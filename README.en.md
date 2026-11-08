@@ -118,6 +118,16 @@ The extension interface contains no advertising iframes, no advertising reachabi
 - [Technical notes](docs/TECHNICAL-NOTES.md)
 
 
+## 👋 About me
+
+Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.
+
+My hobbies include **programming, web design, and creating websites and apps**. I'm also fascinated by **artificial intelligence (AI), computers, digital systems, and new technologies**. I enjoy trying out new tools, learning new things, and turning my own ideas into projects, both small and large.
+
+What excites me most is turning an idea into something that actually works! I love discovering how technology works behind the scenes, solving problems on my own, and designing digital projects creatively. I also use AI as a tool to help me learn, plan, and develop.
+
+**Schleim OS** is one of my own projects. Through my projects, I want to share my enthusiasm for technology and show what curiosity, creativity, and digital tools can make possible. 🐌💻
+
 ## 📬 Contact and support
 
 Do you have questions about Schleim OS, need help with installation, or want to report a problem? You can contact me directly:
