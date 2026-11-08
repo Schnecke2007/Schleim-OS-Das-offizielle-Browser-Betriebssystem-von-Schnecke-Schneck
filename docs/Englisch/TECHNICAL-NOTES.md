@@ -7,6 +7,10 @@
 - **Main entry point:** `pages/newtab.html`
 - **New-tab override:** `chrome_url_overrides.newtab`
 
+## Installation
+
+The documented installation uses direct import of the complete GitHub repository ZIP through the ZIP-import option of a supported Chromium-based browser. The archive contains the extension in the `extension` subfolder and is not extracted before import. ZIP-import availability depends on the browser and platform.
+
 ## Project files
 
 - **Local interface scripts:** `scripts/app.js` and `scripts/personalization.js`
