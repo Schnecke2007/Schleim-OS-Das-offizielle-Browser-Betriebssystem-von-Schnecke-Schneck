@@ -34,6 +34,8 @@ Read the [plain-language installation guide](INSTALLATION.md).
 
 Read [Help and troubleshooting](HELP.md).
 
+[Technology explained simply](TECHNICAL.md)
+
 ## Legal information
 
 The short explanations do not replace the official legal documents.
