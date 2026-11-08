@@ -1,6 +1,6 @@
 # 📥 Schleim OS – Installatiehandleiding
 
-Deze handleiding legt uit hoe je de Schleim OS-browserextensie installeert in compatibele Chromium-browsers op Android en desktop.
+Deze handleiding beschrijft hoe je Schleim OS installeert in ondersteunde Chromium-browsers op Android en desktop. Je browser moet in het extensiebeheer een functie bieden om ZIP-bestanden rechtstreeks te importeren.
 
 ## 1. De volledige GitHub-repository downloaden
 
@@ -9,45 +9,24 @@ Deze handleiding legt uit hoe je de Schleim OS-browserextensie installeert in co
 3. Kies **Download ZIP**.
 4. Sla het ZIP-archief op je apparaat op.
 
-Download op deze manier de **volledige repository**. De browserextensie staat in de submap `extension`. Je hoeft het archief **niet** eerst uit te pakken wanneer je browser rechtstreekse ZIP-import ondersteunt.
+Download de **volledige repository**. De browserextensie staat in de submap `extension`. Laat het ZIP-archief intact – je hoeft het **niet uit te pakken**.
 
-## 2. Het ZIP-bestand rechtstreeks in de browser installeren (Android en desktop)
+## 2. De repository-ZIP rechtstreeks in je Chromium-browser installeren
 
-Sommige ondersteunde Chromium-browsers bieden in hun extensiebeheer een functie om ZIP-bestanden te importeren. Dit werkt op Android of desktop wanneer de betreffende browser deze functie aanbiedt.
-
-1. Open het extensiebeheer van je browser.
+1. Open het extensiebeheer van je ondersteunde Chromium-browser.
 2. Schakel indien nodig de **ontwikkelaarsmodus** in.
-3. Tik of klik op de knop voor het importeren/installeren van bestanden. Deze kan bijvoorbeeld **“From .zip/.crx/.user.js”**, **“Install from ZIP”** of iets vergelijkbaars heten.
-4. Selecteer het eerder gedownloade **volledige GitHub-repository-ZIP-bestand**. Je hoeft het ZIP-bestand niet eerst uit te pakken.
-5. De browser zou Schleim OS in de submap `extension` van de repository moeten herkennen. Volg de aanwijzingen en bevestig de installatie.
+3. Zoek de knop om een extensiebestand te importeren. Deze kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten.
+4. Tik of klik op deze knop.
+5. Selecteer het eerder gedownloade **volledige GitHub-repository-ZIP-bestand** – geen losse bestanden en geen uitgepakte map.
+6. De browser verwerkt het ZIP-archief en zou de extensie in de submap `extension` moeten herkennen. Volg de weergegeven aanwijzingen en bevestig de installatie.
 
-> 💡 **Tip:** Selecteer bij ZIP-import het volledige repository-archief en niet alleen losse bestanden. De exacte naam en locatie van de importknop kunnen per browser en apparaat verschillen.
+> 💡 **Belangrijk:** Het ZIP-bestand wordt rechtstreeks vanuit GitHub in de browser geïmporteerd. Het vooraf uitpakken hoort niet bij deze installatiemethode.
 
-> ⚠️ **Let op:** Niet elke Chromium-browser ondersteunt rechtstreekse ZIP-import. Als je browser deze optie niet aanbiedt, gebruik dan de alternatieve installatiemethode hieronder.
+> 📱 **Android en desktop:** Deze instructies gelden voor ondersteunde Chromium-browsers op beide platforms. De exacte naam en locatie van de importknop kunnen per browser en apparaat verschillen. De browser moet ZIP-import ondersteunen.
 
-## 3. Alternatief: installeren via “Uitgepakte extensie laden”
+## 3. Na de installatie
 
-Gebruik deze methode bij browsers die geen rechtstreekse ZIP-import aanbieden, maar wel een lokale extensiemap kunnen laden.
-
-1. Pak het eerder gedownloade volledige GitHub-ZIP-archief uit.
-2. Open de uitgepakte repositorymap.
-3. Open de submap **`extension`**. In deze map staat het bestand `manifest.json`.
-4. Open het extensiebeheer van je browser en schakel de **ontwikkelaarsmodus** in.
-5. Kies **“Uitgepakte extensie laden”** of **“Load unpacked”**.
-6. Selecteer de map **`extension`** – niet de bovenliggende repositorymap.
-7. Open een nieuw tabblad. Schleim OS zou nu moeten starten. 🎉
-
-### Google Chrome, Microsoft Edge en Brave
-
-- **Google Chrome:** Open `chrome://extensions`.
-- **Microsoft Edge:** Open `edge://extensions`.
-- **Brave:** Open `brave://extensions`.
-
-Schakel de ontwikkelaarsmodus in en kies vervolgens **“Uitgepakte extensie laden”** of **“Load unpacked”**. Selecteer de uitgepakte map `extension` waarin het bestand `manifest.json` staat.
-
-## 4. Na de installatie
-
-Open een nieuw browsertabblad. Als Schleim OS niet verschijnt, controleer dan het extensiebeheer van de browser en raadpleeg de [handleiding voor probleemoplossing](PROBLEMEN-OPLOSSEN.md).
+Open een nieuw browsertabblad. Als Schleim OS niet verschijnt, controleer dan in het extensiebeheer of de extensie succesvol is geïnstalleerd en ingeschakeld. Meer hulp vind je in de [handleiding voor probleemoplossing](PROBLEMEN-OPLOSSEN.md).
 
 ---
 
