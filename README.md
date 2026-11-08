@@ -1,18 +1,18 @@
 # Schleim OS 🐌
 
-**Das offizielle Browser-Betriebssystem von Schnecke Schneck.** Eine eigene, anpassbare Startseite für deinen Browser – mit App-Kacheln, persönlichen Einstellungen und einer Oberfläche, die sich an Smartphone, Tablet und Desktop anpasst.
+**Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
+[🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
 
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
-## Was ist Schleim OS?
+## 🚀 Was ist Schleim OS?
 
 Schleim OS ist eine Browser-Erweiterung, die den normalen neuen Tab durch eine eigene Oberfläche ersetzt. Statt einer leeren oder standardmäßigen Tab-Seite öffnet sich ein persönlicher Startbildschirm mit Apps und Verknüpfungen.
 
 Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder Linux ersetzt. Es läuft innerhalb eines kompatiblen Browsers und nutzt dessen Erweiterungsfunktionen.
 
-## Funktionen
+## ⭐ Funktionen
 
 - Eigene Neuer-Tab-Seite für Chrome und kompatible Chromium-Browser
 - Startbildschirm mit Apps und Website-Verknüpfungen
@@ -23,25 +23,30 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
 
-## Installation
+## 📥 Download und Installation
 
-### Google Chrome
+### 1. Projekt als ZIP herunterladen
 
-1. Lade das ZIP-Paket über den Bereich **Releases** herunter (oder verwende das Projektpaket aus diesem Repository).
-2. Entpacke die ZIP-Datei vollständig.
-3. Öffne in Chrome die Adresse `chrome://extensions`.
-4. Aktiviere oben rechts den **Entwicklermodus**.
-5. Klicke auf **Entpackte Erweiterung laden**.
-6. Wähle den Ordner `schleim-os-browser-extension` aus – direkt darin muss die Datei `manifest.json` liegen.
-7. Öffne einen neuen Tab. Schleim OS sollte jetzt angezeigt werden.
+1. Öffne dieses GitHub-Repository.
+2. Klicke oben auf die grüne Schaltfläche **Code**.
+3. Wähle im Menü **Download ZIP**.
+4. Speichere die ZIP-Datei und entpacke sie vollständig.
+
+### 2. Google Chrome einrichten
+
+1. Öffne `chrome://extensions`.
+2. Aktiviere oben rechts den **Entwicklermodus**.
+3. Klicke auf **Entpackte Erweiterung laden**.
+4. Wähle den entpackten Ordner `schleim-os-browser-extension` aus. Direkt darin muss `manifest.json` liegen.
+5. Öffne einen neuen Tab. Schleim OS sollte jetzt angezeigt werden. 🎉
 
 ### Microsoft Edge und Brave
 
-- Edge: `edge://extensions` öffnen.
-- Brave: `brave://extensions` öffnen.
-- Entwicklermodus einschalten, **Entpackt laden** auswählen und denselben Erweiterungsordner mit der `manifest.json` öffnen.
+- **Edge:** `edge://extensions` öffnen.
+- **Brave:** `brave://extensions` öffnen.
+- Entwicklermodus einschalten, **Entpackt laden** auswählen und denselben entpackten Erweiterungsordner mit `manifest.json` öffnen.
 
-> Die ZIP-Datei wird nicht direkt als Erweiterung installiert. Sie muss vorher entpackt werden.
+> ⚠️ Wichtig: Die ZIP-Datei kann nicht direkt als Erweiterung geladen werden. Erst **Code → Download ZIP**, dann vollständig entpacken und anschließend den Ordner mit `manifest.json` auswählen.
 
 ## Bedienung und Einstellungen
 
@@ -52,7 +57,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-Backup sollte an einem sicheren Ort aufbewahrt werden.
 
-## Fehlerbehebung
+## 🛠️ Fehlerbehebung
 
 | Problem | Mögliche Lösung |
 |---|---|
@@ -64,7 +69,7 @@ Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-B
 | Einstellungen sind nach einem Browserwechsel weg | Das Browserprofil ist lokal. Das JSON-Backup im alten Browser exportieren und im neuen Browser importieren. |
 | Installation auf Android funktioniert nicht | Chrome für Android unterstützt keine regulären Desktop-Chrome-Erweiterungen. Dafür ist eine separate PWA oder ein Browser mit Erweiterungsunterstützung nötig. |
 
-## Projektstruktur
+## 📁 Projektstruktur
 
 ```text
 schleim-os-browser-extension/
@@ -87,20 +92,20 @@ schleim-os-browser-extension/
 └── README.md
 ```
 
-## Datenschutz und Berechtigungen
+## 🔐 Datenschutz und Berechtigungen
 
 Schleim OS speichert Oberflächen- und Personalisierungseinstellungen lokal im Browserprofil. Die Erweiterung verwendet die in `manifest.json` aufgeführten Berechtigungen. Externe Apps und Websites können beim Öffnen eine Verbindung zu ihren jeweiligen Anbietern herstellen; deren Datenschutzbestimmungen gelten zusätzlich.
 
 Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbarkeitsprüfung und keine werbebedingte Start-Sperre. Aussagen zu Werbung in übernommenen Rechtstexten beziehen sich auf die dort beschriebene Website und nicht auf eine Werbeeinbindung in der Extension.
 
-## Hinweise
+## 💡 Hinweise
 
 - Schleim OS ersetzt die Neuer-Tab-Seite, nicht die gesamte Browseroberfläche.
 - Inkognito-Fenster können eigene Einschränkungen haben.
 - Google Chrome für Android unterstützt keine normalen Desktop-Erweiterungen.
 - Externe Inhalte benötigen gegebenenfalls eine Internetverbindung.
 
-## Sprachen und Dokumentation
+## 🌐 Sprachen und Dokumentation
 
 - [Deutsch – Hauptdokumentation](README.md)
 - [English – documentation](README.en.md)
