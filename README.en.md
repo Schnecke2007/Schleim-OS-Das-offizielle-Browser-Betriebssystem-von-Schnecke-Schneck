@@ -124,8 +124,10 @@ The extension interface contains no advertising iframes, no advertising reachabi
 - [Deutsch – main documentation](README.md)
 - [English – main documentation](README.en.md)
 - [Nederlands – documentatie](README.nl.md)
-- [Installation guide](docs/INSTALLATION.md)
-- [Technical notes](docs/TECHNICAL-NOTES.md)
+- [Installation guide](docs/Englisch/INSTALLATION.md)
+- [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
+- [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
+- [Documentation overview – all languages](docs/README.md)
 
 ## ⚖️ Legal information
 
