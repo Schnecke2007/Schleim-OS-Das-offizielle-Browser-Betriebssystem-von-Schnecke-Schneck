@@ -14,13 +14,14 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 
 ## Installation
 
-1. ZIP vollständig entpacken.
-2. Chrome öffnen und `chrome://extensions` eingeben.
-3. Entwicklermodus einschalten.
-4. **Entpackte Erweiterung laden** wählen und den Ordner `schleim-os-browser-extension` öffnen, in dem `manifest.json` liegt.
-5. Einen neuen Tab öffnen.
+1. Lade über GitHub mit **Code → Download ZIP** das vollständige Repository herunter.
+2. Entpacke das ZIP-Archiv nicht.
+3. Öffne die Erweiterungsverwaltung eines Chromium-Browsers mit ZIP-Import-Unterstützung.
+4. Aktiviere bei Bedarf den Entwicklermodus.
+5. Wähle **„From .zip/.crx/.user.js“** oder die entsprechende ZIP-Importfunktion.
+6. Importiere die vollständige Repository-ZIP und bestätige die Installation.
 
-Die ZIP-Datei wird nicht direkt als Extension installiert. Chrome für Android unterstützt reguläre Desktop-Chrome-Erweiterungen nicht; dort ist eine PWA bzw. ein kompatibler Browser erforderlich.
+Der Browser-Importer erkennt die Erweiterung im Unterordner `extension`. Die genaue Bezeichnung und Verfügbarkeit der Importfunktion hängt vom Browser und der Plattform ab. Chrome für Android unterstützt keine regulären Chrome-Erweiterungen; auf Android ist daher ein kompatibler Browser mit Erweiterungs- und ZIP-Import-Unterstützung erforderlich.
 
 ## Standalone-HTML
 
