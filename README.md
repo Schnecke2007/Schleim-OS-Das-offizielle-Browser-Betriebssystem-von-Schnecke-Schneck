@@ -127,6 +127,12 @@ Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbar
 - [Installationsanleitung](docs/INSTALLATION.md)
 - [Technische Hinweise](docs/TECHNICAL-NOTES.md)
 
+## ⚖️ Rechtliche Informationen
+
+- [Allgemeine Geschäftsbedingungen (AGB) & Community-Richtlinien](legal/Deutsch/AGB.md)
+- [Datenschutzerklärung](legal/Deutsch/DATENSCHUTZ.md)
+- [Impressum](legal/Deutsch/IMPRESSUM.md)
+
 ## 📬 Kontakt und Support
 
 Du hast Fragen zu Schleim OS, benötigst Hilfe bei der Installation oder möchtest ein Problem melden? Du kannst mich direkt kontaktieren:
