@@ -118,6 +118,16 @@ De extensie-interface bevat geen advertentie-iframes, geen controles of adverten
 - [Technische opmerkingen](docs/TECHNICAL-NOTES.md)
 
 
+## 👋 Over mij
+
+Hoi! Ik ben **Schnecke Schneck**, ik ben 19 jaar oud en kom uit **Bottrop in Noordrijn-Westfalen, Duitsland**. Online gebruik ik de naam *Schnecke Schneck*. Ik ben vooral geïnteresseerd in technologie en digitale ideeën.
+
+Mijn hobby's zijn **programmeren, webdesign en het maken en vormgeven van websites en apps**. Daarnaast ben ik enthousiast over **kunstmatige intelligentie (AI), computers, digitale systemen en nieuwe technologieën**. Ik probeer graag nieuwe tools uit, leer steeds iets nieuws en werk mijn eigen ideeën uit tot kleine en grotere projecten.
+
+Wat mij hierin zo aanspreekt? Het is geweldig om een idee stap voor stap om te zetten in iets dat echt werkt! Ik vind het interessant om te ontdekken hoe technologie achter de schermen werkt, zelf problemen op te lossen en digitale projecten creatief vorm te geven. AI gebruik ik ook als hulpmiddel om te leren, plannen en ontwikkelen.
+
+**Schleim OS** is een van mijn eigen projecten. Met mijn projecten wil ik mijn enthousiasme voor technologie delen en laten zien wat nieuwsgierigheid, creativiteit en digitale hulpmiddelen mogelijk maken. 🐌💻
+
 ## 📬 Contact en ondersteuning
 
 Heb je vragen over Schleim OS, hulp nodig bij de installatie of wil je een probleem melden? Je kunt rechtstreeks contact met mij opnemen:
