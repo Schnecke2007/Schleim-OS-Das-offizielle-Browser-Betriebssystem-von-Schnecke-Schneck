@@ -159,3 +159,10 @@ Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mic
 **Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
 
 © 2026 Schnecke Schneck.
+
+## 🤝 Mitwirkende & Credits
+
+- **Projektentwicklung und Verantwortung:** Schnecke Schneck.
+- **KI-Unterstützung:** [ChatGPT von OpenAI](https://chatgpt.com/) – Unterstützung bei Ideenfindung, Planung, Programmierung, Fehleranalyse, Dokumentation und Übersetzungen.
+
+*Hinweis: ChatGPT ist ein KI-Assistent und keine menschliche Person oder ein eigenständiger GitHub-Contributor. Die Projektidee, Entscheidungen und Verantwortung für Schleim OS liegen bei Schnecke Schneck.*
