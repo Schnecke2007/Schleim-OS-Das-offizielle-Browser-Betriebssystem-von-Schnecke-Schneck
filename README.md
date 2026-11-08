@@ -50,10 +50,6 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 > ⚠️ **Wichtig – ZIP oder Ordner?** Die Schaltfläche **„Entpackte Erweiterung laden“** erwartet einen Ordner, keine ZIP-Datei. Für die lokale Installation über den Browser-Entwicklermodus musst du das über GitHub heruntergeladene ZIP-Archiv daher zuerst entpacken. Wähle danach den Ordner aus, in dem `manifest.json` direkt liegt.
 
-### Hinweis zur Veröffentlichung im Chrome Web Store
-
-Wenn du Schleim OS selbst im **Chrome Web Store** veröffentlichen oder dort eine neue Version hochladen möchtest, wird das Erweiterungspaket als ZIP-Datei im **Chrome Web Store Developer Dashboard** hochgeladen. Das ist ein anderer Vorgang als **„Entpackte Erweiterung laden“** unter `chrome://extensions`. Das GitHub-Quellcode-ZIP ist nicht automatisch ein fertiges Store-Paket; für den Store muss das ZIP die Erweiterungsdateien mit `manifest.json` direkt im ZIP-Hauptverzeichnis enthalten.
-
 ## Bedienung und Einstellungen
 
 - **Apps starten:** Eine Kachel auf dem Startbildschirm auswählen.
