@@ -16,6 +16,14 @@ What excites me most is turning an idea into something that actually works! I lo
 
 **Schleim OS** is one of my own projects. Through my projects, I want to share my enthusiasm for technology and show what curiosity, creativity, and digital tools can make possible. 🐌💻
 
+## 🧪 Try Schleim OS live
+
+[**Open the demo in a new browser tab**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – try the standalone version directly. You do not need to install the extension to use the demo.
+
+## 📖 Plain-language documentation
+
+Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics.
+
 ## 🚀 What is Schleim OS?
 
 Schleim OS is a browser extension that replaces the browser's regular new-tab page with its own interface. Instead of an empty or default tab page, a personal home screen with apps and shortcuts opens.
