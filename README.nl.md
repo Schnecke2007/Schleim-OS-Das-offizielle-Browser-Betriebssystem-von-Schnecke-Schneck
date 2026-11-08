@@ -117,6 +117,34 @@ De extensie-interface bevat geen advertentie-iframes, geen controles of adverten
 - [Installatiehandleiding](docs/INSTALLATION.md)
 - [Technische opmerkingen](docs/TECHNICAL-NOTES.md)
 
+
+## 📬 Contact en ondersteuning
+
+Heb je vragen over Schleim OS, hulp nodig bij de installatie of wil je een probleem melden? Je kunt rechtstreeks contact met mij opnemen:
+
+- **WhatsApp:** [Stuur mij een bericht](https://wa.me/491773988636) op **+49 177 3988636**.
+- **E-mail:** [info.schnecke.schneck@gmail.com](mailto:info.schnecke.schneck@gmail.com).
+
+Beschrijf je vraag kort, zodat ik je zo goed mogelijk kan helpen. Bij technische problemen is het ook handig om te vermelden welke browser en versie je gebruikt en welke stappen tot het probleem hebben geleid. Stuur nooit wachtwoorden of andere vertrouwelijke inloggegevens.
+
+## 💬 Feedback
+
+Jouw feedback is belangrijk voor mij! Ik ontvang graag beoordelingen, verbetersuggesties, ideeën en meldingen van fouten. Je kunt op de volgende manieren feedback geven:
+
+- **GitHub:** [Feedback, vragen of foutmeldingen als issue indienen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues).
+- **Google-bedrijfsprofiel:** [Schnecke-Schneck Creator Studio beoordelen](https://g.page/r/CfqIlATGmPYUEBM/review).
+- **E-mail:** [Feedback per e-mail versturen](mailto:info.schnecke.schneck@gmail.com).
+- **WhatsApp:** [Rechtstreeks feedback sturen via WhatsApp](https://wa.me/491773988636).
+
+Bedankt dat je de tijd neemt om Schleim OS en mijn werk te ondersteunen! ❤️
+
+## 📱 Volg mij op social media
+
+Wil je meer zien van mijn projecten en updates? Ik vind het leuk als je mij volgt op Instagram en TikTok:
+
+- **Instagram:** [@schnecke_schneck2007](https://www.instagram.com/schnecke_schneck2007/)
+- **TikTok:** [@schnecke_schneck2007](https://www.tiktok.com/@schnecke_schneck2007/)
+
 ---
 
 **Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
