@@ -30,23 +30,29 @@ This project is not a standalone operating system that replaces Windows, Android
 1. Open this GitHub repository.
 2. Click the green **Code** button near the top.
 3. Select **Download ZIP** from the menu.
-4. Save the ZIP file and extract it completely.
+4. Save the ZIP file to your device.
+5. Extract the ZIP archive completely.
+6. In the extracted files, find the extension folder that contains the `manifest.json` file directly. This is the folder you will select later – not the ZIP file and not a parent folder.
 
 ### 2. Set up Google Chrome
 
 1. Open `chrome://extensions`.
 2. Enable **Developer mode** in the top-right corner.
 3. Click **Load unpacked**.
-4. Select the extracted `schleim-os-browser-extension` folder. The `manifest.json` file must be directly inside this folder.
+4. Select the extracted extension folder. The `manifest.json` file must be directly inside it.
 5. Open a new tab. Schleim OS should now appear. 🎉
 
 ### Microsoft Edge and Brave
 
 - **Edge:** Open `edge://extensions`.
 - **Brave:** Open `brave://extensions`.
-- Enable Developer mode, select **Load unpacked**, and choose the same extracted extension folder containing `manifest.json`.
+- Enable Developer mode, select **Load unpacked**, and then choose the extracted extension folder containing `manifest.json` directly.
 
-> ⚠️ Important: The ZIP file cannot be loaded directly as an extension. First choose **Code → Download ZIP**, extract the archive completely, and then select the folder containing `manifest.json`.
+> ⚠️ **Important – ZIP or folder?** The **Load unpacked** button expects a folder, not a ZIP file. For local installation through the browser's developer mode, you must first extract the ZIP archive downloaded from GitHub. Then select the folder that contains `manifest.json` directly.
+
+### Note about publishing on the Chrome Web Store
+
+If you want to publish Schleim OS in the **Chrome Web Store** or upload a new version, the extension package is uploaded as a ZIP file through the **Chrome Web Store Developer Dashboard**. This is a different process from choosing **Load unpacked** at `chrome://extensions`. The GitHub source-code ZIP is not automatically a ready-to-upload store package; the store ZIP must contain the extension files with `manifest.json` directly at the ZIP's root.
 
 ## Using Schleim OS and its settings
 
@@ -61,8 +67,10 @@ Personal settings are stored locally in the browser profile. Keep your JSON back
 
 | Issue | Possible solution |
 |---|---|
-| Schleim OS does not appear in a new tab | Check whether the extension is enabled and whether the correct folder containing `manifest.json` was loaded. |
-| Chrome reports an invalid manifest | Extract the ZIP file again and select the folder where `manifest.json` is located directly. |
+| Schleim OS does not appear in a new tab | Check whether the extension is enabled and whether the extracted extension folder containing `manifest.json` was loaded. |
+| Chrome reports an invalid manifest | Extract the ZIP file completely and select the folder where `manifest.json` is located directly. |
+| A ZIP file was selected in the Load unpacked dialog | Extract the ZIP archive first. Then select the extension folder inside it. |
+| The wrong folder was selected | Select the folder containing `manifest.json` directly, not the parent repository folder. |
 | Another new-tab extension is active | Temporarily disable the other extension. Multiple extensions cannot replace the same new-tab page at the same time. |
 | Changes are not displayed | Open `chrome://extensions`, click **Reload** for Schleim OS, and open a new tab. |
 | An external website or embed remains blank | Check your internet connection. Some providers block embedding on other websites. |
