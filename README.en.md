@@ -1,90 +1,120 @@
 # Schleim OS 🐌
 
-**The official browser operating system by Schnecke Schneck.** A customizable browser start page with app tiles, personal settings and a responsive layout for desktop, tablet and mobile screens.
+**The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
+[🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
 
-## What is Schleim OS?
+![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
-Schleim OS is a browser extension that replaces the browser's default new-tab page with its own interface. It provides a personal home screen with app shortcuts and customization options.
+## 🚀 What is Schleim OS?
 
-It is not a standalone operating system and does not replace Windows, Android or Linux. It runs inside a compatible browser and uses the browser's extension platform.
+Schleim OS is a browser extension that replaces the browser's regular new-tab page with its own interface. Instead of an empty or default tab page, a personal home screen with apps and shortcuts opens.
 
-## Features
+This project is not a standalone operating system that replaces Windows, Android or Linux. It runs inside a compatible browser and uses that browser's extension features.
+
+## ⭐ Features
 
 - Custom new-tab page for Chrome and compatible Chromium browsers
 - Home screen with apps and website shortcuts
 - Rearrange app tiles using drag and drop
-- Customize the appearance, accent color and background
-- App editor and local JSON backup/restore
-- German, English and Dutch interface
-- Separate standalone HTML version included in the project package
+- Customize the design, accent color and background
+- App editor and local JSON backup and restore
+- Multilingual interface: German, English and Dutch
+- Separate standalone HTML file included in the project package
 - Ad-free extension interface
 
-## Installation
+## 📥 Download and installation
 
-### Google Chrome
+### 1. Download the project as a ZIP file
 
-1. Download the ZIP package from the **Releases** section (or use the project package from this repository).
-2. Extract the ZIP archive completely.
-3. Open `chrome://extensions` in Chrome.
-4. Enable **Developer mode**.
-5. Select **Load unpacked**.
-6. Choose the `schleim-os-browser-extension` folder. The `manifest.json` file must be directly inside that folder.
-7. Open a new tab. Schleim OS should now appear.
+1. Open this GitHub repository.
+2. Click the green **Code** button near the top.
+3. Select **Download ZIP** from the menu.
+4. Save the ZIP file and extract it completely.
+
+### 2. Set up Google Chrome
+
+1. Open `chrome://extensions`.
+2. Enable **Developer mode** in the top-right corner.
+3. Click **Load unpacked**.
+4. Select the extracted `schleim-os-browser-extension` folder. The `manifest.json` file must be directly inside this folder.
+5. Open a new tab. Schleim OS should now appear. 🎉
 
 ### Microsoft Edge and Brave
 
-- Edge: open `edge://extensions`.
-- Brave: open `brave://extensions`.
-- Enable Developer mode, choose **Load unpacked**, and select the same extension folder containing `manifest.json`.
+- **Edge:** Open `edge://extensions`.
+- **Brave:** Open `brave://extensions`.
+- Enable Developer mode, select **Load unpacked**, and choose the same extracted extension folder containing `manifest.json`.
 
-> The ZIP file cannot be installed directly. Extract it first.
+> ⚠️ Important: The ZIP file cannot be loaded directly as an extension. First choose **Code → Download ZIP**, extract the archive completely, and then select the folder containing `manifest.json`.
 
-## Using Schleim OS
+## Using Schleim OS and its settings
 
-- **Open apps:** Select an app tile on the home screen.
-- **Rearrange tiles:** Drag a tile with your mouse. On touch screens, press and hold a tile before moving it.
-- **Customize:** Open the settings or app editor in the interface.
-- **Back up settings:** Use the JSON export/import option to save or restore personal settings.
+- **Open apps:** Select a tile on the home screen.
+- **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
+- **Personalize:** Open the settings or app editor in the interface.
+- **Back up settings:** Use the available JSON feature to export or import your personal settings.
 
-Personal settings are stored locally in the browser profile. Keep exported JSON backups somewhere safe.
+Personal settings are stored locally in the browser profile. Keep your JSON backup in a safe place.
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
-| Issue | What to try |
+| Issue | Possible solution |
 |---|---|
-| Schleim OS does not appear in a new tab | Check that the extension is enabled and that you loaded the folder containing `manifest.json`. |
-| Chrome reports an invalid manifest | Extract the ZIP again and select the folder where `manifest.json` is directly located. |
-| Another new-tab extension is active | Temporarily disable the other extension. Only one extension can control the new-tab page at a time. |
-| Changes do not appear | Open `chrome://extensions`, click **Reload** for Schleim OS, then open a new tab. |
-| An external page or embed is blank | Check your internet connection. Some providers block embedding on third-party pages. |
-| Settings are missing in another browser | Settings belong to the local browser profile. Export a JSON backup in the old browser and import it in the new one. |
-| Installation does not work on Android | Chrome for Android does not support regular desktop Chrome extensions. Use a separate PWA or a browser that supports extensions. |
+| Schleim OS does not appear in a new tab | Check whether the extension is enabled and whether the correct folder containing `manifest.json` was loaded. |
+| Chrome reports an invalid manifest | Extract the ZIP file again and select the folder where `manifest.json` is located directly. |
+| Another new-tab extension is active | Temporarily disable the other extension. Multiple extensions cannot replace the same new-tab page at the same time. |
+| Changes are not displayed | Open `chrome://extensions`, click **Reload** for Schleim OS, and open a new tab. |
+| An external website or embed remains blank | Check your internet connection. Some providers block embedding on other websites. |
+| Settings are missing after switching browsers | The browser profile is stored locally. Export the JSON backup in the old browser and import it in the new one. |
+| Installation does not work on Android | Chrome for Android does not support regular desktop Chrome extensions. A separate PWA or a browser with extension support is required. |
 
-## Privacy and permissions
+## 📁 Project structure
 
-Schleim OS stores interface and personalization settings locally in the browser profile. The extension uses the permissions listed in `manifest.json`. Opening external apps or websites may connect to their respective providers; their privacy policies also apply.
+```text
+schleim-os-browser-extension/
+├── manifest.json
+├── pages/
+│   └── newtab.html
+├── scripts/
+│   ├── app.js
+│   └── personalization.js
+├── styles/
+│   ├── main.css
+│   └── personalization.css
+├── locales/
+│   └── legal-translations.js
+├── assets/
+│   └── icons/
+├── docs/
+├── standalone/
+│   └── schleim-os-standalone.html
+└── README.md
+```
 
-The extension interface contains no advertising iframes, advertising reachability checks or ad-related startup lock.
+## 🔐 Privacy and permissions
 
-## Notes
+Schleim OS stores interface and personalization settings locally in the browser profile. The extension uses the permissions listed in `manifest.json`. Opening external apps and websites may connect to their respective providers; their privacy policies also apply.
+
+The extension interface contains no advertising iframes, no advertising reachability checks and no ad-related startup lock. Statements about advertising in adopted legal texts refer to the website described there, not to advertising embedded in the extension.
+
+## 💡 Notes
 
 - Schleim OS replaces the new-tab page, not the entire browser interface.
-- Incognito windows may have separate restrictions.
+- Incognito windows may have their own restrictions.
 - Google Chrome for Android does not support regular desktop extensions.
 - External content may require an internet connection.
 
-## Documentation
+## 🌐 Languages and documentation
 
-- [Deutsch](README.md)
-- [English – this page](README.en.md)
-- [Nederlands](README.nl.md)
+- [Deutsch – main documentation](README.md)
+- [English – main documentation](README.en.md)
+- [Nederlands – documentatie](README.nl.md)
 - [Installation guide](docs/INSTALLATION.md)
 - [Technical notes](docs/TECHNICAL-NOTES.md)
 
 ---
 
-Developed and maintained by **Schnecke Schneck**.
+**Schleim OS** is developed and maintained by **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
