@@ -1,90 +1,120 @@
 # Schleim OS 🐌
 
-**Het officiële browserbesturingssysteem van Schnecke Schneck.** Een aanpasbare startpagina voor je browser, met app-tegels, persoonlijke instellingen en een indeling die zich aanpast aan desktop, tablet en mobiel.
+**Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
+[🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
 
-## Wat is Schleim OS?
+![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
-Schleim OS is een browserextensie die de standaardpagina voor een nieuw tabblad vervangt door een eigen interface. Je krijgt een persoonlijk startscherm met apps, snelkoppelingen en instellingen.
+## 🚀 Wat is Schleim OS?
 
-Het is geen zelfstandig besturingssysteem en vervangt Windows, Android of Linux niet. Het werkt binnen een compatibele browser en gebruikt de extensiefuncties van die browser.
+Schleim OS is een browserextensie die de gewone nieuw-tabbladpagina van de browser vervangt door een eigen interface. In plaats van een lege of standaard tabbladpagina opent een persoonlijk startscherm met apps en snelkoppelingen.
 
-## Functies
+Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux vervangt. Het werkt binnen een compatibele browser en maakt gebruik van de extensiefuncties van die browser.
+
+## ⭐ Functies
 
 - Eigen nieuw-tabbladpagina voor Chrome en compatibele Chromium-browsers
 - Startscherm met apps en websitelinks
 - App-tegels verslepen en opnieuw ordenen
-- Uiterlijk, accentkleur en achtergrond aanpassen
-- App-editor en lokale JSON-back-up/herstel
-- Interface in het Duits, Engels en Nederlands
-- Afzonderlijke standalone HTML-versie in het projectpakket
+- Ontwerp, accentkleur en achtergrond aanpassen
+- App-editor en lokale JSON-back-up en herstel
+- Meertalige interface: Duits, Engels en Nederlands
+- Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
 
-## Installatie
+## 📥 Downloaden en installeren
 
-### Google Chrome
+### 1. Download het project als ZIP-bestand
 
-1. Download het ZIP-pakket via **Releases** (of gebruik het projectpakket uit deze repository).
-2. Pak het ZIP-bestand volledig uit.
-3. Open `chrome://extensions` in Chrome.
-4. Schakel **Ontwikkelaarsmodus** in.
-5. Klik op **Uitgepakte extensie laden**.
-6. Selecteer de map `schleim-os-browser-extension`. Het bestand `manifest.json` moet direct in deze map staan.
-7. Open een nieuw tabblad. Schleim OS zou nu moeten verschijnen.
+1. Open deze GitHub-repository.
+2. Klik bovenaan op de groene knop **Code**.
+3. Kies **Download ZIP** in het menu.
+4. Sla het ZIP-bestand op en pak het volledig uit.
+
+### 2. Google Chrome instellen
+
+1. Open `chrome://extensions`.
+2. Schakel rechtsboven **Ontwikkelaarsmodus** in.
+3. Klik op **Uitgepakte extensie laden**.
+4. Selecteer de uitgepakte map `schleim-os-browser-extension`. Het bestand `manifest.json` moet rechtstreeks in deze map staan.
+5. Open een nieuw tabblad. Schleim OS zou nu moeten verschijnen. 🎉
 
 ### Microsoft Edge en Brave
 
-- Edge: open `edge://extensions`.
-- Brave: open `brave://extensions`.
-- Schakel de ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer de map met `manifest.json`.
+- **Edge:** Open `edge://extensions`.
+- **Brave:** Open `brave://extensions`.
+- Schakel de ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer dezelfde uitgepakte extensiemap met `manifest.json`.
 
-> Het ZIP-bestand kan niet rechtstreeks als extensie worden geïnstalleerd. Pak het eerst uit.
+> ⚠️ Belangrijk: Het ZIP-bestand kan niet rechtstreeks als extensie worden geladen. Kies eerst **Code → Download ZIP**, pak het archief volledig uit en selecteer daarna de map met `manifest.json`.
 
-## Schleim OS gebruiken
+## Schleim OS gebruiken en instellingen beheren
 
-- **Apps openen:** selecteer een app-tegel op het startscherm.
-- **Tegels ordenen:** sleep een tegel met de muis. Houd op een touchscreen een tegel ingedrukt voordat je deze verplaatst.
-- **Aanpassen:** open de instellingen of de app-editor in de interface.
-- **Instellingen bewaren:** gebruik de JSON-export/import om persoonlijke instellingen op te slaan of terug te zetten.
+- **Apps openen:** Selecteer een tegel op het startscherm.
+- **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
+- **Personaliseren:** Open de instellingen of de app-editor in de interface.
+- **Instellingen back-uppen:** Gebruik de beschikbare JSON-functie om je persoonlijke instellingen te exporteren of te importeren.
 
-Persoonlijke instellingen worden lokaal in het browserprofiel bewaard. Bewaar JSON-back-ups op een veilige plek.
+Persoonlijke instellingen worden lokaal in het browserprofiel opgeslagen. Bewaar je JSON-back-up op een veilige plek.
 
-## Problemen oplossen
+## 🛠️ Problemen oplossen
 
 | Probleem | Mogelijke oplossing |
 |---|---|
-| Schleim OS verschijnt niet bij een nieuw tabblad | Controleer of de extensie is ingeschakeld en of de map met `manifest.json` is geladen. |
-| Chrome meldt een ongeldig manifest | Pak het ZIP-bestand opnieuw uit en selecteer de map waarin `manifest.json` direct staat. |
-| Een andere nieuw-tabbladextensie is actief | Schakel de andere extensie tijdelijk uit. Slechts één extensie kan tegelijk de nieuw-tabbladpagina beheren. |
-| Wijzigingen worden niet getoond | Open `chrome://extensions`, klik bij Schleim OS op **Opnieuw laden** en open een nieuw tabblad. |
-| Een externe pagina of insluiting blijft leeg | Controleer de internetverbinding. Sommige aanbieders blokkeren insluiting op andere websites. |
-| Instellingen ontbreken in een andere browser | Instellingen horen bij het lokale browserprofiel. Exporteer een JSON-back-up in de oude browser en importeer deze in de nieuwe. |
-| Installatie werkt niet op Android | Chrome voor Android ondersteunt geen gewone desktop-Chrome-extensies. Gebruik een aparte PWA of een browser met extensieondersteuning. |
+| Schleim OS verschijnt niet in een nieuw tabblad | Controleer of de extensie is ingeschakeld en of de juiste map met `manifest.json` is geladen. |
+| Chrome meldt een ongeldig manifest | Pak het ZIP-bestand opnieuw uit en selecteer de map waarin `manifest.json` rechtstreeks staat. |
+| Een andere nieuw-tabbladextensie is actief | Schakel de andere extensie tijdelijk uit. Meerdere extensies kunnen niet tegelijkertijd dezelfde nieuw-tabbladpagina vervangen. |
+| Wijzigingen worden niet weergegeven | Open `chrome://extensions`, klik bij Schleim OS op **Opnieuw laden** en open een nieuw tabblad. |
+| Een externe website of insluiting blijft leeg | Controleer je internetverbinding. Sommige aanbieders blokkeren insluiting op andere websites. |
+| Instellingen ontbreken na een browserwissel | Het browserprofiel wordt lokaal opgeslagen. Exporteer de JSON-back-up in de oude browser en importeer deze in de nieuwe browser. |
+| Installatie werkt niet op Android | Chrome voor Android ondersteunt geen gewone desktop-Chrome-extensies. Hiervoor is een aparte PWA of een browser met extensieondersteuning nodig. |
 
-## Privacy en machtigingen
+## 📁 Projectstructuur
 
-Schleim OS bewaart interface- en personalisatie-instellingen lokaal in het browserprofiel. De extensie gebruikt de machtigingen die in `manifest.json` staan. Het openen van externe apps of websites kan verbinding maken met de betreffende aanbieders; hun privacybeleid is dan ook van toepassing.
+```text
+schleim-os-browser-extension/
+├── manifest.json
+├── pages/
+│   └── newtab.html
+├── scripts/
+│   ├── app.js
+│   └── personalization.js
+├── styles/
+│   ├── main.css
+│   └── personalization.css
+├── locales/
+│   └── legal-translations.js
+├── assets/
+│   └── icons/
+├── docs/
+├── standalone/
+│   └── schleim-os-standalone.html
+└── README.md
+```
 
-De extensie-interface bevat geen advertentie-iframes, geen controle van de bereikbaarheid van advertenties en geen opstartblokkering vanwege advertenties.
+## 🔐 Privacy en machtigingen
 
-## Opmerkingen
+Schleim OS slaat interface- en personalisatie-instellingen lokaal op in het browserprofiel. De extensie gebruikt de machtigingen die in `manifest.json` worden vermeld. Wanneer externe apps en websites worden geopend, kan er verbinding worden gemaakt met de betreffende aanbieders; ook hun privacybeleid is dan van toepassing.
+
+De extensie-interface bevat geen advertentie-iframes, geen controles of advertenties bereikbaar zijn en geen opstartblokkering vanwege advertenties. Vermeldingen over advertenties in overgenomen juridische teksten hebben betrekking op de daarin beschreven website en niet op advertenties die in de extensie zijn ingebouwd.
+
+## 💡 Opmerkingen
 
 - Schleim OS vervangt de nieuw-tabbladpagina, niet de volledige browserinterface.
-- Incognitovensters kunnen aparte beperkingen hebben.
+- Incognitovensters kunnen eigen beperkingen hebben.
 - Google Chrome voor Android ondersteunt geen gewone desktopextensies.
-- Externe inhoud kan een internetverbinding vereisen.
+- Voor externe inhoud kan een internetverbinding nodig zijn.
 
-## Documentatie
+## 🌐 Talen en documentatie
 
-- [Deutsch](README.md)
-- [English](README.en.md)
-- [Nederlands – deze pagina](README.nl.md)
+- [Deutsch – hoofddocumentatie](README.md)
+- [English – documentation](README.en.md)
+- [Nederlands – hoofddocumentatie](README.nl.md)
 - [Installatiehandleiding](docs/INSTALLATION.md)
 - [Technische opmerkingen](docs/TECHNICAL-NOTES.md)
 
 ---
 
-Ontwikkeld en onderhouden door **Schnecke Schneck**.
+**Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
