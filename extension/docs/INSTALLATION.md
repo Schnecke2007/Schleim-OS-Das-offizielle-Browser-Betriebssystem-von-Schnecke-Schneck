@@ -1,12 +1,13 @@
-# Chrome-Erweiterung manuell installieren
+# Schleim OS direkt aus der Repository-ZIP installieren
 
-1. ZIP entpacken.
-2. `chrome://extensions` in Chrome öffnen.
-3. Entwicklermodus aktivieren.
-4. **Entpackte Erweiterung laden** wählen.
-5. Den Ordner `schleim-os-browser-extension` auswählen; direkt darin liegt `manifest.json`.
-6. Mit `Strg+T` einen neuen Tab öffnen.
+1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
+2. Wähle **Code → Download ZIP** und lade das vollständige Repository herunter.
+3. Entpacke die ZIP-Datei nicht.
+4. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der ZIP-Erweiterungen importieren kann.
+5. Aktiviere bei Bedarf den Entwicklermodus.
+6. Wähle die Importfunktion, beispielsweise **„From .zip/.crx/.user.js“**, und anschließend die vollständige Repository-ZIP.
+7. Bestätige die Installation und öffne einen neuen Tab.
 
-Die Erweiterung ist für Chromium und Manifest V3 ausgelegt. Chrome für Android unterstützt reguläre Desktop-Chrome-Erweiterungen nicht.
+Der Browser-Importer erkennt die Erweiterung im Unterordner `extension`. Die genaue Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome für Android unterstützt keine regulären Chrome-Erweiterungen; verwende dort einen Android-Browser mit Erweiterungs- und ZIP-Import-Unterstützung.
 
-Die Extension-Oberfläche enthält keine Werbeeinbindungen und führt keine Werbe- oder Filterprüfung durch. Der Startbildschirm ist direkt nach dem Öffnen verfügbar.
+Die Erweiterung basiert auf Chromium und Manifest V3. Die Oberfläche enthält keine Werbeeinbindungen und führt keine Werbe- oder Filterprüfung durch.
