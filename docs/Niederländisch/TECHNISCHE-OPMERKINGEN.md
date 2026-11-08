@@ -7,6 +7,10 @@
 - **Belangrijkste ingangspunt:** `pages/newtab.html`
 - **Vervanging van het nieuwe tabblad:** `chrome_url_overrides.newtab`
 
+## Installatie
+
+De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige GitHub-repository-ZIP via de ZIP-importfunctie van een ondersteunde Chromium-browser. Het archief bevat de extensie in de submap `extension` en wordt vóór het importeren niet uitgepakt. De beschikbaarheid van ZIP-import hangt af van de browser en het platform.
+
 ## Projectbestanden
 
 - **Lokale interfacescripts:** `scripts/app.js` en `scripts/personalization.js`
