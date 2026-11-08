@@ -50,10 +50,6 @@ This project is not a standalone operating system that replaces Windows, Android
 
 > ⚠️ **Important – ZIP or folder?** The **Load unpacked** button expects a folder, not a ZIP file. For local installation through the browser's developer mode, you must first extract the ZIP archive downloaded from GitHub. Then select the folder that contains `manifest.json` directly.
 
-### Note about publishing on the Chrome Web Store
-
-If you want to publish Schleim OS in the **Chrome Web Store** or upload a new version, the extension package is uploaded as a ZIP file through the **Chrome Web Store Developer Dashboard**. This is a different process from choosing **Load unpacked** at `chrome://extensions`. The GitHub source-code ZIP is not automatically a ready-to-upload store package; the store ZIP must contain the extension files with `manifest.json` directly at the ZIP's root.
-
 ## Using Schleim OS and its settings
 
 - **Open apps:** Select a tile on the home screen.
