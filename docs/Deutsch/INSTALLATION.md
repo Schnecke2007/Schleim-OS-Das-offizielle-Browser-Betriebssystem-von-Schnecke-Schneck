@@ -29,7 +29,7 @@ Diese Anleitung beschreibt die lokale Installation der Schleim-OS-Browser-Erweit
 
 ## 4. Nach der Installation
 
-Öffne einen neuen Browser-Tab. Wenn Schleim OS nicht erscheint, prüfe die Erweiterungsverwaltung und folge der [Fehlerbehebung](TROUBLESHOOTING.md).
+Öffne einen neuen Browser-Tab. Wenn Schleim OS nicht erscheint, prüfe die Erweiterungsverwaltung und folge der [Fehlerbehebung](FEHLERBEHEBUNG.md).
 
 ---
 
