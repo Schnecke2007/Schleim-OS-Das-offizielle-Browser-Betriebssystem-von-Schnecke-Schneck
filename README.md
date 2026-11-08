@@ -30,23 +30,29 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 1. Öffne dieses GitHub-Repository.
 2. Klicke oben auf die grüne Schaltfläche **Code**.
 3. Wähle im Menü **Download ZIP**.
-4. Speichere die ZIP-Datei und entpacke sie vollständig.
+4. Speichere die ZIP-Datei auf deinem Gerät.
+5. Entpacke die ZIP-Datei vollständig.
+6. Suche in den entpackten Dateien den Erweiterungsordner, in dem die Datei `manifest.json` direkt liegt. Wähle später genau diesen Ordner aus – nicht die ZIP-Datei und nicht einen übergeordneten Ordner.
 
 ### 2. Google Chrome einrichten
 
 1. Öffne `chrome://extensions`.
 2. Aktiviere oben rechts den **Entwicklermodus**.
 3. Klicke auf **Entpackte Erweiterung laden**.
-4. Wähle den entpackten Ordner `schleim-os-browser-extension` aus. Direkt darin muss `manifest.json` liegen.
+4. Wähle den zuvor entpackten Erweiterungsordner aus. Die Datei `manifest.json` muss direkt darin liegen.
 5. Öffne einen neuen Tab. Schleim OS sollte jetzt angezeigt werden. 🎉
 
 ### Microsoft Edge und Brave
 
-- **Edge:** `edge://extensions` öffnen.
-- **Brave:** `brave://extensions` öffnen.
-- Entwicklermodus einschalten, **Entpackt laden** auswählen und denselben entpackten Erweiterungsordner mit `manifest.json` öffnen.
+- **Edge:** Öffne `edge://extensions`.
+- **Brave:** Öffne `brave://extensions`.
+- Aktiviere den Entwicklermodus, wähle **Entpackt laden** und anschließend den entpackten Erweiterungsordner mit der direkt darin liegenden Datei `manifest.json`.
 
-> ⚠️ Wichtig: Die ZIP-Datei kann nicht direkt als Erweiterung geladen werden. Erst **Code → Download ZIP**, dann vollständig entpacken und anschließend den Ordner mit `manifest.json` auswählen.
+> ⚠️ **Wichtig – ZIP oder Ordner?** Die Schaltfläche **„Entpackte Erweiterung laden“** erwartet einen Ordner, keine ZIP-Datei. Für die lokale Installation über den Browser-Entwicklermodus musst du das über GitHub heruntergeladene ZIP-Archiv daher zuerst entpacken. Wähle danach den Ordner aus, in dem `manifest.json` direkt liegt.
+
+### Hinweis zur Veröffentlichung im Chrome Web Store
+
+Wenn du Schleim OS selbst im **Chrome Web Store** veröffentlichen oder dort eine neue Version hochladen möchtest, wird das Erweiterungspaket als ZIP-Datei im **Chrome Web Store Developer Dashboard** hochgeladen. Das ist ein anderer Vorgang als **„Entpackte Erweiterung laden“** unter `chrome://extensions`. Das GitHub-Quellcode-ZIP ist nicht automatisch ein fertiges Store-Paket; für den Store muss das ZIP die Erweiterungsdateien mit `manifest.json` direkt im ZIP-Hauptverzeichnis enthalten.
 
 ## Bedienung und Einstellungen
 
@@ -61,8 +67,10 @@ Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-B
 
 | Problem | Mögliche Lösung |
 |---|---|
-| Schleim OS erscheint nicht in einem neuen Tab | Prüfen, ob die Erweiterung aktiviert ist und der richtige Ordner mit `manifest.json` geladen wurde. |
-| Chrome meldet ein ungültiges Manifest | ZIP erneut vollständig entpacken und den Ordner auswählen, in dem `manifest.json` direkt liegt. |
+| Schleim OS erscheint nicht in einem neuen Tab | Prüfen, ob die Erweiterung aktiviert ist und der entpackte Erweiterungsordner mit `manifest.json` geladen wurde. |
+| Chrome meldet ein ungültiges Manifest | ZIP-Datei vollständig entpacken und den Ordner auswählen, in dem `manifest.json` direkt liegt. |
+| ZIP-Datei wurde im Dialog „Entpackte Erweiterung laden“ ausgewählt | Das ZIP-Archiv zuerst entpacken. Anschließend den darin enthaltenen Erweiterungsordner auswählen. |
+| Falscher Ordner wurde ausgewählt | Nicht den übergeordneten Repository-Ordner, sondern den Ordner auswählen, in dem `manifest.json` direkt liegt. |
 | Eine andere Neuer-Tab-Erweiterung ist aktiv | Die andere Erweiterung vorübergehend deaktivieren. Mehrere Erweiterungen können dieselbe Tab-Seite nicht gleichzeitig ersetzen. |
 | Änderungen werden nicht angezeigt | Unter `chrome://extensions` bei Schleim OS auf **Aktualisieren** klicken und einen neuen Tab öffnen. |
 | Eine externe Website oder Einbettung bleibt leer | Internetverbindung prüfen. Manche Anbieter blockieren das Einbetten in andere Seiten. |
