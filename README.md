@@ -6,6 +6,16 @@
 
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
+## 👋 Über mich
+
+Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
+
+Zu meinen Hobbys gehören **Programmieren, Webdesign sowie das Entwickeln und Gestalten von Websites und Apps**. Außerdem interessiere ich mich für **künstliche Intelligenz (KI), Computer, digitale Systeme und neue Technologien**. Ich probiere gerne Werkzeuge aus, lerne Neues dazu und setze eigene Ideen in kleinen und größeren Projekten um.
+
+Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionierendes zu machen! Ich finde es spannend zu verstehen, wie Technik im Hintergrund arbeitet, Probleme selbst zu lösen und digitale Projekte kreativ zu gestalten. Dabei nutze ich auch KI als Unterstützung zum Lernen, Planen und Entwickeln.
+
+**Schleim OS** ist eines meiner eigenen Projekte. Mit meinen Projekten möchte ich meine Begeisterung für Technik teilen und zeigen, was man mit Neugier, Kreativität und digitalen Werkzeugen erschaffen kann. 🐌💻
+
 ## 🚀 Was ist Schleim OS?
 
 Schleim OS ist eine Browser-Erweiterung, die den normalen neuen Tab durch eine eigene Oberfläche ersetzt. Statt einer leeren oder standardmäßigen Tab-Seite öffnet sich ein persönlicher Startbildschirm mit Apps und Verknüpfungen.
@@ -116,17 +126,6 @@ Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbar
 - [Nederlands – documentatie](README.nl.md)
 - [Installationsanleitung](docs/INSTALLATION.md)
 - [Technische Hinweise](docs/TECHNICAL-NOTES.md)
-
-
-## 👋 Über mich
-
-Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
-
-Zu meinen Hobbys gehören **Programmieren, Webdesign sowie das Entwickeln und Gestalten von Websites und Apps**. Außerdem interessiere ich mich für **künstliche Intelligenz (KI), Computer, digitale Systeme und neue Technologien**. Ich probiere gerne Werkzeuge aus, lerne Neues dazu und setze eigene Ideen in kleinen und größeren Projekten um.
-
-Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionierendes zu machen! Ich finde es spannend zu verstehen, wie Technik im Hintergrund arbeitet, Probleme selbst zu lösen und digitale Projekte kreativ zu gestalten. Dabei nutze ich auch KI als Unterstützung zum Lernen, Planen und Entwickeln.
-
-**Schleim OS** ist eines meiner eigenen Projekte. Mit meinen Projekten möchte ich meine Begeisterung für Technik teilen und zeigen, was man mit Neugier, Kreativität und digitalen Werkzeugen erschaffen kann. 🐌💻
 
 ## 📬 Kontakt und Support
 
