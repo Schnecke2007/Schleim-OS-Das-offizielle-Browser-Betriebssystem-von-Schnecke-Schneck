@@ -36,6 +36,8 @@ Lees de [installatiehandleiding in eenvoudige taal](INSTALLATIE.md).
 
 Lees [Hulp en problemen oplossen](HULP.md).
 
+[Techniek eenvoudig uitgelegd](TECHNIEK.md)
+
 ## Juridische informatie
 
 De korte uitleg vervangt de officiële juridische documenten niet.
