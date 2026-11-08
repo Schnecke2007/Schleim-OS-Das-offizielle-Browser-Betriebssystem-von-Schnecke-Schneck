@@ -127,6 +127,12 @@ The extension interface contains no advertising iframes, no advertising reachabi
 - [Installation guide](docs/INSTALLATION.md)
 - [Technical notes](docs/TECHNICAL-NOTES.md)
 
+## ⚖️ Legal information
+
+- [Terms and conditions & community guidelines](legal/Englisch/TERMS-AND-COMMUNITY-GUIDELINES.md)
+- [Privacy policy](legal/Englisch/PRIVACY-POLICY.md)
+- [Imprint](legal/Englisch/IMPRINT.md)
+
 ## 📬 Contact and support
 
 Do you have questions about Schleim OS, need help with installation, or want to report a problem? You can contact me directly:
