@@ -76,7 +76,7 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 
 ---
 
-[🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+[🇬🇧 English troubleshooting](docs/Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 
 ## 📁 Projektstruktur
 
