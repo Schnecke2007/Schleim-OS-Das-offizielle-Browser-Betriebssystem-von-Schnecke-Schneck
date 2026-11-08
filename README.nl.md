@@ -159,3 +159,10 @@ Wil je meer zien van mijn projecten en updates? Ik vind het leuk als je mij volg
 **Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
+
+## 🤝 Bijdragers & credits
+
+- **Projectontwikkeling en verantwoordelijkheid:** Schnecke Schneck.
+- **AI-ondersteuning:** [ChatGPT van OpenAI](https://chatgpt.com/) – ondersteuning bij het bedenken van ideeën, plannen, programmeren, foutopsporing, documentatie en vertalingen.
+
+*Opmerking: ChatGPT is een AI-assistent en geen menselijke persoon of zelfstandige GitHub-bijdrager. Het projectidee, de beslissingen en de verantwoordelijkheid voor Schleim OS liggen bij Schnecke Schneck.*
