@@ -78,23 +78,6 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 
 [🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md)
 
-## ❓ Veelgestelde vragen (FAQ)
-
-**Kan ik het ZIP-bestand rechtstreeks installeren?**  
-Ja. Download de volledige GitHub-repository via **Code → Download ZIP** en importeer precies dat ZIP-bestand via de ZIP-importfunctie van een ondersteunde Chromium-browser. Pak het bestand niet eerst uit.
-
-**Moet ik alleen de map `extension` downloaden?**  
-Nee. Download de volledige repository als ZIP-bestand. De browserimporteur herkent de extensie in de opgenomen submap `extension`.
-
-**Werkt dit in elke Chromium-browser?**  
-Nee. De browser moet expliciet ZIP-extensies kunnen importeren. De knop kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten. De beschikbaarheid verschilt per browser en platform.
-
-**Werkt dit met Chrome voor Android?**  
-Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt.
-
-**Wat moet ik doen als de ZIP-importknop ontbreekt?**  
-Dan ondersteunt je browser mogelijk de installatiemethode in deze documentatie niet. Gebruik een compatibele Chromium-browser met ZIP-importondersteuning.
-
 ## 📁 Projectstructuur
 
 ```text
