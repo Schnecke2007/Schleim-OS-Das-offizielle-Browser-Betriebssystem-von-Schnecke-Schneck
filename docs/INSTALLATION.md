@@ -30,10 +30,6 @@ Diese Anleitung ist auf Deutsch, Englisch und Niederländisch verfügbar.
 
 > ⚠️ **Wichtig:** Die Funktion **„Entpackte Erweiterung laden“** nimmt einen Ordner entgegen, keine ZIP-Datei. Für die lokale Installation über den Browser-Entwicklermodus muss das GitHub-ZIP daher zuerst entpackt werden. Wähle danach den Ordner aus, in dem `manifest.json` direkt liegt.
 
-### 4. ZIP-Datei für den Chrome Web Store
-
-Wenn du die Erweiterung im Chrome Web Store veröffentlichen möchtest, lädst du ein ZIP-Paket im **Chrome Web Store Developer Dashboard** hoch. Das ist nicht dasselbe wie die lokale Installation über `chrome://extensions`. Das Store-ZIP muss die Erweiterungsdateien mit `manifest.json` direkt im Hauptverzeichnis des ZIP-Archivs enthalten. Das ZIP des gesamten GitHub-Repositories ist dafür nicht automatisch geeignet.
-
 ---
 
 ## 🇬🇧 English
@@ -62,10 +58,6 @@ Wenn du die Erweiterung im Chrome Web Store veröffentlichen möchtest, lädst d
 
 > ⚠️ **Important:** The **Load unpacked** function accepts a folder, not a ZIP file. For local installation through the browser's developer mode, you must first extract the GitHub ZIP archive. Then select the folder that contains `manifest.json` directly.
 
-### 4. ZIP file for the Chrome Web Store
-
-To publish the extension in the Chrome Web Store, upload a ZIP package through the **Chrome Web Store Developer Dashboard**. This is different from installing it locally through `chrome://extensions`. The store ZIP must contain the extension files with `manifest.json` directly at the archive root. The ZIP of the entire GitHub repository is not automatically suitable for this.
-
 ---
 
 ## 🇳🇱 Nederlands
@@ -93,10 +85,6 @@ To publish the extension in the Chrome Web Store, upload a ZIP package through t
 - Schakel de ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer daarna de uitgepakte extensiemap met `manifest.json`.
 
 > ⚠️ **Belangrijk:** De functie **Uitgepakte extensie laden** accepteert een map, geen ZIP-bestand. Voor een lokale installatie via de ontwikkelaarsmodus van de browser moet je het GitHub-ZIP-archief eerst uitpakken. Selecteer daarna de map waarin `manifest.json` rechtstreeks staat.
-
-### 4. ZIP-bestand voor de Chrome Web Store
-
-Om de extensie in de Chrome Web Store te publiceren, upload je een ZIP-pakket via het **Chrome Web Store Developer Dashboard**. Dit is iets anders dan de lokale installatie via `chrome://extensions`. Het Store-ZIP-bestand moet de extensiebestanden bevatten met `manifest.json` rechtstreeks in de hoofdmap van het archief. De ZIP van de volledige GitHub-repository is hiervoor niet automatisch geschikt.
 
 ---
 
