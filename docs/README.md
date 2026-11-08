@@ -5,7 +5,7 @@ Die Dokumentation ist nach Sprache geordnet. Für jede Sprache stehen eine Insta
 ## 🇩🇪 Deutsch
 
 - [Installationsanleitung](Deutsch/INSTALLATION.md)
-- [Fehlerbehebung](Deutsch/TROUBLESHOOTING.md)
+- [Fehlerbehebung](Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](Deutsch/TECHNISCHE-HINWEISE.md)
 
 ## 🇬🇧 English
