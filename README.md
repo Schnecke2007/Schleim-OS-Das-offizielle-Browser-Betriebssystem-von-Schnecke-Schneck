@@ -1,15 +1,32 @@
-# Schnecke-Schneck-OS
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-Ein persönliches Web-/Smartphone-OS-Projekt von Schnecke Schneck.
+**Schleim OS** ist das offizielle Browser-Betriebssystem von Schnecke Schneck. Es bringt eine personalisierbare, responsive Oberfläche im Stil eines modernen Smartphones in den Browser.
 
-## Projekt
+## Aktuelle Version
 
-Schnecke-Schneck-OS stellt eine webbasierte Benutzeroberfläche im Stil eines Samsung-Galaxy-Geräts bereit. Das Projekt ist für die Nutzung im Browser und als responsive Oberfläche auf Smartphone, Tablet und Desktop gedacht.
+**Version 3.4.1** – Umbenennung und Markenaktualisierung der werbefreien Chrome-/Chromium-Erweiterung.
+
+## Funktionen
+
+- Neuer-Tab-Oberfläche für Chromium-Browser
+- Responsive Darstellung für Smartphone, Tablet und Desktop
+- Personalisierbarer Homescreen mit verschiebbaren App-Kacheln
+- App-Editor, Designoptionen und lokales JSON-Backup
+- Deutsch, Englisch und Niederländisch
+- Werbefreie Erweiterungsoberfläche ohne Werbe-IFrames, Werbeaufrufe oder Werbe-Startprüfung
+
+## Projektname
+
+Der Produktname lautet **Schleim OS**. Die offizielle Langbezeichnung ist:
+
+> Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
+
+Der Creator-Name Schnecke Schneck bleibt Teil der Urheberschaft und Projektidentität. Interne Kennungen für vorhandene Einstellungen und JSON-Backups bleiben aus Kompatibilitätsgründen erhalten.
 
 ## Repository
 
-Dieses Repository enthält den Quellcode und die Projektdokumentation.
+Dieses öffentliche Repository gehört zum Projekt **Schleim OS** und enthält die Projektdokumentation. Die vollständigen Extension-Quelldateien und das Installationspaket werden als eigener Projektstand gepflegt.
 
-## Hinweis
+---
 
-Diese README dient als Startdokumentation. Weitere Projektdateien werden ergänzt, sobald der aktuelle Projektstand bereitgestellt und geprüft wurde.
+© 2026 Schnecke Schneck. Alle Rechte vorbehalten.
