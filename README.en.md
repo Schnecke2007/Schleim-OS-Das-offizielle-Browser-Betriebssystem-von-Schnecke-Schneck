@@ -159,3 +159,10 @@ Would you like to see more of my projects and updates? I’d be happy if you fol
 **Schleim OS** is developed and maintained by **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
+
+## 🤝 Contributors & Credits
+
+- **Project development and ownership:** Schnecke Schneck.
+- **AI assistance:** [ChatGPT by OpenAI](https://chatgpt.com/) – assistance with brainstorming, planning, programming, troubleshooting, documentation and translations.
+
+*Note: ChatGPT is an AI assistant, not a human person or an independent GitHub contributor. The project idea, decisions and responsibility for Schleim OS belong to Schnecke Schneck.*
