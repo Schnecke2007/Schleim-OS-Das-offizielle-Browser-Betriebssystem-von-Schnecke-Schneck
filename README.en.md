@@ -6,6 +6,16 @@
 
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
+## 👋 About me
+
+Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.
+
+My hobbies include **programming, web design, and creating websites and apps**. I'm also fascinated by **artificial intelligence (AI), computers, digital systems, and new technologies**. I enjoy trying out new tools, learning new things, and turning my own ideas into projects, both small and large.
+
+What excites me most is turning an idea into something that actually works! I love discovering how technology works behind the scenes, solving problems on my own, and designing digital projects creatively. I also use AI as a tool to help me learn, plan, and develop.
+
+**Schleim OS** is one of my own projects. Through my projects, I want to share my enthusiasm for technology and show what curiosity, creativity, and digital tools can make possible. 🐌💻
+
 ## 🚀 What is Schleim OS?
 
 Schleim OS is a browser extension that replaces the browser's regular new-tab page with its own interface. Instead of an empty or default tab page, a personal home screen with apps and shortcuts opens.
@@ -116,17 +126,6 @@ The extension interface contains no advertising iframes, no advertising reachabi
 - [Nederlands – documentatie](README.nl.md)
 - [Installation guide](docs/INSTALLATION.md)
 - [Technical notes](docs/TECHNICAL-NOTES.md)
-
-
-## 👋 About me
-
-Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.
-
-My hobbies include **programming, web design, and creating websites and apps**. I'm also fascinated by **artificial intelligence (AI), computers, digital systems, and new technologies**. I enjoy trying out new tools, learning new things, and turning my own ideas into projects, both small and large.
-
-What excites me most is turning an idea into something that actually works! I love discovering how technology works behind the scenes, solving problems on my own, and designing digital projects creatively. I also use AI as a tool to help me learn, plan, and develop.
-
-**Schleim OS** is one of my own projects. Through my projects, I want to share my enthusiasm for technology and show what curiosity, creativity, and digital tools can make possible. 🐌💻
 
 ## 📬 Contact and support
 
