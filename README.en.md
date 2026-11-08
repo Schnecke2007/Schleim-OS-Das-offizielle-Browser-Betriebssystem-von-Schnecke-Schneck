@@ -35,30 +35,15 @@ This project is not a standalone operating system that replaces Windows, Android
 
 ## 📥 Download and installation
 
-### 1. Download the project as a ZIP file
+1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
+2. Select **Code → Download ZIP** and download the **complete repository**.
+3. **Do not** extract the ZIP file.
+4. Open the extension manager in a supported Chromium-based browser.
+5. Enable **Developer mode** if required.
+6. Choose the ZIP-file import option, for example **“From .zip/.crx/.user.js”**.
+7. Select the complete repository ZIP and confirm the installation.
 
-1. Open this GitHub repository.
-2. Click the green **Code** button near the top.
-3. Select **Download ZIP** from the menu.
-4. Save the ZIP file to your device.
-5. Extract the ZIP archive completely.
-6. In the extracted files, find the extension folder that contains the `manifest.json` file directly. This is the folder you will select later – not the ZIP file and not a parent folder.
-
-### 2. Set up Google Chrome
-
-1. Open `chrome://extensions`.
-2. Enable **Developer mode** in the top-right corner.
-3. Click **Load unpacked**.
-4. Select the extracted extension folder. The `manifest.json` file must be directly inside it.
-5. Open a new tab. Schleim OS should now appear. 🎉
-
-### Microsoft Edge and Brave
-
-- **Edge:** Open `edge://extensions`.
-- **Brave:** Open `brave://extensions`.
-- Enable Developer mode, select **Load unpacked**, and then choose the extracted extension folder containing `manifest.json` directly.
-
-> ⚠️ **Important – ZIP or folder?** The **Load unpacked** button expects a folder, not a ZIP file. For local installation through the browser's developer mode, you must first extract the ZIP archive downloaded from GitHub. Then select the folder that contains `manifest.json` directly.
+The browser importer detects Schleim OS in the `extension` subfolder. The button label and location may vary by browser and device. The browser must support direct ZIP import.
 
 ## Using Schleim OS and its settings
 
@@ -69,19 +54,46 @@ This project is not a standalone operating system that replaces Windows, Android
 
 Personal settings are stored locally in the browser profile. Keep your JSON backup in a safe place.
 
-## 🛠️ Troubleshooting
+# 🛠️ Schleim OS – Troubleshooting
 
-| Issue | Possible solution |
+This guide helps solve common problems with direct ZIP import and using Schleim OS.
+
+| Problem | Possible solution |
 |---|---|
-| Schleim OS does not appear in a new tab | Check whether the extension is enabled and whether the extracted extension folder containing `manifest.json` was loaded. |
-| Chrome reports an invalid manifest | Extract the ZIP file completely and select the folder where `manifest.json` is located directly. |
-| A ZIP file was selected in the Load unpacked dialog | Extract the ZIP archive first. Then select the extension folder inside it. |
-| The wrong folder was selected | Select the folder containing `manifest.json` directly, not the parent repository folder. |
-| Another new-tab extension is active | Temporarily disable the other extension. Multiple extensions cannot replace the same new-tab page at the same time. |
-| Changes are not displayed | Open `chrome://extensions`, click **Reload** for Schleim OS, and open a new tab. |
-| An external website or embed remains blank | Check your internet connection. Some providers block embedding on other websites. |
-| Settings are missing after switching browsers | The browser profile is stored locally. Export the JSON backup in the old browser and import it in the new one. |
-| Installation does not work on Android | Chrome for Android does not support regular desktop Chrome extensions. A separate PWA or a browser with extension support is required. |
+| **The ZIP-import button is missing.** | Check whether your browser supports importing ZIP extensions. The button may be labelled **“From .zip/.crx/.user.js”**. |
+| **The ZIP file does not appear.** | First download the complete repository from GitHub using **Code → Download ZIP**. Then check whether your browser's file picker can access your Downloads folder. |
+| **Installation reports an error.** | Make sure you selected the complete repository ZIP and that it has not been modified. Do not select individual files or a different archive. |
+| **Schleim OS does not appear in a new tab.** | Check the extension manager to make sure Schleim OS is installed and enabled. Then open a new tab. |
+| **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
+| **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
+| **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
+| **Settings are missing after switching browsers.** | Personalization settings are stored in the relevant browser profile. Use the JSON backup feature, if available. |
+| **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
+
+## Need more help?
+
+If the problem continues, report it through [GitHub Issues](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues). Please describe which browser and version you are using and the steps that lead to the problem. Do not share passwords or confidential login details.
+
+---
+
+[🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+
+## ❓ Frequently Asked Questions (FAQ)
+
+**Can I install the ZIP file directly?**  
+Yes. Download the complete GitHub repository using **Code → Download ZIP**, then import that exact ZIP file through the ZIP-import option in a supported Chromium-based browser. Do not extract it first.
+
+**Should I download only the `extension` folder?**  
+No. Download the complete repository as a ZIP file. The browser importer detects the extension in the included `extension` subfolder.
+
+**Does this work in every Chromium-based browser?**  
+No. The browser must explicitly support importing ZIP extensions. The button may be labelled **“From .zip/.crx/.user.js”**. Availability varies by browser and platform.
+
+**Does it work in Chrome for Android?**  
+Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import.
+
+**What if the ZIP-import button is missing?**  
+Your browser may not support the installation method documented here. Use a compatible Chromium-based browser with ZIP-import support.
 
 ## 📁 Project structure
 
