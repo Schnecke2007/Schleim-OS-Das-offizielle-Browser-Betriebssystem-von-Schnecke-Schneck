@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <!-- Progressive web app shell. Styles, scripts and assets are organized in dedicated folders. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#251205">
+  <meta name="description" content="Schleim OS – das offizielle Browser-Betriebssystem von Schnecke Schneck. Eine responsive Oberfläche für Smartphone, Tablet und Desktop.">
+  <meta name="color-scheme" content="dark light">
+  <title>Schleim OS · Offizielles Browser-Betriebssystem</title>
+  <link rel="icon" href="../assets/icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
+  
+  
+  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/personalization.css">
+<meta name="application-name" content="Schleim OS"><meta name="referrer" content="strict-origin-when-cross-origin"></head>
+<body data-theme="dark" data-wallpaper="midnight">
+  <main class="stage" aria-label="Schleim OS">
+    <div class="device" id="device">
+      <div class="side-button side-button-right"></div>
+      <div class="side-button side-button-left"></div>
+      <div class="screen" id="screen">
+        <div class="wallpaper-glow glow-one"></div>
+        <div class="wallpaper-glow glow-two"></div>
+        <div class="grain"></div>
+
+        <header class="statusbar" id="statusbar">
+          <button class="status-time" id="statusTime" type="button" aria-label="Kontrollzentrum öffnen">16:03</button>
+          <div class="status-icons" aria-hidden="true"><span>◈</span><span>⌁</span><span class="battery"><i></i></span></div>
+        </header>
+
+        <section class="language-screen" id="languageScreen" aria-label="Sprachauswahl">
+          <div class="language-orbit"></div>
+          <div class="brand-mark language-mark"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q4YjI3YiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzgwNWIzZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaGVsbCIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZjVkZmIzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWQ2ODQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMjAiIGZpbGw9IiMyMTE4MTMiLz4KICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNTEiIHI9IjE3NiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9Ii4xOCIvPgogIDxwYXRoIGQ9Ik0xMDAgMzM3YzI4LTY1IDgxLTk1IDE1MS05NSA0MiAwIDczIDE3IDkxIDQ5IDEwIDE4IDE0IDM3IDE0IDU4SDEyNWMtMTUgMC0yNS00LTI1LTEyWiIgZmlsbD0iI2U4YzU4ZiIvPgogIDxwYXRoIGQ9Ik0xMTAgMzQzYzMyLTIyIDc5LTM0IDEzNy0zNCA1OCAwIDEwMyAxMiAxMjggMzQgMTMgMTIgMTcgMjkgMTAgNDMtNyAxNS0yNCAyMi00OCAyMkgxNTFjLTM0IDAtNTUtOC02Mi0yNC01LTE0IDMtMjkgMjEtNDFaIiBmaWxsPSJ1cmwoI3NoZWxsKSIvPgogIDxjaXJjbGUgY3g9IjI2NSIgY3k9IjIyNiIgcj0iMTA0IiBmaWxsPSJ1cmwoI3NoZWxsKSIgc3Ryb2tlPSIjNWMzZDJjIiBzdHJva2Utd2lkdGg9IjEzIi8+CiAgPHBhdGggZD0iTTI2NyAxNjBjLTQ0LTE0LTc4IDE5LTcyIDU3IDUgMzEgMzYgNDcgNjEgMjkgMTgtMTMgMTEtNDAtOC00Mi0xNC0xLTIxIDEwLTE3IDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3YzUwMzQiIHN0cm9rZS13aWR0aD0iMTciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNjUgMzQzYzEwLTMwIDgtNjItNy04NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjNThmIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSIzNTQiIGN5PSIyNDgiIHI9IjEwIiBmaWxsPSIjZjhlOGM5Ii8+PGNpcmNsZSBjeD0iMzkxIiBjeT0iMjUwIiByPSIxMCIgZmlsbD0iI2Y4ZThjOSIvPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjI1MCIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPjxjaXJjbGUgY3g9IjM5MyIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPgogIDxwYXRoIGQ9Ik0zNDQgMjczYzE4IDEyIDM0IDEyIDQ5LTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc1NGEzMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt=""></div>
+          <p class="eyebrow" id="languageEyebrow">WILLKOMMEN IN DER DIGITALEN WELT</p>
+          <h1 id="languageTitle">Welche Sprache sprichst du?</h1>
+          <p class="language-copy" id="languageCopy">Wähle eine Sprache für dein Besuchererlebnis.</p>
+          <div class="language-options" role="group" aria-label="Choose language">
+            <button class="language-option selected" type="button" data-language-choice="de"><span>🇩🇪</span><b>Deutsch</b><small>German</small></button>
+            <button class="language-option" type="button" data-language-choice="en"><span>🇬🇧</span><b>English</b><small>English</small></button>
+            <button class="language-option" type="button" data-language-choice="nl"><span>🇳🇱</span><b>Nederlands</b><small>Niederländisch</small></button>
+          </div>
+          <button class="primary-button" id="confirmLanguage" type="button">Weiter <span>↗</span></button>
+          <p class="language-footnote" id="languageFootnote">Du kannst die Sprache später in den Einstellungen ändern.</p>
+        </section>
+
+        <section class="intro-screen hidden" id="introScreen">
+          <div class="intro-orbit orbit-a"></div><div class="intro-orbit orbit-b"></div>
+          <div class="brand-mark intro-mark"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q4YjI3YiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzgwNWIzZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaGVsbCIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZjVkZmIzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWQ2ODQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMjAiIGZpbGw9IiMyMTE4MTMiLz4KICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNTEiIHI9IjE3NiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9Ii4xOCIvPgogIDxwYXRoIGQ9Ik0xMDAgMzM3YzI4LTY1IDgxLTk1IDE1MS05NSA0MiAwIDczIDE3IDkxIDQ5IDEwIDE4IDE0IDM3IDE0IDU4SDEyNWMtMTUgMC0yNS00LTI1LTEyWiIgZmlsbD0iI2U4YzU4ZiIvPgogIDxwYXRoIGQ9Ik0xMTAgMzQzYzMyLTIyIDc5LTM0IDEzNy0zNCA1OCAwIDEwMyAxMiAxMjggMzQgMTMgMTIgMTcgMjkgMTAgNDMtNyAxNS0yNCAyMi00OCAyMkgxNTFjLTM0IDAtNTUtOC02Mi0yNC01LTE0IDMtMjkgMjEtNDFaIiBmaWxsPSJ1cmwoI3NoZWxsKSIvPgogIDxjaXJjbGUgY3g9IjI2NSIgY3k9IjIyNiIgcj0iMTA0IiBmaWxsPSJ1cmwoI3NoZWxsKSIgc3Ryb2tlPSIjNWMzZDJjIiBzdHJva2Utd2lkdGg9IjEzIi8+CiAgPHBhdGggZD0iTTI2NyAxNjBjLTQ0LTE0LTc4IDE5LTcyIDU3IDUgMzEgMzYgNDcgNjEgMjkgMTgtMTMgMTEtNDAtOC00Mi0xNC0xLTIxIDEwLTE3IDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3YzUwMzQiIHN0cm9rZS13aWR0aD0iMTciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNjUgMzQzYzEwLTMwIDgtNjItNy04NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjNThmIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSIzNTQiIGN5PSIyNDgiIHI9IjEwIiBmaWxsPSIjZjhlOGM5Ii8+PGNpcmNsZSBjeD0iMzkxIiBjeT0iMjUwIiByPSIxMCIgZmlsbD0iI2Y4ZThjOSIvPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjI1MCIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPjxjaXJjbGUgY3g9IjM5MyIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPgogIDxwYXRoIGQ9Ik0zNDQgMjczYzE4IDEyIDM0IDEyIDQ5LTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc1NGEzMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt=""></div>
+          <p class="eyebrow">DAS OFFIZIELLE BROWSER-BETRIEBSSYSTEM VON SCHNECKE SCHNECK</p>
+          <h1>Schleim<br><span>OS</span></h1>
+          <p class="intro-copy">Projekte, Technik, Social Media und Schneckenwelt – alles an einem Ort.</p>
+          <button class="primary-button" id="enterOS" type="button">System starten <span>↗</span></button>
+          <button class="text-button" id="skipIntro" type="button">Intro überspringen</button>
+          <div class="intro-footer"><span>GALAXY S24 EDITION</span><span>BUILT WITH 🐌</span></div>
+        </section>
+
+        <section class="home-screen hidden" id="homeScreen" aria-label="Startbildschirm">
+          <aside class="desktop-sidebar" aria-label="Desktop navigation">
+            <div class="desktop-brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q4YjI3YiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzgwNWIzZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaGVsbCIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZjVkZmIzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWQ2ODQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMjAiIGZpbGw9IiMyMTE4MTMiLz4KICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNTEiIHI9IjE3NiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9Ii4xOCIvPgogIDxwYXRoIGQ9Ik0xMDAgMzM3YzI4LTY1IDgxLTk1IDE1MS05NSA0MiAwIDczIDE3IDkxIDQ5IDEwIDE4IDE0IDM3IDE0IDU4SDEyNWMtMTUgMC0yNS00LTI1LTEyWiIgZmlsbD0iI2U4YzU4ZiIvPgogIDxwYXRoIGQ9Ik0xMTAgMzQzYzMyLTIyIDc5LTM0IDEzNy0zNCA1OCAwIDEwMyAxMiAxMjggMzQgMTMgMTIgMTcgMjkgMTAgNDMtNyAxNS0yNCAyMi00OCAyMkgxNTFjLTM0IDAtNTUtOC02Mi0yNC01LTE0IDMtMjkgMjEtNDFaIiBmaWxsPSJ1cmwoI3NoZWxsKSIvPgogIDxjaXJjbGUgY3g9IjI2NSIgY3k9IjIyNiIgcj0iMTA0IiBmaWxsPSJ1cmwoI3NoZWxsKSIgc3Ryb2tlPSIjNWMzZDJjIiBzdHJva2Utd2lkdGg9IjEzIi8+CiAgPHBhdGggZD0iTTI2NyAxNjBjLTQ0LTE0LTc4IDE5LTcyIDU3IDUgMzEgMzYgNDcgNjEgMjkgMTgtMTMgMTEtNDAtOC00Mi0xNC0xLTIxIDEwLTE3IDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3YzUwMzQiIHN0cm9rZS13aWR0aD0iMTciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNjUgMzQzYzEwLTMwIDgtNjItNy04NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjNThmIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSIzNTQiIGN5PSIyNDgiIHI9IjEwIiBmaWxsPSIjZjhlOGM5Ii8+PGNpcmNsZSBjeD0iMzkxIiBjeT0iMjUwIiByPSIxMCIgZmlsbD0iI2Y4ZThjOSIvPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjI1MCIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPjxjaXJjbGUgY3g9IjM5MyIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPgogIDxwYXRoIGQ9Ik0zNDQgMjczYzE4IDEyIDM0IDEyIDQ5LTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc1NGEzMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt=""><span><b>Schnecke Schneck</b><small>Digital world</small></span></div>
+            <p class="desktop-sidebar-label">EXPLORE</p>
+            <button type="button" data-app="websitehome">🏠 <span>Home</span></button>
+            <button type="button" data-app="about">🐌 <span>About</span></button>
+            <button type="button" data-app="projects">🧩 <span>Projects</span></button>
+            <button type="button" data-app="social">📸 <span>Social media</span></button>
+            <button type="button" data-app="shop">🛍️ <span>Snail shop</span></button>
+            <button type="button" data-app="studio">🚀 <span>Creator Studio</span></button>
+            <button type="button" data-app="website">🌐 <span>Fan website</span></button>
+            <button type="button" data-app="images">🖼️ <span>Images</span></button>
+            <button type="button" data-app="legal">⚖️ <span>Legal</span></button>
+            <p class="desktop-sidebar-label">QUICK ACCESS</p>
+            <button type="button" data-app="contact">✉️ <span>Contact</span></button>
+            <button type="button" data-app="settings">⚙️ <span>Settings</span></button>
+          </aside>
+          <div class="desktop-main">
+          <div class="home-topline">
+            <div><p class="eyebrow" id="longDate">FREITAG · 6. NOVEMBER</p><h2>Hallo! <span>Schön, dass du da bist.</span></h2></div>
+            <button class="avatar-button" id="openProfile" type="button" aria-label="Über Schnecke Schneck"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q4YjI3YiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzgwNWIzZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaGVsbCIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZjVkZmIzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWQ2ODQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMjAiIGZpbGw9IiMyMTE4MTMiLz4KICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNTEiIHI9IjE3NiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9Ii4xOCIvPgogIDxwYXRoIGQ9Ik0xMDAgMzM3YzI4LTY1IDgxLTk1IDE1MS05NSA0MiAwIDczIDE3IDkxIDQ5IDEwIDE4IDE0IDM3IDE0IDU4SDEyNWMtMTUgMC0yNS00LTI1LTEyWiIgZmlsbD0iI2U4YzU4ZiIvPgogIDxwYXRoIGQ9Ik0xMTAgMzQzYzMyLTIyIDc5LTM0IDEzNy0zNCA1OCAwIDEwMyAxMiAxMjggMzQgMTMgMTIgMTcgMjkgMTAgNDMtNyAxNS0yNCAyMi00OCAyMkgxNTFjLTM0IDAtNTUtOC02Mi0yNC01LTE0IDMtMjkgMjEtNDFaIiBmaWxsPSJ1cmwoI3NoZWxsKSIvPgogIDxjaXJjbGUgY3g9IjI2NSIgY3k9IjIyNiIgcj0iMTA0IiBmaWxsPSJ1cmwoI3NoZWxsKSIgc3Ryb2tlPSIjNWMzZDJjIiBzdHJva2Utd2lkdGg9IjEzIi8+CiAgPHBhdGggZD0iTTI2NyAxNjBjLTQ0LTE0LTc4IDE5LTcyIDU3IDUgMzEgMzYgNDcgNjEgMjkgMTgtMTMgMTEtNDAtOC00Mi0xNC0xLTIxIDEwLTE3IDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3YzUwMzQiIHN0cm9rZS13aWR0aD0iMTciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNjUgMzQzYzEwLTMwIDgtNjItNy04NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjNThmIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSIzNTQiIGN5PSIyNDgiIHI9IjEwIiBmaWxsPSIjZjhlOGM5Ii8+PGNpcmNsZSBjeD0iMzkxIiBjeT0iMjUwIiByPSIxMCIgZmlsbD0iI2Y4ZThjOSIvPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjI1MCIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPjxjaXJjbGUgY3g9IjM5MyIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPgogIDxwYXRoIGQ9Ik0zNDQgMjczYzE4IDEyIDM0IDEyIDQ5LTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc1NGEzMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt=""></button>
+          </div>
+          <button class="search-pill" id="openSearch" type="button"><span class="search-symbol">⌕</span><span>Apps und Inhalte suchen</span><kbd>⌕</kbd></button>
+          <p class="gesture-hint">↓ Vom oberen Rand nach unten wischen – Kontrollzentrum öffnen</p>
+
+          <button class="hero-card" id="heroStudio" type="button">
+            <span class="hero-orbit"></span>
+            <span class="hero-tag">ENTDECKE DIE DIGITALE WELT</span>
+            <span class="hero-title">Schnecke Schneck<br><b>Projekte & Creator-Welt</b></span>
+            <span class="hero-bottom"><span>Schön, dass du hier bist.</span><span class="hero-arrow">↗</span></span>
+            <span class="hero-snail">🐌</span>
+          </button>
+          <div class="section-heading"><span>Entdecke die Apps</span><button id="showAllApps" type="button">Alle anzeigen <span>→</span></button></div>
+          <div class="app-grid" id="homeAppGrid"></div>
+          <p class="ssos-arrange-hint">Kachel länger gedrückt halten und an die gewünschte Position ziehen. Die Reihenfolge wird automatisch gespeichert und im JSON-Backup mitgesichert.</p>
+
+          <div class="section-heading project-heading"><span>Im Spotlight</span><span class="tiny-label">ENTDECKEN</span></div>
+          <button class="mini-project" id="openCloud" type="button">
+            <span class="mini-project-icon">🧩</span><span class="mini-project-copy"><b>Projektwelt</b><small>Alle digitalen Projekte gesammelt</small></span><span class="mini-arrow">↗</span>
+          </button>
+
+          <nav class="dock" aria-label="Favoriten">
+            <button data-app="website" type="button" aria-label="Website"><span>🌐</span></button>
+            <button data-app="social" type="button" aria-label="Social Media"><span>📸</span></button>
+            <button data-app="studio" type="button" aria-label="Creator Studio"><span>🚀</span></button>
+            <button data-app="settings" type="button" aria-label="Einstellungen"><span>⚙️</span></button>
+          </nav>
+          </div>
+          <aside class="desktop-info-panel">
+            <div class="desktop-info-card"><span class="desktop-info-icon">🐌</span><p class="eyebrow">CREATOR PROFILE</p><h3>Schnecke Schneck</h3><p>Technology, web projects, AI and a little snail spirit.</p><button type="button" data-app="about">View profile ↗</button></div>
+            <div class="desktop-info-card"><p class="eyebrow">PROJECT COLLECTION</p><h3>Projektwelt</h3><p>All digital projects in one place.</p><button type="button" data-app="projects">Explore ↗</button></div>
+            <div class="desktop-info-card"><p class="eyebrow">CONNECT</p><button type="button" data-app="contact">✉️ Contact the Creator Studio ↗</button></div>
+          </aside>
+        </section>
+
+        <section class="app-screen hidden" id="appScreen" aria-label="App-Fenster">
+          <header class="app-window-bar">
+            <button class="round-icon-button" id="backHome" type="button" aria-label="Zurück zum Startbildschirm">‹</button>
+            <div class="app-window-title"><span id="appWindowEmoji">🐌</span><b id="appWindowTitle">App</b></div>
+            <button class="round-icon-button" id="closeApp" type="button" aria-label="App schließen">×</button>
+          </header>
+          <div class="app-scroll" id="appContent"></div>
+        </section>
+
+        <section class="control-panel hidden" id="controlPanel" aria-label="Kontrollzentrum">
+          <div class="panel-handle"></div>
+          <div class="panel-heading"><div><p class="eyebrow">SCHNECKE SCHNECK OS</p><h2>Kontrollzentrum</h2></div><button class="round-icon-button" id="closeControl" type="button" aria-label="Schließen">×</button></div>
+          <div class="quick-grid">
+            <button class="quick-tile active" data-toggle="wifi" type="button"><span>⌁</span><b>WLAN</b><small>Verbunden</small></button>
+            <button class="quick-tile active" data-toggle="bluetooth" type="button"><span>ᛒ</span><b>Bluetooth</b><small>Bereit</small></button>
+            <button class="quick-tile" data-toggle="quiet" type="button"><span>◐</span><b>Ruhemodus</b><small>Aus</small></button>
+            <button class="quick-tile active" data-toggle="sounds" type="button"><span>♫</span><b>Töne</b><small>Ein</small></button>
+            <button class="quick-tile active" data-toggle="mobile" type="button"><span>▥</span><b>Mobile Daten</b><small>Ein</small></button>
+            <button class="quick-tile active" data-toggle="rotation" type="button"><span>⟳</span><b>Autom. Drehen</b><small>Ein</small></button>
+            <button class="quick-tile" data-toggle="flashlight" type="button"><span>⌁</span><b>Taschenlampe</b><small>Aus</small></button>
+          </div>
+          <div class="slider-card"><div><span>☼</span><b>Displayhelligkeit</b><output id="brightnessOutput">90%</output></div><input id="brightnessSlider" type="range" min="35" max="100" value="90" aria-label="Displayhelligkeit"></div>
+          <div class="slider-card"><div><span>◌</span><b>Glas-Effekt</b><output id="glassOutput">78%</output></div><input id="glassSlider" type="range" min="0" max="100" value="78" aria-label="Glas-Effekt"></div>
+          <div class="slider-card"><div><span>♫</span><b>Medienlautstärke</b><output id="volumeOutput">35%</output></div><input id="volumeSlider" type="range" min="0" max="100" value="35" aria-label="Medienlautstärke"></div>
+          <div class="wallpaper-card"><div class="wallpaper-title"><b>Hintergrund</b><small>Wähle deinen Look</small></div><div class="wallpaper-options"><button class="wall-choice selected" data-wall="midnight" type="button"><i></i><span>Midnight</span></button><button class="wall-choice" data-wall="blue" type="button"><i></i><span>Blue dusk</span></button><button class="wall-choice" data-wall="forest" type="button"><i></i><span>Forest</span></button><button class="wall-choice" data-wall="amber" type="button"><i></i><span>Amber</span></button></div></div>
+          <p class="control-footnote">Die Schnellschalter und Regler bilden die One-UI-Optik nach. Eine Browser-Webapp kann die echten Funk-, Taschenlampen- oder Medienlautstärke-Funktionen des Galaxy S24 nicht systemweit steuern.</p>
+          <div class="panel-actions"><button id="themeToggle" type="button">☾ <span>Darstellung wechseln</span></button><button id="motionToggle" type="button">◌ <span>Bewegung reduzieren</span></button><button id="lockButton" type="button">⌑ <span>Bildschirm sperren</span></button></div>
+        </section>
+
+        <section class="search-screen hidden" id="searchScreen" aria-label="Suche">
+          <div class="search-header"><button class="round-icon-button" id="closeSearch" type="button" aria-label="Suche schließen">‹</button><input id="searchInput" type="search" placeholder="Apps suchen oder Google fragen …" autocomplete="off"><button class="round-icon-button" id="clearSearch" type="button" aria-label="Suche löschen">×</button><button class="google-search-button" id="googleSearchButton" type="button" aria-label="Bei Google suchen" title="Bei Google suchen">G</button></div>
+          <p class="eyebrow search-caption">SPOTLIGHT · SCHNECKE SCHNECK OS</p>
+          <div id="searchResults" class="search-results"></div>
+        </section>
+
+        <section class="lock-screen hidden" id="lockScreen" aria-label="Sperrbildschirm">
+          <div class="lock-top"><span>🐌 SCHLEIM OS</span><span>● ● ●</span></div>
+          <div class="lock-clock"><div id="lockTime">16:03</div><p id="lockDate">Freitag, 6. November</p></div>
+          <div class="lock-bottom"><p>Zum Entsperren antippen</p><button class="unlock-button" id="unlockButton" type="button">↑</button></div>
+        </section>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div class="gesture-area"><button class="gesture-bar" id="gestureBar" type="button" aria-label="Zum Startbildschirm"></button></div>
+      </div>
+    </div>
+    <aside class="outside-caption"><div class="caption-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KICA8ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Q4YjI3YiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzgwNWIzZCIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaGVsbCIgeDE9IjAiIHkxPSIwIiB4Mj0iLjgiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjZjVkZmIzIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOWQ2ODQzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMjAiIGZpbGw9IiMyMTE4MTMiLz4KICA8Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNTEiIHI9IjE3NiIgZmlsbD0idXJsKCNiZykiIG9wYWNpdHk9Ii4xOCIvPgogIDxwYXRoIGQ9Ik0xMDAgMzM3YzI4LTY1IDgxLTk1IDE1MS05NSA0MiAwIDczIDE3IDkxIDQ5IDEwIDE4IDE0IDM3IDE0IDU4SDEyNWMtMTUgMC0yNS00LTI1LTEyWiIgZmlsbD0iI2U4YzU4ZiIvPgogIDxwYXRoIGQ9Ik0xMTAgMzQzYzMyLTIyIDc5LTM0IDEzNy0zNCA1OCAwIDEwMyAxMiAxMjggMzQgMTMgMTIgMTcgMjkgMTAgNDMtNyAxNS0yNCAyMi00OCAyMkgxNTFjLTM0IDAtNTUtOC02Mi0yNC01LTE0IDMtMjkgMjEtNDFaIiBmaWxsPSJ1cmwoI3NoZWxsKSIvPgogIDxjaXJjbGUgY3g9IjI2NSIgY3k9IjIyNiIgcj0iMTA0IiBmaWxsPSJ1cmwoI3NoZWxsKSIgc3Ryb2tlPSIjNWMzZDJjIiBzdHJva2Utd2lkdGg9IjEzIi8+CiAgPHBhdGggZD0iTTI2NyAxNjBjLTQ0LTE0LTc4IDE5LTcyIDU3IDUgMzEgMzYgNDcgNjEgMjkgMTgtMTMgMTEtNDAtOC00Mi0xNC0xLTIxIDEwLTE3IDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3YzUwMzQiIHN0cm9rZS13aWR0aD0iMTciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zNjUgMzQzYzEwLTMwIDgtNjItNy04NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZThjNThmIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8Y2lyY2xlIGN4PSIzNTQiIGN5PSIyNDgiIHI9IjEwIiBmaWxsPSIjZjhlOGM5Ii8+PGNpcmNsZSBjeD0iMzkxIiBjeT0iMjUwIiByPSIxMCIgZmlsbD0iI2Y4ZThjOSIvPgogIDxjaXJjbGUgY3g9IjM1NiIgY3k9IjI1MCIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPjxjaXJjbGUgY3g9IjM5MyIgY3k9IjI1MiIgcj0iNCIgZmlsbD0iIzJiMWExMiIvPgogIDxwYXRoIGQ9Ik0zNDQgMjczYzE4IDEyIDM0IDEyIDQ5LTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzc1NGEzMiIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==" alt=""></div><p class="eyebrow">A DIGITAL FAN EXPERIENCE</p><h2>Entdecke die Welt.<br><span>Von Schnecke Schneck.</span></h2><p>Eine interaktive Smartphone-Erfahrung mit Projekten, Social Media und Fan-Inhalten.</p><div class="caption-meta"><span id="deviceModelLabel">GALAXY S24</span><span>VISITOR OS · 2026</span></div><div class="device-detection-card"><span class="eyebrow">DEVICE DETECTED</span><b id="deviceDetectedLabel">Samsung Galaxy S24</b><small id="deviceDetectedHint">Smartphone interface</small><div class="device-preview-buttons"><button type="button" data-preview-device="phone">Phone</button><button type="button" data-preview-device="tablet">Tablet</button><button type="button" data-preview-device="desktop">Desktop</button><button type="button" data-preview-device="auto">Auto</button></div></div></aside>
+  </main>
+<script src="../locales/legal-translations.js" defer></script>
+  <script src="../scripts/app.js" defer></script>
+  <script src="../scripts/personalization.js" defer></script>
+</body>
+</html>
