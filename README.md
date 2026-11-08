@@ -101,6 +101,10 @@ schleim-os-browser-extension/
 ├── assets/
 │   └── icons/
 ├── docs/
+│   ├── Deutsch/
+│   ├── Englisch/
+│   ├── Niederländisch/
+│   └── README.md
 ├── standalone/
 │   └── schleim-os-standalone.html
 └── README.md
