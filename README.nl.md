@@ -124,8 +124,10 @@ De extensie-interface bevat geen advertentie-iframes, geen controles of adverten
 - [Deutsch – hoofddocumentatie](README.md)
 - [English – documentation](README.en.md)
 - [Nederlands – hoofddocumentatie](README.nl.md)
-- [Installatiehandleiding](docs/INSTALLATION.md)
-- [Technische opmerkingen](docs/TECHNICAL-NOTES.md)
+- [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
+- [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
+- [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
+- [Documentatieoverzicht – alle talen](docs/README.md)
 
 ## ⚖️ Juridische informatie
 
