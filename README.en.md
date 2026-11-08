@@ -76,7 +76,7 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 
 ---
 
-[🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+[🇩🇪 Deutsche Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 
 ## 📁 Project structure
 
