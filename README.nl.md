@@ -50,10 +50,6 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 > ⚠️ **Belangrijk – ZIP of map?** De knop **Uitgepakte extensie laden** verwacht een map, geen ZIP-bestand. Voor een lokale installatie via de ontwikkelaarsmodus van de browser moet je het ZIP-archief dat je via GitHub hebt gedownload eerst uitpakken. Selecteer daarna de map waarin `manifest.json` rechtstreeks staat.
 
-### Opmerking over publiceren in de Chrome Web Store
-
-Als je Schleim OS in de **Chrome Web Store** wilt publiceren of een nieuwe versie wilt uploaden, upload je het extensiepakket als ZIP-bestand via het **Chrome Web Store Developer Dashboard**. Dit is een ander proces dan **Uitgepakte extensie laden** op `chrome://extensions`. De ZIP met de GitHub-broncode is niet automatisch een kant-en-klaar Store-pakket; het Store-ZIP-bestand moet de extensiebestanden bevatten met `manifest.json` direct in de hoofdmap van het ZIP-bestand.
-
 ## Schleim OS gebruiken en instellingen beheren
 
 - **Apps openen:** Selecteer een tegel op het startscherm.
