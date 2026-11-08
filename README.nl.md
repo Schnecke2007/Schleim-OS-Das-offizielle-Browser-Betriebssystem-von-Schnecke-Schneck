@@ -127,6 +127,12 @@ De extensie-interface bevat geen advertentie-iframes, geen controles of adverten
 - [Installatiehandleiding](docs/INSTALLATION.md)
 - [Technische opmerkingen](docs/TECHNICAL-NOTES.md)
 
+## ⚖️ Juridische informatie
+
+- [Algemene voorwaarden & communityrichtlijnen](legal/Niederländisch/ALGEMENE-VOORWAARDEN-EN-COMMUNITYRICHTLIJNEN.md)
+- [Privacyverklaring](legal/Niederländisch/PRIVACYBELEID.md)
+- [Colofon](legal/Niederländisch/COLOFON.md)
+
 ## 📬 Contact en ondersteuning
 
 Heb je vragen over Schleim OS, hulp nodig bij de installatie of wil je een probleem melden? Je kunt rechtstreeks contact met mij opnemen:
