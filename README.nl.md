@@ -35,30 +35,15 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 ## 📥 Downloaden en installeren
 
-### 1. Download het project als ZIP-bestand
+1. Open de [Schleim OS GitHub-repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
+2. Kies **Code → Download ZIP** en download de **volledige repository**.
+3. Pak het ZIP-bestand **niet** uit.
+4. Open het extensiebeheer in een ondersteunde Chromium-browser.
+5. Schakel indien nodig de **ontwikkelaarsmodus** in.
+6. Kies de importoptie voor ZIP-bestanden, bijvoorbeeld **“From .zip/.crx/.user.js”**.
+7. Selecteer de volledige repository-ZIP en bevestig de installatie.
 
-1. Open deze GitHub-repository.
-2. Klik bovenaan op de groene knop **Code**.
-3. Kies **Download ZIP** in het menu.
-4. Sla het ZIP-bestand op je apparaat op.
-5. Pak het ZIP-archief volledig uit.
-6. Zoek in de uitgepakte bestanden de extensiemap waarin het bestand `manifest.json` rechtstreeks staat. Dit is de map die je straks selecteert – niet het ZIP-bestand en ook niet een bovenliggende map.
-
-### 2. Google Chrome instellen
-
-1. Open `chrome://extensions`.
-2. Schakel rechtsboven **Ontwikkelaarsmodus** in.
-3. Klik op **Uitgepakte extensie laden**.
-4. Selecteer de uitgepakte extensiemap. Het bestand `manifest.json` moet rechtstreeks in deze map staan.
-5. Open een nieuw tabblad. Schleim OS zou nu moeten verschijnen. 🎉
-
-### Microsoft Edge en Brave
-
-- **Edge:** Open `edge://extensions`.
-- **Brave:** Open `brave://extensions`.
-- Schakel de ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer vervolgens de uitgepakte extensiemap met `manifest.json` rechtstreeks erin.
-
-> ⚠️ **Belangrijk – ZIP of map?** De knop **Uitgepakte extensie laden** verwacht een map, geen ZIP-bestand. Voor een lokale installatie via de ontwikkelaarsmodus van de browser moet je het ZIP-archief dat je via GitHub hebt gedownload eerst uitpakken. Selecteer daarna de map waarin `manifest.json` rechtstreeks staat.
+De browserimporteur herkent Schleim OS in de submap `extension`. De naam en locatie van de importknop kunnen per browser en apparaat verschillen. De browser moet rechtstreekse ZIP-import ondersteunen.
 
 ## Schleim OS gebruiken en instellingen beheren
 
@@ -69,19 +54,46 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 Persoonlijke instellingen worden lokaal in het browserprofiel opgeslagen. Bewaar je JSON-back-up op een veilige plek.
 
-## 🛠️ Problemen oplossen
+# 🛠️ Schleim OS – Problemen oplossen
+
+Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-import en het gebruik van Schleim OS.
 
 | Probleem | Mogelijke oplossing |
 |---|---|
-| Schleim OS verschijnt niet in een nieuw tabblad | Controleer of de extensie is ingeschakeld en of de uitgepakte extensiemap met `manifest.json` is geladen. |
-| Chrome meldt een ongeldig manifest | Pak het ZIP-bestand volledig uit en selecteer de map waarin `manifest.json` rechtstreeks staat. |
-| Er is een ZIP-bestand geselecteerd in het venster voor uitgepakte extensies | Pak het ZIP-archief eerst uit. Selecteer daarna de extensiemap die erin staat. |
-| De verkeerde map is geselecteerd | Selecteer de map waarin `manifest.json` rechtstreeks staat, niet de bovenliggende repositorymap. |
-| Een andere nieuw-tabbladextensie is actief | Schakel de andere extensie tijdelijk uit. Meerdere extensies kunnen niet tegelijkertijd dezelfde nieuw-tabbladpagina vervangen. |
-| Wijzigingen worden niet weergegeven | Open `chrome://extensions`, klik bij Schleim OS op **Opnieuw laden** en open een nieuw tabblad. |
-| Een externe website of insluiting blijft leeg | Controleer je internetverbinding. Sommige aanbieders blokkeren insluiting op andere websites. |
-| Instellingen ontbreken na een browserwissel | Het browserprofiel wordt lokaal opgeslagen. Exporteer de JSON-back-up in de oude browser en importeer deze in de nieuwe browser. |
-| Installatie werkt niet op Android | Chrome voor Android ondersteunt geen gewone desktop-Chrome-extensies. Hiervoor is een aparte PWA of een browser met extensieondersteuning nodig. |
+| **De ZIP-importknop ontbreekt.** | Controleer of je browser het importeren van ZIP-extensies ondersteunt. De knop kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten. |
+| **Het ZIP-bestand wordt niet weergegeven.** | Download eerst de volledige repository via GitHub met **Code → Download ZIP**. Controleer daarna of de bestandskiezer van je browser toegang heeft tot de map Downloads. |
+| **De installatie geeft een foutmelding.** | Controleer of je de volledige repository-ZIP hebt geselecteerd en of deze ongewijzigd is. Selecteer geen losse bestanden of een ander archief. |
+| **Schleim OS verschijnt niet in een nieuw tabblad.** | Controleer in het extensiebeheer of Schleim OS is geïnstalleerd en ingeschakeld. Open daarna een nieuw tabblad. |
+| **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
+| **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
+| **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
+| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Gebruik indien beschikbaar de JSON-back-upfunctie. |
+| **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
+
+## Meer hulp nodig?
+
+Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues). Beschrijf welke browser en versie je gebruikt en welke stappen tot het probleem leiden. Deel geen wachtwoorden of vertrouwelijke inloggegevens.
+
+---
+
+[🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md)
+
+## ❓ Veelgestelde vragen (FAQ)
+
+**Kan ik het ZIP-bestand rechtstreeks installeren?**  
+Ja. Download de volledige GitHub-repository via **Code → Download ZIP** en importeer precies dat ZIP-bestand via de ZIP-importfunctie van een ondersteunde Chromium-browser. Pak het bestand niet eerst uit.
+
+**Moet ik alleen de map `extension` downloaden?**  
+Nee. Download de volledige repository als ZIP-bestand. De browserimporteur herkent de extensie in de opgenomen submap `extension`.
+
+**Werkt dit in elke Chromium-browser?**  
+Nee. De browser moet expliciet ZIP-extensies kunnen importeren. De knop kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten. De beschikbaarheid verschilt per browser en platform.
+
+**Werkt dit met Chrome voor Android?**  
+Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt.
+
+**Wat moet ik doen als de ZIP-importknop ontbreekt?**  
+Dan ondersteunt je browser mogelijk de installatiemethode in deze documentatie niet. Gebruik een compatibele Chromium-browser met ZIP-importondersteuning.
 
 ## 📁 Projectstructuur
 
