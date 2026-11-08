@@ -20,4 +20,4 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 
 ---
 
-[🇬🇧 English troubleshooting](../Englisch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+[🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
