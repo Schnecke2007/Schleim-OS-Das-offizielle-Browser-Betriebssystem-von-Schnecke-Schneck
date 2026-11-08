@@ -1,20 +1,38 @@
-# Installation
+# 📥 Schleim OS – Installationsanleitung
 
-## Google Chrome
+## 1. ZIP-Datei von GitHub herunterladen
 
-1. Download the Schleim OS ZIP package and extract it completely.
-2. Open `chrome://extensions` in Chrome.
-3. Enable **Developer mode**.
-4. Select **Load unpacked**.
-5. Choose the extracted folder that contains `manifest.json` directly.
-6. Open a new tab to launch Schleim OS.
+1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
+2. Klicke oben auf die grüne Schaltfläche **Code**.
+3. Wähle im Menü **Download ZIP**.
+4. Speichere die ZIP-Datei auf deinem Gerät.
+5. Entpacke die ZIP-Datei vollständig.
 
-## Microsoft Edge and Brave
+> ⚠️ Die ZIP-Datei selbst kann nicht direkt als Browser-Erweiterung geladen werden. Du musst sie zuerst entpacken.
 
-Open `edge://extensions` (Edge) or `brave://extensions` (Brave), enable Developer mode and load the extracted extension folder.
+## 2. Google Chrome
 
-## Important
+1. Öffne `chrome://extensions`.
+2. Aktiviere oben rechts den **Entwicklermodus**.
+3. Klicke auf **Entpackte Erweiterung laden**.
+4. Wähle den entpackten Ordner `schleim-os-browser-extension` aus. Die Datei `manifest.json` muss direkt in diesem Ordner liegen.
+5. Öffne einen neuen Tab. Schleim OS sollte jetzt starten. 🎉
 
-Do not select the ZIP file itself. Extract it first. If the archive contains a parent folder, open that folder and select the inner `schleim-os-browser-extension` directory where `manifest.json` is located.
+## 3. Microsoft Edge und Brave
 
-Chrome for Android does not support regular desktop Chrome extensions. For Android, use a separate PWA build or a browser that explicitly supports extensions.
+- **Microsoft Edge:** Öffne `edge://extensions`.
+- **Brave:** Öffne `brave://extensions`.
+- Aktiviere den Entwicklermodus und wähle **Entpackt laden**.
+- Wähle den entpackten Ordner aus, in dem sich die Datei `manifest.json` direkt befindet.
+
+## 4. Häufige Fehler
+
+- **Falscher Ordner ausgewählt:** Wähle den inneren Ordner `schleim-os-browser-extension`, in dem `manifest.json` direkt liegt.
+- **ZIP statt Ordner ausgewählt:** Entpacke die ZIP-Datei zuerst und lade anschließend den Ordner.
+- **Schleim OS wird nicht angezeigt:** Prüfe, ob die Erweiterung aktiviert ist und lade sie unter `chrome://extensions` erneut.
+
+## Hinweis zu Android
+
+Chrome für Android unterstützt keine regulären Desktop-Chrome-Erweiterungen. Auf Android ist eine separate PWA oder ein Browser erforderlich, der Erweiterungen ausdrücklich unterstützt.
+
+🌐 [Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck)
