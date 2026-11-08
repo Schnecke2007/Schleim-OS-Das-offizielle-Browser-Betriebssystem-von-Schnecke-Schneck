@@ -39,6 +39,8 @@ Die genaue Anleitung steht hier: [Installation in Leichter Sprache](INSTALLATION
 
 Wenn etwas nicht funktioniert, lies bitte [Hilfe und Fehlerbehebung](HILFE.md).
 
+[Technik einfach erklärt](TECHNIK.md)
+
 ## Rechtliche Texte
 
 Es gibt auch Texte zu Datenschutz, Regeln und Kontakt. Diese Texte sind wichtig. Die kurzen Erklärungen sind keine Ersatz-Versionen der offiziellen Rechtstexte.
