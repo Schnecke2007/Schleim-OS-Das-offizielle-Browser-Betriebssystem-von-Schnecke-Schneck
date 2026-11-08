@@ -129,7 +129,7 @@ Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbar
 - [English – documentation](README.en.md)
 - [Nederlands – documentatie](README.nl.md)
 - [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
-- [Fehlerbehebung](docs/Deutsch/TROUBLESHOOTING.md)
+- [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
 - [Dokumentationsübersicht – alle Sprachen](docs/README.md)
 
