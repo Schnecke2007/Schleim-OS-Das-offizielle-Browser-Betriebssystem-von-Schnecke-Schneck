@@ -6,11 +6,16 @@
 
 ## Installation
 
-1. Dieses Paket vollständig entpacken.
-2. In Chrome `chrome://extensions` öffnen.
-3. **Entwicklermodus** einschalten.
-4. **Entpackte Erweiterung laden** anklicken und den Ordner `schleim-os-browser-extension` auswählen.
-5. Einen neuen Tab öffnen.
+1. Lade das vollständige Repository über GitHub mit **Code → Download ZIP** herunter.
+2. Entpacke die ZIP-Datei nicht.
+3. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der ZIP-Import unterstützt.
+4. Aktiviere bei Bedarf den Entwicklermodus.
+5. Wähle **„From .zip/.crx/.user.js“** oder die entsprechende ZIP-Importfunktion.
+6. Wähle die vollständige Repository-ZIP aus und bestätige den Import.
+
+Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Die Importfunktion ist je nach Browser und Gerät unterschiedlich. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
+
+[Schleim OS live ausprobieren](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md)
 
 ## Dateien
 
