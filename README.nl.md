@@ -16,6 +16,14 @@ Wat mij hierin zo aanspreekt? Het is geweldig om een idee stap voor stap om te z
 
 **Schleim OS** is een van mijn eigen projecten. Met mijn projecten wil ik mijn enthousiasme voor technologie delen en laten zien wat nieuwsgierigheid, creativiteit en digitale hulpmiddelen mogelijk maken. 🐌💻
 
+## 🧪 Schleim OS live uitproberen
+
+[**Open de demo in een nieuw browsertabblad**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – probeer de standalone-versie direct uit. Je hoeft de uitbreiding niet te installeren om de demo te gebruiken.
+
+## 📖 Documentatie in eenvoudige taal
+
+Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen.
+
 ## 🚀 Wat is Schleim OS?
 
 Schleim OS is een browserextensie die de gewone nieuw-tabbladpagina van de browser vervangt door een eigen interface. In plaats van een lege of standaard tabbladpagina opent een persoonlijk startscherm met apps en snelkoppelingen.
