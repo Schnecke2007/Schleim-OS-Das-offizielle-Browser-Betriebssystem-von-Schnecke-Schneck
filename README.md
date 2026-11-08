@@ -35,30 +35,15 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 ## 📥 Download und Installation
 
-### 1. Projekt als ZIP herunterladen
+1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
+2. Klicke auf **Code → Download ZIP** und lade das **vollständige Repository** herunter.
+3. Entpacke die ZIP-Datei **nicht**.
+4. Öffne die Erweiterungsverwaltung eines unterstützten Chromium-Browsers.
+5. Aktiviere bei Bedarf den **Entwicklermodus**.
+6. Wähle die Importfunktion für ZIP-Dateien, beispielsweise **„From .zip/.crx/.user.js“**.
+7. Wähle die vollständige Repository-ZIP aus und bestätige die Installation.
 
-1. Öffne dieses GitHub-Repository.
-2. Klicke oben auf die grüne Schaltfläche **Code**.
-3. Wähle im Menü **Download ZIP**.
-4. Speichere die ZIP-Datei auf deinem Gerät.
-5. Entpacke die ZIP-Datei vollständig.
-6. Suche in den entpackten Dateien den Erweiterungsordner, in dem die Datei `manifest.json` direkt liegt. Wähle später genau diesen Ordner aus – nicht die ZIP-Datei und nicht einen übergeordneten Ordner.
-
-### 2. Google Chrome einrichten
-
-1. Öffne `chrome://extensions`.
-2. Aktiviere oben rechts den **Entwicklermodus**.
-3. Klicke auf **Entpackte Erweiterung laden**.
-4. Wähle den zuvor entpackten Erweiterungsordner aus. Die Datei `manifest.json` muss direkt darin liegen.
-5. Öffne einen neuen Tab. Schleim OS sollte jetzt angezeigt werden. 🎉
-
-### Microsoft Edge und Brave
-
-- **Edge:** Öffne `edge://extensions`.
-- **Brave:** Öffne `brave://extensions`.
-- Aktiviere den Entwicklermodus, wähle **Entpackt laden** und anschließend den entpackten Erweiterungsordner mit der direkt darin liegenden Datei `manifest.json`.
-
-> ⚠️ **Wichtig – ZIP oder Ordner?** Die Schaltfläche **„Entpackte Erweiterung laden“** erwartet einen Ordner, keine ZIP-Datei. Für die lokale Installation über den Browser-Entwicklermodus musst du das über GitHub heruntergeladene ZIP-Archiv daher zuerst entpacken. Wähle danach den Ordner aus, in dem `manifest.json` direkt liegt.
+Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichnung und Position der Import-Schaltfläche kann je nach Browser und Gerät variieren. Voraussetzung ist ein Browser, der den direkten ZIP-Import unterstützt.
 
 ## Bedienung und Einstellungen
 
@@ -69,19 +54,46 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-Backup sollte an einem sicheren Ort aufbewahrt werden.
 
-## 🛠️ Fehlerbehebung
+# 🛠️ Schleim OS – Fehlerbehebung
+
+Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und bei der Verwendung von Schleim OS.
 
 | Problem | Mögliche Lösung |
 |---|---|
-| Schleim OS erscheint nicht in einem neuen Tab | Prüfen, ob die Erweiterung aktiviert ist und der entpackte Erweiterungsordner mit `manifest.json` geladen wurde. |
-| Chrome meldet ein ungültiges Manifest | ZIP-Datei vollständig entpacken und den Ordner auswählen, in dem `manifest.json` direkt liegt. |
-| ZIP-Datei wurde im Dialog „Entpackte Erweiterung laden“ ausgewählt | Das ZIP-Archiv zuerst entpacken. Anschließend den darin enthaltenen Erweiterungsordner auswählen. |
-| Falscher Ordner wurde ausgewählt | Nicht den übergeordneten Repository-Ordner, sondern den Ordner auswählen, in dem `manifest.json` direkt liegt. |
-| Eine andere Neuer-Tab-Erweiterung ist aktiv | Die andere Erweiterung vorübergehend deaktivieren. Mehrere Erweiterungen können dieselbe Tab-Seite nicht gleichzeitig ersetzen. |
-| Änderungen werden nicht angezeigt | Unter `chrome://extensions` bei Schleim OS auf **Aktualisieren** klicken und einen neuen Tab öffnen. |
-| Eine externe Website oder Einbettung bleibt leer | Internetverbindung prüfen. Manche Anbieter blockieren das Einbetten in andere Seiten. |
-| Einstellungen sind nach einem Browserwechsel weg | Das Browserprofil ist lokal. Das JSON-Backup im alten Browser exportieren und im neuen Browser importieren. |
-| Installation auf Android funktioniert nicht | Chrome für Android unterstützt keine regulären Desktop-Chrome-Erweiterungen. Dafür ist eine separate PWA oder ein Browser mit Erweiterungsunterstützung nötig. |
+| **Die ZIP-Import-Schaltfläche fehlt.** | Prüfe, ob dein Browser den Import von ZIP-Erweiterungen unterstützt. Die Schaltfläche kann beispielsweise **„From .zip/.crx/.user.js“** heißen. |
+| **Die ZIP-Datei wird nicht angezeigt.** | Lade zuerst über GitHub **Code → Download ZIP** das vollständige Repository herunter. Prüfe anschließend, ob dein Browser-Dateiauswahldialog den Download-Ordner anzeigt. |
+| **Die Installation meldet einen Fehler.** | Stelle sicher, dass du das vollständige Repository-ZIP ausgewählt hast und es unverändert geblieben ist. Verwende nicht einzelne Dateien oder ein anderes Archiv. |
+| **Schleim OS erscheint nicht in einem neuen Tab.** | Prüfe in der Erweiterungsverwaltung, ob Schleim OS installiert und aktiviert ist. Öffne danach einen neuen Tab. |
+| **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
+| **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
+| **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Nutze die JSON-Sicherungsfunktion, sofern verfügbar. |
+| **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
+
+## Weitere Hilfe
+
+Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues). Beschreibe dabei möglichst genau, welchen Browser und welche Version du verwendest und welche Schritte zum Fehler führen. Teile keine Passwörter oder vertraulichen Zugangsdaten.
+
+---
+
+[🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+
+## ❓ Häufige Fragen (FAQ)
+
+**Kann ich die ZIP-Datei direkt installieren?**  
+Ja. Lade über **Code → Download ZIP** das vollständige GitHub-Repository herunter und importiere genau diese ZIP-Datei über die ZIP-Importfunktion deines unterstützten Chromium-Browsers. Entpacke sie vorher nicht.
+
+**Muss ich nur den Ordner `extension` herunterladen?**  
+Nein. Lade das vollständige Repository als ZIP herunter. Der Browser-Importer erkennt die Erweiterung im enthaltenen Unterordner `extension`.
+
+**Funktioniert das in jedem Chromium-Browser?**  
+Nein. Der Browser muss ausdrücklich den Import von ZIP-Erweiterungen unterstützen. Die Schaltfläche kann beispielsweise **„From .zip/.crx/.user.js“** heißen. Die Verfügbarkeit unterscheidet sich je nach Browser und Plattform.
+
+**Funktioniert es mit Chrome auf Android?**  
+Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und den direkten ZIP-Import unterstützt.
+
+**Was mache ich, wenn die ZIP-Import-Schaltfläche fehlt?**  
+Dann unterstützt dein Browser den hier dokumentierten Installationsweg möglicherweise nicht. Verwende einen kompatiblen Chromium-Browser mit ZIP-Import.
 
 ## 📁 Projektstruktur
 
