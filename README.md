@@ -16,6 +16,14 @@ Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionier
 
 **Schleim OS** ist eines meiner eigenen Projekte. Mit meinen Projekten möchte ich meine Begeisterung für Technik teilen und zeigen, was man mit Neugier, Kreativität und digitalen Werkzeugen erschaffen kann. 🐌💻
 
+## 🧪 Schleim OS live ausprobieren
+
+[**Demo in einem neuen Browser-Tab öffnen**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
+
+## 📖 Dokumentation in Leichter Sprache
+
+Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen.
+
 ## 🚀 Was ist Schleim OS?
 
 Schleim OS ist eine Browser-Erweiterung, die den normalen neuen Tab durch eine eigene Oberfläche ersetzt. Statt einer leeren oder standardmäßigen Tab-Seite öffnet sich ein persönlicher Startbildschirm mit Apps und Verknüpfungen.
