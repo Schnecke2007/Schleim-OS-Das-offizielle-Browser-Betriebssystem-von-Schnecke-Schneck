@@ -2,9 +2,11 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-[🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🧪 Demo openen](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
-
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+
+[🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
+
+[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo openen](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md)
 
 ## 👋 Over mij
 
@@ -19,10 +21,6 @@ Wat mij hierin zo aanspreekt? Het is geweldig om een idee stap voor stap om te z
 ## 🧪 Schleim OS live uitproberen
 
 [**Open de demo in een nieuw browsertabblad**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – probeer de standalone-versie direct uit. Je hoeft de uitbreiding niet te installeren om de demo te gebruiken.
-
-## 📖 Documentatie in eenvoudige taal
-
-Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen.
 
 ## 🚀 Wat is Schleim OS?
 
@@ -86,6 +84,27 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 
 [🇩🇪 Deutsche Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md) · [🇬🇧 English troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
 
+## 💡 Opmerkingen
+
+- Schleim OS vervangt de nieuw-tabbladpagina, niet de volledige browserinterface.
+- Incognitovensters kunnen eigen beperkingen hebben.
+- Google Chrome voor Android ondersteunt geen gewone desktopextensies.
+- Voor externe inhoud kan een internetverbinding nodig zijn.
+
+## 🌐 Talen en documentatie
+
+- [Deutsch – hoofddocumentatie](README.md)
+- [English – documentation](README.en.md)
+- [Nederlands – hoofddocumentatie](README.nl.md)
+- [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
+- [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
+- [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
+- [Documentatieoverzicht – alle talen](docs/README.md)
+
+## 📖 Documentatie in eenvoudige taal
+
+Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen.
+
 ## 📁 Projectstructuur
 
 ```text
@@ -118,23 +137,6 @@ schleim-os-browser-extension/
 Schleim OS slaat interface- en personalisatie-instellingen lokaal op in het browserprofiel. De extensie gebruikt de machtigingen die in `manifest.json` worden vermeld. Wanneer externe apps en websites worden geopend, kan er verbinding worden gemaakt met de betreffende aanbieders; ook hun privacybeleid is dan van toepassing.
 
 De extensie-interface bevat geen advertentie-iframes, geen controles of advertenties bereikbaar zijn en geen opstartblokkering vanwege advertenties. Vermeldingen over advertenties in overgenomen juridische teksten hebben betrekking op de daarin beschreven website en niet op advertenties die in de extensie zijn ingebouwd.
-
-## 💡 Opmerkingen
-
-- Schleim OS vervangt de nieuw-tabbladpagina, niet de volledige browserinterface.
-- Incognitovensters kunnen eigen beperkingen hebben.
-- Google Chrome voor Android ondersteunt geen gewone desktopextensies.
-- Voor externe inhoud kan een internetverbinding nodig zijn.
-
-## 🌐 Talen en documentatie
-
-- [Deutsch – hoofddocumentatie](README.md)
-- [English – documentation](README.en.md)
-- [Nederlands – hoofddocumentatie](README.nl.md)
-- [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
-- [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
-- [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
-- [Documentatieoverzicht – alle talen](docs/README.md)
 
 ## ⚖️ Juridische informatie
 
@@ -183,4 +185,3 @@ Wil je meer zien van mijn projecten en updates? Ik vind het leuk als je mij volg
 **Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
-
