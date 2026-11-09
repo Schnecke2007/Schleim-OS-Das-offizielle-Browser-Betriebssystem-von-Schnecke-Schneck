@@ -2,9 +2,11 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-[🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🧪 Open demo](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
-
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+
+[🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
+
+[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Open demo](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Easy Language](docs/Leichte-Sprache/Englisch/README.md)
 
 ## 👋 About me
 
@@ -19,10 +21,6 @@ What excites me most is turning an idea into something that actually works! I lo
 ## 🧪 Try Schleim OS live
 
 [**Open the demo in a new browser tab**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – try the standalone version directly. You do not need to install the extension to use the demo.
-
-## 📖 Plain-language documentation
-
-Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics.
 
 ## 🚀 What is Schleim OS?
 
@@ -86,6 +84,27 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 
 [🇩🇪 Deutsche Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 
+## 💡 Notes
+
+- Schleim OS replaces the new-tab page, not the entire browser interface.
+- Incognito windows may have their own restrictions.
+- Google Chrome for Android does not support regular desktop extensions.
+- External content may require an internet connection.
+
+## 🌐 Languages and documentation
+
+- [Deutsch – main documentation](README.md)
+- [English – main documentation](README.en.md)
+- [Nederlands – documentatie](README.nl.md)
+- [Installation guide](docs/Englisch/INSTALLATION.md)
+- [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
+- [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
+- [Documentation overview – all languages](docs/README.md)
+
+## 📖 Plain-language documentation
+
+Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics.
+
 ## 📁 Project structure
 
 ```text
@@ -118,23 +137,6 @@ schleim-os-browser-extension/
 Schleim OS stores interface and personalization settings locally in the browser profile. The extension uses the permissions listed in `manifest.json`. Opening external apps and websites may connect to their respective providers; their privacy policies also apply.
 
 The extension interface contains no advertising iframes, no advertising reachability checks and no ad-related startup lock. Statements about advertising in adopted legal texts refer to the website described there, not to advertising embedded in the extension.
-
-## 💡 Notes
-
-- Schleim OS replaces the new-tab page, not the entire browser interface.
-- Incognito windows may have their own restrictions.
-- Google Chrome for Android does not support regular desktop extensions.
-- External content may require an internet connection.
-
-## 🌐 Languages and documentation
-
-- [Deutsch – main documentation](README.md)
-- [English – main documentation](README.en.md)
-- [Nederlands – documentatie](README.nl.md)
-- [Installation guide](docs/Englisch/INSTALLATION.md)
-- [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
-- [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
-- [Documentation overview – all languages](docs/README.md)
 
 ## ⚖️ Legal information
 
@@ -183,4 +185,3 @@ Would you like to see more of my projects and updates? I’d be happy if you fol
 **Schleim OS** is developed and maintained by **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
-
