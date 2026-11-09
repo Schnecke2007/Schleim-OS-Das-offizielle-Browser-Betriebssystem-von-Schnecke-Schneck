@@ -2,9 +2,11 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-[🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip) · [🧪 Demo öffnen](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md)
-
 ![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+
+[🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
+
+[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
 
 ## 👋 Über mich
 
@@ -19,10 +21,6 @@ Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionier
 ## 🧪 Schleim OS live ausprobieren
 
 [**Demo in einem neuen Browser-Tab öffnen**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
-
-## 📖 Dokumentation in Leichter Sprache
-
-Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen.
 
 ## 🚀 Was ist Schleim OS?
 
@@ -86,6 +84,27 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 
 [🇬🇧 English troubleshooting](docs/Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 
+## 💡 Hinweise
+
+- Schleim OS ersetzt die Neuer-Tab-Seite, nicht die gesamte Browseroberfläche.
+- Inkognito-Fenster können eigene Einschränkungen haben.
+- Google Chrome für Android unterstützt keine normalen Desktop-Erweiterungen.
+- Externe Inhalte benötigen gegebenenfalls eine Internetverbindung.
+
+## 🌐 Sprachen und Dokumentation
+
+- [Deutsch – Hauptdokumentation](README.md)
+- [English – documentation](README.en.md)
+- [Nederlands – documentatie](README.nl.md)
+- [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
+- [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
+- [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
+- [Dokumentationsübersicht – alle Sprachen](docs/README.md)
+
+## 📖 Dokumentation in Leichter Sprache
+
+Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen.
+
 ## 📁 Projektstruktur
 
 ```text
@@ -118,23 +137,6 @@ schleim-os-browser-extension/
 Schleim OS speichert Oberflächen- und Personalisierungseinstellungen lokal im Browserprofil. Die Erweiterung verwendet die in `manifest.json` aufgeführten Berechtigungen. Externe Apps und Websites können beim Öffnen eine Verbindung zu ihren jeweiligen Anbietern herstellen; deren Datenschutzbestimmungen gelten zusätzlich.
 
 Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbarkeitsprüfung und keine werbebedingte Start-Sperre. Aussagen zu Werbung in übernommenen Rechtstexten beziehen sich auf die dort beschriebene Website und nicht auf eine Werbeeinbindung in der Extension.
-
-## 💡 Hinweise
-
-- Schleim OS ersetzt die Neuer-Tab-Seite, nicht die gesamte Browseroberfläche.
-- Inkognito-Fenster können eigene Einschränkungen haben.
-- Google Chrome für Android unterstützt keine normalen Desktop-Erweiterungen.
-- Externe Inhalte benötigen gegebenenfalls eine Internetverbindung.
-
-## 🌐 Sprachen und Dokumentation
-
-- [Deutsch – Hauptdokumentation](README.md)
-- [English – documentation](README.en.md)
-- [Nederlands – documentatie](README.nl.md)
-- [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
-- [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
-- [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
-- [Dokumentationsübersicht – alle Sprachen](docs/README.md)
 
 ## ⚖️ Rechtliche Informationen
 
@@ -183,4 +185,3 @@ Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mic
 **Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
 
 © 2026 Schnecke Schneck.
-
