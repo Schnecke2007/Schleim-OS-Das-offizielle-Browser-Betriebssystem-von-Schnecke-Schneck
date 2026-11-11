@@ -9,7 +9,7 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 | [Tools](./tools/README.md) | tools | 0 |
 | [KI & Chatbots](./ai/README.md) | ai | 1 |
 | [Medien](./media/README.md) | media | 2 |
-| [Wissen](./knowledge/README.md) | knowledge | 2 |
+| [Wissen](./knowledge/README.md) | knowledge | 1 |
 | [Navigation](./navigation/README.md) | navigation | 1 |
 | [Produktivität](./productivity/README.md) | productivity | 1 |
 | [Kommunikation](./communication/README.md) | communication | 1 |
@@ -20,9 +20,9 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 
 - Einreichungen werden zunächst als GitHub-Issue eingereicht und von Schnecke Schneck geprüft.
 - Erst nach der Genehmigung wird eine App hier veröffentlicht.
-- Die App wird automatisch unter `Store/<category>/<app-id>.json` abgelegt.
+- Die App wird automatisch unter Store/<category>/<app-id>.json abgelegt.
 - Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.
-- Der Laufzeitkatalog der Browser-Erweiterung bleibt `extension/data/store-apps.json`; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.
+- Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.
 
 Weitere Informationen: [Store-Dokumentation](../extension/docs/SLIME-STORE.md) · [Admin-Handbuch](../extension/admin/README.md).
 
