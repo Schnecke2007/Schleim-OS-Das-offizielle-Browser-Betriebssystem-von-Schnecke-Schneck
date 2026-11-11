@@ -23,4 +23,6 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 - Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.
 - Der Laufzeitkatalog der Browser-Erweiterung bleibt `extension/data/store-apps.json`; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.
 
+Weitere Informationen: [Store-Dokumentation](../extension/docs/SLIME-STORE.md) · [Admin-Handbuch](../extension/admin/README.md).
+
 **Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich. Keine Tokens, Passwörter oder privaten Admin-Dateien hier ablegen.
