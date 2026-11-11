@@ -657,7 +657,7 @@
         return [value.url,value.href,value.link,value.targetUrl,value.targetURL,value.target_url,value.website,value.websiteUrl,value.websiteURL,value.address,value.src,value.appUrl,value.app_url,value.destination,value.uri,value.target?.url,value.target,value.data?.url].some(candidate=>typeof candidate==='string'&&!!safeLegacyUrl(candidate));
       };
       const looksLikeLegacyMap=value=>isObject(value)&&Object.entries(value).some(([key,item])=>
-        (/^(?:https?:)?\\/\\//i.test(key)||/^www\\./i.test(key))?!!safeLegacyUrl(key):hasLegacyUrl(item)
+        (/^(?:https?:)?\/\//i.test(key)||/^www\./i.test(key))?!!safeLegacyUrl(key):hasLegacyUrl(item)
       );
       const legacyMap=looksLikeLegacyMap(candidateConfig)?candidateConfig:
         (!data?.preferences&&!data?.data&&!data?.config&&!data?.settings&&looksLikeLegacyMap(data)?data:null);
