@@ -412,12 +412,15 @@
     const category=$('#ssosAppCategory')?.value||'tools';
     const iconUrl=safeUrl($('#ssosAppIconUrl')?.value||'');
     let issueDescription=description;
-    if(pendingIconData)issueDescription+='\n\n'+({de:'Ein eigenes Icon wurde lokal ausgewählt. Bitte lade die Bilddatei im GitHub-Formular erneut hoch.',en:'A custom icon was selected locally. Please upload the image again in the GitHub form.',nl:'Er is lokaal een eigen pictogram geselecteerd. Upload de afbeelding opnieuw in het GitHub-formulier.'}[LANG()]||'A custom icon was selected locally. Please upload the image again in the GitHub form.');
-    const language=LANG();
-    const issueBody='## App information\\n\\n**Name:** '+name+'\\n\\n**Website:** '+url+'\\n\\n**Category:** '+category+'\\n\\n**Icon URL:** '+(iconUrl||'Not provided')+'\\n\\n**Submission language:** '+language+'\\n\\n## Description\\n\\n'+issueDescription+'\\n';
+    if(pendingIconData)issueDescription+='\\n\\n'+({de:'Ein eigenes Icon wurde lokal ausgewählt. Bitte lade die Bilddatei im GitHub-Formular erneut hoch.',en:'A custom icon was selected locally. Please upload the image again in the GitHub form.',nl:'Er is lokaal een eigen pictogram geselecteerd. Upload de afbeelding opnieuw in het GitHub-formulier.'}[LANG()]||'A custom icon was selected locally. Please upload the image again in the GitHub form.');
     const params=new URLSearchParams();
-    params.set('title','[Slime Store] App-Vorschlag: '+name);
-    params.set('body',issueBody);
+    params.set('template','app-submission.yml');
+    params.set('title','[Slime Store] App suggestion: '+name);
+    params.set('app-name',name);
+    params.set('app-url',url);
+    params.set('app-category',category);
+    params.set('app-description',issueDescription);
+    if(iconUrl)params.set('app-icon-url',iconUrl);
     const issueUrl=STORE_ISSUE_URL+'?'+params.toString();
     const fallback=$('#ssosIssueFallback');if(fallback){fallback.href=issueUrl;fallback.hidden=false;}
     window.open(issueUrl,'_blank','noopener,noreferrer');
