@@ -169,6 +169,22 @@
         "en": "Surf the internet more securely and manage your own DNS server",
         "nl": "Surf veiliger op het internet en beheer je eigen DNS-serve"
       }
+    },
+    {
+      "id": "deezer",
+      "name": "Deezer",
+      "url": "https://deezer.com/",
+      "category": "media",
+      "icon": "🌐",
+      "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fdeezer.com%2F&sz=128",
+      "tags": "deezer",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "description": {
+        "de": "Streame Musik von überall, wo du willst",
+        "en": "Stream music from anywhere you like",
+        "nl": "Stream muziek van waar je maar wilt"
+      }
     }
   ]
 }
