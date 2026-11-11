@@ -52,7 +52,7 @@
 .search-screen{overflow-y:auto;overscroll-behavior:contain}
 
 
-/* Slime Store – app discovery, search, ratings and community submissions */
+/* Schleim-Store – app discovery, search, ratings and community submissions */
 .ssos-store-hero{position:relative;overflow:hidden;min-height:150px;padding:19px 18px;margin-bottom:16px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:21px;background:radial-gradient(circle at 88% 18%,rgba(213,166,109,.25),transparent 34%),linear-gradient(125deg,#38271f,#1c2c25 100%)}
 .ssos-store-hero h2{position:relative;z-index:1;margin:7px 0 6px;font-size:27px;letter-spacing:-.06em}
 .ssos-store-hero>p:not(.eyebrow){position:relative;z-index:1;max-width:78%;margin:0;color:#d8c9bd;font-size:10px;line-height:1.55}
