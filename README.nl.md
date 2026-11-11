@@ -43,7 +43,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 ## 🛍️ Schleim-Store
 
-In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren, persoonlijke beoordelingen geven en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
+In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren en openbare communitybeoordelingen indienen en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
