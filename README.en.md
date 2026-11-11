@@ -48,6 +48,8 @@ The **Schleim-Store** lets you discover recommended websites and web apps, brows
 - **Discover:** Recommendations, new apps, top ratings and categories.
 - **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
 - **Submit:** Visitors can suggest websites through the public [GitHub submission form](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
+- **Submit local websites:** Imported or previously saved websites appear under “Previously added websites”. Choose “Submit to the Schleim-Store” to copy their details into the submission form. Add a meaningful description and submit the proposal on GitHub for review.
+- **Rate:** The star buttons open a public GitHub rating submission. After it is submitted, GitHub Actions recalculates the average and vote count. The GitHub username and individual vote are publicly visible.
 - **Review and publish:** Suggestions are not published automatically. The admin reviews and approves each app before it is added to the Store.
 
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
