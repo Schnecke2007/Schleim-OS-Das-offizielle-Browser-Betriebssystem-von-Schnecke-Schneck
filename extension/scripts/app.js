@@ -58,6 +58,9 @@
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
   const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','contact','legal','settings'];
+  // The old static Wix gallery URLs are no longer bundled. Keep the app usable
+  // and offer the live public gallery below instead of referencing an undefined constant.
+  const WIX_GALLERY_IMAGES = [];
   const PROJECT_CHILD_IDS = ['voiceassistant','parentsettings','schildi','chatgpt','scratch','schleimcloud','iptv','tech'];
   const CONTACT_CHILD_IDS = ['whatsapp','email','google'];
   let activeAppId = null;
@@ -461,11 +464,15 @@
       <div class="ssos-form-actions"><a class="app-button" href="${esc(target)}" target="_blank" rel="noopener noreferrer">${open} ↗</a><a class="app-button secondary" href="${esc(translateUrl)}" target="_blank" rel="noopener noreferrer">🌐 ${translateLabel}</a></div>`;
   }
 
-  function renderImages(){return `${appHero('BILDER','Bilder aus der Fan-Welt.','Öffentliche Bilddateien der offiziellen Fan-Webseite – direkt in einer eigenen Galerie gesammelt.','🖼️')}
-    ${section('Galerie der offiziellen Webseite')}<div class="image-gallery">${WIX_GALLERY_IMAGES.map((image,index)=>`<a class="image-gallery-item" href="${image.src}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${image.src}" alt="${esc(image.alt)}"><span>Bild ${index+1} · Originalgröße ↗</span></a>`).join('')}</div>
-    <div class="notice">Diese Galerie zeigt die drei direkt eingebundenen öffentlichen Wix-Bilddateien, die in der Website-Prüfung identifiziert wurden. Dynamische Social-Media-Bilder und weitere Wix-Galerieelemente werden vom Originalanbieter geladen und können sich ändern.</div>
-    ${section('Weitere Bilder im Original-Feed')}<div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Social-Media-Galerie</b><small>Die vollständige Wix-/Instagram-Galerie einschließlich weiterer Bild- und Videobeiträge kann hier nachgeladen werden.</small><button class="app-button" type="button" data-load-frame="imageFeed">Galerie laden</button></div></div>
-    ${external(URLS.social,'Originale Bilder- und Social-Media-Seite öffnen',true)}`;}
+  function renderImages(){
+    const gallery=WIX_GALLERY_IMAGES.length
+      ?`<div class="image-gallery">${WIX_GALLERY_IMAGES.map((image,index)=>`<a class="image-gallery-item" href="${image.src}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${image.src}" alt="${esc(image.alt)}"><span>Bild ${index+1} · Originalgröße ↗</span></a>`).join('')}</div>`
+      :'<div class="notice">Die früher eingebundenen statischen Bilddateien stehen in dieser Version nicht mehr als lokale Galerie-Daten zur Verfügung. Du kannst stattdessen die aktuelle öffentliche Wix-/Instagram-Galerie unten laden oder extern öffnen.</div>';
+    return `${appHero('BILDER','Bilder aus der Fan-Welt.','Öffentliche Bilddateien der offiziellen Fan-Webseite – direkt in einer eigenen Galerie gesammelt.','🖼️')}
+      ${section('Galerie der offiziellen Webseite')}${gallery}
+      ${section('Weitere Bilder im Original-Feed')}<div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Social-Media-Galerie</b><small>Die vollständige Wix-/Instagram-Galerie einschließlich weiterer Bild- und Videobeiträge kann hier nachgeladen werden.</small><button class="app-button" type="button" data-load-frame="imageFeed">Galerie laden</button></div></div>
+      ${external(URLS.social,'Originale Bilder- und Social-Media-Seite öffnen',true)}`;
+  }
 
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}
     <p class="body-copy">„Willkommen auf meiner offiziellen Fan-Webseite! Hier findest du alles über meine Projekte, Hobbys und Social Media Aktivitäten. Nutze den integrierten Live-Chat, um direkt mit mir zu sprechen, und tritt unseren Gruppen bei, um dich mit anderen Fans auszutauschen. Viel Spaß beim Erkunden!“</p>
