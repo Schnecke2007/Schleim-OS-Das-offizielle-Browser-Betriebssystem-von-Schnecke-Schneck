@@ -2,6 +2,7 @@
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
+- [Slime Store verwalten](SLIME-STORE.md) – Apps zum Katalog hinzufügen und Community-Vorschläge prüfen.
 ## Funktionen
 
 - App-Startbildschirm mit fest eingebauten Apps und eigenen Website-Apps
