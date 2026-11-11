@@ -1,6 +1,6 @@
-# Slime Store – Apps verwalten
+# Schleim-Store – Apps verwalten
 
-Der Slime Store ist der zentrale App-Katalog von Schleim OS. Besucher können empfohlene Webseiten entdecken, suchen, bewerten sowie auf ihrem Startbildschirm installieren oder wieder deinstallieren.
+Der Schleim-Store ist der zentrale App-Katalog von Schleim OS. Besucher können empfohlene Webseiten entdecken, suchen, bewerten sowie auf ihrem Startbildschirm installieren oder wieder deinstallieren.
 
 ## Öffentlicher App-Katalog
 
@@ -34,7 +34,7 @@ Beispiel:
 
 ## Community-Vorschläge
 
-Besucher können im Slime Store eine Webseite mit Name, URL, Kategorie, Beschreibung und optionalem Icon vorschlagen. Das Formular öffnet ein vorbereitetes GitHub-Issue. Der Nutzer muss die Einreichung auf GitHub selbst abschicken.
+Besucher können im Schleim-Store eine Webseite mit Name, URL, Kategorie, Beschreibung und optionalem Icon vorschlagen. Das Formular öffnet ein vorbereitetes GitHub-Issue. Der Nutzer muss die Einreichung auf GitHub selbst abschicken.
 
 Ein Vorschlag erscheint **nicht automatisch** im Store. Er wird erst nach Prüfung durch den Admin veröffentlicht.
 
