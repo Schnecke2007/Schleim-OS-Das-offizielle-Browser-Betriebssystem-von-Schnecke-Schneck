@@ -1190,9 +1190,21 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     else if(!CONTACT_CHILD_IDS.includes(id))contactHubActive=false;
     activeAppId=id;
     els.title.textContent=localizedAppName(app.id);els.emoji.textContent=app.icon;
-    const rendered=RENDERERS[id]();
-    els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
-    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    let rendered='';
+    try{
+      rendered=RENDERERS[id]();
+      if(typeof rendered!=='string'||!rendered.trim())throw new Error('The app renderer returned no content.');
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+    }catch(error){
+      console.error('[Schleim OS] Could not open app:',id,error);
+      if(id==='images'){
+        rendered='<div class="app-hero"><p class="eyebrow">FOTOS & GALERIE</p><h2>Bilder aus der Fan-Welt.</h2><p>Die interne Galerieansicht konnte nicht vollständig geladen werden. Du kannst die öffentliche Bildergalerie direkt auf der offiziellen Webseite öffnen.</p><span class="large-emoji">🖼️</span></div><div class="notice">Die Originalgalerie kann externe Inhalte verwenden, die nicht in jedem Browser eingebettet werden dürfen.</div><div class="ssos-form-actions"><a class="app-button" href="'+esc(URLS.social)+'" target="_blank" rel="noopener noreferrer">Fotogalerie öffnen ↗</a></div>';
+      }else{
+        rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
+      }
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+    }
+    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
@@ -1482,26 +1494,32 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     return `legacy-${slug}-${(hash>>>0).toString(36)}`;
   }
   function normalizeLegacyApps(input) {
-    const entries=Array.isArray(input)?input:
-      (Array.isArray(input?.items)?input.items:
-      Array.isArray(input?.apps)?input.apps:
-      (input&&typeof input==='object'?Object.values(input):[]));
+    const entries=Array.isArray(input)?input:(input&&typeof input==='object'?Object.entries(input).map(([key,value])=>{
+      const keyIsUrl=/^(?:https?:)?\/\//i.test(key)||/^www\./i.test(key);
+      if(typeof value==='string')return keyIsUrl?{name:value,url:key}:{name:key,url:value};
+      if(value&&typeof value==='object'&&!Array.isArray(value)){
+        return {...value,id:value.id??value.appId??(keyIsUrl?undefined:key),_legacyUrl:keyIsUrl?safeLegacyUrl(key):''};
+      }
+      return value;
+    }):[]);
     const seen=new Set(),result=[];
     entries.slice(0,250).forEach((entry,index)=>{
       const raw=typeof entry==='string'?{url:entry}:entry;
-      if(!raw||typeof raw!=='object')return;
-      const url=safeLegacyUrl(raw.url??raw.href??raw.link??raw.targetUrl??raw.targetURL??raw.target??raw.website??raw.websiteUrl??raw.websiteURL??raw.address??raw.src??raw.appUrl??raw.destination??raw.value);
+      if(!raw||typeof raw!=='object'||Array.isArray(raw))return;
+      const urlCandidates=[raw.url,raw.href,raw.link,raw.targetUrl,raw.targetURL,raw.target_url,raw.website,raw.websiteUrl,raw.websiteURL,raw.website_url,raw.address,raw.src,raw.appUrl,raw.appURL,raw.app_url,raw.destination,raw.uri,raw.launchUrl,raw.openUrl,raw.target?.url,raw.target,raw.data?.url,raw._legacyUrl,raw.value];
+      const url=urlCandidates.map(safeLegacyUrl).find(Boolean)||'';
       if(!url)return;
-      const name=String(raw.name??raw.title??raw.appName??raw.label??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
+      const name=String(raw.name??raw.title??raw.appName??raw.displayName??raw.label??raw.caption??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
       const candidate=String(raw.id??raw.appId??raw.key??'').trim();
       let id=/^[a-zA-Z0-9_-]{1,120}$/.test(candidate)?candidate:stableLegacyId(name,url,index);
       if(seen.has(id))id=stableLegacyId(name,url,index);
-      let suffix=2,base=id;while(seen.has(id))id=`${base}-${suffix++}`;
+      let suffix=2,base=id;while(seen.has(id))id=base+'-'+suffix++;
       seen.add(id);
+      const iconValue=raw.iconUrl??raw.favicon??raw.logo??raw.image??raw.iconSrc??raw.imageUrl??raw.image_url??raw.iconURL??(/^https?:\/\//i.test(String(raw.icon||''))?raw.icon:'');
       result.push({
         id,name,url,
         icon:String(raw.icon??raw.emoji??raw.symbol??'🌐').slice(0,12),
-        iconUrl:safeLegacyUrl(raw.iconUrl??raw.favicon??raw.logo??raw.image??raw.iconSrc)||'',
+        iconUrl:safeLegacyUrl(iconValue)||'',
         color:/^#[0-9a-f]{6}$/i.test(raw.color||'')?raw.color:''
       });
     });
@@ -1509,12 +1527,14 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function appCollection(source) {
     if(!source||typeof source!=='object')return null;
-    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','customLinks','tiles']) {
+    let empty=null;
+    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','shortcuts','customLinks','tiles','items']) {
       const value=source[key];
       if(Array.isArray(value)&&value.length)return value;
       if(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length)return value;
+      if(Array.isArray(value)||value&&typeof value==='object')empty=value;
     }
-    return null;
+    return empty;
   }
 
   const STORE_KEY = 'ssos-store-v1';
@@ -1777,7 +1797,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     const params=new URLSearchParams();
     params.set('template','store-rating.md');
     params.set('title','[Schleim-Store-Bewertung] '+app.name);
-    params.set('body',['## Schleim-Store-Bewertung','','App-ID: '+app.id,'','Rating: '+rating,''].join('\\n'));
+    params.set('body',['## Schleim-Store-Bewertung','','App-ID: '+app.id,'','Rating: '+rating,''].join('\n'));
     window.open(STORE_ISSUE_URL+'?'+params.toString(),'_blank','noopener,noreferrer');
     toast(st('ratingPrepared'));
     return true;
@@ -2041,11 +2061,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
         isObject(data?.data?.preferences)?data.data.preferences:
         (isObject(data)&&Object.keys(data).some(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key))?data:{});
       const storedConfig=parseMaybe(preferences[KEY]);
-      const rootConfig=parseMaybe(data?.config??data?.settings);
+      const nestedData=isObject(data?.data)?data.data:{};
+      const rootConfig=parseMaybe(data?.config??data?.settings??nestedData.config??nestedData.settings);
       const candidateConfig=Array.isArray(storedConfig)?{apps:storedConfig}:
         (isObject(storedConfig)?storedConfig:(isObject(rootConfig)?rootConfig:{}));
-      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']);
-      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??directArray;
+      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']??preferences['ssos-links']??preferences['ssos-shortcuts']);
+      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??directArray;
       const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
       if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
       for(const [key,value] of Object.entries(preferences)){
@@ -2132,15 +2153,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function openCustomApp(id) {
     const app=config.apps.find(item=>item.id===String(id));
-    if(!app || !safeUrl(app.url))return false;
-    const link=document.createElement('a');
-    link.href=app.url;
-    link.target='_blank';
-    link.rel='noopener noreferrer';
-    link.referrerPolicy='no-referrer';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    const url=safeUrl(app?.url);
+    if(!app||!url){toast(st('invalid'));return false;}
+    window.open(url,'_blank','noopener,noreferrer');
     return true;
   }
   function getApps() {
