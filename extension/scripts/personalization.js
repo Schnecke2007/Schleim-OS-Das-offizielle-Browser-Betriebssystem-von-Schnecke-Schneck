@@ -69,7 +69,8 @@
     let raw=String(value ?? '').trim();
     if(!raw)return '';
     if(raw.startsWith('//'))raw='https:'+raw;
-    else if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(raw))raw='https://'+raw;
+    else if(/^[a-z][a-z0-9+.-]*:/i.test(raw)&&!/^https?:\/\//i.test(raw))return '';
+    else if(!/^https?:\/\//i.test(raw))raw='https://'+raw;
     return safeUrl(raw);
   }
   function stableLegacyId(name,url,index) {
