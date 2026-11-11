@@ -34,7 +34,9 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Startscherm met apps en websitelinks
 - App-tegels verslepen en opnieuw ordenen
 - Ontwerp, accentkleur en achtergrond aanpassen
-- App-editor en lokale JSON-back-up en herstel
+- Slime Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
+- App-voorstellen indienen via een GitHub-issueformulier
+- Lokale JSON-back-up en herstel van personalisatie
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
@@ -55,7 +57,8 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 
 - **Apps openen:** Selecteer een tegel op het startscherm.
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
-- **Personaliseren:** Open de instellingen of de app-editor in de interface.
+- **Personaliseren:** Open het instellingengedeelte in de interface.
+- **Apps ontdekken:** Open de Slime Store, zoek naar webapps en installeer of verwijder de gewenste apps.
 - **Instellingen back-uppen:** Gebruik de beschikbare JSON-functie om je persoonlijke instellingen te exporteren of te importeren.
 
 Persoonlijke instellingen worden lokaal in het browserprofiel opgeslagen. Bewaar je JSON-back-up op een veilige plek.
