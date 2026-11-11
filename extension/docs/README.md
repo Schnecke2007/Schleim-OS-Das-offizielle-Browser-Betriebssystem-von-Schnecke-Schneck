@@ -2,7 +2,7 @@
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
-- [Slime Store verwalten](SLIME-STORE.md) – Apps zum Katalog hinzufügen und Community-Vorschläge prüfen.
+- [Schleim-Store verwalten](SLIME-STORE.md) – Apps zum Katalog hinzufügen und Community-Vorschläge prüfen.
 ## Funktionen
 
 - App-Startbildschirm mit fest eingebauten Apps und eigenen Website-Apps
@@ -10,7 +10,7 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
 - Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; JSON-Export/Import sichert und restauriert diese Reihenfolge
-- Slime Store mit Suche, Empfehlungen, App-Installation, Deinstallation und GitHub-App-Vorschlägen
+- Schleim-Store mit Suche, Empfehlungen, App-Installation, Deinstallation und GitHub-App-Vorschlägen
 - HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und JSON-Backup
 - Deutsch, Englisch und Niederländisch
 
