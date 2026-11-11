@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-11",
+  "apps": [
+    {
+      "id": "chatgpt-web",
+      "name": "ChatGPT",
+      "icon": "🤖",
+      "url": "https://chatgpt.com/",
+      "category": "ai",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "tags": "ki künstliche intelligenz chatbot schreiben fragen",
+      "description": {
+        "de": "KI-Assistent für Fragen, Ideen, Texte und kreative Aufgaben.",
+        "en": "AI assistant for questions, ideas, writing and creative tasks.",
+        "nl": "AI-assistent voor vragen, ideeën, teksten en creatieve taken."
+      }
+    },
+    {
+      "id": "youtube-web",
+      "name": "YouTube",
+      "icon": "▶️",
+      "url": "https://www.youtube.com/",
+      "category": "media",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "tags": "videos musik unterhaltung clips",
+      "description": {
+        "de": "Videos, Musik, Tutorials und Unterhaltung entdecken.",
+        "en": "Discover videos, music, tutorials and entertainment.",
+        "nl": "Ontdek video's, muziek, tutorials en entertainment."
+      }
+    },
+    {
+      "id": "spotify-web",
+      "name": "Spotify",
+      "icon": "🎧",
+      "url": "https://open.spotify.com/",
+      "category": "media",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "tags": "musik podcasts audio playlist",
+      "description": {
+        "de": "Musik und Podcasts direkt im Browser anhören.",
+        "en": "Listen to music and podcasts directly in your browser.",
+        "nl": "Luister rechtstreeks in je browser naar muziek en podcasts."
+      }
+    },
+    {
+      "id": "wikipedia-web",
+      "name": "Wikipedia",
+      "icon": "📚",
+      "url": "https://www.wikipedia.org/",
+      "category": "knowledge",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "tags": "wissen lexikon recherche lernen",
+      "description": {
+        "de": "Wissen und Hintergrundinformationen in einer freien Enzyklopädie finden.",
+        "en": "Find knowledge and background information in a free encyclopedia.",
+        "nl": "Vind kennis en achtergrondinformatie in een vrije encyclopedie."
+      }
+    },
+    {
+      "id": "google-maps-web",
+      "name": "Google Maps",
+      "icon": "🗺️",
+      "url": "https://maps.google.com/",
+      "category": "navigation",
+      "addedAt": "2026-11-11",
+      "featured": false,
+      "tags": "karten routen navigation orte",
+      "description": {
+        "de": "Orte suchen, Karten ansehen und Routen planen.",
+        "en": "Find places, explore maps and plan routes.",
+        "nl": "Zoek plaatsen, bekijk kaarten en plan routes."
+      }
+    },
+    {
+      "id": "google-drive-web",
+      "name": "Google Drive",
+      "icon": "📁",
+      "url": "https://drive.google.com/",
+      "category": "productivity",
+      "addedAt": "2026-11-11",
+      "featured": false,
+      "tags": "dateien cloud dokumente speicher",
+      "description": {
+        "de": "Dateien und Dokumente online verwalten.",
+        "en": "Manage files and documents online.",
+        "nl": "Beheer bestanden en documenten online."
+      }
+    },
+    {
+      "id": "whatsapp-web",
+      "name": "WhatsApp Web",
+      "icon": "💬",
+      "url": "https://web.whatsapp.com/",
+      "category": "communication",
+      "addedAt": "2026-11-11",
+      "featured": false,
+      "tags": "nachrichten chat kommunikation",
+      "description": {
+        "de": "WhatsApp-Nachrichten im Browser nutzen.",
+        "en": "Use WhatsApp messaging in your browser.",
+        "nl": "Gebruik WhatsApp-berichten in je browser."
+      }
+    },
+    {
+      "id": "duckduckgo-web",
+      "name": "DuckDuckGo",
+      "icon": "🦆",
+      "url": "https://duckduckgo.com/",
+      "category": "privacy",
+      "addedAt": "2026-11-11",
+      "featured": false,
+      "tags": "suche datenschutz privat suchen",
+      "description": {
+        "de": "Alternative Suchmaschine mit Fokus auf Datenschutz.",
+        "en": "Alternative search engine with a focus on privacy.",
+        "nl": "Alternatieve zoekmachine met aandacht voor privacy."
+      }
+    }
+  ]
+}
