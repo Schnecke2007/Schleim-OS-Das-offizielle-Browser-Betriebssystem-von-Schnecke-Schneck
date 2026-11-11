@@ -5,3 +5,7 @@
 
 # Temporary local test exports
 *.admin-key.json
+
+# Local encrypted Schleim-Store admin credentials
+/schleim-store-admin-key.json
+/extension/admin/schleim-store-admin-key.json
