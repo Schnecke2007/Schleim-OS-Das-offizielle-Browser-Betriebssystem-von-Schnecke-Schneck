@@ -47,8 +47,27 @@ Wenn das Admin-Portal die offene Einreichung bereits anzeigen kann, aber das Ver
 
 Prüfe außerdem unter **Repository access**, ob genau dieses Repository ausgewählt ist. Die Statusmeldung im Admin-Portal nennt jetzt den betroffenen API-Bereich (`Contents` oder `Issues`). Erstelle bei Bedarf einen neuen Token mit diesen Rechten und danach im Admin-Portal eine neue verschlüsselte Admin-JSON-Datei. Den alten Token kannst du anschließend in GitHub widerrufen.
 
+## Automatische Kategorie-Ablage
+
+Bei jeder Freigabe aktualisiert das Admin-Portal den Laufzeitkatalog und das öffentliche Kategorie-Verzeichnis. Die Änderungen werden als gemeinsamer Git-Commit veröffentlicht. Es werden die GitHub-Git-Daten-Endpunkte für Blobs, Trees, Commits und das Aktualisieren des Branch-Refs verwendet; dafür reicht die Repository-Berechtigung Contents: Read and write aus. Die Issue-Berechtigung wird anschließend für den Kommentar und das Schließen der Einreichung verwendet.
+
+Die Kategorien sind:
+
+- `tools` – Tools
+- `ai` – KI & Chatbots
+- `media` – Medien
+- `knowledge` – Wissen
+- `navigation` – Navigation
+- `productivity` – Produktivität
+- `communication` – Kommunikation
+- `privacy` – Suche & Datenschutz
+
+Wird eine bestehende App in eine andere Kategorie verschoben, entfernt das Admin-Portal die alte Kategorie-Datei im selben Commit und aktualisiert beide Kategorie-Übersichten.
+
 ## Sicherheitshinweise
 
+- Das Fine-grained Token ist auf dieses Repository begrenzt. Die Contents-Berechtigung ist jedoch nicht auf den Ordner `Store/` beschränkt: Sie erlaubt Änderungen an Repository-Inhalten allgemein. Teile den Token daher niemals und widerrufe ihn sofort bei Verlust oder Verdacht auf Offenlegung.
+- Die GitHub-Issues sind öffentlich. Veröffentliche dort keine privaten Angaben, Passwörter, Token oder vertraulichen Daten.
 - **Niemals** den unverschlüsselten Token in GitHub, Issue-Kommentare, Screenshots oder Chats kopieren.
 - Die Admin-Datei allein reicht ohne Passphrase nicht zum Entschlüsseln; schütze aber beides getrennt.
 - Der Token befindet sich während einer angemeldeten Admin-Sitzung im Arbeitsspeicher des Browsers. Melde dich auf gemeinsam genutzten Geräten ab und schließe das Fenster.
