@@ -9,7 +9,7 @@ Erstelle in deinen GitHub-Einstellungen einen **Fine-grained personal access tok
 - Resource owner: `Schnecke2007`
 - Repository access: **Only select repositories** → ausschließlich dieses Schleim-OS-Repository auswählen (nicht nur alle Repositories allgemein anzeigen lassen)
 - Repository permissions:
-  - **Contents: Read and write** – zum Aktualisieren von `extension/data/store-apps.json`
+  - **Contents: Read and write** – zum Aktualisieren des zentralen Laufzeitkatalogs und der Kategorie-Dateien unter `Store/`
   - **Issues: Read and write** – zum Lesen, Kommentieren und Schließen von Einreichungen
 - Keine weiteren Rechte hinzufügen.
 - Verwende nach Möglichkeit ein Ablaufdatum und erneuere den Token bei Bedarf.
