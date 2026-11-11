@@ -23,7 +23,10 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Slime Store, App-Vorschläge, Personalisierung, JSON-Backup und Kachel-Anordnung
-- `styles/` – Design und Personalisierung
+- `scripts/slime-store-admin.js` – verschlüsseltes Admin-Portal und GitHub-Veröffentlichung
+- `data/store-apps.json` – zentraler Store-Katalog
+- `styles/` – Design und Personalisierung einschließlich Admin-Portal
+- `admin/README.md` – Anleitung für den geschützten Admin-Zugang
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
