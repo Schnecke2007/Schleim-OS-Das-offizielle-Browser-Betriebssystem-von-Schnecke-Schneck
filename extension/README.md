@@ -27,6 +27,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung einschließlich Admin-Portal
 - `admin/README.md` – Anleitung für den geschützten Admin-Zugang
+- [Slime Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md) · [Admin-Zugang und Veröffentlichung](admin/README.md)
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
