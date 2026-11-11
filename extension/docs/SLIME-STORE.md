@@ -95,3 +95,16 @@ Das Admin-Portal und sein Quellcode sind ebenfalls öffentlich sichtbar. Die Adm
 Die Erweiterung verwendet Dateien unter `extension/scripts/` und `extension/styles/`. Die Standalone-Demo enthält eingebettete Kopien dieser Dateien in `extension/standalone/schleim-os-standalone.html`.
 
 Wenn du den Store-Code oder sein Design änderst, müssen die eingebetteten Abschnitte der Standalone-Datei ebenfalls aktualisiert werden. Sonst können Erweiterung und Demo unterschiedliche Funktionen zeigen.
+
+## Community-Bewertungen über GitHub
+
+- Jede App-Karte zeigt den öffentlichen Durchschnitt und die Anzahl gültiger Stimmen aus `extension/data/store-ratings.json`.
+- Ein Klick auf einen der fünf Sterne öffnet eine GitHub-Einreichung mit App-ID und gewählter Punktzahl. Besucher müssen die Einreichung auf GitHub selbst absenden und benötigen dafür ein GitHub-Konto.
+- Das Workflow-File `.github/workflows/store-ratings.yml` berechnet nach dem Öffnen, Bearbeiten, Wiederöffnen oder Schließen einer Bewertungs-Einreichung die Aggregatwerte neu.
+- Je GitHub-Konto und App zählt die zuletzt bearbeitete offene Bewertung. Geschlossene Bewertungen zählen nicht mehr.
+- Die Issues sind öffentlich: GitHub-Benutzername und abgegebene Bewertung sind sichtbar. In der aggregierten JSON-Datei werden dagegen nur Durchschnitt, Anzahl und Verteilung gespeichert.
+- Die Workflow-Automation verwendet den von GitHub bereitgestellten `GITHUB_TOKEN`; ein persönlicher Admin-Token wird nicht in den Browsercode eingebaut. Das Repository muss GitHub Actions erlauben und Schreibrechte für den Workflow-Token zulassen.
+
+## Lokale Webseiten aus Backups
+
+Früher gespeicherte Webseiten werden nach dem Import in der Store-Sektion **Bisherige eigene Webseiten** angezeigt. Jede lokale Webseite kann von dort in das Einreichungsformular übernommen werden. Vor dem Absenden muss eine aussagekräftige Beschreibung ergänzt werden. Die App wird erst nach Prüfung und Freigabe durch den Betreiber in den offiziellen Katalog aufgenommen.
