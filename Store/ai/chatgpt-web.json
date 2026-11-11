@@ -1,0 +1,15 @@
+{
+  "id": "chatgpt-web",
+  "name": "ChatGPT",
+  "icon": "🤖",
+  "url": "https://chatgpt.com/",
+  "category": "ai",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "tags": "ki künstliche intelligenz chatbot schreiben fragen",
+  "description": {
+    "de": "KI-Assistent für Fragen, Ideen, Texte und kreative Aufgaben.",
+    "en": "AI assistant for questions, ideas, writing and creative tasks.",
+    "nl": "AI-assistent voor vragen, ideeën, teksten en creatieve taken."
+  }
+}
