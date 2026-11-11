@@ -1,0 +1,116 @@
+name: Schleim-Store-Community-Bewertungen
+
+on:
+  issues:
+    types: [opened, edited, reopened, closed]
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: schleim-store-ratings-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  rebuild-ratings:
+    if: startsWith(github.event.issue.title, '[Schleim-Store-Bewertung]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Community-Bewertungen neu berechnen
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+
+            const catalogResponse = await github.rest.repos.getContent({
+              owner,
+              repo,
+              path: 'extension/data/store-apps.json'
+            });
+            if (Array.isArray(catalogResponse.data)) {
+              throw new Error('The Store catalog path resolved to a directory.');
+            }
+            const catalogText = Buffer.from(catalogResponse.data.content, 'base64').toString('utf8');
+            const catalogJson = JSON.parse(catalogText);
+            const catalogApps = Array.isArray(catalogJson) ? catalogJson : (catalogJson.apps || []);
+            const publishedIds = new Set(
+              catalogApps
+                .map(app => String(app?.id || '').trim())
+                .filter(id => /^[a-z0-9][a-z0-9-]{1,79}$/.test(id))
+            );
+
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            // One active vote per GitHub account and app. If a user submits
+            // more than one open rating issue, the most recently edited one wins.
+            const latestVotes = new Map();
+            for (const issue of issues) {
+              if (issue.pull_request || !/^\[Schleim-Store-Bewertung\]/i.test(issue.title || '')) continue;
+
+              const body = String(issue.body || '');
+              const appMatch = body.match(/^\s*App-ID\s*:\s*`?([a-z0-9][a-z0-9-]{1,79})`?\s*$/im);
+              const ratingMatch = body.match(/^\s*(?:Rating|Bewertung)\s*:\s*([1-5])(?:\s*\/\s*5)?\s*$/im);
+              const appId = appMatch?.[1] || '';
+              const rating = Number(ratingMatch?.[1] || 0);
+              const login = String(issue.user?.login || '').trim().toLowerCase();
+
+              if (!publishedIds.has(appId) || !login || !Number.isInteger(rating) || rating < 1 || rating > 5) continue;
+
+              const key = appId + ':' + login;
+              const current = latestVotes.get(key);
+              if (!current || new Date(issue.updated_at) > new Date(current.updated_at)) {
+                latestVotes.set(key, { appId, rating, updated_at: issue.updated_at });
+              }
+            }
+
+            const totals = {};
+            for (const vote of latestVotes.values()) {
+              const item = totals[vote.appId] || (totals[vote.appId] = {
+                count: 0,
+                sum: 0,
+                distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+              });
+              item.count += 1;
+              item.sum += vote.rating;
+              item.distribution[vote.rating] += 1;
+            }
+
+            const apps = {};
+            for (const [appId, item] of Object.entries(totals)) {
+              apps[appId] = {
+                average: Number((item.sum / item.count).toFixed(2)),
+                count: item.count,
+                distribution: item.distribution
+              };
+            }
+
+            const output = {
+              schemaVersion: 1,
+              updatedAt: new Date().toISOString(),
+              apps
+            };
+            const path = 'extension/data/store-ratings.json';
+            let sha;
+            try {
+              const existing = await github.rest.repos.getContent({ owner, repo, path });
+              if (!Array.isArray(existing.data)) sha = existing.data.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: 'Update Schleim-Store community ratings',
+              content: Buffer.from(JSON.stringify(output, null, 2) + '\n', 'utf8').toString('base64'),
+              ...(sha ? { sha } : {})
+            });
+
+            core.notice(`Community ratings updated for ${Object.keys(apps).length} apps.`);
