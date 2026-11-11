@@ -1,0 +1,15 @@
+{
+  "id": "whatsapp-web",
+  "name": "WhatsApp Web",
+  "icon": "💬",
+  "url": "https://web.whatsapp.com/",
+  "category": "communication",
+  "addedAt": "2026-11-11",
+  "featured": false,
+  "tags": "nachrichten chat kommunikation",
+  "description": {
+    "de": "WhatsApp-Nachrichten im Browser nutzen.",
+    "en": "Use WhatsApp messaging in your browser.",
+    "nl": "Gebruik WhatsApp-berichten in je browser."
+  }
+}
