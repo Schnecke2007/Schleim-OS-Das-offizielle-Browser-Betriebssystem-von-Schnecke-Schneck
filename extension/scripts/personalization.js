@@ -281,7 +281,7 @@
       const app=STORE_CATALOG.find(item=>item.id===id);if(!app)return;
       const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-store-tile';
       tile.dataset.ssosStoreApp=app.id;tile.title=app.name;
-      tile.innerHTML='<span class="icon-tile">'+esc(app.icon)+'</span><small>'+esc(app.name)+'</small>';
+      tile.innerHTML='<span class="icon-tile">'+iconMarkup(app)+'</span><small>'+esc(app.name)+'</small>';
       grid.appendChild(tile);
     });
     applyHomeOrder();initHomeReordering();
