@@ -466,20 +466,23 @@
 
   function renderImages(){
     const lang=currentLanguage();
-    const unavailable=lang==='en'
-      ?'The previously embedded static image files are no longer available as local gallery data in this version. You can load the current public Wix/Instagram gallery below or open it externally.'
+    const copy=lang==='en'
+      ?'Open the public photo and social gallery on the official website. Some providers block embedded galleries, so the external link is the most reliable option.'
       :lang==='nl'
-        ?'De eerder ingesloten statische afbeeldingsbestanden zijn in deze versie niet meer beschikbaar als lokale galerijgegevens. Je kunt hieronder de actuele openbare Wix-/Instagram-galerij laden of extern openen.'
-        :'Die früher eingebundenen statischen Bilddateien stehen in dieser Version nicht mehr als lokale Galerie-Daten zur Verfügung. Du kannst stattdessen die aktuelle öffentliche Wix-/Instagram-Galerie unten laden oder extern öffnen.';
-    const gallery=WIX_GALLERY_IMAGES.length
-      ?`<div class="image-gallery">${WIX_GALLERY_IMAGES.map((image,index)=>`<a class="image-gallery-item" href="${image.src}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${image.src}" alt="${esc(image.alt)}"><span>Bild ${index+1} · Originalgröße ↗</span></a>`).join('')}</div>`
-      :`<div class="notice">${esc(unavailable)}</div>`;
-    return `${appHero('BILDER','Bilder aus der Fan-Welt.','Öffentliche Bilddateien der offiziellen Fan-Webseite – direkt in einer eigenen Galerie gesammelt.','🖼️')}
-      ${section('Galerie der offiziellen Webseite')}${gallery}
-      ${section('Weitere Bilder im Original-Feed')}<div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Social-Media-Galerie</b><small>Die vollständige Wix-/Instagram-Galerie einschließlich weiterer Bild- und Videobeiträge kann hier nachgeladen werden.</small><button class="app-button" type="button" data-load-frame="imageFeed">Galerie laden</button></div></div>
+        ?'Open de openbare foto- en socialmediagalerij op de officiële website. Sommige aanbieders blokkeren ingesloten galerijen; de externe link is daarom het betrouwbaarst.'
+        :'Öffne die öffentliche Foto- und Social-Media-Galerie auf der offiziellen Webseite. Manche Anbieter blockieren eingebettete Galerien – deshalb ist der externe Aufruf der zuverlässigste Weg.';
+    const openLabel=lang==='en'?'Open photo gallery':lang==='nl'?'Fotogalerij openen':'Fotogalerie öffnen';
+    const loadLabel=lang==='en'?'Try loading here':lang==='nl'?'Hier proberen te laden':'Hier laden versuchen';
+    return `${appHero('BILDER','Bilder aus der Fan-Welt.',copy,'🖼️')}
+      <div class="notice">${esc(copy)}</div>
+      <div class="ssos-form-actions">
+        <a class="app-button" href="${esc(URLS.social)}" target="_blank" rel="noopener noreferrer">${openLabel} ↗</a>
+        <button class="app-button secondary" type="button" data-load-frame="imageFeed">${loadLabel}</button>
+      </div>
+      ${section('Galerie der offiziellen Webseite')}
+      <div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Bildergalerie</b><small>Die Galerie wird erst nach deiner Auswahl geladen. Falls die Einbettung blockiert wird, nutze den externen Öffnungsbutton.</small><button class="app-button" type="button" data-load-frame="imageFeed">${loadLabel}</button></div></div>
       ${external(URLS.social,'Originale Bilder- und Social-Media-Seite öffnen',true)}`;
   }
-
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}
     <p class="body-copy">„Willkommen auf meiner offiziellen Fan-Webseite! Hier findest du alles über meine Projekte, Hobbys und Social Media Aktivitäten. Nutze den integrierten Live-Chat, um direkt mit mir zu sprechen, und tritt unseren Gruppen bei, um dich mit anderen Fans auszutauschen. Viel Spaß beim Erkunden!“</p>
     ${section('Funktionen laut Website und Projektangaben')}<div class="info-grid">${infoCard('🌙','Dark Mode','Dunkle Darstellung')}${infoCard('💬','Mitglieder-Chat','Chatfunktion für die Community')}${infoCard('👤','Profile','Mitgliederprofile')}${infoCard('👥','Gruppen','Austausch mit anderen Fans')}${infoCard('🧠','Schneckes KI','KI-Funktion mit Datenschutzhinweis vor der Nutzung')}${infoCard('🛍️','Shop-Einbindung','On-Demand-Shop / externe Shop-Verknüpfung')}${infoCard('⭐','Google-Bewertung','Link zum öffentlichen Unternehmensprofil')}</div>
