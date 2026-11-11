@@ -41,6 +41,19 @@ This project is not a standalone operating system that replaces Windows, Android
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
 
+## 🛍️ Schleim-Store
+
+The **Schleim-Store** lets you discover recommended websites and web apps, browse categories, leave personal ratings, and install or remove apps from your Schleim OS home screen.
+
+- **Discover:** Recommendations, new apps, top ratings and categories.
+- **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
+- **Submit:** Visitors can suggest websites through the public [GitHub submission form](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
+- **Review and publish:** Suggestions are not published automatically. The admin reviews and approves each app before it is added to the Store.
+
+The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
+
+**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. Admin credentials must never be committed to the repository. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md) and the [admin setup guide](extension/admin/README.md).
+
 ## 📥 Download and installation
 
 1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
