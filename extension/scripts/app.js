@@ -465,9 +465,15 @@
   }
 
   function renderImages(){
+    const lang=currentLanguage();
+    const unavailable=lang==='en'
+      ?'The previously embedded static image files are no longer available as local gallery data in this version. You can load the current public Wix/Instagram gallery below or open it externally.'
+      :lang==='nl'
+        ?'De eerder ingesloten statische afbeeldingsbestanden zijn in deze versie niet meer beschikbaar als lokale galerijgegevens. Je kunt hieronder de actuele openbare Wix-/Instagram-galerij laden of extern openen.'
+        :'Die früher eingebundenen statischen Bilddateien stehen in dieser Version nicht mehr als lokale Galerie-Daten zur Verfügung. Du kannst stattdessen die aktuelle öffentliche Wix-/Instagram-Galerie unten laden oder extern öffnen.';
     const gallery=WIX_GALLERY_IMAGES.length
       ?`<div class="image-gallery">${WIX_GALLERY_IMAGES.map((image,index)=>`<a class="image-gallery-item" href="${image.src}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${image.src}" alt="${esc(image.alt)}"><span>Bild ${index+1} · Originalgröße ↗</span></a>`).join('')}</div>`
-      :'<div class="notice">Die früher eingebundenen statischen Bilddateien stehen in dieser Version nicht mehr als lokale Galerie-Daten zur Verfügung. Du kannst stattdessen die aktuelle öffentliche Wix-/Instagram-Galerie unten laden oder extern öffnen.</div>';
+      :`<div class="notice">${esc(unavailable)}</div>`;
     return `${appHero('BILDER','Bilder aus der Fan-Welt.','Öffentliche Bilddateien der offiziellen Fan-Webseite – direkt in einer eigenen Galerie gesammelt.','🖼️')}
       ${section('Galerie der offiziellen Webseite')}${gallery}
       ${section('Weitere Bilder im Original-Feed')}<div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Social-Media-Galerie</b><small>Die vollständige Wix-/Instagram-Galerie einschließlich weiterer Bild- und Videobeiträge kann hier nachgeladen werden.</small><button class="app-button" type="button" data-load-frame="imageFeed">Galerie laden</button></div></div>
