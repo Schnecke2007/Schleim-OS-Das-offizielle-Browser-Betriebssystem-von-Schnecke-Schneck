@@ -85,7 +85,7 @@
     entries.slice(0,250).forEach((entry,index)=>{
       const raw=typeof entry==='string'?{url:entry}:entry;
       if(!raw||typeof raw!=='object')return;
-      const url=safeLegacyUrl(raw.url??raw.href??raw.link??raw.targetUrl??raw.target??raw.website??raw.address??raw.src??raw.appUrl);
+      const url=safeLegacyUrl(raw.url??raw.href??raw.link??raw.targetUrl??raw.targetURL??raw.target??raw.website??raw.websiteUrl??raw.websiteURL??raw.address??raw.src??raw.appUrl??raw.destination??raw.value);
       if(!url)return;
       const name=String(raw.name??raw.title??raw.appName??raw.label??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
       const candidate=String(raw.id??raw.appId??raw.key??'').trim();
@@ -105,15 +105,11 @@
   function appCollection(source) {
     if(!source||typeof source!=='object')return null;
     let empty=null;
-    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','links','bookmarks']) {
+    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','links','bookmarks','shortcuts','customLinks','tiles','items']) {
       const value=source[key];
-      if(Array.isArray(value)){
-        if(value.length)return value;
-        empty=value;
-      }else if(value&&typeof value==='object'){
-        if(Object.keys(value).length)return value;
-        empty=value;
-      }
+      if(Array.isArray(value)&&value.length)return value;
+      if(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length)return value;
+      if(Array.isArray(value)||value&&typeof value==='object')empty=value;
     }
     return empty;
   }
@@ -378,7 +374,7 @@
     const params=new URLSearchParams();
     params.set('template','store-rating.md');
     params.set('title','[Schleim-Store-Bewertung] '+app.name);
-    params.set('body','## Schleim-Store-Bewertung\\n\\nApp-ID: '+app.id+'\\n\\nRating: '+rating+'\\n\\n');
+    params.set('body',['## Schleim-Store-Bewertung','','App-ID: '+app.id,'','Rating: '+rating,''].join('\\n'));
     window.open(STORE_ISSUE_URL+'?'+params.toString(),'_blank','noopener,noreferrer');
     toast(st('ratingPrepared'));
     return true;
@@ -496,7 +492,7 @@
     $('#ssosAppUrl').value=app.url;
     $('#ssosAppName').value=app.name;
     $('#ssosAppCategory').value='tools';
-    $('#ssosAppDescription').value='';
+    $('#ssosAppDescription').value='Persönlich gespeicherte Webseite: '+app.name+' ('+storeHost(app)+'). Bitte ergänze hier, welche Funktionen die Webseite bietet und warum sie im Schleim-Store nützlich ist.';
     $('#ssosAppIconUrl').value=app.iconUrl||'';
     pendingSuggestionIcon=app.icon||'🌐';
     previewIcon(app.iconUrl||'');
@@ -734,7 +730,14 @@
   function openCustomApp(id) {
     const app=config.apps.find(item=>item.id===String(id));
     if(!app || !safeUrl(app.url))return false;
-    window.open(app.url,'_blank','noopener,noreferrer');
+    const link=document.createElement('a');
+    link.href=app.url;
+    link.target='_blank';
+    link.rel='noopener noreferrer';
+    link.referrerPolicy='no-referrer';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
     return true;
   }
   function getApps() {
