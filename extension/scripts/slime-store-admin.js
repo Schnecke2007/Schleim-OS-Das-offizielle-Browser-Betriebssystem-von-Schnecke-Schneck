@@ -111,10 +111,11 @@
       'Weitere Informationen: [Store-Dokumentation](../extension/docs/SLIME-STORE.md) · [Admin-Handbuch](../extension/admin/README.md).\n\n'+
       '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich. Keine Tokens, Passwörter oder privaten Admin-Dateien hier ablegen.\n';
   }
-  async function commitStoreFiles(files,message){
+  async function commitStoreFiles(files,message,expectedParentSha){
     const ref=await api('/git/ref/heads/'+BRANCH);
     const parentSha=ref?.object?.sha;
     if(!parentSha)throw new Error('GitHub hat den aktuellen main-Branch nicht zurückgegeben.');
+    if(expectedParentSha&&parentSha!==expectedParentSha)throw new Error('Der main-Branch wurde während der Prüfung geändert. Bitte die Einreichung erneut öffnen und noch einmal veröffentlichen.');
     const parent=await api('/git/commits/'+parentSha);
     const treeEntries=[];
     for(const [path,content] of Object.entries(files)){
@@ -202,7 +203,10 @@
     if(!de||!en||!nl){status(t('missing'),true);return;}
     const button=$('#ssosAdminPublishForm button[type="submit"]');if(button){button.disabled=true;button.textContent=t('loading');}
     try{
-      const current=await api('/contents/'+CATALOG+'?ref='+encodeURIComponent(BRANCH));
+      const branch=await api('/git/ref/heads/'+BRANCH);
+      const baseSha=branch?.object?.sha;
+      if(!baseSha)throw new Error('GitHub hat den aktuellen main-Branch nicht zurückgegeben.');
+      const current=await api('/contents/'+CATALOG+'?ref='+encodeURIComponent(baseSha));
       const decoded=new TextDecoder().decode(fromB64(current.content)),old=JSON.parse(decoded),apps=Array.isArray(old)?old:(Array.isArray(old.apps)?old.apps:[]);
       const app={id,name,url,category,icon:($('#adminAppIcon').value.trim()||'🌐').slice(0,8),iconUrl:iconUrl||'',tags:$('#adminAppTags').value.trim().slice(0,400),addedAt:new Date().toISOString().slice(0,10),featured:$('#adminAppFeatured').checked,description:{de,en,nl}};
       const at=apps.findIndex(x=>x.id===id),previous=at>=0?apps[at]:null;
@@ -217,7 +221,7 @@
         files['Store/'+previous.category+'/README.md']=makeCategoryReadme(previous.category,apps);
       }
       files['Store/README.md']=makeStoreReadme(apps);
-      await commitStoreFiles(files,'Schleim-Store: publish '+name);
+      await commitStoreFiles(files,'Schleim-Store: publish '+name,baseSha);
       status(t('published'));await window.SSOSPersonalization?.refreshStoreCatalog?.();
       try{await api('/issues/'+selected.number+'/comments',{method:'POST',body:JSON.stringify({body:t('approved')})});await api('/issues/'+selected.number,{method:'PATCH',body:JSON.stringify({state:'closed',state_reason:'completed'})});}
       catch(e){status(t('published')+' '+permissionMessage(e)+' Der Katalog und das Kategorie-Verzeichnis sind bereits veröffentlicht; nur das Kommentieren/Schließen der Einreichung ist fehlgeschlagen.',true);}
