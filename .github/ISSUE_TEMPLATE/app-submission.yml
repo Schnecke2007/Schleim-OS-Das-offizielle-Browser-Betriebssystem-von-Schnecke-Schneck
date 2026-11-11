@@ -1,6 +1,6 @@
-name: Slime Store – App-Vorschlag
-description: Schlage eine Website oder Web-App für den Slime Store vor.
-title: "[Slime Store] App-Vorschlag: "
+name: Schleim-Store – App-Vorschlag
+description: Schlage eine Website oder Web-App für den Schleim-Store vor.
+title: "[Schleim-Store] App-Vorschlag: "
 body:
   - type: markdown
     attributes:
@@ -11,7 +11,7 @@ body:
     id: app-name
     attributes:
       label: App-Name
-      description: Wie soll die App im Slime Store heißen?
+      description: Wie soll die App im Schleim-Store heißen?
       placeholder: Beispiel-App
     validations:
       required: true
