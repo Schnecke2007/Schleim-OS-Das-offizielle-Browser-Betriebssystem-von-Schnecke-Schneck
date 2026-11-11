@@ -1,0 +1,7 @@
+# Local encrypted Slime Store admin credentials
+/slime-store-admin-key.json
+/*.slime-admin.json
+/extension/admin/slime-store-admin-key.json
+
+# Temporary local test exports
+*.admin-key.json
