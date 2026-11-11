@@ -1,4 +1,4 @@
-/* Private Slime Store administration UI */
+/* Private Schleim-Store administration UI */
 #ssosAdminPortal[hidden]{display:none!important}
 .ssos-admin-portal{margin:22px 0 18px;padding:16px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#211a17f0,#17201bf2);box-shadow:0 18px 42px #0003}
 .ssos-admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 0 15px}
