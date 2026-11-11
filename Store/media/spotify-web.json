@@ -1,0 +1,15 @@
+{
+  "id": "spotify-web",
+  "name": "Spotify",
+  "icon": "🎧",
+  "url": "https://open.spotify.com/",
+  "category": "media",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "tags": "musik podcasts audio playlist",
+  "description": {
+    "de": "Musik und Podcasts direkt im Browser anhören.",
+    "en": "Listen to music and podcasts directly in your browser.",
+    "nl": "Luister rechtstreeks in je browser naar muziek en podcasts."
+  }
+}
