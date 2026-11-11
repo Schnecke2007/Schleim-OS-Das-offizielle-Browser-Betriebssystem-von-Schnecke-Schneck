@@ -23,12 +23,12 @@
     const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await keyFor(pass,salt,'encrypt');
     const payload={token,owner:OWNER,repository:REPO,branch:BRANCH,createdAt:new Date().toISOString()};
     const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(payload)));
-    return {format:'Schleim OS Slime Store Admin Key',version:1,cipher:'AES-256-GCM',kdf:'PBKDF2-SHA-256',iterations:ITERATIONS,salt:toB64(salt),iv:toB64(iv),ciphertext:toB64(new Uint8Array(cipher))};
+    return {format:'Schleim OS Schleim-Store Admin Key',version:1,cipher:'AES-256-GCM',kdf:'PBKDF2-SHA-256',iterations:ITERATIONS,salt:toB64(salt),iv:toB64(iv),ciphertext:toB64(new Uint8Array(cipher))};
   }
   async function decryptFile(file,pass){
     if(!file||file.size>128000)throw new Error(t('bad'));
     const data=JSON.parse(await file.text());
-    if(data.format!=='Schleim OS Slime Store Admin Key'||data.version!==1||data.cipher!=='AES-256-GCM'||data.kdf!=='PBKDF2-SHA-256'||data.iterations!==ITERATIONS)throw new Error(t('bad'));
+    if(!['Schleim OS Schleim-Store Admin Key','Schleim OS Slime Store Admin Key'].includes(data.format)||data.version!==1||data.cipher!=='AES-256-GCM'||data.kdf!=='PBKDF2-SHA-256'||data.iterations!==ITERATIONS)throw new Error(t('bad'));
     const key=await keyFor(pass,fromB64(data.salt),'decrypt');
     const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:fromB64(data.iv)},key,fromB64(data.ciphertext));
     const p=JSON.parse(new TextDecoder().decode(plain));
@@ -62,7 +62,7 @@
   function permissionMessage(error){
     const path=String(error?.apiPath||''),method=String(error?.httpMethod||'GET').toUpperCase();
     const prefix='GitHub verweigert '+method+' '+(path.split('?')[0]||'den API-Zugriff')+'. ';
-    if(path.startsWith('/contents/'))return prefix+'Für das Veröffentlichen fehlt wahrscheinlich die Repository-Berechtigung Contents: Read and write. Öffne deinen Fine-grained Token, wähle dieses Repository aus und setze Contents auf Read and write. Danach erneut versuchen. Falls du einen neuen Token erstellst, erstelle auch eine neue verschlüsselte Admin-JSON-Datei.';
+    if(path.startsWith('/contents/')||path.startsWith('/git/'))return prefix+'Für das Veröffentlichen oder Aktualisieren der Kategorie-Dateien benötigt der Token Repository-Berechtigung Contents: Read and write. Öffne deinen Fine-grained Token, wähle dieses Repository aus und setze Contents auf Read and write. Danach erneut versuchen. Falls du einen neuen Token erstellst, erstelle auch eine neue verschlüsselte Admin-JSON-Datei.';
     if(path.startsWith('/issues'))return prefix+'Für Einreichungen und deren Status benötigt der Token Issues: Read and write für genau dieses Repository. Prüfe die Repository-Auswahl und die Issues-Berechtigung in deinem Fine-grained Token.';
     return error?.message||'GitHub API nicht erreichbar. Prüfe Verbindung, Repository-Auswahl und Token-Berechtigungen.';
   }
@@ -78,6 +78,56 @@
       throw error;
     }
     return data;
+  }
+  function categoryLabel(category){
+    const labels={tools:'Tools',ai:'KI & Chatbots',media:'Medien',knowledge:'Wissen',navigation:'Navigation',productivity:'Produktivität',communication:'Kommunikation',privacy:'Suche & Datenschutz'};
+    return labels[category]||category;
+  }
+  function makeCategoryReadme(category,apps){
+    const sorted=[...apps].filter(app=>app.category===category).sort((a,b)=>a.name.localeCompare(b.name,'de'));
+    const rows=sorted.length?sorted.map(app=>{
+      const description=String(app.description?.de||'').replace(/\s+/g,' ').trim();
+      return '- **'+app.name+'** — '+description+' ([JSON](./'+app.id+'.json))';
+    }).join('\n'):'Noch keine Apps veröffentlicht.';
+    return '# '+categoryLabel(category)+' ('+category+')\n\n'+
+      'Öffentliches App-Verzeichnis der Kategorie **'+categoryLabel(category)+'** im Schleim-Store.\n\n'+
+      '**Veröffentlichte Apps:** '+sorted.length+'\n\n'+rows+'\n\n'+
+      '[Zur Store-Übersicht](../README.md)\n';
+  }
+  function makeStoreReadme(apps){
+    const categories=CATEGORIES.map(category=>{
+      const count=apps.filter(app=>app.category===category).length;
+      return '| ['+categoryLabel(category)+'](./'+category+'/README.md) | '+category+' | '+count+' |';
+    }).join('\n');
+    return '# Schleim-Store – öffentlicher App-Katalog 🐌\n\n'+
+      'Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jede App besitzt eine eigene JSON-Datei im jeweiligen Kategorieordner.\n\n'+
+      '## Kategorien\n\n| Kategorie | Ordner | Apps |\n|---|---|---:|\n'+categories+'\n\n'+
+      '## Wie die Ablage funktioniert\n\n'+
+      '- Einreichungen werden zunächst als GitHub-Issue eingereicht und von Schnecke Schneck geprüft.\n'+
+      '- Erst nach der Genehmigung wird eine App hier veröffentlicht.\n'+
+      '- Die App wird automatisch unter Store/<category>/<app-id>.json abgelegt.\n'+
+      '- Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.\n'+
+      '- Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.\n\n'+
+      '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich. Keine Tokens, Passwörter oder privaten Admin-Dateien hier ablegen.\n';
+  }
+  async function commitStoreFiles(files,message){
+    const ref=await api('/git/ref/heads/'+BRANCH);
+    const parentSha=ref?.object?.sha;
+    if(!parentSha)throw new Error('GitHub hat den aktuellen main-Branch nicht zurückgegeben.');
+    const parent=await api('/git/commits/'+parentSha);
+    const treeEntries=[];
+    for(const [path,content] of Object.entries(files)){
+      if(content===null){
+        treeEntries.push({path,mode:'100644',type:'blob',sha:null});
+        continue;
+      }
+      const blob=await api('/git/blobs',{method:'POST',body:JSON.stringify({content,encoding:'utf-8'})});
+      treeEntries.push({path,mode:'100644',type:'blob',sha:blob.sha});
+    }
+    const tree=await api('/git/trees',{method:'POST',body:JSON.stringify({base_tree:parent.tree.sha,tree:treeEntries})});
+    const commit=await api('/git/commits',{method:'POST',body:JSON.stringify({message,tree:tree.sha,parents:[parentSha]})});
+    await api('/git/refs/heads/'+BRANCH,{method:'PATCH',body:JSON.stringify({sha:commit.sha,force:false})});
+    return commit.sha;
   }
   async function createKey(event){
     event.preventDefault();const token=$('#ssosAdminToken').value.trim(),pass=$('#ssosAdminPass').value,repeat=$('#ssosAdminRepeat').value;
@@ -147,20 +197,29 @@
     event.preventDefault();if(!credentials||!selected)return;
     const id=$('#adminAppId').value.trim().toLowerCase(),name=$('#adminAppName').value.trim(),url=safeUrl($('#adminAppUrl').value),iconUrl=safeUrl($('#adminAppIconUrl').value),category=$('#adminAppCategory').value;
     const de=$('#adminDescDe').value.trim(),en=$('#adminDescEn').value.trim(),nl=$('#adminDescNl').value.trim();
-    if(!/^[a-z0-9][a-z0-9-]{1,59}$/.test(id)||!name||!url){status(t('invalid'),true);return;}
+    if(!/^[a-z0-9][a-z0-9-]{1,59}$/.test(id)||!name||!url||!CATEGORIES.includes(category)){status(t('invalid'),true);return;}
     if(!de||!en||!nl){status(t('missing'),true);return;}
     const button=$('#ssosAdminPublishForm button[type="submit"]');if(button){button.disabled=true;button.textContent=t('loading');}
     try{
       const current=await api('/contents/'+CATALOG+'?ref='+encodeURIComponent(BRANCH));
       const decoded=new TextDecoder().decode(fromB64(current.content)),old=JSON.parse(decoded),apps=Array.isArray(old)?old:(Array.isArray(old.apps)?old.apps:[]);
       const app={id,name,url,category,icon:($('#adminAppIcon').value.trim()||'🌐').slice(0,8),iconUrl:iconUrl||'',tags:$('#adminAppTags').value.trim().slice(0,400),addedAt:new Date().toISOString().slice(0,10),featured:$('#adminAppFeatured').checked,description:{de,en,nl}};
-      const at=apps.findIndex(x=>x.id===id);if(at>=0)apps[at]=app;else apps.push(app);
+      const at=apps.findIndex(x=>x.id===id),previous=at>=0?apps[at]:null;
+      if(at>=0)apps[at]=app;else apps.push(app);
       const next={schemaVersion:1,updatedAt:new Date().toISOString().slice(0,10),apps};
-      const content=toB64(new TextEncoder().encode(JSON.stringify(next,null,2)+'\n'));
-      await api('/contents/'+CATALOG,{method:'PUT',body:JSON.stringify({message:'Schleim-Store: publish '+name,content,sha:current.sha,branch:BRANCH})});
+      const files={};
+      files[CATALOG]=JSON.stringify(next,null,2)+'\n';
+      files['Store/'+category+'/'+id+'.json']=JSON.stringify(app,null,2)+'\n';
+      files['Store/'+category+'/README.md']=makeCategoryReadme(category,apps);
+      if(previous&&previous.category&&previous.category!==category&&CATEGORIES.includes(previous.category)){
+        files['Store/'+previous.category+'/'+id+'.json']=null;
+        files['Store/'+previous.category+'/README.md']=makeCategoryReadme(previous.category,apps);
+      }
+      files['Store/README.md']=makeStoreReadme(apps);
+      await commitStoreFiles(files,'Schleim-Store: publish '+name);
       status(t('published'));await window.SSOSPersonalization?.refreshStoreCatalog?.();
       try{await api('/issues/'+selected.number+'/comments',{method:'POST',body:JSON.stringify({body:t('approved')})});await api('/issues/'+selected.number,{method:'PATCH',body:JSON.stringify({state:'closed',state_reason:'completed'})});}
-      catch(e){status(t('published')+' '+permissionMessage(e)+' Der App-Katalog wurde bereits aktualisiert; nur das Kommentieren/Schließen der Einreichung ist fehlgeschlagen.',true);}
+      catch(e){status(t('published')+' '+permissionMessage(e)+' Der Katalog und das Kategorie-Verzeichnis sind bereits veröffentlicht; nur das Kommentieren/Schließen der Einreichung ist fehlgeschlagen.',true);}
       selected=null;const f=$('#ssosAdminForm'),h=$('#ssosAdminHint');if(f)f.innerHTML='';if(h)h.textContent=t('choose');await fetchIssues();
     }catch(e){status(permissionMessage(e),true);}
     finally{if(button&&button.isConnected){button.disabled=false;button.textContent=t('publish');}}
