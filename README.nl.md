@@ -41,6 +41,19 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
 
+## 🛍️ Schleim-Store
+
+In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren, persoonlijke beoordelingen geven en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
+
+- **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
+- **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
+- **Voorstellen:** Bezoekers kunnen websites voorstellen via het openbare [GitHub-inzendformulier](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
+- **Controleren en publiceren:** Voorstellen worden niet automatisch gepubliceerd. De beheerder controleert en keurt elke app eerst goed.
+
+De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
+
+**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Beheerdersgegevens mogen nooit in de repository worden geplaatst. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md) en de [handleiding voor beheerders](extension/admin/README.md).
+
 ## 📥 Downloaden en installeren
 
 1. Open de [Schleim OS GitHub-repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
