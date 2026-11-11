@@ -1,0 +1,64 @@
+name: Slime Store – App-Vorschlag
+description: Schlage eine Website oder Web-App für den Slime Store vor.
+title: "[Slime Store] App-Vorschlag: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke für deinen Vorschlag! 🐌
+        Jede Einsendung wird von Schnecke Schneck geprüft. Eine Einreichung veröffentlicht oder installiert die App nicht automatisch.
+  - type: input
+    id: app-name
+    attributes:
+      label: App-Name
+      description: Wie soll die App im Slime Store heißen?
+      placeholder: Beispiel-App
+    validations:
+      required: true
+  - type: input
+    id: app-url
+    attributes:
+      label: Website-URL
+      description: Bitte eine vollständige HTTPS- oder HTTP-Adresse angeben.
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: app-category
+    attributes:
+      label: Kategorie
+      options:
+        - tools
+        - ai
+        - media
+        - knowledge
+        - navigation
+        - productivity
+        - communication
+        - privacy
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: app-description
+    attributes:
+      label: Beschreibung
+      description: Was bietet die Website? Warum ist sie für Schleim-OS-Nutzer nützlich?
+      placeholder: Beschreibe die Funktionen und den Nutzen der Website.
+    validations:
+      required: true
+  - type: input
+    id: app-icon-url
+    attributes:
+      label: Icon-URL (optional)
+      description: Direkter Link zu einem App-Symbol, falls vorhanden.
+      placeholder: https://example.com/icon.png
+    validations:
+      required: false
+  - type: textarea
+    id: app-notes
+    attributes:
+      label: Weitere Hinweise (optional)
+      description: Gibt es Besonderheiten, Altersbeschränkungen, Werbung oder benötigte Konten?
+    validations:
+      required: false
