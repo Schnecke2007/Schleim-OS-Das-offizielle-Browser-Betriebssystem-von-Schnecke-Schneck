@@ -43,7 +43,7 @@ This project is not a standalone operating system that replaces Windows, Android
 
 ## 🛍️ Schleim-Store
 
-The **Schleim-Store** lets you discover recommended websites and web apps, browse categories, leave personal ratings, and install or remove apps from your Schleim OS home screen.
+The **Schleim-Store** lets you discover recommended websites and web apps, browse categories and submit public community ratings, and install or remove apps from your Schleim OS home screen.
 
 - **Discover:** Recommendations, new apps, top ratings and categories.
 - **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
