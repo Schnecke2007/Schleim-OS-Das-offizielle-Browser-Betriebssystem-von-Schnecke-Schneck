@@ -280,6 +280,63 @@ body[data-device="desktop"] .language-screen,.device[data-device="desktop"] .lan
 .ssos-arrange-hint{margin:-7px 2px 13px;color:var(--muted);font-size:8px;line-height:1.5}
 
 
+.ssos-search-ad{border:1px solid rgba(213,166,109,.3);border-radius:15px;background:linear-gradient(135deg,rgba(213,166,109,.12),rgba(255,255,255,.035));padding:10px 11px;margin:10px 0 16px}
+.search-screen{overflow-y:auto;overscroll-behavior:contain}
+
+
+/* Slime Store – app discovery, search, ratings and community submissions */
+.ssos-store-hero{position:relative;overflow:hidden;min-height:150px;padding:19px 18px;margin-bottom:16px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:21px;background:radial-gradient(circle at 88% 18%,rgba(213,166,109,.25),transparent 34%),linear-gradient(125deg,#38271f,#1c2c25 100%)}
+.ssos-store-hero h2{position:relative;z-index:1;margin:7px 0 6px;font-size:27px;letter-spacing:-.06em}
+.ssos-store-hero>p:not(.eyebrow){position:relative;z-index:1;max-width:78%;margin:0;color:#d8c9bd;font-size:10px;line-height:1.55}
+.ssos-store-hero .large-emoji{position:absolute;right:17px;top:32px;font-size:58px;filter:drop-shadow(0 9px 14px #0006)}
+.ssos-store-search{display:flex!important;flex-direction:row!important;align-items:center;gap:10px;margin:0 0 13px!important;padding:0 13px;border:1px solid var(--line);border-radius:14px;background:#ffffff0c;color:var(--muted)!important}
+.ssos-store-search>span{font-size:22px}
+.ssos-store-search input{flex:1;width:100%;min-width:0;border:0!important;background:transparent!important;padding:13px 0!important;color:var(--ink)!important;font-size:11px!important;outline:none!important}
+.ssos-store-categories{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;margin-bottom:7px;scrollbar-width:none}
+.ssos-store-categories::-webkit-scrollbar{display:none}
+.ssos-store-category{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:#ffffff09;padding:8px 11px;color:#d7c9be;font-size:9px}
+.ssos-store-category.selected{border-color:color-mix(in srgb,var(--accent) 70%,transparent);background:color-mix(in srgb,var(--accent) 18%,transparent);color:#ffe4c4}
+.ssos-store-system-note{margin:2px 0 17px;padding:10px 11px;border:1px solid rgba(151,190,157,.2);border-radius:13px;background:rgba(93,139,104,.09);color:#c8d9c8;font-size:9px;line-height:1.5}
+.ssos-store-section{margin:19px 0 22px}
+.ssos-store-section>h3{margin:0 0 11px;font-size:15px;letter-spacing:-.035em}
+.ssos-store-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.ssos-store-card{min-width:0;padding:12px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#ffffff0d,#ffffff05);box-shadow:0 8px 20px #0002}
+.ssos-store-card-head{display:flex;align-items:center;gap:10px;min-width:0}
+.ssos-store-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border:1px solid #ffffff17;border-radius:14px;background:linear-gradient(145deg,#ffffff19,#ffffff07);font-size:24px;overflow:hidden}
+.ssos-store-icon img{width:30px;height:30px;object-fit:contain}
+.ssos-store-card-title{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ssos-store-card-title b{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ssos-store-card-title small,.ssos-store-legacy-row small{color:var(--muted);font-size:8px;overflow-wrap:anywhere}
+.ssos-store-description{min-height:34px;margin:10px 0;color:#d0c3b8;font-size:9px;line-height:1.5}
+.ssos-store-rating{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px;border-top:1px solid #ffffff10}
+.ssos-store-rating-label{color:var(--muted);font-size:8px}
+.ssos-store-stars{display:flex;gap:1px}
+.ssos-store-star{border:0;background:transparent;padding:1px 2px;color:#76695e;font-size:15px;line-height:1}
+.ssos-store-star.selected{color:#f0bd70}
+.ssos-store-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.ssos-store-actions .app-button{flex:1;min-width:90px;margin:0;justify-content:center}
+.ssos-store-remove{color:#ffc0b3!important}
+.ssos-store-empty{margin:0;padding:12px;border:1px dashed var(--line);border-radius:13px;color:var(--muted);font-size:9px;line-height:1.5}
+.ssos-store-installed{display:grid;gap:8px}
+.ssos-store-legacy-row{display:flex;align-items:center;gap:9px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:13px;background:#ffffff08}
+.ssos-store-legacy-row>div{display:flex;flex:1;flex-direction:column;gap:4px;min-width:0}
+.ssos-store-legacy-row>b{font-size:10px}
+.ssos-store-legacy-row .app-button{flex:0 0 auto;margin:0;padding:8px 9px;font-size:9px}
+.ssos-store-submit{margin:24px 0 10px;padding-top:17px;border-top:1px solid var(--line)}
+.ssos-store-submit .ssos-section-heading h3{margin-bottom:7px}
+.ssos-store-submit .ssos-card{margin-top:10px}
+.ssos-form select,.ssos-form textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 11px;color:var(--ink);background:#17110d;font-size:10px;outline-color:var(--accent)}
+.ssos-form textarea{resize:vertical;line-height:1.5}
+.ssos-form select option{background:#17110d;color:var(--ink)}
+.ssos-store-upload-note{margin:10px 0;color:var(--muted);font-size:8px;line-height:1.5}
+.ssos-store-issue-fallback{display:inline-block;margin-top:10px;color:var(--accent);font-size:10px}
+@media(max-width:450px){
+ .ssos-store-grid{grid-template-columns:1fr}
+ .ssos-store-hero>p:not(.eyebrow){max-width:76%}
+ .ssos-store-legacy-row{flex-wrap:wrap}
+ .ssos-store-legacy-row>div{min-width:calc(100% - 62px)}
+}
+
 </style>
 <meta name="application-name" content="Schleim OS"><meta name="referrer" content="strict-origin-when-cross-origin">  <style id="ssos-search-scroll-styles">.search-screen{overflow-y:auto;overscroll-behavior:contain}</style>
 </head>
@@ -555,6 +612,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     {id:'studio',name:'Creator Studio',icon:'🚀',hint:'Marke und Leistungen',keys:'creator studio google unternehmen medien software'},
     {id:'website',name:'Fan-Webseite',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'wix fan homepage unterseiten website'},
     {id:'shop',name:'Schneckenshop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'spreadshirt shop merchandise bestellung'},
+    {id:'slimestore',name:'Slime Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'slime store app store apps installieren websites webapps'},
     {id:'fanapp',name:'Fan-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'NovaVoice – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant novavoice'},
@@ -575,7 +633,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','social','projects','studio','website','shop','images','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','contact','legal','settings'];
   const PROJECT_CHILD_IDS = ['voiceassistant','parentsettings','schildi','chatgpt','scratch','schleimcloud','iptv','tech'];
   const CONTACT_CHILD_IDS = ['whatsapp','email','google'];
   let activeAppId = null;
@@ -611,12 +669,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Slime Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Slime Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
-    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover, install and suggest web apps',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Ontdek, installeer en stel webapps voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
   const TEXT = {
@@ -752,11 +810,11 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     $$('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
 
     const desktop={
-      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
-      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
-      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
+      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',store:'Slime Store',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
+      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',store:'Slime Store',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
+      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',store:'Slime Store',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
     }[lang];
-    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
+    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
     const info=$$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
     const topDate=$('#introScreen .intro-footer span:first-child');if(topDate)topDate.textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24 EDITION';
     const foot=$('.control-footnote');if(foot)foot.textContent=lang==='de'?'Die Schnellschalter und Regler bilden die One-UI-Optik nach. Eine Browser-Webapp kann die echten Funk-, Taschenlampen- oder Medienlautstärke-Funktionen des Galaxy S24 nicht systemweit steuern.':lang==='en'?'The quick toggles and sliders reproduce the One UI look. A browser app cannot control the Galaxy device’s actual radios, flashlight or system media volume.':'De snelle schakelaars en schuifregelaars bootsen de One UI-stijl na. Een browserapp kan de echte radiofuncties, zaklamp of systeemmediavolume van het Galaxy-apparaat niet bedienen.';
@@ -1104,6 +1162,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
+    slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Slime Store konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
@@ -1128,7 +1187,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     activeAppId=id;
     els.title.textContent=localizedAppName(app.id);els.emoji.textContent=app.icon;
     const rendered=RENDERERS[id]();
-    els.appContent.innerHTML=id==='legal'?rendered:localize(rendered);
+    els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
@@ -1367,6 +1426,38 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     ]
   });
   const makeId = () => (crypto.randomUUID ? crypto.randomUUID() : `app-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+
+  const STORE_KEY = 'ssos-store-v1';
+  const STORE_ISSUE_URL = 'https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new';
+  const STORE_CATALOG = [
+    {id:'chatgpt-web',name:'ChatGPT',icon:'🤖',url:'https://chatgpt.com/',category:'ai',addedAt:'2026-11-11',featured:true,tags:'ki künstliche intelligenz chatbot schreiben fragen',description:{de:'KI-Assistent für Fragen, Ideen, Texte und kreative Aufgaben.',en:'AI assistant for questions, ideas, writing and creative tasks.',nl:'AI-assistent voor vragen, ideeën, teksten en creatieve taken.'}},
+    {id:'youtube-web',name:'YouTube',icon:'▶️',url:'https://www.youtube.com/',category:'media',addedAt:'2026-11-11',featured:true,tags:'videos musik unterhaltung clips',description:{de:'Videos, Musik, Tutorials und Unterhaltung entdecken.',en:'Discover videos, music, tutorials and entertainment.',nl:'Ontdek videos, muziek, tutorials en entertainment.'}},
+    {id:'spotify-web',name:'Spotify',icon:'🎧',url:'https://open.spotify.com/',category:'media',addedAt:'2026-11-11',featured:true,tags:'musik podcasts audio playlist',description:{de:'Musik und Podcasts direkt im Browser anhören.',en:'Listen to music and podcasts directly in your browser.',nl:'Luister rechtstreeks in je browser naar muziek en podcasts.'}},
+    {id:'wikipedia-web',name:'Wikipedia',icon:'📚',url:'https://www.wikipedia.org/',category:'knowledge',addedAt:'2026-11-11',featured:true,tags:'wissen lexikon recherche lernen',description:{de:'Wissen und Hintergrundinformationen in einer freien Enzyklopädie finden.',en:'Find knowledge and background information in a free encyclopedia.',nl:'Vind kennis en achtergrondinformatie in een vrije encyclopedie.'}},
+    {id:'google-maps-web',name:'Google Maps',icon:'🗺️',url:'https://maps.google.com/',category:'navigation',addedAt:'2026-11-11',featured:false,tags:'karten routen navigation orte',description:{de:'Orte suchen, Karten ansehen und Routen planen.',en:'Find places, explore maps and plan routes.',nl:'Zoek plaatsen, bekijk kaarten en plan routes.'}},
+    {id:'google-drive-web',name:'Google Drive',icon:'📁',url:'https://drive.google.com/',category:'productivity',addedAt:'2026-11-11',featured:false,tags:'dateien cloud dokumente speicher',description:{de:'Dateien und Dokumente online verwalten.',en:'Manage files and documents online.',nl:'Beheer bestanden en documenten online.'}},
+    {id:'whatsapp-web',name:'WhatsApp Web',icon:'💬',url:'https://web.whatsapp.com/',category:'communication',addedAt:'2026-11-11',featured:false,tags:'nachrichten chat kommunikation',description:{de:'WhatsApp-Nachrichten im Browser nutzen.',en:'Use WhatsApp messaging in your browser.',nl:'Gebruik WhatsApp-berichten in je browser.'}},
+    {id:'duckduckgo-web',name:'DuckDuckGo',icon:'🦆',url:'https://duckduckgo.com/',category:'privacy',addedAt:'2026-11-11',featured:false,tags:'suche datenschutz privat suchen',description:{de:'Alternative Suchmaschine mit Fokus auf Datenschutz.',en:'Alternative search engine with a focus on privacy.',nl:'Alternatieve zoekmachine met aandacht voor privacy.'}}
+  ];
+  const STORE_TEXT = {
+    de:{intro:'Entdecke Webseiten als Apps für deinen Startbildschirm. Store-Apps öffnen sich in einem neuen Browser-Tab.',search:'Im Slime Store suchen …',allCategories:'Alle Kategorien',recommended:'Für dich empfohlen',top:'Deine Top-Bewertungen auf diesem Gerät',topEmpty:'Noch keine Bewertungen auf diesem Gerät. Bewerte Apps mit den Sternen, damit hier deine Favoriten erscheinen.',newest:'Neu im Store',all:'Alle Apps',installed:'Deine installierten Apps',legacy:'Bisherige eigene Webseiten',propose:'App vorschlagen',submitIntro:'Dein Vorschlag wird als GitHub-Issue vorbereitet und von Schnecke Schneck geprüft. Er erscheint nicht automatisch im Store.',url:'Webseiten-URL',detect:'Name und Icon erkennen',name:'App-Name',category:'Kategorie',description:'Beschreibung',iconUrl:'Icon-URL (optional)',iconFile:'Eigenes Icon (optional)',iconPreview:'Icon-Vorschau',submit:'Vorschlag auf GitHub einreichen',uploadNote:'Ein lokal ausgewähltes Icon kann nicht automatisch zu GitHub übertragen werden. Bitte lade die Bilddatei nach dem Öffnen des GitHub-Formulars dort noch einmal hoch.',systemNote:'System-Apps und die fest eingebauten Inhalte von Schleim OS bleiben immer erhalten. Sie können hier nicht deinstalliert werden.',install:'Installieren',installedLabel:'Installiert',uninstall:'Deinstallieren',open:'Öffnen',rated:'Deine Bewertung',notRated:'Noch nicht bewertet',noResults:'Keine passenden Apps gefunden.',noInstalled:'Du hast noch keine Store-Apps installiert.',legacyEmpty:'Keine früher hinzugefügten Webseiten vorhanden.',confirmUninstall:'Diese Store-App vom Startbildschirm entfernen?',legacyConfirm:'Diese eigene Webseite vom Startbildschirm entfernen?',prepared:'Vorschlag vorbereitet. Prüfe die Angaben auf GitHub und sende das Formular dort ab.',invalid:'Bitte gib eine gültige http- oder https-Adresse ein.',needName:'Bitte gib einen App-Namen ein.',needDescription:'Bitte beschreibe kurz, was die Webseite bietet.',categories:{tools:'Tools',ai:'KI & Chatbots',media:'Medien',knowledge:'Wissen',navigation:'Navigation',productivity:'Produktivität',communication:'Kommunikation',privacy:'Suche & Datenschutz'}},
+    en:{intro:'Discover websites as apps for your home screen. Store apps open in a new browser tab.',search:'Search the Slime Store …',allCategories:'All categories',recommended:'Recommended for you',top:'Your top ratings on this device',topEmpty:'No ratings on this device yet. Rate apps with the stars to build your own favourites here.',newest:'New in the Store',all:'All apps',installed:'Your installed apps',legacy:'Previously added websites',propose:'Suggest an app',submitIntro:'Your suggestion is prepared as a GitHub issue and reviewed by Schnecke Schneck. It is not published automatically.',url:'Website URL',detect:'Detect name and icon',name:'App name',category:'Category',description:'Description',iconUrl:'Icon URL (optional)',iconFile:'Custom icon (optional)',iconPreview:'Icon preview',submit:'Submit suggestion on GitHub',uploadNote:'A locally selected icon cannot be transferred to GitHub automatically. Please upload the image again in the GitHub form after it opens.',systemNote:'System apps and built-in Schleim OS content are always kept. They cannot be uninstalled here.',install:'Install',installedLabel:'Installed',uninstall:'Uninstall',open:'Open',rated:'Your rating',notRated:'Not rated yet',noResults:'No matching apps found.',noInstalled:'You have not installed any Store apps yet.',legacyEmpty:'No previously added websites were found.',confirmUninstall:'Remove this Store app from your home screen?',legacyConfirm:'Remove this custom website from your home screen?',prepared:'Suggestion prepared. Review the details on GitHub and submit the form there.',invalid:'Enter a valid http or https website address.',needName:'Enter an app name.',needDescription:'Briefly describe what the website offers.',categories:{tools:'Tools',ai:'AI & chatbots',media:'Media',knowledge:'Knowledge',navigation:'Navigation',productivity:'Productivity',communication:'Communication',privacy:'Search & privacy'}},
+    nl:{intro:'Ontdek websites als apps voor je startscherm. Store-apps openen in een nieuw browsertabblad.',search:'Zoeken in de Slime Store …',allCategories:'Alle categorieën',recommended:'Aanbevolen voor jou',top:'Jouw hoogste beoordelingen op dit apparaat',topEmpty:'Er zijn nog geen beoordelingen op dit apparaat. Beoordeel apps met de sterren om hier je favorieten te zien.',newest:'Nieuw in de Store',all:'Alle apps',installed:'Je geïnstalleerde apps',legacy:'Eerder toegevoegde websites',propose:'Een app voorstellen',submitIntro:'Je voorstel wordt voorbereid als GitHub-issue en beoordeeld door Schnecke Schneck. Het wordt niet automatisch gepubliceerd.',url:'Website-URL',detect:'Naam en pictogram herkennen',name:'App-naam',category:'Categorie',description:'Beschrijving',iconUrl:'Pictogram-URL (optioneel)',iconFile:'Eigen pictogram (optioneel)',iconPreview:'Voorbeeld pictogram',submit:'Voorstel indienen op GitHub',uploadNote:'Een lokaal geselecteerd pictogram kan niet automatisch naar GitHub worden verzonden. Upload de afbeelding opnieuw in het GitHub-formulier nadat het is geopend.',systemNote:'Systeemapps en ingebouwde Schleim OS-inhoud blijven altijd behouden. Je kunt ze hier niet verwijderen.',install:'Installeren',installedLabel:'Geïnstalleerd',uninstall:'Verwijderen',open:'Openen',rated:'Jouw beoordeling',notRated:'Nog niet beoordeeld',noResults:'Geen overeenkomende apps gevonden.',noInstalled:'Je hebt nog geen Store-apps geïnstalleerd.',legacyEmpty:'Er zijn geen eerder toegevoegde websites gevonden.',confirmUninstall:'Deze Store-app van het startscherm verwijderen?',legacyConfirm:'Deze eigen website van het startscherm verwijderen?',prepared:'Voorstel voorbereid. Controleer de gegevens op GitHub en verstuur het formulier daar.',invalid:'Voer een geldig http- of https-websiteadres in.',needName:'Voer een app-naam in.',needDescription:'Beschrijf kort wat de website biedt.',categories:{tools:'Hulpmiddelen',ai:'AI & chatbots',media:'Media',knowledge:'Kennis',navigation:'Navigatie',productivity:'Productiviteit',communication:'Communicatie',privacy:'Zoeken & privacy'}}
+  };
+  const st = key => STORE_TEXT[LANG()]?.[key] || STORE_TEXT.de[key] || key;
+  const storeCategory = key => STORE_TEXT[LANG()]?.categories?.[key] || STORE_TEXT.de.categories[key] || key;
+  const storeView = {query:'',category:'all'};
+  function loadStoreState(){
+    try{
+      const value=JSON.parse(localStorage.getItem(STORE_KEY)||'null')||{};
+      const valid=new Set(STORE_CATALOG.map(app=>app.id));
+      return {
+        installed:Array.isArray(value.installed)?[...new Set(value.installed.filter(id=>valid.has(id)))].slice(0,100):[],
+        ratings:value.ratings&&typeof value.ratings==='object'?Object.fromEntries(Object.entries(value.ratings).filter(([id,r])=>valid.has(id)&&Number.isInteger(r)&&r>=1&&r<=5)):{}
+      };
+    }catch{return {installed:[],ratings:{}};}
+  }
+  let storeState=loadStoreState();
   function loadConfig() {
     try {
       const value = JSON.parse(localStorage.getItem(KEY) || 'null');
@@ -1384,8 +1475,14 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     } catch { return defaults(); }
   }
   let config = loadConfig();
-  let editingId = null;
   let pendingIconData = '';
+  function previewIcon(source) {
+    const box = $('#ssosIconPreview');
+    if (!box) return;
+    const value = String(source || '').trim();
+    const image = value.startsWith('data:image/') ? value : safeUrl(value);
+    box.innerHTML = image ? `<img src="${esc(image)}" alt="">` : '🌐';
+  }
   function saveConfig() {
     try { localStorage.setItem(KEY, JSON.stringify(config)); }
     catch { toast(t('fileTooLarge')); }
@@ -1402,10 +1499,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     return iconUrl ? `<img class="ssos-app-icon-img" src="${esc(iconUrl)}" alt="" ${small?'':'loading="lazy"'}>` : `<span>${esc(app.icon || '🌐')}</span>`;
   }
   function tileKey(tile) {
-    if (tile.dataset.app) return `app:${tile.dataset.app}`;
-    if (tile.dataset.ssosCustomApp) return `custom:${tile.dataset.ssosCustomApp}`;
-    if (tile.dataset.ssosOpenEditor === 'add') return 'add';
-    if (tile.dataset.ssosOpenEditor) return 'editor';
+    if(tile.dataset.app)return 'app:'+tile.dataset.app;
+    if(tile.dataset.ssosStoreApp)return 'store:'+tile.dataset.ssosStoreApp;
+    if(tile.dataset.ssosCustomApp)return 'custom:'+tile.dataset.ssosCustomApp;
     return '';
   }
   function applyHomeOrder() {
@@ -1493,72 +1589,102 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     });
   }
   function renderHomeTiles() {
-    const grid = $('#homeAppGrid'); if (!grid) return;
-    $$('.ssos-editor-tile,.ssos-plus-tile,.ssos-custom-tile', grid).forEach(el => el.remove());
-    const editor = document.createElement('button');
-    editor.type = 'button'; editor.className = 'app-icon ssos-editor-tile'; editor.dataset.ssosOpenEditor = '1';
-    editor.innerHTML = `<span class="icon-tile">🧩</span><small>${esc(t('editor'))}</small>`;
-    const plus = document.createElement('button');
-    plus.type = 'button'; plus.className = 'app-icon ssos-plus-tile'; plus.dataset.ssosOpenEditor = 'add';
-    plus.innerHTML = `<span class="icon-tile ssos-plus-icon">＋</span><small>${esc(t('add').replace('＋ ',''))}</small>`;
-    grid.append(editor, plus);
-    config.apps.forEach(app => {
-      const tile = document.createElement('button'); tile.type = 'button'; tile.className = 'app-icon ssos-custom-tile';
-      tile.dataset.ssosCustomApp = app.id; tile.title = app.name;
-      tile.innerHTML = `<span class="icon-tile">${iconMarkup(app)}</span><small>${esc(app.name)}</small>`;
-      grid.insertBefore(tile, editor);
+    const grid=$('#homeAppGrid');if(!grid)return;
+    $$('.ssos-store-tile,.ssos-custom-tile',grid).forEach(el=>el.remove());
+    config.apps.forEach(app=>{
+      const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-custom-tile';
+      tile.dataset.ssosCustomApp=app.id;tile.title=app.name;
+      tile.innerHTML='<span class="icon-tile">'+iconMarkup(app)+'</span><small>'+esc(app.name)+'</small>';
+      grid.appendChild(tile);
     });
-    applyHomeOrder();
-    initHomeReordering();
+    storeState.installed.forEach(id=>{
+      const app=STORE_CATALOG.find(item=>item.id===id);if(!app)return;
+      const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-store-tile';
+      tile.dataset.ssosStoreApp=app.id;tile.title=app.name;
+      tile.innerHTML='<span class="icon-tile">'+esc(app.icon)+'</span><small>'+esc(app.name)+'</small>';
+      grid.appendChild(tile);
+    });
+    applyHomeOrder();initHomeReordering();
   }
-  function openEditor(focusAdd = false) {
-    const home = $('#homeScreen'), app = $('#appScreen'), panel = $('#controlPanel'), search = $('#searchScreen');
-    if (!home || !app) return;
-    home.classList.add('hidden'); panel?.classList.add('hidden'); search?.classList.add('hidden'); app.classList.remove('hidden');
-    $('#appWindowTitle').textContent = t('editor'); $('#appWindowEmoji').textContent = '🧩';
-    $('#appContent').innerHTML = editorMarkup();
-    renderAppList();
-    if (focusAdd) setTimeout(() => $('#ssosAppUrl')?.focus(), 60);
+  function storeHost(app){try{return new URL(app.url).hostname.replace(/^www\./,'');}catch{return app.url;}}
+  function storeCard(app){
+    const installed=storeState.installed.includes(app.id),rating=storeState.ratings[app.id]||0;
+    const buttons=installed
+      ?'<button class="app-button secondary" type="button" data-ssos-store-open="'+esc(app.id)+'">'+esc(st('open'))+' ↗</button><button class="app-button secondary ssos-store-remove" type="button" data-ssos-store-uninstall="'+esc(app.id)+'">'+esc(st('uninstall'))+'</button>'
+      :'<button class="app-button ssos-store-install" type="button" data-ssos-store-install="'+esc(app.id)+'">＋ '+esc(st('install'))+'</button>';
+    const stars=[1,2,3,4,5].map(n=>'<button class="ssos-store-star'+(rating>=n?' selected':'')+'" type="button" data-ssos-rate-app="'+esc(app.id)+'" data-rating="'+n+'" aria-label="'+n+' / 5">★</button>').join('');
+    const description=app.description[LANG()]||app.description.de;
+    return '<article class="ssos-store-card"><div class="ssos-store-card-head"><span class="ssos-store-icon">'+esc(app.icon)+'</span><div class="ssos-store-card-title"><b>'+esc(app.name)+'</b><small>'+esc(storeCategory(app.category))+' · '+esc(storeHost(app))+'</small></div></div><p class="ssos-store-description">'+esc(description)+'</p><div class="ssos-store-rating"><span class="ssos-store-rating-label">'+esc(rating?st('rated')+': '+rating+'/5':st('notRated'))+'</span><div class="ssos-store-stars">'+stars+'</div></div><div class="ssos-store-actions">'+buttons+'</div></article>';
   }
-  function editorMarkup() {
-    return `<div class="app-hero"><p class="eyebrow">PERSONAL WORKSPACE</p><h2>${esc(t('editor'))}</h2><p>${esc(t('editorIntro'))}</p><span class="large-emoji">🧩</span></div>
-      <p class="notice">${esc(t('addUrlHint'))}</p>
-      <button class="app-button ssos-full-button" type="button" data-ssos-focus-add>${esc(t('add'))}</button>
-      <section class="ssos-card ssos-form" id="ssosAppForm"><h3>${esc(t('add'))}</h3>
-        <label>${esc(t('url'))}<input id="ssosAppUrl" type="url" inputmode="url" placeholder="https://example.com" autocomplete="url"></label>
-        <button class="app-button secondary" type="button" id="ssosDetectMetadata">✨ ${esc(t('detect'))}</button>
-        <label>${esc(t('name'))}<input id="ssosAppName" type="text" maxlength="60" placeholder="Website"></label>
-        <label>${esc(t('iconUrl'))}<input id="ssosAppIconUrl" type="url" placeholder="https://example.com/favicon.ico"></label>
-        <label>${esc(t('iconFile'))}<input id="ssosAppIconFile" type="file" accept="image/*"></label>
-        <div class="ssos-icon-preview"><span>${esc(t('iconPreview'))}</span><div id="ssosIconPreview">🌐</div></div>
-        <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosSaveApp">${esc(t('save'))}</button><button class="app-button secondary" type="button" id="ssosCancelEdit">${esc(t('cancel'))}</button></div>
-      </section>
-      <h3 class="content-heading">${esc(t('apps'))}</h3><div id="ssosAppList" class="ssos-app-list"></div>`;
+  function renderLegacyApps(){
+    if(!config.apps.length)return '<p class="body-copy">'+esc(st('legacyEmpty'))+'</p>';
+    return config.apps.map(app=>'<article class="ssos-store-legacy-row"><span class="ssos-store-icon">'+iconMarkup(app,true)+'</span><div><b>'+esc(app.name)+'</b><small>'+esc(storeHost(app))+'</small></div><button class="app-button secondary" type="button" data-ssos-legacy-open="'+esc(app.id)+'">'+esc(st('open'))+' ↗</button><button class="app-button secondary ssos-store-remove" type="button" data-ssos-legacy-uninstall="'+esc(app.id)+'">'+esc(st('uninstall'))+'</button></article>').join('');
   }
-  function renderAppList() {
-    const list = $('#ssosAppList'); if (!list) return;
-    if (!config.apps.length) { list.innerHTML = `<p class="body-copy">${esc(t('noApps'))}</p>`; return; }
-    list.innerHTML = config.apps.map(app => `<article class="ssos-app-row"><div class="ssos-row-icon">${iconMarkup(app,true)}</div><div class="ssos-row-copy"><b>${esc(app.name)}</b><small>${esc(new URL(app.url).hostname)}</small></div><button type="button" class="ssos-small-button" data-ssos-edit="${esc(app.id)}">${esc(t('edit'))}</button><button type="button" class="ssos-small-button danger" data-ssos-delete="${esc(app.id)}">${esc(t('delete'))}</button></article>`).join('');
-    $$('img.ssos-app-icon-img', list).forEach(img => img.addEventListener('error', () => { img.replaceWith(Object.assign(document.createElement('span'), {textContent:'🌐'})); }, {once:true}));
+  function renderStoreSections(){
+    const root=$('#ssosStoreDiscover');if(!root)return;
+    const category=storeView.category,q=storeView.query.trim().toLocaleLowerCase(LANG());
+    const matches=STORE_CATALOG.filter(app=>{
+      const description=app.description[LANG()]||app.description.de;
+      const value=(app.name+' '+app.url+' '+app.category+' '+storeCategory(app.category)+' '+app.tags+' '+description).toLocaleLowerCase(LANG());
+      return (!q||value.includes(q))&&(category==='all'||app.category===category);
+    });
+    const featured=STORE_CATALOG.filter(app=>app.featured&&(category==='all'||app.category===category));
+    const topRated=STORE_CATALOG.filter(app=>(storeState.ratings[app.id]||0)>0&&(category==='all'||app.category===category)).sort((a,b)=>(storeState.ratings[b.id]||0)-(storeState.ratings[a.id]||0));
+    const newest=STORE_CATALOG.filter(app=>category==='all'||app.category===category).sort((a,b)=>b.addedAt.localeCompare(a.addedAt));
+    const set=(id,markup)=>{const el=$('#'+id);if(el)el.innerHTML=markup;};
+    set('ssosStoreFeatured',featured.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
+    set('ssosStoreTopRated',topRated.length?topRated.map(storeCard).join(''):'<p class="ssos-store-empty">'+esc(st('topEmpty'))+'</p>');
+    set('ssosStoreNew',newest.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
+    set('ssosStoreAll',matches.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
+    set('ssosStoreInstalled',storeState.installed.map(id=>STORE_CATALOG.find(app=>app.id===id)).filter(Boolean).map(storeCard).join('')||'<p class="body-copy">'+esc(st('noInstalled'))+'</p>');
+    set('ssosStoreLegacy',renderLegacyApps());
+    const searchBox=$('#ssosStoreSearchResults');if(searchBox)searchBox.hidden=!q;
+    root.hidden=!!q;
+    set('ssosStoreSearchList',matches.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
+    $$('#ssosStoreCategories [data-ssos-store-category]').forEach(button=>button.classList.toggle('selected',button.dataset.ssosStoreCategory===category));
   }
-  function previewIcon(src) {
-    const box = $('#ssosIconPreview'); if (!box) return;
-    box.innerHTML = src ? `<img src="${esc(src)}" alt="">` : '🌐';
-    const img = $('img', box); if (img) img.addEventListener('error', () => { box.textContent = '🌐'; }, {once:true});
+  function renderStore(){
+    storeView.query='';storeView.category='all';
+    const categories=[...new Set(STORE_CATALOG.map(app=>app.category))];
+    const categoryButtons='<button class="ssos-store-category selected" type="button" data-ssos-store-category="all">'+esc(st('allCategories'))+'</button>'+categories.map(key=>'<button class="ssos-store-category" type="button" data-ssos-store-category="'+esc(key)+'">'+esc(storeCategory(key))+'</button>').join('');
+    const categoryOptions=Object.entries(STORE_TEXT[LANG()]?.categories||STORE_TEXT.de.categories).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
+    const markup='<div class="app-hero ssos-store-hero"><p class="eyebrow">SCHNECKE SCHNECK · WEB APP MARKET</p><h2>Slime Store</h2><p>'+esc(st('intro'))+'</p><span class="large-emoji">🛍️</span></div>'+
+      '<label class="ssos-store-search"><span>⌕</span><input id="ssosStoreSearch" type="search" placeholder="'+esc(st('search'))+'" autocomplete="off"></label>'+
+      '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
+      '<div class="ssos-store-system-note">🔒 '+esc(st('systemNote'))+'</div>'+
+      '<div id="ssosStoreDiscover">'+
+        '<section class="ssos-store-section"><h3>'+esc(st('recommended'))+'</h3><div class="ssos-store-grid" id="ssosStoreFeatured"></div></section>'+
+        '<section class="ssos-store-section"><h3>'+esc(st('top'))+'</h3><div class="ssos-store-grid" id="ssosStoreTopRated"></div></section>'+
+        '<section class="ssos-store-section"><h3>'+esc(st('newest'))+'</h3><div class="ssos-store-grid" id="ssosStoreNew"></div></section>'+
+        '<section class="ssos-store-section"><h3>'+esc(st('all'))+'</h3><div class="ssos-store-grid" id="ssosStoreAll"></div></section>'+
+        '<section class="ssos-store-section"><h3>'+esc(st('installed'))+'</h3><div class="ssos-store-grid" id="ssosStoreInstalled"></div></section>'+
+        '<section class="ssos-store-section"><h3>'+esc(st('legacy'))+'</h3><div class="ssos-store-installed" id="ssosStoreLegacy"></div></section>'+
+      '</div>'+
+      '<section class="ssos-store-section ssos-store-search-results" id="ssosStoreSearchResults" hidden><h3>'+esc(st('all'))+'</h3><div class="ssos-store-grid" id="ssosStoreSearchList"></div></section>'+
+      '<section class="ssos-store-submit"><div class="ssos-section-heading"><p class="eyebrow">COMMUNITY</p><h3>'+esc(st('propose'))+'</h3></div><p class="body-copy">'+esc(st('submitIntro'))+'</p>'+
+        '<form id="ssosAppSubmissionForm" class="ssos-card ssos-form">'+
+          '<label>'+esc(st('url'))+'<input id="ssosAppUrl" type="url" inputmode="url" placeholder="https://example.com" autocomplete="url" required></label>'+
+          '<button class="app-button secondary" type="button" id="ssosDetectMetadata">✨ '+esc(st('detect'))+'</button>'+
+          '<label>'+esc(st('name'))+'<input id="ssosAppName" type="text" maxlength="60" placeholder="Website" required></label>'+
+          '<label>'+esc(st('category'))+'<select id="ssosAppCategory">'+categoryOptions+'</select></label>'+
+          '<label>'+esc(st('description'))+'<textarea id="ssosAppDescription" rows="3" maxlength="1200" placeholder="Was kann die Webseite?" required></textarea></label>'+
+          '<label>'+esc(st('iconUrl'))+'<input id="ssosAppIconUrl" type="url" placeholder="https://example.com/favicon.ico"></label>'+
+          '<label>'+esc(st('iconFile'))+'<input type="file" id="ssosAppIconFile" accept="image/*"></label>'+
+          '<div class="ssos-icon-preview"><span>'+esc(st('iconPreview'))+'</span><div id="ssosIconPreview">🌐</div></div><p class="ssos-store-upload-note">'+esc(st('uploadNote'))+'</p>'+
+          '<div class="ssos-form-actions"><button class="app-button" type="submit" id="ssosSubmitApp">'+esc(st('submit'))+' ↗</button></div>'+
+          '<a id="ssosIssueFallback" class="ssos-store-issue-fallback" href="#" target="_blank" rel="noopener noreferrer" hidden>GitHub Issue öffnen ↗</a>'+
+        '</form></section>';
+    setTimeout(renderStoreSections,0);
+    return markup;
   }
-  function resetAppForm() {
-    editingId = null; pendingIconData = '';
-    const form = $('#ssosAppForm'); if (!form) return;
-    $('#ssosAppUrl').value = ''; $('#ssosAppName').value = ''; $('#ssosAppIconUrl').value = ''; $('#ssosAppIconFile').value = '';
-    $('#ssosSaveApp').textContent = t('save'); form.querySelector('h3').textContent = t('add'); previewIcon('');
+  function saveStoreState(){
+    try{localStorage.setItem(STORE_KEY,JSON.stringify(storeState));}catch{toast(t('fileTooLarge'));}
+    renderHomeTiles();renderStoreSections();window.dispatchEvent(new Event('ssos-store-changed'));
   }
-  function editApp(id) {
-    const item = config.apps.find(a => a.id === id); if (!item) return;
-    editingId = id; pendingIconData = item.icon.startsWith('data:image/') ? item.icon : '';
-    $('#ssosAppUrl').value = item.url; $('#ssosAppName').value = item.name; $('#ssosAppIconUrl').value = item.iconUrl || '';
-    $('#ssosSaveApp').textContent = t('update'); $('#ssosAppForm').querySelector('h3').textContent = t('edit');
-    previewIcon(item.iconUrl || pendingIconData);
-    $('#ssosAppForm').scrollIntoView({behavior:'smooth',block:'start'});
+  function openStoreApp(id){
+    const app=STORE_CATALOG.find(item=>item.id===String(id));
+    if(!app||!storeState.installed.includes(app.id))return false;
+    window.open(app.url,'_blank','noopener,noreferrer');return true;
   }
   function domainLabel(url) {
     try { return new URL(url).hostname.replace(/^www\./,'').split('.')[0].replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()); }
@@ -1594,14 +1720,29 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     if (btn) { btn.disabled = false; btn.textContent = `✨ ${t('detect')}`; }
     toast(title !== domainLabel(url) ? t('metadataDone') : t('metadataFallback'));
   }
-  function saveApp() {
-    const url = safeUrl($('#ssosAppUrl')?.value || ''); if (!url) { toast(t('urlRequired')); return; }
-    const name = ($('#ssosAppName')?.value || '').trim().slice(0,60) || domainLabel(url);
-    const previous = editingId ? config.apps.find(a => a.id === editingId) : null;
-    const iconField = pendingIconData ? '' : (safeUrl($('#ssosAppIconUrl')?.value || '') || `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(url)}&sz=128`);
-    const app = {id:editingId || makeId(), name, url, icon:pendingIconData || previous?.icon || '🌐', iconUrl:iconField, color:''};
-    if (editingId) config.apps = config.apps.map(a => a.id === editingId ? app : a); else config.apps.push(app);
-    saveConfig(); renderAppList(); resetAppForm(); toast(t('saved'));
+  function submitAppSuggestion(){
+    const url=safeUrl($('#ssosAppUrl')?.value||'');
+    if(!url){toast(st('invalid'));return;}
+    const name=($('#ssosAppName')?.value||'').trim().slice(0,60);
+    if(!name){toast(st('needName'));return;}
+    const description=($('#ssosAppDescription')?.value||'').trim().slice(0,1200);
+    if(!description){toast(st('needDescription'));return;}
+    const category=$('#ssosAppCategory')?.value||'tools';
+    const iconUrl=safeUrl($('#ssosAppIconUrl')?.value||'');
+    let issueDescription=description;
+    if(pendingIconData)issueDescription+='\n\n'+({de:'Ein eigenes Icon wurde lokal ausgewählt. Bitte lade die Bilddatei im GitHub-Formular erneut hoch.',en:'A custom icon was selected locally. Please upload the image again in the GitHub form.',nl:'Er is lokaal een eigen pictogram geselecteerd. Upload de afbeelding opnieuw in het GitHub-formulier.'}[LANG()]||'A custom icon was selected locally. Please upload the image again in the GitHub form.');
+    const params=new URLSearchParams();
+    params.set('template','app-submission.yml');
+    params.set('title','[Slime Store] App-Vorschlag: '+name);
+    params.set('app-name',name);
+    params.set('app-url',url);
+    params.set('app-category',category);
+    params.set('app-description',issueDescription);
+    if(iconUrl)params.set('app-icon-url',iconUrl);
+    const issueUrl=STORE_ISSUE_URL+'?'+params.toString();
+    const fallback=$('#ssosIssueFallback');if(fallback){fallback.href=issueUrl;fallback.hidden=false;}
+    window.open(issueUrl,'_blank','noopener,noreferrer');
+    toast(st('prepared'));
   }
   async function compressImage(file, maxBytes = 1500000) {
     if (!file || !file.type.startsWith('image/')) throw new Error('image');
@@ -1635,7 +1776,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       <div class="ssos-card"><h4>📦 ${esc(t('backup'))}</h4><p class="body-copy">${esc(t('backupInfo'))}</p>
         <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosExport">⬇ ${esc(t('export'))}</button><label class="app-button secondary ssos-file-label">⬆ ${esc(t('import'))}<input type="file" id="ssosImportFile" accept="application/json,.json"></label></div>
       </div>
-      <div class="ssos-card"><h4>🧩 ${esc(t('editor'))}</h4><p class="body-copy">${esc(t('editorIntro'))}</p><button class="app-button secondary" type="button" data-ssos-open-editor="1">${esc(t('editor'))} öffnen ↗</button></div>`;
+`;
     mount.appendChild(section);
     $('#ssosAccentPicker').addEventListener('input',e=>$('#ssosAccentHex').value=e.target.value);
     $('#ssosAccentHex').addEventListener('input',e=>{if(/^#[0-9a-f]{6}$/i.test(e.target.value))$('#ssosAccentPicker').value=e.target.value;});
@@ -1727,20 +1868,38 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     let touchStart=null; $('#lockScreen')?.addEventListener('pointerdown',e=>{touchStart={y:e.clientY};},{passive:true});
     $('#lockScreen')?.addEventListener('pointerup',e=>{if(touchStart && touchStart.y-e.clientY>42 && !e.target.closest('[data-ssos-lock-url]'))$('#unlockButton')?.click();touchStart=null;},{passive:true});
     document.addEventListener('click',async e=>{
-      if(e.target.closest('[data-ssos-open-editor]')){openEditor(e.target.closest('[data-ssos-open-editor]').dataset.ssosOpenEditor==='add');return;}
-      if(e.target.closest('[data-ssos-custom-app]')){const app=config.apps.find(a=>a.id===e.target.closest('[data-ssos-custom-app]').dataset.ssosCustomApp);if(app)window.open(app.url,'_blank','noopener,noreferrer');return;}
-      if(e.target.closest('[data-ssos-focus-add]')){$('#ssosAppUrl')?.focus();return;}
+      const storeTile=e.target.closest('[data-ssos-store-app]');
+      if(storeTile){openStoreApp(storeTile.dataset.ssosStoreApp);return;}
+      const install=e.target.closest('[data-ssos-store-install]');
+      if(install){const id=install.dataset.ssosStoreInstall;if(STORE_CATALOG.some(app=>app.id===id)&&!storeState.installed.includes(id)){storeState.installed.push(id);saveStoreState();toast(st('installedLabel')+' ✓');}return;}
+      const storeOpen=e.target.closest('[data-ssos-store-open]');
+      if(storeOpen){openStoreApp(storeOpen.dataset.ssosStoreOpen);return;}
+      const uninstall=e.target.closest('[data-ssos-store-uninstall]');
+      if(uninstall){const id=uninstall.dataset.ssosStoreUninstall;if(confirm(st('confirmUninstall'))){storeState.installed=storeState.installed.filter(item=>item!==id);saveStoreState();toast(st('uninstall')+' ✓');}return;}
+      const rate=e.target.closest('[data-ssos-rate-app]');
+      if(rate){const id=rate.dataset.ssosRateApp,value=Number(rate.dataset.rating);if(STORE_CATALOG.some(app=>app.id===id)&&Number.isInteger(value)&&value>=1&&value<=5){storeState.ratings[id]=value;saveStoreState();}return;}
+      const legacyOpen=e.target.closest('[data-ssos-legacy-open]');
+      if(legacyOpen){openCustomApp(legacyOpen.dataset.ssosLegacyOpen);return;}
+      const legacyRemove=e.target.closest('[data-ssos-legacy-uninstall]');
+      if(legacyRemove){const id=legacyRemove.dataset.ssosLegacyUninstall;if(confirm(st('legacyConfirm'))){config.apps=config.apps.filter(app=>app.id!==id);saveConfig();renderStoreSections();toast(st('uninstall')+' ✓');}return;}
       if(e.target.closest('#ssosDetectMetadata')){await detectMetadata();return;}
-      if(e.target.closest('#ssosSaveApp')){saveApp();return;}
-      if(e.target.closest('#ssosCancelEdit')){resetAppForm();return;}
-      const edit=e.target.closest('[data-ssos-edit]');if(edit){editApp(edit.dataset.ssosEdit);return;}
-      const del=e.target.closest('[data-ssos-delete]');if(del){if(confirm(t('confirmDelete'))){config.apps=config.apps.filter(a=>a.id!==del.dataset.ssosDelete);saveConfig();renderAppList();toast(t('deleted'));}return;}
       if(e.target.closest('#ssosSaveDesign')){saveDesign();return;}
       if(e.target.closest('#ssosClearWallpaper')){config.wallpaperUrl='';config.wallpaperData='';saveConfig();toast(t('designSaved'));return;}
       if(e.target.closest('#ssosSaveLock')){saveLockSettings();return;}
       if(e.target.closest('#ssosRefreshWeather')){config.weatherCity=$('#ssosWeatherCity')?.value.trim()||'';saveConfig();refreshWeather();return;}
       if(e.target.closest('#ssosExport')){exportBackup();return;}
       const lockUrl=e.target.closest('[data-ssos-lock-url]');if(lockUrl){window.open(lockUrl.dataset.ssosLockUrl,'_blank','noopener,noreferrer');return;}
+    });
+    document.addEventListener('input',e=>{
+      if(e.target.id==='ssosStoreSearch'){storeView.query=e.target.value||'';renderStoreSections();}
+      if(e.target.id==='ssosAppIconUrl')previewIcon(safeUrl(e.target.value));
+    });
+    document.addEventListener('click',e=>{
+      const category=e.target.closest('[data-ssos-store-category]');
+      if(category){storeView.category=category.dataset.ssosStoreCategory||'all';renderStoreSections();return;}
+    });
+    document.addEventListener('submit',e=>{
+      if(e.target?.id==='ssosAppSubmissionForm'){e.preventDefault();submitAppSuggestion();}
     });
     document.addEventListener('change',async e=>{
       if(e.target.id==='ssosAppIconUrl'){previewIcon(safeUrl(e.target.value));}
@@ -1766,7 +1925,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({openEditor, exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp});
+  window.SSOSPersonalization = Object.freeze({renderStore, exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp, openStoreApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
