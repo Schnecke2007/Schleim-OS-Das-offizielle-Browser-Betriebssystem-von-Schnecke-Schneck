@@ -84,7 +84,7 @@ Das Admin-Portal und sein Quellcode sind ebenfalls öffentlich sichtbar. Die Adm
 ## Installationen, Bewertungen und System-Apps
 
 - Installierte Store-Apps werden lokal im Browser unter `ssos-store-v1` gespeichert.
-- Bewertungen sind persönliche Bewertungen auf diesem Gerät, keine globalen Community-Bewertungen.
+- Community-Bewertungen werden aus öffentlichen GitHub-Einreichungen berechnet und zentral in `extension/data/store-ratings.json` gespeichert; einzelne Stimmen bleiben als GitHub-Issues öffentlich einsehbar.
 - Eine Installation fügt eine Website-Kachel zum Startbildschirm hinzu. Die Website wird beim Öffnen in einem neuen Browser-Tab geladen.
 - Beim Deinstallieren wird nur die betreffende Store-Kachel entfernt.
 - Eingebaute System-Apps und feste Schleim-OS-Inhalte befinden sich nicht im Store-Katalog und können über den Store nicht deinstalliert werden.
