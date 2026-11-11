@@ -32,6 +32,32 @@ Beispiel:
 }
 ```
 
+## Kategorie-Verzeichnis im Repository
+
+Neben dem Laufzeitkatalog gibt es den öffentlichen Ordner [Store](../../Store/README.md). Dort werden freigegebene Apps übersichtlich nach Kategorie abgelegt:
+
+| Kategorie | Ordner |
+|---|---|
+| Tools | `Store/tools/` |
+| KI & Chatbots | `Store/ai/` |
+| Medien | `Store/media/` |
+| Wissen | `Store/knowledge/` |
+| Navigation | `Store/navigation/` |
+| Produktivität | `Store/productivity/` |
+| Kommunikation | `Store/communication/` |
+| Suche & Datenschutz | `Store/privacy/` |
+
+Jede Kategorie besitzt eine `README.md` mit den veröffentlichten Apps. Jede einzelne App wird zusätzlich als eigene JSON-Datei gespeichert, zum Beispiel `Store/ai/chatgpt-web.json`.
+
+Bei einer Genehmigung aktualisiert das Admin-Portal in einem gemeinsamen Git-Commit:
+
+1. den zentralen Laufzeitkatalog `extension/data/store-apps.json`,
+2. die JSON-Datei der App im passenden Kategorieordner,
+3. die README der betroffenen Kategorie,
+4. die Übersicht `Store/README.md`.
+
+Wird eine bestehende App in eine andere Kategorie verschoben, entfernt die Veröffentlichung die alte Kategorie-Datei und aktualisiert beide Kategorie-Übersichten. Die Laufzeit-Erweiterung liest weiterhin den zentralen Katalog; die Kategorieordner dienen der transparenten Ablage und einfachen manuellen Übersicht.
+
 ## Community-Vorschläge
 
 Besucher können im Schleim-Store eine Webseite mit Name, URL, Kategorie, Beschreibung und optionalem Icon vorschlagen. Das Formular öffnet ein vorbereitetes GitHub-Issue. Der Nutzer muss die Einreichung auf GitHub selbst abschicken.
@@ -47,6 +73,12 @@ Die Anleitung mit den Schritten zum Erstellen des Fine-grained GitHub-Tokens, zu
 Das Admin-Portal verwendet eine lokal gespeicherte, verschlüsselte JSON-Datei. Der Token wird mit AES-256-GCM verschlüsselt und beim Anmelden nur im Arbeitsspeicher der geöffneten Seite gehalten. Für die GitHub-API sind nur Repository-Zugriff sowie **Contents: Read and write** und **Issues: Read and write** vorgesehen.
 
 **Wichtig:** Das Portal ist ein clientseitiges Admin-Werkzeug und kein serverseitiges Rollen- oder Zugriffssystem. Die Admin-Datei und ihre Passphrase müssen getrennt und sicher aufbewahrt werden.
+
+## Öffentlichkeit und Datenschutz
+
+Das Schleim-OS-Repository ist öffentlich. Deshalb sind der Katalog, die Kategorie-Dateien, die Einreichungsvorlage und eingereichte GitHub-Issues öffentlich einsehbar. Einreichungen können den GitHub-Benutzernamen des Absenders und alle in den Text geschriebenen Angaben enthalten. Keine Passwörter, privaten Kontaktdaten oder vertraulichen Inhalte in App-Vorschläge schreiben.
+
+Das Admin-Portal und sein Quellcode sind ebenfalls öffentlich sichtbar. Die Admin-Datei und die Passphrase sind jedoch private Zugangsdaten und dürfen nicht ins Repository hochgeladen werden. Die lokale `.gitignore` schützt nur die dort ausdrücklich aufgeführten Dateinamen; kontrolliere vor jedem Commit auch manuell, dass keine andere Token- oder Schlüsseldatei enthalten ist.
 
 ## Installationen, Bewertungen und System-Apps
 
