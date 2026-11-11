@@ -1179,6 +1179,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     websiteinfo:{url:URLS.website,title:'Über unsere Webseite'},fanapp:{url:URLS.fanapp,title:'Unsere App'}
   };
   function openApp(id){
+    if(['photos','photo','gallery','fotos','bilder'].includes(String(id||'').toLowerCase()))id='images';
     if(['agbs','privacy','imprint'].includes(id)){selectedLegalDocument=id;id='legal';}
     if(PROJECT_CHILD_IDS.includes(id) && !projectHubActive){showToast('Bitte öffne Projekte über die App „Projektwelt“.');id='projects';}
     if(CONTACT_CHILD_IDS.includes(id) && !contactHubActive){showToast('Bitte öffne Kontaktfunktionen über die App „Kontakt“.');id='contact';}
