@@ -173,7 +173,7 @@
   }
   function review(issue){
     const p=parse(issue),descs={de:p.lang==='de'?p.description:'',en:p.lang==='en'?p.description:'',nl:p.lang==='nl'?p.description:''};
-    const options=CATEGORIES.map(x=>'<option value="'+x+'" '+(p.category===x?'selected':'')+'>'+x+'</option>').join('');
+    const options=CATEGORIES.map(x=>'<option value="'+esc(x)+'" '+(p.category===x?'selected':'')+'>'+esc(categoryLabel(x))+'</option>').join('');
     return '<form id="ssosAdminPublishForm" class="ssos-form" data-issue="'+issue.number+'">'+
       '<label>'+esc(t('id'))+'<input id="adminAppId" value="'+esc(p.id)+'" maxlength="60" required></label>'+
       '<label>'+esc(t('name'))+'<input id="adminAppName" value="'+esc(p.name)+'" maxlength="60" required></label>'+
