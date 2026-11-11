@@ -153,6 +153,22 @@
         "en": "Discover TikTok: The ultimate platform for short-form video entertainment, trends, and inspiration. With our integrated TikTok feed, you can explore viral products, behind-the-scenes moments, and community highlights right here in the store!",
         "nl": "Ontdek TikTok: Het ultieme platform voor korte videoverentertainment, trends en inspiratie. Met onze geïntegreerde TikTok-feed ontdek je virale producten, kijkjes achter de schermen en community-highlights direct hier in de store!"
       }
+    },
+    {
+      "id": "nextdns",
+      "name": "NextDNS",
+      "url": "https://my.nextdns.io/",
+      "category": "tools",
+      "icon": "🌐",
+      "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fmy.nextdns.io%2F&sz=128",
+      "tags": "nextdns",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "description": {
+        "de": "Surfe sicherer im Internet und verwalte deinen eigenen DNS-Server",
+        "en": "Surf the internet more securely and manage your own DNS server",
+        "nl": "Surf veiliger op het internet en beheer je eigen DNS-serve"
+      }
     }
   ]
 }
