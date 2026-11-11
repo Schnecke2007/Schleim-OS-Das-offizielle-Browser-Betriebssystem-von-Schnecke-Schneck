@@ -34,7 +34,9 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Startbildschirm mit Apps und Website-Verknüpfungen
 - App-Kacheln per Drag-and-drop neu anordnen
 - Personalisierung von Design, Akzentfarbe und Hintergrund
-- App-Editor und lokale JSON-Sicherung bzw. Wiederherstellung
+- Slime Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
+- App-Vorschläge über ein GitHub-Issue-Formular einreichen
+- Lokale JSON-Sicherung bzw. Wiederherstellung der Personalisierung
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -55,7 +57,8 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 
 - **Apps starten:** Eine Kachel auf dem Startbildschirm auswählen.
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
-- **Personalisieren:** Den Einstellungs- bzw. App-Editor in der Oberfläche öffnen.
+- **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
+- **Apps entdecken:** Den Slime Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
 - **Sicherung:** Die angebotene JSON-Funktion verwenden, um persönliche Einstellungen zu exportieren oder wieder einzulesen.
 
 Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-Backup sollte an einem sicheren Ort aufbewahrt werden.
