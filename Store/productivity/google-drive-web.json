@@ -1,0 +1,15 @@
+{
+  "id": "google-drive-web",
+  "name": "Google Drive",
+  "icon": "📁",
+  "url": "https://drive.google.com/",
+  "category": "productivity",
+  "addedAt": "2026-11-11",
+  "featured": false,
+  "tags": "dateien cloud dokumente speicher",
+  "description": {
+    "de": "Dateien und Dokumente online verwalten.",
+    "en": "Manage files and documents online.",
+    "nl": "Beheer bestanden en documenten online."
+  }
+}
