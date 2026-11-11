@@ -93,8 +93,8 @@
     entries.slice(0,250).forEach((entry,index)=>{
       const raw=typeof entry==='string'?{url:entry}:entry;
       if(!raw||typeof raw!=='object'||Array.isArray(raw))return;
-      const urlValue=raw.url??raw.href??raw.link??raw.targetUrl??raw.targetURL??raw.target_url??raw.website??raw.websiteUrl??raw.websiteURL??raw.website_url??raw.address??raw.src??raw.appUrl??raw.appURL??raw.app_url??raw.destination??raw.uri??raw.launchUrl??raw.openUrl??raw.target?.url??raw.data?.url??raw._legacyUrl??raw.value;
-      const url=safeLegacyUrl(urlValue);
+      const urlCandidates=[raw.url,raw.href,raw.link,raw.targetUrl,raw.targetURL,raw.target_url,raw.website,raw.websiteUrl,raw.websiteURL,raw.website_url,raw.address,raw.src,raw.appUrl,raw.appURL,raw.app_url,raw.destination,raw.uri,raw.launchUrl,raw.openUrl,raw.target?.url,raw.target,raw.data?.url,raw._legacyUrl,raw.value];
+      const url=urlCandidates.map(safeLegacyUrl).find(Boolean)||'';
       if(!url)return;
       const name=String(raw.name??raw.title??raw.appName??raw.displayName??raw.label??raw.caption??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
       const candidate=String(raw.id??raw.appId??raw.key??'').trim();
