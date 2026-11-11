@@ -1,0 +1,15 @@
+{
+  "id": "duckduckgo-web",
+  "name": "DuckDuckGo",
+  "icon": "🦆",
+  "url": "https://duckduckgo.com/",
+  "category": "privacy",
+  "addedAt": "2026-11-11",
+  "featured": false,
+  "tags": "suche datenschutz privat suchen",
+  "description": {
+    "de": "Alternative Suchmaschine mit Fokus auf Datenschutz.",
+    "en": "Alternative search engine with a focus on privacy.",
+    "nl": "Alternatieve zoekmachine met aandacht voor privacy."
+  }
+}
