@@ -48,6 +48,8 @@ In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door ca
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
 - **Voorstellen:** Bezoekers kunnen websites voorstellen via het openbare [GitHub-inzendformulier](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
+- **Lokale websites indienen:** Geïmporteerde of eerder opgeslagen websites verschijnen onder „Eerder toegevoegde websites“. Kies „Indienen bij de Schleim-Store“ om de gegevens naar het inzendformulier over te nemen. Voeg een duidelijke beschrijving toe en dien het voorstel ter beoordeling in op GitHub.
+- **Beoordelen:** Met de sterren open je een openbare GitHub-beoordeling. Na verzending berekent GitHub Actions het gemiddelde en het aantal stemmen opnieuw. De GitHub-gebruikersnaam en individuele stem zijn openbaar zichtbaar.
 - **Controleren en publiceren:** Voorstellen worden niet automatisch gepubliceerd. De beheerder controleert en keurt elke app eerst goed.
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
