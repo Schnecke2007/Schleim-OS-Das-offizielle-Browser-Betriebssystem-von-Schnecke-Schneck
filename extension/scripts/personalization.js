@@ -114,7 +114,7 @@
   }
   function appCollection(source) {
     if(!source||typeof source!=='object')return null;
-    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','customLinks','tiles']) {
+    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','shortcuts','customLinks','tiles','items']) {
       const value=source[key];
       if(Array.isArray(value)&&value.length)return value;
       if(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length)return value;
