@@ -1,0 +1,15 @@
+{
+  "id": "youtube-web",
+  "name": "YouTube",
+  "icon": "▶️",
+  "url": "https://www.youtube.com/",
+  "category": "media",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "tags": "videos musik unterhaltung clips",
+  "description": {
+    "de": "Videos, Musik, Tutorials und Unterhaltung entdecken.",
+    "en": "Discover videos, music, tutorials and entertainment.",
+    "nl": "Ontdek video's, muziek, tutorials en entertainment."
+  }
+}
