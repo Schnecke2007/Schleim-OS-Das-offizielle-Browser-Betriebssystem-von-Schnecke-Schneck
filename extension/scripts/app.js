@@ -626,9 +626,21 @@
     else if(!CONTACT_CHILD_IDS.includes(id))contactHubActive=false;
     activeAppId=id;
     els.title.textContent=localizedAppName(app.id);els.emoji.textContent=app.icon;
-    const rendered=RENDERERS[id]();
-    els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
-    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    let rendered='';
+    try{
+      rendered=RENDERERS[id]();
+      if(typeof rendered!=='string'||!rendered.trim())throw new Error('The app renderer returned no content.');
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+    }catch(error){
+      console.error('[Schleim OS] Could not open app:',id,error);
+      if(id==='images'){
+        rendered='<div class="app-hero"><p class="eyebrow">FOTOS & GALERIE</p><h2>Bilder aus der Fan-Welt.</h2><p>Die interne Galerieansicht konnte nicht vollständig geladen werden. Du kannst die öffentliche Bildergalerie direkt auf der offiziellen Webseite öffnen.</p><span class="large-emoji">🖼️</span></div><div class="notice">Die Originalgalerie kann externe Inhalte verwenden, die nicht in jedem Browser eingebettet werden dürfen.</div><div class="ssos-form-actions"><a class="app-button" href="'+esc(URLS.social)+'" target="_blank" rel="noopener noreferrer">Fotogalerie öffnen ↗</a></div>';
+      }else{
+        rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
+      }
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+    }
+    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
