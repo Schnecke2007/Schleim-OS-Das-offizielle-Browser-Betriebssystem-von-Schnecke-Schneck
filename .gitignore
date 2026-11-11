@@ -1,4 +1,4 @@
-# Local encrypted Slime Store admin credentials
+# Local encrypted Schleim-Store admin credentials
 /slime-store-admin-key.json
 /*.slime-admin.json
 /extension/admin/slime-store-admin-key.json
