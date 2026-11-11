@@ -107,4 +107,4 @@ Wenn du den Store-Code oder sein Design änderst, müssen die eingebetteten Absc
 
 ## Lokale Webseiten aus Backups
 
-Früher gespeicherte Webseiten werden nach dem Import in der Store-Sektion **Bisherige eigene Webseiten** angezeigt. Jede lokale Webseite kann von dort in das Einreichungsformular übernommen werden. Vor dem Absenden muss eine aussagekräftige Beschreibung ergänzt werden. Die App wird erst nach Prüfung und Freigabe durch den Betreiber in den offiziellen Katalog aufgenommen.
+Früher gespeicherte Webseiten werden nach dem Import in der Store-Sektion **Bisherige eigene Webseiten** angezeigt. Jede lokale Webseite besitzt dort die Schaltfläche **„Im Schleim-Store einreichen“**. Sie übernimmt Name, Adresse und vorhandenes Icon in das Einreichungsformular. Prüfe Kategorie und Angaben, ergänze eine aussagekräftige Beschreibung und sende den Vorschlag anschließend selbst auf GitHub ab. Ältere JSON-Dateien mit unterschiedlichen Feldnamen und URL-Strukturen werden beim Import nach Möglichkeit normalisiert. Die App wird erst nach Prüfung und Freigabe durch den Betreiber in den offiziellen Katalog aufgenommen.
