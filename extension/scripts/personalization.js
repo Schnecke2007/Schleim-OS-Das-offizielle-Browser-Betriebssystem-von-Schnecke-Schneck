@@ -417,6 +417,7 @@
     const language=LANG();
     const issueBody='## App information\n\n**Name:** '+name+'\n\n**Website:** '+url+'\n\n**Category:** '+category+'\n\n**Icon URL:** '+(iconUrl||'Not provided')+'\n\n**Submission language:** '+language+'\n\n## Description\n\n'+issueDescription+'\n';
     const params=new URLSearchParams();
+    params.set('template','app-submission.md');
     params.set('title',({de:'[Slime Store] App-Vorschlag: ',en:'[Slime Store] App suggestion: ',nl:'[Slime Store] Appvoorstel: '}[language]||'[Slime Store] App suggestion: ')+name);
     params.set('body',issueBody);
     const issueUrl=STORE_ISSUE_URL+'?'+params.toString();
