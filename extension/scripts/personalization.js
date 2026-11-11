@@ -651,7 +651,17 @@
       const candidateConfig=Array.isArray(storedConfig)?{apps:storedConfig}:
         (isObject(storedConfig)?storedConfig:(isObject(rootConfig)?rootConfig:{}));
       const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']??preferences['ssos-links']??preferences['ssos-shortcuts']);
-      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??directArray;
+      const hasLegacyUrl=value=>{
+        if(typeof value==='string')return !!safeLegacyUrl(value);
+        if(!isObject(value))return false;
+        return [value.url,value.href,value.link,value.targetUrl,value.targetURL,value.target_url,value.website,value.websiteUrl,value.websiteURL,value.address,value.src,value.appUrl,value.app_url,value.destination,value.uri,value.target?.url,value.target,value.data?.url].some(candidate=>typeof candidate==='string'&&!!safeLegacyUrl(candidate));
+      };
+      const looksLikeLegacyMap=value=>isObject(value)&&Object.entries(value).some(([key,item])=>
+        (/^(?:https?:)?\\/\\//i.test(key)||/^www\\./i.test(key))?!!safeLegacyUrl(key):hasLegacyUrl(item)
+      );
+      const legacyMap=looksLikeLegacyMap(candidateConfig)?candidateConfig:
+        (!data?.preferences&&!data?.data&&!data?.config&&!data?.settings&&looksLikeLegacyMap(data)?data:null);
+      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??legacyMap??directArray;
       const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
       if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
       for(const [key,value] of Object.entries(preferences)){
