@@ -81,26 +81,32 @@
     return `legacy-${slug}-${(hash>>>0).toString(36)}`;
   }
   function normalizeLegacyApps(input) {
-    const entries=Array.isArray(input)?input:
-      (Array.isArray(input?.items)?input.items:
-      Array.isArray(input?.apps)?input.apps:
-      (input&&typeof input==='object'?Object.values(input):[]));
+    const entries=Array.isArray(input)?input:(input&&typeof input==='object'?Object.entries(input).map(([key,value])=>{
+      const keyIsUrl=/^(?:https?:)?\/\//i.test(key)||/^www\./i.test(key);
+      if(typeof value==='string')return keyIsUrl?{name:value,url:key}:{name:key,url:value};
+      if(value&&typeof value==='object'&&!Array.isArray(value)){
+        return {...value,id:value.id??value.appId??(keyIsUrl?undefined:key),_legacyUrl:keyIsUrl?safeLegacyUrl(key):''};
+      }
+      return value;
+    }):[]);
     const seen=new Set(),result=[];
     entries.slice(0,250).forEach((entry,index)=>{
       const raw=typeof entry==='string'?{url:entry}:entry;
-      if(!raw||typeof raw!=='object')return;
-      const url=safeLegacyUrl(raw.url??raw.href??raw.link??raw.targetUrl??raw.targetURL??raw.target??raw.website??raw.websiteUrl??raw.websiteURL??raw.address??raw.src??raw.appUrl??raw.destination??raw.value);
+      if(!raw||typeof raw!=='object'||Array.isArray(raw))return;
+      const urlValue=raw.url??raw.href??raw.link??raw.targetUrl??raw.targetURL??raw.target_url??raw.website??raw.websiteUrl??raw.websiteURL??raw.website_url??raw.address??raw.src??raw.appUrl??raw.appURL??raw.app_url??raw.destination??raw.uri??raw.launchUrl??raw.openUrl??raw.target?.url??raw.data?.url??raw._legacyUrl??raw.value;
+      const url=safeLegacyUrl(urlValue);
       if(!url)return;
-      const name=String(raw.name??raw.title??raw.appName??raw.label??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
+      const name=String(raw.name??raw.title??raw.appName??raw.displayName??raw.label??raw.caption??raw.text??domainLabel(url)??'Website').trim().slice(0,60)||domainLabel(url);
       const candidate=String(raw.id??raw.appId??raw.key??'').trim();
       let id=/^[a-zA-Z0-9_-]{1,120}$/.test(candidate)?candidate:stableLegacyId(name,url,index);
       if(seen.has(id))id=stableLegacyId(name,url,index);
-      let suffix=2,base=id;while(seen.has(id))id=`${base}-${suffix++}`;
+      let suffix=2,base=id;while(seen.has(id))id=base+'-'+suffix++;
       seen.add(id);
+      const iconValue=raw.iconUrl??raw.favicon??raw.logo??raw.image??raw.iconSrc??raw.imageUrl??raw.image_url??raw.iconURL??(/^https?:\/\//i.test(String(raw.icon||''))?raw.icon:'');
       result.push({
         id,name,url,
         icon:String(raw.icon??raw.emoji??raw.symbol??'🌐').slice(0,12),
-        iconUrl:safeLegacyUrl(raw.iconUrl??raw.favicon??raw.logo??raw.image??raw.iconSrc)||'',
+        iconUrl:safeLegacyUrl(iconValue)||'',
         color:/^#[0-9a-f]{6}$/i.test(raw.color||'')?raw.color:''
       });
     });
@@ -133,9 +139,9 @@
   const STORE_RATINGS_URL = 'https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/data/store-ratings.json';
   let STORE_RATINGS = {};
   const STORE_TEXT = {
-    de:{intro:'Entdecke Webseiten als Apps für deinen Startbildschirm. Store-Apps öffnen sich in einem neuen Browser-Tab.',search:'Im Schleim-Store suchen …',allCategories:'Alle Kategorien',recommended:'Für dich empfohlen',top:'Community-Bewertungen',topEmpty:'Noch keine Community-Bewertungen. Bewerte Apps über GitHub.',ratingPrepared:'GitHub-Bewertung vorbereitet. Reiche sie öffentlich ein, damit die Sterne aktualisiert werden.',ratingPublic:'Bewertungen werden öffentlich über GitHub abgegeben. Dein GitHub-Benutzername und deine Stimme sind sichtbar.',vote:'Stimme',votes:'Stimmen',legacyPublish:'Im Schleim-Store vorschlagen',legacyPrepared:'Formular vorbereitet. Bitte ergänze die Beschreibung und reiche deinen Vorschlag ein.',newest:'Neu im Store',all:'Alle Apps',installed:'Deine installierten Apps',legacy:'Bisherige eigene Webseiten',propose:'App vorschlagen',submitIntro:'Dein Vorschlag wird als GitHub-Issue vorbereitet und von Schnecke Schneck geprüft. Er erscheint nicht automatisch im Store.',url:'Webseiten-URL',detect:'Name und Icon erkennen',name:'App-Name',category:'Kategorie',description:'Beschreibung',iconUrl:'Icon-URL (optional)',iconFile:'Eigenes Icon (optional)',iconPreview:'Icon-Vorschau',submit:'Vorschlag auf GitHub einreichen',uploadNote:'Ein lokal ausgewähltes Icon kann nicht automatisch zu GitHub übertragen werden. Bitte lade die Bilddatei nach dem Öffnen des GitHub-Formulars dort noch einmal hoch.',systemNote:'System-Apps und die fest eingebauten Inhalte von Schleim OS bleiben immer erhalten. Sie können hier nicht deinstalliert werden.',install:'Installieren',installedLabel:'Installiert',uninstall:'Deinstallieren',open:'Öffnen',rated:'Deine Bewertung',notRated:'Noch keine Bewertungen',noResults:'Keine passenden Apps gefunden.',noInstalled:'Du hast noch keine Store-Apps installiert.',legacyEmpty:'Keine früher hinzugefügten Webseiten vorhanden.',confirmUninstall:'Diese Store-App vom Startbildschirm entfernen?',legacyConfirm:'Diese eigene Webseite vom Startbildschirm entfernen?',prepared:'Vorschlag vorbereitet. Prüfe die Angaben auf GitHub und sende das Formular dort ab.',invalid:'Bitte gib eine gültige http- oder https-Adresse ein.',needName:'Bitte gib einen App-Namen ein.',needDescription:'Bitte beschreibe kurz, was die Webseite bietet.',categories:{tools:'Tools',ai:'KI & Chatbots',media:'Medien',knowledge:'Wissen',navigation:'Navigation',productivity:'Produktivität',communication:'Kommunikation',privacy:'Suche & Datenschutz',shopping:'Shopping & Online-Shops'}},
-    en:{intro:'Discover websites as apps for your home screen. Store apps open in a new browser tab.',search:'Search the Schleim-Store …',allCategories:'All categories',recommended:'Recommended for you',top:'Community ratings',topEmpty:'No community ratings yet. Rate an app through GitHub.',ratingPrepared:'GitHub rating prepared. Submit it publicly to update the Store stars.',ratingPublic:'Ratings are submitted publicly through GitHub. Your GitHub username and vote are visible.',vote:'vote',votes:'votes',legacyPublish:'Suggest for the Schleim-Store',legacyPrepared:'Form prepared. Add a description and submit your suggestion.',newest:'New in the Store',all:'All apps',installed:'Your installed apps',legacy:'Previously added websites',propose:'Suggest an app',submitIntro:'Your suggestion is prepared as a GitHub issue and reviewed by Schnecke Schneck. It is not published automatically.',url:'Website URL',detect:'Detect name and icon',name:'App name',category:'Category',description:'Description',iconUrl:'Icon URL (optional)',iconFile:'Custom icon (optional)',iconPreview:'Icon preview',submit:'Submit suggestion on GitHub',uploadNote:'A locally selected icon cannot be transferred to GitHub automatically. Please upload the image again in the GitHub form after it opens.',systemNote:'System apps and built-in Schleim OS content are always kept. They cannot be uninstalled here.',install:'Install',installedLabel:'Installed',uninstall:'Uninstall',open:'Open',rated:'Your rating',notRated:'No ratings yet',noResults:'No matching apps found.',noInstalled:'You have not installed any Store apps yet.',legacyEmpty:'No previously added websites were found.',confirmUninstall:'Remove this Store app from your home screen?',legacyConfirm:'Remove this custom website from your home screen?',prepared:'Suggestion prepared. Review the details on GitHub and submit the form there.',invalid:'Enter a valid http or https website address.',needName:'Enter an app name.',needDescription:'Briefly describe what the website offers.',categories:{tools:'Tools',ai:'AI & chatbots',media:'Media',knowledge:'Knowledge',navigation:'Navigation',productivity:'Productivity',communication:'Communication',privacy:'Search & privacy',shopping:'Shopping & online stores'}},
-    nl:{intro:'Ontdek websites als apps voor je startscherm. Store-apps openen in een nieuw browsertabblad.',search:'Zoeken in de Schleim-Store …',allCategories:'Alle categorieën',recommended:'Aanbevolen voor jou',top:'Communitybeoordelingen',topEmpty:'Er zijn nog geen communitybeoordelingen. Beoordeel een app via GitHub.',ratingPrepared:'GitHub-beoordeling voorbereid. Dien deze openbaar in om de Store-sterren bij te werken.',ratingPublic:'Beoordelingen worden openbaar via GitHub ingediend. Je GitHub-gebruikersnaam en stem zijn zichtbaar.',vote:'stem',votes:'stemmen',legacyPublish:'Voorstellen voor de Schleim-Store',legacyPrepared:'Formulier voorbereid. Voeg een beschrijving toe en dien je voorstel in.',newest:'Nieuw in de Store',all:'Alle apps',installed:'Je geïnstalleerde apps',legacy:'Eerder toegevoegde websites',propose:'Een app voorstellen',submitIntro:'Je voorstel wordt voorbereid als GitHub-issue en beoordeeld door Schnecke Schneck. Het wordt niet automatisch gepubliceerd.',url:'Website-URL',detect:'Naam en pictogram herkennen',name:'App-naam',category:'Categorie',description:'Beschrijving',iconUrl:'Pictogram-URL (optioneel)',iconFile:'Eigen pictogram (optioneel)',iconPreview:'Voorbeeld pictogram',submit:'Voorstel indienen op GitHub',uploadNote:'Een lokaal geselecteerd pictogram kan niet automatisch naar GitHub worden verzonden. Upload de afbeelding opnieuw in het GitHub-formulier nadat het is geopend.',systemNote:'Systeemapps en ingebouwde Schleim OS-inhoud blijven altijd behouden. Je kunt ze hier niet verwijderen.',install:'Installeren',installedLabel:'Geïnstalleerd',uninstall:'Verwijderen',open:'Openen',rated:'Jouw beoordeling',notRated:'Nog geen beoordelingen',noResults:'Geen overeenkomende apps gevonden.',noInstalled:'Je hebt nog geen Store-apps geïnstalleerd.',legacyEmpty:'Er zijn geen eerder toegevoegde websites gevonden.',confirmUninstall:'Deze Store-app van het startscherm verwijderen?',legacyConfirm:'Deze eigen website van het startscherm verwijderen?',prepared:'Voorstel voorbereid. Controleer de gegevens op GitHub en verstuur het formulier daar.',invalid:'Voer een geldig http- of https-websiteadres in.',needName:'Voer een app-naam in.',needDescription:'Beschrijf kort wat de website biedt.',categories:{tools:'Hulpmiddelen',ai:'AI & chatbots',media:'Media',knowledge:'Kennis',navigation:'Navigatie',productivity:'Productiviteit',communication:'Communicatie',privacy:'Zoeken & privacy',shopping:'Winkelen & webshops'}}
+    de:{intro:'Entdecke Webseiten als Apps für deinen Startbildschirm. Store-Apps öffnen sich in einem neuen Browser-Tab.',search:'Im Schleim-Store suchen …',allCategories:'Alle Kategorien',recommended:'Für dich empfohlen',top:'Community-Bewertungen',topEmpty:'Noch keine Community-Bewertungen. Bewerte Apps über GitHub.',ratingPrepared:'GitHub-Bewertung vorbereitet. Reiche sie öffentlich ein, damit die Sterne aktualisiert werden.',ratingPublic:'Bewertungen werden öffentlich über GitHub abgegeben. Dein GitHub-Benutzername und deine Stimme sind sichtbar.',vote:'Stimme',votes:'Stimmen',legacyPublish:'Im Schleim-Store einreichen',legacyPrepared:'Formular vorbereitet. Bitte ergänze die Beschreibung und reiche deinen Vorschlag ein.',newest:'Neu im Store',all:'Alle Apps',installed:'Deine installierten Apps',legacy:'Bisherige eigene Webseiten',propose:'App vorschlagen',submitIntro:'Dein Vorschlag wird als GitHub-Issue vorbereitet und von Schnecke Schneck geprüft. Er erscheint nicht automatisch im Store.',url:'Webseiten-URL',detect:'Name und Icon erkennen',name:'App-Name',category:'Kategorie',description:'Beschreibung',iconUrl:'Icon-URL (optional)',iconFile:'Eigenes Icon (optional)',iconPreview:'Icon-Vorschau',submit:'Vorschlag auf GitHub einreichen',uploadNote:'Ein lokal ausgewähltes Icon kann nicht automatisch zu GitHub übertragen werden. Bitte lade die Bilddatei nach dem Öffnen des GitHub-Formulars dort noch einmal hoch.',systemNote:'System-Apps und die fest eingebauten Inhalte von Schleim OS bleiben immer erhalten. Sie können hier nicht deinstalliert werden.',install:'Installieren',installedLabel:'Installiert',uninstall:'Deinstallieren',open:'Öffnen',rated:'Deine Bewertung',notRated:'Noch keine Bewertungen',noResults:'Keine passenden Apps gefunden.',noInstalled:'Du hast noch keine Store-Apps installiert.',legacyEmpty:'Keine früher hinzugefügten Webseiten vorhanden.',confirmUninstall:'Diese Store-App vom Startbildschirm entfernen?',legacyConfirm:'Diese eigene Webseite vom Startbildschirm entfernen?',prepared:'Vorschlag vorbereitet. Prüfe die Angaben auf GitHub und sende das Formular dort ab.',invalid:'Bitte gib eine gültige http- oder https-Adresse ein.',needName:'Bitte gib einen App-Namen ein.',needDescription:'Bitte beschreibe kurz, was die Webseite bietet.',categories:{tools:'Tools',ai:'KI & Chatbots',media:'Medien',knowledge:'Wissen',navigation:'Navigation',productivity:'Produktivität',communication:'Kommunikation',privacy:'Suche & Datenschutz',shopping:'Shopping & Online-Shops'}},
+    en:{intro:'Discover websites as apps for your home screen. Store apps open in a new browser tab.',search:'Search the Schleim-Store …',allCategories:'All categories',recommended:'Recommended for you',top:'Community ratings',topEmpty:'No community ratings yet. Rate an app through GitHub.',ratingPrepared:'GitHub rating prepared. Submit it publicly to update the Store stars.',ratingPublic:'Ratings are submitted publicly through GitHub. Your GitHub username and vote are visible.',vote:'vote',votes:'votes',legacyPublish:'Submit to the Schleim-Store',legacyPrepared:'Form prepared. Add a description and submit your suggestion.',newest:'New in the Store',all:'All apps',installed:'Your installed apps',legacy:'Previously added websites',propose:'Suggest an app',submitIntro:'Your suggestion is prepared as a GitHub issue and reviewed by Schnecke Schneck. It is not published automatically.',url:'Website URL',detect:'Detect name and icon',name:'App name',category:'Category',description:'Description',iconUrl:'Icon URL (optional)',iconFile:'Custom icon (optional)',iconPreview:'Icon preview',submit:'Submit suggestion on GitHub',uploadNote:'A locally selected icon cannot be transferred to GitHub automatically. Please upload the image again in the GitHub form after it opens.',systemNote:'System apps and built-in Schleim OS content are always kept. They cannot be uninstalled here.',install:'Install',installedLabel:'Installed',uninstall:'Uninstall',open:'Open',rated:'Your rating',notRated:'No ratings yet',noResults:'No matching apps found.',noInstalled:'You have not installed any Store apps yet.',legacyEmpty:'No previously added websites were found.',confirmUninstall:'Remove this Store app from your home screen?',legacyConfirm:'Remove this custom website from your home screen?',prepared:'Suggestion prepared. Review the details on GitHub and submit the form there.',invalid:'Enter a valid http or https website address.',needName:'Enter an app name.',needDescription:'Briefly describe what the website offers.',categories:{tools:'Tools',ai:'AI & chatbots',media:'Media',knowledge:'Knowledge',navigation:'Navigation',productivity:'Productivity',communication:'Communication',privacy:'Search & privacy',shopping:'Shopping & online stores'}},
+    nl:{intro:'Ontdek websites als apps voor je startscherm. Store-apps openen in een nieuw browsertabblad.',search:'Zoeken in de Schleim-Store …',allCategories:'Alle categorieën',recommended:'Aanbevolen voor jou',top:'Communitybeoordelingen',topEmpty:'Er zijn nog geen communitybeoordelingen. Beoordeel een app via GitHub.',ratingPrepared:'GitHub-beoordeling voorbereid. Dien deze openbaar in om de Store-sterren bij te werken.',ratingPublic:'Beoordelingen worden openbaar via GitHub ingediend. Je GitHub-gebruikersnaam en stem zijn zichtbaar.',vote:'stem',votes:'stemmen',legacyPublish:'Indienen bij de Schleim-Store',legacyPrepared:'Formulier voorbereid. Voeg een beschrijving toe en dien je voorstel in.',newest:'Nieuw in de Store',all:'Alle apps',installed:'Je geïnstalleerde apps',legacy:'Eerder toegevoegde websites',propose:'Een app voorstellen',submitIntro:'Je voorstel wordt voorbereid als GitHub-issue en beoordeeld door Schnecke Schneck. Het wordt niet automatisch gepubliceerd.',url:'Website-URL',detect:'Naam en pictogram herkennen',name:'App-naam',category:'Categorie',description:'Beschrijving',iconUrl:'Pictogram-URL (optioneel)',iconFile:'Eigen pictogram (optioneel)',iconPreview:'Voorbeeld pictogram',submit:'Voorstel indienen op GitHub',uploadNote:'Een lokaal geselecteerd pictogram kan niet automatisch naar GitHub worden verzonden. Upload de afbeelding opnieuw in het GitHub-formulier nadat het is geopend.',systemNote:'Systeemapps en ingebouwde Schleim OS-inhoud blijven altijd behouden. Je kunt ze hier niet verwijderen.',install:'Installeren',installedLabel:'Geïnstalleerd',uninstall:'Verwijderen',open:'Openen',rated:'Jouw beoordeling',notRated:'Nog geen beoordelingen',noResults:'Geen overeenkomende apps gevonden.',noInstalled:'Je hebt nog geen Store-apps geïnstalleerd.',legacyEmpty:'Er zijn geen eerder toegevoegde websites gevonden.',confirmUninstall:'Deze Store-app van het startscherm verwijderen?',legacyConfirm:'Deze eigen website van het startscherm verwijderen?',prepared:'Voorstel voorbereid. Controleer de gegevens op GitHub en verstuur het formulier daar.',invalid:'Voer een geldig http- of https-websiteadres in.',needName:'Voer een app-naam in.',needDescription:'Beschrijf kort wat de website biedt.',categories:{tools:'Hulpmiddelen',ai:'AI & chatbots',media:'Media',knowledge:'Kennis',navigation:'Navigatie',productivity:'Productiviteit',communication:'Communicatie',privacy:'Zoeken & privacy',shopping:'Winkelen & webshops'}}
   };
   const st = key => STORE_TEXT[LANG()]?.[key] || STORE_TEXT.de[key] || key;
   const storeCategory = key => STORE_TEXT[LANG()]?.categories?.[key] || STORE_TEXT.de.categories[key] || key;
@@ -180,7 +186,7 @@
   }
   async function loadStoreRatings(){
     try{
-      const response=await fetch(STORE_RATINGS_URL,{cache:'no-store',credentials:'omit'});
+      const response=await fetch(STORE_RATINGS_URL+'?t='+Date.now(),{cache:'no-store',credentials:'omit'});
       if(!response.ok)return false;
       const raw=await response.json(),source=raw&&typeof raw.apps==='object'&&raw.apps?raw.apps:{};
       const next={};
@@ -376,7 +382,7 @@
     const params=new URLSearchParams();
     params.set('template','store-rating.md');
     params.set('title','[Schleim-Store-Bewertung] '+app.name);
-    params.set('body',['## Schleim-Store-Bewertung','','App-ID: '+app.id,'','Rating: '+rating,''].join('\\n'));
+    params.set('body',['## Schleim-Store-Bewertung','','App-ID: '+app.id,'','Rating: '+rating,''].join('\n'));
     window.open(STORE_ISSUE_URL+'?'+params.toString(),'_blank','noopener,noreferrer');
     toast(st('ratingPrepared'));
     return true;
@@ -640,11 +646,12 @@
         isObject(data?.data?.preferences)?data.data.preferences:
         (isObject(data)&&Object.keys(data).some(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key))?data:{});
       const storedConfig=parseMaybe(preferences[KEY]);
-      const rootConfig=parseMaybe(data?.config??data?.settings);
+      const nestedData=isObject(data?.data)?data.data:{};
+      const rootConfig=parseMaybe(data?.config??data?.settings??nestedData.config??nestedData.settings);
       const candidateConfig=Array.isArray(storedConfig)?{apps:storedConfig}:
         (isObject(storedConfig)?storedConfig:(isObject(rootConfig)?rootConfig:{}));
-      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']);
-      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??directArray;
+      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']??preferences['ssos-links']??preferences['ssos-shortcuts']);
+      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??directArray;
       const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
       if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
       for(const [key,value] of Object.entries(preferences)){
@@ -731,15 +738,11 @@
   }
   function openCustomApp(id) {
     const app=config.apps.find(item=>item.id===String(id));
-    if(!app || !safeUrl(app.url))return false;
-    const link=document.createElement('a');
-    link.href=app.url;
-    link.target='_blank';
-    link.rel='noopener noreferrer';
-    link.referrerPolicy='no-referrer';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    const url=safeUrl(app?.url);
+    if(!app||!url){toast(st('invalid'));return false;}
+    // Use the same direct, user-initiated window.open path as installed Store apps.
+    // Synthetic anchor clicks can be blocked by some mobile Chromium browsers.
+    window.open(url,'_blank','noopener,noreferrer');
     return true;
   }
   function getApps() {
