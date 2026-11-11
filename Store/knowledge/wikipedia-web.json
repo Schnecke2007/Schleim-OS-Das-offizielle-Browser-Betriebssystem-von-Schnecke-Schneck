@@ -1,0 +1,15 @@
+{
+  "id": "wikipedia-web",
+  "name": "Wikipedia",
+  "icon": "📚",
+  "url": "https://www.wikipedia.org/",
+  "category": "knowledge",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "tags": "wissen lexikon recherche lernen",
+  "description": {
+    "de": "Wissen und Hintergrundinformationen in einer freien Enzyklopädie finden.",
+    "en": "Find knowledge and background information in a free encyclopedia.",
+    "nl": "Vind kennis en achtergrondinformatie in een vrije encyclopedie."
+  }
+}
