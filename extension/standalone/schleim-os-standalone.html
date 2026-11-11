@@ -272,7 +272,7 @@ body[data-device="desktop"] .language-screen,.device[data-device="desktop"] .lan
 .search-screen{overflow-y:auto;overscroll-behavior:contain}
 
 
-/* Slime Store – app discovery, search, ratings and community submissions */
+/* Schleim-Store – app discovery, search, ratings and community submissions */
 .ssos-store-hero{position:relative;overflow:hidden;min-height:150px;padding:19px 18px;margin-bottom:16px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:21px;background:radial-gradient(circle at 88% 18%,rgba(213,166,109,.25),transparent 34%),linear-gradient(125deg,#38271f,#1c2c25 100%)}
 .ssos-store-hero h2{position:relative;z-index:1;margin:7px 0 6px;font-size:27px;letter-spacing:-.06em}
 .ssos-store-hero>p:not(.eyebrow){position:relative;z-index:1;max-width:78%;margin:0;color:#d8c9bd;font-size:10px;line-height:1.55}
@@ -798,9 +798,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     $$('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
 
     const desktop={
-      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',store:'Slime Store',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
-      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',store:'Slime Store',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
-      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',store:'Slime Store',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
+      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',store:'Schleim-Store',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
+      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',store:'Schleim-Store',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
+      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',store:'Schleim-Store',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
     }[lang];
     const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
     const info=$$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
@@ -1150,7 +1150,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
-    slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Slime Store konnte nicht geladen werden.</p>',
+    slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Schleim-Store konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
