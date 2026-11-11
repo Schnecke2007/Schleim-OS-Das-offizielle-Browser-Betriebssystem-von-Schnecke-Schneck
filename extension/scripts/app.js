@@ -641,7 +641,7 @@
       }
       els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     }
-    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
