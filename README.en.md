@@ -34,7 +34,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Home screen with apps and website shortcuts
 - Rearrange app tiles using drag and drop
 - Customize the design, accent color and background
-- Slime Store with recommendations, categories, search, installation and removal of web apps
+- Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
 - Local JSON backup and restore for personalization
 - Multilingual interface: German, English and Dutch
@@ -58,7 +58,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Open apps:** Select a tile on the home screen.
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
-- **Discover apps:** Open the Slime Store, search for web apps and install or remove the ones you want.
+- **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
 - **Back up settings:** Use the available JSON feature to export or import your personal settings.
 
 Personal settings are stored locally in the browser profile. Keep your JSON backup in a safe place.
