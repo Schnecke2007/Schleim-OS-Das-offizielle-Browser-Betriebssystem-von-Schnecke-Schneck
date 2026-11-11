@@ -137,6 +137,22 @@
         "en": "Shop on Amazon 🤎",
         "nl": "Winkel op Amazon 🤎"
       }
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "url": "https://tiktok.com/",
+      "category": "media",
+      "icon": "🌐",
+      "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Ftiktok.com%2F&sz=128",
+      "tags": "tiktok",
+      "addedAt": "2026-11-11",
+      "featured": true,
+      "description": {
+        "de": "Entdecke TikTok: Die ultimative Plattform für kreative Kurzvideos, aktuelle Trends und pure Inspiration. Mit unserem integrierten TikTok-Feed erlebst du virale Produkte, Einblicke hinter die Kulissen und die Community-Highlights direkt hier im Store!",
+        "en": "Discover TikTok: The ultimate platform for short-form video entertainment, trends, and inspiration. With our integrated TikTok feed, you can explore viral products, behind-the-scenes moments, and community highlights right here in the store!",
+        "nl": "Ontdek TikTok: Het ultieme platform voor korte videoverentertainment, trends en inspiratie. Met onze geïntegreerde TikTok-feed ontdek je virale producten, kijkjes achter de schermen en community-highlights direct hier in de store!"
+      }
     }
   ]
 }
