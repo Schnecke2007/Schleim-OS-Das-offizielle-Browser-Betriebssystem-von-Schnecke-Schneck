@@ -28,14 +28,14 @@ body:
     attributes:
       label: Kategorie
       options:
-        - tools
-        - ai
-        - media
-        - knowledge
-        - navigation
-        - productivity
-        - communication
-        - privacy
+        - Tools
+        - KI & Chatbots
+        - Medien
+        - Wissen
+        - Navigation
+        - Produktivität
+        - Kommunikation
+        - Suche & Datenschutz
       default: 0
     validations:
       required: true
