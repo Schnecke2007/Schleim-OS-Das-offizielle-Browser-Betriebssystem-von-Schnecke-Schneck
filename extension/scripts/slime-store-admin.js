@@ -62,8 +62,8 @@
   function permissionMessage(error){
     const path=String(error?.apiPath||''),method=String(error?.httpMethod||'GET').toUpperCase();
     const prefix='GitHub verweigert '+method+' '+(path.split('?')[0]||'den API-Zugriff')+'. ';
-    if(path.startsWith('/contents/'))return prefix+'Für das Veröffentlichen fehlt wahrscheinlich die Repository-Berechtigung **Contents: Read and write**. Öffne deinen Fine-grained Token, wähle dieses Repository aus und setze Contents auf Read and write. Danach erneut versuchen. Falls du einen neuen Token erstellst, erstelle auch eine neue verschlüsselte Admin-JSON-Datei.';
-    if(path.startsWith('/issues'))return prefix+'Für Einreichungen und deren Status benötigt der Token **Issues: Read and write** für genau dieses Repository. Prüfe die Repository-Auswahl und die Issues-Berechtigung in deinem Fine-grained Token.';
+    if(path.startsWith('/contents/'))return prefix+'Für das Veröffentlichen fehlt wahrscheinlich die Repository-Berechtigung Contents: Read and write. Öffne deinen Fine-grained Token, wähle dieses Repository aus und setze Contents auf Read and write. Danach erneut versuchen. Falls du einen neuen Token erstellst, erstelle auch eine neue verschlüsselte Admin-JSON-Datei.';
+    if(path.startsWith('/issues'))return prefix+'Für Einreichungen und deren Status benötigt der Token Issues: Read and write für genau dieses Repository. Prüfe die Repository-Auswahl und die Issues-Berechtigung in deinem Fine-grained Token.';
     return error?.message||'GitHub API nicht erreichbar. Prüfe Verbindung, Repository-Auswahl und Token-Berechtigungen.';
   }
   async function api(path,options={}){
