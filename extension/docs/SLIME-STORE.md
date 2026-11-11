@@ -46,6 +46,7 @@ Neben dem Laufzeitkatalog gibt es den öffentlichen Ordner [Store](../../Store/R
 | Produktivität | `Store/productivity/` |
 | Kommunikation | `Store/communication/` |
 | Suche & Datenschutz | `Store/privacy/` |
+| Shopping & Online-Shops | `Store/shopping/` |
 
 Jede Kategorie besitzt eine `README.md` mit den veröffentlichten Apps. Jede einzelne App wird zusätzlich als eigene JSON-Datei gespeichert, zum Beispiel `Store/ai/chatgpt-web.json`.
 
