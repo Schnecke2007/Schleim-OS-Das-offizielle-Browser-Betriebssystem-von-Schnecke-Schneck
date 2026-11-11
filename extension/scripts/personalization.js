@@ -81,7 +81,10 @@
     return `legacy-${slug}-${(hash>>>0).toString(36)}`;
   }
   function normalizeLegacyApps(input) {
-    const entries=Array.isArray(input)?input:(input&&typeof input==='object'?Object.values(input):[]);
+    const entries=Array.isArray(input)?input:
+      (Array.isArray(input?.items)?input.items:
+      Array.isArray(input?.apps)?input.apps:
+      (input&&typeof input==='object'?Object.values(input):[]));
     const seen=new Set(),result=[];
     entries.slice(0,250).forEach((entry,index)=>{
       const raw=typeof entry==='string'?{url:entry}:entry;
@@ -105,14 +108,12 @@
   }
   function appCollection(source) {
     if(!source||typeof source!=='object')return null;
-    let empty=null;
-    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','links','bookmarks','shortcuts','customLinks','tiles','items']) {
+    for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','customLinks','tiles']) {
       const value=source[key];
       if(Array.isArray(value)&&value.length)return value;
       if(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length)return value;
-      if(Array.isArray(value)||value&&typeof value==='object')empty=value;
     }
-    return empty;
+    return null;
   }
 
   const STORE_KEY = 'ssos-store-v1';
