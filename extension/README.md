@@ -22,12 +22,12 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `manifest.json` – Manifest V3 und Neuer-Tab-Override
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
-- `scripts/personalization.js` – Slime Store, App-Vorschläge, Personalisierung, JSON-Backup und Kachel-Anordnung
+- `scripts/personalization.js` – Schleim-Store, App-Vorschläge, Personalisierung, JSON-Backup und Kachel-Anordnung
 - `scripts/slime-store-admin.js` – verschlüsseltes Admin-Portal und GitHub-Veröffentlichung
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung einschließlich Admin-Portal
 - `admin/README.md` – Anleitung für den geschützten Admin-Zugang
-- [Slime Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md) · [Admin-Zugang und Veröffentlichung](admin/README.md)
+- [Schleim-Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md) · [Admin-Zugang und Veröffentlichung](admin/README.md)
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
