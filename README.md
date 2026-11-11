@@ -43,7 +43,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 ## 🛍️ Der Schleim-Store
 
-Im **Schleim-Store** kannst du empfohlene Webseiten und Web-Apps entdecken, nach Kategorien suchen, persönliche Bewertungen abgeben und Apps auf deinem Schleim-OS-Startbildschirm installieren oder wieder entfernen.
+Im **Schleim-Store** kannst du empfohlene Webseiten und Web-Apps entdecken, nach Kategorien suchen und öffentliche Community-Bewertungen abgeben und Apps auf deinem Schleim-OS-Startbildschirm installieren oder wieder entfernen.
 
 - **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
 - **Installieren:** Eine App wird als Kachel hinzugefügt und öffnet die zugehörige Webseite in einem neuen Browser-Tab.
