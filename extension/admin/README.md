@@ -61,6 +61,7 @@ Die Kategorien sind:
 - `productivity` – Produktivität
 - `communication` – Kommunikation
 - `privacy` – Suche & Datenschutz
+- `shopping` – Shopping & Online-Shops
 
 Wird eine bestehende App in eine andere Kategorie verschoben, entfernt das Admin-Portal die alte Kategorie-Datei im selben Commit und aktualisiert beide Kategorie-Übersichten.
 
