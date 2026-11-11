@@ -14,6 +14,7 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 | [Produktivität](./productivity/README.md) | productivity | 1 |
 | [Kommunikation](./communication/README.md) | communication | 1 |
 | [Suche & Datenschutz](./privacy/README.md) | privacy | 1 |
+| [Shopping & Online-Shops](./shopping/README.md) | shopping | 1 |
 
 ## Wie die Ablage funktioniert
 
