@@ -51,7 +51,7 @@ Der **Schleim-Store** ist nur nach einer Anmeldung mit einem GitHub-Konto zugän
 - **Einreichen:** Besucher können eigene Webseiten über das öffentliche [GitHub-Einreichungsformular](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md) vorschlagen.
 - **Lokale Webseiten übernehmen:** Importierte oder bereits lokal gespeicherte Webseiten erscheinen unter „Bisherige eigene Webseiten“. Mit „Im Schleim-Store einreichen“ werden ihre Daten in das Einreichungsformular übernommen. Ergänze eine aussagekräftige Beschreibung und sende den Vorschlag zur Prüfung auf GitHub ab.
 - **Bewerten:** Über die Sterne gibst du eine öffentliche GitHub-Bewertung ab. Nach dem Absenden berechnet GitHub Actions Durchschnitt und Stimmenzahl neu. Dein GitHub-Benutzername und deine einzelne Bewertung sind öffentlich sichtbar.
-- **Prüfen und veröffentlichen:** Vorschläge erscheinen nicht automatisch. Erst nach Prüfung und Freigabe durch den Admin werden sie in den Store aufgenommen.
+- **Prüfen und veröffentlichen:** Vorschläge erscheinen nicht automatisch. Vorschläge werden vor der Veröffentlichung geprüft und freigegeben.
 
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
