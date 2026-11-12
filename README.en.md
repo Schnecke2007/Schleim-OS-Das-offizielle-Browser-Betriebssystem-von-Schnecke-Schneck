@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.9.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.9.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -77,7 +77,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
 - **JSON backup:** Open Settings and select **Export home screen** to download a JSON file. Use **Import home screen** to restore it later or transfer it to another device. Transfer is manual. See the [JSON backup guide](docs/Englisch/JSON-BACKUP.md).
 
-Normal settings and app shortcuts sync automatically. Uploaded wallpaper images remain local; the browser provides approximately 100 KB of sync storage per extension.
+The JSON backup is created locally and is not uploaded automatically. Transfer the file yourself when moving settings to another device.
 
 Schleim OS keeps settings locally in each browser. Use the JSON backup to move settings between devices; nothing is uploaded automatically.
 
