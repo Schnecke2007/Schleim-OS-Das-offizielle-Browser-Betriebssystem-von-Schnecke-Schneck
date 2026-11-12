@@ -20,7 +20,7 @@ Die dokumentierte Installation verwendet den direkten Import des vollständigen 
 
 ## Speicherung und Sicherungen
 
-Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Exportiere eine JSON-Sicherung, bevor du Browserdaten löschst oder zu einem anderen Browserprofil wechselst.
+Schleim OS benötigt einen lokalen Arbeitsstand im Browser, um den Startbildschirm bedienen zu können. Nach der GitHub-Anmeldung wird dieser Stand in einem privaten Repository gesichert: zuerst sofort und danach alle fünf Minuten über den Manifest-V3-Hintergrunddienst. Nach einem Browserneustart musst du dich erneut bei GitHub anmelden. Richte dafür eine GitHub App mit Device Flow sowie den Berechtigungen `Contents: Read and write` und `Metadata: Read-only` ein. Die Schritte stehen in [GITHUB-CLOUD-BACKUP.md](GITHUB-CLOUD-BACKUP.md).
 
 ## Werbung und externe Verbindungen
 
