@@ -1,4 +1,4 @@
-# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.9.0
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.9.1
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
@@ -8,7 +8,7 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Werbefreie Extension-Oberfläche ohne Werbe-IFrames
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
-- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird bei aktivierter Browser-Synchronisierung über das Browserprofil abgeglichen
+- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung bleibt lokal und wird über das manuelle JSON-Backup übertragen
 - Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; ohne GitHub-Anmeldung nutzbar
 - HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und manuelles JSON-Backup mit Export und Import
 - Deutsch, Englisch und Niederländisch
