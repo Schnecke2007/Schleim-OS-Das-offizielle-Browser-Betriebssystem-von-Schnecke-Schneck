@@ -127,28 +127,50 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 ## 📁 Projektstruktur
 
 ```text
-schleim-os-browser-extension/
-├── manifest.json
-├── pages/
-│   └── newtab.html
-├── scripts/
-│   ├── app.js
-│   └── personalization.js
-├── styles/
-│   ├── main.css
-│   └── personalization.css
-├── locales/
-│   └── legal-translations.js
-├── assets/
-│   └── icons/
+.
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   └── workflows/
+├── Store/
+│   ├── ai/
+│   ├── communication/
+│   ├── knowledge/
+│   ├── media/
+│   ├── navigation/
+│   ├── privacy/
+│   ├── productivity/
+│   ├── shopping/
+│   └── tools/
 ├── docs/
+│   ├── Deutsch/
+│   ├── Englisch/
+│   ├── Leichte-Sprache/
+│   ├── Niederländisch/
+│   └── README.md
+├── extension/
+│   ├── assets/icons/
+│   ├── data/
+│   ├── docs/
+│   ├── locales/
+│   ├── pages/newtab.html
+│   ├── scripts/
+│   │   ├── app.js
+│   │   ├── personalization.js
+│   │   └── slime-store-admin.js
+│   ├── standalone/schleim-os-standalone.html
+│   ├── styles/
+│   ├── manifest.json
+│   ├── README.md
+│   └── SHA256SUMS.txt
+├── legal/
 │   ├── Deutsch/
 │   ├── Englisch/
 │   ├── Niederländisch/
 │   └── README.md
-├── standalone/
-│   └── schleim-os-standalone.html
-└── README.md
+├── .gitignore
+├── README.md
+├── README.en.md
+└── README.nl.md
 ```
 
 ## 🔐 Datenschutz und Berechtigungen
