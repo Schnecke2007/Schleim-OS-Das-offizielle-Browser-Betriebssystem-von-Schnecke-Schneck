@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.8.0 · Chrome-/Chromium-Erweiterung**
+**Version 3.9.0 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -23,7 +23,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
-- `scripts/browser-sync.js` – automatische Synchronisierung über den integrierten Browser-Speicher
+- JSON-Backup – manuelles Exportieren und Importieren der Personalisierung über die Einstellungen
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung
 - `locales/` – Rechtstext-Übersetzungen
@@ -43,4 +43,4 @@ Die Chrome-Erweiterung lädt keine Werbeanzeigen. Es gibt keine Werbe-IFrames, k
 
 ## Speicherung
 
-Schleim OS benötigt weiterhin einen lokalen Arbeitsstand. Zusätzlich spiegelt `scripts/browser-sync.js` die Personalisierungsdaten in `chrome.storage.sync`. Der Browser synchronisiert diesen Speicher über das angemeldete Browserprofil, sofern dessen Sync-Funktion aktiv ist. Eine separate App-Registrierung, Client-ID oder Anmeldung in Schleim OS ist nicht erforderlich. Das Kontingent beträgt ungefähr 100 KB pro Erweiterung; hochgeladene Hintergrundbilder bleiben lokal. Der Browser steuert den Übertragungszeitpunkt.
+Schleim OS speichert die Personalisierungsdaten lokal im Browserprofil. Im Einstellungsbereich kannst du den Homescreen als JSON-Datei exportieren und diese Datei später wieder importieren. Es gibt keine automatische Cloud- oder Browser-Synchronisierung. Eine Anleitung findest du unter [JSON-Backup](../docs/Deutsch/JSON-BACKUP.md).
