@@ -445,7 +445,7 @@
           '<div class="ssos-form-actions"><button class="app-button" type="submit" id="ssosSubmitApp">'+esc(st('submit'))+' ↗</button></div>'+
           '<a id="ssosIssueFallback" class="ssos-store-issue-fallback" href="#" target="_blank" rel="noopener noreferrer" hidden>GitHub Issue öffnen ↗</a>'+
         '</form></section>'+
-      '';
+      (globalThis.chrome?.runtime?.id?'<section class="ssos-store-admin-entry"><button class="app-button secondary ssos-admin-open" id="ssosOpenAdmin" type="button">🔐 '+(LANG()==='en'?'Admin portal':LANG()==='nl'?'Adminportaal':'Admin-Portal')+'</button><div id="ssosAdminPortal" class="ssos-admin-portal" hidden></div></section>':'');
     setTimeout(renderStoreSections,0);
     return markup;
   }
