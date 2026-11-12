@@ -1,57 +1,69 @@
 # GitHub-Cloud-Sicherung für Schleim OS
 
-Diese Anleitung betrifft ausschließlich die persönliche Cloud-Sicherung. Sie ist keine Anleitung für das entfernte Schleim-Store-Admin-Portal.
+Die Cloud-Sicherung legt eine Kopie des persönlichen Schleim-OS-Startbildschirms in einem **privaten Repository deines eigenen GitHub-Kontos** ab. Nach der Anmeldung wird sofort gesichert. Danach aktualisiert der Manifest-V3-Hintergrunddienst die Sicherung alle fünf Minuten, solange der Browser läuft.
 
-## Voraussetzungen
+## Was wird gesichert?
 
-- Ein GitHub-Konto
-- Ein privates Repository im eigenen GitHub-Konto, zum Beispiel `schleim-os-cloud-backup`
-- Eine GitHub-App mit aktiviertem Device Flow
+Gesichert werden die Personalisierungsdaten mit dem Präfix `ssos-`, darunter die Startbildschirm-Anordnung, eigene Website-Apps, installierte Store-Apps, Design, Akzentfarbe, Hintergrund und weitere Schleim-OS-Einstellungen.
 
-## 1. Privates Backup-Repository anlegen
+Der Browser benötigt weiterhin einen lokalen Arbeitsstand, damit die Oberfläche direkt angezeigt und bedient werden kann. Die GitHub-Datei ist die zusätzliche private Sicherungskopie. GitHub-Anmeldetokens werden nur in der temporären Browser-Sitzung gespeichert und nicht in das Repository geschrieben.
 
-1. Erstelle in deinem GitHub-Konto ein neues Repository.
-2. Verwende zum Beispiel den Namen `schleim-os-cloud-backup`.
-3. Stelle die Sichtbarkeit ausdrücklich auf **Private**.
-4. Du musst keine Dateien hinzufügen; Schleim OS erstellt die Sicherungsdatei selbst.
+## Einmalige Einrichtung
 
-## 2. GitHub-App einrichten
+### 1. GitHub App anlegen
 
-1. Öffne GitHub und gehe zu **Settings → Developer settings → GitHub Apps**.
-2. Erstelle eine neue GitHub-App.
-3. Aktiviere in den Einstellungen der App den **Device Flow**.
-4. Vergib nur diese Repository-Berechtigungen:
-   - **Contents: Read and write**
-   - **Metadata: Read-only**
-5. Installiere die App ausschließlich für dein privates Backup-Repository.
-6. Kopiere die **Client ID** der App. Du brauchst keinen Client Secret in Schleim OS einzutragen.
+1. Öffne [GitHub Developer Settings](https://github.com/settings/apps) und wähle **New GitHub App**.
+2. Vergib einen Namen, zum Beispiel **Schleim OS Cloud Backup**, und trage eine passende Homepage-URL ein.
+3. Aktiviere in den App-Einstellungen den **Device Flow**.
+4. Setze unter **Repository permissions**:
+   - **Contents:** Read and write
+   - **Metadata:** Read-only
+5. Speichere die App und kopiere ihre **Client ID**. Nicht die App-ID und nicht ein Client Secret verwenden.
 
-Die Client ID ist kein Zugriffstoken. Teile niemals ein Client Secret, einen persönlichen Zugriffstoken oder einen Gerätecode.
+Der Device Flow muss ausdrücklich eingeschaltet sein. Gib einen Gerätecode ausschließlich auf der echten GitHub-Seite [github.com/login/device](https://github.com/login/device) ein und kontrolliere vor der Freigabe den angezeigten App-Namen.
 
-## 3. In Schleim OS verbinden
+### 2. Privates Backup-Repository erstellen
 
-1. Öffne Schleim OS in deinem unterstützten Chromium-Browser.
-2. Öffne **Einstellungen** und den Bereich **GitHub-Cloud-Sicherung**.
-3. Trage die Client ID deiner GitHub-App ein.
-4. Trage den Namen deines privaten Backup-Repositories ein.
-5. Speichere die Einstellungen und wähle **Mit GitHub anmelden**.
-6. Öffne die angezeigte GitHub-Geräteanmeldeseite und gib den angezeigten Einmalcode ein.
-7. Prüfe den Zugriff und bestätige die Anmeldung.
+1. Erstelle in deinem GitHub-Konto ein neues Repository, zum Beispiel `schleim-os-cloud-backup`.
+2. Stelle die Sichtbarkeit ausdrücklich auf **Private**.
+3. Installiere deine GitHub App auf genau diesem Repository. Wähle nicht pauschal alle Repositorys aus.
 
-Schleim OS prüft, ob das Repository privat ist und deinem angemeldeten GitHub-Konto gehört.
+Die Erweiterung prüft, ob das Repository privat ist und dem angemeldeten GitHub-Konto gehört. Ein öffentliches oder fremdes Repository wird abgelehnt.
 
-## 4. Sicherung und Wiederherstellung
+### 3. Schleim OS verbinden
 
-Nach erfolgreicher Anmeldung wird sofort eine Sicherung erstellt. Anschließend versucht Schleim OS, die Sicherung alle fünf Minuten zu aktualisieren. Die Datei heißt `schleim-os-backup.json` und liegt im privaten Backup-Repository.
+1. Installiere und öffne die Schleim-OS-Erweiterung.
+2. Öffne den Schleim-Store oder die GitHub-Cloud-Einstellungen.
+3. Trage die **Client ID** deiner GitHub App ein.
+4. Trage den Namen deines privaten Backup-Repositorys ein. Standardmäßig lautet er `schleim-os-cloud-backup`.
+5. Wähle **Mit GitHub anmelden**.
+6. Öffne die angezeigte Geräteanmeldeseite und gib den Einmalcode auf [github.com/login/device](https://github.com/login/device) ein.
+7. Prüfe den App-Namen und bestätige die Berechtigungsanfrage.
 
-Die Sicherung umfasst die Schleim-OS-Einstellungen und Personalisierungsdaten, die unter dem Präfix `ssos-` gespeichert sind, darunter Startbildschirm-Kacheln, deren Reihenfolge, Design, Hintergrund und Store-Installationen.
+Nach erfolgreicher Anmeldung prüft Schleim OS das private Repository und erstellt sofort die erste Sicherung als `schleim-os-backup.json`.
 
-Wenn im Repository bereits eine Sicherung liegt, fragt Schleim OS beim ersten Verbinden, ob diese auf das Gerät übernommen oder durch den aktuellen lokalen Stand ersetzt werden soll. Lies die Auswahl sorgfältig, bevor du bestätigst.
+## Automatische Aktualisierung
 
-## Hinweise
+Die Neuer-Tab-Seite übergibt den aktuellen Personalisierungsstand regelmäßig an den Erweiterungs-Hintergrunddienst. Dieser hält die letzte Momentaufnahme in der temporären Browser-Sitzung und lädt sie anschließend alle fünf Minuten in das private GitHub-Repository hoch. Dadurch läuft der Fünf-Minuten-Takt weiter, auch wenn die Neuer-Tab-Seite geschlossen ist, solange der Browser geöffnet bleibt und die Erweiterung aktiv ist.
 
-- Der Browser benötigt weiterhin einen lokalen Arbeitsstand, damit Schleim OS direkt starten und Einstellungen bearbeiten kann. Die zusätzliche Sicherungskopie wird in GitHub abgelegt.
-- Die GitHub-Anmeldedaten und die Token für die Anmeldung werden lokal im Erweiterungsspeicher des Browserprofils verwaltet, damit die Verbindung erneuert werden kann. Dieser Speicher ist kein verschlüsselter Tresor; schütze daher dein Browserprofil und dein Betriebssystem. Die Sicherungsdatei selbst wird in das private GitHub-Repository hochgeladen.
-- Der automatische Fünf-Minuten-Takt der derzeitigen Oberfläche läuft, solange eine Schleim-OS-Erweiterungsseite geöffnet ist. Wird die letzte solche Seite geschlossen, pausiert dieser Seitentimer. Für eine vollständig tab-unabhängige Sicherung ist ein zusätzlicher Hintergrunddienst erforderlich.
-- Die Cloud-Sicherung ist kein Ersatz für die Sicherheit deines GitHub-Kontos. Verwende Zwei-Faktor-Authentifizierung und halte dein Konto geschützt.
-- Die manuelle JSON-Export-/Importfunktion bleibt als zusätzliche Möglichkeit erhalten.
+Wird der Computer ausgeschaltet oder der Browser vollständig beendet, kann in dieser Zeit keine neue Sicherung hochgeladen werden. Nach dem nächsten Browserstart ist aus Sicherheitsgründen eine erneute GitHub-Anmeldung erforderlich. Sobald du dich wieder anmeldest, wird der aktuelle lokale Arbeitsstand sofort gesichert. Eine vorhandene Cloud-Sicherung kann beim ersten Abgleich wiederhergestellt werden.
+
+## Wiederherstellen
+
+1. Installiere Schleim OS im gewünschten Browser.
+2. Öffne die GitHub-Cloud-Einstellungen und melde dich mit dem GitHub-Konto an, das die private Sicherung enthält.
+3. Wenn eine vorhandene Sicherung erkannt wird, kannst du sie beim ersten Abgleich übernehmen. Alternativ steht **Aus GitHub wiederherstellen** zur Verfügung.
+4. Die Oberfläche wird nach dem Wiederherstellen neu geladen.
+
+Beim Wiederherstellen werden die lokalen `ssos-`-Einstellungen durch die Werte aus dem Backup ersetzt. Bestätige den Vorgang nur, wenn du diesen Stand übernehmen möchtest.
+
+## Sicherheit und Grenzen
+
+- Das Backup-Repository muss privat sein und deinem angemeldeten GitHub-Konto gehören.
+- Die GitHub App benötigt nur Repository-Zugriff auf das ausgewählte Backup-Repository sowie die genannten Repository-Berechtigungen.
+- Access- und Refresh-Tokens werden in `chrome.storage.session` gehalten. Sie werden beim Beenden der Browser-Sitzung beziehungsweise beim Neuladen oder Aktualisieren der Erweiterung verworfen. Danach ist eine erneute Anmeldung erforderlich.
+- Die GitHub-Client-ID ist öffentlich und darf im Einstellungsfeld stehen. Ein Client Secret, Access Token oder Refresh Token gehört niemals in den Quellcode, in ein öffentliches Repository oder in eine Issue-Meldung.
+- Die Sicherungsdatei liegt in deinem privaten GitHub-Repository. GitHub verwaltet Änderungen an dieser Datei als Repository-Versionen.
+- Der Hintergrunddienst arbeitet, solange der Browser läuft. Er kann einen ausgeschalteten Computer nicht starten und keine Sicherung hochladen, während der Browser beendet ist.
+
+Weitere technische Informationen findest du in der [offiziellen GitHub-Dokumentation zum Device Flow](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app) und zur [Chrome-Alarms-API](https://developer.chrome.com/docs/extensions/reference/api/alarms).
