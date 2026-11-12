@@ -51,7 +51,7 @@ Wenn im Repository bereits eine Sicherung liegt, fragt Schleim OS beim ersten Ve
 ## Hinweise
 
 - Der Browser benötigt weiterhin einen lokalen Arbeitsstand, damit Schleim OS direkt starten und Einstellungen bearbeiten kann. Die zusätzliche Sicherungskopie wird in GitHub abgelegt.
-- Die GitHub-Anmeldedaten und die Token für die Anmeldung werden lokal im geschützten Erweiterungsspeicher verwaltet, damit die Verbindung erneuert werden kann. Die Sicherungsdatei selbst wird in das private GitHub-Repository hochgeladen.
+- Die GitHub-Anmeldedaten und die Token für die Anmeldung werden lokal im Erweiterungsspeicher des Browserprofils verwaltet, damit die Verbindung erneuert werden kann. Dieser Speicher ist kein verschlüsselter Tresor; schütze daher dein Browserprofil und dein Betriebssystem. Die Sicherungsdatei selbst wird in das private GitHub-Repository hochgeladen.
 - Der automatische Fünf-Minuten-Takt der derzeitigen Oberfläche läuft, solange eine Schleim-OS-Erweiterungsseite geöffnet ist. Wird die letzte solche Seite geschlossen, pausiert dieser Seitentimer. Für eine vollständig tab-unabhängige Sicherung ist ein zusätzlicher Hintergrunddienst erforderlich.
 - Die Cloud-Sicherung ist kein Ersatz für die Sicherheit deines GitHub-Kontos. Verwende Zwei-Faktor-Authentifizierung und halte dein Konto geschützt.
 - Die manuelle JSON-Export-/Importfunktion bleibt als zusätzliche Möglichkeit erhalten.
