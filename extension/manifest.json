@@ -32,5 +32,6 @@
   ],
   "background": {
     "service_worker": "scripts/background.js"
-  }
+  },
+  "minimum_chrome_version": "102"
 }
