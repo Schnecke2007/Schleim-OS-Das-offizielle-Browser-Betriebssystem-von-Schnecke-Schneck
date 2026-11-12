@@ -44,7 +44,7 @@ This project is not a standalone operating system that replaces Windows, Android
 
 ## 🛍️ Schleim-Store
 
-The **Schleim-Store** is available only after signing in with a GitHub account. After signing in, you can discover recommended websites and web apps, browse categories and submit public community ratings, and install or remove apps from your Schleim OS home screen.
+The **Store interface inside Schleim OS** is unlocked only after signing in with a GitHub account. The catalogue and ratings are also fetched only after successful sign-in. Note: the project repository is public, so its catalogue JSON files can still be viewed directly on GitHub. Sign-in protects the in-app Store interface, not direct access to those public repository files. After signing in, you can discover websites and web apps, rate them, and install or remove them from your home screen.
 
 - **Discover:** Recommendations, new apps, top ratings and categories.
 - **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
