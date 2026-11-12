@@ -44,7 +44,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 ## 🛍️ Der Schleim-Store
 
-Die **Store-Oberfläche in Schleim OS** wird erst nach der Anmeldung mit einem GitHub-Konto freigeschaltet. Der Katalog und die Bewertungen werden ebenfalls erst nach erfolgreicher Anmeldung geladen. Hinweis: Da das Projekt-Repository öffentlich ist, bleiben die darin gespeicherten Katalog-JSON-Dateien direkt über GitHub einsehbar. Die Anmeldung schützt die Store-Oberfläche, nicht den direkten Zugriff auf diese öffentlichen Repository-Dateien. Nach der Anmeldung kannst du Webseiten und Web-Apps entdecken, bewerten sowie auf dem Startbildschirm installieren oder entfernen.
+Der **Schleim-Store** ist ohne GitHub-Anmeldung nutzbar. Du kannst Webseiten und Web-Apps entdecken, bewerten sowie auf dem Startbildschirm installieren oder entfernen. Da das Projekt-Repository öffentlich ist, können die Katalogdateien außerdem direkt auf GitHub eingesehen werden.
 
 - **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
 - **Installieren:** Eine App wird als Kachel hinzugefügt und öffnet die zugehörige Webseite in einem neuen Browser-Tab.
