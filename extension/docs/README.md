@@ -1,4 +1,4 @@
-# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.8.0
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.9.0
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
@@ -10,10 +10,10 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
 - Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird bei aktivierter Browser-Synchronisierung über das Browserprofil abgeglichen
 - Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; ohne GitHub-Anmeldung nutzbar
-- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und automatische Browser-Cloud-Synchronisierung
+- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und manuelles JSON-Backup mit Export und Import
 - Deutsch, Englisch und Niederländisch
 
-Schleim OS nutzt `chrome.storage.sync`, um die Personalisierung automatisch über das angemeldete Browserprofil zu synchronisieren. Eine GitHub-App oder Client-ID ist nicht erforderlich. Voraussetzung ist eine aktivierte Browser-Synchronisierung. Das Kontingent liegt bei ungefähr 100 KB; hochgeladene Bilddateien bleiben lokal. Details: [Browser-Cloud-Synchronisierung](../../docs/Deutsch/BROWSER-CLOUD-SYNC.md).
+Schleim OS speichert Einstellungen lokal. Im Einstellungsbereich kannst du den Homescreen als JSON-Datei exportieren und später wieder importieren. Es gibt keine automatische Cloud- oder Browser-Synchronisierung. Details: [JSON-Backup](../../docs/Deutsch/JSON-BACKUP.md).
 
 ## Installation
 
