@@ -20,7 +20,7 @@ De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige Gi
 
 ## Opslag en back-ups
 
-Schleim OS heeft een lokale werkkopie in de browser nodig om het startscherm weer te geven en te bedienen. Na aanmelding bij GitHub wordt deze status direct opgeslagen in een privérepository en daarna elke vijf minuten bijgewerkt via de Manifest V3-achtergronddienst. Na het opnieuw starten van de browser moet je opnieuw aanmelden bij GitHub. Configureer hiervoor een GitHub App met Device Flow en de machtigingen `Contents: Read and write` en `Metadata: Read-only`. Volg de [handleiding voor de GitHub-cloudback-up](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
+Schleim OS heeft een lokale werkkopie in de browser nodig om het startscherm te bedienen. Met één knop start je de GitHub-verbinding. Daarna maakt Schleim OS automatisch een privérepository, schrijft direct een back-up en plant updates om de vijf minuten via de Manifest V3-achtergronddienst. De verbinding blijft in de beveiligde extensieopslag staan. De projectbeheerder moet een GitHub App eenmalig registreren met Device Flow, `Repository creation: Write` en `Contents: Read and write`, en de openbare Client ID in de broncode plaatsen. Zie de [handleiding voor de GitHub-cloudback-up](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 ## Reclame en externe verbindingen
 
