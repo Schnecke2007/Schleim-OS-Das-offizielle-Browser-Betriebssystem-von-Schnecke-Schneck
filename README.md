@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.8.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.9.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store ohne GitHub-Anmeldung nutzbar
-- Automatische Browser-Cloud-Synchronisierung der Personalisierung über das Browserprofil – ohne GitHub-App oder separates Login
+- Manuelles JSON-Backup: Homescreen-Einstellungen exportieren und später wieder importieren
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -75,7 +75,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Cloud-Synchronisierung:** Schleim OS nutzt den integrierten Sync-Speicher des Browsers. Es gibt keine GitHub-App, keine Client-ID und keine separate Anmeldung in Schleim OS. Voraussetzung ist, dass du im Browserprofil angemeldet bist und dessen Synchronisierung aktiviert ist. Details: [Anleitung zur Browser-Cloud-Synchronisierung](docs/Deutsch/BROWSER-CLOUD-SYNC.md).
+- **JSON-Backup:** Öffne die Einstellungen und wähle **Homescreen exportieren**, um eine JSON-Datei herunterzuladen. Mit **Homescreen importieren** kannst du diese Datei später wiederherstellen oder auf einem anderen Gerät verwenden. Die Übertragung erfolgt manuell. Details: [Anleitung zum JSON-Backup](docs/Deutsch/JSON-BACKUP.md).
 
 Die Browser-Synchronisierung überträgt normale Einstellungen und App-Verknüpfungen automatisch. Hochgeladene Hintergrundbilder bleiben lokal; der Browser stellt insgesamt ungefähr 100 KB Sync-Speicher pro Erweiterung bereit.
 
@@ -92,7 +92,7 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
 | **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Prüfe, ob du im Browserkonto angemeldet bist und die Synchronisierung für Erweiterungsdaten aktiviert ist. Für den geräteübergreifenden Abgleich muss Schleim OS auf beiden Geräten dieselbe Erweiterungs-ID besitzen. Die Standalone-Demo synchronisiert nicht. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Schleim OS speichert die Einstellungen lokal im jeweiligen Browser. Exportiere auf dem alten Gerät eine JSON-Sicherung und importiere sie im neuen Browser über **Einstellungen → Homescreen importieren**. |
 | **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
 
 ## Weitere Hilfe
