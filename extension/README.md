@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.5.1 · Chrome-/Chromium-Erweiterung**
+**Version 3.6.0 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -22,10 +22,11 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `manifest.json` – Manifest V3 und Neuer-Tab-Override
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
-- `scripts/personalization.js` – Schleim-Store, App-Vorschläge, Personalisierung, JSON-Backup und Kachel-Anordnung
+- `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
+- `scripts/github-cloud.js` – GitHub-Anmeldung, Cloud-Sicherung und Wiederherstellung
+- `scripts/background.js` – Fünf-Minuten-Sicherung über den Manifest-V3-Hintergrunddienst
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung
-- [Schleim-Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md)
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
@@ -33,7 +34,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 
 ## App-Kacheln anordnen
 
-Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird automatisch in `ssos-personalization-v1.homeOrder` gespeichert und beim vorhandenen JSON-Export in der Datei mitgesichert.
+Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird im Browserprofil gespeichert und nach der GitHub-Anmeldung in die private Cloud-Sicherung übernommen.
 
 ## Werbung
 
@@ -43,4 +44,4 @@ Die Chrome-Erweiterung lädt keine Werbeanzeigen. Es gibt keine Werbe-IFrames, k
 
 ## Speicherung
 
-Eine Browseranwendung darf ohne ausdrückliche Nutzeraktion keine beliebige lokale JSON-Datei stillschweigend überschreiben. Die App speichert die Anordnung automatisch im lokalen Browserprofil und nimmt sie beim JSON-Export mit.
+Schleim OS benötigt einen lokalen Arbeitsstand, damit der Startbildschirm im Browser angezeigt und bedient werden kann. Nach der GitHub-Anmeldung wird der vollständige Personalisierungsstand sofort und anschließend alle fünf Minuten im privaten GitHub-Repository gesichert. Der Hintergrunddienst übernimmt die regelmäßigen Sicherungen auch dann, wenn die Neuer-Tab-Seite nicht geöffnet ist, solange der Browser läuft. Die GitHub-Anmeldung wird aus Sicherheitsgründen nur in der aktuellen Browsersitzung gehalten.
