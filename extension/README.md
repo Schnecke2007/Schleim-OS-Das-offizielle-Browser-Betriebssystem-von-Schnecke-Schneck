@@ -24,7 +24,6 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
 - `scripts/browser-sync.js` – automatische Synchronisierung über den integrierten Browser-Speicher
-- `scripts/background.js` – Fünf-Minuten-Sicherung über den Manifest-V3-Hintergrunddienst
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung
 - `locales/` – Rechtstext-Übersetzungen
@@ -34,7 +33,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 
 ## App-Kacheln anordnen
 
-Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird im Browserprofil gespeichert und nach der GitHub-Anmeldung in die private Cloud-Sicherung übernommen.
+Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird lokal gespeichert und bei aktivierter Browser-Synchronisierung automatisch über das Browserprofil abgeglichen.
 
 ## Werbung
 
