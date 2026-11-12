@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.5.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,14 +36,15 @@ This project is not a standalone operating system that replaces Windows, Android
 - Customize the design, accent color and background
 - Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
-- Local JSON backup and restore for personalization
+- GitHub sign-in required to access the Schleim-Store
+- Automatic cloud backup of personalization to a private GitHub repository after sign-in (immediately and every five minutes)
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
 
 ## 🛍️ Schleim-Store
 
-The **Schleim-Store** lets you discover recommended websites and web apps, browse categories and submit public community ratings, and install or remove apps from your Schleim OS home screen.
+The **Schleim-Store** is available only after signing in with a GitHub account. After signing in, you can discover recommended websites and web apps, browse categories and submit public community ratings, and install or remove apps from your Schleim OS home screen.
 
 - **Discover:** Recommendations, new apps, top ratings and categories.
 - **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
@@ -54,7 +55,7 @@ The **Schleim-Store** lets you discover recommended websites and web apps, brows
 
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
 
-**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. Admin credentials must never be committed to the repository. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md).
+**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md).
 
 ## 📥 Download and installation
 
@@ -76,7 +77,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
 - **Back up settings:** Use the available JSON feature to export or import your personal settings.
 
-Personal settings are stored locally in the browser profile. Keep your JSON backup in a safe place.
+The browser still keeps a local working copy so Schleim OS can run. The additional backup copy is stored in the private GitHub repository.
 
 # 🛠️ Schleim OS – Troubleshooting
 
