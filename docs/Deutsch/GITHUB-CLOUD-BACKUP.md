@@ -22,7 +22,7 @@ GitHub verlangt für Geräteanmeldungen eine registrierte GitHub App und eine ö
 1. Öffne [GitHub Developer Settings – GitHub Apps](https://github.com/settings/apps) und registriere einmalig eine GitHub App für Schleim OS.
 2. Aktiviere unter **Identifying and authorizing users** den **Device Flow**.
 3. Vergib die benötigten Berechtigungen:
-   - **Account permission – Repository creation: Write**
+   - **Repository permission – Repository creation: Write**
    - **Repository permission – Contents: Read and write**
 4. Kopiere die **Client ID** der App. Die Client ID ist nicht die App-ID und nicht das Client Secret.
 5. Trage die öffentliche Client ID einmalig in `GITHUB_APP_CLIENT_ID` in `extension/scripts/github-cloud.js` ein und veröffentliche die aktualisierte Erweiterung.
