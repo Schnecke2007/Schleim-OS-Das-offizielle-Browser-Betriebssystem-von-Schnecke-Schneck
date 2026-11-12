@@ -147,20 +147,65 @@
       draw();status(t('logged'));
     }catch(e){credentials=null;draw();status(e.message==='Failed to fetch'?'GitHub API nicht erreichbar. Verbindung und Berechtigungen prüfen.':e.message,true);}
   }
+  function normalizeFieldLabel(value){
+    return String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  }
   function field(body,label){
-    const line=String(body||'').split(/\r?\n/).find(x=>x.toLowerCase().startsWith('**'+label.toLowerCase()+':**'));
-    return line?line.slice(line.indexOf(':**')+3).trim():'';
+    const aliases={
+      name:['name','app name'],
+      website:['website','website url','url'],
+      category:['category','kategorie','categorie'],
+      'icon url':['icon url','icon url optional'],
+      'submission language':['submission language','einreichungssprache'],
+      description:['description','app description','beschreibung','beschrijving'],
+      notes:['notes','additional notes','weitere hinweise','opmerkingen']
+    };
+    const wanted=new Set((aliases[String(label||'').toLowerCase()]||[label]).map(normalizeFieldLabel));
+    const lines=String(body||'').split(/\r?\n/);
+    // Legacy Markdown template: **Name:** value
+    for(const line of lines){
+      const match=line.match(/^\s*\*\*([^*]+):\*\*\s*(.*)$/);
+      if(match&&wanted.has(normalizeFieldLabel(match[1])))return match[2].trim();
+    }
+    // GitHub issue-form template: ### App-Name, followed by its value.
+    for(let i=0;i<lines.length;i++){
+      const heading=lines[i].match(/^\s*#{2,6}\s+(.+?)\s*$/);
+      if(!heading||!wanted.has(normalizeFieldLabel(heading[1])))continue;
+      const value=[];
+      for(let j=i+1;j<lines.length&&!/^\s*#{1,6}\s+/.test(lines[j]);j++)value.push(lines[j]);
+      return value.join('\n').trim();
+    }
+    return '';
   }
   function slug(v){return String(v||'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'new-app';}
   function category(v){
-    const s=String(v||'').trim().toLowerCase();
-    const map={'ki & chatbots':'ai','ai & chatbots':'ai','medien':'media','wissen':'knowledge','produktivit\u00e4t':'productivity','kommunikation':'communication','shopping & online-shops':'shopping','shopping & online stores':'shopping','winkelen & webshops':'shopping','online-shops':'shopping','webshops':'shopping','sonstiges':'tools'};
-    const c=map[s]||s;return CATEGORIES.includes(c)?c:'tools';
+    const s=normalizeFieldLabel(v);
+    const map={
+      'ki chatbots':'ai','ai chatbots':'ai','medien':'media','wissen':'knowledge',
+      'produktivitat':'productivity','kommunikation':'communication',
+      'suche datenschutz':'privacy','search privacy':'privacy','zoeken privacy':'privacy',
+      'shopping online shops':'shopping','shopping online stores':'shopping',
+      'winkelen webshops':'shopping','sonstiges':'tools'
+    };
+    const c=map[s]||s;
+    return CATEGORIES.includes(c)?c:'tools';
   }
   function parse(issue){
-    const body=issue.body||'',match=body.match(/## Description\s*([\s\S]*?)(?:\n## |$)/i);
-    const name=field(body,'Name')||issue.title.replace(/^\[(?:Schleim-Store|Slime Store)\]\s*/i,'').replace(/^App-Vorschlag:\s*/i,'');
-    return {id:slug(name),name,url:safeUrl(field(body,'Website')),category:category(field(body,'Category')),iconUrl:safeUrl(field(body,'Icon URL')),lang:['de','en','nl'].includes(field(body,'Submission language'))?field(body,'Submission language'):'de',description:(match?.[1]||'').trim()};
+    const body=issue.body||'';
+    const title=String(issue.title||'');
+    const fallbackName=title.replace(/^\[(?:Schleim-Store|Slime Store)\]\s*/i,'').replace(/^(?:App-Vorschlag|App suggestion|Appvoorstel):\s*/i,'').trim();
+    const name=field(body,'Name')||fallbackName;
+    const description=field(body,'Description');
+    const notes=field(body,'Notes');
+    return {
+      id:slug(name),
+      name,
+      url:safeUrl(field(body,'Website')),
+      category:category(field(body,'Category')),
+      iconUrl:safeUrl(field(body,'Icon URL')),
+      lang:['de','en','nl'].includes(field(body,'Submission language'))?field(body,'Submission language'):'de',
+      description:[description,notes?('Weitere Hinweise:\n'+notes):''].filter(Boolean).join('\n\n')
+    };
   }
   async function fetchIssues(){
     const root=$('#ssosAdminIssues');if(!root||!credentials)return;root.innerHTML='<p>'+esc(t('loading'))+'</p>';
