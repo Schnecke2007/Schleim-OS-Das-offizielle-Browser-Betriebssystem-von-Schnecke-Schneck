@@ -424,19 +424,22 @@
   }
 
   async function publishSnapshot() {
-    if (!state.connected || !globalThis.chrome?.runtime?.id) return;
+    if (!state.connected || !globalThis.chrome?.runtime?.id) return false;
     try {
       const snapshot = collectSnapshot();
-      await chrome.runtime.sendMessage({ type: 'SSOS_GITHUB_CLOUD_SNAPSHOT', snapshot });
+      const response = await chrome.runtime.sendMessage({ type: 'SSOS_GITHUB_CLOUD_SNAPSHOT', snapshot });
+      if (!response?.ok) throw new Error(response?.error || 'Der Hintergrunddienst hat die Momentaufnahme nicht bestätigt.');
+      return true;
     } catch (error) {
       console.warn('[Schleim OS] Snapshot konnte nicht an den Hintergrunddienst übergeben werden:', error);
+      return false;
     }
   }
 
-  function startScheduler() {
+  async function startScheduler() {
     stopScheduler();
-    publishSnapshot();
-    snapshotTimer = window.setInterval(publishSnapshot, SNAPSHOT_INTERVAL);
+    await publishSnapshot();
+    snapshotTimer = window.setInterval(() => { publishSnapshot(); }, SNAPSHOT_INTERVAL);
     if (!pageHideBound) {
       window.addEventListener('pagehide', publishSnapshot);
       document.addEventListener('visibilitychange', () => {
@@ -495,7 +498,7 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
-      startScheduler();
+      await startScheduler();
       updatePanels();
       if ($('#ssosGithubCloudGate')) {
         const original = window.SSOSGitHubCloud?.originalStoreRenderer;
@@ -546,7 +549,7 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
-      startScheduler();
+      await startScheduler();
     } catch (error) {
       state.connected = false;
       stopScheduler();
