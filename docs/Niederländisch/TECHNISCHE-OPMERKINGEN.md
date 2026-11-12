@@ -20,7 +20,7 @@ De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige Gi
 
 ## Opslag en back-ups
 
-Schleim OS bewaart een lokale werkkopie en spiegelt personalisatiegegevens naar `chrome.storage.sync`. De browser verzorgt de cloudsynchronisatie wanneer je bent aangemeld bij een browserprofiel met ingeschakelde synchronisatie. Een GitHub App, Client ID of aparte aanmelding bij Schleim OS is niet nodig. Het quotum is ongeveer 100 KB per extensie; geüploade achtergrondafbeeldingen blijven lokaal. Zie de [handleiding voor browsersynchronisatie](../../Deutsch/BROWSER-CLOUD-SYNC.md).
+Schleim OS slaat personalisatiegegevens lokaal op in de browser. Via **Instellingen → Configuratiebestand (JSON)** kun je het startscherm exporteren en later op hetzelfde of een ander apparaat importeren. Er vindt geen automatische cloud- of browsersynchronisatie plaats. Zie de [handleiding voor JSON-back-ups](JSON-BACKUP.md).
 
 ## Reclame en externe verbindingen
 
