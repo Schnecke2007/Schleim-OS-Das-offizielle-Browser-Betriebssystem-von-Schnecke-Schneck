@@ -130,22 +130,6 @@
       '</section>';
   }
 
-  function renderStoreGate() {
-    return '<div class="app-hero">' +
-      '<p class="eyebrow">GITHUB-KONTO ERFORDERLICH</p>' +
-      '<h2>Schleim-Store freischalten</h2>' +
-      '<p>Der Schleim-Store ist erst nach einer Anmeldung mit deinem GitHub-Konto verfügbar. Gleichzeitig wird eine Sicherung deines Startbildschirms in deinem privaten GitHub-Repository eingerichtet.</p>' +
-      '<span class="large-emoji">🔐</span></div>' +
-      '<section class="ssos-card">' +
-      '<label>GitHub-App-Client-ID<input id="ssosGithubClientId" type="text" autocomplete="off" spellcheck="false" placeholder="Iv1. …"></label>' +
-      '<label>Privates Backup-Repository<input id="ssosGithubRepoName" type="text" autocomplete="off" spellcheck="false" value="' + escapeHtml(state.config.repoName || 'schleim-os-cloud-backup') + '" placeholder="schleim-os-cloud-backup"></label>' +
-      '<p class="body-copy">Die GitHub-App muss Device Flow und die Berechtigungen <b>Contents: Read and write</b> sowie <b>Metadata: Read-only</b> besitzen und auf deinem privaten Backup-Repository installiert sein.</p>' +
-      '<p class="body-copy"><a href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/docs/Deutsch/GITHUB-CLOUD-BACKUP.md" target="_blank" rel="noopener noreferrer">GitHub-App einrichten ↗</a></p>' +
-      '<div class="ssos-form-actions"><button class="app-button" type="button" data-ssos-cloud-login>Mit GitHub anmelden</button></div>' +
-      '<p class="body-copy" data-ssos-cloud-status>Bitte richte zuerst die GitHub-App ein und melde dich anschließend an.</p>' +
-      '</section>';
-  }
-
   function mountSettingsPanel() {
     const root = $('#ssosSettingsTools');
     if (!root || $('#ssosGithubCloudSettings', root)) return;
@@ -463,16 +447,6 @@
     fallbackBackupTimer = null;
   }
 
-  async function loadStoreAfterLogin() {
-    const personalization = window.SSOSPersonalization;
-    if (typeof personalization?.refreshStoreCatalog === 'function') {
-      await personalization.refreshStoreCatalog();
-    }
-    if (typeof personalization?.refreshStoreRatings === 'function') {
-      await personalization.refreshStoreRatings();
-    }
-  }
-
   async function startDeviceLogin(root) {
     if (loginInProgress) return;
     loginInProgress = true;
@@ -508,13 +482,8 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
-      await loadStoreAfterLogin();
       await startScheduler();
       updatePanels();
-      if ($('#ssosGithubCloudGate')) {
-        const original = window.SSOSGitHubCloud?.originalStoreRenderer;
-        if (typeof original === 'function') $('#appContent').innerHTML = original();
-      }
       setStatus('Verbunden als @' + username + '. Die automatische Sicherung läuft alle fünf Minuten.');
       mountSettingsPanel();
     } catch (error) {
@@ -532,10 +501,7 @@
     state.connected = false;
     await writeState();
     updatePanels();
-    if (window.SSOSPersonalization?.renderStore && $('#appContent')) {
-      $('#appContent').innerHTML = renderStoreGate();
-    }
-    setStatus('Du wurdest von GitHub abgemeldet. Der Schleim-Store ist wieder gesperrt.');
+    setStatus('Du wurdest von der GitHub-Cloud abgemeldet. Die Store-Oberfläche bleibt weiterhin öffentlich zugänglich.');
     toast('GitHub-Verbindung getrennt.');
   }
 
@@ -560,7 +526,6 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
-      await loadStoreAfterLogin();
       await startScheduler();
     } catch (error) {
       state.connected = false;
@@ -572,9 +537,6 @@
       console.warn('[Schleim OS] GitHub Cloud nicht verfügbar:', error);
     } finally {
       state.initializing = false;
-      if (state.connected && $('#ssosGithubCloudGate') && typeof api.originalStoreRenderer === 'function') {
-        $('#appContent').innerHTML = api.originalStoreRenderer();
-      }
       updatePanels();
       mountSettingsPanel();
     }
@@ -613,18 +575,9 @@
   personalizationObserver.observe(document.documentElement, { childList: true, subtree: true });
 
   const api = {
-    renderStoreGate,
     mountSettingsPanel,
-    get connected() { return state.connected; },
-    originalStoreRenderer: null
+    get connected() { return state.connected; }
   };
-
-  if (window.SSOSPersonalization?.renderStore) {
-    api.originalStoreRenderer = window.SSOSPersonalization.renderStore.bind(window.SSOSPersonalization);
-    window.SSOSPersonalization.renderStore = function () {
-      return state.connected && !state.initializing && !loginInProgress ? api.originalStoreRenderer() : renderStoreGate();
-    };
-  }
 
   if (globalThis.chrome?.storage?.onChanged) {
     chrome.storage.onChanged.addListener((changes, areaName) => {
