@@ -1,4 +1,4 @@
-# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.6.0
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.7.0
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
@@ -9,11 +9,11 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
 - Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird nach GitHub-Anmeldung in die private Cloud-Sicherung übernommen
-- Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; Zugriff erst nach GitHub-Anmeldung
+- Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; ohne GitHub-Anmeldung nutzbar
 - HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und private GitHub-Cloud-Sicherung
 - Deutsch, Englisch und Niederländisch
 
-Die Cloud-Sicherung startet nach der Anmeldung sofort und wird anschließend alle fünf Minuten durch den Manifest-V3-Hintergrunddienst aktualisiert. Die OAuth-Anmeldedaten liegen nur in der Browser-Sitzung. Die Einrichtungsdetails stehen in [docs/Deutsch/GITHUB-CLOUD-BACKUP.md](../../docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
+Ein Button startet die GitHub-Verbindung. Schleim OS erstellt danach automatisch ein privates Backup-Repository und sichert sofort. Der Manifest-V3-Hintergrunddienst aktualisiert die Sicherung planmäßig alle fünf Minuten. Die Anmeldung wird im geschützten Erweiterungsspeicher gehalten, damit die Verbindung nach Browserneustarts bestehen bleibt. Details: [GitHub-Cloud-Backup](../../docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 ## Installation
 
