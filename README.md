@@ -92,7 +92,7 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
 | **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Verbinde dich mit demselben GitHub-Konto über den Button in den Einstellungen. Eine vorhandene Sicherung kann beim ersten Abgleich übernommen werden. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Prüfe, ob du im Browserkonto angemeldet bist und die Synchronisierung für Erweiterungsdaten aktiviert ist. Für den geräteübergreifenden Abgleich muss Schleim OS auf beiden Geräten dieselbe Erweiterungs-ID besitzen. Die Standalone-Demo synchronisiert nicht. |
 | **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
 
 ## Weitere Hilfe
