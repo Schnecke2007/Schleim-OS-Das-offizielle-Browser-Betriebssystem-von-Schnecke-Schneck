@@ -44,7 +44,7 @@ Nach erfolgreicher Anmeldung prüft Schleim OS das private Repository und erstel
 
 ## Automatische Aktualisierung
 
-Die Neuer-Tab-Seite übergibt den aktuellen Personalisierungsstand regelmäßig an den Erweiterungs-Hintergrunddienst. Dieser hält die letzte Momentaufnahme in der temporären Browser-Sitzung und lädt sie anschließend alle fünf Minuten in das private GitHub-Repository hoch. Dadurch läuft der Fünf-Minuten-Takt weiter, auch wenn die Neuer-Tab-Seite geschlossen ist, solange der Browser geöffnet bleibt und die Erweiterung aktiv ist.
+Die Neuer-Tab-Seite übergibt den aktuellen Personalisierungsstand regelmäßig an den Erweiterungs-Hintergrunddienst. Dieser hält die letzte Momentaufnahme in der temporären Browser-Sitzung und lädt sie anschließend planmäßig alle fünf Minuten in das private GitHub-Repository hoch. Die Browser-Alarm-API kann einzelne Ausführungen bei hoher Systemlast oder im Energiesparmodus verzögern. Dadurch läuft der Fünf-Minuten-Takt weiter, auch wenn die Neuer-Tab-Seite geschlossen ist, solange der Browser geöffnet bleibt und die Erweiterung aktiv ist.
 
 Wird der Computer ausgeschaltet oder der Browser vollständig beendet, kann in dieser Zeit keine neue Sicherung hochgeladen werden. Nach dem nächsten Browserstart ist aus Sicherheitsgründen eine erneute GitHub-Anmeldung erforderlich. Sobald du dich wieder anmeldest, wird der aktuelle lokale Arbeitsstand sofort gesichert. Eine vorhandene Cloud-Sicherung kann beim ersten Abgleich wiederhergestellt werden.
 
