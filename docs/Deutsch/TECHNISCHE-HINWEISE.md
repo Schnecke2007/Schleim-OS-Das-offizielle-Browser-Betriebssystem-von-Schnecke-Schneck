@@ -20,7 +20,7 @@ Die dokumentierte Installation verwendet den direkten Import des vollständigen 
 
 ## Speicherung und Sicherungen
 
-Schleim OS benötigt einen lokalen Arbeitsstand im Browser, um den Startbildschirm bedienen zu können. Ein Button startet die GitHub-Verbindung. Danach erstellt Schleim OS automatisch ein privates Repository, sichert sofort und plant Updates alle fünf Minuten über den Manifest-V3-Hintergrunddienst. Die Anmeldung bleibt im geschützten Erweiterungsspeicher erhalten. Der Projektbetreiber muss einmalig eine GitHub App mit aktiviertem Device Flow, `Repository creation: Write` sowie `Contents: Read and write` einrichten und deren öffentliche Client-ID in den Quellcode eintragen. Details: [GITHUB-CLOUD-BACKUP.md](GITHUB-CLOUD-BACKUP.md).
+Schleim OS speichert den Arbeitsstand lokal und spiegelt die Personalisierungsdaten zusätzlich in `chrome.storage.sync`. Der Browser übernimmt die Cloud-Synchronisierung automatisch, wenn du in deinem Browserprofil angemeldet bist und dessen Synchronisierung aktiviert ist. Es sind keine GitHub-App, Client-ID oder separate Anmeldung in Schleim OS erforderlich. Das Kontingent beträgt ungefähr 100 KB pro Erweiterung; hochgeladene Hintergrundbilder bleiben lokal. Details: [BROWSER-CLOUD-SYNC.md](BROWSER-CLOUD-SYNC.md).
 
 ## Werbung und externe Verbindungen
 
