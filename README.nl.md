@@ -44,7 +44,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 ## 🛍️ Schleim-Store
 
-De **Schleim-Store** is alleen toegankelijk na aanmelding met een GitHub-account. Na aanmelding kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren en openbare communitybeoordelingen indienen en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
+De **Store-interface in Schleim OS** wordt pas ontgrendeld nadat je je met een GitHub-account hebt aangemeld. De catalogus en beoordelingen worden ook pas na een geslaagde aanmelding opgehaald. Let op: de projectrepository is openbaar, dus de JSON-catalogusbestanden kunnen nog steeds rechtstreeks op GitHub worden bekeken. De aanmelding beschermt de Store-interface in de app, maar niet de rechtstreekse toegang tot deze openbare repositorybestanden. Na aanmelding kun je websites en webapps ontdekken, beoordelen en aan je startscherm toevoegen of ervan verwijderen.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
