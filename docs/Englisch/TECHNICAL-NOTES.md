@@ -20,7 +20,7 @@ The documented installation uses direct import of the complete GitHub repository
 
 ## Storage and backups
 
-Personalization settings are stored in the relevant browser profile. Export a JSON backup before clearing browser data or moving to another browser profile.
+Schleim OS needs a local working copy in the browser to display and operate the home screen. After GitHub sign-in, this state is backed up to a private repository immediately and then every five minutes through the Manifest V3 background service worker. You must sign in to GitHub again after restarting the browser. Configure a GitHub App with Device Flow and `Contents: Read and write` plus `Metadata: Read-only` permissions. Follow the [GitHub cloud backup setup guide](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 ## Advertising and external connections
 
