@@ -13,8 +13,8 @@
       lockSettings:'Sperrbildschirm', city:'Wetter-Ort / Stadt', weather:'Wetter aktualisieren', shortcuts:'Sperrbildschirm-Verknüpfungen',
       shortcutName:'Name', shortcutUrl:'Ziel-URL', shortcutIcon:'Symbol', saveLock:'Sperrbildschirm speichern',
       export:'Homescreen exportieren', import:'Homescreen importieren', backup:'Konfigurationsdatei (JSON)',
-      backupInfo:'Deine Einstellungen werden automatisch mit dem Browserprofil synchronisiert, sofern dessen Synchronisierung eingeschaltet ist.',
-      exportDone:'Konfiguration exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.',
+      backupInfo:'Deine Einstellungen bleiben lokal in diesem Browser. Exportiere eine JSON-Datei als Sicherung und importiere sie bei Bedarf auf diesem oder einem anderen Gerät. Es gibt keine automatische Cloud-Synchronisierung.',
+      exportDone:'JSON-Sicherung exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.', importConfirm:'Der Import ersetzt die in der Sicherungsdatei enthaltenen Einstellungen. Möchtest du fortfahren?',
       designSaved:'Personalisierung gespeichert.', wallpaperSaved:'Hintergrundbild gespeichert.', weatherPending:'Wetter wird geladen …',
       weatherMissing:'Lege in den Einstellungen eine Stadt fest.', weatherError:'Wetterdaten konnten nicht geladen werden.',
       swipe:'Nach oben wischen oder antippen zum Entsperren', shortcutDefaults:'Google, Karten und YouTube sind Beispiel-Verknüpfungen und können geändert werden.',
@@ -28,8 +28,8 @@
       lockSettings:'Lock screen', city:'Weather location / city', weather:'Refresh weather', shortcuts:'Lock screen shortcuts',
       shortcutName:'Name', shortcutUrl:'Target URL', shortcutIcon:'Icon', saveLock:'Save lock screen',
       export:'Export home screen', import:'Import home screen', backup:'Configuration file (JSON)',
-      backupInfo:'Your settings are synced automatically through your browser profile when browser sync is enabled.',
-      exportDone:'Configuration exported.', importBad:'This configuration file is invalid or incompatible.',
+      backupInfo:'Your settings stay local in this browser. Export a JSON file as a backup and import it when needed on this or another device. There is no automatic cloud sync.',
+      exportDone:'JSON backup exported.', importBad:'This configuration file is invalid or incompatible.', importConfirm:'Importing replaces the settings contained in the backup file. Do you want to continue?',
       designSaved:'Personalization saved.', wallpaperSaved:'Wallpaper saved.', weatherPending:'Loading weather …',
       weatherMissing:'Set a city in Settings.', weatherError:'Could not load weather data.',
       swipe:'Swipe up or tap to unlock', shortcutDefaults:'Google, Maps and YouTube are sample shortcuts and can be edited.',
@@ -43,8 +43,8 @@
       lockSettings:'Vergrendelscherm', city:'Weerlocatie / stad', weather:'Weer vernieuwen', shortcuts:'Snelkoppelingen op vergrendelscherm',
       shortcutName:'Naam', shortcutUrl:'Doel-URL', shortcutIcon:'Symbool', saveLock:'Vergrendelscherm opslaan',
       export:'Startscherm exporteren', import:'Startscherm importeren', backup:'Configuratiebestand (JSON)',
-      backupInfo:'Je instellingen worden automatisch gesynchroniseerd via je browserprofiel wanneer browsersynchronisatie is ingeschakeld.',
-      exportDone:'Configuratie geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.',
+      backupInfo:'Je instellingen blijven lokaal in deze browser. Exporteer een JSON-bestand als back-up en importeer het indien nodig op dit of een ander apparaat. Er is geen automatische cloudsynchronisatie.',
+      exportDone:'JSON-back-up geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.', importConfirm:'Door te importeren worden de instellingen uit het back-upbestand vervangen. Wil je doorgaan?',
       designSaved:'Personalisatie opgeslagen.', wallpaperSaved:'Achtergrond opgeslagen.', weatherPending:'Weer wordt geladen …',
       weatherMissing:'Stel een stad in bij Instellingen.', weatherError:'Weergegevens konden niet worden geladen.',
       swipe:'Veeg omhoog of tik om te ontgrendelen', shortcutDefaults:'Google, Maps en YouTube zijn voorbeeldsnelkoppelingen en kunnen worden aangepast.',
@@ -561,6 +561,15 @@
         <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosSaveLock">${esc(t('saveLock'))}</button><button class="app-button secondary" type="button" id="ssosRefreshWeather">${esc(t('weather'))}</button></div>
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
+      <div class="ssos-card">
+        <h4>💾 ${esc(t('backup'))}</h4>
+        <p class="body-copy">${esc(t('backupInfo'))}</p>
+        <div class="ssos-form-actions">
+          <button class="app-button" type="button" id="ssosExport">${esc(t('export'))}</button>
+          <button class="app-button secondary" type="button" id="ssosImportTrigger">${esc(t('import'))}</button>
+        </div>
+        <input id="ssosImportFile" type="file" accept=".json,application/json" hidden>
+      </div>
 `;
     mount.appendChild(section);
     $('#ssosAccentPicker').addEventListener('input',e=>$('#ssosAccentHex').value=e.target.value);
@@ -661,6 +670,7 @@
       const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??legacyMap??directArray;
       const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
       if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
+      if(!confirm(t('importConfirm')))return;
       for(const [key,value] of Object.entries(preferences)){
         if(!/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)||key===KEY)continue;
         localStorage.setItem(key,JSON.stringify(value));
@@ -679,8 +689,17 @@
       toast(t('importBad'));
     }
   }
+  function clearRetiredCloudCredentials() {
+    const area = globalThis.chrome?.storage?.local;
+    if (!area?.remove) return;
+    try {
+      const result = area.remove(['ssosGithubCloudAuth','ssosGithubCloudState','ssosGithubCloudSnapshot','ssosGithubCloudLastError']);
+      if (result && typeof result.catch === 'function') result.catch(() => {});
+    } catch {}
+  }
   function refreshSettingsIfOpen() { if ($('#resetSettings')) renderSettingsTools(); }
   function init() {
+    clearRetiredCloudCredentials();
     renderHomeTiles(); renderLockScreen(); applyVisuals();
     loadStoreCatalog();
     loadStoreRatings();
@@ -715,6 +734,7 @@
       if(e.target.closest('#ssosSaveLock')){saveLockSettings();return;}
       if(e.target.closest('#ssosRefreshWeather')){config.weatherCity=$('#ssosWeatherCity')?.value.trim()||'';saveConfig();refreshWeather();return;}
       if(e.target.closest('#ssosExport')){exportBackup();return;}
+      if(e.target.closest('#ssosImportTrigger')){$('#ssosImportFile')?.click();return;}
       const lockUrl=e.target.closest('[data-ssos-lock-url]');if(lockUrl){window.open(lockUrl.dataset.ssosLockUrl,'_blank','noopener,noreferrer');return;}
     });
     document.addEventListener('input',e=>{
@@ -739,7 +759,9 @@
         try{config.wallpaperData=await compressImage(file,1500000);config.wallpaperUrl='';saveConfig();toast(t('wallpaperSaved'));}catch{toast(t('fileTooLarge'));}
       }
       if(e.target.id==='ssosImportFile'){
-        const file=e.target.files?.[0];if(file)await importBackup(file);
+        const file=e.target.files?.[0];
+        if(file)await importBackup(file);
+        e.target.value='';
       }
     });
   }
