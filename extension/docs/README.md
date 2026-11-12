@@ -8,7 +8,7 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Werbefreie Extension-Oberfläche ohne Werbe-IFrames
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
-- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird nach GitHub-Anmeldung in die private Cloud-Sicherung übernommen
+- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird bei aktivierter Browser-Synchronisierung über das Browserprofil abgeglichen
 - Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; ohne GitHub-Anmeldung nutzbar
 - HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und automatische Browser-Cloud-Synchronisierung
 - Deutsch, Englisch und Niederländisch
