@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.5.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.6.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -55,7 +55,7 @@ The **Schleim-Store** is available only after signing in with a GitHub account. 
 
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
 
-**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md).
+**Transparency:** The GitHub repository and app suggestions submitted as issues are publicly visible. Do not submit passwords, private data or confidential information. The in-app Store is unlocked only after GitHub sign-in.
 
 ## 📥 Download and installation
 
@@ -75,7 +75,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **Back up settings:** Use the available JSON feature to export or import your personal settings.
+- **Cloud backup:** After the one-time setup and GitHub sign-in, your current home screen is backed up immediately to your private GitHub repository. The background service updates it every five minutes. See the [GitHub cloud backup setup guide](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 The browser still keeps a local working copy so Schleim OS can run. The additional backup copy is stored in the private GitHub repository.
 
@@ -92,7 +92,7 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
 | **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
-| **Settings are missing after switching browsers.** | Personalization settings are stored in the relevant browser profile. Use the JSON backup feature, if available. |
+| **Settings are missing after switching browsers.** | Personalization settings are stored in the relevant browser profile. Sign in with the same GitHub account and restore the backup through the GitHub cloud settings. |
 | **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
 
 ## Need more help?
