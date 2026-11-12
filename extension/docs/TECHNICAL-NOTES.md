@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.9.0
+# Technische Hinweise – Version 3.9.1
 
 - Shop-URL: `https://sites.google.com/view/schneckenshop/`; die vorherige eigenständige `shop.html` wurde aus der neuen Ausgabe entfernt.
 - Browsererweiterung: Manifest V3 mit `chrome_url_overrides.newtab`.
