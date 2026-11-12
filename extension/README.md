@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.9.0 · Chrome-/Chromium-Erweiterung**
+**Version 3.9.1 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -23,9 +23,10 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
+- `scripts/slime-store-admin.js` – separates Admin-Portal zum Prüfen und Veröffentlichen von Store-Vorschlägen
 - JSON-Backup – manuelles Exportieren und Importieren der Personalisierung über die Einstellungen
-- `data/store-apps.json` – zentraler Store-Katalog
-- `styles/` – Design und Personalisierung
+- `data/store-apps.json` und `data/store-ratings.json` – Store-Katalog und Community-Bewertungen
+- `styles/` – Design, Personalisierung und Admin-Portal
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
@@ -33,7 +34,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 
 ## App-Kacheln anordnen
 
-Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird lokal gespeichert und bei aktivierter Browser-Synchronisierung automatisch über das Browserprofil abgeglichen.
+Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird lokal gespeichert und beim manuellen JSON-Export in der Sicherungsdatei mitgespeichert.
 
 ## Werbung
 
