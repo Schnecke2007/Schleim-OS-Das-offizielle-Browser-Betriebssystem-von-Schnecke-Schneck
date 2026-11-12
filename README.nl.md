@@ -55,7 +55,7 @@ De **Schleim-Store** is zonder GitHub-aanmelding beschikbaar. Je kunt websites e
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
-**Transparantie:** De GitHub-repository en app-voorstellen die als issues worden ingediend, zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. De Store in de extensie wordt pas na aanmelding bij GitHub ontgrendeld.
+**Transparantie:** De GitHub-repository en app-voorstellen die als issues worden ingediend, zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. De Schleim-Store is zonder aanmelding beschikbaar.
 
 ## 📥 Downloaden en installeren
 
@@ -92,7 +92,7 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
 | **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
-| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Meld je met hetzelfde GitHub-account aan en herstel de back-up via de GitHub-cloudinstellingen. |
+| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Verbind hetzelfde GitHub-account via de knop in de instellingen. Een bestaande back-up kan bij de eerste synchronisatie worden overgenomen. |
 | **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
 
 ## Meer hulp nodig?
