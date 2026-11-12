@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.7.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.8.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store ohne GitHub-Anmeldung nutzbar
-- Automatische Cloud-Sicherung der Personalisierung im privaten GitHub-Repository nach der Anmeldung (sofort und anschließend im Fünf-Minuten-Rhythmus)
+- Automatische Browser-Cloud-Synchronisierung der Personalisierung über das Browserprofil – ohne GitHub-App oder separates Login
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -75,9 +75,9 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Cloud-Sicherung:** Nach dem einmaligen Einrichten der GitHub-App genügt der Button **Mit GitHub verbinden**. Schleim OS erstellt dann automatisch ein privates Backup-Repository und sichert den Startbildschirm sofort sowie planmäßig alle fünf Minuten im Hintergrund. Einzelheiten stehen in der [Anleitung zur GitHub-Cloud-Sicherung](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
+- **Cloud-Synchronisierung:** Schleim OS nutzt den integrierten Sync-Speicher des Browsers. Es gibt keine GitHub-App, keine Client-ID und keine separate Anmeldung in Schleim OS. Voraussetzung ist, dass du im Browserprofil angemeldet bist und dessen Synchronisierung aktiviert ist. Details: [Anleitung zur Browser-Cloud-Synchronisierung](docs/Deutsch/BROWSER-CLOUD-SYNC.md).
 
-Der Browser hält weiterhin einen lokalen Arbeitsstand, damit Schleim OS funktioniert. Die zusätzliche Sicherungskopie wird im privaten GitHub-Repository gespeichert.
+Die Browser-Synchronisierung überträgt normale Einstellungen und App-Verknüpfungen automatisch. Hochgeladene Hintergrundbilder bleiben lokal; der Browser stellt insgesamt ungefähr 100 KB Sync-Speicher pro Erweiterung bereit.
 
 # 🛠️ Schleim OS – Fehlerbehebung
 
