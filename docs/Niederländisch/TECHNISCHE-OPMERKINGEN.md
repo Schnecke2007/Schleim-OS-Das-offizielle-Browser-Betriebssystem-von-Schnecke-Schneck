@@ -20,7 +20,7 @@ De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige Gi
 
 ## Opslag en back-ups
 
-Schleim OS heeft een lokale werkkopie in de browser nodig om het startscherm te bedienen. Met één knop start je de GitHub-verbinding. Daarna maakt Schleim OS automatisch een privérepository, schrijft direct een back-up en plant updates om de vijf minuten via de Manifest V3-achtergronddienst. De verbinding blijft in de beveiligde extensieopslag staan. De projectbeheerder moet een GitHub App eenmalig registreren met Device Flow, `Repository creation: Write` en `Contents: Read and write`, en de openbare Client ID in de broncode plaatsen. Zie de [handleiding voor de GitHub-cloudback-up](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
+Schleim OS bewaart een lokale werkkopie en spiegelt personalisatiegegevens naar `chrome.storage.sync`. De browser verzorgt de cloudsynchronisatie wanneer je bent aangemeld bij een browserprofiel met ingeschakelde synchronisatie. Een GitHub App, Client ID of aparte aanmelding bij Schleim OS is niet nodig. Het quotum is ongeveer 100 KB per extensie; geüploade achtergrondafbeeldingen blijven lokaal. Zie de [handleiding voor browsersynchronisatie](../../Deutsch/BROWSER-CLOUD-SYNC.md).
 
 ## Reclame en externe verbindingen
 
