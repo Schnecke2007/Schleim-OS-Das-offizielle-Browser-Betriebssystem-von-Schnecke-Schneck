@@ -4,6 +4,10 @@
   const STATE_KEY = 'ssosGithubCloudState';
   const AUTH_KEY = 'ssosGithubCloudAuth';
   const SNAPSHOT_KEY = 'ssosGithubCloudSnapshot';
+  // Public Client ID inserted once by the Schleim OS project owner.
+  const GITHUB_APP_CLIENT_ID = '';
+  const BACKUP_REPO_NAME = 'schleim-os-cloud-backup';
+  const BACKUP_REPO_DESCRIPTION = 'Private personal Schleim OS cloud backup. Created automatically by Schleim OS.';
   const BACKUP_FILE = 'schleim-os-backup.json';
   const BACKUP_FORMAT = 'schleim-os-github-cloud-backup';
   const BACKUP_INTERVAL = 5 * 60 * 1000;
@@ -14,7 +18,7 @@
   const $ = (selector, root = document) => root.querySelector(selector);
 
   let state = {
-    config: { clientId: '', repoName: 'schleim-os-cloud-backup' },
+    config: { clientId: GITHUB_APP_CLIENT_ID, repoName: BACKUP_REPO_NAME },
     auth: null,
     connected: false,
     initializing: true
@@ -36,32 +40,30 @@
   async function readState() {
     const local = storageArea();
     const session = sessionArea();
-    if (!local || !session) throw new Error('Dieser Browser unterstützt keine sichere Sitzungsablage für die GitHub-Anmeldung.');
-    const [persistent, temporary] = await Promise.all([
-      local.get([STATE_KEY]),
-      session.get([AUTH_KEY])
-    ]);
-    const saved = persistent?.[STATE_KEY] || {};
-    const auth = temporary?.[AUTH_KEY] || saved.auth || null;
+    if (!local) throw new Error('Der Erweiterungsspeicher ist nicht verfügbar.');
+    const saved = (await local.get([STATE_KEY]))?.[STATE_KEY] || {};
+    let auth = saved.auth || null;
 
-    // Migrate older installations: remove persisted tokens from extension local storage.
-    if (saved.auth) {
-      if (auth) await session.set({ [AUTH_KEY]: auth });
-      await local.set({ [STATE_KEY]: { config: saved.config || {} } });
-    }
-    return { config: saved.config || {}, auth };
+    // Migrate a prior session-only login to persistent extension storage.
+    if (!auth && session) auth = (await session.get([AUTH_KEY]))?.[AUTH_KEY] || null;
+    state.config = { ...state.config, ...(saved.config || {}) };
+    if (GITHUB_APP_CLIENT_ID) state.config.clientId = GITHUB_APP_CLIENT_ID;
+    if (!state.config.clientId) state.config.clientId = GITHUB_APP_CLIENT_ID;
+    if (!state.config.repoName) state.config.repoName = BACKUP_REPO_NAME;
+    if (auth && !saved.auth) await local.set({ [STATE_KEY]: { config: state.config, auth } });
+    if (session) await session.remove([AUTH_KEY]);
+    try { await local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }); } catch {}
+    return { config: state.config, auth };
   }
 
   async function writeState() {
     const local = storageArea();
     const session = sessionArea();
-    if (!local || !session) throw new Error('Die sichere Browser-Sitzungsablage ist nicht verfügbar.');
-    await local.set({ [STATE_KEY]: { config: state.config } });
-    if (state.auth) {
-      await session.set({ [AUTH_KEY]: state.auth });
-    } else {
-      await session.remove([AUTH_KEY, SNAPSHOT_KEY]);
-    }
+    if (!local) throw new Error('Der Erweiterungsspeicher ist nicht verfügbar.');
+    await local.set({ [STATE_KEY]: { config: state.config, auth: state.auth || null } });
+    if (!state.auth) await local.remove([SNAPSHOT_KEY]);
+    if (session) await session.remove([AUTH_KEY]);
+    try { await local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' }); } catch {}
   }
 
   function setStatus(message, isError = false) {
@@ -86,46 +88,12 @@
     toast._timer = window.setTimeout(() => node.classList.remove('show'), 2600);
   }
 
-  function configFromInputs(root) {
-    const clientId = $('#ssosGithubClientId', root)?.value.trim() || state.config.clientId || '';
-    const repoName = $('#ssosGithubRepoName', root)?.value.trim() || state.config.repoName || 'schleim-os-cloud-backup';
-    return { clientId, repoName };
-  }
-
-  function validateConfig(config) {
-    if (!/^[A-Za-z0-9_]{8,80}$/.test(config.clientId)) {
-      throw new Error('Bitte trage eine gültige GitHub-App-Client-ID ein.');
-    }
-    if (!/^[A-Za-z0-9._-]{1,100}$/.test(config.repoName)) {
-      throw new Error('Der Name des Backup-Repositories ist ungültig.');
-    }
-  }
-
-  async function saveConfigFrom(root) {
-    const next = configFromInputs(root);
-    validateConfig(next);
-    state.config = next;
-    await writeState();
-    updatePanels();
-    setStatus('Einstellungen gespeichert. Du kannst dich jetzt mit GitHub anmelden.');
-  }
-
   function renderSettingsPanel() {
     return '<section class="ssos-card" id="ssosGithubCloudSettings">' +
       '<h4>☁️ GitHub-Cloud-Sicherung</h4>' +
-      '<p class="body-copy">Nach der Anmeldung wird dein kompletter Schleim-OS-Startbildschirm sofort in deinem privaten GitHub-Repository gesichert und anschließend alle fünf Minuten aktualisiert.</p>' +
-      '<label>GitHub-App-Client-ID<input id="ssosGithubClientId" type="text" autocomplete="off" spellcheck="false" placeholder="Iv1. …"></label>' +
-      '<label>Privates Backup-Repository<input id="ssosGithubRepoName" type="text" autocomplete="off" spellcheck="false" value="schleim-os-cloud-backup" placeholder="schleim-os-cloud-backup"></label>' +
-      '<p class="body-copy">Benötigt wird eine GitHub-App mit aktiviertem Device Flow, Repository-Berechtigung <b>Contents: Read and write</b> und <b>Metadata: Read-only</b>. Installiere sie ausschließlich auf deinem privaten Backup-Repository.</p>' +
-      '<p class="body-copy"><a href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/docs/Deutsch/GITHUB-CLOUD-BACKUP.md" target="_blank" rel="noopener noreferrer">Einrichtung der GitHub-Cloud-Sicherung ↗</a></p>' +
+      '<p class="body-copy">Einmal mit GitHub verbinden. Schleim OS erstellt automatisch ein privates Backup-Repository und sichert deinen Startbildschirm sofort sowie danach alle fünf Minuten.</p>' +
+      '<div class="ssos-form-actions"><button class="app-button" type="button" data-ssos-cloud-toggle>Mit GitHub verbinden</button></div>' +
       '<p class="body-copy" data-ssos-cloud-status>GitHub ist noch nicht verbunden.</p>' +
-      '<div class="ssos-form-actions">' +
-      '<button class="app-button secondary" type="button" data-ssos-cloud-save-config>Einstellungen speichern</button>' +
-      '<button class="app-button" type="button" data-ssos-cloud-login>Mit GitHub anmelden</button>' +
-      '<button class="app-button secondary" type="button" data-ssos-cloud-backup>Jetzt sichern</button>' +
-      '<button class="app-button secondary" type="button" data-ssos-cloud-restore>Aus GitHub wiederherstellen</button>' +
-      '<button class="app-button secondary" type="button" data-ssos-cloud-logout>Abmelden</button>' +
-      '</div>' +
       '<p class="body-copy" data-ssos-cloud-last-backup></p>' +
       '</section>';
   }
@@ -134,10 +102,6 @@
     const root = $('#ssosSettingsTools');
     if (!root || $('#ssosGithubCloudSettings', root)) return;
     root.insertAdjacentHTML('beforeend', renderSettingsPanel());
-    const client = $('#ssosGithubClientId', root);
-    const repo = $('#ssosGithubRepoName', root);
-    if (client) client.value = state.config.clientId || '';
-    if (repo) repo.value = state.config.repoName || 'schleim-os-cloud-backup';
     updatePanels();
   }
 
@@ -164,9 +128,10 @@
     document.querySelectorAll('[data-ssos-cloud-last-backup]').forEach(node => {
       node.textContent = auth?.lastBackupAt ? 'Letzte Sicherung: ' + formatTime(auth.lastBackupAt) : '';
     });
-    document.querySelectorAll('[data-ssos-cloud-login]').forEach(node => node.hidden = state.connected || loginInProgress);
-    document.querySelectorAll('[data-ssos-cloud-logout]').forEach(node => node.hidden = !state.connected);
-    document.querySelectorAll('[data-ssos-cloud-backup], [data-ssos-cloud-restore]').forEach(node => node.hidden = !state.connected);
+    document.querySelectorAll('[data-ssos-cloud-toggle]').forEach(node => {
+      node.textContent = state.connected ? 'GitHub trennen' : 'Mit GitHub verbinden';
+      node.disabled = state.initializing || loginInProgress;
+    });
   }
 
   async function postForm(url, values) {
@@ -188,7 +153,7 @@
   }
 
   async function requestDeviceCode(clientId) {
-    const device = await postForm(DEVICE_CODE_URL, { client_id: clientId, scope: 'offline_access' });
+    const device = await postForm(DEVICE_CODE_URL, { client_id: clientId });
     if (!device.device_code || !device.user_code) throw new Error(device.error_description || device.error || 'GitHub konnte keinen Gerätecode erstellen.');
     return device;
   }
@@ -256,13 +221,49 @@
     return data;
   }
 
-  async function validateRepository(token, username, repoName) {
-    const repo = await apiRequest('/repos/' + encodeURIComponent(username) + '/' + encodeURIComponent(repoName), {}, token);
-    if (!repo.private) throw new Error('Das Backup-Repository ist öffentlich. Bitte verwende ausschließlich ein privates GitHub-Repository.');
-    if (String(repo.owner?.login || '').toLowerCase() !== String(username).toLowerCase()) {
-      throw new Error('Das Backup-Repository muss zu deinem angemeldeten GitHub-Konto gehören.');
+  async function createOrFindBackupRepository(token, username, preferredName = '') {
+    const preferred = /^[A-Za-z0-9._-]{1,100}$/.test(preferredName) ? preferredName : '';
+    const candidates = [...new Set([...(preferred ? [preferred] : []), BACKUP_REPO_NAME, ...Array.from({ length: 20 }, (_, index) => BACKUP_REPO_NAME + '-' + (index + 2))])];
+    for (const repoName of candidates) {
+      let existing = null;
+      try {
+        existing = await apiRequest('/repos/' + encodeURIComponent(username) + '/' + encodeURIComponent(repoName), {}, token);
+      } catch (error) {
+        if (error.status !== 404) throw error;
+      }
+      if (existing) {
+        const owned = String(existing.owner?.login || '').toLowerCase() === String(username).toLowerCase();
+        const isExpectedBackup = repoName === preferred || existing.description === BACKUP_REPO_DESCRIPTION;
+        if (owned && existing.private === true && isExpectedBackup) return repoName;
+        continue;
+      }
+      try {
+        const created = await apiRequest('/user/repos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: repoName,
+            description: BACKUP_REPO_DESCRIPTION,
+            private: true,
+            auto_init: true,
+            has_issues: false,
+            has_projects: false,
+            has_wiki: false
+          })
+        }, token);
+        if (created.private !== true || String(created.owner?.login || '').toLowerCase() !== String(username).toLowerCase()) {
+          throw new Error('GitHub hat kein privates Backup-Repository im angemeldeten Konto erstellt.');
+        }
+        return String(created.name || repoName);
+      } catch (error) {
+        if (error.status === 422) continue;
+        if (error.status === 403) {
+          throw new Error('Der GitHub-App fehlt die Berechtigung „Repository creation: Write“. Bitte den Projektbetreiber informieren.');
+        }
+        throw error;
+      }
     }
-    return repo;
+    throw new Error('Es konnte kein freier Name für das private Backup-Repository gefunden werden.');
   }
 
   function encodeBase64(text) {
@@ -447,35 +448,37 @@
     fallbackBackupTimer = null;
   }
 
-  async function startDeviceLogin(root) {
+  async function startDeviceLogin() {
     if (loginInProgress) return;
     loginInProgress = true;
     updatePanels();
     try {
-      const nextConfig = configFromInputs(root || document);
-      validateConfig(nextConfig);
-      state.config = nextConfig;
+      const clientId = String(state.config.clientId || GITHUB_APP_CLIENT_ID).trim();
+      if (!/^[A-Za-z0-9_]{8,80}$/.test(clientId)) {
+        throw new Error('Die einmalige GitHub-App-Einrichtung ist noch nicht abgeschlossen. Die öffentliche Client-ID fehlt.');
+      }
+      state.config.clientId = clientId;
       await writeState();
       setStatus('Verbindung zu GitHub wird vorbereitet …');
-      const device = await requestDeviceCode(nextConfig.clientId);
-      const statusNodes = document.querySelectorAll('[data-ssos-cloud-status]');
-      statusNodes.forEach(node => {
-        node.innerHTML = 'Öffne <a href="' + escapeHtml(device.verification_uri || 'https://github.com/login/device') + '" target="_blank" rel="noopener noreferrer">github.com/login/device</a> und gib diesen Code ein: <b>' + escapeHtml(device.user_code) + '</b>. Danach die App-Berechtigung auf GitHub bestätigen.';
+      const device = await requestDeviceCode(clientId);
+      document.querySelectorAll('[data-ssos-cloud-status]').forEach(node => {
+        node.innerHTML = 'Öffne <a href="' + escapeHtml(device.verification_uri || 'https://github.com/login/device') + '" target="_blank" rel="noopener noreferrer">github.com/login/device</a> und gib diesen Code ein: <b>' + escapeHtml(device.user_code) + '</b>. Danach die Berechtigung für Schleim OS auf GitHub bestätigen.';
       });
       toast('GitHub-Gerätecode wurde erstellt.');
-      const tokenData = await pollForAccessToken(nextConfig.clientId, device);
-      setStatus('Anmeldung erfolgreich. Backup-Repository wird geprüft …');
+      const tokenData = await pollForAccessToken(clientId, device);
+      setStatus('Anmeldung erfolgreich. Privates Backup-Repository wird automatisch erstellt …');
       const user = await apiRequest('/user', {}, tokenData.access_token);
       const username = String(user.login || '').trim();
       if (!username) throw new Error('GitHub hat keinen Benutzernamen zurückgegeben.');
-      await validateRepository(tokenData.access_token, username, nextConfig.repoName);
+      const repoName = await createOrFindBackupRepository(tokenData.access_token, username, '');
+      state.config.repoName = repoName;
       state.auth = {
         accessToken: tokenData.access_token,
         refreshToken: tokenData.refresh_token || null,
         expiresAt: tokenData.expires_in ? Date.now() + Number(tokenData.expires_in) * 1000 : null,
         refreshExpiresAt: tokenData.refresh_token_expires_in ? Date.now() + Number(tokenData.refresh_token_expires_in) * 1000 : null,
         username,
-        repoName: nextConfig.repoName,
+        repoName,
         lastBackupAt: null,
         lastSyncedRepo: null
       };
@@ -484,11 +487,11 @@
       await firstSyncAfterConnection();
       await startScheduler();
       updatePanels();
-      setStatus('Verbunden als @' + username + '. Die automatische Sicherung läuft alle fünf Minuten.');
+      setStatus('Verbunden als @' + username + '. Das private Backup-Repository ist eingerichtet; die automatische Sicherung läuft alle fünf Minuten.');
       mountSettingsPanel();
     } catch (error) {
       setStatus(error.message || 'GitHub-Anmeldung fehlgeschlagen.', true);
-      toast('GitHub-Anmeldung fehlgeschlagen.');
+      toast(error.message || 'GitHub-Anmeldung fehlgeschlagen.');
     } finally {
       loginInProgress = false;
       updatePanels();
@@ -521,7 +524,7 @@
       if (!username || username.toLowerCase() !== String(state.auth.username || '').toLowerCase()) {
         throw new Error('Das angemeldete GitHub-Konto stimmt nicht mit der gespeicherten Verbindung überein.');
       }
-      await validateRepository(token, username, state.auth.repoName);
+      state.auth.repoName = await createOrFindBackupRepository(token, username, state.auth.repoName || '');
       state.auth.username = username;
       state.connected = true;
       await writeState();
@@ -543,26 +546,11 @@
   }
 
   document.addEventListener('click', async event => {
-    const save = event.target.closest('[data-ssos-cloud-save-config]');
-    const login = event.target.closest('[data-ssos-cloud-login]');
-    const backup = event.target.closest('[data-ssos-cloud-backup]');
-    const restore = event.target.closest('[data-ssos-cloud-restore]');
-    const signout = event.target.closest('[data-ssos-cloud-logout]');
-    const root = event.target.closest('#ssosSettingsTools') || $('#appContent') || document;
+    const toggle = event.target.closest('[data-ssos-cloud-toggle]');
+    if (!toggle) return;
     try {
-      if (save) {
-        await saveConfigFrom(root);
-        toast('GitHub-Einstellungen gespeichert.');
-      } else if (login) {
-        await startDeviceLogin(root);
-      } else if (backup) {
-        await saveConfigFrom(root).catch(() => {});
-        await backupNow(false);
-      } else if (restore) {
-        await restoreFromCloud(false);
-      } else if (signout) {
-        await logout();
-      }
+      if (state.connected) await logout();
+      else await startDeviceLogin();
     } catch (error) {
       setStatus(error.message || 'Die Aktion ist fehlgeschlagen.', true);
       toast(error.message || 'Die Aktion ist fehlgeschlagen.');
@@ -581,8 +569,8 @@
 
   if (globalThis.chrome?.storage?.onChanged) {
     chrome.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName === 'session' && changes[AUTH_KEY]) {
-        state.auth = changes[AUTH_KEY].newValue || null;
+      if (areaName === 'local' && changes[STATE_KEY]) {
+        state.auth = changes[STATE_KEY].newValue?.auth || null;
         state.connected = !!state.auth?.accessToken;
         updatePanels();
       }
