@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.6.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.7.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,7 +36,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Ontwerp, accentkleur en achtergrond aanpassen
 - Schleim-Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
 - App-voorstellen indienen via een GitHub-issueformulier
-- GitHub-aanmelding vereist voor toegang tot de Schleim-Store
+- Schleim-Store is zonder GitHub-aanmelding beschikbaar
 - Automatische cloudback-up van personalisatie in een privé-GitHub-repository na aanmelding (direct en vervolgens elke vijf minuten)
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
@@ -44,7 +44,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 ## 🛍️ Schleim-Store
 
-De **Store-interface in Schleim OS** wordt pas ontgrendeld nadat je je met een GitHub-account hebt aangemeld. De catalogus en beoordelingen worden ook pas na een geslaagde aanmelding opgehaald. Let op: de projectrepository is openbaar, dus de JSON-catalogusbestanden kunnen nog steeds rechtstreeks op GitHub worden bekeken. De aanmelding beschermt de Store-interface in de app, maar niet de rechtstreekse toegang tot deze openbare repositorybestanden. Na aanmelding kun je websites en webapps ontdekken, beoordelen en aan je startscherm toevoegen of ervan verwijderen.
+De **Schleim-Store** is zonder GitHub-aanmelding beschikbaar. Je kunt websites en webapps ontdekken, beoordelen en aan je startscherm toevoegen of ervan verwijderen. Let op: de projectrepository is openbaar, dus catalogusbestanden kunnen ook rechtstreeks op GitHub worden bekeken.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
@@ -75,9 +75,9 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **Cloudback-up:** Na de eenmalige configuratie en aanmelding bij GitHub wordt je huidige startscherm direct opgeslagen in je privé-GitHub-repository. Daarna werkt de achtergronddienst de back-up elke vijf minuten bij. Bekijk de [handleiding voor de GitHub-cloudback-up](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
+- **Cloudback-up:** Na de eenmalige inrichting van de GitHub App door de projectbeheerder hoef je alleen op **Met GitHub verbinden** te klikken. Schleim OS maakt automatisch een privé-back-uprepository aan en slaat je startscherm direct en daarna planmatig elke vijf minuten op. Zie de [handleiding voor de GitHub-cloudback-up](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
-De browser houdt een lokale werkkopie bij zodat Schleim OS direct kan werken. De extra back-up wordt na aanmelding in je privé-GitHub-repository opgeslagen en elke vijf minuten bijgewerkt. Na een browserherstart moet je opnieuw aanmelden bij GitHub.
+De browser houdt een lokale werkkopie bij zodat Schleim OS direct kan werken. De extra back-up wordt na aanmelding in je privé-GitHub-repository opgeslagen en elke vijf minuten bijgewerkt. De GitHub-verbinding blijft in de browserextensie opgeslagen, zodat de achtergronddienst na een herstart kan doorgaan.
 
 # 🛠️ Schleim OS – Problemen oplossen
 
