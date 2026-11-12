@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck",
   "short_name": "Schleim OS",
-  "version": "3.9.0",
+  "version": "3.9.1",
   "description": "Das offizielle Browser-Betriebssystem von Schnecke Schneck – personalisierbare Neuer-Tab-Oberfläche für Chromium-Browser.",
   "chrome_url_overrides": {
     "newtab": "pages/newtab.html"
