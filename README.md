@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.5.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,14 +36,15 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Personalisierung von Design, Akzentfarbe und Hintergrund
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
-- Lokale JSON-Sicherung bzw. Wiederherstellung der Personalisierung
+- GitHub-Anmeldung für den Schleim-Store
+- Automatische Cloud-Sicherung der Personalisierung im privaten GitHub-Repository nach der Anmeldung (sofort und anschließend im Fünf-Minuten-Rhythmus)
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
 
 ## 🛍️ Der Schleim-Store
 
-Im **Schleim-Store** kannst du empfohlene Webseiten und Web-Apps entdecken, nach Kategorien suchen und öffentliche Community-Bewertungen abgeben und Apps auf deinem Schleim-OS-Startbildschirm installieren oder wieder entfernen.
+Der **Schleim-Store** ist nur nach einer Anmeldung mit einem GitHub-Konto zugänglich. Nach der Anmeldung kannst du empfohlene Webseiten und Web-Apps entdecken, nach Kategorien suchen und öffentliche Community-Bewertungen abgeben und Apps auf deinem Schleim-OS-Startbildschirm installieren oder wieder entfernen.
 
 - **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
 - **Installieren:** Eine App wird als Kachel hinzugefügt und öffnet die zugehörige Webseite in einem neuen Browser-Tab.
@@ -54,7 +55,7 @@ Im **Schleim-Store** kannst du empfohlene Webseiten und Web-Apps entdecken, nach
 
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
-**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Admin-Zugangsdaten gehören nicht in das Repository. Details stehen in der [Schleim-Store-Dokumentation](extension/docs/SLIME-STORE.md).
+**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Details stehen in der [Schleim-Store-Dokumentation](extension/docs/SLIME-STORE.md).
 
 ## 📥 Download und Installation
 
@@ -74,9 +75,9 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Sicherung:** Die angebotene JSON-Funktion verwenden, um persönliche Einstellungen zu exportieren oder wieder einzulesen.
+- **Cloud-Sicherung:** Nach Einrichtung und Anmeldung bei GitHub wird eine Sicherung im privaten GitHub-Repository erstellt und im Fünf-Minuten-Rhythmus aktualisiert. Die JSON-Funktion bleibt als manueller Export/Import verfügbar.
 
-Persönliche Einstellungen werden lokal im Browserprofil gespeichert. Das JSON-Backup sollte an einem sicheren Ort aufbewahrt werden.
+Der Browser hält weiterhin einen lokalen Arbeitsstand, damit Schleim OS funktioniert. Die zusätzliche Sicherungskopie wird im privaten GitHub-Repository gespeichert.
 
 # 🛠️ Schleim OS – Fehlerbehebung
 
