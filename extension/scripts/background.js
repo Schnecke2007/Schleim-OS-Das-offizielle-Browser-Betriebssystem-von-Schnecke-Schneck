@@ -2,7 +2,6 @@
   'use strict';
 
   const STATE_KEY = 'ssosGithubCloudState';
-  const AUTH_KEY = 'ssosGithubCloudAuth';
   const SNAPSHOT_KEY = 'ssosGithubCloudSnapshot';
   const LAST_ERROR_KEY = 'ssosGithubCloudLastError';
   const ALARM_NAME = 'ssosGithubCloudBackup';
@@ -70,14 +69,12 @@
   }
 
   async function currentCredentials() {
-    const [persistent, temporary] = await Promise.all([
-      chrome.storage.local.get([STATE_KEY]),
-      chrome.storage.session.get([AUTH_KEY, SNAPSHOT_KEY])
-    ]);
+    const saved = await chrome.storage.local.get([STATE_KEY, SNAPSHOT_KEY]);
+    const cloudState = saved?.[STATE_KEY] || {};
     return {
-      config: persistent?.[STATE_KEY]?.config || {},
-      auth: temporary?.[AUTH_KEY] || null,
-      snapshot: temporary?.[SNAPSHOT_KEY] || null
+      config: cloudState.config || {},
+      auth: cloudState.auth || null,
+      snapshot: saved?.[SNAPSHOT_KEY] || null
     };
   }
 
@@ -99,7 +96,9 @@
     auth.refreshExpiresAt = refreshed.refresh_token_expires_in
       ? Date.now() + Number(refreshed.refresh_token_expires_in) * 1000
       : auth.refreshExpiresAt;
-    await chrome.storage.session.set({ [AUTH_KEY]: auth });
+    const saved = await chrome.storage.local.get([STATE_KEY]);
+    const current = saved?.[STATE_KEY] || {};
+    await chrome.storage.local.set({ [STATE_KEY]: { config: current.config || config, auth } });
     return auth.accessToken;
   }
 
@@ -127,13 +126,18 @@
       await request(path, { method: 'PUT', body: JSON.stringify(body) }, token);
       context.auth.lastBackupAt = new Date().toISOString();
       context.auth.lastSyncedRepo = context.auth.username + '/' + context.auth.repoName;
-      await chrome.storage.session.set({ [AUTH_KEY]: context.auth });
+      const saved = await chrome.storage.local.get([STATE_KEY]);
+      await chrome.storage.local.set({ [STATE_KEY]: { config: saved?.[STATE_KEY]?.config || context.config, auth: context.auth } });
       await chrome.storage.local.remove([LAST_ERROR_KEY]);
     } catch (error) {
       await chrome.storage.local.set({
         [LAST_ERROR_KEY]: { message: String(error?.message || 'Unbekannter GitHub-Fehler'), at: new Date().toISOString() }
       });
-      if (error?.status === 401) await chrome.storage.session.remove([AUTH_KEY]);
+      if (error?.status === 401) {
+        const saved = await chrome.storage.local.get([STATE_KEY]);
+        const current = saved?.[STATE_KEY] || {};
+        await chrome.storage.local.set({ [STATE_KEY]: { config: current.config || {}, auth: null } });
+      }
     } finally {
       uploadInProgress = false;
     }
@@ -157,7 +161,7 @@
         sendResponse({ ok: false, error: 'Ungültige Schleim-OS-Sicherung.' });
         return false;
       }
-      chrome.storage.session.set({ [SNAPSHOT_KEY]: snapshot })
+      chrome.storage.local.set({ [SNAPSHOT_KEY]: snapshot })
         .then(() => sendResponse({ ok: true }))
         .catch(error => sendResponse({ ok: false, error: String(error?.message || error) }));
       return true;
@@ -166,7 +170,7 @@
   });
 
   try {
-    chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
+    chrome.storage.local.setAccessLevel({ accessLevel: 'TRUSTED_CONTEXTS' });
   } catch {}
   ensureAlarm();
 })();
