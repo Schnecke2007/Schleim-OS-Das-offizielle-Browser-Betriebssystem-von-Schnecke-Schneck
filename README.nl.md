@@ -92,7 +92,7 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
 | **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
-| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Verbind hetzelfde GitHub-account via de knop in de instellingen. Een bestaande back-up kan bij de eerste synchronisatie worden overgenomen. |
+| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het browserprofiel. Controleer of je bent aangemeld bij de browser en synchronisatie van extensiegegevens is ingeschakeld. Synchronisatie tussen apparaten vereist ook dezelfde extensie-ID op beide apparaten. De standalone-demo synchroniseert niet. |
 | **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
 
 ## Meer hulp nodig?
