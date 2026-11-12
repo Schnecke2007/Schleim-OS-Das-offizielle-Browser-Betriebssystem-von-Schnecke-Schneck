@@ -20,7 +20,7 @@ Die dokumentierte Installation verwendet den direkten Import des vollständigen 
 
 ## Speicherung und Sicherungen
 
-Schleim OS benötigt einen lokalen Arbeitsstand im Browser, um den Startbildschirm bedienen zu können. Nach der GitHub-Anmeldung wird dieser Stand in einem privaten Repository gesichert: zuerst sofort und danach alle fünf Minuten über den Manifest-V3-Hintergrunddienst. Nach einem Browserneustart musst du dich erneut bei GitHub anmelden. Richte dafür eine GitHub App mit Device Flow sowie den Berechtigungen `Contents: Read and write` und `Metadata: Read-only` ein. Die Schritte stehen in [GITHUB-CLOUD-BACKUP.md](GITHUB-CLOUD-BACKUP.md).
+Schleim OS benötigt einen lokalen Arbeitsstand im Browser, um den Startbildschirm bedienen zu können. Ein Button startet die GitHub-Verbindung. Danach erstellt Schleim OS automatisch ein privates Repository, sichert sofort und plant Updates alle fünf Minuten über den Manifest-V3-Hintergrunddienst. Die Anmeldung bleibt im geschützten Erweiterungsspeicher erhalten. Der Projektbetreiber muss einmalig eine GitHub App mit aktiviertem Device Flow, `Repository creation: Write` sowie `Contents: Read and write` einrichten und deren öffentliche Client-ID in den Quellcode eintragen. Details: [GITHUB-CLOUD-BACKUP.md](GITHUB-CLOUD-BACKUP.md).
 
 ## Werbung und externe Verbindungen
 
