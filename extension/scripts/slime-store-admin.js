@@ -108,8 +108,7 @@
       '- Die App wird automatisch unter Store/<category>/<app-id>.json abgelegt.\n'+
       '- Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.\n'+
       '- Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.\n\n'+
-      'Weitere Informationen: [Store-Dokumentation](../extension/docs/SLIME-STORE.md) · [Admin-Handbuch](../extension/admin/README.md).\n\n'+
-      '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich. Keine Tokens, Passwörter oder privaten Admin-Dateien hier ablegen.\n';
+      '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Die Store-Oberfläche innerhalb von Schleim OS setzt eine GitHub-Anmeldung voraus. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.\\n';
   }
   async function commitStoreFiles(files,message,expectedParentSha){
     const ref=await api('/git/ref/heads/'+BRANCH);
