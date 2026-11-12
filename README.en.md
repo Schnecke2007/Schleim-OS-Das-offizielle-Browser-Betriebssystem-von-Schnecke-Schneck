@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.8.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.9.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store is available without GitHub sign-in
-- Automatic browser cloud sync for personalization through the browser profile, with no GitHub App or separate sign-in
+- Manual JSON backup: export home screen settings and import them again when needed
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
@@ -75,11 +75,11 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **Cloud sync:** Schleim OS uses the browser's built-in sync storage. There is no GitHub App, Client ID or separate Schleim OS sign-in. You must be signed in to your browser profile with sync enabled. See the [browser cloud sync guide](docs/Deutsch/BROWSER-CLOUD-SYNC.md).
+- **JSON backup:** Open Settings and select **Export home screen** to download a JSON file. Use **Import home screen** to restore it later or transfer it to another device. Transfer is manual. See the [JSON backup guide](docs/Englisch/JSON-BACKUP.md).
 
 Normal settings and app shortcuts sync automatically. Uploaded wallpaper images remain local; the browser provides approximately 100 KB of sync storage per extension.
 
-The browser keeps a local working copy so Schleim OS can run. Supported personalization settings are also synced by the browser profile when its sync feature is enabled.
+Schleim OS keeps settings locally in each browser. Use the JSON backup to move settings between devices; nothing is uploaded automatically.
 
 # 🛠️ Schleim OS – Troubleshooting
 
@@ -94,7 +94,7 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
 | **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
-| **Settings are missing after switching browsers.** | Personalization settings are stored in the browser profile. Make sure you are signed in to the browser and extension-data sync is enabled. Cross-device sync also requires Schleim OS to have the same extension ID on both devices. The standalone demo does not sync. |
+| **Settings are missing after switching browsers.** | Settings are stored locally in each browser. Export a JSON backup on the old device and import it in the new browser through **Settings → Import home screen**. |
 | **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
 
 ## Need more help?
