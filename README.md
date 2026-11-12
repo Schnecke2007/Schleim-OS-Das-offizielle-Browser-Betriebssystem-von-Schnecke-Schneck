@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.6.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.7.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,7 +36,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Personalisierung von Design, Akzentfarbe und Hintergrund
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
-- GitHub-Anmeldung für den Schleim-Store
+- Schleim-Store ohne GitHub-Anmeldung nutzbar
 - Automatische Cloud-Sicherung der Personalisierung im privaten GitHub-Repository nach der Anmeldung (sofort und anschließend im Fünf-Minuten-Rhythmus)
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
@@ -55,7 +55,7 @@ Die **Store-Oberfläche in Schleim OS** wird erst nach der Anmeldung mit einem G
 
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
-**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Der In-App-Store wird erst nach der GitHub-Anmeldung freigeschaltet.
+**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Der Schleim-Store ist ohne Anmeldung nutzbar; die Katalogdateien in diesem öffentlichen Repository sind auch direkt auf GitHub einsehbar.
 
 ## 📥 Download und Installation
 
@@ -75,7 +75,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Cloud-Sicherung:** Nach der einmaligen Einrichtung und GitHub-Anmeldung wird der aktuelle Startbildschirm sofort in deinem privaten GitHub-Repository gesichert. Danach wird die Sicherung alle fünf Minuten im Hintergrund aktualisiert. Die Einrichtung wird in der [Anleitung zur GitHub-Cloud-Sicherung](docs/Deutsch/GITHUB-CLOUD-BACKUP.md) erklärt.
+- **Cloud-Sicherung:** Nach dem einmaligen Einrichten der GitHub-App genügt der Button **Mit GitHub verbinden**. Schleim OS erstellt dann automatisch ein privates Backup-Repository und sichert den Startbildschirm sofort sowie planmäßig alle fünf Minuten im Hintergrund. Einzelheiten stehen in der [Anleitung zur GitHub-Cloud-Sicherung](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 Der Browser hält weiterhin einen lokalen Arbeitsstand, damit Schleim OS funktioniert. Die zusätzliche Sicherungskopie wird im privaten GitHub-Repository gespeichert.
 
@@ -92,7 +92,7 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
 | **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Melde dich mit demselben GitHub-Konto an und stelle die Sicherung über die GitHub-Cloud-Einstellungen wieder her. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Personalisierungseinstellungen werden im jeweiligen Browserprofil gespeichert. Verbinde dich mit demselben GitHub-Konto über den Button in den Einstellungen. Eine vorhandene Sicherung kann beim ersten Abgleich übernommen werden. |
 | **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
 
 ## Weitere Hilfe
