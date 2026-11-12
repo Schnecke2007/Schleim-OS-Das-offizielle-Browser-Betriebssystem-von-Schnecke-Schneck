@@ -463,6 +463,16 @@
     fallbackBackupTimer = null;
   }
 
+  async function loadStoreAfterLogin() {
+    const personalization = window.SSOSPersonalization;
+    if (typeof personalization?.refreshStoreCatalog === 'function') {
+      await personalization.refreshStoreCatalog();
+    }
+    if (typeof personalization?.refreshStoreRatings === 'function') {
+      await personalization.refreshStoreRatings();
+    }
+  }
+
   async function startDeviceLogin(root) {
     if (loginInProgress) return;
     loginInProgress = true;
@@ -498,6 +508,7 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
+      await loadStoreAfterLogin();
       await startScheduler();
       updatePanels();
       if ($('#ssosGithubCloudGate')) {
@@ -549,6 +560,7 @@
       state.connected = true;
       await writeState();
       await firstSyncAfterConnection();
+      await loadStoreAfterLogin();
       await startScheduler();
     } catch (error) {
       state.connected = false;
@@ -560,6 +572,9 @@
       console.warn('[Schleim OS] GitHub Cloud nicht verfügbar:', error);
     } finally {
       state.initializing = false;
+      if (state.connected && $('#ssosGithubCloudGate') && typeof api.originalStoreRenderer === 'function') {
+        $('#appContent').innerHTML = api.originalStoreRenderer();
+      }
       updatePanels();
       mountSettingsPanel();
     }
@@ -607,7 +622,7 @@
   if (window.SSOSPersonalization?.renderStore) {
     api.originalStoreRenderer = window.SSOSPersonalization.renderStore.bind(window.SSOSPersonalization);
     window.SSOSPersonalization.renderStore = function () {
-      return state.connected ? api.originalStoreRenderer() : renderStoreGate();
+      return state.connected && !state.initializing && !loginInProgress ? api.originalStoreRenderer() : renderStoreGate();
     };
   }
 
