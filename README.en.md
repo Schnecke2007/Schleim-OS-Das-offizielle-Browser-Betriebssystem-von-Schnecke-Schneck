@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.7.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.8.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store is available without GitHub sign-in
-- Automatic cloud backup of personalization to a private GitHub repository after sign-in (immediately and every five minutes)
+- Automatic browser cloud sync for personalization through the browser profile, with no GitHub App or separate sign-in
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
@@ -75,7 +75,9 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **Cloud backup:** After the project owner's one-time GitHub App setup, the user only needs to select **Connect to GitHub**. Schleim OS creates a private backup repository automatically, saves the home screen immediately and schedules background updates every five minutes. See the [GitHub cloud backup setup guide](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
+- **Cloud sync:** Schleim OS uses the browser's built-in sync storage. There is no GitHub App, Client ID or separate Schleim OS sign-in. You must be signed in to your browser profile with sync enabled. See the [browser cloud sync guide](docs/Deutsch/BROWSER-CLOUD-SYNC.md).
+
+Normal settings and app shortcuts sync automatically. Uploaded wallpaper images remain local; the browser provides approximately 100 KB of sync storage per extension.
 
 The browser still keeps a local working copy so Schleim OS can run. The additional backup copy is stored in the private GitHub repository.
 
