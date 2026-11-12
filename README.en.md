@@ -94,7 +94,7 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
 | **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
-| **Settings are missing after switching browsers.** | Personalization settings are stored in the relevant browser profile. Connect the same GitHub account using the button in Settings. An existing backup can be restored during the first synchronization. |
+| **Settings are missing after switching browsers.** | Personalization settings are stored in the browser profile. Make sure you are signed in to the browser and extension-data sync is enabled. Cross-device sync also requires Schleim OS to have the same extension ID on both devices. The standalone demo does not sync. |
 | **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
 
 ## Need more help?
