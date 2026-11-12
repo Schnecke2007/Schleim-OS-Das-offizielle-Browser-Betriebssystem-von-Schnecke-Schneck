@@ -79,7 +79,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 
 Normal settings and app shortcuts sync automatically. Uploaded wallpaper images remain local; the browser provides approximately 100 KB of sync storage per extension.
 
-The browser still keeps a local working copy so Schleim OS can run. The additional backup copy is stored in the private GitHub repository.
+The browser keeps a local working copy so Schleim OS can run. Supported personalization settings are also synced by the browser profile when its sync feature is enabled.
 
 # 🛠️ Schleim OS – Troubleshooting
 
