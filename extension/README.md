@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.4.1 · Chrome-/Chromium-Erweiterung**
+**Version 3.5.1 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -23,11 +23,9 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Schleim-Store, App-Vorschläge, Personalisierung, JSON-Backup und Kachel-Anordnung
-- `scripts/slime-store-admin.js` – verschlüsseltes Admin-Portal und GitHub-Veröffentlichung
 - `data/store-apps.json` – zentraler Store-Katalog
-- `styles/` – Design und Personalisierung einschließlich Admin-Portal
-- `admin/README.md` – Anleitung für den geschützten Admin-Zugang
-- [Schleim-Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md) · [Admin-Zugang und Veröffentlichung](admin/README.md)
+- `styles/` – Design und Personalisierung
+- [Schleim-Store – Apps und Vorschläge verwalten](docs/SLIME-STORE.md)
 - `locales/` – Rechtstext-Übersetzungen
 - `assets/icons/` – App-Symbole
 - `docs/` – Installation und Release-Notizen
