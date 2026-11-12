@@ -454,7 +454,7 @@
     updatePanels();
     try {
       const clientId = String(state.config.clientId || GITHUB_APP_CLIENT_ID).trim();
-      if (!/^[A-Za-z0-9_]{8,80}$/.test(clientId)) {
+      if (!/^[A-Za-z0-9._-]{8,100}$/.test(clientId)) {
         throw new Error('Die einmalige GitHub-App-Einrichtung ist noch nicht abgeschlossen. Die öffentliche Client-ID fehlt.');
       }
       state.config.clientId = clientId;
