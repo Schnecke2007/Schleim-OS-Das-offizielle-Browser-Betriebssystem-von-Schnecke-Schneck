@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.6.0 · Chrome-/Chromium-Erweiterung**
+**Version 3.7.0 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -44,4 +44,4 @@ Die Chrome-Erweiterung lädt keine Werbeanzeigen. Es gibt keine Werbe-IFrames, k
 
 ## Speicherung
 
-Schleim OS benötigt einen lokalen Arbeitsstand, damit der Startbildschirm im Browser angezeigt und bedient werden kann. Nach der GitHub-Anmeldung wird der vollständige Personalisierungsstand sofort und anschließend alle fünf Minuten im privaten GitHub-Repository gesichert. Der Hintergrunddienst übernimmt die regelmäßigen Sicherungen auch dann, wenn die Neuer-Tab-Seite nicht geöffnet ist, solange der Browser läuft. Die GitHub-Anmeldung wird aus Sicherheitsgründen nur in der aktuellen Browsersitzung gehalten.
+Schleim OS benötigt einen lokalen Arbeitsstand, damit der Startbildschirm im Browser angezeigt und bedient werden kann. Nach der GitHub-Anmeldung wird der vollständige Personalisierungsstand sofort und anschließend alle fünf Minuten im privaten GitHub-Repository gesichert. Der Hintergrunddienst übernimmt die regelmäßigen Sicherungen auch dann, wenn die Neuer-Tab-Seite nicht geöffnet ist, solange der Browser läuft. Die GitHub-Verbindung bleibt im geschützten Erweiterungsspeicher erhalten, damit die automatische Sicherung nach einem Browserneustart weiterlaufen kann. Der Token ist damit lokal im Erweiterungsprofil gespeichert; die Sicherungsdatei selbst liegt im privaten GitHub-Repository.
