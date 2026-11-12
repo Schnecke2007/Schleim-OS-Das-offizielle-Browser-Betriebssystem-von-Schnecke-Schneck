@@ -153,7 +153,7 @@
   }
 
   async function requestDeviceCode(clientId) {
-    const device = await postForm(DEVICE_CODE_URL, { client_id: clientId });
+    const device = await postForm(DEVICE_CODE_URL, { client_id: clientId, scope: 'offline_access' });
     if (!device.device_code || !device.user_code) throw new Error(device.error_description || device.error || 'GitHub konnte keinen Gerätecode erstellen.');
     return device;
   }
