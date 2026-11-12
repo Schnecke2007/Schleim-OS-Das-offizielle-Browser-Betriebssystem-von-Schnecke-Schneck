@@ -7,6 +7,7 @@ Die Dokumentation ist nach Sprache geordnet. Für jede Sprache stehen eine Insta
 - [Installationsanleitung](Deutsch/INSTALLATION.md)
 - [Fehlerbehebung](Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](Deutsch/TECHNISCHE-HINWEISE.md)
+- [Browser-Cloud-Synchronisierung](Deutsch/BROWSER-CLOUD-SYNC.md)
 
 ## 🇬🇧 English
 
