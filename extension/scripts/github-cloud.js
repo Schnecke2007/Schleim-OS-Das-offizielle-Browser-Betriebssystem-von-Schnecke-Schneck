@@ -2,9 +2,12 @@
   'use strict';
 
   const STATE_KEY = 'ssosGithubCloudState';
+  const AUTH_KEY = 'ssosGithubCloudAuth';
+  const SNAPSHOT_KEY = 'ssosGithubCloudSnapshot';
   const BACKUP_FILE = 'schleim-os-backup.json';
   const BACKUP_FORMAT = 'schleim-os-github-cloud-backup';
   const BACKUP_INTERVAL = 5 * 60 * 1000;
+  const SNAPSHOT_INTERVAL = 15 * 1000;
   const API = 'https://api.github.com';
   const DEVICE_CODE_URL = 'https://github.com/login/device/code';
   const ACCESS_TOKEN_URL = 'https://github.com/login/oauth/access_token';
@@ -16,7 +19,9 @@
     connected: false,
     initializing: true
   };
-  let backupTimer = null;
+  let snapshotTimer = null;
+  let fallbackBackupTimer = null;
+  let pageHideBound = false;
   let backupInProgress = false;
   let loginInProgress = false;
 
@@ -24,22 +29,39 @@
     return globalThis.chrome?.storage?.local || null;
   }
 
-  function readState() {
-    const area = storageArea();
-    if (!area) return Promise.resolve({});
-    return new Promise(resolve => area.get([STATE_KEY], result => resolve(result?.[STATE_KEY] || {})));
+  function sessionArea() {
+    return globalThis.chrome?.storage?.session || null;
   }
 
-  function writeState() {
-    const area = storageArea();
-    if (!area) return Promise.reject(new Error('Die Erweiterungsablage ist nicht verfügbar.'));
-    return new Promise((resolve, reject) => {
-      area.set({ [STATE_KEY]: { config: state.config, auth: state.auth } }, () => {
-        const error = globalThis.chrome?.runtime?.lastError;
-        if (error) reject(new Error(error.message));
-        else resolve();
-      });
-    });
+  async function readState() {
+    const local = storageArea();
+    const session = sessionArea();
+    if (!local || !session) throw new Error('Dieser Browser unterstützt keine sichere Sitzungsablage für die GitHub-Anmeldung.');
+    const [persistent, temporary] = await Promise.all([
+      local.get([STATE_KEY]),
+      session.get([AUTH_KEY])
+    ]);
+    const saved = persistent?.[STATE_KEY] || {};
+    const auth = temporary?.[AUTH_KEY] || saved.auth || null;
+
+    // Migrate older installations: remove persisted tokens from extension local storage.
+    if (saved.auth) {
+      if (auth) await session.set({ [AUTH_KEY]: auth });
+      await local.set({ [STATE_KEY]: { config: saved.config || {} } });
+    }
+    return { config: saved.config || {}, auth };
+  }
+
+  async function writeState() {
+    const local = storageArea();
+    const session = sessionArea();
+    if (!local || !session) throw new Error('Die sichere Browser-Sitzungsablage ist nicht verfügbar.');
+    await local.set({ [STATE_KEY]: { config: state.config } });
+    if (state.auth) {
+      await session.set({ [AUTH_KEY]: state.auth });
+    } else {
+      await session.remove([AUTH_KEY, SNAPSHOT_KEY]);
+    }
   }
 
   function setStatus(message, isError = false) {
@@ -401,14 +423,41 @@
     }
   }
 
+  async function publishSnapshot() {
+    if (!state.connected || !globalThis.chrome?.runtime?.id) return;
+    try {
+      const snapshot = collectSnapshot();
+      await chrome.runtime.sendMessage({ type: 'SSOS_GITHUB_CLOUD_SNAPSHOT', snapshot });
+    } catch (error) {
+      console.warn('[Schleim OS] Snapshot konnte nicht an den Hintergrunddienst übergeben werden:', error);
+    }
+  }
+
   function startScheduler() {
     stopScheduler();
-    backupTimer = window.setInterval(() => backupNow(true), BACKUP_INTERVAL);
+    publishSnapshot();
+    snapshotTimer = window.setInterval(publishSnapshot, SNAPSHOT_INTERVAL);
+    if (!pageHideBound) {
+      window.addEventListener('pagehide', publishSnapshot);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') publishSnapshot();
+      });
+      pageHideBound = true;
+    }
+    try {
+      chrome.runtime.sendMessage({ type: 'SSOS_GITHUB_CLOUD_ENSURE_ALARM' }).catch(() => {});
+    } catch {}
+    // Fallback for Chromium variants without the alarms API.
+    if (!globalThis.chrome?.alarms) {
+      fallbackBackupTimer = window.setInterval(() => backupNow(true), BACKUP_INTERVAL);
+    }
   }
 
   function stopScheduler() {
-    if (backupTimer) window.clearInterval(backupTimer);
-    backupTimer = null;
+    if (snapshotTimer) window.clearInterval(snapshotTimer);
+    if (fallbackBackupTimer) window.clearInterval(fallbackBackupTimer);
+    snapshotTimer = null;
+    fallbackBackupTimer = null;
   }
 
   async function startDeviceLogin(root) {
@@ -557,6 +606,19 @@
     window.SSOSPersonalization.renderStore = function () {
       return state.connected ? api.originalStoreRenderer() : renderStoreGate();
     };
+  }
+
+  if (globalThis.chrome?.storage?.onChanged) {
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === 'session' && changes[AUTH_KEY]) {
+        state.auth = changes[AUTH_KEY].newValue || null;
+        state.connected = !!state.auth?.accessToken;
+        updatePanels();
+      }
+      if (areaName === 'local' && changes.ssosGithubCloudLastError?.newValue) {
+        setStatus('GitHub-Sicherung fehlgeschlagen: ' + changes.ssosGithubCloudLastError.newValue.message, true);
+      }
+    });
   }
 
   window.SSOSGitHubCloud = Object.freeze(api);
