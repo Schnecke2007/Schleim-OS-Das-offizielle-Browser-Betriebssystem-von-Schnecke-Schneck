@@ -20,7 +20,7 @@ De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige Gi
 
 ## Opslag en back-ups
 
-Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Exporteer een JSON-back-up voordat je browsergegevens wist of naar een ander browserprofiel overstapt.
+Schleim OS heeft een lokale werkkopie in de browser nodig om het startscherm weer te geven en te bedienen. Na aanmelding bij GitHub wordt deze status direct opgeslagen in een privérepository en daarna elke vijf minuten bijgewerkt via de Manifest V3-achtergronddienst. Na het opnieuw starten van de browser moet je opnieuw aanmelden bij GitHub. Configureer hiervoor een GitHub App met Device Flow en de machtigingen `Contents: Read and write` en `Metadata: Read-only`. Volg de [handleiding voor de GitHub-cloudback-up](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 ## Reclame en externe verbindingen
 
