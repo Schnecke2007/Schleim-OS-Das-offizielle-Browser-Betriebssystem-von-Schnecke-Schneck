@@ -156,6 +156,7 @@
       website:['website','website url','url'],
       category:['category','kategorie','categorie'],
       'icon url':['icon url','icon url optional'],
+      icon:['icon','emoji','pictogram'],
       'submission language':['submission language','einreichungssprache'],
       description:['description','app description','beschreibung','beschrijving'],
       notes:['notes','notes optional','additional notes','additional notes optional','weitere hinweise','weitere hinweise optional','opmerkingen','opmerkingen optioneel']
@@ -203,6 +204,7 @@
       url:safeUrl(field(body,'Website')),
       category:category(field(body,'Category')),
       iconUrl:safeUrl(field(body,'Icon URL')),
+      icon:(field(body,'Icon')||'🌐').trim().slice(0,8),
       lang:['de','en','nl'].includes(field(body,'Submission language'))?field(body,'Submission language'):'de',
       description:[description,notes?('Weitere Hinweise:\n'+notes):''].filter(Boolean).join('\n\n')
     };
@@ -223,7 +225,7 @@
       '<label>'+esc(t('name'))+'<input id="adminAppName" value="'+esc(p.name)+'" maxlength="60" required></label>'+
       '<label>'+esc(t('url'))+'<input id="adminAppUrl" type="url" value="'+esc(p.url)+'" required></label>'+
       '<label>'+esc(t('category'))+'<select id="adminAppCategory">'+options+'</select></label>'+
-      '<label>'+esc(t('icon'))+'<input id="adminAppIcon" maxlength="8" value="🌐"></label>'+
+      '<label>'+esc(t('icon'))+'<input id="adminAppIcon" maxlength="8" value="'+esc(p.icon||'🌐')+'"></label>'+
       '<label>'+esc(t('iconUrl'))+'<input id="adminAppIconUrl" type="url" value="'+esc(p.iconUrl)+'"></label>'+
       '<label>'+esc(t('tags'))+'<input id="adminAppTags" maxlength="400" value="'+esc(slug(p.name).replace(/-/g,' '))+'"></label>'+
       '<label class="ssos-admin-check"><input id="adminAppFeatured" type="checkbox"> '+esc(t('featured'))+'</label>'+
