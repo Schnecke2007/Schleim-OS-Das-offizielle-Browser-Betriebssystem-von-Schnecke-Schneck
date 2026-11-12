@@ -24,4 +24,4 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 - Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.
 - Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.
 
-**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Die Store-Oberfläche in Schleim OS verlangt eine GitHub-Anmeldung und lädt die Daten erst danach. Diese Anmeldung verhindert jedoch nicht den direkten Zugriff auf die Katalogdateien in diesem öffentlichen Repository. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.
+**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Der Schleim-Store in der Erweiterung ist ohne Anmeldung zugänglich. Die Katalogdateien können in diesem öffentlichen Repository ebenfalls direkt auf GitHub angesehen werden. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.
