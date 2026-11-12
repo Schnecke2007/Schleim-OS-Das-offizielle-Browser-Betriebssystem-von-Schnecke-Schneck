@@ -20,7 +20,7 @@ The documented installation uses direct import of the complete GitHub repository
 
 ## Storage and backups
 
-Schleim OS keeps a local working copy and mirrors personalization data into `chrome.storage.sync`. The browser handles cloud synchronization when the user is signed in to a browser profile with sync enabled. No GitHub App, Client ID or separate Schleim OS sign-in is required. The quota is approximately 100 KB per extension; uploaded wallpaper images remain local. See the [browser cloud sync guide](../../Deutsch/BROWSER-CLOUD-SYNC.md).
+Schleim OS stores personalization data locally in the browser. Use **Settings → Configuration file (JSON)** to export the home screen and import it later on the same or another device. No automatic cloud or browser synchronization takes place. See the [JSON backup guide](JSON-BACKUP.md).
 
 ## Advertising and external connections
 
