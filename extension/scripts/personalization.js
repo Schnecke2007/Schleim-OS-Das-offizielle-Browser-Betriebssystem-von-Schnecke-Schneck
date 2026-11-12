@@ -13,7 +13,7 @@
       lockSettings:'Sperrbildschirm', city:'Wetter-Ort / Stadt', weather:'Wetter aktualisieren', shortcuts:'Sperrbildschirm-Verknüpfungen',
       shortcutName:'Name', shortcutUrl:'Ziel-URL', shortcutIcon:'Symbol', saveLock:'Sperrbildschirm speichern',
       export:'Homescreen exportieren', import:'Homescreen importieren', backup:'Konfigurationsdatei (JSON)',
-      backupInfo:'Sichert deine gespeicherten Webseiten, Store-Installationen und Bewertungen sowie Sprache, Farbe, Hintergrund und Sperrbildschirm-Einstellungen.',
+      backupInfo:'Deine Einstellungen werden nach der GitHub-Anmeldung automatisch in deinem privaten Backup-Repository gesichert.',
       exportDone:'Konfiguration exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.',
       designSaved:'Personalisierung gespeichert.', wallpaperSaved:'Hintergrundbild gespeichert.', weatherPending:'Wetter wird geladen …',
       weatherMissing:'Lege in den Einstellungen eine Stadt fest.', weatherError:'Wetterdaten konnten nicht geladen werden.',
@@ -28,7 +28,7 @@
       lockSettings:'Lock screen', city:'Weather location / city', weather:'Refresh weather', shortcuts:'Lock screen shortcuts',
       shortcutName:'Name', shortcutUrl:'Target URL', shortcutIcon:'Icon', saveLock:'Save lock screen',
       export:'Export home screen', import:'Import home screen', backup:'Configuration file (JSON)',
-      backupInfo:'Backs up your saved websites, Store installations and ratings, language, color, wallpaper and lock screen settings.',
+      backupInfo:'After signing in to GitHub, your settings are backed up automatically to your private backup repository.',
       exportDone:'Configuration exported.', importBad:'This configuration file is invalid or incompatible.',
       designSaved:'Personalization saved.', wallpaperSaved:'Wallpaper saved.', weatherPending:'Loading weather …',
       weatherMissing:'Set a city in Settings.', weatherError:'Could not load weather data.',
@@ -43,7 +43,7 @@
       lockSettings:'Vergrendelscherm', city:'Weerlocatie / stad', weather:'Weer vernieuwen', shortcuts:'Snelkoppelingen op vergrendelscherm',
       shortcutName:'Naam', shortcutUrl:'Doel-URL', shortcutIcon:'Symbool', saveLock:'Vergrendelscherm opslaan',
       export:'Startscherm exporteren', import:'Startscherm importeren', backup:'Configuratiebestand (JSON)',
-      backupInfo:'Maakt een back-up van je opgeslagen websites, Store-installaties en beoordelingen, taal, kleur, achtergrond en vergrendelscherminstellingen.',
+      backupInfo:'Na aanmelding bij GitHub worden je instellingen automatisch opgeslagen in je privé-back-uprepository.',
       exportDone:'Configuratie geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.',
       designSaved:'Personalisatie opgeslagen.', wallpaperSaved:'Achtergrond opgeslagen.', weatherPending:'Weer wordt geladen …',
       weatherMissing:'Stel een stad in bij Instellingen.', weatherError:'Weergegevens konden niet worden geladen.',
@@ -560,9 +560,6 @@
         <div class="ssos-shortcut-editor"><b>${esc(t('shortcuts'))}</b>${config.shortcuts.map((s,i)=>`<div class="ssos-shortcut-fields"><label>${esc(t('shortcutIcon'))}<input data-ssos-shortcut-icon="${i}" value="${esc(s.icon)}" maxlength="4"></label><label>${esc(t('shortcutName'))}<input data-ssos-shortcut-name="${i}" value="${esc(s.name)}" maxlength="25"></label><label>${esc(t('shortcutUrl'))}<input data-ssos-shortcut-url="${i}" value="${esc(s.url)}" type="url" placeholder="https://example.com"></label></div>`).join('')}</div>
         <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosSaveLock">${esc(t('saveLock'))}</button><button class="app-button secondary" type="button" id="ssosRefreshWeather">${esc(t('weather'))}</button></div>
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
-      </div>
-      <div class="ssos-card"><h4>📦 ${esc(t('backup'))}</h4><p class="body-copy">${esc(t('backupInfo'))}</p>
-        <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosExport">⬇ ${esc(t('export'))}</button><label class="app-button secondary ssos-file-label">⬆ ${esc(t('import'))}<input type="file" id="ssosImportFile" accept="application/json,.json"></label></div>
       </div>
 `;
     mount.appendChild(section);
