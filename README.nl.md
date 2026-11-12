@@ -51,7 +51,7 @@ De **Schleim-Store** is alleen toegankelijk na aanmelding met een GitHub-account
 - **Voorstellen:** Bezoekers kunnen websites voorstellen via het openbare [GitHub-inzendformulier](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
 - **Lokale websites indienen:** Geïmporteerde of eerder opgeslagen websites verschijnen onder „Eerder toegevoegde websites“. Kies „Indienen bij de Schleim-Store“ om de gegevens naar het inzendformulier over te nemen. Voeg een duidelijke beschrijving toe en dien het voorstel ter beoordeling in op GitHub.
 - **Beoordelen:** Met de sterren open je een openbare GitHub-beoordeling. Na verzending berekent GitHub Actions het gemiddelde en het aantal stemmen opnieuw. De GitHub-gebruikersnaam en individuele stem zijn openbaar zichtbaar.
-- **Controleren en publiceren:** Voorstellen worden niet automatisch gepubliceerd. De beheerder controleert en keurt elke app eerst goed.
+- **Controleren en publiceren:** Voorstellen worden niet automatisch gepubliceerd. Voorstellen worden gecontroleerd en goedgekeurd voordat ze aan de Store worden toegevoegd.
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
