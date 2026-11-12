@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.4.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.5.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,14 +36,15 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Ontwerp, accentkleur en achtergrond aanpassen
 - Schleim-Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
 - App-voorstellen indienen via een GitHub-issueformulier
-- Lokale JSON-back-up en herstel van personalisatie
+- GitHub-aanmelding vereist voor toegang tot de Schleim-Store
+- Automatische cloudback-up van personalisatie in een privé-GitHub-repository na aanmelding (direct en vervolgens elke vijf minuten)
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
 
 ## 🛍️ Schleim-Store
 
-In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren en openbare communitybeoordelingen indienen en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
+De **Schleim-Store** is alleen toegankelijk na aanmelding met een GitHub-account. Na aanmelding kun je aanbevolen websites en webapps ontdekken, door categorieën bladeren en openbare communitybeoordelingen indienen en apps toevoegen aan of verwijderen van het startscherm van Schleim OS.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
@@ -54,7 +55,7 @@ In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door ca
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
-**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Beheerdersgegevens mogen nooit in de repository worden geplaatst. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md).
+**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md).
 
 ## 📥 Downloaden en installeren
 
