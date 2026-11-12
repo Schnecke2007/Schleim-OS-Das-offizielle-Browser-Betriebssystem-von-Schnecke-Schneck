@@ -77,7 +77,7 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
 - **Cloudback-up:** Na de eenmalige configuratie en aanmelding bij GitHub wordt je huidige startscherm direct opgeslagen in je privé-GitHub-repository. Daarna werkt de achtergronddienst de back-up elke vijf minuten bij. Bekijk de [handleiding voor de GitHub-cloudback-up](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
-Persoonlijke instellingen worden lokaal in het browserprofiel opgeslagen. Bewaar je JSON-back-up op een veilige plek.
+De browser houdt een lokale werkkopie bij zodat Schleim OS direct kan werken. De extra back-up wordt na aanmelding in je privé-GitHub-repository opgeslagen en elke vijf minuten bijgewerkt. Na een browserherstart moet je opnieuw aanmelden bij GitHub.
 
 # 🛠️ Schleim OS – Problemen oplossen
 
