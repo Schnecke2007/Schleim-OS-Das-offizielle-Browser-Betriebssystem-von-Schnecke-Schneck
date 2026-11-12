@@ -54,7 +54,7 @@ In de **Schleim-Store** kun je aanbevolen websites en webapps ontdekken, door ca
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
-**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Beheerdersgegevens mogen nooit in de repository worden geplaatst. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md) en de [handleiding voor beheerders](extension/admin/README.md).
+**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Beheerdersgegevens mogen nooit in de repository worden geplaatst. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md).
 
 ## 📥 Downloaden en installeren
 
