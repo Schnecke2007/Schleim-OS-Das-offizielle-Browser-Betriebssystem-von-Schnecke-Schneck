@@ -1,18 +1,19 @@
-# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.4.1
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.6.0
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
-- [Schleim-Store verwalten](SLIME-STORE.md) – Apps zum Katalog hinzufügen und Community-Vorschläge prüfen.
 ## Funktionen
 
 - App-Startbildschirm mit fest eingebauten Apps und eigenen Website-Apps
 - Werbefreie Extension-Oberfläche ohne Werbe-IFrames
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
-- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; JSON-Export/Import sichert und restauriert diese Reihenfolge
-- Schleim-Store mit Suche, Empfehlungen, App-Installation, Deinstallation und GitHub-App-Vorschlägen
-- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und JSON-Backup
+- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung wird nach GitHub-Anmeldung in die private Cloud-Sicherung übernommen
+- Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; Zugriff erst nach GitHub-Anmeldung
+- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und private GitHub-Cloud-Sicherung
 - Deutsch, Englisch und Niederländisch
+
+Die Cloud-Sicherung startet nach der Anmeldung sofort und wird anschließend alle fünf Minuten durch den Manifest-V3-Hintergrunddienst aktualisiert. Die OAuth-Anmeldedaten liegen nur in der Browser-Sitzung. Die Einrichtungsdetails stehen in [docs/Deutsch/GITHUB-CLOUD-BACKUP.md](../../docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 ## Installation
 
