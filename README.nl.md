@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.5.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.6.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -55,7 +55,7 @@ De **Schleim-Store** is alleen toegankelijk na aanmelding met een GitHub-account
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
-**Transparantie:** De GitHub-repository en ingediende app-voorstellen als issues zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. Lees ook de [Schleim-Store-documentatie](extension/docs/SLIME-STORE.md).
+**Transparantie:** De GitHub-repository en app-voorstellen die als issues worden ingediend, zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. De Store in de extensie wordt pas na aanmelding bij GitHub ontgrendeld.
 
 ## 📥 Downloaden en installeren
 
@@ -75,7 +75,7 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **Instellingen back-uppen:** Gebruik de beschikbare JSON-functie om je persoonlijke instellingen te exporteren of te importeren.
+- **Cloudback-up:** Na de eenmalige configuratie en aanmelding bij GitHub wordt je huidige startscherm direct opgeslagen in je privé-GitHub-repository. Daarna werkt de achtergronddienst de back-up elke vijf minuten bij. Bekijk de [handleiding voor de GitHub-cloudback-up](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
 
 Persoonlijke instellingen worden lokaal in het browserprofiel opgeslagen. Bewaar je JSON-back-up op een veilige plek.
 
@@ -92,7 +92,7 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
 | **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
-| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Gebruik indien beschikbaar de JSON-back-upfunctie. |
+| **Instellingen ontbreken na een browserwissel.** | Personalisatie-instellingen worden opgeslagen in het betreffende browserprofiel. Meld je met hetzelfde GitHub-account aan en herstel de back-up via de GitHub-cloudinstellingen. |
 | **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
 
 ## Meer hulp nodig?
