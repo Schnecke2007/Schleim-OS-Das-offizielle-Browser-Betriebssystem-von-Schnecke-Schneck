@@ -285,6 +285,18 @@
   }
 
   async function initializeSync() {
+    // Remove obsolete OAuth tokens and state left by the retired GitHub cloud backup.
+    try {
+      await globalThis.chrome?.storage?.local?.remove([
+        'ssosGithubCloudAuth',
+        'ssosGithubCloudState',
+        'ssosGithubCloudSnapshot',
+        'ssosGithubCloudLastError'
+      ]);
+    } catch (error) {
+      console.warn('[Schleim OS] Obsolete cloud credentials could not be cleared:', error);
+    }
+
     if (!syncArea) {
       ready = true;
       mountPanel();
