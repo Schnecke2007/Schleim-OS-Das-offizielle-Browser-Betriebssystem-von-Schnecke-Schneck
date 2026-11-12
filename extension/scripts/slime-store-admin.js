@@ -158,7 +158,7 @@
       'icon url':['icon url','icon url optional'],
       'submission language':['submission language','einreichungssprache'],
       description:['description','app description','beschreibung','beschrijving'],
-      notes:['notes','additional notes','weitere hinweise','opmerkingen']
+      notes:['notes','notes optional','additional notes','additional notes optional','weitere hinweise','weitere hinweise optional','opmerkingen','opmerkingen optioneel']
     };
     const wanted=new Set((aliases[String(label||'').toLowerCase()]||[label]).map(normalizeFieldLabel));
     const lines=String(body||'').split(/\r?\n/);
