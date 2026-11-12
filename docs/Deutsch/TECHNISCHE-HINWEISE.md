@@ -20,7 +20,7 @@ Die dokumentierte Installation verwendet den direkten Import des vollständigen 
 
 ## Speicherung und Sicherungen
 
-Schleim OS speichert den Arbeitsstand lokal und spiegelt die Personalisierungsdaten zusätzlich in `chrome.storage.sync`. Der Browser übernimmt die Cloud-Synchronisierung automatisch, wenn du in deinem Browserprofil angemeldet bist und dessen Synchronisierung aktiviert ist. Es sind keine GitHub-App, Client-ID oder separate Anmeldung in Schleim OS erforderlich. Das Kontingent beträgt ungefähr 100 KB pro Erweiterung; hochgeladene Hintergrundbilder bleiben lokal. Details: [BROWSER-CLOUD-SYNC.md](BROWSER-CLOUD-SYNC.md).
+Schleim OS speichert Personalisierungsdaten lokal im Browser. Über **Einstellungen → Konfigurationsdatei (JSON)** kannst du den Homescreen exportieren und später auf demselben oder einem anderen Gerät importieren. Eine automatische Cloud- oder Browser-Synchronisierung findet nicht statt. Details: [JSON-Backup](JSON-BACKUP.md).
 
 ## Werbung und externe Verbindungen
 
