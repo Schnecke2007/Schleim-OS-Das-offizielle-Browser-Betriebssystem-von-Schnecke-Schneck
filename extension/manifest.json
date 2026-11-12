@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck",
   "short_name": "Schleim OS",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "Das offizielle Browser-Betriebssystem von Schnecke Schneck – personalisierbare Neuer-Tab-Oberfläche für Chromium-Browser.",
   "chrome_url_overrides": {
     "newtab": "pages/newtab.html"
@@ -15,9 +15,7 @@
   "host_permissions": [
     "https://api.open-meteo.com/*",
     "https://geocoding-api.open-meteo.com/*",
-    "https://raw.githubusercontent.com/*",
-    "https://api.github.com/*",
-    "https://github.com/*"
+    "https://raw.githubusercontent.com/*"
   ],
   "optional_host_permissions": [
     "https://*/*",
@@ -27,11 +25,7 @@
     "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: blob: http: https:; frame-src https: http:; connect-src 'self' http: https:"
   },
   "permissions": [
-    "storage",
-    "alarms"
+    "storage"
   ],
-  "background": {
-    "service_worker": "scripts/background.js"
-  },
   "minimum_chrome_version": "102"
 }
