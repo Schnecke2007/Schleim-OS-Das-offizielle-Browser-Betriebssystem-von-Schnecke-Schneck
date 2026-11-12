@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.7.0 · Chrome-/Chromium-Erweiterung**
+**Version 3.8.0 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -23,7 +23,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `pages/newtab.html` – Extension-Oberfläche
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
-- `scripts/github-cloud.js` – GitHub-Anmeldung, Cloud-Sicherung und Wiederherstellung
+- `scripts/browser-sync.js` – automatische Synchronisierung über den integrierten Browser-Speicher
 - `scripts/background.js` – Fünf-Minuten-Sicherung über den Manifest-V3-Hintergrunddienst
 - `data/store-apps.json` – zentraler Store-Katalog
 - `styles/` – Design und Personalisierung
@@ -44,4 +44,4 @@ Die Chrome-Erweiterung lädt keine Werbeanzeigen. Es gibt keine Werbe-IFrames, k
 
 ## Speicherung
 
-Schleim OS benötigt einen lokalen Arbeitsstand, damit der Startbildschirm im Browser angezeigt und bedient werden kann. Nach der GitHub-Anmeldung wird der vollständige Personalisierungsstand sofort und anschließend alle fünf Minuten im privaten GitHub-Repository gesichert. Der Hintergrunddienst übernimmt die regelmäßigen Sicherungen auch dann, wenn die Neuer-Tab-Seite nicht geöffnet ist, solange der Browser läuft. Die GitHub-Verbindung bleibt im geschützten Erweiterungsspeicher erhalten, damit die automatische Sicherung nach einem Browserneustart weiterlaufen kann. Der Token ist damit lokal im Erweiterungsprofil gespeichert; die Sicherungsdatei selbst liegt im privaten GitHub-Repository.
+Schleim OS benötigt weiterhin einen lokalen Arbeitsstand. Zusätzlich spiegelt `scripts/browser-sync.js` die Personalisierungsdaten in `chrome.storage.sync`. Der Browser synchronisiert diesen Speicher über das angemeldete Browserprofil, sofern dessen Sync-Funktion aktiv ist. Eine separate App-Registrierung, Client-ID oder Anmeldung in Schleim OS ist nicht erforderlich. Das Kontingent beträgt ungefähr 100 KB pro Erweiterung; hochgeladene Hintergrundbilder bleiben lokal. Der Browser steuert den Übertragungszeitpunkt.
