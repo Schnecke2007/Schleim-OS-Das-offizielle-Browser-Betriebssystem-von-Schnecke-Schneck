@@ -54,7 +54,7 @@ The **Schleim-Store** lets you discover recommended websites and web apps, brows
 
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
 
-**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. Admin credentials must never be committed to the repository. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md) and the [admin setup guide](extension/admin/README.md).
+**Transparency:** The GitHub repository and submitted app suggestions as issues are publicly visible. Do not submit passwords, private data or confidential information. Admin credentials must never be committed to the repository. See the [Schleim-Store documentation](extension/docs/SLIME-STORE.md).
 
 ## 📥 Download and installation
 
