@@ -1,0 +1,16 @@
+{
+  "id": "tiktok",
+  "name": "TikTok",
+  "url": "https://tiktok.com/",
+  "category": "media",
+  "icon": "🌐",
+  "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Ftiktok.com%2F&sz=128",
+  "tags": "tiktok",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "description": {
+    "de": "Entdecke Kurzvideos, Creator und aktuelle Trends auf der offiziellen TikTok-Plattform. TikTok wird in einem neuen Browser-Tab geöffnet.",
+    "en": "Explore short videos, creators, and trending content on TikTok. The official website opens in a new browser tab.",
+    "nl": "Ontdek korte video's, makers en actuele trends op TikTok. De officiële website wordt geopend in een nieuw browsertabblad."
+  }
+}
