@@ -50,7 +50,7 @@ Neben dem Laufzeitkatalog gibt es den öffentlichen Ordner [Store](../../Store/R
 
 Jede Kategorie besitzt eine `README.md` mit den veröffentlichten Apps. Jede einzelne App wird zusätzlich als eigene JSON-Datei gespeichert, zum Beispiel `Store/ai/chatgpt-web.json`.
 
-Bei einer Genehmigung aktualisiert das Admin-Portal in einem gemeinsamen Git-Commit:
+Bei einer Freigabe werden in einem gemeinsamen Git-Commit aktualisiert:
 
 1. den zentralen Laufzeitkatalog `extension/data/store-apps.json`,
 2. die JSON-Datei der App im passenden Kategorieordner,
@@ -64,16 +64,6 @@ Wird eine bestehende App in eine andere Kategorie verschoben, entfernt die Verö
 Besucher können im Schleim-Store eine Webseite mit Name, URL, Kategorie, Beschreibung und optionalem Icon vorschlagen. Das Formular öffnet ein vorbereitetes GitHub-Issue. Der Nutzer muss die Einreichung auf GitHub selbst abschicken.
 
 Ein Vorschlag erscheint **nicht automatisch** im Store. Er wird erst nach Prüfung durch den Admin veröffentlicht.
-
-## Admin-Portal einrichten
-
-Die Anleitung mit den Schritten zum Erstellen des Fine-grained GitHub-Tokens, zum Erzeugen der verschlüsselten Admin-JSON-Datei und zum Prüfen und Veröffentlichen von Vorschlägen findest du hier:
-
-[Admin-Zugang und Veröffentlichung](../admin/README.md)
-
-Das Admin-Portal verwendet eine lokal gespeicherte, verschlüsselte JSON-Datei. Der Token wird mit AES-256-GCM verschlüsselt und beim Anmelden nur im Arbeitsspeicher der geöffneten Seite gehalten. Für die GitHub-API sind nur Repository-Zugriff sowie **Contents: Read and write** und **Issues: Read and write** vorgesehen.
-
-**Wichtig:** Das Portal ist ein clientseitiges Admin-Werkzeug und kein serverseitiges Rollen- oder Zugriffssystem. Die Admin-Datei und ihre Passphrase müssen getrennt und sicher aufbewahrt werden.
 
 ## Öffentlichkeit und Datenschutz
 
