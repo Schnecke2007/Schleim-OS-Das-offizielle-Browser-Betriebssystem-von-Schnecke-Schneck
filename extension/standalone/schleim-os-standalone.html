@@ -632,7 +632,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   let selectedLegalDocument = 'imprint';
 
   const $ = (s, root=document) => root.querySelector(s);
-  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const $ = (s, root=document) => [...root.querySelectorAll(s)];
   const saved = (key, fallback) => {
     try { const value = localStorage.getItem('ssos-' + key); return value === null ? fallback : JSON.parse(value); }
     catch { return fallback; }
@@ -795,20 +795,20 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     $('#homeScreen .home-topline h2').innerHTML=copy.home;$('#openSearch span:nth-child(2)').textContent=copy.search;$('.gesture-hint').textContent=copy.hint;$('#controlPanel .panel-heading h2').textContent=copy.control;$('#showAllApps').innerHTML=copy.all+' <span>→</span>';$('.section-heading span').textContent=copy.discover;
     $('#searchInput').placeholder=lang==='de'?'Was suchst du?':lang==='en'?'What are you looking for?':'Waar ben je naar op zoek?';
     const cp=$('#controlPanel'); const labels=lang==='de'?['WLAN','Bluetooth','Ruhemodus','Töne','Mobile Daten','Autom. Drehen','Taschenlampe']:lang==='en'?['Wi-Fi','Bluetooth','Do not disturb','Sounds','Mobile data','Auto-rotate','Flashlight']:['Wifi','Bluetooth','Niet storen','Geluid','Mobiele gegevens','Automatisch draaien','Zaklamp'];
-    $$('[data-toggle]',cp).forEach((b,i)=>{const label=$('b',b);if(label)label.textContent=labels[i]||label.textContent;});
+    $('[data-toggle]',cp).forEach((b,i)=>{const label=$('b',b);if(label)label.textContent=labels[i]||label.textContent;});
     const controlLabels=lang==='de'?['Displayhelligkeit','Glas-Effekt','Medienlautstärke','Hintergrund','Wähle deinen Look']:lang==='en'?['Screen brightness','Glass effect','Media volume','Wallpaper','Choose your look']:['Schermhelderheid','Glaseffect','Mediavolume','Achtergrond','Kies je stijl'];
-    $$('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
+    $('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
 
     const desktop={
       de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
       en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
       nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
     }[lang];
-    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
-    const info=$$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
+    const side=$('.desktop-sidebar'); if(side){const labels=$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
+    const info=$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
     const topDate=$('#introScreen .intro-footer span:first-child');if(topDate)topDate.textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24 EDITION';
     const foot=$('.control-footnote');if(foot)foot.textContent=lang==='de'?'Die Schnellschalter und Regler bilden die One-UI-Optik nach. Eine Browser-Webapp kann die echten Funk-, Taschenlampen- oder Medienlautstärke-Funktionen des Galaxy S24 nicht systemweit steuern.':lang==='en'?'The quick toggles and sliders reproduce the One UI look. A browser app cannot control the Galaxy device’s actual radios, flashlight or system media volume.':'De snelle schakelaars en schuifregelaars bootsen de One UI-stijl na. Een browserapp kan de echte radiofuncties, zaklamp of systeemmediavolume van het Galaxy-apparaat niet bedienen.';
-    const actions=$$('.panel-actions button');const actionLabels=lang==='de'?['Darstellung wechseln','Bewegung reduzieren','Bildschirm sperren']:lang==='en'?['Switch appearance','Reduce motion','Lock screen']:['Weergave wisselen','Beweging verminderen','Scherm vergrendelen'];actions.forEach((b,i)=>{const span=$('span',b);if(span&&actionLabels[i])span.textContent=actionLabels[i];});
+    const actions=$('.panel-actions button');const actionLabels=lang==='de'?['Darstellung wechseln','Bewegung reduzieren','Bildschirm sperren']:lang==='en'?['Switch appearance','Reduce motion','Lock screen']:['Weergave wisselen','Beweging verminderen','Scherm vergrendelen'];actions.forEach((b,i)=>{const span=$('span',b);if(span&&actionLabels[i])span.textContent=actionLabels[i];});
     const lockCaption=$('#lockScreen .lock-bottom p');if(lockCaption)lockCaption.textContent=lang==='de'?'Zum Entsperren antippen':lang==='en'?'Tap to unlock':'Tik om te ontgrendelen';
     const footBrand=$('#introScreen .intro-footer span:last-child');if(footBrand)footBrand.textContent='BUILT WITH 🐌';
     const homeHero=$('#heroStudio .hero-bottom span:first-child');if(homeHero)homeHero.textContent=lang==='de'?'Schön, dass du hier bist.':lang==='en'?'Glad you are here.':'Fijn dat je hier bent.';
@@ -823,7 +823,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function chooseLanguage(lang){
     if(!LANGUAGES[lang])return;
     selectedLanguage=lang;
-    $$('[data-language-choice]').forEach(b=>b.classList.toggle('selected',b.dataset.languageChoice===lang));
+    $('[data-language-choice]').forEach(b=>b.classList.toggle('selected',b.dataset.languageChoice===lang));
     const prompt={
       de:{eyebrow:'WILLKOMMEN IN DER DIGITALEN WELT',title:'Welche Sprache sprichst du?',copy:'Wähle eine Sprache für dein Besuchererlebnis.',foot:'Du kannst die Sprache später in den Einstellungen ändern.',next:'Weiter'},
       en:{eyebrow:'WELCOME TO THE DIGITAL WORLD',title:'Which language do you speak?',copy:'Choose a language for your visitor experience.',foot:'You can change the language later in Settings.',next:'Continue'},
@@ -1201,9 +1201,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       }else{
         rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
       }
-      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal')?rendered:localize(rendered);
     }
-    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
@@ -1224,13 +1224,13 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     document.documentElement.style.setProperty('--screen-brightness',String(state.brightness/100));
     document.documentElement.style.setProperty('--glass',state.glass+'%');document.documentElement.style.setProperty('--glass-blur',(state.glass/5)+'px');
     document.body.classList.toggle('reduce-motion',state.reduceMotion);
-    $$('.wall-choice').forEach(b=>b.classList.toggle('selected',b.dataset.wall===state.wallpaper));
+    $('.wall-choice').forEach(b=>b.classList.toggle('selected',b.dataset.wall===state.wallpaper));
     const fields=[['brightnessSlider','brightnessOutput',state.brightness],['glassSlider','glassOutput',state.glass],['volumeSlider','volumeOutput',state.volume]];
     fields.forEach(([input,output,value])=>{const el=$('#'+input),out=$('#'+output);if(el)el.value=value;if(out)out.textContent=value+'%';});
   }
   function syncControl(){
     applySettings();
-    $$('[data-toggle]').forEach(b=>{const key=b.dataset.toggle,on=!!state[key];b.classList.toggle('active',on);const small=$('small',b);if(small)small.textContent=currentLanguage()==='de'?(on?'Ein':'Aus'):currentLanguage()==='en'?(on?'On':'Off'):(on?'Aan':'Uit');});
+    $('[data-toggle]').forEach(b=>{const key=b.dataset.toggle,on=!!state[key];b.classList.toggle('active',on);const small=$('small',b);if(small)small.textContent=currentLanguage()==='de'?(on?'Ein':'Aus'):currentLanguage()==='en'?(on?'On':'Off'):(on?'Aan':'Uit');});
   }
   function renderSearch(query){
     const q=query.trim().toLocaleLowerCase(currentLanguage());
@@ -1285,12 +1285,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function deviceLabel(type){return type==='desktop'?'Samsung Galaxy Book6 Pro':type==='tablet'?'Samsung Galaxy Tab S12 Ultra':'Samsung Galaxy S24';}
   function deviceHint(type){return type==='desktop'?'Desktop workspace · laptop layout':type==='tablet'?'Tablet interface · wide touch layout':'Smartphone interface · mobile layout';}
-  function renderDevicePreviewButtons(){ $$('[data-preview-device]').forEach(b=>b.classList.toggle('active',b.dataset.previewDevice===deviceOverride)); }
+  function renderDevicePreviewButtons(){ $('[data-preview-device]').forEach(b=>b.classList.toggle('active',b.dataset.previewDevice===deviceOverride)); }
   function updateDevice(){detectedDevice=detectDevice();document.body.dataset.device=detectedDevice;$('#deviceDetectedLabel').textContent=deviceLabel(detectedDevice);$('#deviceDetectedHint').textContent=deviceHint(detectedDevice);$('#deviceModelLabel').textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24';renderDevicePreviewButtons();}
   window.addEventListener('resize',()=>{if(deviceOverride==='auto')updateDevice();});
-  $$('[data-preview-device]').forEach(b=>b.addEventListener('click',()=>{deviceOverride=b.dataset.previewDevice;persist('deviceOverride',deviceOverride);updateDevice();}));
+  $('[data-preview-device]').forEach(b=>b.addEventListener('click',()=>{deviceOverride=b.dataset.previewDevice;persist('deviceOverride',deviceOverride);updateDevice();}));
 
-  $$('[data-language-choice]').forEach(b=>b.addEventListener('click',()=>chooseLanguage(b.dataset.languageChoice)));
+  $('[data-language-choice]').forEach(b=>b.addEventListener('click',()=>chooseLanguage(b.dataset.languageChoice)));
   $('#confirmLanguage').addEventListener('click',confirmLanguage);
   function initializeLanguage(){
     if(LANGUAGES[state.language]){
@@ -1374,7 +1374,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='l'){e.preventDefault();els.lock.classList.remove('hidden');}
   });
   document.addEventListener('click',e=>{
-    if(e.target.closest('[data-expand-legal]')){$$('.legal-section').forEach(d=>d.open=true);}
+    if(e.target.closest('[data-expand-legal]')){$('.legal-section').forEach(d=>d.open=true);}
     if(e.target.closest('#resetSettings'))resetSettings();
   });
   document.addEventListener('change',e=>{
@@ -1414,7 +1414,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   'use strict';
   const KEY = 'ssos-personalization-v1';
   const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const $ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const LANG = () => document.body.dataset.language || 'de';
   const DICT = {
     de: {
@@ -1760,7 +1760,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function renderHomeTiles() {
     const grid=$('#homeAppGrid');if(!grid)return;
-    $$('.ssos-store-tile,.ssos-custom-tile',grid).forEach(el=>el.remove());
+    $('.ssos-store-tile,.ssos-custom-tile',grid).forEach(el=>el.remove());
     config.apps.forEach(app=>{
       const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-custom-tile';
       tile.dataset.ssosCustomApp=app.id;tile.title=app.name;
@@ -1826,7 +1826,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     const searchBox=$('#ssosStoreSearchResults');if(searchBox)searchBox.hidden=!q;
     root.hidden=!!q;
     set('ssosStoreSearchList',matches.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
-    $$('#ssosStoreCategories [data-ssos-store-category]').forEach(button=>button.classList.toggle('selected',button.dataset.ssosStoreCategory===category));
+    $('#ssosStoreCategories [data-ssos-store-category]').forEach(button=>button.classList.toggle('selected',button.dataset.ssosStoreCategory===category));
   }
   function renderStore(){
     storeView.query='';storeView.category='all';
@@ -2099,8 +2099,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function refreshSettingsIfOpen() { if ($('#resetSettings')) renderSettingsTools(); }
   function init() {
     renderHomeTiles(); renderLockScreen(); applyVisuals();
-    loadStoreCatalog();
-    loadStoreRatings();
+
     if (config.weatherCity) refreshWeather();
     const appContent=$('#appContent'); if(appContent){new MutationObserver(()=>refreshSettingsIfOpen()).observe(appContent,{childList:true,subtree:true});}
     window.addEventListener('ssos-home-grid-rendered', renderHomeTiles);
@@ -2170,7 +2169,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, getStoreCatalog:()=>STORE_CATALOG.map(app=>({...app,description:{...app.description}})), exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp, openStoreApp});
+  window.SSOSPersonalization = Object.freeze({exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
