@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.7.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.8.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Schleim-Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
 - App-voorstellen indienen via een GitHub-issueformulier
 - Schleim-Store is zonder GitHub-aanmelding beschikbaar
-- Automatische cloudback-up van personalisatie in een privé-GitHub-repository na aanmelding (direct en vervolgens elke vijf minuten)
+- Automatische cloudsynchronisatie van personalisatie via het browserprofiel, zonder GitHub App of aparte aanmelding
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
@@ -75,9 +75,9 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **Cloudback-up:** Na de eenmalige inrichting van de GitHub App door de projectbeheerder hoef je alleen op **Met GitHub verbinden** te klikken. Schleim OS maakt automatisch een privé-back-uprepository aan en slaat je startscherm direct en daarna planmatig elke vijf minuten op. Zie de [handleiding voor de GitHub-cloudback-up](docs/Deutsch/GITHUB-CLOUD-BACKUP.md).
+- **Cloudsynchronisatie:** Schleim OS gebruikt de ingebouwde synchronisatieopslag van de browser. Er is geen GitHub App, Client ID of aparte aanmelding bij Schleim OS nodig. Je moet zijn aangemeld bij je browserprofiel en synchronisatie hebben ingeschakeld. Zie de [handleiding voor browsersynchronisatie](docs/Deutsch/BROWSER-CLOUD-SYNC.md).
 
-De browser houdt een lokale werkkopie bij zodat Schleim OS direct kan werken. De extra back-up wordt na aanmelding in je privé-GitHub-repository opgeslagen en elke vijf minuten bijgewerkt. De GitHub-verbinding blijft in de browserextensie opgeslagen, zodat de achtergronddienst na een herstart kan doorgaan.
+Normale instellingen en app-snelkoppelingen worden automatisch gesynchroniseerd. Geüploade achtergrondafbeeldingen blijven lokaal; de browser biedt ongeveer 100 KB synchronisatieopslag per extensie.
 
 # 🛠️ Schleim OS – Problemen oplossen
 
