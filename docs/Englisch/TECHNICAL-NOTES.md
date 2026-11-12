@@ -20,7 +20,7 @@ The documented installation uses direct import of the complete GitHub repository
 
 ## Storage and backups
 
-Schleim OS needs a local working copy in the browser to operate the home screen. A single button starts the GitHub connection. Schleim OS then creates a private repository automatically, saves immediately and schedules updates every five minutes through the Manifest V3 background service worker. The connection remains in protected extension storage. The project owner must register a GitHub App once with Device Flow enabled, `Repository creation: Write` and `Contents: Read and write`, then add its public Client ID to the source. See the [GitHub cloud backup setup guide](../../Deutsch/GITHUB-CLOUD-BACKUP.md).
+Schleim OS keeps a local working copy and mirrors personalization data into `chrome.storage.sync`. The browser handles cloud synchronization when the user is signed in to a browser profile with sync enabled. No GitHub App, Client ID or separate Schleim OS sign-in is required. The quota is approximately 100 KB per extension; uploaded wallpaper images remain local. See the [browser cloud sync guide](../../Deutsch/BROWSER-CLOUD-SYNC.md).
 
 ## Advertising and external connections
 
