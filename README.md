@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.9.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.9.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -77,7 +77,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
 - **JSON-Backup:** Öffne die Einstellungen und wähle **Homescreen exportieren**, um eine JSON-Datei herunterzuladen. Mit **Homescreen importieren** kannst du diese Datei später wiederherstellen oder auf einem anderen Gerät verwenden. Die Übertragung erfolgt manuell. Details: [Anleitung zum JSON-Backup](docs/Deutsch/JSON-BACKUP.md).
 
-Die Browser-Synchronisierung überträgt normale Einstellungen und App-Verknüpfungen automatisch. Hochgeladene Hintergrundbilder bleiben lokal; der Browser stellt insgesamt ungefähr 100 KB Sync-Speicher pro Erweiterung bereit.
+Die JSON-Sicherung wird lokal erstellt und nicht automatisch hochgeladen. Übertrage die Datei selbst auf ein anderes Gerät und importiere sie dort über die Einstellungen.
 
 # 🛠️ Schleim OS – Fehlerbehebung
 
