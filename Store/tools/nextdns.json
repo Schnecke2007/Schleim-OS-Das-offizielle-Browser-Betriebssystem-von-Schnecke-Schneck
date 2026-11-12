@@ -1,0 +1,16 @@
+{
+  "id": "nextdns",
+  "name": "NextDNS",
+  "url": "https://my.nextdns.io/",
+  "category": "tools",
+  "icon": "🌐",
+  "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fmy.nextdns.io%2F&sz=128",
+  "tags": "nextdns",
+  "addedAt": "2026-11-11",
+  "featured": true,
+  "description": {
+    "de": "Konfiguriere deinen NextDNS-Dienst mit DNS-Filterlisten sowie Datenschutz- und Sicherheitseinstellungen.",
+    "en": "Configure your NextDNS service with DNS filtering, privacy, and security settings.",
+    "nl": "Configureer je NextDNS-dienst met DNS-filtering, privacy- en beveiligingsinstellingen."
+  }
+}
