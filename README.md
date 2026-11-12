@@ -54,7 +54,7 @@ Im **Schleim-Store** kannst du empfohlene Webseiten und Web-Apps entdecken, nach
 
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
-**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Admin-Zugangsdaten gehören nicht in das Repository. Details stehen in der [Schleim-Store-Dokumentation](extension/docs/SLIME-STORE.md) und der [Admin-Anleitung](extension/admin/README.md).
+**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Admin-Zugangsdaten gehören nicht in das Repository. Details stehen in der [Schleim-Store-Dokumentation](extension/docs/SLIME-STORE.md).
 
 ## 📥 Download und Installation
 
