@@ -329,6 +329,7 @@ body[data-device="desktop"] .language-screen,.device[data-device="desktop"] .lan
             <button type="button" data-app="projects">🧩 <span>Projects</span></button>
             <button type="button" data-app="social">📸 <span>Social media</span></button>
             <button type="button" data-app="shop">🛍️ <span>Snail shop</span></button>
+            <button type="button" data-app="slimestore">🛍️ <span>Schleim Store</span></button>
             <button type="button" data-app="studio">🚀 <span>Creator Studio</span></button>
             <button type="button" data-app="website">🌐 <span>Fan website</span></button>
             <button type="button" data-app="images">🖼️ <span>Images</span></button>
@@ -551,6 +552,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     {id:'studio',name:'Creator Studio',icon:'🚀',hint:'Marke und Leistungen',keys:'creator studio google unternehmen medien software'},
     {id:'website',name:'Fan-Webseite',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'wix fan homepage unterseiten website'},
     {id:'shop',name:'Schneckenshop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'spreadshirt shop merchandise bestellung'},
+    {id:'slimestore',name:'Schleim Store',icon:'🛍️',hint:'Nur in der vollständigen Browser-Extension verfügbar',keys:'schleim store apps entdecken installieren vorschlagen'},
     {id:'fanapp',name:'Fan-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'NovaVoice – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant novavoice'},
@@ -571,7 +573,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','social','projects','studio','website','shop','images','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','social','projects','studio','website','shop','slimestore','images','contact','legal','settings'];
   // The old static Wix gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const WIX_GALLERY_IMAGES = [];
@@ -610,12 +612,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
-    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Not available in the demo – use the full extension',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Niet beschikbaar in de demo – gebruik de volledige extensie',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
   const TEXT = {
@@ -751,11 +753,11 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     $$('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
 
     const desktop={
-      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
-      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
-      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
+      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',store:'Schleim Store',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
+      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',store:'Schleim Store',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
+      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',store:'Schleim Store',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
     }[lang];
-    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
+    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
     const info=$$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
     const topDate=$('#introScreen .intro-footer span:first-child');if(topDate)topDate.textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24 EDITION';
     const foot=$('.control-footnote');if(foot)foot.textContent=lang==='de'?'Die Schnellschalter und Regler bilden die One-UI-Optik nach. Eine Browser-Webapp kann die echten Funk-, Taschenlampen- oder Medienlautstärke-Funktionen des Galaxy S24 nicht systemweit steuern.':lang==='en'?'The quick toggles and sliders reproduce the One UI look. A browser app cannot control the Galaxy device’s actual radios, flashlight or system media volume.':'De snelle schakelaars en schuifregelaars bootsen de One UI-stijl na. Een browserapp kan de echte radiofuncties, zaklamp of systeemmediavolume van het Galaxy-apparaat niet bedienen.';
@@ -1112,10 +1114,24 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     <div class="notice">WLAN, Bluetooth, mobile Daten, Taschenlampe und Rotation werden in dieser Webapp nur optisch simuliert. Ein Browser darf diese Systemfunktionen des Galaxy S24 nicht selbstständig umschalten.</div>
     <div class="language-settings"><h3 class="content-heading">Sprache ändern</h3><div class="language-options setting-language-options"><button class="language-option" type="button" data-set-language="de"><span>🇩🇪</span><b>Deutsch</b></button><button class="language-option" type="button" data-set-language="en"><span>🇬🇧</span><b>English</b></button><button class="language-option" type="button" data-set-language="nl"><span>🇳🇱</span><b>Nederlands</b></button></div></div><button class="app-button" id="resetSettings" type="button">Einstellungen zurücksetzen</button>`;}
 
+  const EXTENSION_DOWNLOAD_URL = 'https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip';
+  const EXTENSION_REPOSITORY_URL = 'https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck';
+  function renderDemoUnavailableStore(){
+    const copy = {
+      de:{eyebrow:'SCHLEIM STORE',title:'In der Demo nicht verfügbar',intro:'Der Schleim Store gehört zur vollständigen Browser-Extension und kann in dieser Demo nicht verwendet werden.',detail:'Lade die vollständige Projekt-ZIP von GitHub herunter. Darin befindet sich die Extension im Ordner „extension“. Nutze anschließend den ZIP-Import deines kompatiblen Browsers.',download:'Extension herunterladen',repository:'GitHub-Repository ansehen'},
+      en:{eyebrow:'SCHLEIM STORE',title:'Not available in the demo',intro:'The Schleim Store is part of the full browser extension and cannot be used in this demo.',detail:'Download the complete project ZIP from GitHub. The extension is included in the „extension“ folder. Then use the ZIP import feature of a compatible browser.',download:'Download extension',repository:'View GitHub repository'},
+      nl:{eyebrow:'SCHLEIM STORE',title:'Niet beschikbaar in de demo',intro:'De Schleim Store maakt deel uit van de volledige browserextensie en kan niet in deze demo worden gebruikt.',detail:'Download het volledige project als ZIP via GitHub. De extensie staat in de map „extension“. Gebruik daarna de ZIP-importfunctie van een compatibele browser.',download:'Extensie downloaden',repository:'GitHub-repository bekijken'}
+    }[currentLanguage()];
+    return `${appHero(copy.eyebrow,copy.title,copy.intro,'🛍️')}
+      <div class="notice warning-notice"><b>🔒 ${copy.title}</b><p>${copy.intro}</p></div>
+      <p class="body-copy">${copy.detail}</p>
+      <div class="ssos-form-actions">${external(EXTENSION_DOWNLOAD_URL,copy.download)}${external(EXTENSION_REPOSITORY_URL,copy.repository,true)}</div>`;
+  }
+
   const RENDERERS={
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
-    contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
+    contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,slimestore:renderDemoUnavailableStore,
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
@@ -1650,13 +1666,8 @@ window.SSOS_LEGAL_TRANSLATIONS = {
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
       <div class="ssos-card">
-        <h4>💾 ${esc(t('backup'))}</h4>
-        <p class="body-copy">${esc(t('backupInfo'))}</p>
-        <div class="ssos-form-actions">
-          <button class="app-button" type="button" id="ssosExport">${esc(t('export'))}</button>
-          <button class="app-button secondary" type="button" id="ssosImportTrigger">${esc(t('import'))}</button>
-        </div>
-        <input id="ssosImportFile" type="file" accept=".json,application/json" hidden>
+        <h4>💾 ${currentLanguage()==='en'?'Import & Export':currentLanguage()==='nl'?'Importeren & exporteren':'Import & Export'}</h4>
+        <p class="body-copy">${currentLanguage()==='en'?'Importing and exporting settings is not available in the demo. This feature is included in the full browser extension.':currentLanguage()==='nl'?'Instellingen importeren en exporteren is niet beschikbaar in de demo. Deze functie is opgenomen in de volledige browserextensie.':'Der Import und Export von Einstellungen ist in der Demo nicht verfügbar. Diese Funktion ist in der vollständigen Browser-Extension enthalten.'}</p>
       </div>
 `;
     mount.appendChild(section);
@@ -1716,67 +1727,6 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     }));
     saveConfig(); refreshWeather(); toast(t('designSaved'));
   }
-  function exportBackup() {
-    const preferences={};
-    for(let i=0;i<localStorage.length;i++){
-      const key=localStorage.key(i); if(!key?.startsWith('ssos-'))continue;
-      try { preferences[key]=JSON.parse(localStorage.getItem(key)); } catch { preferences[key]=localStorage.getItem(key); }
-    }
-    preferences[KEY]=config;
-    const backup={format:'schnecke-schneck-os',schemaVersion:1,exportedAt:new Date().toISOString(),preferences};
-    const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=`schnecke-schneck-homescreen-${new Date().toISOString().slice(0,10)}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1500); toast(t('exportDone'));
-  }
-  async function importBackup(file) {
-    try {
-      const data=JSON.parse(await file.text());
-      const isObject=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
-      const parseMaybe=value=>{
-        if(typeof value!=='string')return value;
-        try{return JSON.parse(value);}catch{return value;}
-      };
-      const directArray=Array.isArray(data)?data:null;
-      const preferences=isObject(data?.preferences)?data.preferences:
-        isObject(data?.data?.preferences)?data.data.preferences:
-        (isObject(data)&&Object.keys(data).some(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key))?data:{});
-      const storedConfig=parseMaybe(preferences[KEY]);
-      const nestedData=isObject(data?.data)?data.data:{};
-      const rootConfig=parseMaybe(data?.config??data?.settings??nestedData.config??nestedData.settings);
-      const candidateConfig=Array.isArray(storedConfig)?{apps:storedConfig}:
-        (isObject(storedConfig)?storedConfig:(isObject(rootConfig)?rootConfig:{}));
-      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']??preferences['ssos-links']??preferences['ssos-shortcuts']);
-      const hasLegacyUrl=value=>{
-        if(typeof value==='string')return !!safeLegacyUrl(value);
-        if(!isObject(value))return false;
-        return [value.url,value.href,value.link,value.targetUrl,value.targetURL,value.target_url,value.website,value.websiteUrl,value.websiteURL,value.address,value.src,value.appUrl,value.app_url,value.destination,value.uri,value.target?.url,value.target,value.data?.url].some(candidate=>typeof candidate==='string'&&!!safeLegacyUrl(candidate));
-      };
-      const looksLikeLegacyMap=value=>isObject(value)&&Object.entries(value).some(([key,item])=>
-        (/^(?:https?:)?\/\//i.test(key)||/^www\./i.test(key))?!!safeLegacyUrl(key):hasLegacyUrl(item)
-      );
-      const legacyMap=looksLikeLegacyMap(candidateConfig)?candidateConfig:
-        (!data?.preferences&&!data?.data&&!data?.config&&!data?.settings&&looksLikeLegacyMap(data)?data:null);
-      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??legacyMap??directArray;
-      const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
-      if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
-      if(!confirm(t('importConfirm')))return;
-      for(const [key,value] of Object.entries(preferences)){
-        if(!/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)||key===KEY)continue;
-        localStorage.setItem(key,JSON.stringify(value));
-      }
-      const migrated={
-        ...defaults(),
-        ...(isObject(candidateConfig)?candidateConfig:{}),
-        apps:normalizeLegacyApps(collection??[])
-      };
-      if(Array.isArray(candidateConfig.homeOrder)){
-        migrated.homeOrder=candidateConfig.homeOrder.filter(id=>typeof id==='string'&&id.length<=160).slice(0,250);
-      }
-      localStorage.setItem(KEY,JSON.stringify(migrated));
-      window.location.reload();
-    } catch {
-      toast(t('importBad'));
-    }
-  }
   function clearRetiredCloudCredentials() {
     const area = globalThis.chrome?.storage?.local;
     if (!area?.remove) return;
@@ -1802,8 +1752,6 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       if(e.target.closest('#ssosClearWallpaper')){config.wallpaperUrl='';config.wallpaperData='';saveConfig();toast(t('designSaved'));return;}
       if(e.target.closest('#ssosSaveLock')){saveLockSettings();return;}
       if(e.target.closest('#ssosRefreshWeather')){config.weatherCity=$('#ssosWeatherCity')?.value.trim()||'';saveConfig();refreshWeather();return;}
-      if(e.target.closest('#ssosExport')){exportBackup();return;}
-      if(e.target.closest('#ssosImportTrigger')){$('#ssosImportFile')?.click();return;}
       const lockUrl=e.target.closest('[data-ssos-lock-url]');if(lockUrl){window.open(lockUrl.dataset.ssosLockUrl,'_blank','noopener,noreferrer');return;}
     });
     document.addEventListener('input',e=>{
@@ -1812,11 +1760,6 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       if(e.target.id==='ssosWallpaperFile'){
         const file=e.target.files?.[0]; if(!file)return;
         try{config.wallpaperData=await compressImage(file,1500000);config.wallpaperUrl='';saveConfig();toast(t('wallpaperSaved'));}catch{toast(t('fileTooLarge'));}
-      }
-      if(e.target.id==='ssosImportFile'){
-        const file=e.target.files?.[0];
-        if(file)await importBackup(file);
-        e.target.value='';
       }
     });
   }
@@ -1831,7 +1774,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp});
+  window.SSOSPersonalization = Object.freeze({getApps, openCustomApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
