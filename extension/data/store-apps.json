@@ -201,6 +201,22 @@
         "en": "Discover Instagram! Go live, watch funny videos, and customize your own profile to become a successful content creator.",
         "nl": "Ontdek Instagram! Ga live, bekijk grappige video's en geef je eigen profiel vorm om een succesvolle contentcreator te worden."
       }
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "url": "https://google.com/",
+      "category": "knowledge",
+      "icon": "🌐",
+      "iconUrl": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fgoogle.com%2F&sz=128",
+      "tags": "google",
+      "addedAt": "2026-11-13",
+      "featured": true,
+      "description": {
+        "de": "Google ist eine Suchmaschine, mit der du im Web recherchieren und navigieren kannst.",
+        "en": "Google is a search engine that allows you to search for things and navigate the web.",
+        "nl": "Google is een zoekmachine waarmee je naar dingen kunt zoeken en over het web kunt surfen."
+      }
     }
   ]
 }
