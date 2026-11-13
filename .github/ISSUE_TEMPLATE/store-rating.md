@@ -12,4 +12,7 @@ App-ID:
 ## Rating
 Rating: 5
 
-**Hinweis:** Diese Bewertung wird öffentlich in diesem GitHub-Repository eingereicht. Dein GitHub-Benutzername und deine Bewertung sind für andere sichtbar. Pro GitHub-Konto zählt je App nur eine aktive Stimme; du kannst die Einreichung bearbeiten oder schließen.
+## Feedback
+Feedback: 
+
+**Hinweis:** Die Bewertung, dein Feedback und dein GitHub-Benutzername werden öffentlich in diesem Repository gespeichert. Nach erfolgreicher Verarbeitung wird das Bewertungs-Issue automatisch geschlossen. Pro GitHub-Konto und App zählt nur die jeweils neueste Bewertung. Bitte teile keine Passwörter oder vertraulichen Daten.
