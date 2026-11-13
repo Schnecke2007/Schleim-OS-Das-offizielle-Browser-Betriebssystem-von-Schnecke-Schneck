@@ -132,6 +132,9 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 │   ├── ISSUE_TEMPLATE/
 │   └── workflows/
 ├── Store/
+├── Bewertungen/
+│   ├── README.md
+│   └── <issue-number>.json
 │   ├── ai/
 │   ├── communication/
 │   ├── knowledge/
