@@ -2,32 +2,69 @@ name: Schleim-Store-Community-Bewertungen
 
 on:
   issues:
-    types: [opened, edited, reopened, closed]
+    types: [opened, edited]
 
 permissions:
   contents: write
-  issues: read
+  issues: write
 
 concurrency:
   group: schleim-store-ratings-${{ github.repository }}
   cancel-in-progress: false
 
 jobs:
-  rebuild-ratings:
+  archive-and-recalculate:
     if: startsWith(github.event.issue.title, '[Schleim-Store-Bewertung]')
     runs-on: ubuntu-latest
     steps:
-      - name: Community-Bewertungen neu berechnen
+      - name: Bewertung speichern, Issue schließen und Sterne neu berechnen
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
+            const issue = context.payload.issue;
+            const action = context.payload.action;
+            const sender = String(context.payload.sender?.login || '').toLowerCase();
+            const author = String(issue.user?.login || '').trim();
+
+            // Only the original author may change the saved rating or feedback.
+            // Reopening an issue by the developer does not trigger this workflow.
+            if (action === 'edited' && sender !== author.toLowerCase()) {
+              core.notice('Issue edited by someone other than its author; rating archive left unchanged.');
+              return;
+            }
+
+            const body = String(issue.body || '');
+            const appMatch = body.match(/^\\s*App-ID\\s*:\\s*`?([a-z0-9][a-z0-9-]{1,79})`?\\s*$/im);
+            const ratingMatch = body.match(/^\\s*(?:Rating|Bewertung)\\s*:\\s*([1-5])(?:\\s*\\/\\s*5)?\\s*$/im);
+            const appId = appMatch?.[1] || '';
+            const rating = Number(ratingMatch?.[1] || 0);
+
+            const feedbackHeader = body.match(/^##\\s*Feedback\\s*$/im);
+            let feedback = '';
+            if (feedbackHeader) {
+              const afterHeader = body.slice(feedbackHeader.index + feedbackHeader[0].length);
+              const nextSection = afterHeader.search(/^\\s*##\\s+/m);
+              const section = afterHeader.slice(0, nextSection >= 0 ? nextSection : afterHeader.length).trim();
+              feedback = section.replace(/^Feedback\\s*:\\s*/i, '').trim();
+            } else {
+              const fallback = body.match(/^Feedback\\s*:\\s*([\\s\\S]*?)(?=^##\\s+|$)/im);
+              feedback = fallback?.[1]?.trim() || '';
+            }
+            feedback = feedback.slice(0, 2000);
+
+            if (!author || !appId || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: issue.number,
+                body: 'Die Bewertung konnte nicht gespeichert werden. Bitte prüfe App-ID und Sternebewertung (1 bis 5) und bearbeite das Issue.'
+              });
+              core.warning('Invalid rating submission; issue remains open for correction.');
+              return;
+            }
 
             const catalogResponse = await github.rest.repos.getContent({
-              owner,
-              repo,
-              path: 'extension/data/store-apps.json'
+              owner, repo, path: 'extension/data/store-apps.json'
             });
             if (Array.isArray(catalogResponse.data)) {
               throw new Error('The Store catalog path resolved to a directory.');
@@ -35,56 +72,106 @@ jobs:
             const catalogText = Buffer.from(catalogResponse.data.content, 'base64').toString('utf8');
             const catalogJson = JSON.parse(catalogText);
             const catalogApps = Array.isArray(catalogJson) ? catalogJson : (catalogJson.apps || []);
-            const publishedIds = new Set(
-              catalogApps
-                .map(app => String(app?.id || '').trim())
-                .filter(id => /^[a-z0-9][a-z0-9-]{1,79}$/.test(id))
-            );
+            const app = catalogApps.find(item => String(item?.id || '').trim() === appId);
+            if (!app) {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: issue.number,
+                body: 'Diese App-ID ist nicht im veröffentlichten Schleim-Store-Katalog enthalten. Die Bewertung wurde deshalb nicht übernommen.'
+              });
+              core.warning(`Unknown Store app ID: ${appId}`);
+              return;
+            }
 
-            const issues = await github.paginate(github.rest.issues.listForRepo, {
-              owner,
-              repo,
-              state: 'open',
-              per_page: 100
+            const path = `Bewertungen/${issue.number}.json`;
+            let previous = null;
+            let sha;
+            try {
+              const existing = await github.rest.repos.getContent({ owner, repo, path });
+              if (!Array.isArray(existing.data)) {
+                sha = existing.data.sha;
+                previous = JSON.parse(Buffer.from(existing.data.content, 'base64').toString('utf8'));
+              }
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+
+            const record = {
+              schemaVersion: 1,
+              issueNumber: issue.number,
+              issueUrl: issue.html_url,
+              appId,
+              appName: String(app.name || issue.title.replace(/^\\[Schleim-Store-Bewertung\\]\\s*/i, '')).slice(0, 100),
+              githubUsername: author,
+              rating,
+              feedback,
+              submittedAt: previous?.submittedAt || issue.created_at,
+              updatedAt: issue.updated_at || new Date().toISOString()
+            };
+
+            await github.rest.repos.createOrUpdateFileContents({
+              owner, repo, path,
+              message: `Save Schleim-Store rating #${issue.number}`,
+              content: Buffer.from(JSON.stringify(record, null, 2) + '\\n', 'utf8').toString('base64'),
+              ...(sha ? { sha } : {})
             });
 
-            // One active vote per GitHub account and app. If a user submits
-            // more than one open rating issue, the most recently edited one wins.
+            // Rebuild the public aggregate from the individual JSON files.
+            const directory = await github.rest.repos.getContent({ owner, repo, path: 'Bewertungen' });
+            if (!Array.isArray(directory.data)) {
+              throw new Error('The Bewertungen path is not a directory.');
+            }
+
+            const ratingFiles = directory.data.filter(item =>
+              item.type === 'file' && /^\\d+\\.json$/i.test(item.name)
+            );
+            const records = [];
+            for (const file of ratingFiles) {
+              const result = await github.rest.repos.getContent({ owner, repo, path: file.path });
+              if (Array.isArray(result.data)) continue;
+              try {
+                const saved = JSON.parse(Buffer.from(result.data.content, 'base64').toString('utf8'));
+                if (
+                  /^[a-z0-9][a-z0-9-]{1,79}$/.test(String(saved.appId || '')) &&
+                  typeof saved.githubUsername === 'string' &&
+                  Number.isInteger(Number(saved.rating)) &&
+                  Number(saved.rating) >= 1 && Number(saved.rating) <= 5 &&
+                  new Date(saved.submittedAt).toString() !== 'Invalid Date'
+                ) records.push(saved);
+              } catch (error) {
+                core.warning(`Skipping invalid rating file ${file.path}: ${error.message}`);
+              }
+            }
+
+            // One vote per GitHub account and app. The newest submitted issue wins.
             const latestVotes = new Map();
-            for (const issue of issues) {
-              if (issue.pull_request || !/^\[Schleim-Store-Bewertung\]/i.test(issue.title || '')) continue;
-
-              const body = String(issue.body || '');
-              const appMatch = body.match(/^\s*App-ID\s*:\s*`?([a-z0-9][a-z0-9-]{1,79})`?\s*$/im);
-              const ratingMatch = body.match(/^\s*(?:Rating|Bewertung)\s*:\s*([1-5])(?:\s*\/\s*5)?\s*$/im);
-              const appId = appMatch?.[1] || '';
-              const rating = Number(ratingMatch?.[1] || 0);
-              const login = String(issue.user?.login || '').trim().toLowerCase();
-
-              if (!publishedIds.has(appId) || !login || !Number.isInteger(rating) || rating < 1 || rating > 5) continue;
-
-              const key = appId + ':' + login;
-              const current = latestVotes.get(key);
-              if (!current || new Date(issue.updated_at) > new Date(current.updated_at)) {
-                latestVotes.set(key, { appId, rating, updated_at: issue.updated_at });
+            for (const vote of records) {
+              const key = String(vote.appId) + ':' + String(vote.githubUsername).trim().toLowerCase();
+              if (!key.endsWith(':')) {
+                const current = latestVotes.get(key);
+                const currentDate = current ? new Date(current.submittedAt).getTime() : -1;
+                const voteDate = new Date(vote.submittedAt).getTime();
+                if (!current || voteDate > currentDate ||
+                    (voteDate === currentDate && Number(vote.issueNumber) > Number(current.issueNumber))) {
+                  latestVotes.set(key, vote);
+                }
               }
             }
 
             const totals = {};
             for (const vote of latestVotes.values()) {
+              if (!catalogApps.some(item => item.id === vote.appId)) continue;
               const item = totals[vote.appId] || (totals[vote.appId] = {
-                count: 0,
-                sum: 0,
-                distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+                count: 0, sum: 0, distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
               });
+              const value = Number(vote.rating);
               item.count += 1;
-              item.sum += vote.rating;
-              item.distribution[vote.rating] += 1;
+              item.sum += value;
+              item.distribution[value] += 1;
             }
 
             const apps = {};
-            for (const [appId, item] of Object.entries(totals)) {
-              apps[appId] = {
+            for (const [id, item] of Object.entries(totals)) {
+              apps[id] = {
                 average: Number((item.sum / item.count).toFixed(2)),
                 count: item.count,
                 distribution: item.distribution
@@ -92,26 +179,42 @@ jobs:
             }
 
             const output = {
-              schemaVersion: 1,
+              schemaVersion: 2,
               updatedAt: new Date().toISOString(),
+              totalRatings: latestVotes.size,
               apps
             };
-            const path = 'extension/data/store-ratings.json';
-            let sha;
+            const ratingsPath = 'extension/data/store-ratings.json';
+            let ratingsSha;
             try {
-              const existing = await github.rest.repos.getContent({ owner, repo, path });
-              if (!Array.isArray(existing.data)) sha = existing.data.sha;
+              const existing = await github.rest.repos.getContent({ owner, repo, path: ratingsPath });
+              if (!Array.isArray(existing.data)) ratingsSha = existing.data.sha;
             } catch (error) {
               if (error.status !== 404) throw error;
             }
 
             await github.rest.repos.createOrUpdateFileContents({
-              owner,
-              repo,
-              path,
-              message: 'Update Schleim-Store community ratings',
-              content: Buffer.from(JSON.stringify(output, null, 2) + '\n', 'utf8').toString('base64'),
-              ...(sha ? { sha } : {})
+              owner, repo, path: ratingsPath,
+              message: 'Recalculate Schleim-Store community ratings',
+              content: Buffer.from(JSON.stringify(output, null, 2) + '\\n', 'utf8').toString('base64'),
+              ...(ratingsSha ? { sha: ratingsSha } : {})
             });
 
-            core.notice(`Community ratings updated for ${Object.keys(apps).length} apps.`);
+            // Close only when the submitted/edited rating has been archived and
+            // the public aggregates were successfully written. Admin reopenings
+            // are intentional and are not closed by this workflow.
+            if (issue.state === 'open') {
+              if (action === 'opened') {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: issue.number,
+                  body: `Danke für deine Bewertung! Sie wurde in \`Bewertungen/${issue.number}.json\` gespeichert. Die öffentlichen Store-Sterne wurden neu berechnet. Dieses Bewertungs-Issue wird automatisch geschlossen. Du kannst es später weiterhin bearbeiten; dein GitHub-Benutzername und dein Feedback sind öffentlich sichtbar.`
+                });
+              }
+              await github.rest.issues.update({
+                owner, repo, issue_number: issue.number,
+                state: 'closed',
+                state_reason: 'completed'
+              });
+            }
+
+            core.notice(`Saved rating #${issue.number}; recalculated ${Object.keys(apps).length} apps from ${records.length} files.`);
