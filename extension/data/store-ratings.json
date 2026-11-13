@@ -1,8 +1,19 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-13T13:43:15.478Z",
-  "totalRatings": 3,
+  "updatedAt": "2026-11-13T19:26:01.512Z",
+  "totalRatings": 4,
   "apps": {
+    "google": {
+      "average": 5,
+      "count": 1,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      }
+    },
     "nextdns": {
       "average": 5,
       "count": 1,
