@@ -25,7 +25,7 @@ Dort gibt es Kacheln für Apps und Webseiten.
 
 Du kannst die Standalone-Demo in einem neuen Browser-Tab öffnen:
 
-[**Schleim OS – Live-Demo öffnen**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
+[**Schleim OS – Live-Demo öffnen**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
 
 Die Demo ist eine einzelne HTML-Datei. Sie ist zum Ausprobieren da. Sie installiert keine Browser-Erweiterung.
 
