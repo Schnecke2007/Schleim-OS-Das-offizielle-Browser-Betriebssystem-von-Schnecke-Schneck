@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-13T13:26:37.013Z",
-  "totalRatings": 2,
+  "updatedAt": "2026-11-13T13:43:15.478Z",
+  "totalRatings": 3,
   "apps": {
     "nextdns": {
       "average": 5,
@@ -15,6 +15,17 @@
       }
     },
     "deezer": {
+      "average": 5,
+      "count": 1,
+      "distribution": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      }
+    },
+    "instagram": {
       "average": 5,
       "count": 1,
       "distribution": {
