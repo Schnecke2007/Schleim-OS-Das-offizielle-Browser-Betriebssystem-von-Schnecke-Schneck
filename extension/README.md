@@ -15,7 +15,7 @@
 
 Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Die Importfunktion ist je nach Browser und Gerät unterschiedlich. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
 
-[Schleim OS live ausprobieren](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md)
+[Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md)
 
 ## Dateien
 
