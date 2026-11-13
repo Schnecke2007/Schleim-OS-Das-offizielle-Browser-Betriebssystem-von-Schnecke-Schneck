@@ -20,7 +20,7 @@ Je ziet dan een eigen startpagina met tegels voor apps en websites.
 
 ## Probeer de demo
 
-[**Open de live demo van Schleim OS**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
+[**Open de live demo van Schleim OS**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
 
 De demo is één HTML-bestand. Je kunt de interface ermee uitproberen. De demo installeert geen browseruitbreiding.
 
