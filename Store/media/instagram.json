@@ -1,0 +1,16 @@
+{
+  "id": "instagram",
+  "name": "Instagram",
+  "url": "http://instagram.com/",
+  "category": "media",
+  "icon": "🌐",
+  "iconUrl": "https://www.google.com/s2/favicons?domain_url=http%3A%2F%2Finstagram.com%2F&sz=128",
+  "tags": "instagram",
+  "addedAt": "2026-11-13",
+  "featured": true,
+  "description": {
+    "de": "Entdecke Instagram! Gehe live, schaue dir lustige Videos an und gestalte dein eigenes Profil, um ein erfolgreicher Content Creator zu werden.",
+    "en": "Discover Instagram! Go live, watch funny videos, and customize your own profile to become a successful content creator.",
+    "nl": "Ontdek Instagram! Ga live, bekijk grappige video's en geef je eigen profiel vorm om een succesvolle contentcreator te worden."
+  }
+}

@@ -8,7 +8,7 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 |---|---|---:|
 | [Tools](./tools/README.md) | tools | 1 |
 | [KI & Chatbots](./ai/README.md) | ai | 1 |
-| [Medien](./media/README.md) | media | 4 |
+| [Medien](./media/README.md) | media | 5 |
 | [Wissen](./knowledge/README.md) | knowledge | 1 |
 | [Navigation](./navigation/README.md) | navigation | 1 |
 | [Produktivität](./productivity/README.md) | productivity | 1 |
@@ -24,4 +24,4 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 - Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.
 - Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.
 
-**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Der Schleim-Store in der Erweiterung ist ohne Anmeldung zugänglich. Die Katalogdateien können in diesem öffentlichen Repository ebenfalls direkt auf GitHub angesehen werden. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.
+**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Der Schleim-Store in Schleim OS ist ohne Anmeldung nutzbar. Die Katalogdateien dieses öffentlichen Repositorys bleiben auch direkt auf GitHub sichtbar. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.
