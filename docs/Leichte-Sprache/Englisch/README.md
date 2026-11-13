@@ -20,7 +20,7 @@ You see a personal start page with tiles for apps and websites.
 
 ## Try the demo
 
-[**Open the live Schleim OS demo**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
+[**Open the live Schleim OS demo**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
 
 The demo is one HTML file. It is for trying the interface. It does not install a browser extension.
 
