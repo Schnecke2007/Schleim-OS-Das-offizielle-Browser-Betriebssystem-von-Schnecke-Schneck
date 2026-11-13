@@ -104,3 +104,17 @@
  .ssos-store-legacy-row{flex-wrap:wrap}
  .ssos-store-legacy-row>div{min-width:calc(100% - 62px)}
 }
+
+/* Rating feedback dialog */
+.ssos-rating-dialog{width:min(480px,calc(100% - 28px));max-width:480px;margin:auto;padding:0;border:1px solid var(--line);border-radius:20px;background:#25180f;color:var(--ink);box-shadow:0 24px 70px #0009}
+.ssos-rating-dialog::backdrop{background:#080604bd;backdrop-filter:blur(5px)}
+.ssos-rating-dialog form{display:grid;gap:12px;padding:20px}
+.ssos-rating-dialog h3{margin:0;font-size:18px;line-height:1.25}
+.ssos-rating-dialog-intro,.ssos-rating-dialog-note{margin:0;color:var(--muted);font-size:10px;line-height:1.55}
+.ssos-rating-dialog-selected{font-size:25px;letter-spacing:3px;color:#f2c15d}
+.ssos-rating-dialog-selected span{color:#8a7969}
+.ssos-rating-dialog label{font-size:10px;font-weight:700}
+.ssos-rating-dialog textarea{box-sizing:border-box;width:100%;min-height:120px;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:12px;background:#120d09;color:var(--ink);font:inherit;font-size:11px;line-height:1.55;outline-color:var(--accent)}
+.ssos-rating-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.ssos-rating-dialog-actions .app-button{margin:0}
+@media(max-width:480px){.ssos-rating-dialog form{padding:16px}.ssos-rating-dialog-actions{display:grid;grid-template-columns:1fr 1fr}.ssos-rating-dialog-actions .app-button{justify-content:center}}
