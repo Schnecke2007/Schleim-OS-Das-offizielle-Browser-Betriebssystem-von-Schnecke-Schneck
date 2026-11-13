@@ -31,7 +31,7 @@ Die Dokumentation ist nach Sprache geordnet. Für jede Sprache stehen eine Insta
 
 ## 🧪 Live-Demo
 
-[Schleim OS als Standalone-Demo in einem neuen Tab ausprobieren](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
+[Schleim OS als Standalone-Demo in einem neuen Tab ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
 
 ---
 
