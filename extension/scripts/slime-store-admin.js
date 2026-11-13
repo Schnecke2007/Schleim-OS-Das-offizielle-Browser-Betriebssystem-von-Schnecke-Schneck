@@ -4,14 +4,14 @@
   const CATALOG='extension/data/store-apps.json', API='https://api.github.com', ITERATIONS=310000;
   const CATEGORIES=['tools','ai','media','knowledge','navigation','productivity','communication','privacy','shopping'];
   const TEXT={
-    de:{title:'Schleim-Store · Admin-Portal',intro:'Zugriff nur mit deiner verschlüsselten Admin-Datei und Passphrase.',setup:'Admin-Datei erstellen',setupText:'Dein Fine-grained GitHub-Token wird direkt hier im Browser verschlüsselt.',token:'GitHub-Token',pass:'Passphrase (mindestens 12 Zeichen)',repeat:'Passphrase wiederholen',create:'Verschlüsselte JSON-Datei herunterladen',login:'Mit Admin-Datei anmelden',file:'Verschlüsselte Admin-JSON-Datei',unlock:'Anmelden',refresh:'Einreichungen aktualisieren',logout:'Abmelden',scope:'Token-Rechte: nur dieses Repository; Contents: Read and write; Issues: Read and write.',privacy:'Der entschlüsselte Token bleibt nur im Arbeitsspeicher und wird beim Abmelden oder Neuladen verworfen.',pending:'Offene App-Einreichungen',empty:'Keine offenen Einreichungen gefunden.',choose:'Wähle links einen Vorschlag zur Prüfung.',edit:'App prüfen und veröffentlichen',id:'App-ID',name:'App-Name',url:'Webseiten-URL',category:'Kategorie',icon:'Emoji/Icon',iconUrl:'Icon-Bild-URL (optional)',tags:'Suchbegriffe',featured:'Als Empfehlung hervorheben',de:'Beschreibung Deutsch',en:'Description English',nl:'Beschrijving Nederlands',publish:'Genehmigen und veröffentlichen',reject:'Ablehnen',loading:'Wird geladen …',ok:'Admin-Datei erstellt und heruntergeladen.',logged:'Angemeldet. Einreichungen werden geladen …',published:'App im zentralen Store-Katalog veröffentlicht.',rejected:'Einreichung geschlossen.',bad:'Admin-Datei oder Passphrase ungültig.',repo:'Diese Datei gehört nicht zu diesem Repository.',missing:'Bitte alle drei Beschreibungen ausfüllen.',invalid:'Bitte App-ID, Name und http-/https-URLs prüfen.',created:'Erstellt',approved:'Dein Vorschlag wurde geprüft und im Schleim-Store veröffentlicht. Danke!',denied:'Danke für deinen Vorschlag. Die App wurde diesmal nicht aufgenommen.',session:'Admin-Sitzung aktiv – Token nur im Arbeitsspeicher.',tip:'Nach dem Veröffentlichen wird der Store-Katalog neu geladen.'},
-    en:{title:'Schleim-Store · Admin portal',intro:'Accessible only with your encrypted admin file and passphrase.',setup:'Create admin file',setupText:'Your fine-grained GitHub token is encrypted in this browser.',token:'GitHub token',pass:'Passphrase (at least 12 characters)',repeat:'Repeat passphrase',create:'Download encrypted JSON file',login:'Sign in with admin file',file:'Encrypted admin JSON file',unlock:'Sign in',refresh:'Refresh submissions',logout:'Sign out',scope:'Token permissions: this repository only; Contents: Read and write; Issues: Read and write.',privacy:'The decrypted token stays in memory only and is discarded on sign-out or reload.',pending:'Open app submissions',empty:'No open submissions found.',choose:'Select a suggestion on the left to review it.',edit:'Review and publish app',id:'App ID',name:'App name',url:'Website URL',category:'Category',icon:'Emoji/icon',iconUrl:'Icon image URL (optional)',tags:'Search terms',featured:'Feature as a recommendation',de:'German description',en:'English description',nl:'Dutch description',publish:'Approve and publish',reject:'Reject',loading:'Loading …',ok:'Admin file created and downloaded.',logged:'Signed in. Loading submissions …',published:'App published in the central Store catalogue.',rejected:'Submission closed.',bad:'Admin file or passphrase is invalid.',repo:'This file belongs to another repository.',missing:'Complete all three descriptions.',invalid:'Check the app ID, name and valid http/https URLs.',created:'Created',approved:'Your suggestion was reviewed and published in the Schleim-Store. Thank you!',denied:'Thank you for your suggestion. The app was not added this time.',session:'Admin session active – token is memory-only.',tip:'The Store catalogue will reload after publishing.'},
-    nl:{title:'Schleim-Store · Adminportaal',intro:'Alleen toegankelijk met je versleutelde beheerdersbestand en wachtzin.',setup:'Beheerdersbestand maken',setupText:'Je fine-grained GitHub-token wordt in deze browser versleuteld.',token:'GitHub-token',pass:'Wachtzin (minimaal 12 tekens)',repeat:'Wachtzin herhalen',create:'Versleuteld JSON-bestand downloaden',login:'Aanmelden met beheerdersbestand',file:'Versleuteld beheerders-JSON-bestand',unlock:'Aanmelden',refresh:'Inzendingen vernieuwen',logout:'Afmelden',scope:'Tokenrechten: alleen deze repository; Contents: Read and write; Issues: Read and write.',privacy:'Het ontsleutelde token blijft alleen in het geheugen en wordt bij afmelden of vernieuwen gewist.',pending:'Openstaande app-inzendingen',empty:'Geen open inzendingen gevonden.',choose:'Selecteer links een voorstel om te beoordelen.',edit:'App controleren en publiceren',id:'App-ID',name:'App-naam',url:'Website-URL',category:'Categorie',icon:'Emoji/pictogram',iconUrl:'Afbeeldings-URL (optioneel)',tags:'Zoektermen',featured:'Als aanbeveling uitlichten',de:'Duitse beschrijving',en:'Engelse beschrijving',nl:'Nederlandse beschrijving',publish:'Goedkeuren en publiceren',reject:'Afwijzen',loading:'Laden …',ok:'Beheerdersbestand gemaakt en gedownload.',logged:'Aangemeld. Inzendingen worden geladen …',published:'App gepubliceerd in de centrale Store-catalogus.',rejected:'Inzending gesloten.',bad:'Beheerdersbestand of wachtzin is ongeldig.',repo:'Dit bestand hoort bij een andere repository.',missing:'Vul alle drie beschrijvingen in.',invalid:'Controleer app-ID, naam en geldige http-/https-URL’s.',created:'Aangemaakt',approved:'Je voorstel is beoordeeld en gepubliceerd in de Schleim-Store. Bedankt!',denied:'Bedankt voor je voorstel. De app is deze keer niet toegevoegd.',session:'Beheerderssessie actief – token alleen in geheugen.',tip:'De Store-catalogus wordt na publicatie opnieuw geladen.'}
+    de:{title:'Schleim-Store · Admin-Portal',intro:'Zugriff nur mit deiner verschlüsselten Admin-Datei und Passphrase.',setup:'Admin-Datei erstellen',setupText:'Dein Fine-grained GitHub-Token wird direkt hier im Browser verschlüsselt.',token:'GitHub-Token',pass:'Passphrase (mindestens 12 Zeichen)',repeat:'Passphrase wiederholen',create:'Verschlüsselte JSON-Datei herunterladen',login:'Mit Admin-Datei anmelden',file:'Verschlüsselte Admin-JSON-Datei',unlock:'Anmelden',refresh:'Einreichungen aktualisieren',logout:'Abmelden',scope:'Token-Rechte: nur dieses Repository; Contents: Read and write; Issues: Read and write.',privacy:'Der entschlüsselte Token bleibt nur im Arbeitsspeicher und wird beim Abmelden oder Neuladen verworfen.',pending:'Offene App-Einreichungen',empty:'Keine offenen Einreichungen gefunden.',choose:'Wähle links einen Vorschlag zur Prüfung.',edit:'App prüfen und veröffentlichen',id:'App-ID',name:'App-Name',url:'Webseiten-URL',category:'Kategorie',icon:'Emoji/Icon',iconUrl:'Icon-Bild-URL (optional)',tags:'Suchbegriffe',featured:'Als Empfehlung hervorheben',de:'Beschreibung Deutsch',en:'Description English',nl:'Beschrijving Nederlands',publish:'Genehmigen und veröffentlichen',reject:'Ablehnen',loading:'Wird geladen …',ok:'Admin-Datei erstellt und heruntergeladen.',logged:'Angemeldet. Einreichungen werden geladen …',published:'App im zentralen Store-Katalog veröffentlicht.',rejected:'Einreichung geschlossen.',bad:'Admin-Datei oder Passphrase ungültig.',repo:'Diese Datei gehört nicht zu diesem Repository.',missing:'Bitte alle drei Beschreibungen ausfüllen.',invalid:'Bitte App-ID, Name und http-/https-URLs prüfen.',created:'Erstellt',approved:'Dein Vorschlag wurde geprüft und im Schleim-Store veröffentlicht. Danke!',denied:'Danke für deinen Vorschlag. Die App wurde diesmal nicht aufgenommen.',session:'Admin-Sitzung aktiv – Token nur im Arbeitsspeicher.',tip:'Nach dem Veröffentlichen wird der Store-Katalog neu geladen.',ratings:'Community-Bewertungen',ratingEmpty:'Noch keine Bewertungen vorhanden.',ratingReplyTitle:'Auf Bewertung antworten',ratingUser:'GitHub-Benutzer',ratingScore:'Sternebewertung',ratingFeedback:'Feedback',ratingReplyPlaceholder:'Schreibe eine öffentliche Antwort …',ratingReopen:'Issue wieder öffnen',ratingAlreadyOpen:'Issue ist bereits offen',ratingSendReply:'Antwort auf GitHub senden',ratingThread:'Bisherige Antworten',ratingOpened:'Bewertungs-Issue wieder geöffnet.',ratingReplied:'Antwort wurde veröffentlicht. Das Issue bleibt geöffnet.',ratingReplyMissing:'Bitte gib eine Antwort ein.',ratingIssueLink:'Issue auf GitHub öffnen'},
+    en:{title:'Schleim-Store · Admin portal',intro:'Accessible only with your encrypted admin file and passphrase.',setup:'Create admin file',setupText:'Your fine-grained GitHub token is encrypted in this browser.',token:'GitHub token',pass:'Passphrase (at least 12 characters)',repeat:'Repeat passphrase',create:'Download encrypted JSON file',login:'Sign in with admin file',file:'Encrypted admin JSON file',unlock:'Sign in',refresh:'Refresh submissions',logout:'Sign out',scope:'Token permissions: this repository only; Contents: Read and write; Issues: Read and write.',privacy:'The decrypted token stays in memory only and is discarded on sign-out or reload.',pending:'Open app submissions',empty:'No open submissions found.',choose:'Select a suggestion on the left to review it.',edit:'Review and publish app',id:'App ID',name:'App name',url:'Website URL',category:'Category',icon:'Emoji/icon',iconUrl:'Icon image URL (optional)',tags:'Search terms',featured:'Feature as a recommendation',de:'German description',en:'English description',nl:'Dutch description',publish:'Approve and publish',reject:'Reject',loading:'Loading …',ok:'Admin file created and downloaded.',logged:'Signed in. Loading submissions …',published:'App published in the central Store catalogue.',rejected:'Submission closed.',bad:'Admin file or passphrase is invalid.',repo:'This file belongs to another repository.',missing:'Complete all three descriptions.',invalid:'Check the app ID, name and valid http/https URLs.',created:'Created',approved:'Your suggestion was reviewed and published in the Schleim-Store. Thank you!',denied:'Thank you for your suggestion. The app was not added this time.',session:'Admin session active – token is memory-only.',tip:'The Store catalogue will reload after publishing.',ratings:'Community ratings',ratingEmpty:'No ratings have been submitted yet.',ratingReplyTitle:'Reply to rating',ratingUser:'GitHub user',ratingScore:'Star rating',ratingFeedback:'Feedback',ratingReplyPlaceholder:'Write a public reply …',ratingReopen:'Reopen issue',ratingAlreadyOpen:'Issue is already open',ratingSendReply:'Send reply on GitHub',ratingThread:'Previous replies',ratingOpened:'Rating issue reopened.',ratingReplied:'Your reply was published. The issue remains open.',ratingReplyMissing:'Enter a reply first.',ratingIssueLink:'Open issue on GitHub'},
+    nl:{title:'Schleim-Store · Adminportaal',intro:'Alleen toegankelijk met je versleutelde beheerdersbestand en wachtzin.',setup:'Beheerdersbestand maken',setupText:'Je fine-grained GitHub-token wordt in deze browser versleuteld.',token:'GitHub-token',pass:'Wachtzin (minimaal 12 tekens)',repeat:'Wachtzin herhalen',create:'Versleuteld JSON-bestand downloaden',login:'Aanmelden met beheerdersbestand',file:'Versleuteld beheerders-JSON-bestand',unlock:'Aanmelden',refresh:'Inzendingen vernieuwen',logout:'Afmelden',scope:'Tokenrechten: alleen deze repository; Contents: Read and write; Issues: Read and write.',privacy:'Het ontsleutelde token blijft alleen in het geheugen en wordt bij afmelden of vernieuwen gewist.',pending:'Openstaande app-inzendingen',empty:'Geen open inzendingen gevonden.',choose:'Selecteer links een voorstel om te beoordelen.',edit:'App controleren en publiceren',id:'App-ID',name:'App-naam',url:'Website-URL',category:'Categorie',icon:'Emoji/pictogram',iconUrl:'Afbeeldings-URL (optioneel)',tags:'Zoektermen',featured:'Als aanbeveling uitlichten',de:'Duitse beschrijving',en:'Engelse beschrijving',nl:'Nederlandse beschrijving',publish:'Goedkeuren en publiceren',reject:'Afwijzen',loading:'Laden …',ok:'Beheerdersbestand gemaakt en gedownload.',logged:'Aangemeld. Inzendingen worden geladen …',published:'App gepubliceerd in de centrale Store-catalogus.',rejected:'Inzending gesloten.',bad:'Beheerdersbestand of wachtzin is ongeldig.',repo:'Dit bestand hoort bij een andere repository.',missing:'Vul alle drie beschrijvingen in.',invalid:'Controleer app-ID, naam en geldige http-/https-URL’s.',created:'Aangemaakt',approved:'Je voorstel is beoordeeld en gepubliceerd in de Schleim-Store. Bedankt!',denied:'Bedankt voor je voorstel. De app is deze keer niet toegevoegd.',session:'Beheerderssessie actief – token alleen in geheugen.',tip:'De Store-catalogus wordt na publicatie opnieuw geladen.',ratings:'Communitybeoordelingen',ratingEmpty:'Er zijn nog geen beoordelingen.',ratingReplyTitle:'Reageren op beoordeling',ratingUser:'GitHub-gebruiker',ratingScore:'Sterrenbeoordeling',ratingFeedback:'Feedback',ratingReplyPlaceholder:'Schrijf een openbare reactie …',ratingReopen:'Issue opnieuw openen',ratingAlreadyOpen:'Issue is al geopend',ratingSendReply:'Reactie op GitHub plaatsen',ratingThread:'Eerdere reacties',ratingOpened:'Beoordelingsissue opnieuw geopend.',ratingReplied:'Je reactie is gepubliceerd. Het issue blijft geopend.',ratingReplyMissing:'Schrijf eerst een reactie.',ratingIssueLink:'Issue op GitHub openen'}
   };
   const $=(s,r=document)=>r.querySelector(s), lang=()=>document.body.dataset.language||'de', t=k=>TEXT[lang()]?.[k]||TEXT.de[k]||k;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl=v=>{try{const u=new URL(String(v||'').trim());return ['http:','https:'].includes(u.protocol)?u.href:'';}catch{return '';}};
-  let credentials=null, selected=null, issues=[];
+  let credentials=null, selected=null, issues=[], ratings=[], selectedRating=null, selectedRatingIssue=null, selectedRatingComments=[];
   function status(message,error=false){const el=$('#ssosAdminStatus');if(el){el.textContent=message;el.classList.toggle('is-error',error);}}
   function toB64(bytes){let s='';for(let i=0;i<bytes.length;i+=0x8000)s+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(s);}
   function fromB64(s){const b=atob(String(s||'').replace(/\s/g,''));return Uint8Array.from(b,c=>c.charCodeAt(0));}
@@ -38,7 +38,7 @@
   }
   function draw(){
     const root=$('#ssosAdminPortal');if(!root)return;root.hidden=false;
-    if(credentials){root.innerHTML=dashboard();fetchIssues();return;}
+    if(credentials){root.innerHTML=dashboard();fetchIssues();fetchRatings();return;}
     root.innerHTML='<header class="ssos-admin-head"><div><p class="eyebrow">SCHLEIM OS · PRIVATE ACCESS</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div><span>🔐</span></header>'+
       '<div class="ssos-admin-grid">'+
       '<form id="ssosAdminCreateForm" class="ssos-card ssos-form"><h4>'+esc(t('setup'))+'</h4><p>'+esc(t('setupText'))+'</p>'+
@@ -56,8 +56,14 @@
     return '<header class="ssos-admin-head"><div><p class="eyebrow">SCHLEIM OS · ADMIN</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('session'))+'</p></div><span>🔓</span></header>'+
       '<div class="ssos-admin-toolbar"><button id="ssosAdminRefresh" class="app-button secondary" type="button">'+esc(t('refresh'))+'</button><button id="ssosAdminLogout" class="app-button secondary" type="button">'+esc(t('logout'))+'</button></div>'+
       '<p id="ssosAdminStatus" class="ssos-admin-status" role="status" aria-live="polite">'+esc(t('logged'))+'</p>'+
-      '<div class="ssos-admin-grid ssos-admin-review-grid"><section class="ssos-card"><h4>'+esc(t('pending'))+'</h4><div id="ssosAdminIssues"><p>'+esc(t('loading'))+'</p></div></section>'+
-      '<section class="ssos-card"><h4>'+esc(t('edit'))+'</h4><p id="ssosAdminHint">'+esc(t('choose'))+'</p><div id="ssosAdminForm"></div></section></div>';
+      '<div class="ssos-admin-grid ssos-admin-review-grid">'+
+        '<section class="ssos-card"><h4>'+esc(t('pending'))+'</h4><div id="ssosAdminIssues" class="ssos-admin-issue-list"><p>'+esc(t('loading'))+'</p></div></section>'+
+        '<section class="ssos-card"><h4>'+esc(t('edit'))+'</h4><p id="ssosAdminHint">'+esc(t('choose'))+'</p><div id="ssosAdminForm"></div></section>'+
+      '</div>'+
+      '<div class="ssos-admin-grid ssos-admin-review-grid ssos-admin-ratings-grid">'+
+        '<section class="ssos-card"><h4>'+esc(t('ratings'))+'</h4><div id="ssosAdminRatings" class="ssos-admin-issue-list"><p>'+esc(t('loading'))+'</p></div></section>'+
+        '<section class="ssos-card"><h4>'+esc(t('ratingReplyTitle'))+'</h4><p id="ssosAdminRatingHint">'+esc(t('choose'))+'</p><div id="ssosAdminRatingDetails"></div></section>'+
+      '</div>';
   }
   function permissionMessage(error){
     const path=String(error?.apiPath||''),method=String(error?.httpMethod||'GET').toUpperCase();
@@ -217,6 +223,88 @@
       root.innerHTML=issues.length?issues.map(x=>'<button type="button" class="ssos-admin-issue'+(selected?.number===x.number?' selected':'')+'" data-admin-issue="'+x.number+'"><b>'+esc(x.title)+'</b><small>#'+x.number+' · '+esc(t('created'))+' '+esc(new Date(x.created_at).toLocaleDateString())+'</small></button>').join():'<p>'+esc(t('empty'))+'</p>';
     }catch(e){const message=permissionMessage(e);root.innerHTML='<p class="ssos-admin-error">'+esc(message)+'</p>';status(message,true);}
   }
+  async function fetchRatings(){
+    const root=$('#ssosAdminRatings');if(!root||!credentials)return;
+    root.innerHTML='<p>'+esc(t('loading'))+'</p>';
+    try{
+      const listing=await api('/contents/Bewertungen?ref='+encodeURIComponent(BRANCH));
+      const files=(Array.isArray(listing)?listing:[]).filter(item=>item.type==='file'&&/^\\d+\\.json$/i.test(item.name));
+      const loaded=await Promise.all(files.map(async item=>{
+        const payload=await api('/contents/'+item.path.split('/').map(encodeURIComponent).join('/')+'?ref='+encodeURIComponent(BRANCH));
+        const value=JSON.parse(new TextDecoder().decode(fromB64(payload.content)));
+        return {...value,issueNumber:Number(value.issueNumber||item.name.replace(/\\.json$/i,''))};
+      }));
+      ratings=loaded.filter(item=>Number.isInteger(item.issueNumber)&&item.issueNumber>0&&item.githubUsername&&Number(item.rating)>=1&&Number(item.rating)<=5);
+      ratings.sort((a,b)=>new Date(b.submittedAt||0)-new Date(a.submittedAt||0));
+      root.innerHTML=ratings.length?ratings.map(item=>
+        '<button type="button" class="ssos-admin-issue'+(selectedRating?.issueNumber===item.issueNumber?' selected':'')+'" data-admin-rating="'+item.issueNumber+'">'+
+          '<b>'+esc(item.appName||item.appId)+' · '+('★'.repeat(Number(item.rating)))+('☆'.repeat(5-Number(item.rating)))+'</b>'+
+          '<small>@'+esc(item.githubUsername)+' · #'+item.issueNumber+' · '+esc(new Date(item.submittedAt).toLocaleDateString())+'</small></button>'
+      ).join(''):'<p class="ssos-admin-empty">'+esc(t('ratingEmpty'))+'</p>';
+    }catch(e){
+      ratings=[];
+      const message=e.httpStatus===404?t('ratingEmpty'):permissionMessage(e);
+      root.innerHTML='<p class="'+(e.httpStatus===404?'ssos-admin-empty':'ssos-admin-error')+'">'+esc(message)+'</p>';
+      if(e.httpStatus!==404)status(message,true);
+    }
+  }
+  function renderRatingReview(record,issue,comments){
+    const rating=Number(record.rating);
+    const thread=comments.length?comments.map(comment=>
+      '<article class="ssos-admin-rating-comment"><b>'+esc(comment.user?.login||'GitHub')+' · '+esc(new Date(comment.created_at).toLocaleString())+'</b><p>'+esc(comment.body||'')+'</p></article>'
+    ).join(''):'<p class="ssos-admin-note">—</p>';
+    const state=issue.state==='open'?t('ratingAlreadyOpen'):'Geschlossen';
+    const issueUrl=issue.html_url||record.issueUrl||'';
+    return '<div class="ssos-admin-rating-record">'+
+      '<p><b>'+esc(t('ratingUser'))+':</b> @'+esc(record.githubUsername)+'</p>'+
+      '<p><b>'+esc(t('ratingScore'))+':</b> <span class="ssos-admin-rating-stars">'+('★'.repeat(rating))+('☆'.repeat(5-rating))+'</span> ('+rating+'/5)</p>'+
+      '<p><b>'+esc(t('ratingFeedback'))+':</b></p><div class="ssos-admin-rating-feedback">'+esc(record.feedback||'—')+'</div>'+
+      '<p><b>Issue #'+record.issueNumber+'</b> · '+esc(state)+' · <a href="'+esc(issueUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(t('ratingIssueLink'))+' ↗</a></p>'+
+      '<h5>'+esc(t('ratingThread'))+'</h5><div class="ssos-admin-rating-thread">'+thread+'</div>'+
+      '<label for="ssosAdminRatingReply">'+esc(t('ratingReplyTitle'))+'</label>'+
+      '<textarea id="ssosAdminRatingReply" rows="5" maxlength="4000" placeholder="'+esc(t('ratingReplyPlaceholder'))+'"></textarea>'+
+      '<div class="ssos-form-actions">'+
+        '<button id="ssosAdminReopenRating" class="app-button secondary" type="button" '+(issue.state==='open'?'disabled':'')+'>'+esc(t('ratingReopen'))+'</button>'+
+        '<button id="ssosAdminSendRatingReply" class="app-button" type="button">'+esc(t('ratingSendReply'))+'</button>'+
+      '</div></div>';
+  }
+  async function chooseRating(number){
+    selectedRating=ratings.find(item=>item.issueNumber===Number(number))||null;
+    selectedRatingIssue=null;selectedRatingComments=[];
+    const details=$('#ssosAdminRatingDetails'),hint=$('#ssosAdminRatingHint');
+    if(!selectedRating){if(details)details.innerHTML='';if(hint)hint.textContent=t('choose');return;}
+    if(hint)hint.textContent=(selectedRating.appName||selectedRating.appId)+' · @'+selectedRating.githubUsername;
+    if(details)details.innerHTML='<p>'+esc(t('loading'))+'</p>';
+    try{
+      selectedRatingIssue=await api('/issues/'+selectedRating.issueNumber);
+      selectedRatingComments=await api('/issues/'+selectedRating.issueNumber+'/comments?per_page=100');
+      if(details)details.innerHTML=renderRatingReview(selectedRating,selectedRatingIssue,Array.isArray(selectedRatingComments)?selectedRatingComments:[]);
+      await fetchRatings();
+    }catch(e){if(details)details.innerHTML='<p class="ssos-admin-error">'+esc(permissionMessage(e))+'</p>';status(permissionMessage(e),true);}
+  }
+  async function reopenRatingIssue(){
+    if(!selectedRating)return;
+    try{
+      selectedRatingIssue=await api('/issues/'+selectedRating.issueNumber,{method:'PATCH',body:JSON.stringify({state:'open',state_reason:'reopened'})});
+      selectedRatingComments=await api('/issues/'+selectedRating.issueNumber+'/comments?per_page=100');
+      const details=$('#ssosAdminRatingDetails');if(details)details.innerHTML=renderRatingReview(selectedRating,selectedRatingIssue,Array.isArray(selectedRatingComments)?selectedRatingComments:[]);
+      status(t('ratingOpened'));await fetchRatings();
+    }catch(e){status(permissionMessage(e),true);}
+  }
+  async function sendRatingReply(){
+    if(!selectedRating)return;
+    const reply=$('#ssosAdminRatingReply')?.value.trim().slice(0,4000)||'';
+    if(!reply){status(t('ratingReplyMissing'),true);return;}
+    try{
+      const current=await api('/issues/'+selectedRating.issueNumber);
+      if(current.state!=='open'){
+        await api('/issues/'+selectedRating.issueNumber,{method:'PATCH',body:JSON.stringify({state:'open',state_reason:'reopened'})});
+      }
+      await api('/issues/'+selectedRating.issueNumber+'/comments',{method:'POST',body:JSON.stringify({body:reply})});
+      status(t('ratingReplied'));
+      await chooseRating(selectedRating.issueNumber);
+    }catch(e){status(permissionMessage(e),true);}
+  }
   function review(issue){
     const p=parse(issue),descs={de:p.lang==='de'?p.description:'',en:p.lang==='en'?p.description:'',nl:p.lang==='nl'?p.description:''};
     const options=CATEGORIES.map(x=>'<option value="'+esc(x)+'" '+(p.category===x?'selected':'')+'>'+esc(categoryLabel(x))+'</option>').join('');
@@ -280,12 +368,15 @@
     try{await api('/issues/'+selected.number+'/comments',{method:'POST',body:JSON.stringify({body:TEXT[lang()]?.denied||TEXT.de.denied})});await api('/issues/'+selected.number,{method:'PATCH',body:JSON.stringify({state:'closed',state_reason:'not_planned'})});selected=null;const f=$('#ssosAdminForm'),h=$('#ssosAdminHint');if(f)f.innerHTML='';if(h)h.textContent=t('choose');status(t('rejected'));await fetchIssues();}
     catch(e){status('Fehler: '+e.message,true);}
   }
-  function signOut(){credentials=null;selected=null;issues=[];draw();status(t('logout'));}
+  function signOut(){credentials=null;selected=null;issues=[];ratings=[];selectedRating=null;selectedRatingIssue=null;selectedRatingComments=[];draw();status(t('logout'));}
   document.addEventListener('click',e=>{
     if(e.target.closest('#ssosOpenAdmin')){draw();return;}
-    if(e.target.closest('#ssosAdminRefresh')){fetchIssues();return;}
+    if(e.target.closest('#ssosAdminRefresh')){fetchIssues();fetchRatings();return;}
     if(e.target.closest('#ssosAdminLogout')){signOut();return;}
     const issue=e.target.closest('[data-admin-issue]');if(issue){chooseIssue(issue.dataset.adminIssue);return;}
+    const rating=e.target.closest('[data-admin-rating]');if(rating){chooseRating(rating.dataset.adminRating);return;}
+    if(e.target.closest('#ssosAdminReopenRating')){reopenRatingIssue();return;}
+    if(e.target.closest('#ssosAdminSendRatingReply')){sendRatingReply();return;}
     if(e.target.closest('#ssosAdminReject')){reject();return;}
   });
   document.addEventListener('submit',e=>{
