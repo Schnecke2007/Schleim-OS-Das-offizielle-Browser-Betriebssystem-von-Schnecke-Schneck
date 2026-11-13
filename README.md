@@ -6,7 +6,7 @@
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
+[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
 
 ## 👋 Über mich
 
@@ -20,7 +20,7 @@ Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionier
 
 ## 🧪 Schleim OS live ausprobieren
 
-[**Demo in einem neuen Browser-Tab öffnen**](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
+[**Demo in einem neuen Browser-Tab öffnen**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
 
 ## 🚀 Was ist Schleim OS?
 
