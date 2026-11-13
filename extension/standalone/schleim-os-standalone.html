@@ -600,6 +600,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     {id:'studio',name:'Creator Studio',icon:'🚀',hint:'Marke und Leistungen',keys:'creator studio google unternehmen medien software'},
     {id:'website',name:'Fan-Webseite',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'wix fan homepage unterseiten website'},
     {id:'shop',name:'Schneckenshop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'spreadshirt shop merchandise bestellung'},
+    {id:'slimestore',name:'Schleim-Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'schleim-store schleim store slime store app store apps installieren websites webapps'},
     {id:'fanapp',name:'Fan-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'NovaVoice – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant novavoice'},
@@ -620,7 +621,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','social','projects','studio','website','shop','images','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','contact','legal','settings'];
   // The old static Wix gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const WIX_GALLERY_IMAGES = [];
@@ -659,12 +660,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
-    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Ontdek apps in de Schleim-Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
   const TEXT = {
@@ -795,20 +796,20 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     $('#homeScreen .home-topline h2').innerHTML=copy.home;$('#openSearch span:nth-child(2)').textContent=copy.search;$('.gesture-hint').textContent=copy.hint;$('#controlPanel .panel-heading h2').textContent=copy.control;$('#showAllApps').innerHTML=copy.all+' <span>→</span>';$('.section-heading span').textContent=copy.discover;
     $('#searchInput').placeholder=lang==='de'?'Was suchst du?':lang==='en'?'What are you looking for?':'Waar ben je naar op zoek?';
     const cp=$('#controlPanel'); const labels=lang==='de'?['WLAN','Bluetooth','Ruhemodus','Töne','Mobile Daten','Autom. Drehen','Taschenlampe']:lang==='en'?['Wi-Fi','Bluetooth','Do not disturb','Sounds','Mobile data','Auto-rotate','Flashlight']:['Wifi','Bluetooth','Niet storen','Geluid','Mobiele gegevens','Automatisch draaien','Zaklamp'];
-    $('[data-toggle]',cp).forEach((b,i)=>{const label=$('b',b);if(label)label.textContent=labels[i]||label.textContent;});
+    $$('[data-toggle]',cp).forEach((b,i)=>{const label=$('b',b);if(label)label.textContent=labels[i]||label.textContent;});
     const controlLabels=lang==='de'?['Displayhelligkeit','Glas-Effekt','Medienlautstärke','Hintergrund','Wähle deinen Look']:lang==='en'?['Screen brightness','Glass effect','Media volume','Wallpaper','Choose your look']:['Schermhelderheid','Glaseffect','Mediavolume','Achtergrond','Kies je stijl'];
-    $('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
+    $$('.slider-card b').forEach((el,i)=>{if(controlLabels[i])el.textContent=controlLabels[i];});$('.wallpaper-title b').textContent=controlLabels[3];$('.wallpaper-title small').textContent=controlLabels[4];
 
     const desktop={
-      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
-      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
-      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
+      de:{explore:'ENTDECKEN',quick:'SCHNELLZUGRIFF',home:'Startseite',about:'Über mich',projects:'Projekte',social:'Social Media',shop:'Schneckenshop',store:'Schleim-Store',studio:'Creator Studio',website:'Fan-Webseite',images:'Bilder',legal:'Rechtliches',contact:'Kontakt',settings:'Einstellungen',digital:'Digitale Welt',profile:'Creator-Profil',view:'Profil ansehen',featured:'PROJEKT IM SPOTLIGHT',exploreProject:'Entdecken',connect:'KONTAKT'},
+      en:{explore:'EXPLORE',quick:'QUICK ACCESS',home:'Home',about:'About',projects:'Projects',social:'Social media',shop:'Snail shop',store:'Schleim-Store',studio:'Creator Studio',website:'Fan website',images:'Images',legal:'Legal',contact:'Contact',settings:'Settings',digital:'Digital world',profile:'Creator profile',view:'View profile',featured:'FEATURED PROJECT',exploreProject:'Explore',connect:'CONNECT'},
+      nl:{explore:'ONTDEKKEN',quick:'SNELLE TOEGANG',home:'Startpagina',about:'Over mij',projects:'Projecten',social:'Sociale media',shop:'Slakkenwinkel',store:'Schleim-Store',studio:'Creator Studio',website:'Fanwebsite',images:'Afbeeldingen',legal:'Juridisch',contact:'Contact',settings:'Instellingen',digital:'Digitale wereld',profile:'Creatorprofiel',view:'Bekijk profiel',featured:'UITGELICHT PROJECT',exploreProject:'Ontdekken',connect:'CONTACT'}
     }[lang];
-    const side=$('.desktop-sidebar'); if(side){const labels=$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
-    const info=$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
+    const side=$('.desktop-sidebar'); if(side){const labels=$$('.desktop-sidebar-label',side);if(labels[0])labels[0].textContent=desktop.explore;if(labels[1])labels[1].textContent=desktop.quick;const btns=$$('button span',side);[desktop.home,desktop.about,desktop.projects,desktop.social,desktop.shop,desktop.store,desktop.studio,desktop.website,desktop.images,desktop.legal,desktop.contact,desktop.settings].forEach((v,i)=>{if(btns[i])btns[i].textContent=v;});}
+    const info=$$('.desktop-info-card');if(info.length){const profile=info[0];const eyebrow=$('.eyebrow',profile);if(eyebrow)eyebrow.textContent=desktop.profile.toUpperCase();const btn=$('button',profile);if(btn)btn.textContent=desktop.view+' ↗';const second=info[1];if(second){const e=$('.eyebrow',second);if(e)e.textContent=desktop.featured;const b=$('button',second);if(b)b.textContent=desktop.exploreProject+' ↗';}const third=info[2];if(third){const e=$('.eyebrow',third);if(e)e.textContent=desktop.connect;const b=$('button',third);if(b)b.textContent='✉️ '+desktop.contact+' the Creator Studio ↗';}}
     const topDate=$('#introScreen .intro-footer span:first-child');if(topDate)topDate.textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24 EDITION';
     const foot=$('.control-footnote');if(foot)foot.textContent=lang==='de'?'Die Schnellschalter und Regler bilden die One-UI-Optik nach. Eine Browser-Webapp kann die echten Funk-, Taschenlampen- oder Medienlautstärke-Funktionen des Galaxy S24 nicht systemweit steuern.':lang==='en'?'The quick toggles and sliders reproduce the One UI look. A browser app cannot control the Galaxy device’s actual radios, flashlight or system media volume.':'De snelle schakelaars en schuifregelaars bootsen de One UI-stijl na. Een browserapp kan de echte radiofuncties, zaklamp of systeemmediavolume van het Galaxy-apparaat niet bedienen.';
-    const actions=$('.panel-actions button');const actionLabels=lang==='de'?['Darstellung wechseln','Bewegung reduzieren','Bildschirm sperren']:lang==='en'?['Switch appearance','Reduce motion','Lock screen']:['Weergave wisselen','Beweging verminderen','Scherm vergrendelen'];actions.forEach((b,i)=>{const span=$('span',b);if(span&&actionLabels[i])span.textContent=actionLabels[i];});
+    const actions=$$('.panel-actions button');const actionLabels=lang==='de'?['Darstellung wechseln','Bewegung reduzieren','Bildschirm sperren']:lang==='en'?['Switch appearance','Reduce motion','Lock screen']:['Weergave wisselen','Beweging verminderen','Scherm vergrendelen'];actions.forEach((b,i)=>{const span=$('span',b);if(span&&actionLabels[i])span.textContent=actionLabels[i];});
     const lockCaption=$('#lockScreen .lock-bottom p');if(lockCaption)lockCaption.textContent=lang==='de'?'Zum Entsperren antippen':lang==='en'?'Tap to unlock':'Tik om te ontgrendelen';
     const footBrand=$('#introScreen .intro-footer span:last-child');if(footBrand)footBrand.textContent='BUILT WITH 🐌';
     const homeHero=$('#heroStudio .hero-bottom span:first-child');if(homeHero)homeHero.textContent=lang==='de'?'Schön, dass du hier bist.':lang==='en'?'Glad you are here.':'Fijn dat je hier bent.';
@@ -823,7 +824,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   function chooseLanguage(lang){
     if(!LANGUAGES[lang])return;
     selectedLanguage=lang;
-    $('[data-language-choice]').forEach(b=>b.classList.toggle('selected',b.dataset.languageChoice===lang));
+    $$('[data-language-choice]').forEach(b=>b.classList.toggle('selected',b.dataset.languageChoice===lang));
     const prompt={
       de:{eyebrow:'WILLKOMMEN IN DER DIGITALEN WELT',title:'Welche Sprache sprichst du?',copy:'Wähle eine Sprache für dein Besuchererlebnis.',foot:'Du kannst die Sprache später in den Einstellungen ändern.',next:'Weiter'},
       en:{eyebrow:'WELCOME TO THE DIGITAL WORLD',title:'Which language do you speak?',copy:'Choose a language for your visitor experience.',foot:'You can change the language later in Settings.',next:'Continue'},
@@ -1165,6 +1166,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
+    slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Schleim-Store konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
@@ -1193,7 +1195,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     try{
       rendered=RENDERERS[id]();
       if(typeof rendered!=='string'||!rendered.trim())throw new Error('The app renderer returned no content.');
-      els.appContent.innerHTML=id==='legal'?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     }catch(error){
       console.error('[Schleim OS] Could not open app:',id,error);
       if(id==='images'){
@@ -1201,9 +1203,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       }else{
         rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
       }
-      els.appContent.innerHTML=(id==='legal')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     }
-    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
@@ -1224,13 +1226,13 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     document.documentElement.style.setProperty('--screen-brightness',String(state.brightness/100));
     document.documentElement.style.setProperty('--glass',state.glass+'%');document.documentElement.style.setProperty('--glass-blur',(state.glass/5)+'px');
     document.body.classList.toggle('reduce-motion',state.reduceMotion);
-    $('.wall-choice').forEach(b=>b.classList.toggle('selected',b.dataset.wall===state.wallpaper));
+    $$('.wall-choice').forEach(b=>b.classList.toggle('selected',b.dataset.wall===state.wallpaper));
     const fields=[['brightnessSlider','brightnessOutput',state.brightness],['glassSlider','glassOutput',state.glass],['volumeSlider','volumeOutput',state.volume]];
     fields.forEach(([input,output,value])=>{const el=$('#'+input),out=$('#'+output);if(el)el.value=value;if(out)out.textContent=value+'%';});
   }
   function syncControl(){
     applySettings();
-    $('[data-toggle]').forEach(b=>{const key=b.dataset.toggle,on=!!state[key];b.classList.toggle('active',on);const small=$('small',b);if(small)small.textContent=currentLanguage()==='de'?(on?'Ein':'Aus'):currentLanguage()==='en'?(on?'On':'Off'):(on?'Aan':'Uit');});
+    $$('[data-toggle]').forEach(b=>{const key=b.dataset.toggle,on=!!state[key];b.classList.toggle('active',on);const small=$('small',b);if(small)small.textContent=currentLanguage()==='de'?(on?'Ein':'Aus'):currentLanguage()==='en'?(on?'On':'Off'):(on?'Aan':'Uit');});
   }
   function renderSearch(query){
     const q=query.trim().toLocaleLowerCase(currentLanguage());
@@ -1285,12 +1287,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function deviceLabel(type){return type==='desktop'?'Samsung Galaxy Book6 Pro':type==='tablet'?'Samsung Galaxy Tab S12 Ultra':'Samsung Galaxy S24';}
   function deviceHint(type){return type==='desktop'?'Desktop workspace · laptop layout':type==='tablet'?'Tablet interface · wide touch layout':'Smartphone interface · mobile layout';}
-  function renderDevicePreviewButtons(){ $('[data-preview-device]').forEach(b=>b.classList.toggle('active',b.dataset.previewDevice===deviceOverride)); }
+  function renderDevicePreviewButtons(){ $$('[data-preview-device]').forEach(b=>b.classList.toggle('active',b.dataset.previewDevice===deviceOverride)); }
   function updateDevice(){detectedDevice=detectDevice();document.body.dataset.device=detectedDevice;$('#deviceDetectedLabel').textContent=deviceLabel(detectedDevice);$('#deviceDetectedHint').textContent=deviceHint(detectedDevice);$('#deviceModelLabel').textContent=detectedDevice==='desktop'?'GALAXY BOOK6 PRO':detectedDevice==='tablet'?'GALAXY TAB S12 ULTRA':'GALAXY S24';renderDevicePreviewButtons();}
   window.addEventListener('resize',()=>{if(deviceOverride==='auto')updateDevice();});
-  $('[data-preview-device]').forEach(b=>b.addEventListener('click',()=>{deviceOverride=b.dataset.previewDevice;persist('deviceOverride',deviceOverride);updateDevice();}));
+  $$('[data-preview-device]').forEach(b=>b.addEventListener('click',()=>{deviceOverride=b.dataset.previewDevice;persist('deviceOverride',deviceOverride);updateDevice();}));
 
-  $('[data-language-choice]').forEach(b=>b.addEventListener('click',()=>chooseLanguage(b.dataset.languageChoice)));
+  $$('[data-language-choice]').forEach(b=>b.addEventListener('click',()=>chooseLanguage(b.dataset.languageChoice)));
   $('#confirmLanguage').addEventListener('click',confirmLanguage);
   function initializeLanguage(){
     if(LANGUAGES[state.language]){
@@ -1374,7 +1376,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='l'){e.preventDefault();els.lock.classList.remove('hidden');}
   });
   document.addEventListener('click',e=>{
-    if(e.target.closest('[data-expand-legal]')){$('.legal-section').forEach(d=>d.open=true);}
+    if(e.target.closest('[data-expand-legal]')){$$('.legal-section').forEach(d=>d.open=true);}
     if(e.target.closest('#resetSettings'))resetSettings();
   });
   document.addEventListener('change',e=>{
@@ -1406,7 +1408,6 @@ window.SSOS_LEGAL_TRANSLATIONS = {
 
   applySettings();updateClock();setInterval(updateClock,15000);
 })();
-
 </script>
   <script data-source="scripts/personalization.js">
 (() => {
@@ -1424,8 +1425,8 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Sperrbildschirm', city:'Wetter-Ort / Stadt', weather:'Wetter aktualisieren', shortcuts:'Sperrbildschirm-Verknüpfungen',
       shortcutName:'Name', shortcutUrl:'Ziel-URL', shortcutIcon:'Symbol', saveLock:'Sperrbildschirm speichern',
       export:'Homescreen exportieren', import:'Homescreen importieren', backup:'Konfigurationsdatei (JSON)',
-      backupInfo:'Sichert deine gespeicherten Webseiten, Store-Installationen und Bewertungen sowie Sprache, Farbe, Hintergrund und Sperrbildschirm-Einstellungen.',
-      exportDone:'Konfiguration exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.',
+      backupInfo:'Deine Einstellungen bleiben lokal in diesem Browser. Exportiere eine JSON-Datei als Sicherung und importiere sie bei Bedarf auf diesem oder einem anderen Gerät. Es gibt keine automatische Cloud-Synchronisierung.',
+      exportDone:'JSON-Sicherung exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.', importConfirm:'Der Import ersetzt die in der Sicherungsdatei enthaltenen Einstellungen. Möchtest du fortfahren?',
       designSaved:'Personalisierung gespeichert.', wallpaperSaved:'Hintergrundbild gespeichert.', weatherPending:'Wetter wird geladen …',
       weatherMissing:'Lege in den Einstellungen eine Stadt fest.', weatherError:'Wetterdaten konnten nicht geladen werden.',
       swipe:'Nach oben wischen oder antippen zum Entsperren', shortcutDefaults:'Google, Karten und YouTube sind Beispiel-Verknüpfungen und können geändert werden.',
@@ -1439,8 +1440,8 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Lock screen', city:'Weather location / city', weather:'Refresh weather', shortcuts:'Lock screen shortcuts',
       shortcutName:'Name', shortcutUrl:'Target URL', shortcutIcon:'Icon', saveLock:'Save lock screen',
       export:'Export home screen', import:'Import home screen', backup:'Configuration file (JSON)',
-      backupInfo:'Backs up your saved websites, Store installations and ratings, language, color, wallpaper and lock screen settings.',
-      exportDone:'Configuration exported.', importBad:'This configuration file is invalid or incompatible.',
+      backupInfo:'Your settings stay local in this browser. Export a JSON file as a backup and import it when needed on this or another device. There is no automatic cloud sync.',
+      exportDone:'JSON backup exported.', importBad:'This configuration file is invalid or incompatible.', importConfirm:'Importing replaces the settings contained in the backup file. Do you want to continue?',
       designSaved:'Personalization saved.', wallpaperSaved:'Wallpaper saved.', weatherPending:'Loading weather …',
       weatherMissing:'Set a city in Settings.', weatherError:'Could not load weather data.',
       swipe:'Swipe up or tap to unlock', shortcutDefaults:'Google, Maps and YouTube are sample shortcuts and can be edited.',
@@ -1454,8 +1455,8 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Vergrendelscherm', city:'Weerlocatie / stad', weather:'Weer vernieuwen', shortcuts:'Snelkoppelingen op vergrendelscherm',
       shortcutName:'Naam', shortcutUrl:'Doel-URL', shortcutIcon:'Symbool', saveLock:'Vergrendelscherm opslaan',
       export:'Startscherm exporteren', import:'Startscherm importeren', backup:'Configuratiebestand (JSON)',
-      backupInfo:'Maakt een back-up van je opgeslagen websites, Store-installaties en beoordelingen, taal, kleur, achtergrond en vergrendelscherminstellingen.',
-      exportDone:'Configuratie geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.',
+      backupInfo:'Je instellingen blijven lokaal in deze browser. Exporteer een JSON-bestand als back-up en importeer het indien nodig op dit of een ander apparaat. Er is geen automatische cloudsynchronisatie.',
+      exportDone:'JSON-back-up geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.', importConfirm:'Door te importeren worden de instellingen uit het back-upbestand vervangen. Wil je doorgaan?',
       designSaved:'Personalisatie opgeslagen.', wallpaperSaved:'Achtergrond opgeslagen.', weatherPending:'Weer wordt geladen …',
       weatherMissing:'Stel een stad in bij Instellingen.', weatherError:'Weergegevens konden niet worden geladen.',
       swipe:'Veeg omhoog of tik om te ontgrendelen', shortcutDefaults:'Google, Maps en YouTube zijn voorbeeldsnelkoppelingen en kunnen worden aangepast.',
@@ -1525,14 +1526,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function appCollection(source) {
     if(!source||typeof source!=='object')return null;
-    let empty=null;
     for(const key of ['apps','customApps','savedApps','websites','customWebsites','websiteShortcuts','appShortcuts','webShortcuts','homeApps','savedLinks','links','bookmarks','shortcuts','customLinks','tiles','items']) {
       const value=source[key];
       if(Array.isArray(value)&&value.length)return value;
       if(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length)return value;
-      if(Array.isArray(value)||value&&typeof value==='object')empty=value;
     }
-    return empty;
+    return null;
   }
 
   const STORE_KEY = 'ssos-store-v1';
@@ -1759,7 +1758,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function renderHomeTiles() {
     const grid=$('#homeAppGrid');if(!grid)return;
-    $('.ssos-store-tile,.ssos-custom-tile',grid).forEach(el=>el.remove());
+    $$('.ssos-store-tile,.ssos-custom-tile',grid).forEach(el=>el.remove());
     config.apps.forEach(app=>{
       const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-custom-tile';
       tile.dataset.ssosCustomApp=app.id;tile.title=app.name;
@@ -1825,7 +1824,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     const searchBox=$('#ssosStoreSearchResults');if(searchBox)searchBox.hidden=!q;
     root.hidden=!!q;
     set('ssosStoreSearchList',matches.map(storeCard).join('')||'<p class="body-copy">'+esc(st('noResults'))+'</p>');
-    $('#ssosStoreCategories [data-ssos-store-category]').forEach(button=>button.classList.toggle('selected',button.dataset.ssosStoreCategory===category));
+    $$('#ssosStoreCategories [data-ssos-store-category]').forEach(button=>button.classList.toggle('selected',button.dataset.ssosStoreCategory===category));
   }
   function renderStore(){
     storeView.query='';storeView.category='all';
@@ -1974,8 +1973,14 @@ window.SSOS_LEGAL_TRANSLATIONS = {
         <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosSaveLock">${esc(t('saveLock'))}</button><button class="app-button secondary" type="button" id="ssosRefreshWeather">${esc(t('weather'))}</button></div>
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
-      <div class="ssos-card"><h4>📦 ${esc(t('backup'))}</h4><p class="body-copy">${esc(t('backupInfo'))}</p>
-        <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosExport">⬇ ${esc(t('export'))}</button><label class="app-button secondary ssos-file-label">⬆ ${esc(t('import'))}<input type="file" id="ssosImportFile" accept="application/json,.json"></label></div>
+      <div class="ssos-card">
+        <h4>💾 ${esc(t('backup'))}</h4>
+        <p class="body-copy">${esc(t('backupInfo'))}</p>
+        <div class="ssos-form-actions">
+          <button class="app-button" type="button" id="ssosExport">${esc(t('export'))}</button>
+          <button class="app-button secondary" type="button" id="ssosImportTrigger">${esc(t('import'))}</button>
+        </div>
+        <input id="ssosImportFile" type="file" accept=".json,application/json" hidden>
       </div>
 `;
     mount.appendChild(section);
@@ -2077,6 +2082,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??legacyMap??directArray;
       const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
       if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
+      if(!confirm(t('importConfirm')))return;
       for(const [key,value] of Object.entries(preferences)){
         if(!/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)||key===KEY)continue;
         localStorage.setItem(key,JSON.stringify(value));
@@ -2095,10 +2101,20 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       toast(t('importBad'));
     }
   }
+  function clearRetiredCloudCredentials() {
+    const area = globalThis.chrome?.storage?.local;
+    if (!area?.remove) return;
+    try {
+      const result = area.remove(['ssosGithubCloudAuth','ssosGithubCloudState','ssosGithubCloudSnapshot','ssosGithubCloudLastError']);
+      if (result && typeof result.catch === 'function') result.catch(() => {});
+    } catch {}
+  }
   function refreshSettingsIfOpen() { if ($('#resetSettings')) renderSettingsTools(); }
   function init() {
+    clearRetiredCloudCredentials();
     renderHomeTiles(); renderLockScreen(); applyVisuals();
-
+    loadStoreCatalog();
+    loadStoreRatings();
     if (config.weatherCity) refreshWeather();
     const appContent=$('#appContent'); if(appContent){new MutationObserver(()=>refreshSettingsIfOpen()).observe(appContent,{childList:true,subtree:true});}
     window.addEventListener('ssos-home-grid-rendered', renderHomeTiles);
@@ -2130,6 +2146,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       if(e.target.closest('#ssosSaveLock')){saveLockSettings();return;}
       if(e.target.closest('#ssosRefreshWeather')){config.weatherCity=$('#ssosWeatherCity')?.value.trim()||'';saveConfig();refreshWeather();return;}
       if(e.target.closest('#ssosExport')){exportBackup();return;}
+      if(e.target.closest('#ssosImportTrigger')){$('#ssosImportFile')?.click();return;}
       const lockUrl=e.target.closest('[data-ssos-lock-url]');if(lockUrl){window.open(lockUrl.dataset.ssosLockUrl,'_blank','noopener,noreferrer');return;}
     });
     document.addEventListener('input',e=>{
@@ -2154,7 +2171,9 @@ window.SSOS_LEGAL_TRANSLATIONS = {
         try{config.wallpaperData=await compressImage(file,1500000);config.wallpaperUrl='';saveConfig();toast(t('wallpaperSaved'));}catch{toast(t('fileTooLarge'));}
       }
       if(e.target.id==='ssosImportFile'){
-        const file=e.target.files?.[0];if(file)await importBackup(file);
+        const file=e.target.files?.[0];
+        if(file)await importBackup(file);
+        e.target.value='';
       }
     });
   }
@@ -2162,17 +2181,18 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     const app=config.apps.find(item=>item.id===String(id));
     const url=safeUrl(app?.url);
     if(!app||!url){toast(st('invalid'));return false;}
+    // Use the same direct, user-initiated window.open path as installed Store apps.
+    // Synthetic anchor clicks can be blocked by some mobile Chromium browsers.
     window.open(url,'_blank','noopener,noreferrer');
     return true;
   }
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp});
+  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, refreshStoreRatings:loadStoreRatings, getStoreCatalog:()=>STORE_CATALOG.map(app=>({...app,description:{...app.description}})), exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp, openStoreApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
-
 </script>
 </body>
 </html>
