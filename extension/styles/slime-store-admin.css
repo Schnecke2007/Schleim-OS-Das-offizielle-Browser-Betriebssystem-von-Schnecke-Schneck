@@ -32,3 +32,20 @@
 .ssos-admin-review-grid .ssos-form-actions{display:flex;flex-wrap:wrap;gap:8px}
 .ssos-admin-review-grid .ssos-form-actions .app-button{flex:1;margin:0;justify-content:center}
 @media(max-width:650px){.ssos-admin-review-grid{grid-template-columns:1fr}.ssos-admin-portal{padding:12px}.ssos-admin-head h3{font-size:16px}}
+
+/* Community rating moderation */
+.ssos-admin-ratings-grid{margin-top:12px}
+.ssos-admin-rating-record{display:grid;gap:8px}
+.ssos-admin-rating-record>p{margin:0 0 4px}
+.ssos-admin-rating-record h5{font-size:10px;margin:8px 0 4px}
+.ssos-admin-rating-stars{color:#f2c15d;letter-spacing:2px}
+.ssos-admin-rating-feedback{padding:10px;border:1px solid var(--line);border-radius:10px;background:#0002;font-size:10px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.ssos-admin-rating-thread{display:grid;gap:7px;max-height:220px;overflow:auto}
+.ssos-admin-rating-comment{padding:9px;border:1px solid var(--line);border-radius:10px;background:#ffffff08}
+.ssos-admin-rating-comment b{display:block;font-size:8px;color:var(--muted);margin-bottom:4px}
+.ssos-admin-rating-comment p{margin:0;font-size:9px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.ssos-admin-rating-record>label{font-size:9px;font-weight:700}
+.ssos-admin-portal #ssosAdminRatingReply{width:100%;min-height:100px;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:#0c0908;color:var(--ink);font:inherit;font-size:10px;line-height:1.55;resize:vertical;outline-color:var(--accent)}
+.ssos-admin-rating-record .ssos-form-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ssos-admin-rating-record .ssos-form-actions .app-button{flex:1;margin:0;justify-content:center}
+.ssos-admin-rating-record .app-button:disabled{opacity:.55;cursor:default}
