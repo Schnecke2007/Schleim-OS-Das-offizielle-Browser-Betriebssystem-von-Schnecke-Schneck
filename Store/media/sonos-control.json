@@ -1,0 +1,15 @@
+{
+  "id": "sonos-control",
+  "name": "Sonos",
+  "icon": "🔊",
+  "url": "https://www.sonos.com/",
+  "category": "media",
+  "addedAt": "2026-11-14",
+  "featured": true,
+  "tags": "sonos lautsprecher musik audio multiroom spotify radio wiedergabe",
+  "description": {
+    "de": "Native Schleim-OS-App zur Steuerung deiner Sonos-Lautsprecher, Wiedergabe, Lautstärke, Favoriten und Playlists.",
+    "en": "Native Schleim OS app to control your Sonos speakers, playback, volume, favorites and playlists.",
+    "nl": "Native Schleim OS-app om je Sonos-speakers, afspelen, volume, favorieten en afspeellijsten te bedienen."
+  }
+}
