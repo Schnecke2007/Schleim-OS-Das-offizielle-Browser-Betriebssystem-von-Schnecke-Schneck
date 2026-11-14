@@ -755,3 +755,5 @@
 
   window.SSOSSonosApp = Object.freeze({ render, mount });
 })();
+
+// Validated by .github/workflows/sonos-validation.yml.
