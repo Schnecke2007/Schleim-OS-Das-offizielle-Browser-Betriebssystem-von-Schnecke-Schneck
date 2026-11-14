@@ -326,7 +326,7 @@
     try {
       const bytes = new Uint8Array(await file.slice(0, 4 * 1024 * 1024).arrayBuffer());
       if (type === 'image/png') {
-        if (readAscii(bytes, 1) !== 'PNG') return true;
+        if (bytes[0] !== 0x89 || bytes[1] !== 0x50 || bytes[2] !== 0x4e || bytes[3] !== 0x47) return true;
         let offset = 8;
         while (offset + 12 <= bytes.length) {
           const length = readUint32BE(bytes, offset);

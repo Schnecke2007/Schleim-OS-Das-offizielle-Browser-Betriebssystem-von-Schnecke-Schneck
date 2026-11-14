@@ -84,6 +84,7 @@ test('Media uploads use date folders, metadata and a bounded file size', () => {
 test('Photo uploads compress still images before storing them', () => {
   assert.match(photosCloudSource, /const MAX_IMAGE_EDGE = 2560/);
   assert.match(photosCloudSource, /const WEBP_QUALITY = 0\.9/);
+  assert.match(photosCloudSource, /bytes\[0\] !== 0x89 \|\| bytes\[1\] !== 0x50/);
   assert.match(photosCloudSource, /async function isAnimatedImage\(file\)/);
   assert.match(photosCloudSource, /chunk === 'acTL'/);
   assert.match(photosCloudSource, /chunk === 'ANIM' \|\| chunk === 'ANMF'/);
