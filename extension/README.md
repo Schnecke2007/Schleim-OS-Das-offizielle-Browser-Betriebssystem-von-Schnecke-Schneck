@@ -59,11 +59,18 @@ Die Cloud-Sicherung befindet sich ausschließlich unter **Einstellungen → Schl
 
 Das Backup wird manuell in das private Repository `schleim-os-cloud` geschrieben. Es enthält die gespeicherten Schleim-OS-Einstellungen sowie ausdrücklich die Startbildschirm-Reihenfolge, installierte Store-Apps und das Hintergrundbild. Es findet keine automatische Synchronisierung nach jeder Änderung statt.
 
-Anleitung: [Schleim-Konto und Cloud-Sicherung](docs/SCHLEIM-KONTO.md).
+Anleitung: [Schleim-Konto und Cloud-Sicherung – Deutsch](docs/SCHLEIM-KONTO.md) · [English](../docs/Englisch/SCHLEIM-ACCOUNT.md) · [Nederlands](../docs/Niederländisch/SCHLEIM-ACCOUNT.md).
 
 ## App-Kacheln anordnen
 
 Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten eine Kachel kurz gedrückt halten und an eine andere Position ziehen. Die Reihenfolge wird lokal gespeichert und in der Cloud-Sicherung mitgespeichert.
+
+## Mehrsprachige Store-Dokumentation
+
+- [Deutsch](../Store/Deutsch/README.md)
+- [English](../Store/Englisch/README.md)
+- [Nederlands](../Store/Niederländisch/README.md)
+- [Leichte Sprache / Plain language / Eenvoudige taal](../docs/README.md)
 
 ## Werbung und externe Verbindungen
 
