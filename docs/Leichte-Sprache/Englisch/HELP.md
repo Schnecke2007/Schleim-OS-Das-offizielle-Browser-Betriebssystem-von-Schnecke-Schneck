@@ -35,9 +35,19 @@ Some websites do not allow their pages to be shown inside Schleim OS.
 
 ## Your settings are missing
 
-Settings are saved in the browser profile.
-Settings may not appear in another browser.
-Use your JSON backup if you made one.
+Settings are saved in your browser first.
+You can use the cloud backup on another browser.
+Open **Settings → Schleim account**.
+Sign in with the same GitHub account.
+Choose **Restore cloud backup**.
+
+## The Schleim-Store is locked
+
+You are signed out.
+Open the Store and select **Connect with GitHub**.
+Check that you installed the **Schleim OS Account** GitHub App.
+
+[Read the simple Schleim-Store guide](SCHLEIM-STORE.md)
 
 ## Need more help?
 
