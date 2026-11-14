@@ -123,7 +123,8 @@
     {id:'google-maps-web',name:'Google Maps',icon:'🗺️',url:'https://maps.google.com/',category:'navigation',addedAt:'2026-11-11',featured:false,tags:'karten routen navigation orte',description:{de:'Orte suchen, Karten ansehen und Routen planen.',en:'Find places, explore maps and plan routes.',nl:'Zoek plaatsen, bekijk kaarten en plan routes.'}},
     {id:'google-drive-web',name:'Google Drive',icon:'📁',url:'https://drive.google.com/',category:'productivity',addedAt:'2026-11-11',featured:false,tags:'dateien cloud dokumente speicher',description:{de:'Dateien und Dokumente online verwalten.',en:'Manage files and documents online.',nl:'Beheer bestanden en documenten online.'}},
     {id:'whatsapp-web',name:'WhatsApp Web',icon:'💬',url:'https://web.whatsapp.com/',category:'communication',addedAt:'2026-11-11',featured:false,tags:'nachrichten chat kommunikation',description:{de:'WhatsApp-Nachrichten im Browser nutzen.',en:'Use WhatsApp messaging in your browser.',nl:'Gebruik WhatsApp-berichten in je browser.'}},
-    {id:'duckduckgo-web',name:'DuckDuckGo',icon:'🦆',url:'https://duckduckgo.com/',category:'privacy',addedAt:'2026-11-11',featured:false,tags:'suche datenschutz privat suchen',description:{de:'Alternative Suchmaschine mit Fokus auf Datenschutz.',en:'Alternative search engine with a focus on privacy.',nl:'Alternatieve zoekmachine met aandacht voor privacy.'}}
+    {id:'duckduckgo-web',name:'DuckDuckGo',icon:'🦆',url:'https://duckduckgo.com/',category:'privacy',addedAt:'2026-11-11',featured:false,tags:'suche datenschutz privat suchen',description:{de:'Alternative Suchmaschine mit Fokus auf Datenschutz.',en:'Alternative search engine with a focus on privacy.',nl:'Alternatieve zoekmachine met aandacht voor privacy.'}},
+    {id:'sonos-control',name:'Sonos',icon:'🔊',url:'https://www.sonos.com/',category:'media',addedAt:'2026-11-14',featured:true,tags:'sonos lautsprecher musik audio multiroom spotify radio wiedergabe',description:{de:'Steuere deine Sonos-Lautsprecher, wähle Räume aus, sieh die aktuelle Wiedergabe und starte gespeicherte Sonos-Favoriten und Playlists.',en:'Control your Sonos speakers, choose rooms, view now playing and start saved Sonos favorites and playlists.',nl:'Bedien je Sonos-speakers, kies kamers, bekijk wat er wordt afgespeeld en start opgeslagen Sonos-favorieten en afspeellijsten.'}}
   ];
   let STORE_CATALOG = STORE_CATALOG_FALLBACK;
   const STORE_CATALOG_URL = 'https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/data/store-apps.json';
@@ -495,6 +496,7 @@
     if(!hasStoreAccess()){toast(st('loginRequiredToast'));return false;}
     const app=STORE_CATALOG.find(item=>item.id===String(id));
     if(!app||!storeState.installed.includes(app.id))return false;
+    if(app.id==='sonos-control'){window.dispatchEvent(new CustomEvent('ssos-open-native-app',{detail:{id:'sonos'}}));return true;}
     window.open(app.url,'_blank','noopener,noreferrer');return true;
   }
   function domainLabel(url) {
