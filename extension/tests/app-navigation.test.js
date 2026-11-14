@@ -9,6 +9,7 @@ const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-
 const personalizationSource = fs.readFileSync(path.join(root, 'scripts/personalization.js'), 'utf8');
 const accountSource = fs.readFileSync(path.join(root, 'scripts/schleim-account.js'), 'utf8');
 const photosCloudSource = fs.readFileSync(path.join(root, 'scripts/schleim-photos-cloud.js'), 'utf8');
+const photosAISource = fs.readFileSync(path.join(root, 'scripts/schleim-photo-ai.js'), 'utf8');
 const newtabSource = fs.readFileSync(path.join(root, 'pages/newtab.html'), 'utf8');
 const personalizationCss = fs.readFileSync(path.join(root, 'styles/personalization.css'), 'utf8');
 const storeCatalog = JSON.parse(fs.readFileSync(path.join(root, 'data/store-apps.json'), 'utf8'));
@@ -85,12 +86,18 @@ test('Camera uses the browser front/rear camera APIs and video recording', () =>
   assert.match(photosCloudSource, /data-camera-switch/);
 });
 
-test('Local smart search uses metadata and synonyms without requiring an API key', () => {
+test('Photos search combines metadata fallback with optional on-device AI', () => {
   assert.match(photosCloudSource, /function searchItems/);
   assert.match(photosCloudSource, /SYNONYMS/);
   assert.match(photosCloudSource, /item\.description/);
-  assert.match(photosCloudSource, /item\.capturedAt/);
-  assert.match(photosCloudSource, /automatic object recognition/);
+  assert.match(photosCloudSource, /item\.aiDescription/);
+  assert.match(photosCloudSource, /getExpandedTerms/);
+  assert.match(photosAISource, /LanguageModel\.availability/);
+  assert.match(photosAISource, /LanguageModel\.create/);
+  assert.match(photosAISource, /type:\s*'image'/);
+  assert.match(photosAISource, /No API key/i);
+  assert.match(newtabSource, /schleim-photo-ai\.js/);
+  assert.match(appSource, /data-photos-ai-search/);
 });
 
 test('Settings include a separate photo and video cloud storage panel', () => {

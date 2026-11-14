@@ -9,6 +9,7 @@ on:
       - 'extension/scripts/personalization.js'
       - 'extension/scripts/schleim-account.js'
       - 'extension/scripts/schleim-photos-cloud.js'
+      - 'extension/scripts/schleim-photo-ai.js'
       - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
       - 'extension/manifest.json'
@@ -24,6 +25,7 @@ on:
       - 'extension/scripts/personalization.js'
       - 'extension/scripts/schleim-account.js'
       - 'extension/scripts/schleim-photos-cloud.js'
+      - 'extension/scripts/schleim-photo-ai.js'
       - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
       - 'extension/manifest.json'
@@ -50,6 +52,7 @@ jobs:
           node --check extension/scripts/personalization.js
           node --check extension/scripts/schleim-account.js
           node --check extension/scripts/schleim-photos-cloud.js
+          node --check extension/scripts/schleim-photo-ai.js
       - name: Check app navigation regressions
         run: node --test extension/tests/*.test.js
       - name: Validate JSON files

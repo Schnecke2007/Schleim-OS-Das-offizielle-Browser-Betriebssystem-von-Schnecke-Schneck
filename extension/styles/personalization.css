@@ -222,3 +222,10 @@
 .ssos-photos-settings-card>h4{margin-bottom:12px}
 @media(min-width:560px){.ssos-photos-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ssos-photos-thumb{height:145px}}
 @media(max-width:380px){.ssos-photos-grid{gap:6px}.ssos-photos-thumb{height:95px}.ssos-camera-actions{gap:6px}.ssos-camera-actions .app-button{font-size:8px}}
+
+
+/* Schleim OS Photos — optional on-device AI */
+.ssos-photos-ai-actions{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 5px}
+.ssos-photos-ai-actions .app-button{flex:1 1 130px;justify-content:center;margin:0;padding:9px 10px;font-size:9px}
+.ssos-photos-ai-status{min-height:14px;margin:5px 1px 8px;color:var(--muted);font-size:8px;line-height:1.5;overflow-wrap:anywhere}
+.ssos-photos-ai-status.is-error{color:#ff9d91}

@@ -43,7 +43,7 @@
       remove: 'Aus Mediathek entfernen',
       removeConfirm: 'Medium aus der aktuellen Mediathek entfernen? GitHub behält ältere Dateiversionen in der Repository-Historie.',
       removed: 'Medium aus der aktuellen Mediathek entfernt.',
-      localSearchNote: 'Die Suche läuft lokal ohne API-Schlüssel. Sie nutzt Dateinamen, Beschreibung, Stichwörter, Medientyp und Datum; automatische Objekterkennung in Bildinhalten ist nicht aktiviert.',
+      localSearchNote: 'Die Suche funktioniert ohne API-Schlüssel. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchbegriffe erweitern. Auf anderen Geräten nutzt sie Dateinamen, Datum, Beschreibungen, Stichwörter und Synonyme.',
       cameraHint: 'Nutze die Vorder- oder Rückkamera. Aufnahmen werden direkt in deine private Foto- und Video-Cloud geladen.',
       startCamera: 'Kamera starten',
       stopCamera: 'Kamera stoppen',
@@ -98,7 +98,7 @@
       remove: 'Remove from library',
       removeConfirm: 'Remove this item from the current library? GitHub keeps previous file versions in the repository history.',
       removed: 'Item removed from the current library.',
-      localSearchNote: 'Search runs locally without an API key. It uses filenames, descriptions, tags, media type and date; automatic object recognition in image contents is not enabled.',
+      localSearchNote: 'Search works without an API key. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search terms. Other devices use filenames, dates, descriptions, tags and synonyms.',
       cameraHint: 'Use the front or rear camera. Captures are uploaded directly to your private photo and video cloud.',
       startCamera: 'Start camera',
       stopCamera: 'Stop camera',
@@ -153,7 +153,7 @@
       remove: 'Uit bibliotheek verwijderen',
       removeConfirm: 'Dit item uit de huidige bibliotheek verwijderen? GitHub bewaart oudere bestandsversies in de repositorygeschiedenis.',
       removed: 'Item uit de huidige bibliotheek verwijderd.',
-      localSearchNote: 'Zoeken gebeurt lokaal zonder API-sleutel. De zoekfunctie gebruikt bestandsnamen, beschrijvingen, tags, mediatype en datum; automatische objectherkenning in afbeeldingen is niet ingeschakeld.',
+      localSearchNote: 'Zoeken werkt zonder API-sleutel. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoektermen uitbreiden. Andere apparaten gebruiken bestandsnamen, datums, beschrijvingen, tags en synoniemen.',
       cameraHint: 'Gebruik de voor- of achtercamera. Opnamen worden direct naar je privéfoto- en videocloud geüpload.',
       startCamera: 'Camera starten',
       stopCamera: 'Camera stoppen',
@@ -386,6 +386,11 @@
     const stamp = capturedAt.getTime().toString(36);
     const id = (crypto.randomUUID?.() || (stamp + '-' + Math.random().toString(36).slice(2,10))).replace(/[^a-zA-Z0-9-]/g,'');
     const type = file.type.startsWith('video/') ? 'video' : 'photo';
+    let aiResult = null;
+    if (type === 'photo' && window.SSOSPhotoAI?.isReady?.()) {
+      try { aiResult = await window.SSOSPhotoAI.describeImage(file); }
+      catch (error) { console.warn('[Schleim OS Photos] Local AI description skipped:', error); }
+    }
     const folder = type === 'video' ? 'Videos' : 'Fotos';
     const extension = extensionFor(file);
     const filename = day + '-' + month + '-' + year + '-' + id + '.' + extension;
@@ -403,13 +408,20 @@
         console.warn('[Schleim OS Photos] Thumbnail skipped:', error);
       }
     }
+    const aiDescription = String(aiResult?.description || '').slice(0,260);
+    const aiTags = Array.isArray(aiResult?.keywords) ? aiResult.keywords : [];
+    const combinedDescription = [String(description || '').trim(), aiDescription].filter(Boolean).join(' · ').slice(0,500);
+    const tags = [...new Set([
+      ...String(description || '').toLowerCase().split(/[,\s]+/).filter(Boolean),
+      ...aiTags.map(value => String(value).toLowerCase())
+    ])].slice(0,40);
     const item = {
       id:id, name:String(file.name || filename).slice(0,180),
       type:type, mimeType:file.type || (type === 'video' ? 'video/mp4' : 'image/jpeg'),
       size:file.size, capturedAt:capturedAt.toISOString(), dateSource:captureInfo.source,
       uploadedAt:new Date().toISOString(), path:path, sha:fileSha.sha || '',
-      thumbnailPath:thumbnailPath, description:String(description || '').slice(0,500),
-      tags:String(description || '').toLowerCase().split(/[,\s]+/).filter(Boolean).slice(0,24)
+      thumbnailPath:thumbnailPath, description:combinedDescription, aiDescription:aiDescription,
+      aiTags:aiTags, tags:tags
     };
     state.items.unshift(item);
     await updateIndex(state.items);
@@ -434,26 +446,41 @@
   }
 
   const SYNONYMS = {
-    urlaub:['reise','ferien','trip','travel','vacation'], strand:['meer','beach','wasser','sand'],
-    hund:['dog','tier','haustier','welpe'], katze:['cat','tier','haustier'],
-    essen:['food','restaurant','mahlzeit'], selfie:['portrait','gesicht','person'],
-    auto:['car','fahrzeug'], screenshot:['bildschirm','screen','capture'],
-    video:['film','clip','aufnahme'], foto:['bild','photo','picture']
+    urlaub:['reise','ferien','trip','travel','vacation'], vacation:['urlaub','reise','ferien'],
+    strand:['meer','beach','wasser','sand','küste'], beach:['strand','meer','sand','coast'],
+    hund:['dog','tier','haustier','welpe'], dog:['hund','pet','puppy'],
+    katze:['cat','tier','haustier'], cat:['katze','pet'],
+    essen:['food','restaurant','mahlzeit'], food:['essen','mahlzeit','restaurant'],
+    selfie:['portrait','gesicht','person'], portrait:['selfie','portraitfoto'],
+    auto:['car','fahrzeug'], car:['auto','fahrzeug'],
+    screenshot:['bildschirm','screen','capture'], screen:['bildschirm','screenshot'],
+    video:['film','clip','aufnahme'], film:['video','clip'],
+    foto:['bild','photo','picture'], photo:['foto','bild','picture'],
+    sonnenuntergang:['abendrot','sunset'], sunset:['sonnenuntergang','abendrot'],
+    berg:['mountain','gebirge','wandern'], mountain:['berg','gebirge'],
+    schnee:['snow','winter'], snow:['schnee','winter'],
+    geburtstag:['party','feier','kuchen'], party:['geburtstag','feier']
   };
+  const SEARCH_STOP_WORDS = new Set(['am','an','auf','aus','bei','das','dem','den','der','des','die','ein','eine','einer','eines','im','in','mit','und','von','vom','zu','zum','zur','the','a','an','and','for','in','of','on','to','with','de','het','een','en','van','voor','op']);
   function searchItems(items, query, view) {
     const needle = String(query || '').toLocaleLowerCase(lang() === 'en' ? 'en' : lang() === 'nl' ? 'nl' : 'de').trim();
-    const tokens = needle.split(/[\s,.;:!?]+/).filter(Boolean);
-    const expanded = new Set(tokens);
-    tokens.forEach(token => (SYNONYMS[token] || []).forEach(term => expanded.add(term)));
-    return items.filter(item => {
-      if (view === 'photo' && item.type !== 'photo') return false;
-      if (view === 'video' && item.type !== 'video') return false;
+    const tokens = needle.split(/[\s,.;:!?]+/).filter(token => token && !SEARCH_STOP_WORDS.has(token));
+    const groups = tokens.map(token => [token, ...(SYNONYMS[token] || [])]);
+    const aiTerms = (window.SSOSPhotoAI?.getExpandedTerms?.() || []).map(value => String(value).toLowerCase()).filter(Boolean);
+    return items.map(item => {
+      if (view === 'photo' && item.type !== 'photo') return null;
+      if (view === 'video' && item.type !== 'video') return null;
       const haystack = [
-        item.name,item.description,(item.tags || []).join(' '),item.path,item.type,
+        item.name,item.description,item.aiDescription,(item.tags || []).join(' '),(item.aiTags || []).join(' '),item.path,item.type,
         item.mimeType,item.capturedAt,item.uploadedAt
       ].join(' ').toLocaleLowerCase();
-      return !expanded.size || [...expanded].every(token => haystack.includes(token));
-    }).sort((a,b) => String(b.capturedAt).localeCompare(String(a.capturedAt)));
+      if (!groups.length && !aiTerms.length) return {item, score:0};
+      const directMatches = groups.filter(group => group.some(term => haystack.includes(term))).length;
+      const aiMatches = aiTerms.filter(term => haystack.includes(term)).length;
+      const requiredMatches = groups.length <= 2 ? 1 : Math.max(1, Math.ceil(groups.length * 0.5));
+      if (directMatches < requiredMatches && aiMatches === 0) return null;
+      return {item, score:directMatches * 4 + aiMatches};
+    }).filter(Boolean).sort((a,b) => b.score - a.score || String(b.item.capturedAt).localeCompare(String(a.item.capturedAt))).map(entry => entry.item);
   }
   function renderGallery() {
     const host = $('[data-photos-gallery]');
@@ -756,6 +783,7 @@
   }
   function handleInput(event) {
     if (event.target.matches('[data-photos-search]')) {
+      window.SSOSPhotoAI?.clearExpandedTerms?.();
       state.query=event.target.value;
       renderGallery();
     }
@@ -788,6 +816,7 @@
     document.addEventListener('change',handleChange);
     window.addEventListener('ssos-app-opened',handleAppOpen);
     window.addEventListener('ssos-photos-updated',refreshOpenViews);
+    window.addEventListener('ssos-photo-ai-terms-updated',renderGallery);
     window.addEventListener('ssos-account-state-changed',() => {
       if (state.activeApp === 'images') refreshMediaApp();
       if (state.activeApp === 'settings') mountSettings();

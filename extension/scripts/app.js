@@ -470,8 +470,10 @@
       <section class="ssos-photos-app" data-photos-app>
         <p class="ssos-photos-status" data-photos-status role="status" aria-live="polite">Deine private Foto- und Video-Cloud wird geprüft …</p>
         <div class="ssos-photos-stats" data-photos-stats></div>
-        <label class="ssos-photos-search"><span>⌕</span><input type="search" data-photos-search placeholder="Intelligent suchen: Urlaub, Strand, 2026, Screenshot …" autocomplete="off"></label>
-        <p class="ssos-photos-search-note">Lokale Suche ohne API-Schlüssel: Dateinamen, Datum, Medientyp, Beschreibungen und Stichwörter.</p>
+        <label class="ssos-photos-search"><span>⌕</span><input type="search" data-photos-search placeholder="Suche: Urlaub, Strand, Hund, 2026 …" autocomplete="off"></label>
+        <div class="ssos-photos-ai-actions"><button class="app-button secondary" type="button" data-photos-ai-enable>✨ Lokale KI aktivieren</button><button class="app-button" type="button" data-photos-ai-search>KI-Suche</button></div>
+        <p class="ssos-photos-search-note" data-photos-ai-note>Ohne API-Schlüssel. Auf geeigneten Chrome-Desktopgeräten läuft die KI lokal. Auf anderen Geräten bleibt die Metadatensuche verfügbar.</p>
+        <p class="ssos-photos-ai-status" data-photos-ai-status role="status" aria-live="polite"></p>
         <div class="ssos-photos-toolbar">
           <select data-photos-filter aria-label="Medientyp filtern"><option value="all">Alle Medien</option><option value="photo">Fotos</option><option value="video">Videos</option></select>
           <label class="app-button secondary ssos-photos-file-button">＋ Fotos/Videos auswählen<input type="file" data-photos-files accept="image/*,video/*" multiple></label>
