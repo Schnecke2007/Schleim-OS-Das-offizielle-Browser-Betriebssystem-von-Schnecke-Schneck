@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.12.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -38,6 +38,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - App-voorstellen indienen via een GitHub-issueformulier
 - Schleim-Store: toegang is alleen mogelijk na aanmelding met een Schleim-account
 - Schleim-account met GitHub-aanmelding en privécloudback-up van het startscherm
+- Updatecentrum in de instellingen: GitHub-versie controleren en de nieuwste ZIP downloaden; de browser verzorgt de uiteindelijke installatie
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
@@ -77,6 +78,7 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
 - **Schleim-account:** De aanmelding opent eerst de GitHub-app-pagina. Na de installatie bevestig je de volgende stap in Schleim OS. De apparaatcode wordt getoond. Schleim OS probeert de code na korte tijd automatisch te kopiëren. Als dat niet lukt, kun je de code zelf kopiëren. Daarna opent de GitHub-pagina voor apparaatmachtiging. Na toestemming controleert Schleim OS de app-installatie en maakt zo nodig je privérepository `schleim-os-cloud` aan.
 - **Cloudback-up:** Back-up maken en herstellen kan alleen via **Instellingen → Schleim-account**. De back-up bevat de opgeslagen Schleim OS-instellingen, de volgorde van de apps op het startscherm, geïnstalleerde Store-apps en de achtergrond. Wijzigingen worden niet automatisch gesynchroniseerd. Zie de [handleiding voor het Schleim-account](extension/docs/SCHLEIM-KONTO.md). GitHub-toegangstokens en wachtwoorden worden nooit in het back-upbestand opgeslagen.
+- **Updates:** Via **Instellingen → Schleim OS bijwerken** kun je de GitHub-versie controleren en de nieuwste ZIP downloaden. De uiteindelijke installatie gebeurt via de import- of updatefunctie van je browser. [Updatehandleiding](docs/Niederländisch/UPDATES.md).
 
 # 🛠️ Schleim OS – Problemen oplossen
 
@@ -119,11 +121,12 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 - [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
 - [Schleim-account en cloudback-up](docs/Niederländisch/SCHLEIM-ACCOUNT.md)
 - [Store-handleiding](Store/Niederländisch/README.md)
+- [Updatehandleiding](docs/Niederländisch/UPDATES.md)
 - [Documentatieoverzicht – alle talen](docs/README.md)
 
 ## 📖 Documentatie in eenvoudige taal
 
-Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md). Er is ook een eenvoudige uitleg over [aanmelden en cloudback-ups](docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md).
+Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md). Er is ook een eenvoudige uitleg over [aanmelden en cloudback-ups](docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md) en [Schleim OS bijwerken](docs/Leichte-Sprache/Niederländisch/UPDATES.md).
 
 ## 📁 Projectstructuur
 
@@ -161,7 +164,8 @@ Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in
 │   │   ├── app.js
 │   │   ├── personalization.js
 │   │   ├── schleim-account.js
-│   │   └── slime-store-admin.js
+│   │   ├── slime-store-admin.js
+│   │   └── update-center.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
 │   ├── manifest.json
