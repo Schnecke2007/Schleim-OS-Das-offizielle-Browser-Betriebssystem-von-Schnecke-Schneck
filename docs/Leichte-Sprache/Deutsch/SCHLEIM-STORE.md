@@ -61,6 +61,22 @@ Installierte Store-Apps werden vorübergehend nicht auf dem Start-Bildschirm gez
 
 Nach der nächsten Anmeldung erscheinen sie wieder.
 
+## Cloud-Sicherung
+
+Im Schleim-Store gibt es keine Cloud-Sicherung.
+
+Du findest die Sicherung nur hier:
+
+**Einstellungen → Schleim-Konto**
+
+Du musst die Sicherung selbst starten.
+
+Sie speichert auch die Reihenfolge deiner Apps, installierte Store-Apps und dein Hintergrundbild.
+
+Die Sicherung wird nicht automatisch erstellt.
+
+[Schleim-Konto und Cloud-Sicherung einfach erklärt](KONTO-CLOUD.md)
+
 ## Wichtig
 
 Die Anmeldung schützt den Store in Schleim OS.
