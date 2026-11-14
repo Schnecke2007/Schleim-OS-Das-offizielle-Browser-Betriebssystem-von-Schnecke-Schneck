@@ -238,15 +238,15 @@
       "id": "sonos-control",
       "name": "Sonos",
       "icon": "🔊",
-      "url": "https://www.sonos.com/",
+      "url": "https://play.sonos.com/",
       "category": "media",
       "addedAt": "2026-11-14",
       "featured": true,
       "tags": "sonos lautsprecher musik audio multiroom spotify radio wiedergabe",
       "description": {
-        "de": "Steuere deine Sonos-Lautsprecher, wähle Räume aus, sieh die aktuelle Wiedergabe und starte gespeicherte Sonos-Favoriten und Playlists.",
-        "en": "Control your Sonos speakers, choose rooms, view now playing and start saved Sonos favorites and playlists.",
-        "nl": "Bedien je Sonos-speakers, kies kamers, bekijk wat er wordt afgespeeld en start opgeslagen Sonos-favorieten en afspeellijsten."
+        "de": "Öffne die offizielle Sonos-Websteuerung direkt aus Schleim OS. Keine API-Schlüssel oder eigene Server-Einrichtung erforderlich.",
+        "en": "Open the official Sonos web control from Schleim OS. No API keys or self-hosted server setup required.",
+        "nl": "Open de officiële Sonos-webbediening vanuit Schleim OS. Geen API-sleutels of eigen serverinstallatie nodig."
       }
     }
   ]
