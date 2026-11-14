@@ -603,6 +603,7 @@
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
       <div class="ssos-cloud-account ssos-settings-cloud" data-ssos-cloud-account></div>
+      <div class="ssos-update-center-mount" data-ssos-update-center></div>
 `;
     mount.appendChild(section);
     $('#ssosAccentPicker').addEventListener('input',e=>$('#ssosAccentHex').value=e.target.value);
