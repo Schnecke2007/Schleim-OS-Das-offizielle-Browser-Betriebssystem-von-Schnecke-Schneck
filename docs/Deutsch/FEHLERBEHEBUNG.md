@@ -1,6 +1,6 @@
 # 🛠️ Schleim OS – Fehlerbehebung
 
-Hier findest du Lösungen für häufige Probleme bei Installation, Anmeldung und Verwendung von Schleim OS 3.11.0.
+Hier findest du Lösungen für häufige Probleme bei Installation, Anmeldung und Verwendung von Schleim OS 3.12.0.
 
 | Problem | Mögliche Lösung |
 |---|---|
