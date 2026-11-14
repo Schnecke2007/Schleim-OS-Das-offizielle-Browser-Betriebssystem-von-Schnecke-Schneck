@@ -15,7 +15,8 @@ You see a personal start page with tiles for apps and websites.
 - Open apps and websites from tiles.
 - Move the tiles.
 - Change the design, colour and background.
-- Save settings in a JSON file.
+- Save your settings to the cloud with your Schleim account.
+- The Schleim-Store shows apps and websites. You need a Schleim account to use the Store.
 - Use the interface in German, English or Dutch.
 
 ## Try the demo
@@ -29,6 +30,12 @@ The demo is one HTML file. It is for trying the interface. It does not install a
 Download the complete ZIP file from GitHub. Do not extract it. Import the ZIP file in a browser that supports direct ZIP import.
 
 Read the [plain-language installation guide](INSTALLATION.md).
+
+## The Schleim-Store
+
+The Schleim-Store is only available after sign-in. You can search for apps, install them and rate them.
+
+[Read the simple Schleim-Store guide](SCHLEIM-STORE.md)
 
 ## Get help
 
