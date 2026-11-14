@@ -37,6 +37,12 @@ Du kannst in den Einstellungen nach neuen Versionen suchen.
 
 [Updates einfach erklärt](UPDATES.md)
 
+## Updates
+
+Du kannst in den Einstellungen nach neuen Versionen suchen.
+
+[Updates einfach erklärt](UPDATES.md)
+
 ## Die Erweiterung installieren
 
 Lade zuerst die vollständige ZIP-Datei von GitHub herunter. Entpacke die Datei nicht. Danach importierst du die ZIP-Datei in einem Browser, der diesen Import unterstützt.
