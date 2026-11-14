@@ -32,3 +32,6 @@ JSON-Dateien aus der früheren lokalen Exportfunktion können in der aktuellen O
 Ältere Cloud-Backups im Format 1, die mit dem Schleim-Konto erstellt wurden, können weiterhin wiederhergestellt werden.
 
 **Sicherheit:** Das Cloud-Repository muss privat bleiben. GitHub-Passwörter und Zugriffstokens werden nicht in die Backup-Datei geschrieben.
+
+
+**Abgrenzung zur Standalone-Demo:** Die separate Datei `extension/standalone/schleim-os-standalone.html` besitzt eigene lokale Import-/Export-Funktionen für ihre Demo-Einstellungen. Das ist nicht die Cloud-Sicherung der vollständigen Erweiterung und überträgt keine GitHub-Konto-Sitzung.
