@@ -37,4 +37,14 @@ Verschijnt Schleim OS niet? Controleer dan of de uitbreiding is geïnstalleerd e
 
 De naam van de knop kan per browser verschillen. Rechtstreekse ZIP-import werkt alleen in browsers die dit ondersteunen.
 
+## De Schleim-Store gebruiken
+
+Je hebt een Schleim-account nodig om de Schleim-Store te gebruiken.
+Open de Store en kies **Verbinden met GitHub**.
+Installeer eerst de GitHub-app **Schleim OS Account**.
+Ga terug naar Schleim OS en kies **Ik heb de app geïnstalleerd – verder**.
+Volg de stappen met de apparaatcode.
+
+[Lees de eenvoudige uitleg over de Schleim-Store](SCHLEIM-STORE.md)
+
 [Hulp en problemen oplossen](HULP.md) · [Normale installatiehandleiding](../../Niederländisch/INSTALLATIE.md)
