@@ -229,9 +229,9 @@
       "addedAt": "2026-11-14",
       "featured": true,
       "description": {
-        "de": "Claude ist dein intelligenter KI-Assistent direkt in Schleim OS. Egal ob du kreative Texte schreiben, komplexe Fragen klären, Code programmieren oder schnelle Ideen für deine Projekte sammeln möchtest – Claude unterstützt dich zuverlässig bei jeder Aufgabe und sorgt für maximale Produktivität auf deinem System.",
-        "en": "Claude is your intelligent AI assistant right inside Schleim OS. Whether you want to write creative texts, get answers to complex questions, write code, or brainstorm quick ideas for your projects, Claude reliably supports you with every task and ensures maximum productivity on your system.",
-        "nl": "Claude is jouw intelligente AI-assistent direct in Schleim OS. Of je nu creatieve teksten wilt schrijven, complexe vragen wilt beantwoorden, code wilt programmeren of snel ideeën wilt opdoen voor je projecten – Claude ondersteunt je betrouwbaar bij elke taak en zorgt voor maximale productiviteit op jouw systeem."
+        "de": "Claude ist ein KI-Assistent für Fragen, Texte, Ideen und Programmierhilfe. Die Webseite claude.ai wird in einem neuen Browser-Tab geöffnet.",
+        "en": "Claude is an AI assistant for questions, writing, ideas and coding help. The claude.ai website opens in a new browser tab.",
+        "nl": "Claude is een AI-assistent voor vragen, teksten, ideeën en hulp bij programmeren. De website claude.ai wordt in een nieuw browsertabblad geopend."
       }
     }
   ]
