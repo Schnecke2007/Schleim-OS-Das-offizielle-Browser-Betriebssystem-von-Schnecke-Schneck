@@ -16,7 +16,7 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 
 ## Anmeldung und Store-Sperre
 
-Der Schleim-Store bleibt ohne angemeldetes Schleim-Konto gesperrt. Die Store-Kachel und die Store-App-Verknüpfungen werden erst nach erfolgreicher Anmeldung freigegeben. Beim Abmelden wird der Store erneut gesperrt.
+Der feste Store-Einstieg auf dem Homescreen bleibt sichtbar. Ohne angemeldetes Schleim-Konto öffnet er nur den Anmeldebereich; Katalog, Suche, Bewertungen, Installationen, Deinstallationen und Vorschläge bleiben gesperrt. Bereits installierte Store-App-Kacheln werden beim Abmelden ausgeblendet und nach der nächsten erfolgreichen Anmeldung wieder angezeigt.
 
 Der Anmeldeablauf öffnet zuerst die GitHub-App-Seite. Nach der Installation bestätigt die Person den nächsten Schritt in Schleim OS. Der Gerätecode wird angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung in die Zwischenablage zu kopieren; manuelles Kopieren bleibt möglich. Anschließend öffnet sich die GitHub-Gerätefreigabe. Nach der Autorisierung prüft Schleim OS die App-Installation über die GitHub-API.
 
