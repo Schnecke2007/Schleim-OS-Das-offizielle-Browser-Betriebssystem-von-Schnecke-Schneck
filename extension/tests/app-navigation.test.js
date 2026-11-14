@@ -94,8 +94,8 @@ test('Photos search combines metadata fallback with optional on-device AI', () =
   assert.match(photosCloudSource, /item\.description/);
   assert.match(photosCloudSource, /item\.aiDescription/);
   assert.match(photosCloudSource, /getExpandedTerms/);
-  assert.match(photosAISource, /LanguageModel\.availability/);
-  assert.match(photosAISource, /LanguageModel\.create/);
+  assert.match(photosAISource, /api\.availability/);
+  assert.match(photosAISource, /api\.create/);
   assert.match(photosAISource, /type:\s*'image'/);
   assert.match(photosAISource, /No API key/i);
   assert.match(newtabSource, /schleim-photo-ai\.js/);
