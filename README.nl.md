@@ -117,11 +117,13 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 - [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
 - [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 - [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
+- [Schleim-account en cloudback-up](docs/Niederländisch/SCHLEIM-ACCOUNT.md)
+- [Store-handleiding](Store/Niederländisch/README.md)
 - [Documentatieoverzicht – alle talen](docs/README.md)
 
 ## 📖 Documentatie in eenvoudige taal
 
-Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md).
+Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md). Er is ook een eenvoudige uitleg over [aanmelden en cloudback-ups](docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md).
 
 ## 📁 Projectstructuur
 
@@ -131,6 +133,9 @@ Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in
 │   ├── ISSUE_TEMPLATE/
 │   └── workflows/
 ├── Store/
+│   ├── Deutsch/
+│   ├── Englisch/
+│   ├── Niederländisch/
 │   ├── ai/
 │   ├── communication/
 │   ├── knowledge/
@@ -155,6 +160,7 @@ Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in
 │   ├── scripts/
 │   │   ├── app.js
 │   │   ├── personalization.js
+│   │   ├── schleim-account.js
 │   │   └── slime-store-admin.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
