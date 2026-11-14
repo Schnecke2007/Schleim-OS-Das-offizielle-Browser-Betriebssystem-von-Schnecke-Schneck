@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.11.0
+# Technische Hinweise – Version 3.12.0
 
 ## Plattform und Erweiterungsformat
 
@@ -14,6 +14,7 @@
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
+- `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
 - `locales/legal-translations.js` enthält Übersetzungen der Rechtstexte. Die übrigen Oberflächentexte werden über Sprachwörterbücher in den JavaScript-Dateien gepflegt.
 - `data/store-apps.json` und `data/store-ratings.json` sind die Laufzeitdaten für Katalog und Bewertungen.
@@ -41,6 +42,12 @@ Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Oh
 - Backup-Format 2 umfasst alle unterstützten `ssos-` Einstellungen und zusätzlich explizite Snapshot-Felder für App-Reihenfolge, Store-Installationen und Hintergrundbild.
 - Format-1-Backups können weiterhin wiederhergestellt werden. Lokale JSON-Import-/Export-Steuerelemente sind nicht mehr Teil der aktuellen Oberfläche.
 - Es findet keine automatische Synchronisierung nach jeder Änderung statt.
+
+## Update-Center
+
+Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig über `raw.githubusercontent.com`. Er vergleicht ausschließlich die numerische Manifest-Version. Bei einer höheren GitHub-Version wird der Download des vollständigen Repository-Archivs angeboten. Der Download wird durch eine direkte Benutzeraktion geöffnet. Das Skript ersetzt keine Erweiterungsdateien und installiert keine Pakete. Für die Installation ist die vom Browser erlaubte Import- oder Update-Funktion notwendig.
+
+`chrome.runtime.requestUpdateCheck()` wird bewusst nicht verwendet: Diese API fragt den Update-Kanal der installierten Erweiterung ab und ist kein allgemeiner GitHub-ZIP-Installer. Siehe [Chrome Update Lifecycle](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle).
 
 ## Werbung und externe Verbindungen
 
