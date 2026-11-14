@@ -6,6 +6,7 @@ Schleim OS unterstützt Deutsch, Englisch und Niederländisch. Die Übersetzunge
 - `scripts/personalization.js` enthält Übersetzungen für Personalisierung, Schleim-Store, Bewertungen, App-Vorschläge und Store-Sperrhinweise.
 - `scripts/schleim-account.js` enthält Übersetzungen für Anmeldung, GitHub-App-Installation, Gerätecode, Cloud-Backup und Wiederherstellung.
 - `scripts/slime-store-admin.js` enthält die Texte für das Admin-Portal und seine Formulare.
+- `scripts/update-center.js` enthält die übersetzten Texte für die GitHub-Versionsprüfung und den ZIP-Download.
 - `scripts/slime-store-admin.js` enthält Texte für das Store-Admin-Portal.
 - `locales/legal-translations.js` enthält die lokal eingebundenen Rechtstext-Übersetzungen.
 
