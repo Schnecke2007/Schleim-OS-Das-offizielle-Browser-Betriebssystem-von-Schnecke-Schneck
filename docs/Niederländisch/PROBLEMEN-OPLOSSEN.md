@@ -1,6 +1,6 @@
 # 🛠️ Schleim OS – Problemen oplossen
 
-Hier vind je oplossingen voor veelvoorkomende problemen met installatie, aanmelding en gebruik van Schleim OS 3.11.0.
+Hier vind je oplossingen voor veelvoorkomende problemen met installatie, aanmelding en gebruik van Schleim OS 3.12.0.
 
 | Probleem | Mogelijke oplossing |
 |---|---|
