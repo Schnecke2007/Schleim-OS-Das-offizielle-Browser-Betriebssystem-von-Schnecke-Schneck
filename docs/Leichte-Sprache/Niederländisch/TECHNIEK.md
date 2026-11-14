@@ -24,7 +24,11 @@ De browser opent het bestand `pages/newtab.html`. Dit bestand toont het startsch
 
 Instellingen worden bewaard in het browserprofiel. Daar bewaart de browser jouw gegevens en instellingen.
 
-Je kunt je instellingen opslaan met de JSON-functie. Bewaar het back-upbestand goed.
+Je kunt je instellingen met je Schleim-account opslaan in een privécloud op GitHub. Start de back-up via **Instellingen → Schleim-account**.
+
+De back-up bevat ook de volgorde van de apps, geïnstalleerde Store-apps en je achtergrond.
+
+Je moet je aanmelden met je Schleim-account om de Schleim-Store te gebruiken.
 
 ## Internet en toestemmingen
 
@@ -33,4 +37,4 @@ Sommige websites staan niet toe dat hun pagina in een andere pagina wordt getoon
 
 De browser kan om toestemming vragen. Lees zulke vragen goed.
 
-[Technische opmerkingen in gewone taal](../../Niederländisch/TECHNISCHE-OPMERKINGEN.md)
+[Technische opmerkingen in gewone taal](../../Niederländisch/TECHNISCHE-OPMERKINGEN.md) · [Eenvoudige uitleg over de Schleim-Store](SCHLEIM-STORE.md)
