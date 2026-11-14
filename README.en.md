@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.12.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -38,6 +38,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store: access requires signing in with a Schleim account
 - Schleim account with GitHub sign-in and private cloud backup of the home screen
+- Settings update center: check the GitHub version and download the latest ZIP; the browser handles the final installation
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
@@ -77,6 +78,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
 - **Schleim account:** Sign-in starts by opening the GitHub App page. After installation, confirm the next step in Schleim OS. The device code is displayed. Schleim OS tries to copy it after a short delay. If this is not possible, you can copy it manually. The GitHub device authorization page then opens. After approval, Schleim OS checks the app installation and creates your private `schleim-os-cloud` repository if needed.
 - **Cloud backup:** Backup and restore are available only under **Settings → Schleim account**. The backup includes saved Schleim OS settings, home-screen app order, installed Store apps and the wallpaper. Changes are not synchronized automatically. See the [Schleim account setup guide](extension/docs/SCHLEIM-KONTO.md). GitHub access tokens and passwords are never written into the backup file.
+- **Updates:** Under **Settings → Update Schleim OS**, check the GitHub version and download the latest ZIP. The final installation uses the import or update function supported by your browser. [Update guide](docs/Englisch/UPDATES.md).
 
 # 🛠️ Schleim OS – Troubleshooting
 
@@ -119,11 +121,12 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
 - [Schleim account and cloud backup](docs/Englisch/SCHLEIM-ACCOUNT.md)
 - [Store guide](Store/Englisch/README.md)
+- [Update guide](docs/Englisch/UPDATES.md)
 - [Documentation overview – all languages](docs/README.md)
 
 ## 📖 Plain-language documentation
 
-Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md). There is also a plain-language guide to [sign-in and cloud backup](docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md).
+Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md). There is also a plain-language guide to [sign-in and cloud backup](docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md) and [updating Schleim OS](docs/Leichte-Sprache/Englisch/UPDATES.md).
 
 ## 📁 Project structure
 
@@ -161,7 +164,8 @@ Would you prefer short sentences and simple explanations? Read the [English plai
 │   │   ├── app.js
 │   │   ├── personalization.js
 │   │   ├── schleim-account.js
-│   │   └── slime-store-admin.js
+│   │   ├── slime-store-admin.js
+│   │   └── update-center.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
 │   ├── manifest.json
