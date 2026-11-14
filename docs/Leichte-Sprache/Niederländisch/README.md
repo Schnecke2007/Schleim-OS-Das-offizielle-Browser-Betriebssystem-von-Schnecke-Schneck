@@ -15,7 +15,8 @@ Je ziet dan een eigen startpagina met tegels voor apps en websites.
 - Apps en websites openen via tegels.
 - De tegels verplaatsen.
 - Het ontwerp, de kleur en de achtergrond veranderen.
-- Je instellingen met je Schleim-account in de cloud opslaan.
+- Je instellingen handmatig opslaan via **Instellingen → Schleim-account**.
+- De back-up wordt niet automatisch gemaakt.
 - De Schleim-Store toont apps en websites. Je hebt een Schleim-account nodig om de Store te gebruiken.
 - De interface gebruiken in het Duits, Engels en Nederlands.
 
@@ -37,7 +38,11 @@ Lees de [installatiehandleiding in eenvoudige taal](INSTALLATIE.md).
 
 De Schleim-Store is alleen beschikbaar na aanmelding. Je kunt apps zoeken, installeren en beoordelen.
 
+In de Store staat geen cloudback-up. De back-up is alleen beschikbaar via Instellingen.
+
 [Lees de eenvoudige uitleg over de Schleim-Store](SCHLEIM-STORE.md)
+
+[Lees over het Schleim-account en de cloudback-up](ACCOUNT-CLOUD.md)
 
 ## Hulp krijgen
 
