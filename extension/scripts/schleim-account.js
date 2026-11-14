@@ -5,6 +5,7 @@
   // Never put a GitHub App private key or client secret in this extension.
   const GITHUB_APP_CLIENT_ID = 'Iv23lihfJBU95UVCrVt1';
   const GITHUB_APP_INSTALL_URL = 'https://github.com/apps/schleim-os-account';
+  const GITHUB_APP_SLUG = 'schleim-os-account';
   const API = 'https://api.github.com';
   const DEVICE_CODE_URL = 'https://github.com/login/device/code';
   const TOKEN_URL = 'https://github.com/login/oauth/access_token';
@@ -37,7 +38,12 @@
       noPermission:'GitHub-App-Berechtigungen fehlen oder die App wurde nicht auf diesem Konto installiert.',
       ownerMismatch:'Das gefundene Repository gehört nicht zum angemeldeten GitHub-Konto.',
       retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte Cloud-Sicherung',
-      notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto'
+      notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto',
+      installFirst:'Installiere zuerst die GitHub-App.', installIntro:'Die GitHub-App-Seite wurde geöffnet. Installiere Schleim OS Account in deinem GitHub-Konto und fahre danach hier fort.',
+      continueAfterInstall:'Ich habe die App installiert – weiter', checkingInstallation:'Prüfe die GitHub-App-Installation …', waitingForInstallation:'Warte, bis GitHub die Installation deinem Konto zuordnet …',
+      installationMissing:'Die GitHub-App wurde noch nicht erkannt. Installiere sie auf deinem GitHub-Konto und versuche es erneut.',
+      codeCopied:'Der Gerätecode wurde in die Zwischenablage kopiert.', copyCode:'Code kopieren', copyFailed:'Automatisches Kopieren nicht möglich. Kopiere den angezeigten Code manuell.',
+      installAgain:'GitHub-App öffnen', installPendingTitle:'Installation wird geprüft', installPendingIntro:'GitHub hat die Anmeldung bestätigt. Schleim OS wartet jetzt darauf, dass die GitHub-App in deinem Konto erkannt wird.'
     },
     en: {
       title:'Schleim account', intro:'Connect your GitHub account and back up your Schleim OS settings in a private repository.',
@@ -62,7 +68,12 @@
       noPermission:'GitHub App permissions are missing, or the app has not been installed on this account.',
       ownerMismatch:'The repository found does not belong to the signed-in GitHub account.',
       retry:'Try again', help:'Open setup guide', lastBackup:'Last cloud backup',
-      notYet:'No backup on this device yet', account:'GitHub account'
+      notYet:'No backup on this device yet', account:'GitHub account',
+      installFirst:'Install the GitHub App first.', installIntro:'The GitHub App page has opened. Install Schleim OS Account in your GitHub account, then continue here.',
+      continueAfterInstall:'I installed the app – continue', checkingInstallation:'Checking the GitHub App installation …', waitingForInstallation:'Waiting for GitHub to associate the installation with your account …',
+      installationMissing:'The GitHub App has not been detected yet. Install it on your GitHub account and try again.',
+      codeCopied:'The device code was copied to the clipboard.', copyCode:'Copy code', copyFailed:'Automatic copying is unavailable. Copy the displayed code manually.',
+      installAgain:'Open GitHub App', installPendingTitle:'Checking installation', installPendingIntro:'GitHub confirmed the sign-in. Schleim OS is now waiting for the GitHub App to be detected in your account.'
     },
     nl: {
       title:'Schleim-account', intro:'Verbind je GitHub-account en maak een back-up van je Schleim OS-instellingen in een privérepository.',
@@ -87,7 +98,12 @@
       noPermission:'GitHub-appmachtigingen ontbreken of de app is niet op dit account geïnstalleerd.',
       ownerMismatch:'De gevonden repository is niet van het aangemelde GitHub-account.',
       retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste cloudback-up',
-      notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account'
+      notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account',
+      installFirst:'Installeer eerst de GitHub-app.', installIntro:'De GitHub-app-pagina is geopend. Installeer Schleim OS Account in je GitHub-account en ga daarna hier verder.',
+      continueAfterInstall:'Ik heb de app geïnstalleerd – verder', checkingInstallation:'De GitHub-app-installatie controleren …', waitingForInstallation:'Wachten totdat GitHub de installatie aan je account koppelt …',
+      installationMissing:'De GitHub-app is nog niet herkend. Installeer de app in je GitHub-account en probeer het opnieuw.',
+      codeCopied:'De apparaatcode is naar het klembord gekopieerd.', copyCode:'Code kopiëren', copyFailed:'Automatisch kopiëren is niet beschikbaar. Kopieer de getoonde code handmatig.',
+      installAgain:'GitHub-app openen', installPendingTitle:'Installatie controleren', installPendingIntro:'GitHub heeft de aanmelding bevestigd. Schleim OS wacht nu totdat de GitHub-app in je account wordt herkend.'
     }
   };
 
@@ -102,6 +118,9 @@
   let polling = false;
   let observer = null;
   let accountReady = false;
+  let installationStage = false;
+  let installationPending = false;
+  let verificationWindow = null;
 
   function notifyAccountState() {
     window.dispatchEvent(new Event('ssos-account-state-changed'));
@@ -149,6 +168,7 @@
   }
   function renderPanel(panel) {
     if (!panel) return;
+    const loginOnly = panel.dataset.ssosCloudMode === 'login';
     if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
       panel.innerHTML =
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div></div>'+
@@ -163,8 +183,27 @@
       panel.innerHTML =
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐙</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('device'))+'</p></div></div>'+
         '<div class="ssos-cloud-device-code">'+esc(deviceFlow.userCode)+'</div>'+
+        '<button class="app-button secondary" type="button" data-ssos-cloud-copy>📋 '+esc(t('copyCode'))+'</button>'+
         '<a class="app-button" href="'+esc(deviceFlow.verificationUri)+'" target="_blank" rel="noopener noreferrer">'+esc(t('openGitHub'))+' ↗</a>'+
+        '<a class="ssos-cloud-help" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('installAgain'))+' ↗</a>'+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite">'+esc(t('waiting'))+'</p>'+
+        '<button class="app-button secondary" type="button" data-ssos-cloud-cancel>'+esc(t('cancel'))+'</button></div>';
+      return;
+    }
+    if (installationStage) {
+      panel.innerHTML =
+        '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐙</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('installFirst'))+'</p></div></div>'+
+        '<p class="ssos-cloud-note">'+esc(t('installIntro'))+'</p>'+
+        '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('installApp'))+' ↗</a>'+
+        '<button class="app-button" type="button" data-ssos-cloud-install-continue>'+esc(t('continueAfterInstall'))+'</button>'+
+        '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
+      return;
+    }
+    if (installationPending) {
+      panel.innerHTML =
+        '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>⏳</span><div><h3>'+esc(t('installPendingTitle'))+'</h3><p>'+esc(t('installPendingIntro'))+'</p></div></div>'+
+        '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('installAgain'))+' ↗</a>'+
+        '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite">'+esc(t('checkingInstallation'))+'</p>'+
         '<button class="app-button secondary" type="button" data-ssos-cloud-cancel>'+esc(t('cancel'))+'</button></div>';
       return;
     }
@@ -176,6 +215,10 @@
         '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+
         '<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
+      return;
+    }
+    if(loginOnly){
+      panel.innerHTML='<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐌</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('connected'))+' <b>@'+esc(session.user.login)+'</b></p></div><span class="ssos-cloud-connected">●</span></div><p class="ssos-cloud-note">'+esc(t('created'))+'</p></div>';
       return;
     }
     const repoUrl = session.repo?.html_url || ('https://github.com/'+session.user.login+'/'+REPO_NAME);
@@ -225,14 +268,59 @@
     if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
       setStatus(t('notConfigured'),true); return;
     }
+    installationStage=true;
+    try { window.open(GITHUB_APP_INSTALL_URL,'_blank','noopener,noreferrer'); } catch {}
+    mountPanels();
+    setStatus(t('installFirst'));
+  }
+  async function startDeviceFlow() {
+    installationStage=false;
     try {
+      // Open a blank tab directly from the button click so later navigation is not blocked as a popup.
+      try { verificationWindow=window.open('about:blank','_blank'); } catch { verificationWindow=null; }
       setStatus(t('signingIn'));
-      deviceFlow = await requestDeviceCode();
+      const flow=await requestDeviceCode();
+      deviceFlow=flow;
       mountPanels();
-      pollForAuthorization(deviceFlow);
+      setTimeout(async()=>{
+        if(deviceFlow!==flow)return;
+        try {
+          if(!navigator.clipboard?.writeText)throw new Error('Clipboard API unavailable');
+          await navigator.clipboard.writeText(flow.userCode);
+          if(deviceFlow===flow)setStatus(t('codeCopied'));
+        } catch { if(deviceFlow===flow)setStatus(t('copyFailed'),true); }
+      },1800);
+      setTimeout(()=>{
+        if(deviceFlow!==flow)return;
+        try {
+          if(verificationWindow&&!verificationWindow.closed){verificationWindow.location.href=flow.verificationUri;verificationWindow=null;}
+          else window.open(flow.verificationUri,'_blank','noopener,noreferrer');
+        } catch {}
+      },3900);
+      pollForAuthorization(flow);
     } catch (error) {
-      deviceFlow=null;mountPanels();setStatus(error.message||t('authError'),true);
+      deviceFlow=null;installationStage=false;mountPanels();setStatus(error.message||t('authError'),true);
     }
+  }
+  async function appInstallationDetected() {
+    const data=await githubApi('/user/installations?per_page=100');
+    return (Array.isArray(data?.installations)?data.installations:[]).some(item=>item?.app_slug===GITHUB_APP_SLUG);
+  }
+  async function waitForAppInstallation() {
+    installationPending=true;mountPanels();setStatus(t('checkingInstallation'));
+    for(let attempt=0;attempt<60&&installationPending;attempt++){
+      if(await appInstallationDetected()){installationPending=false;mountPanels();return true;}
+      setStatus(t('waitingForInstallation'));
+      await pause(5000);
+    }
+    if(!installationPending)throw new Error(t('cancelled'));
+    installationPending=false;
+    throw new Error(t('installationMissing'));
+  }
+  async function copyDeviceCode() {
+    if(!deviceFlow?.userCode)return;
+    await navigator.clipboard.writeText(deviceFlow.userCode);
+    setStatus(t('codeCopied'));
   }
   async function pollForAuthorization(flow) {
     if (polling) return;
@@ -261,7 +349,7 @@
         deviceFlow=null;mountPanels();setStatus(t('expired'),true);
       }
     } catch (error) {
-      deviceFlow=null;session=null;storageRemove().catch(()=>{});mountPanels();setStatus(error.status===403?t('repoPermission'):(error.message||t('authError')),true);notifyAccountState();
+      deviceFlow=null;installationPending=false;installationStage=false;session=null;storageRemove().catch(()=>{});mountPanels();setStatus(error.status===403?t('repoPermission'):(error.message||t('authError')),true);notifyAccountState();
     } finally {
       polling=false;
     }
@@ -328,6 +416,7 @@
       session=null;mountPanels();throw new Error(t('emailMissing'));
     }
     session.user={id:user.id,login:user.login,name:user.name||user.login,email:primary.email};
+    await waitForAppInstallation();
     await ensureCloudRepository();
     await storageSet(session);
     mountPanels();setStatus(t('created'));notifyAccountState();
@@ -381,16 +470,24 @@
       try{preferences[key]=JSON.parse(localStorage.getItem(key));}
       catch{preferences[key]=localStorage.getItem(key);}
     }
+    const design=window.SSOSPersonalization?.getCloudBackupDesign?.();
+    if(design){
+      preferences['ssos-personalization-v1']=design.personalization;
+      preferences['ssos-store-v1']=design.store;
+      preferences['ssos-wallpaper']=design.wallpaper.system;
+    }
     return preferences;
   }
   async function saveCloudBackup() {
     if(!session?.user||!session?.repo)throw new Error(t('authError'));
     setStatus(t('creating'));
+    const design=window.SSOSPersonalization?.getCloudBackupDesign?.()||null;
     const backup={
       format:'schleim-os-cloud-backup',
-      schemaVersion:1,
+      schemaVersion:2,
       exportedAt:new Date().toISOString(),
       owner:{id:session.user.id,login:session.user.login},
+      design:design?{homeAppOrder:design.homeAppOrder,installedStoreApps:design.installedStoreApps,wallpaper:design.wallpaper}:null,
       preferences:collectPreferences()
     };
     if(!Object.keys(backup.preferences).length)throw new Error('No Schleim OS settings were found to back up.');
@@ -418,12 +515,25 @@
     try{file=await githubApi(path);}
     catch(error){if(error.status===404){setStatus(t('noBackup'),true);return;}throw error;}
     const backup=JSON.parse(decodeBase64Utf8(file.content));
-    if(backup?.format!=='schleim-os-cloud-backup'||backup.schemaVersion!==1||
+    if(backup?.format!=='schleim-os-cloud-backup'||![1,2].includes(backup.schemaVersion)||
        Number(backup.owner?.id)!==Number(session.user.id)||
-       !backup.preferences||typeof backup.preferences!=='object'||Array.isArray(backup.preferences)){
+       !backup.preferences||typeof backup.preferences!=='object'||Array.isArray(backup.preferences)||
+       (backup.schemaVersion===2&&(!backup.design||!Array.isArray(backup.design.homeAppOrder)||!Array.isArray(backup.design.installedStoreApps)||!backup.design.wallpaper))){
       throw new Error('The cloud backup is invalid or belongs to another GitHub account.');
     }
-    const entries=Object.entries(backup.preferences).filter(([key])=>
+    const restoredPreferences={...backup.preferences};
+    if(backup.schemaVersion===2){
+      const personal={...(restoredPreferences['ssos-personalization-v1']||{})};
+      personal.homeOrder=[...backup.design.homeAppOrder];
+      personal.wallpaperUrl=String(backup.design.wallpaper.customUrl||'');
+      if(!backup.design.wallpaper.customImageIncluded)personal.wallpaperData='';
+      restoredPreferences['ssos-personalization-v1']=personal;
+      const store={...(restoredPreferences['ssos-store-v1']||{})};
+      store.installed=[...backup.design.installedStoreApps];
+      restoredPreferences['ssos-store-v1']=store;
+      restoredPreferences['ssos-wallpaper']=backup.design.wallpaper.system??'midnight';
+    }
+    const entries=Object.entries(restoredPreferences).filter(([key])=>
       /^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)&&key!==STORAGE_KEY&&!key.startsWith('ssosGithubCloud')
     );
     if(!entries.length)throw new Error('The cloud backup does not contain Schleim OS settings.');
@@ -437,7 +547,8 @@
   }
   async function signOut() {
     if(!confirm(t('signOutConfirm')))return;
-    deviceFlow=null;session=null;
+    deviceFlow=null;installationStage=false;installationPending=false;session=null;
+    try{verificationWindow?.close();}catch{} verificationWindow=null;
     await storageRemove();
     mountPanels();setStatus(t('cancelled'));notifyAccountState();
   }
@@ -446,7 +557,9 @@
     if(button)button.disabled=true;
     try{
       if(action.matches('[data-ssos-cloud-login]'))await startLogin();
-      else if(action.matches('[data-ssos-cloud-cancel]')){deviceFlow=null;mountPanels();setStatus(t('cancelled'));}
+      else if(action.matches('[data-ssos-cloud-install-continue]'))await startDeviceFlow();
+      else if(action.matches('[data-ssos-cloud-copy]'))await copyDeviceCode();
+      else if(action.matches('[data-ssos-cloud-cancel]')){deviceFlow=null;installationStage=false;installationPending=false;try{verificationWindow?.close();}catch{} verificationWindow=null;session=null;await storageRemove();mountPanels();setStatus(t('cancelled'));notifyAccountState();}
       else if(action.matches('[data-ssos-cloud-save]'))await saveCloudBackup();
       else if(action.matches('[data-ssos-cloud-restore]'))await restoreCloudBackup();
       else if(action.matches('[data-ssos-cloud-logout]'))await signOut();
@@ -457,19 +570,24 @@
   }
   function init() {
     mountPanels();
-    storageGet().then(value=>{
-      if(value?.accessToken&&value?.user&&value?.repo)session=value;
+    storageGet().then(async value=>{
+      if(value?.accessToken&&value?.user&&value?.repo){
+        session=value;
+        try { if(!await appInstallationDetected()){session=null;await storageRemove();} }
+        catch { session=null;await storageRemove(); }
+      }
       accountReady=true;
       mountPanels();
       notifyAccountState();
     }).catch(error=>{
+      session=null;
       accountReady=true;
       mountPanels();
       setStatus(error.message,true);
       notifyAccountState();
     });
     document.addEventListener('click',event=>{
-      const action=event.target.closest('[data-ssos-cloud-login],[data-ssos-cloud-cancel],[data-ssos-cloud-save],[data-ssos-cloud-restore],[data-ssos-cloud-logout]');
+      const action=event.target.closest('[data-ssos-cloud-login],[data-ssos-cloud-install-continue],[data-ssos-cloud-copy],[data-ssos-cloud-cancel],[data-ssos-cloud-save],[data-ssos-cloud-restore],[data-ssos-cloud-logout]');
       if(action){event.preventDefault();handleAction(action);}
     });
     if(document.body&&!observer){
@@ -483,7 +601,7 @@
   window.SSOSCloudAccount=Object.freeze({
     mount:mountPanels,
     getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null}:null,
-    getState:()=>({ready:accountReady,authenticated:accountReady&&!!(session?.accessToken&&session?.user&&session?.repo)})
+    getState:()=>({ready:accountReady,authenticated:accountReady&&!installationStage&&!installationPending&&!!(session?.accessToken&&session?.user&&session?.repo)})
   });
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
