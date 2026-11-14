@@ -19,7 +19,9 @@ Das Schleim-Konto verwendet dein eigenes GitHub-Konto als Identität. Schleim OS
 
 **Warum diese Berechtigungen?** Die E-Mail-Berechtigung prüft, ob dein primäres GitHub-E-Mail-Konto bereits verifiziert ist. Repository creation erlaubt die automatische Erstellung des privaten Cloud-Repositorys. Contents wird benötigt, um die Sicherungsdatei hoch- und herunterzuladen. GitHub gibt einer App automatisch Zugriff auf die Repositories, die sie selbst erstellt. Daher muss die App nicht pauschal Zugriff auf sämtliche vorhandenen Repositories bekommen.
 
-7. Speichere die App und installiere sie auf deinem GitHub-Konto. Bestätige die angezeigten Berechtigungen.
+8. Speichere die App. Installiere sie auf deinem GitHub-Konto und – wenn die App öffentlich ist – ermögliche auch anderen Nutzern die Installation auf ihrem jeweiligen GitHub-Konto. Die Nutzer müssen die App-Installation und anschließend die Geräteautorisierung bei GitHub bestätigen.
+
+**Sicherheitshinweis zum Gerätecode:** GitHub beschreibt Device Flow vor allem für CLI-, IoT- und andere Geräte ohne normalen Browser-Redirect. Für Browser-Anwendungen ist ein PKCE-Redirect grundsätzlich vorzuziehen. Der Gerätecode ist hier gewählt, weil Schleim OS als manuell installierte Erweiterung keine einheitliche Redirect-Adresse auf allen Browsern besitzt. Nutzer sollten den Code ausschließlich auf `github.com/login/device` eingeben und dort prüfen, dass die Freigabe tatsächlich **Schleim OS Account** betrifft. Gib einen Gerätecode niemals an Personen weiter.
 
 ## 2. Client-ID in Schleim OS eintragen
 
