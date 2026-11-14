@@ -16,7 +16,7 @@ Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschir
 
 Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
 
-[Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installationsanleitung in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md)
+[Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md) · [Schleim-Store in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
 
 ## Funktionen
 
