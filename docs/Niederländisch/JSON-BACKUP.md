@@ -1,23 +1,34 @@
 # Cloudback-up met het Schleim-account
 
-> **Opmerking over oudere versies:** De lokale JSON-import- en exportfunctie is in Schleim OS 3.10.0 vervangen door het Schleim-account. Deze pagina is nu alleen nog een melding voor JSON-back-ups uit oudere versies.
+> **Opmerking over oudere versies:** De vorige lokale JSON-import- en exportfunctie is niet meer beschikbaar in de interface van Schleim OS 3.11.0. Deze pagina beschrijft de huidige cloudback-up en wat je met oudere bestanden kunt doen.
 
-## Een nieuwe back-up maken
+## Een nieuwe cloudback-up maken
 
-1. Stel eerst de GitHub-app in. Zie [Schleim-account instellen](../../extension/docs/SCHLEIM-KONTO.md).
-2. Open de **Schleim Store** of **Instellingen**.
-3. Kies bij **Schleim-account** de optie **Verbinden met GitHub**.
-4. Bevestig de eenmalige apparaatcode rechtstreeks bij GitHub.
-5. Kies **Nu opslaan in de cloud**.
+1. Installeer zo nodig eerst de [GitHub-app Schleim OS Account](https://github.com/apps/schleim-os-account).
+2. Open **Instellingen → Schleim-account**.
+3. Kies **Verbinden met GitHub** en volg de stappen voor app-installatie en apparaatcode.
+4. Kies na het aanmelden **Nu opslaan in de cloud**.
 
 Schleim OS maakt het bestand `schleim-os-backup.json` aan in je privérepository `schleim-os-cloud` of werkt het bij.
 
-## Herstellen op een ander apparaat
+## Wat wordt opgeslagen?
 
-Meld je op dat apparaat met hetzelfde GitHub-account aan bij het Schleim-account en kies **Cloudback-up herstellen**. De huidige instellingen van het apparaat worden vervangen door de opgeslagen back-up.
+Back-upformaat 2 bevat de opgeslagen Schleim OS-instellingen en legt ook deze onderdelen apart vast:
+- de volgorde van de apps op het startscherm,
+- geïnstalleerde Store-apps,
+- de gekozen systeemachtergrond,
+- een eigen achtergrondafbeelding en de afbeeldingsgegevens of URL.
+
+De back-up wordt handmatig gestart via **Instellingen → Schleim-account**. Er is geen automatische synchronisatie.
+
+## Op een ander apparaat herstellen
+
+Installeer Schleim OS en meld je onder **Instellingen → Schleim-account** aan met hetzelfde GitHub-account. Kies daarna **Cloudback-up herstellen**. De lokale Schleim OS-instellingen worden vervangen door de back-up.
 
 ## Oudere JSON-bestanden
 
-JSON-bestanden die met eerdere versies van Schleim OS zijn geëxporteerd, kunnen in versie 3.10.0 niet meer via de interface worden geïmporteerd. Bewaar bestaande bestanden apart. Oude bestanden worden niet automatisch naar de cloud gemigreerd.
+JSON-bestanden uit de vorige lokale exportfunctie kunnen niet via de huidige interface worden geïmporteerd. Bewaar deze bestanden apart. Ze worden niet automatisch naar de cloud overgezet.
 
-**Beveiliging:** De cloudrepository moet privé blijven. Schleim OS slaat geen wachtwoorden of toegangstokens op in het back-upbestand.
+Oudere cloudback-ups in formaat 1 die met het Schleim-account zijn gemaakt, kunnen nog steeds worden hersteld.
+
+**Beveiliging:** De cloudrepository moet privé blijven. GitHub-wachtwoorden en toegangstokens worden nooit in het back-upbestand opgeslagen.
