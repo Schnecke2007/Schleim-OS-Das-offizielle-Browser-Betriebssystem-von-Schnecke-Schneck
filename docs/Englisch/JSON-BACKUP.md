@@ -32,3 +32,6 @@ JSON files created by the previous local export feature cannot be imported throu
 Older format-1 cloud backups created with the Schleim account can still be restored.
 
 **Security:** The cloud repository must remain private. GitHub passwords and access tokens are never written into the backup file.
+
+
+**Standalone demo note:** The separate file `extension/standalone/schleim-os-standalone.html` has its own local import/export functions for demo settings. This is not the cloud backup for the full extension and does not transfer a GitHub account session.
