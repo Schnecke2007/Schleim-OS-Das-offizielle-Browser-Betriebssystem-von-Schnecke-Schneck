@@ -347,7 +347,7 @@
   function pause(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
   async function pollAuthorization(state, popup) {
     setStatus(t('connecting'));
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 150; i++) {
       await pause(2000);
       if (!root?.isConnected) return;
       try {
