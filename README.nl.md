@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,7 +36,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Ontwerp, accentkleur en achtergrond aanpassen
 - Schleim-Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
 - App-voorstellen indienen via een GitHub-issueformulier
-- Schleim-Store is zonder GitHub-aanmelding beschikbaar
+- Schleim-Store: toegang is alleen mogelijk na aanmelding met een Schleim-account
 - Schleim-account met GitHub-aanmelding en privécloudback-up van het startscherm
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
@@ -44,7 +44,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 
 ## 🛍️ Schleim-Store
 
-De **Schleim-Store** is zonder GitHub-aanmelding beschikbaar. Je kunt websites en webapps ontdekken, beoordelen en aan je startscherm toevoegen of ervan verwijderen. Let op: de projectrepository is openbaar, dus catalogusbestanden kunnen ook rechtstreeks op GitHub worden bekeken.
+De **Schleim-Store** is alleen beschikbaar nadat je je met een Schleim-account hebt aangemeld. Zonder aanmelding blijven de appcatalogus, zoekfunctie, beoordelingen, installaties en voorstellen vergrendeld. Na een succesvolle aanmelding wordt de Store vrijgegeven. Catalogusbestanden in de openbare GitHub-repository blijven rechtstreeks op GitHub zichtbaar.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
 - **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
@@ -55,7 +55,7 @@ De **Schleim-Store** is zonder GitHub-aanmelding beschikbaar. Je kunt websites e
 
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
-**Transparantie:** De GitHub-repository en app-voorstellen die als issues worden ingediend, zijn openbaar zichtbaar. Deel daarom geen wachtwoorden, privégegevens of vertrouwelijke informatie. De Schleim-Store is zonder aanmelding beschikbaar.
+**Transparantie:** De GitHub-repository, de Store-catalogus, beoordelingen en app-voorstellen als issues zijn openbaar zichtbaar. Deel daar geen wachtwoorden, privégegevens of vertrouwelijke informatie. De aanmeldplicht beveiligt de Store-interface binnen Schleim OS; de bestanden in de openbare repository worden er niet privé door.
 
 ## 📥 Downloaden en installeren
 
@@ -75,9 +75,8 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **Schleim-account:** Verbind je GitHub-account via de officiële GitHub-apparaatmachtiging. Schleim OS maakt daarna de privérepository `schleim-os-cloud`. Met **Nu opslaan in de cloud** en **Cloudback-up herstellen** kun je instellingen opslaan of op een ander apparaat herstellen. Zie de [installatiehandleiding voor het Schleim-account](extension/docs/SCHLEIM-KONTO.md).
-
-De cloudback-up wordt opgeslagen in je privérepository op GitHub. GitHub-toegangstokens en wachtwoorden worden nooit in het back-upbestand opgeslagen.
+- **Schleim-account:** De aanmelding opent eerst de GitHub-app-pagina. Na de installatie bevestig je de volgende stap in Schleim OS. De apparaatcode wordt getoond, automatisch gekopieerd en de GitHub-apparaatmachtiging wordt geopend. Na toestemming controleert Schleim OS de app-installatie en maakt zo nodig je privérepository `schleim-os-cloud` aan.
+- **Cloudback-up:** Back-up maken en herstellen kan alleen via **Instellingen → Schleim-account**. De back-up bevat de opgeslagen Schleim OS-instellingen, de volgorde van de apps op het startscherm, geïnstalleerde Store-apps en de achtergrond. Wijzigingen worden niet automatisch gesynchroniseerd. Zie de [handleiding voor het Schleim-account](extension/docs/SCHLEIM-KONTO.md). GitHub-toegangstokens en wachtwoorden worden nooit in het back-upbestand opgeslagen.
 
 # 🛠️ Schleim OS – Problemen oplossen
 
@@ -92,7 +91,7 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
 | **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
-| **Instellingen ontbreken na een browserwissel.** | Meld je aan met hetzelfde GitHub-account en kies **Cloudback-up herstellen**. |
+| **Instellingen ontbreken na een browserwissel.** | Open **Instellingen → Schleim-account**, meld je aan met hetzelfde GitHub-account en kies **Cloudback-up herstellen**. |
 | **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
 
 ## Meer hulp nodig?
