@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.13.0
+# Schleim OS – Erweiterungsdokumentation · Version 3.13.1
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -58,6 +58,7 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 
 ## Versionshinweise
 
+- [Release Notes 3.13.1](RELEASE-NOTES-3.13.1.md)
 - [Release Notes 3.13.0](RELEASE-NOTES-3.13.0.md)
 - [Release Notes 3.11.0](RELEASE-NOTES-3.11.0.md)
 
@@ -96,7 +97,11 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 - [Sonos-App einrichten](./SONOS-APP.md)
 
 
-## Release notes 3.13.0
+## Release notes 3.13.1
+
+- [Release Notes 3.13.1](./RELEASE-NOTES-3.13.1.md)
+- [Sonos-App einrichten](./SONOS-APP.md)
+
+## Previous release notes
 
 - [Release Notes 3.13.0](./RELEASE-NOTES-3.13.0.md)
-- [Sonos-App einrichten](./SONOS-APP.md)
