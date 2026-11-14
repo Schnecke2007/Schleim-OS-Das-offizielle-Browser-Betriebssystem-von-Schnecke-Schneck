@@ -654,6 +654,10 @@
     root.addEventListener('click', async event => {
       const button = event.target.closest('[data-sonos-action]');
       if (!button) return;
+      const favoriteButton = event.target.closest('[data-sonos-favorite-id]');
+      if (favoriteButton) { await playFavorite(favoriteButton.dataset.sonosFavoriteId); return; }
+      const playlistButton = event.target.closest('[data-sonos-playlist-id]');
+      if (playlistButton) { await playPlaylist(playlistButton.dataset.sonosPlaylistId); return; }
       const kind = button.dataset.sonosAction;
       if (kind === 'save-worker') { await saveWorker(); return; }
       if (kind === 'connect') { await connectSonos(); return; }
@@ -673,7 +677,7 @@
         const next = Math.max(0, Math.min(duration || Number.MAX_SAFE_INTEGER, position + (kind === 'forward' ? 15000 : -15000)));
         await action('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: next });
       } else if (kind === 'mute') {
-        await api('/groups/' + groupId + '/groupVolume', 'POST', { muted: !volume.muted });
+        await api('/groups/' + groupId + '/groupVolume/mute', 'POST', { muted: !volume.muted });
         await refreshPlayback();
       }
     });
@@ -699,10 +703,6 @@
         ssosSonosCrossfade: 'crossfade'
       };
       if (modeMap[event.target.id]) await setPlayMode(modeMap[event.target.id], !!event.target.checked);
-      const favorite = event.target.closest('[data-sonos-favorite-id]');
-      if (favorite) await playFavorite(favorite.dataset.sonosFavoriteId);
-      const playlist = event.target.closest('[data-sonos-playlist-id]');
-      if (playlist) await playPlaylist(playlist.dataset.sonosPlaylistId);
       if (event.target.id === 'ssosSonosSeek') {
         const groupId = safeId(selectedGroup());
         await api('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: Number(event.target.value) })
