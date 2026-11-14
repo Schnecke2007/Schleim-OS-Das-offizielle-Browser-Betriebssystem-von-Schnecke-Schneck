@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,7 +36,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Customize the design, accent color and background
 - Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
-- Schleim-Store is available without GitHub sign-in
+- Schleim-Store: access requires signing in with a Schleim account
 - Schleim account with GitHub sign-in and private cloud backup of the home screen
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
@@ -44,7 +44,7 @@ This project is not a standalone operating system that replaces Windows, Android
 
 ## 🛍️ Schleim-Store
 
-The **Schleim-Store** is available without GitHub sign-in. You can discover websites and web apps, rate them, and install or remove them from your home screen. Because the project repository is public, catalogue files can also be viewed directly on GitHub.
+The **Schleim-Store** is available only after signing in with a Schleim account. Without sign-in, the app catalogue, search, ratings, installations and submissions remain locked. The Store unlocks after successful sign-in. Catalogue files in the public GitHub repository remain directly visible on GitHub.
 
 - **Discover:** Recommendations, new apps, top ratings and categories.
 - **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
@@ -55,7 +55,7 @@ The **Schleim-Store** is available without GitHub sign-in. You can discover webs
 
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
 
-**Transparency:** The GitHub repository and app suggestions submitted as issues are publicly visible. Do not submit passwords, private data or confidential information. The Schleim-Store is available without sign-in; catalogue files in this public repository can also be viewed directly on GitHub.
+**Transparency:** The GitHub repository, Store catalogue, ratings and app suggestions submitted as issues are public. Do not submit passwords, private data or confidential information. Sign-in protects the Store interface inside Schleim OS; it does not make files in the public repository private.
 
 ## 📥 Download and installation
 
@@ -75,11 +75,8 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **Schleim account:** Connect your GitHub account through GitHub's official device authorization. Schleim OS then creates the private `schleim-os-cloud` repository. Use **Back up to cloud now** and **Restore cloud backup** to save or restore your settings on another device. See the [Schleim account setup guide](extension/docs/SCHLEIM-KONTO.md).
-
-The cloud backup is stored in your private GitHub repository. GitHub access tokens and passwords are never written into the backup file.
-
-Schleim OS keeps its working settings locally in the browser and uses the private GitHub repository for manual cloud backups and restores.
+- **Schleim account:** Sign-in starts by opening the GitHub App page. After installation, confirm the next step in Schleim OS. The device code is displayed, copied automatically and the GitHub device authorization page opens. After approval, Schleim OS checks the app installation and creates your private `schleim-os-cloud` repository if needed.
+- **Cloud backup:** Backup and restore are available only under **Settings → Schleim account**. The backup includes saved Schleim OS settings, home-screen app order, installed Store apps and the wallpaper. Changes are not synchronized automatically. See the [Schleim account setup guide](extension/docs/SCHLEIM-KONTO.md). GitHub access tokens and passwords are never written into the backup file.
 
 # 🛠️ Schleim OS – Troubleshooting
 
@@ -94,7 +91,7 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
 | **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
-| **Settings are missing after switching browsers.** | Sign in with the same GitHub account and choose **Restore cloud backup**. |
+| **Settings are missing after switching browsers.** | Open **Settings → Schleim account**, sign in with the same GitHub account and choose **Restore cloud backup**. |
 | **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
 
 ## Need more help?
