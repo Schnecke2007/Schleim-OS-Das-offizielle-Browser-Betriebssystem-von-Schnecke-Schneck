@@ -20,8 +20,7 @@ Die dokumentierte Installation verwendet den direkten Import des vollständigen 
 
 ## Speicherung und Sicherungen
 
-Schleim OS speichert Personalisierungsdaten lokal im Browser. Über **Einstellungen → Konfigurationsdatei (JSON)** kannst du den Homescreen exportieren und später auf demselben oder einem anderen Gerät importieren. Eine automatische Cloud- oder Browser-Synchronisierung findet nicht statt. Details: [JSON-Backup](JSON-BACKUP.md).
-
+Schleim OS hält die aktiven Personalisierungsdaten lokal im Browser. Über das **Schleim-Konto** kannst du dich mit GitHub verbinden, ein privates Repository `schleim-os-cloud` erstellen lassen und eine Sicherung manuell hochladen oder wiederherstellen. Es findet keine automatische Synchronisierung bei jeder Änderung statt. Details: [Schleim-Konto](../../extension/docs/SCHLEIM-KONTO.md).
 ## Werbung und externe Verbindungen
 
 Die Erweiterungsoberfläche ist werbefrei. Sie enthält keine Werbe-IFrames, keine Prüfung der Erreichbarkeit von Werbung und keine werbebedingte Start-Sperre. Externe Apps und Websites können weiterhin Netzwerkverbindungen herstellen, wenn du sie öffnest.
