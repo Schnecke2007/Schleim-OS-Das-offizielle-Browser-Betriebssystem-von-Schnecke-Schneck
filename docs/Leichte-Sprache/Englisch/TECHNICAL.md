@@ -24,7 +24,11 @@ The browser opens the file `pages/newtab.html`. This file shows the Schleim OS h
 
 Settings are saved in your browser profile. This is the part of the browser that stores your data and settings.
 
-You can save your settings with the JSON feature. Keep the backup file safe.
+You can save your settings in a private GitHub cloud with your Schleim account. Start the backup under **Settings → Schleim account**.
+
+The backup also includes the app order, installed Store apps and your wallpaper.
+
+You must sign in with your Schleim account to use the Schleim-Store.
 
 ## Internet and permissions
 
@@ -33,4 +37,4 @@ Some websites do not allow their pages to appear inside another page.
 
 The browser may ask you for permission. Read these questions carefully.
 
-[Technical notes in regular English](../../Englisch/TECHNICAL-NOTES.md)
+[Technical notes in regular English](../../Englisch/TECHNICAL-NOTES.md) · [Simple Schleim-Store guide](SCHLEIM-STORE.md)
