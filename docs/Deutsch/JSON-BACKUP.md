@@ -1,23 +1,34 @@
 # Cloud-Sicherung mit dem Schleim-Konto
 
-> **Hinweis zu älteren Versionen:** Die lokale JSON-Import- und Exportfunktion wurde mit Schleim OS 3.10.0 durch das Schleim-Konto ersetzt. Diese Seite dient nur noch als Hinweis für ältere JSON-Sicherungsdateien.
+> **Hinweis zu älteren Versionen:** Die frühere lokale JSON-Import- und Exportfunktion ist in der aktuellen Oberfläche von Schleim OS 3.11.0 nicht mehr verfügbar. Diese Seite erklärt die aktuelle Cloud-Sicherung und den Umgang mit alten Dateien.
 
-## Neue Sicherung verwenden
+## Neue Cloud-Sicherung erstellen
 
-1. Richte zuerst die GitHub-App ein. Die Anleitung findest du unter [Schleim-Konto einrichten](../../extension/docs/SCHLEIM-KONTO.md).
-2. Öffne den **Schleim Store** oder die **Einstellungen**.
-3. Wähle im Bereich **Schleim-Konto** die Option **Mit GitHub verbinden**.
-4. Bestätige den einmaligen Gerätecode direkt bei GitHub.
-5. Wähle **Jetzt in der Cloud sichern**.
+1. Installiere bei Bedarf zuerst die [GitHub-App Schleim OS Account](https://github.com/apps/schleim-os-account).
+2. Öffne **Einstellungen → Schleim-Konto**.
+3. Wähle **Mit GitHub verbinden** und folge dem Installations- und Gerätecode-Ablauf.
+4. Nach erfolgreicher Anmeldung wählst du **Jetzt in der Cloud sichern**.
 
-Schleim OS legt in deinem privaten GitHub-Repository `schleim-os-cloud` die Datei `schleim-os-backup.json` an oder aktualisiert sie.
+Schleim OS speichert oder aktualisiert `schleim-os-backup.json` im privaten GitHub-Repository `schleim-os-cloud`.
 
-## Sicherung auf einem anderen Gerät wiederherstellen
+## Was wird gesichert?
 
-Melde dich dort mit demselben GitHub-Konto über das Schleim-Konto an und wähle **Cloud-Sicherung wiederherstellen**. Die Einstellungen des aktuellen Geräts werden durch die gespeicherte Sicherung ersetzt.
+Das aktuelle Backup-Format 2 enthält die gespeicherten Schleim-OS-Einstellungen und ausdrücklich:
+- die Reihenfolge der Apps auf dem Startbildschirm,
+- installierte Store-Apps,
+- das ausgewählte System-Hintergrundbild,
+- ein eigenes Hintergrundbild mit seinen Bilddaten oder seiner URL.
+
+Die Sicherung wird nur manuell unter **Einstellungen → Schleim-Konto** gestartet. Es gibt keine automatische Synchronisierung.
+
+## Auf einem anderen Gerät wiederherstellen
+
+Installiere Schleim OS und melde dich unter **Einstellungen → Schleim-Konto** mit demselben GitHub-Konto an. Wähle danach **Cloud-Sicherung wiederherstellen**. Die lokalen Schleim-OS-Einstellungen werden durch die Sicherung ersetzt.
 
 ## Ältere JSON-Dateien
 
-JSON-Dateien, die mit einer früheren Schleim-OS-Version exportiert wurden, können in Version 3.10.0 nicht mehr über die Oberfläche importiert werden. Bewahre vorhandene Dateien weiterhin separat auf. Eine automatische Übernahme alter Dateien in die Cloud findet nicht statt.
+JSON-Dateien aus der früheren lokalen Exportfunktion können in der aktuellen Oberfläche nicht importiert werden. Bewahre solche Dateien separat auf. Sie werden nicht automatisch in die Cloud übernommen.
 
-**Sicherheit:** Das Cloud-Repository muss privat bleiben. Schleim OS speichert dort keine Passwörter und keine Zugriffstokens.
+Ältere Cloud-Backups im Format 1, die mit dem Schleim-Konto erstellt wurden, können weiterhin wiederhergestellt werden.
+
+**Sicherheit:** Das Cloud-Repository muss privat bleiben. GitHub-Passwörter und Zugriffstokens werden nicht in die Backup-Datei geschrieben.
