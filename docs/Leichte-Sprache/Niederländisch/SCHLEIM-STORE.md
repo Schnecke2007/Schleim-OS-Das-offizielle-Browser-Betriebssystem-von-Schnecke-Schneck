@@ -61,6 +61,22 @@ Geïnstalleerde Store-apps worden tijdelijk verborgen op het startscherm.
 
 Na de volgende aanmelding verschijnen ze weer.
 
+## Cloudback-up
+
+In de Schleim-Store staat geen cloudback-up.
+
+Je vindt de back-up alleen hier:
+
+**Instellingen → Schleim-account**
+
+Je moet de back-up zelf starten.
+
+De back-up bewaart ook de volgorde van je apps, geïnstalleerde Store-apps en je achtergrond.
+
+De back-up wordt niet automatisch gemaakt.
+
+[Schleim-account en cloudback-up in eenvoudige taal](ACCOUNT-CLOUD.md)
+
 ## Belangrijk
 
 De aanmelding beschermt de Store binnen Schleim OS.
