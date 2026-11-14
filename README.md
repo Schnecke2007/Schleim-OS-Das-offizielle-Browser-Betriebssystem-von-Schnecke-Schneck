@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.9.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store ohne GitHub-Anmeldung nutzbar
-- Manuelles JSON-Backup: Homescreen-Einstellungen exportieren und später wieder importieren
+- Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -75,7 +75,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **JSON-Backup:** Öffne die Einstellungen und wähle **Homescreen exportieren**, um eine JSON-Datei herunterzuladen. Mit **Homescreen importieren** kannst du diese Datei später wiederherstellen oder auf einem anderen Gerät verwenden. Die Übertragung erfolgt manuell. Details: [Anleitung zum JSON-Backup](docs/Deutsch/JSON-BACKUP.md).
+- **Schleim-Konto:** Verbinde dein GitHub-Konto über die offizielle GitHub-Gerätefreigabe. Schleim OS erstellt anschließend das private Repository `schleim-os-cloud`. Über **Jetzt in der Cloud sichern** und **Cloud-Sicherung wiederherstellen** kannst du deine Einstellungen speichern oder auf einem anderen Gerät zurückholen. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
 
 Die JSON-Sicherung wird lokal erstellt und nicht automatisch hochgeladen. Übertrage die Datei selbst auf ein anderes Gerät und importiere sie dort über die Einstellungen.
 
@@ -92,7 +92,7 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
 | **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Schleim OS speichert die Einstellungen lokal im jeweiligen Browser. Exportiere auf dem alten Gerät eine JSON-Sicherung und importiere sie im neuen Browser über **Einstellungen → Homescreen importieren**. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Melde dich in Schleim OS mit demselben GitHub-Konto an und wähle **Cloud-Sicherung wiederherstellen**. |
 | **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
 
 ## Weitere Hilfe
