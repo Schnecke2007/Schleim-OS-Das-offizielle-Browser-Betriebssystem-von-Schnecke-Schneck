@@ -1,6 +1,6 @@
 # 🛠️ Schleim OS – Troubleshooting
 
-This guide helps solve common installation, sign-in and usage problems in Schleim OS 3.11.0.
+This guide helps solve common installation, sign-in and usage problems in Schleim OS 3.12.0.
 
 | Problem | Possible solution |
 |---|---|
