@@ -15,7 +15,7 @@ Jede Datei enthält:
 
 ## Ablauf
 
-1. Eine Person wählt im Schleim Store eine Sternebewertung und kann optional Feedback ergänzen.
+1. Eine Person meldet sich in Schleim OS mit dem Schleim-Konto an, öffnet den Schleim-Store und wählt eine Sternebewertung. Optional kann sie Feedback ergänzen.
 2. Die Person reicht das vorbereitete Bewertungs-Issue auf GitHub ein.
 3. GitHub Actions prüft die App-ID und Sternezahl, speichert die Daten hier als JSON und aktualisiert `extension/data/store-ratings.json`.
 4. Erst nach erfolgreicher Speicherung und Berechnung wird das Issue automatisch geschlossen.
@@ -26,3 +26,6 @@ Jede Datei enthält:
 Bewertungs-Issues bleiben öffentlich. Der Entwickler kann sie über den Admin-Bereich im Schleim Store wieder öffnen und mit einem öffentlichen GitHub-Kommentar beantworten. Eine Wiederöffnung durch den Entwickler wird nicht automatisch erneut geschlossen.
 
 **Öffentlichkeit:** Dieser Ordner ist Teil eines öffentlichen GitHub-Repositories. GitHub-Benutzernamen, Sternebewertungen und eingegebenes Feedback sind öffentlich sichtbar. Keine vertraulichen Daten eintragen.
+
+
+**Zugriff:** Bewertungen können in der Schleim-OS-Oberfläche nur nach Anmeldung mit dem Schleim-Konto gestartet werden. Die hier gespeicherten JSON-Dateien sowie GitHub-Issues und Kommentare bleiben öffentlich einsehbar.
