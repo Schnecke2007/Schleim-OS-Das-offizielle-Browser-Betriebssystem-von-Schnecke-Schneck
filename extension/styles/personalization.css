@@ -143,3 +143,9 @@
 .ssos-store-account{margin:14px 0 18px}
 .ssos-settings-cloud{margin:14px 0}
 @media(max-width:520px){.ssos-cloud-card{padding:12px}.ssos-cloud-meta{grid-template-columns:1fr;gap:4px}.ssos-cloud-meta span:not(:first-child){margin-top:6px}.ssos-cloud-actions{display:grid;grid-template-columns:1fr}.ssos-cloud-actions .app-button{width:100%}}
+
+/* Store access gate: show only the account sign-in panel until authentication succeeds. */
+.ssos-store-gate { display:flex; flex-direction:column; gap:14px; max-width:640px; margin:18px auto; }
+.ssos-store-lock-hero { text-align:center; overflow:hidden; }
+.ssos-store-lock-hero .large-emoji { display:block; margin-top:10px; font-size:44px; }
+.ssos-store-gate .ssos-store-account { margin:0; }
