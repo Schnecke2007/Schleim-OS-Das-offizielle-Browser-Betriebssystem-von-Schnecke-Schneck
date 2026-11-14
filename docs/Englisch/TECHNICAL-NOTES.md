@@ -1,4 +1,4 @@
-# 🧩 Schleim OS – Technical Notes · Version 3.11.0
+# 🧩 Schleim OS – Technical Notes · Version 3.12.0
 
 ## Platform and extension format
 
