@@ -13,6 +13,7 @@
 - **Personalization and Schleim-Store:** `scripts/personalization.js`
 - **GitHub sign-in and cloud backup:** `scripts/schleim-account.js`
 - **Store admin portal:** `scripts/slime-store-admin.js`
+- **GitHub update center:** `scripts/update-center.js`
 - **Stylesheets:** `styles/main.css` and `styles/personalization.css`
 - **Legal-text translations:** `locales/legal-translations.js`
 - **Standalone demo:** `standalone/schleim-os-standalone.html`
@@ -40,6 +41,12 @@ The Schleim-Store is available only with a signed-in Schleim account. The Store 
 ## Permissions
 
 The manifest includes, among others, `storage` and `clipboardWrite`. Clipboard permission is used to copy the GitHub device code automatically. Optional host permissions may be requested when a feature needs them. Review permission prompts carefully.
+
+## Update center
+
+The update center is shown in Settings. It reads the manifest version from the GitHub default branch through `raw.githubusercontent.com` and compares it with `chrome.runtime.getManifest().version`. If a newer version is found, it offers a link to the complete repository ZIP. The script does not install files or replace the running extension.
+
+The browser must perform the ZIP import or its own update function. `chrome.runtime.requestUpdateCheck()` is not used as a GitHub installer because that API checks the extension update channel configured by the browser.
 
 ## Advertising and external connections
 
