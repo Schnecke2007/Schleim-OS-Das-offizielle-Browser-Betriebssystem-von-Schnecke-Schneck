@@ -20,8 +20,7 @@ The documented installation uses direct import of the complete GitHub repository
 
 ## Storage and backups
 
-Schleim OS stores personalization data locally in the browser. Use **Settings → Configuration file (JSON)** to export the home screen and import it later on the same or another device. No automatic cloud or browser synchronization takes place. See the [JSON backup guide](JSON-BACKUP.md).
-
+Schleim OS keeps active personalization data locally in the browser. Use the **Schleim account** to connect GitHub, create a private `schleim-os-cloud` repository, and manually upload or restore a backup. Changes are not synchronized automatically after every edit. See the [Schleim account setup guide](../../extension/docs/SCHLEIM-KONTO.md).
 ## Advertising and external connections
 
 The extension interface is ad-free. It does not include advertising iframes, advertising reachability checks or an advertising-related startup lock. External apps and websites may still make network requests when opened by the user.
