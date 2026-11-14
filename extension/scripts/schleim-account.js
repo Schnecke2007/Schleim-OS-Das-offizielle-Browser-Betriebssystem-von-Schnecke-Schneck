@@ -101,6 +101,11 @@
   let deviceFlow = null;
   let polling = false;
   let observer = null;
+  let accountReady = false;
+
+  function notifyAccountState() {
+    window.dispatchEvent(new Event('ssos-account-state-changed'));
+  }
 
   function storageGet() {
     return new Promise((resolve, reject) => {
@@ -256,7 +261,7 @@
         deviceFlow=null;mountPanels();setStatus(t('expired'),true);
       }
     } catch (error) {
-      deviceFlow=null;session=null;storageRemove().catch(()=>{});mountPanels();setStatus(error.status===403?t('repoPermission'):(error.message||t('authError')),true);
+      deviceFlow=null;session=null;storageRemove().catch(()=>{});mountPanels();setStatus(error.status===403?t('repoPermission'):(error.message||t('authError')),true);notifyAccountState();
     } finally {
       polling=false;
     }
@@ -288,7 +293,7 @@
     if (!session?.accessToken) throw new Error(t('authError'));
     if (!session.expiresAt || session.expiresAt>Date.now()+60000) return;
     if (!session.refreshToken || (session.refreshExpiresAt && session.refreshExpiresAt<Date.now()+60000)) {
-      await storageRemove();session=null;mountPanels();throw new Error(t('authError')+' Please connect again.');
+      await storageRemove();session=null;mountPanels();notifyAccountState();throw new Error(t('authError')+' Please connect again.');
     }
     const data=await oauthPost(TOKEN_URL,{
       client_id:GITHUB_APP_CLIENT_ID,
@@ -325,7 +330,7 @@
     session.user={id:user.id,login:user.login,name:user.name||user.login,email:primary.email};
     await ensureCloudRepository();
     await storageSet(session);
-    mountPanels();setStatus(t('created'));
+    mountPanels();setStatus(t('created'));notifyAccountState();
   }
   async function ensureCloudRepository() {
     if (!session?.user?.login) throw new Error(t('authError'));
@@ -434,7 +439,7 @@
     if(!confirm(t('signOutConfirm')))return;
     deviceFlow=null;session=null;
     await storageRemove();
-    mountPanels();setStatus(t('cancelled'));
+    mountPanels();setStatus(t('cancelled'));notifyAccountState();
   }
   async function handleAction(action) {
     const button=action.closest('button');
@@ -453,10 +458,16 @@
   function init() {
     mountPanels();
     storageGet().then(value=>{
-      if(value?.accessToken&&value?.user&&value?.repo){
-        session=value;mountPanels();
-      }
-    }).catch(error=>setStatus(error.message,true));
+      if(value?.accessToken&&value?.user&&value?.repo)session=value;
+      accountReady=true;
+      mountPanels();
+      notifyAccountState();
+    }).catch(error=>{
+      accountReady=true;
+      mountPanels();
+      setStatus(error.message,true);
+      notifyAccountState();
+    });
     document.addEventListener('click',event=>{
       const action=event.target.closest('[data-ssos-cloud-login],[data-ssos-cloud-cancel],[data-ssos-cloud-save],[data-ssos-cloud-restore],[data-ssos-cloud-logout]');
       if(action){event.preventDefault();handleAction(action);}
@@ -471,7 +482,8 @@
   }
   window.SSOSCloudAccount=Object.freeze({
     mount:mountPanels,
-    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null}:null
+    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null}:null,
+    getState:()=>({ready:accountReady,authenticated:accountReady&&!!(session?.accessToken&&session?.user&&session?.repo)})
   });
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();
