@@ -1,33 +1,44 @@
 # 📥 Schleim OS – Installationsanleitung
 
-Diese Anleitung beschreibt die Installation von Schleim OS in unterstützten Chromium-Browsern auf Android und Desktop. Voraussetzung ist ein Browser, dessen Erweiterungsverwaltung den direkten Import einer ZIP-Datei unterstützt.
+Diese Anleitung beschreibt die Installation der Erweiterung in einem Chromium-Browser, der den direkten Import von ZIP-Erweiterungen unterstützt. Die Funktion ist nicht in jedem Browser und auf jeder Plattform verfügbar.
 
-## 1. Das vollständige GitHub-Repository herunterladen
+## 1. Vollständiges GitHub-Repository herunterladen
 
 1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Klicke oben auf die grüne Schaltfläche **Code**.
-3. Wähle **Download ZIP**.
-4. Speichere das ZIP-Archiv auf deinem Gerät.
+2. Wähle **Code → Download ZIP**.
+3. Speichere das vollständige Repository auf deinem Gerät.
 
-Lade unbedingt das **gesamte Repository** herunter. Die Browser-Erweiterung befindet sich darin im Unterordner `extension`. Das ZIP-Archiv bleibt unverändert – du musst es **nicht entpacken**.
+## 2. Repository-ZIP im Browser importieren
 
-## 2. Die Repository-ZIP direkt im Chromium-Browser installieren
-
-1. Öffne die Erweiterungsverwaltung deines unterstützten Chromium-Browsers.
+1. Öffne die Erweiterungsverwaltung eines unterstützten Chromium-Browsers.
 2. Aktiviere bei Bedarf den **Entwicklermodus**.
-3. Suche die Schaltfläche zum Importieren einer Erweiterungsdatei. Sie kann beispielsweise **„From .zip/.crx/.user.js“** heißen.
-4. Tippe oder klicke auf diese Schaltfläche.
-5. Wähle das zuvor heruntergeladene **vollständige GitHub-Repository-ZIP** aus – nicht einzelne Dateien und nicht einen entpackten Ordner.
-6. Der Browser verarbeitet das ZIP-Archiv und sollte die Erweiterung im Unterordner `extension` erkennen. Folge den angezeigten Hinweisen und bestätige die Installation.
+3. Suche die Funktion zum direkten Import einer ZIP-Erweiterung. Sie kann beispielsweise **„From .zip/.crx/.user.js“** heißen.
+4. Wähle die vollständige Repository-ZIP aus.
+5. Bestätige den Import.
 
-> 💡 **Wichtig:** Die ZIP-Datei wird direkt aus GitHub in den Browser importiert. Ein vorheriges Entpacken ist bei diesem Installationsweg nicht vorgesehen.
+**Wichtig:** Entpacke die ZIP-Datei vor dem Import nicht. Der Browser muss die Erweiterung im Unterordner `extension` erkennen können.
 
-> 📱 **Android und Desktop:** Der Ablauf gilt für unterstützte Chromium-Browser auf beiden Plattformen. Die genaue Bezeichnung und Position der Import-Schaltfläche kann je nach Browser und Gerät variieren. Voraussetzung ist immer, dass der Browser den ZIP-Import anbietet.
+## 3. Schleim OS starten
 
-## 3. Nach der Installation
+Öffne einen neuen Browser-Tab. Wenn Schleim OS nicht erscheint, prüfe in der Erweiterungsverwaltung, ob es installiert und aktiviert ist.
 
-Öffne einen neuen Browser-Tab. Wenn Schleim OS nicht erscheint, prüfe in der Erweiterungsverwaltung, ob die Erweiterung erfolgreich installiert und aktiviert wurde. Weitere Hilfe findest du in der [Fehlerbehebung](FEHLERBEHEBUNG.md).
+## 4. Schleim-Store zum ersten Mal öffnen
+
+Der Schleim-Store ist nur nach Anmeldung mit einem Schleim-Konto verfügbar.
+
+1. Öffne den Schleim-Store und wähle **Mit GitHub verbinden**.
+2. Schleim OS öffnet zuerst die GitHub-App-Seite [Schleim OS Account](https://github.com/apps/schleim-os-account).
+3. Installiere die App für dein GitHub-Konto.
+4. Kehre zu Schleim OS zurück und wähle **Ich habe die App installiert – weiter**.
+5. Folge dem angezeigten Gerätecode. Schleim OS kopiert ihn nach kurzer Verzögerung automatisch und öffnet anschließend die GitHub-Gerätefreigabe.
+6. Bestätige die App auf der echten GitHub-Seite.
+
+Nach der Autorisierung prüft Schleim OS, ob die App-Installation erkannt wird. Details stehen in der [Anleitung zum Schleim-Konto](../../extension/docs/SCHLEIM-KONTO.md).
+
+## 5. Cloud-Sicherung
+
+Die Cloud-Sicherung findest du ausschließlich unter **Einstellungen → Schleim-Konto**. Dort kannst du die Sicherung manuell speichern oder wiederherstellen. Sie enthält auch die App-Reihenfolge, installierte Store-Apps und dein Hintergrundbild.
 
 ---
 
-[🇬🇧 English installation guide](../Englisch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md)
+[🇬🇧 English installation guide](../Englisch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md) · [Fehlerbehebung](FEHLERBEHEBUNG.md)
