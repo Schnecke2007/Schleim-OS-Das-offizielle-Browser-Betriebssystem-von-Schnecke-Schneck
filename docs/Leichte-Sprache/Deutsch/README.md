@@ -18,7 +18,8 @@ Dort gibt es Kacheln für Apps und Webseiten.
 - Du kannst die Kacheln verschieben.
 - Du kannst das Aussehen ändern.
 - Du kannst eine Farbe und einen Hintergrund auswählen.
-- Du kannst deine Einstellungen mit deinem Schleim-Konto in der Cloud sichern.
+- Du kannst deine Einstellungen unter **Einstellungen → Schleim-Konto** manuell in der Cloud sichern.
+- Die Sicherung wird nicht automatisch erstellt.
 - Der Schleim-Store zeigt Apps und Webseiten. Für den Store brauchst du ein Schleim-Konto.
 - Die Oberfläche gibt es auf Deutsch, Englisch und Niederländisch.
 
@@ -40,7 +41,11 @@ Die genaue Anleitung steht hier: [Installation in Leichter Sprache](INSTALLATION
 
 Der Schleim-Store ist nur nach einer Anmeldung verfügbar. Du kannst dort Apps suchen, installieren und bewerten.
 
+Im Store gibt es keine Cloud-Sicherung. Die Sicherung ist nur in den Einstellungen.
+
 [Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
+
+[Schleim-Konto und Cloud-Sicherung einfach erklärt](KONTO-CLOUD.md)
 
 ## Hilfe bekommen
 
