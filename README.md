@@ -2,11 +2,15 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.13.7-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.14.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
+
+## 📷 Neue private Foto- und Video-Cloud
+
+Schleim OS erhält eine private Mediathek mit Kamera-App, Datumsordnern, Speicherstatistik und lokaler Metadatensuche. Fotos und Videos werden in einem getrennten privaten GitHub-Repository gespeichert. Der aktuelle Upload ist auf 50 MiB je Datei begrenzt; GitHub ist kein unbegrenzter Foto-Cloud-Dienst.
 
 ## 👋 Über mich
 

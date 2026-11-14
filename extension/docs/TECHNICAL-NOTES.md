@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.13.7
+# Technische Hinweise – Version 3.14.0
 
 ## Plattform und Erweiterungsformat
 
@@ -12,7 +12,8 @@
 - `pages/` enthält die Erweiterungsoberfläche.
 - `scripts/app.js` steuert Apps und Navigation.
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
-- `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
+- `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung, Einstellungs-Backup und den Zugriff auf das private Medien-Repository.
+- `scripts/schleim-photos-cloud.js` verwaltet Foto-/Video-Uploads, Metadaten, lokale Suche, Kamera, Galerie und Speicherstatistik.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
@@ -31,6 +32,12 @@ Die GitHub-App verwendet den Device Flow. Der Anmeldeablauf öffnet zunächst di
 ## Store-Zugriff
 
 Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Ohne gültige Sitzung bleiben Store-Katalog, Suche, Bewertungen, Installation, Deinstallation und Vorschlagsfunktionen gesperrt. Die öffentlichen Katalogdateien im GitHub-Repository sind dadurch nicht geschützt.
+
+## Foto- und Video-Cloud
+
+Das Medien-Repository `schleim-os-cloud-photos-and-videos` wird getrennt vom Einstellungs-Repository `schleim-os-cloud` verwaltet. Das Konto-Modul prüft Besitzer-ID und `private=true` und erstellt das Medien-Repository bei Bedarf über die GitHub-Repository-API. Die Medienschnittstelle akzeptiert nur Content-Pfade und verwendet dieselbe Schleim-Konto-Sitzung.
+
+Dateien werden nach Medientyp, Aufnahmejahr und -monat sortiert. JPEG-EXIF `DateTimeOriginal` wird – soweit verfügbar und lesbar – ausgewertet; andernfalls gilt `File.lastModified`. Die Suche ist eine lokale Metadaten-/Synonymsuche, keine KI-Bilderkennung. Uploads sind auf 50 MiB je Datei begrenzt. GitHub-Repository-Versionierung ist für große Mediensammlungen nur eingeschränkt geeignet.
 
 ## Speicherung und Backup
 

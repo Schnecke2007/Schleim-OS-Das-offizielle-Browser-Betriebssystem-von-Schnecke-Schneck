@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.13.7
+# Schleim OS – Erweiterungsdokumentation · Version 3.14.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -10,6 +10,10 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 - Schleim-Store mit Kategorien, Empfehlungen, Suche, Bewertungen und App-Vorschlägen
 - Store-Sperre: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsseite, Gerätecode, versuchtem automatischem Kopieren und Installationserkennung
+- Private Foto-/Video-Cloud mit Kamera-App, Upload, Mediathek und Speicherübersicht
+- Front-/Rückkamera für Foto- und Videoaufnahmen über Browser-Medien-APIs
+- Ordner nach Jahr und Monat; EXIF-Aufnahmedatum bei unterstützten JPEG-Fotos
+- Lokale, schlüssel-freie Suche in Metadaten und Synonymen
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich in den Einstellungen
 - Update-Center zum Prüfen der GitHub-Version und Herunterladen der aktuellen Repository-ZIP
 - Deutsch, Englisch und Niederländisch
@@ -22,6 +26,12 @@ Der feste Store-Einstieg auf dem Homescreen bleibt sichtbar. Ohne angemeldetes S
 Der Anmeldeablauf öffnet zuerst die GitHub-App-Seite. Nach der Installation bestätigt die Person den nächsten Schritt in Schleim OS. Der Gerätecode wird angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung in die Zwischenablage zu kopieren; manuelles Kopieren bleibt möglich. Anschließend öffnet sich die GitHub-Gerätefreigabe. Nach der Autorisierung prüft Schleim OS die App-Installation über die GitHub-API.
 
 Die Store-Sperre betrifft die Oberfläche der Erweiterung. Der Katalog und die Bewertungsdateien im öffentlichen GitHub-Repository sind weiterhin öffentlich lesbar.
+
+## Foto- und Video-Cloud
+
+Die Erweiterung verwendet zusätzlich zum Einstellungs-Backup-Repository `schleim-os-cloud` das separate private Repository `schleim-os-cloud-photos-and-videos`. Es wird nach der Anmeldung unter **Einstellungen → Schleim-Konto → Schleim OS Foto Video Cloud Speicher** gesucht und bei Bedarf nach Auswahl privat angelegt. Medien liegen unter `Fotos/JJJJ/JJJJ-MM/` bzw. `Videos/JJJJ/JJJJ-MM/`; `_metadata/media-index.json` enthält Typ, Datum, Dateigröße, Dateiname, Beschreibung und Stichwörter. JPEG-Dateien können ihr EXIF-Aufnahmedatum liefern. Für andere Formate gilt als Fallback der Datei-Zeitstempel.
+
+Die Suche läuft lokal mit Namen, Datum, Stichwörtern und Synonymen, ohne KI-API-Schlüssel. Sie erkennt keine Bildmotive direkt im Bildinhalt. Dateien sind derzeit auf 50 MiB pro Upload begrenzt. GitHub ist versionsbasierter Repository-Speicher und kein unbegrenzter Foto-Cloud-Anbieter; entfernte Dateien können in der Git-Historie erhalten bleiben.
 
 ## Speicherung und Cloud-Backup
 

@@ -70,7 +70,15 @@ Die eigentlichen Bilddaten eines eigenen Hintergrundbilds werden in den Personal
 
 Backups im älteren Format 1 können weiterhin wiederhergestellt werden. Die frühere lokale JSON-Import-/Export-Oberfläche ist nicht mehr Bestandteil der aktuellen Erweiterung.
 
-## 6. Sicherheit und Abmeldung
+## 6. Foto- und Video-Cloud
+
+Zusätzlich zum Einstellungs-Backup kann Schleim OS das zweite private Repository `schleim-os-cloud-photos-and-videos` verwenden. Es wird bei älteren Schleim-OS-Versionen nicht still im Hintergrund angelegt: Öffne **Einstellungen → Schleim-Konto → Schleim OS Foto Video Cloud Speicher** und wähle **Privaten Cloud-Speicher jetzt verknüpfen**. Die Erweiterung sucht zuerst nach dem Repository und legt es bei Bedarf privat an. Dafür werden dieselbe GitHub-App-Anmeldung sowie die Berechtigungen Repository creation (write) und Contents (read/write) verwendet.
+
+Fotos werden unter `Fotos/JJJJ/JJJJ-MM/`, Videos unter `Videos/JJJJ/JJJJ-MM/` abgelegt. `_metadata/media-index.json` erfasst Aufnahmezeit, Uploadzeit, Dateityp, Größe, Beschreibung und Stichwörter. Bei JPEG-Dateien wird – wenn lesbar – EXIF `DateTimeOriginal` verwendet. Bei anderen Formaten oder fehlenden EXIF-Angaben gilt der Datei-Zeitstempel. Die lokale Suche braucht keinen KI-API-Schlüssel; sie durchsucht Metadaten und Synonyme, nicht den Bildinhalt. Die Kamera-App greift nach Browserfreigabe auf Front- oder Rückkamera zu und lädt Aufnahmen in dieselbe private Mediathek.
+
+Pro Datei gilt aktuell ein Uploadlimit von 50 MiB. GitHub ist kein unbegrenzter Foto-/Videospeicher; gelöschte Dateien können in der Git-Historie verbleiben. Für eine größere Cloud-Nutzung wäre später objektbasierter Speicher mit eigenem Backend sinnvoll.
+
+## 7. Sicherheit und Abmeldung
 
 - Das Repository `schleim-os-cloud` muss privat bleiben. Schleim OS verweigert das Speichern, wenn das Repository öffentlich ist.
 - GitHub-Passwörter und Zugriffstokens werden nicht in die Backup-Datei geschrieben.

@@ -611,6 +611,7 @@
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
       <div class="ssos-cloud-account ssos-settings-cloud" data-ssos-cloud-account></div>
+      <div class="ssos-card ssos-photos-settings-card"><h4>📷 Schleim OS Foto Video Cloud Speicher</h4><div data-ssos-photo-cloud-settings><p>Foto- und Videospeicher wird geladen …</p></div></div>
       <div class="ssos-update-center-mount" data-ssos-update-center></div>
 `;
     mount.appendChild(section);

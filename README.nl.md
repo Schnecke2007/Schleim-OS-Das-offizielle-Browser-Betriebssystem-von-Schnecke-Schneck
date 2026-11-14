@@ -2,11 +2,15 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.13.7-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.14.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo openen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md)
+
+## 📷 Privéfoto- en videocloud
+
+Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera-app met voor-/achtercamera, datumgebonden mappen, opslagstatistieken en lokale metadataverkenning. Media wordt apart van instellingenback-ups opgeslagen. Uploads zijn momenteel beperkt tot 50 MiB per bestand; GitHub biedt geen onbeperkte fotocloud.
 
 ## 👋 Over mij
 

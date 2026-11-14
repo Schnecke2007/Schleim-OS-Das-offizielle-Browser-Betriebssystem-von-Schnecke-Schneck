@@ -357,8 +357,11 @@
   }
   async function githubApi(path, options={}) {
     await ensureFreshToken();
+    const responseType=options.responseType||'json';
+    const requestOptions={...options};
+    delete requestOptions.responseType;
     const response=await fetch(API+path,{
-      ...options,
+      ...requestOptions,
       headers:{
         Accept:'application/vnd.github+json',
         Authorization:'Bearer '+session.accessToken,
@@ -369,14 +372,15 @@
       cache:'no-store',
       credentials:'omit'
     });
+    if(responseType==='blob'&&response.ok)return response.blob();
     const raw=await response.text();
-    let data=null;try{data=raw?JSON.parse(raw):null;}catch{}
+    let data=null;try{data=raw?JSON.parse(raw):null;}catch{data=raw;}
     if(!response.ok){
-      const error=new Error(data?.message||('GitHub API HTTP '+response.status));
+      const error=new Error((typeof data==='string'?data:data?.message)||('GitHub API HTTP '+response.status));
       error.status=response.status;error.data=data;
       throw error;
     }
-    return data;
+    return responseType==='text'?raw:data;
   }
   async function ensureFreshToken() {
     if (!session?.accessToken) throw new Error(t('authError'));
@@ -450,6 +454,61 @@
       html_url:repository.html_url,
       default_branch:repository.default_branch||'main'
     };
+  }
+  const PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos';
+  function normalizePrivateRepository(repository) {
+    if(Number(repository.owner?.id)!==Number(session?.user?.id))throw new Error(t('ownerMismatch'));
+    if(repository.private!==true)throw new Error('The photo repository must be private. Public repositories are not accepted.');
+    return {
+      id:repository.id,
+      full_name:repository.full_name,
+      html_url:repository.html_url,
+      default_branch:repository.default_branch||'main',
+      size:Number(repository.size)||0,
+      private:true
+    };
+  }
+  async function getPhotosRepository() {
+    if(!session?.user?.login)throw new Error(t('authError'));
+    if(session.photosRepo?.full_name===session.user.login+'/'+PHOTOS_REPO_NAME)return {...session.photosRepo};
+    let repository;
+    try{
+      repository=await githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+PHOTOS_REPO_NAME);
+    }catch(error){
+      if(error.status===404)return null;
+      throw error;
+    }
+    session.photosRepo=normalizePrivateRepository(repository);
+    await storageSet(session);
+    return {...session.photosRepo};
+  }
+  async function ensurePhotosRepository() {
+    if(!session?.user?.login)throw new Error(t('authError'));
+    const existing=await getPhotosRepository();
+    if(existing)return existing;
+    const repository=await githubApi('/user/repos',{
+      method:'POST',
+      body:JSON.stringify({
+        name:PHOTOS_REPO_NAME,
+        description:'Private personal photo and video library for Schleim OS.',
+        private:true,
+        auto_init:true,
+        has_issues:false,
+        has_projects:false,
+        has_wiki:false
+      })
+    });
+    session.photosRepo=normalizePrivateRepository(repository);
+    await storageSet(session);
+    return {...session.photosRepo};
+  }
+  async function requestPhotosRepository(path, options={}) {
+    if(typeof path!=='string'||(!path.startsWith('/contents/')&&!path.startsWith('/git/trees/'))){
+      throw new Error('Unsupported photo repository API path.');
+    }
+    const repository=await getPhotosRepository();
+    if(!repository)throw new Error('The private photo and video repository is not linked yet.');
+    return githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+PHOTOS_REPO_NAME+path,options);
   }
   function encodeBase64Utf8(value) {
     const bytes=new TextEncoder().encode(value);
@@ -602,8 +661,11 @@
   }
   window.SSOSCloudAccount=Object.freeze({
     mount:mountPanels,
-    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null}:null,
-    getState:()=>({ready:accountReady,authenticated:accountReady&&!installationStage&&!installationPending&&!!(session?.accessToken&&session?.user&&session?.repo)})
+    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null,photoRepository:session.photosRepo?.full_name||null}:null,
+    getState:()=>({ready:accountReady,authenticated:accountReady&&!installationStage&&!installationPending&&!!(session?.accessToken&&session?.user&&session?.repo)}),
+    getPhotosRepository,
+    ensurePhotosRepository,
+    requestPhotosRepository
   });
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();

@@ -7,6 +7,8 @@ on:
       - '.github/workflows/sonos-validation.yml'
       - 'extension/scripts/app.js'
       - 'extension/scripts/personalization.js'
+      - 'extension/scripts/schleim-account.js'
+      - 'extension/scripts/schleim-photos-cloud.js'
       - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
       - 'extension/manifest.json'
@@ -20,6 +22,8 @@ on:
       - '.github/workflows/sonos-validation.yml'
       - 'extension/scripts/app.js'
       - 'extension/scripts/personalization.js'
+      - 'extension/scripts/schleim-account.js'
+      - 'extension/scripts/schleim-photos-cloud.js'
       - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
       - 'extension/manifest.json'
@@ -44,6 +48,8 @@ jobs:
         run: |
           node --check extension/scripts/app.js
           node --check extension/scripts/personalization.js
+          node --check extension/scripts/schleim-account.js
+          node --check extension/scripts/schleim-photos-cloud.js
       - name: Check app navigation regressions
         run: node --test extension/tests/*.test.js
       - name: Validate JSON files

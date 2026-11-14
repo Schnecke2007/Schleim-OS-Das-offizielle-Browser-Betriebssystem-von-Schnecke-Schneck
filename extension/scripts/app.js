@@ -51,13 +51,14 @@
     {id:'whatsapp',name:'WhatsApp Business',icon:'💬',hint:'Nachricht senden',keys:'whatsapp hotline chat nachricht'},
     {id:'email',name:'E-Mail',icon:'📨',hint:'Kontakt per E-Mail',keys:'email gmail mail'},
     {id:'google',name:'Google-Profil',icon:'⭐',hint:'Creator Studio bewerten',keys:'google bewertung rezension maps'},
-    {id:'images',name:'Bilder',icon:'🖼️',hint:'Bildergalerie der offiziellen Fan-Webseite',keys:'bilder galerie fotos wix medien'},
+    {id:'images',name:'Fotos',icon:'📸',hint:'Private Foto- und Video-Mediathek',keys:'fotos bilder galerie mediathek videos cloud hochladen suche'},
+    {id:'camera',name:'Kamera',icon:'📷',hint:'Fotos und Videos mit Front- und Rückkamera aufnehmen',keys:'kamera camera foto video selfie frontkamera rückkamera aufnehmen'},
     {id:'legal',name:'Rechtliches',icon:'⚖️',hint:'Impressum, Datenschutz und AGBs',keys:'rechtliches impressum datenschutz agb agbs bedingungen'},
     {id:'settings',name:'Einstellungen',icon:'⚙️',hint:'Darstellung und Kontrollzentrum',keys:'einstellungen wallpaper design helligkeit'}
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
   // The old static Wix gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const WIX_GALLERY_IMAGES = [];
@@ -96,11 +97,11 @@
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Photos',camera:'Camera',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Take photos and videos with the front or rear camera',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
     nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Ontdek apps in de Schleim-Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
@@ -465,23 +466,37 @@
   }
 
   function renderImages(){
-    const lang=currentLanguage();
-    const copy=lang==='en'
-      ?'Open the public photo and social gallery on the official website. Some providers block embedded galleries, so the external link is the most reliable option.'
-      :lang==='nl'
-        ?'Open de openbare foto- en socialmediagalerij op de officiële website. Sommige aanbieders blokkeren ingesloten galerijen; de externe link is daarom het betrouwbaarst.'
-        :'Öffne die öffentliche Foto- und Social-Media-Galerie auf der offiziellen Webseite. Manche Anbieter blockieren eingebettete Galerien – deshalb ist der externe Aufruf der zuverlässigste Weg.';
-    const openLabel=lang==='en'?'Open photo gallery':lang==='nl'?'Fotogalerij openen':'Fotogalerie öffnen';
-    const loadLabel=lang==='en'?'Try loading here':lang==='nl'?'Hier proberen te laden':'Hier laden versuchen';
-    return `${appHero('BILDER','Bilder aus der Fan-Welt.',copy,'🖼️')}
-      <div class="notice">${esc(copy)}</div>
-      <div class="ssos-form-actions">
-        <a class="app-button" href="${esc(URLS.social)}" target="_blank" rel="noopener noreferrer">${openLabel} ↗</a>
-        <button class="app-button secondary" type="button" data-load-frame="imageFeed">${loadLabel}</button>
-      </div>
-      ${section('Galerie der offiziellen Webseite')}
-      <div class="embed-shell" id="imageFeedEmbed"><div class="embed-placeholder"><span>📸</span><b>Originale Bildergalerie</b><small>Die Galerie wird erst nach deiner Auswahl geladen. Falls die Einbettung blockiert wird, nutze den externen Öffnungsbutton.</small><button class="app-button" type="button" data-load-frame="imageFeed">${loadLabel}</button></div></div>
-      ${external(URLS.social,'Originale Bilder- und Social-Media-Seite öffnen',true)}`;
+    return `${appHero('FOTOS & VIDEOS','Deine private Mediathek.','Sichere deine eigenen Fotos und Videos in einem getrennten privaten GitHub-Repository. Ordner und Metadaten werden automatisch nach Jahr und Monat sortiert.','📸')}
+      <section class="ssos-photos-app" data-photos-app>
+        <p class="ssos-photos-status" data-photos-status role="status" aria-live="polite">Deine private Foto- und Video-Cloud wird geprüft …</p>
+        <div class="ssos-photos-stats" data-photos-stats></div>
+        <label class="ssos-photos-search"><span>⌕</span><input type="search" data-photos-search placeholder="Intelligent suchen: Urlaub, Strand, 2026, Screenshot …" autocomplete="off"></label>
+        <p class="ssos-photos-search-note">Lokale Suche ohne API-Schlüssel: Dateinamen, Datum, Medientyp, Beschreibungen und Stichwörter.</p>
+        <div class="ssos-photos-toolbar">
+          <select data-photos-filter aria-label="Medientyp filtern"><option value="all">Alle Medien</option><option value="photo">Fotos</option><option value="video">Videos</option></select>
+          <label class="app-button secondary ssos-photos-file-button">＋ Fotos/Videos auswählen<input type="file" data-photos-files accept="image/*,video/*" multiple></label>
+        </div>
+        <input class="ssos-photos-description" type="text" data-photos-description maxlength="500" placeholder="Beschreibung oder Stichwörter (optional)">
+        <button class="app-button" type="button" data-photos-upload disabled>Ausgewählte Medien hochladen</button>
+        <p class="ssos-photos-limit">Maximal 50 MiB pro Datei. GitHub ist kein unbegrenzter Medien-Speicher.</p>
+        <div data-photos-gallery class="ssos-photos-gallery"><div class="ssos-photos-empty"><span>☁️</span><b>Mediathek wird geladen …</b></div></div>
+        <div class="ssos-photos-viewer" data-photos-viewer hidden></div>
+      </section>`;
+  }
+  function renderCamera(){
+    return `${appHero('KAMERA','Deine Schleim-OS-Kamera.','Nutze die Front- oder Rückkamera, nimm Fotos und Videos auf und lade sie direkt in deine private Foto- und Video-Cloud.','📷')}
+      <section class="ssos-camera-app" data-camera-app>
+        <div class="ssos-camera-preview-wrap"><video data-camera-preview autoplay muted playsinline></video><span class="ssos-camera-live">LIVE</span></div>
+        <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
+        <div class="ssos-camera-actions">
+          <button class="app-button secondary" type="button" data-camera-start>▶ Kamera starten</button>
+          <button class="app-button secondary" type="button" data-camera-switch>↔ Front-/Rückkamera</button>
+          <button class="app-button" type="button" data-camera-photo>● Foto aufnehmen</button>
+          <button class="app-button secondary" type="button" data-camera-record>◉ Video aufnehmen</button>
+          <button class="app-button secondary" type="button" data-camera-stop>■ Kamera stoppen</button>
+        </div>
+        <p class="ssos-camera-note">Die Kamera benötigt deine ausdrückliche Browserfreigabe. Die Aufnahme wird nach dem Aufnehmen in die private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
+      </section>`;
   }
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}
     <p class="body-copy">„Willkommen auf meiner offiziellen Fan-Webseite! Hier findest du alles über meine Projekte, Hobbys und Social Media Aktivitäten. Nutze den integrierten Live-Chat, um direkt mit mir zu sprechen, und tritt unseren Gruppen bei, um dich mit anderen Fans auszutauschen. Viel Spaß beim Erkunden!“</p>
@@ -600,7 +615,7 @@
 
   const RENDERERS={
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
-    websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
+    websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,camera:renderCamera,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
     slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Schleim-Store konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
@@ -615,7 +630,8 @@
     websiteinfo:{url:URLS.website,title:'Über unsere Webseite'},fanapp:{url:URLS.fanapp,title:'Unsere App'}
   };
   function openApp(id){
-    if(['photos','photo','gallery','fotos','bilder'].includes(String(id||'').toLowerCase()))id='images';
+    if(['photos','photo','gallery','fotos','bilder','foto','mediathek'].includes(String(id||'').toLowerCase()))id='images';
+    if(['kamera','camera-app'].includes(String(id||'').toLowerCase()))id='camera';
     if(['agbs','privacy','imprint'].includes(id)){selectedLegalDocument=id;id='legal';}
     if(PROJECT_CHILD_IDS.includes(id) && !projectHubActive){showToast('Bitte öffne Projekte über die App „Projektwelt“.');id='projects';}
     if(CONTACT_CHILD_IDS.includes(id) && !contactHubActive){showToast('Bitte öffne Kontaktfunktionen über die App „Kontakt“.');id='contact';}
@@ -648,8 +664,9 @@
     }
     els.home.classList.add('hidden');els.panel.classList.add('hidden');els.search.classList.add('hidden');els.app.classList.remove('hidden');
     els.appContent.scrollTop=0;
+    window.dispatchEvent(new CustomEvent('ssos-app-opened',{detail:{id:activeAppId}}));
   }
-  function goHome(){activeAppId=null;projectHubActive=false;contactHubActive=false;els.app.classList.add('hidden');els.panel.classList.add('hidden');els.search.classList.add('hidden');els.lock.classList.add('hidden');els.home.classList.remove('hidden');}
+  function goHome(){activeAppId=null;projectHubActive=false;contactHubActive=false;els.app.classList.add('hidden');els.panel.classList.add('hidden');els.search.classList.add('hidden');els.lock.classList.add('hidden');els.home.classList.remove('hidden');window.dispatchEvent(new CustomEvent('ssos-app-opened',{detail:{id:null}}));}
   function openControl(){els.panel.classList.remove('hidden');els.search.classList.add('hidden');syncControl();}
   function openSearch(){els.search.classList.remove('hidden');els.panel.classList.add('hidden');els.searchInput.value='';renderSearch('');setTimeout(()=>els.searchInput.focus(),80);}
   function searchGoogle(){const query=els.searchInput.value.trim();if(!query){showToast('Gib zuerst einen Suchbegriff ein.');els.searchInput.focus();return;}const url='https://www.google.com/search?q='+encodeURIComponent(query);window.open(url,'_blank','noopener');}

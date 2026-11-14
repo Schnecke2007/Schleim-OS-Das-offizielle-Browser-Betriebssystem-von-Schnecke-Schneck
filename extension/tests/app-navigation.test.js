@@ -7,6 +7,8 @@ const root = path.resolve(__dirname, '..');
 const appSource = fs.readFileSync(path.join(root, 'scripts/app.js'), 'utf8');
 const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-standalone.html'), 'utf8');
 const personalizationSource = fs.readFileSync(path.join(root, 'scripts/personalization.js'), 'utf8');
+const accountSource = fs.readFileSync(path.join(root, 'scripts/schleim-account.js'), 'utf8');
+const photosCloudSource = fs.readFileSync(path.join(root, 'scripts/schleim-photos-cloud.js'), 'utf8');
 const newtabSource = fs.readFileSync(path.join(root, 'pages/newtab.html'), 'utf8');
 const personalizationCss = fs.readFileSync(path.join(root, 'styles/personalization.css'), 'utf8');
 const storeCatalog = JSON.parse(fs.readFileSync(path.join(root, 'data/store-apps.json'), 'utf8'));
@@ -46,4 +48,53 @@ test('Sonos is a standard Store web app opened in a new browser tab', () => {
   assert.doesNotMatch(appSource, /SSOSSonosApp|ssos-open-native-app/);
   assert.doesNotMatch(newtabSource, /sonos-app\.js/);
   assert.doesNotMatch(personalizationCss, /ssos-sonos-/);
+});
+
+test('Photos and Camera are first-class Schleim OS apps', () => {
+  assert.match(appSource, /id:'images',name:'Fotos'/);
+  assert.match(appSource, /id:'camera',name:'Kamera'/);
+  assert.match(appSource, /camera:renderCamera/);
+  assert.match(appSource, /ssos-app-opened/);
+  assert.match(newtabSource, /schleim-photos-cloud\.js/);
+});
+
+test('Photo cloud uses a separate private repository and the existing Schleim account', () => {
+  assert.match(accountSource, /PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos'/);
+  assert.match(accountSource, /async function ensurePhotosRepository/);
+  assert.match(accountSource, /repository\.private!==true/);
+  assert.match(accountSource, /private:true/);
+  assert.match(accountSource, /requestPhotosRepository/);
+  assert.match(photosCloudSource, /getPhotosRepository/);
+  assert.match(photosCloudSource, /ensurePhotosRepository/);
+});
+
+test('Media uploads use date folders, metadata and a bounded file size', () => {
+  assert.match(photosCloudSource, /MAX_FILE_BYTES = 50 \* 1024 \* 1024/);
+  assert.match(photosCloudSource, /const folder = type === 'video' \? 'Videos' : 'Fotos'/);
+  assert.match(photosCloudSource, /year \+ '\/' \+ year \+ '-' \+ month/);
+  assert.match(photosCloudSource, /media-index/);
+  assert.match(photosCloudSource, /capturedAt/);
+  assert.match(photosCloudSource, /dateSource:captureInfo\.source/);
+  assert.match(photosCloudSource, /DateTimeOriginal/);
+});
+
+test('Camera uses the browser front/rear camera APIs and video recording', () => {
+  assert.match(photosCloudSource, /navigator\.mediaDevices\.getUserMedia/);
+  assert.match(photosCloudSource, /facingMode/);
+  assert.match(photosCloudSource, /MediaRecorder/);
+  assert.match(photosCloudSource, /data-camera-switch/);
+});
+
+test('Local smart search uses metadata and synonyms without requiring an API key', () => {
+  assert.match(photosCloudSource, /function searchItems/);
+  assert.match(photosCloudSource, /SYNONYMS/);
+  assert.match(photosCloudSource, /item\.description/);
+  assert.match(photosCloudSource, /item\.capturedAt/);
+  assert.match(photosCloudSource, /automatic object recognition/);
+});
+
+test('Settings include a separate photo and video cloud storage panel', () => {
+  assert.match(personalizationSource, /data-ssos-photo-cloud-settings/);
+  assert.match(photosCloudSource, /function mountSettings/);
+  assert.match(personalizationCss, /ssos-photos-stats/);
 });
