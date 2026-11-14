@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.9.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Schleim-Store met aanbevelingen, categorieën, zoeken, installeren en verwijderen van webapps
 - App-voorstellen indienen via een GitHub-issueformulier
 - Schleim-Store is zonder GitHub-aanmelding beschikbaar
-- Handmatige JSON-back-up: startscherminstellingen exporteren en later opnieuw importeren
+- Schleim-account met GitHub-aanmelding en privécloudback-up van het startscherm
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
@@ -75,9 +75,9 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **JSON-back-up:** Open Instellingen en kies **Startscherm exporteren** om een JSON-bestand te downloaden. Met **Startscherm importeren** kun je het later herstellen of naar een ander apparaat overbrengen. De overdracht gebeurt handmatig. Zie de [handleiding voor JSON-back-ups](docs/Niederländisch/JSON-BACKUP.md).
+- **Schleim-account:** Verbind je GitHub-account via de officiële GitHub-apparaatmachtiging. Schleim OS maakt daarna de privérepository `schleim-os-cloud`. Met **Nu opslaan in de cloud** en **Cloudback-up herstellen** kun je instellingen opslaan of op een ander apparaat herstellen. Zie de [installatiehandleiding voor het Schleim-account](extension/docs/SCHLEIM-KONTO.md).
 
-Schleim OS bewaart instellingen lokaal in elke browser. Gebruik het JSON-back-upbestand om instellingen handmatig tussen apparaten over te zetten; er wordt niets automatisch geüpload.
+De cloudback-up wordt opgeslagen in je privérepository op GitHub. GitHub-toegangstokens en wachtwoorden worden nooit in het back-upbestand opgeslagen.
 
 # 🛠️ Schleim OS – Problemen oplossen
 
@@ -92,7 +92,7 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
 | **Externe inhoud ontbreekt of blijft leeg.** | Controleer je internetverbinding. Sommige aanbieders blokkeren het insluiten van hun pagina's op andere websites. |
-| **Instellingen ontbreken na een browserwissel.** | Instellingen worden lokaal in elke browser opgeslagen. Exporteer op het oude apparaat een JSON-back-up en importeer deze in de nieuwe browser via **Instellingen → Startscherm importeren**. |
+| **Instellingen ontbreken na een browserwissel.** | Meld je aan met hetzelfde GitHub-account en kies **Cloudback-up herstellen**. |
 | **Installatie werkt niet in Chrome voor Android.** | Chrome voor Android ondersteunt geen gewone Chrome-extensies. Gebruik een Android-browser die extensies en rechtstreekse ZIP-import ondersteunt. |
 
 ## Meer hulp nodig?
