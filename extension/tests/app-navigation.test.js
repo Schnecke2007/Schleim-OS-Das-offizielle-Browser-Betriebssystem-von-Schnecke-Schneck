@@ -81,6 +81,25 @@ test('Media uploads use date folders, metadata and a bounded file size', () => {
   assert.match(photosCloudSource, /DateTimeOriginal/);
 });
 
+test('Photo uploads compress still images before storing them', () => {
+  assert.match(photosCloudSource, /const MAX_IMAGE_EDGE = 2560/);
+  assert.match(photosCloudSource, /const WEBP_QUALITY = 0\.9/);
+  assert.match(photosCloudSource, /async function isAnimatedImage\(file\)/);
+  assert.match(photosCloudSource, /chunk === 'acTL'/);
+  assert.match(photosCloudSource, /chunk === 'ANIM' \|\| chunk === 'ANMF'/);
+  assert.match(photosCloudSource, /async function optimizePhoto\(file\)/);
+  assert.match(photosCloudSource, /canvas\.toBlob\(resolve, 'image\/webp', WEBP_QUALITY\)/);
+  const uploadBlock = photosCloudSource.slice(
+    photosCloudSource.indexOf('async function uploadOne(file, description)'),
+    photosCloudSource.indexOf('async function uploadFiles(')
+  );
+  assert.match(uploadBlock, /await optimizePhoto\(file\)/);
+  assert.match(uploadBlock, /await putFile\(path, uploadBlob/);
+  assert.match(uploadBlock, /size:uploadBlob\.size, originalSize:file\.size/);
+  assert.match(uploadBlock, /getThumbnail\(uploadBlob\)/);
+  assert.match(photosCloudSource, /anchor\.download = item\.downloadName \|\| item\.name/);
+});
+
 test('Camera uses the browser front/rear camera APIs and video recording', () => {
   assert.match(photosCloudSource, /navigator\.mediaDevices\.getUserMedia/);
   assert.match(photosCloudSource, /facingMode/);

@@ -4,6 +4,8 @@
   const REPO_NAME = 'schleim-os-cloud-photos-and-videos';
   const INDEX_PATH = '_metadata/media-index.json';
   const MAX_FILE_BYTES = 50 * 1024 * 1024;
+  const MAX_IMAGE_EDGE = 2560;
+  const WEBP_QUALITY = 0.9;
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const state = {
@@ -308,6 +310,88 @@
     bitmap.close?.();
     return await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.72));
   }
+  function readAscii(bytes, offset) {
+    return String.fromCharCode(bytes[offset], bytes[offset + 1], bytes[offset + 2], bytes[offset + 3]);
+  }
+  function readUint32BE(bytes, offset) {
+    return bytes[offset] * 0x1000000 + (bytes[offset + 1] << 16) + (bytes[offset + 2] << 8) + bytes[offset + 3];
+  }
+  function readUint32LE(bytes, offset) {
+    return bytes[offset] + (bytes[offset + 1] << 8) + (bytes[offset + 2] << 16) + bytes[offset + 3] * 0x1000000;
+  }
+  async function isAnimatedImage(file) {
+    const type = String(file.type || '').toLowerCase();
+    if (type === 'image/gif' || type === 'image/svg+xml') return true;
+    if (type !== 'image/png' && type !== 'image/webp') return false;
+    try {
+      const bytes = new Uint8Array(await file.slice(0, 4 * 1024 * 1024).arrayBuffer());
+      if (type === 'image/png') {
+        if (readAscii(bytes, 1) !== 'PNG') return true;
+        let offset = 8;
+        while (offset + 12 <= bytes.length) {
+          const length = readUint32BE(bytes, offset);
+          const chunk = readAscii(bytes, offset + 4);
+          if (chunk === 'acTL') return true;
+          if (chunk === 'IDAT' || chunk === 'IEND') return false;
+          if (offset + 12 + length > bytes.length) return true;
+          offset += 12 + length;
+        }
+        return true;
+      }
+      if (readAscii(bytes, 8) !== 'WEBP') return true;
+      let offset = 12;
+      while (offset + 8 <= bytes.length) {
+        const chunk = readAscii(bytes, offset);
+        const length = readUint32LE(bytes, offset + 4);
+        if (chunk === 'ANIM' || chunk === 'ANMF') return true;
+        if (chunk === 'VP8 ' || chunk === 'VP8L') return false;
+        if (offset + 8 + length > bytes.length) return true;
+        offset += 8 + length + (length % 2);
+      }
+    } catch {
+      return true;
+    }
+    return true;
+  }
+  async function optimizePhoto(file) {
+    const unchanged = {blob:file,optimized:false,width:0,height:0,originalSize:file.size};
+    if (!file?.type?.startsWith('image/') || typeof createImageBitmap !== 'function') return unchanged;
+    if (await isAnimatedImage(file)) return unchanged;
+    let bitmap;
+    try {
+      bitmap = await createImageBitmap(file, {imageOrientation:'from-image'});
+    } catch {
+      return unchanged;
+    }
+    try {
+      if (!bitmap.width || !bitmap.height) return unchanged;
+      const scale = Math.min(1, MAX_IMAGE_EDGE / Math.max(bitmap.width, bitmap.height));
+      const width = Math.max(1, Math.round(bitmap.width * scale));
+      const height = Math.max(1, Math.round(bitmap.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext('2d');
+      if (!context) return unchanged;
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = 'high';
+      context.drawImage(bitmap, 0, 0, width, height);
+      const compressed = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', WEBP_QUALITY));
+      if (!compressed || compressed.type !== 'image/webp' || compressed.size >= file.size) return unchanged;
+      return {
+        blob:compressed,
+        optimized:true,
+        width:width,
+        height:height,
+        originalSize:file.size
+      };
+    } catch (error) {
+      console.warn('[Schleim OS Photos] Image optimization skipped:', error);
+      return unchanged;
+    } finally {
+      bitmap.close?.();
+    }
+  }
   function extensionFor(file) {
     const named = String(file.name || '').match(/\.([a-z0-9]{1,8})$/i)?.[1]?.toLowerCase();
     if (named) return named;
@@ -392,15 +476,23 @@
       try { aiResult = await window.SSOSPhotoAI.describeImage(file); }
       catch (error) { console.warn('[Schleim OS Photos] Local AI description skipped:', error); }
     }
-    const folder = type === 'video' ? 'Videos' : 'Fotos';
-    const extension = extensionFor(file);
+    const optimization = type === 'photo'
+      ? await optimizePhoto(file)
+      : {blob:file,optimized:false,width:0,height:0,originalSize:file.size};
+    const uploadBlob = optimization.blob;
+    const originalName = String(file.name || '');
+    const extension = optimization.optimized ? 'webp' : extensionFor(file);
     const filename = day + '-' + month + '-' + year + '-' + id + '.' + extension;
+    const downloadName = optimization.optimized
+      ? (originalName.replace(/\.[^.]+$/, '') || safeBaseName(filename.replace(/\.[^.]+$/, ''))) + '.webp'
+      : (originalName || filename);
+    const folder = type === 'video' ? 'Videos' : 'Fotos';
     const path = folder + '/' + year + '/' + year + '-' + month + '/' + filename;
-    const fileSha = await putFile(path, file, 'Upload ' + (type === 'video' ? 'video' : 'photo') + ' to Schleim OS cloud');
+    const fileSha = await putFile(path, uploadBlob, 'Upload ' + (type === 'video' ? 'video' : 'photo') + ' to Schleim OS cloud');
     let thumbnailPath = '';
     if (type === 'photo') {
       try {
-        const thumb = await getThumbnail(file);
+        const thumb = await getThumbnail(uploadBlob);
         if (thumb) {
           thumbnailPath = 'Vorschaubilder/' + year + '/' + year + '-' + month + '/' + id + '.jpg';
           await putFile(thumbnailPath, thumb, 'Create Schleim OS media thumbnail');
@@ -413,13 +505,15 @@
     const aiTags = Array.isArray(aiResult?.keywords) ? aiResult.keywords : [];
     const combinedDescription = [String(description || '').trim(), aiDescription].filter(Boolean).join(' · ').slice(0,500);
     const tags = [...new Set([
-      ...String(description || '').toLowerCase().split(/[,\s]+/).filter(Boolean),
+      ...String(description || '').toLowerCase().split(/[ ,\s]+/).filter(Boolean),
       ...aiTags.map(value => String(value).toLowerCase())
     ])].slice(0,40);
     const item = {
-      id:id, name:String(file.name || filename).slice(0,180),
-      type:type, mimeType:file.type || (type === 'video' ? 'video/mp4' : 'image/jpeg'),
-      size:file.size, capturedAt:capturedAt.toISOString(), dateSource:captureInfo.source,
+      id:id, name:originalName || filename, downloadName:downloadName,
+      type:type, mimeType:uploadBlob.type || file.type || (type === 'video' ? 'video/mp4' : 'image/jpeg'),
+      size:uploadBlob.size, originalSize:file.size, optimized:optimization.optimized,
+      width:optimization.width || 0, height:optimization.height || 0,
+      capturedAt:capturedAt.toISOString(), dateSource:captureInfo.source,
       uploadedAt:new Date().toISOString(), path:path, sha:fileSha.sha || '',
       thumbnailPath:thumbnailPath, description:combinedDescription, aiDescription:aiDescription,
       aiTags:aiTags, tags:tags
@@ -537,7 +631,7 @@
       const url = await readOriginal(item);
       if (downloadOnly) {
         const anchor = document.createElement('a');
-        anchor.href = url;anchor.download = item.name || ('schleim-os-media.' + extensionFor({name:item.path}));
+        anchor.href = url;anchor.download = item.downloadName || item.name || ('schleim-os-media.' + extensionFor({name:item.path}));
         document.body.appendChild(anchor);anchor.click();anchor.remove();
       } else {
         const viewer = $('[data-photos-viewer]');
