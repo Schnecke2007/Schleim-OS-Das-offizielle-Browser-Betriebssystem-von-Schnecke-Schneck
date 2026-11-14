@@ -1,23 +1,34 @@
 # Cloud backup with the Schleim account
 
-> **Note about older versions:** The local JSON import/export feature was replaced by the Schleim account in Schleim OS 3.10.0. This page is now a notice for JSON backup files created by older versions.
+> **Note about older versions:** The previous local JSON import/export feature is no longer available in the Schleim OS 3.11.0 interface. This page explains the current cloud backup and what to do with older files.
 
-## Create a new backup
+## Create a new cloud backup
 
-1. Set up the GitHub App first. See [Set up the Schleim account](../../extension/docs/SCHLEIM-KONTO.md).
-2. Open the **Schleim Store** or **Settings**.
-3. In the **Schleim account** section, choose **Connect with GitHub**.
-4. Confirm the one-time device code directly on GitHub.
-5. Select **Back up to cloud now**.
+1. If needed, first install the [Schleim OS Account GitHub App](https://github.com/apps/schleim-os-account).
+2. Open **Settings → Schleim account**.
+3. Select **Connect with GitHub** and follow the app-installation and device-code steps.
+4. After sign-in, select **Back up to cloud now**.
 
 Schleim OS creates or updates `schleim-os-backup.json` in your private GitHub repository named `schleim-os-cloud`.
 
+## What is included?
+
+The current backup format 2 contains saved Schleim OS settings and explicitly includes:
+- the home-screen app order,
+- installed Store apps,
+- the selected system wallpaper,
+- a custom wallpaper and its image data or URL.
+
+The backup is started manually under **Settings → Schleim account**. There is no automatic synchronization.
+
 ## Restore on another device
 
-Sign in to the Schleim account on that device with the same GitHub account, then choose **Restore cloud backup**. The current device's settings will be replaced with the saved backup.
+Install Schleim OS and sign in under **Settings → Schleim account** with the same GitHub account. Then choose **Restore cloud backup**. The local Schleim OS settings will be replaced by the backup.
 
 ## Older JSON files
 
-JSON files exported by earlier Schleim OS versions can no longer be imported through the interface in version 3.10.0. Keep existing files separately. Older files are not automatically migrated to the cloud.
+JSON files created by the previous local export feature cannot be imported through the current interface. Keep those files separately. They are not automatically moved to the cloud.
 
-**Security:** The cloud repository must remain private. Schleim OS never stores passwords or access tokens in the backup file.
+Older format-1 cloud backups created with the Schleim account can still be restored.
+
+**Security:** The cloud repository must remain private. GitHub passwords and access tokens are never written into the backup file.
