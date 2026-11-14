@@ -13,6 +13,7 @@
 - **Personalisatie en Schleim-Store:** `scripts/personalization.js`
 - **GitHub-aanmelding en cloudback-up:** `scripts/schleim-account.js`
 - **Store-beheerportaal:** `scripts/slime-store-admin.js`
+- **GitHub-updatecentrum:** `scripts/update-center.js`
 - **Stylesheets:** `styles/main.css` en `styles/personalization.css`
 - **Vertalingen van juridische teksten:** `locales/legal-translations.js`
 - **Standalone demo:** `standalone/schleim-os-standalone.html`
@@ -40,6 +41,12 @@ De Schleim-Store is alleen beschikbaar met een aangemeld Schleim-account. De Sto
 ## Machtigingen
 
 Het manifest bevat onder andere `storage` en `clipboardWrite`. De klembordmachtiging wordt gebruikt om de GitHub-apparaatcode automatisch te kopiëren. Optionele hostmachtigingen kunnen worden aangevraagd wanneer een functie ze nodig heeft. Lees toestemmingsmeldingen zorgvuldig.
+
+## Updatecentrum
+
+Het updatecentrum staat in de instellingen. Het leest de manifestversie van de standaardbranch op GitHub via `raw.githubusercontent.com` en vergelijkt deze met `chrome.runtime.getManifest().version`. Als er een nieuwere versie is, toont het een link naar de volledige repository-ZIP. Het script installeert geen bestanden en vervangt de actieve extensie niet.
+
+De browser moet zelf de ZIP-import of de eigen updatefunctie uitvoeren. `chrome.runtime.requestUpdateCheck()` wordt niet als GitHub-installer gebruikt, omdat deze API het updatekanaal controleert dat in de browser is ingesteld.
 
 ## Reclame en externe verbindingen
 
