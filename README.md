@@ -121,7 +121,7 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 
 ## 📖 Dokumentation in Leichter Sprache
 
-Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen.
+Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md).
 
 ## 📁 Projektstruktur
 
