@@ -1,15 +1,17 @@
-# Schleim-Konto und GitHub-Cloud-Sicherung
+# Schleim-Konto, GitHub-App und Cloud-Sicherung
 
-Das Schleim-Konto verwendet dein eigenes GitHub-Konto als Identität. Schleim OS erhält kein separates Passwort und speichert niemals dein GitHub-Passwort. Die Anmeldung erfolgt über die offizielle GitHub-Geräteautorisierung.
+Das Schleim-Konto verwendet dein GitHub-Konto zur Anmeldung. Schleim OS fragt dein GitHub-Passwort nicht ab und speichert es nicht. Die Anmeldung läuft über die offizielle GitHub-Geräteautorisierung (Device Flow).
 
-## 1. GitHub-App erstellen
+## 1. GitHub-App einrichten
 
-1. Deine bereits erstellte App findest du hier: [Schleim OS Account auf GitHub](https://github.com/apps/schleim-os-account). Die Einstellungen verwaltest du unter [GitHub Developer Settings → GitHub Apps](https://github.com/settings/apps).
-2. Verwende als Namen **Schleim OS Account**.
-3. Als Homepage-URL kannst du das [Schleim-OS-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck) eintragen.
-4. Aktiviere **Enable Device Flow**. Für diesen Anmeldeweg wird keine Callback-URL benötigt.
-5. **Wähle die Sichtbarkeit passend aus:** Wenn andere Schleim-OS-Nutzer ihr eigenes GitHub-Konto verbinden sollen, muss die App **Public** sein. Eine private App kann nur auf dem Konto installiert werden, dem sie gehört. Wenn ausschließlich du selbst das Konto nutzt, kannst du sie privat lassen.
-6. Aktiviere die folgenden Berechtigungen:
+Die GitHub-App **Schleim OS Account** ist bereits angelegt:
+
+- [Schleim OS Account öffnen](https://github.com/apps/schleim-os-account)
+- [GitHub-App-Einstellungen öffnen](https://github.com/settings/apps)
+
+Damit auch andere Schleim-OS-Nutzer die App installieren können, muss die GitHub-App öffentlich (Public) sein. Aktiviere **Enable Device Flow**.
+
+Benötigte App-Berechtigungen:
 
 | Bereich | Berechtigung | Zugriff |
 |---|---|---|
@@ -17,70 +19,67 @@ Das Schleim-Konto verwendet dein eigenes GitHub-Konto als Identität. Schleim OS
 | Repository permissions | Repository creation | Read and write |
 | Repository permissions | Contents | Read and write |
 
-**Warum diese Berechtigungen?** Die E-Mail-Berechtigung prüft, ob dein primäres GitHub-E-Mail-Konto bereits verifiziert ist. Repository creation erlaubt die automatische Erstellung des privaten Cloud-Repositorys. Contents wird benötigt, um die Sicherungsdatei hoch- und herunterzuladen. GitHub gibt einer App automatisch Zugriff auf die Repositories, die sie selbst erstellt. Daher muss die App nicht pauschal Zugriff auf sämtliche vorhandenen Repositories bekommen.
+Die E-Mail-Berechtigung wird verwendet, um die verifizierte primäre GitHub-E-Mail-Adresse zu prüfen. Repository creation erlaubt das Anlegen des privaten Backup-Repositorys. Contents erlaubt das Lesen und Schreiben der Sicherungsdatei.
 
-7. Speichere die App. Du und andere Nutzer können sie über [Schleim OS Account installieren](https://github.com/apps/schleim-os-account). Für die Cloud-Funktion müssen Nutzer die App-Installation und anschließend die Geräteautorisierung bei GitHub bestätigen.
+## 2. Client-ID
 
-**Sicherheitshinweis zum Gerätecode:** GitHub beschreibt Device Flow vor allem für CLI-, IoT- und andere Geräte ohne normalen Browser-Redirect. Für Browser-Anwendungen ist ein PKCE-Redirect grundsätzlich vorzuziehen. Der Gerätecode ist hier gewählt, weil Schleim OS als manuell installierte Erweiterung keine einheitliche Redirect-Adresse auf allen Browsern besitzt. Nutzer sollten den Code ausschließlich auf `github.com/login/device` eingeben und dort prüfen, dass die Freigabe tatsächlich **Schleim OS Account** betrifft. Gib einen Gerätecode niemals an Personen weiter.
+Die öffentliche Client-ID der GitHub-App steht in `extension/scripts/schleim-account.js` in `GITHUB_APP_CLIENT_ID`.
 
-## 2. Client-ID in Schleim OS eintragen
+Die Client-ID ist kein Passwort und kein App-Geheimnis. Ein GitHub-App-Client-Secret oder ein privater App-Schlüssel darf niemals in den Erweiterungscode geschrieben werden.
 
-Öffne die GitHub-App-Einstellungen und kopiere die **Client ID**. Nicht mit der App-ID verwechseln.
+## 3. Anmeldung und Installation
 
-Öffne anschließend in diesem Repository:
+Der Anmeldeablauf ist in Store und Einstellungen verfügbar:
 
-`extension/scripts/schleim-account.js`
+1. Öffne den Schleim-Store oder **Einstellungen → Schleim-Konto**.
+2. Wähle **Mit GitHub verbinden**.
+3. Schleim OS öffnet zuerst die GitHub-App-Seite [Schleim OS Account](https://github.com/apps/schleim-os-account).
+4. Installiere die App für dein GitHub-Konto. Kehre danach zu Schleim OS zurück und wähle **Ich habe die App installiert – weiter**.
+5. Schleim OS fordert einen einmaligen Gerätecode an und zeigt ihn an.
+6. Nach kurzer Verzögerung versucht Schleim OS, den Code automatisch in die Zwischenablage zu kopieren. Du kannst ihn auch über **Code kopieren** manuell kopieren.
+7. Einige Sekunden später öffnet Schleim OS die GitHub-Gerätefreigabe. Der Link **GitHub-Gerätefreigabe öffnen** bleibt ebenfalls sichtbar.
+8. Gib den Gerätecode auf der echten GitHub-Seite ein und bestätige die App **Schleim OS Account**.
+9. Nach der Autorisierung prüft Schleim OS über die GitHub-API, ob die App-Installation dem angemeldeten Konto zugeordnet ist. Wird sie noch nicht angezeigt, wartet Schleim OS bis zu fünf Minuten und prüft erneut.
+10. Danach wird das private Repository `schleim-os-cloud` gesucht oder erstellt.
 
-Trage die Client-ID in die Konstante `GITHUB_APP_CLIENT_ID` ein und ersetze den Platzhalter `GITHUB_APP_CLIENT_ID_HERE`.
+**Wichtige technische Grenze:** Vor der ersten OAuth-/Geräteautorisierung hat Schleim OS noch kein GitHub-App-Benutzertoken. Deshalb kann es die Installationsliste nicht schon vor dem ersten Gerätecode per API abfragen. Der Ablauf öffnet zuerst die App-Seite und bittet dich um die Bestätigung, dass du sie installiert hast. Die automatische GitHub-Prüfung erfolgt nach der Geräteautorisierung. GitHub dokumentiert den Endpunkt [List app installations accessible to the user access token](https://docs.github.com/en/rest/apps/installations?apiVersion=2026-03-10).
 
-Die Client-ID darf im Extension-Code stehen. **Die Client Secret und den privaten App-Schlüssel darfst du niemals in die Browser-Erweiterung eintragen oder veröffentlichen.** Der Geräteablauf benötigt diese Geheimnisse nicht.
+Wenn die Zwischenablage nicht verfügbar ist, bleibt der Code sichtbar und kann manuell kopiert werden. Auch die Links zum erneuten Öffnen der GitHub-App und der Gerätefreigabe bleiben verfügbar.
 
-## 3. Anmeldung und Cloud-Repository
+## 4. Store-Zugriff
 
-1. Öffne den Schleim Store und wähle **Mit GitHub verbinden**.
-2. Schleim OS fordert bei GitHub einen einmaligen Gerätecode an.
-3. Öffne die offizielle GitHub-Gerätefreigabe und gib den angezeigten Code ein.
-4. Bestätige die Autorisierung direkt bei GitHub.
-5. Schleim OS liest deinen GitHub-Benutzernamen und deine verifizierte primäre E-Mail-Adresse aus.
-6. Anschließend wird das private Repository `schleim-os-cloud` in deinem GitHub-Konto gesucht oder automatisch erstellt.
+Der Schleim-Store ist nur mit einem angemeldeten Schleim-Konto verfügbar. Ohne Anmeldung sind Katalog, Suche, Bewertungen, Installationen, Deinstallationen und Vorschläge gesperrt. Nach einer erfolgreichen Anmeldung wird der Store freigeschaltet. Beim Abmelden wird er wieder gesperrt.
 
-GitHub fragt niemals dein Passwort innerhalb von Schleim OS ab. Du meldest dich ausschließlich auf der echten GitHub-Seite an. Einen separaten Bestätigungscode per E-Mail verschickt der Schleim-Bot nicht; stattdessen prüft Schleim OS den Verifizierungsstatus der primären E-Mail-Adresse in deinem GitHub-Konto.
+Die Sperre gilt für die Store-Oberfläche in Schleim OS. Die Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository bleiben direkt auf GitHub sichtbar.
 
-## 4. Sicherung und Wiederherstellung
+## 5. Cloud-Sicherung und Wiederherstellung
 
-Im Schleim Store und in den Einstellungen findest du im Bereich **Schleim-Konto** die Aktionen:
+Die Sicherung befindet sich ausschließlich unter **Einstellungen → Schleim-Konto**. Im Schleim-Store gibt es keine Sicherungs- oder Wiederherstellungsbuttons.
 
-- **Jetzt in der Cloud sichern:** Die Schleim-OS-Einstellungen werden in `schleim-os-backup.json` im privaten Repository gespeichert oder aktualisiert.
-- **Cloud-Sicherung wiederherstellen:** Die Datei wird aus deinem privaten Repository geladen und die lokalen Schleim-OS-Einstellungen werden damit ersetzt.
+- **Jetzt in der Cloud sichern:** Erstellt oder aktualisiert `schleim-os-backup.json` im privaten Repository `schleim-os-cloud`.
+- **Cloud-Sicherung wiederherstellen:** Lädt die Sicherung herunter und ersetzt damit die lokalen Schleim-OS-Einstellungen. Vorher erscheint eine Bestätigung.
 
-Die Sicherung enthält die lokalen Einstellungen und Store-Daten mit dem Präfix `ssos-`. GitHub-Zugriffstokens und Anmeldedaten werden niemals in die Backup-Datei geschrieben.
+Das aktuelle Backup verwendet **Formatversion 2**. Es umfasst die gespeicherten Schleim-OS-Einstellungen mit dem Präfix `ssos-` und enthält zusätzlich ausdrücklich diese Designangaben:
 
-## 5. Sicherheit und Abmeldung
+- Reihenfolge der App-Kacheln auf dem Startbildschirm
+- installierte Store-Apps
+- ausgewähltes System-Hintergrundbild
+- eigenes Hintergrundbild: Bilddaten und/oder Bild-URL
 
-GitHub-Zugriffstokens werden lokal im Erweiterungsprofil gespeichert, damit die Anmeldung über Browser-Neustarts hinweg bestehen bleiben und bei Bedarf erneuert werden kann. Das Refresh-Token ist zeitlich begrenzt. Die Sicherungsdatei enthält keine Zugriffstokens oder Passwörter.
+Die eigentlichen Bilddaten eines eigenen Hintergrundbilds werden in den Personalisierungsdaten mitgesichert. Die Sicherung wird manuell gestartet. Es gibt keine automatische Synchronisierung nach jeder Änderung.
 
-Bei **Abmelden** entfernt Schleim OS die lokal gespeicherten Anmeldetokens. Dadurch wird die Autorisierung bei GitHub nicht automatisch widerrufen. Um den Zugriff vollständig zu entziehen, entferne die GitHub-App zusätzlich in deinen GitHub-Kontoeinstellungen unter **Applications**.
+Backups im älteren Format 1 können weiterhin wiederhergestellt werden. Die frühere lokale JSON-Import-/Export-Oberfläche ist nicht mehr Bestandteil der aktuellen Erweiterung.
 
-Das Repository muss privat bleiben. Schleim OS verweigert das Speichern, wenn das Repository öffentlich ist.
+## 6. Sicherheit und Abmeldung
 
+- Das Repository `schleim-os-cloud` muss privat bleiben. Schleim OS verweigert das Speichern, wenn das Repository öffentlich ist.
+- GitHub-Passwörter und Zugriffstokens werden nicht in die Backup-Datei geschrieben.
+- Zugriffstokens werden lokal in den Erweiterungsdaten gespeichert, damit die Anmeldung über Browser-Neustarts hinweg bestehen bleiben und bei Bedarf erneuert werden kann.
+- **Abmelden** entfernt die lokal gespeicherte Schleim-Konto-Sitzung. Dadurch wird die App-Berechtigung bei GitHub nicht automatisch widerrufen.
+- Um den Zugriff vollständig zu beenden, widerrufe die App zusätzlich in deinen GitHub-Einstellungen unter **Settings → Applications**.
 
-## 6. Anmeldung für den Schleim-Store
+## Weiterführende Dokumentation
 
-Der Schleim-Store innerhalb von Schleim OS ist nur verfügbar, wenn ein Schleim-Konto angemeldet ist. Ohne aktive Anmeldung bleiben Katalog, Kategorien, Bewertungen, Installations- und Vorschlagsfunktionen gesperrt. Nach der Anmeldung wird der Store automatisch freigeschaltet; beim Abmelden wird er wieder gesperrt.
-
-**Wichtige Abgrenzung:** Das ist eine Zugriffssperre in der Schleim-OS-Oberfläche. Die Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository bleiben weiterhin direkt über GitHub einsehbar. Vertrauliche Daten gehören nicht in diese öffentlichen Dateien.
-
-
-## 7. Cloud-Sicherung und vollständiges Design
-
-Die Cloud-Sicherung wird ausschließlich unter **Einstellungen → Schleim-Konto** gestartet und wiederhergestellt. Im Schleim-Store gibt es keine Sicherungs- oder Wiederherstellungssteuerung.
-
-Eine neue Sicherung (Formatversion 2) umfasst weiterhin alle gespeicherten `ssos-` Einstellungen. Zusätzlich werden die wichtigsten Designbestandteile ausdrücklich erfasst: die Reihenfolge der Apps auf dem Startbildschirm, installierte Store-Apps und das Hintergrundbild (Systemhintergrund sowie eigene Bild-URL bzw. lokal gespeichertes Bild). Bereits vorhandene Sicherungen im Format 1 können weiterhin wiederhergestellt werden.
-
-## 8. Neue Anmeldeabfolge
-
-Beim ersten Anmeldeversuch öffnet Schleim OS zuerst die GitHub-App-Seite. Nach der Installation wird über **„Ich habe die App installiert – weiter“** der Gerätecode angefordert. Der Code wird angezeigt, nach kurzer Verzögerung in die Zwischenablage kopiert und anschließend wird die GitHub-Gerätefreigabe geöffnet. Der Code kann weiterhin manuell kopiert und die Gerätefreigabe über den sichtbaren Link geöffnet werden.
-
-Nach der Geräteautorisierung prüft Schleim OS über `GET /user/installations`, ob GitHub die App-Installation diesem Konto zuordnet. Wird sie noch nicht gefunden, wartet Schleim OS weiter und bietet den Installationslink an.
-
-**Technische Grenze:** Vor dem ersten OAuth-/Device-Flow besitzt Schleim OS noch kein GitHub-App-Benutzertoken. GitHub stellt die Installationsliste aber nur für einen authentifizierten GitHub-App-Benutzertoken bereit. Deshalb öffnet Schleim OS zuerst die App-Seite und wartet auf deine Bestätigung; die API-Prüfung erfolgt nach der Geräteautorisierung. Siehe [GitHub-Dokumentation zu Benutzerinstallationen](https://docs.github.com/en/rest/apps/installations?apiVersion=2026-03-10).
+- [Hauptdokumentation](../../docs/README.md)
+- [Installationsanleitung](../../docs/Deutsch/INSTALLATION.md)
+- [Technische Hinweise](TECHNICAL-NOTES.md)
