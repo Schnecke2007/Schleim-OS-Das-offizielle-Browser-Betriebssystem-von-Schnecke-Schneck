@@ -339,6 +339,13 @@
       chrome.permissions.request({ origins: [origin + '/*'] }, granted => resolve(!!granted));
     });
   }
+  async function checkBridgeHealth() {
+    const response = await fetch(config.workerUrl + '/health', { cache: 'no-store' });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || t('bridgeError'));
+    if (!data.configured) throw new Error(t('notConfigured'));
+    return true;
+  }
   function makeState() {
     const bytes = new Uint8Array(32);
     crypto.getRandomValues(bytes);
@@ -382,6 +389,7 @@
         setStatus(t('permissionDenied'), true);
         return;
       }
+      await checkBridgeHealth();
       const state = makeState();
       config.pendingState = state;
       await storageSet(config);
@@ -638,6 +646,7 @@
     try {
       const granted = await requestWorkerPermission();
       if (!granted) { setStatus(t('permissionDenied'), true); return; }
+      await checkBridgeHealth();
       await storageSet(config);
       setStatus(t('saved'));
     } catch (error) {
