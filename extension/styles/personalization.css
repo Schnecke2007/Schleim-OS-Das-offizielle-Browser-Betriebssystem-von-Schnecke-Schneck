@@ -153,3 +153,19 @@
 /* GitHub app installation-first sign-in and device code controls. */
 .ssos-cloud-device-code { user-select:all; letter-spacing:.12em; }
 .ssos-cloud-card [data-ssos-cloud-copy] { margin:8px 0; }
+
+
+/* GitHub version checker in Settings */
+.ssos-update-card{margin:14px 0}
+.ssos-update-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ssos-update-heading h4{margin:0 0 5px;font-size:14px}
+.ssos-update-intro{margin:0;color:var(--muted);font-size:9px;line-height:1.5}
+.ssos-update-version{flex:0 0 auto;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:var(--accent);font-size:9px;font-weight:800}
+.ssos-update-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.ssos-update-actions .app-button{flex:1;justify-content:center;margin:0}
+.ssos-update-actions [hidden]{display:none!important}
+.ssos-update-status{min-height:16px;margin:10px 0 0;color:#b8d5ad;font-size:9px;line-height:1.55;overflow-wrap:anywhere}
+.ssos-update-status.is-error{color:#ffb3a7}
+.ssos-update-status.is-success{color:#b8d5ad}
+.ssos-update-note{margin:9px 0;color:var(--muted);font-size:9px;line-height:1.6}
+@media(max-width:520px){.ssos-update-heading{flex-direction:column}.ssos-update-actions{display:grid;grid-template-columns:1fr}.ssos-update-actions .app-button{width:100%}}
