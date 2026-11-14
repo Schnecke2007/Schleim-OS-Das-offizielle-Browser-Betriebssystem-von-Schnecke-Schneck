@@ -24,7 +24,11 @@ Der Browser öffnet die Datei `pages/newtab.html`. Diese Datei zeigt die Startse
 
 Die Einstellungen werden im Browser-Profil gespeichert. Das ist der Bereich des Browsers für deine Daten und Einstellungen.
 
-Du kannst deine Einstellungen mit der JSON-Funktion sichern. Bewahre die Sicherungs-Datei gut auf.
+Du kannst deine Einstellungen mit deinem Schleim-Konto in einer privaten GitHub-Cloud sichern. Die Sicherung startest du unter **Einstellungen → Schleim-Konto**.
+
+Die Sicherung enthält auch die Reihenfolge der Apps, installierte Store-Apps und dein Hintergrundbild.
+
+Der Schleim-Store braucht eine Anmeldung mit dem Schleim-Konto.
 
 ## Internet und Rechte
 
@@ -33,4 +37,4 @@ Manche Webseiten erlauben keine Anzeige in einem anderen Fenster.
 
 Der Browser kann nach Rechten fragen. Lies solche Fragen genau durch.
 
-[Technische Hinweise in normaler Sprache](../../Deutsch/TECHNISCHE-HINWEISE.md)
+[Technische Hinweise in normaler Sprache](../../Deutsch/TECHNISCHE-HINWEISE.md) · [Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
