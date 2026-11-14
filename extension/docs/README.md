@@ -47,6 +47,10 @@ Die Importfunktion ist browser- und plattformabhängig. Chrome für Android unte
 
 Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie kann die Erweiterungsfunktionen, insbesondere GitHub-Konto, Store-Sperre und Cloud-Backup, nicht vollständig ersetzen.
 
+## Versionshinweise
+
+- [Release Notes 3.11.0](RELEASE-NOTES-3.11.0.md)
+
 ## Technische Referenzen
 
 - [Installationsanleitung](INSTALLATION.md)
