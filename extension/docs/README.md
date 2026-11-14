@@ -50,10 +50,19 @@ Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie ka
 ## Technische Referenzen
 
 - [Installationsanleitung](INSTALLATION.md)
-- [Schleim-Konto und Cloud-Sicherung](SCHLEIM-KONTO.md)
+- [Schleim-Konto und Cloud-Sicherung – Deutsch](SCHLEIM-KONTO.md)
+- [Schleim account and cloud backup – English](../../docs/Englisch/SCHLEIM-ACCOUNT.md)
+- [Schleim-account en cloudback-up – Nederlands](../../docs/Niederländisch/SCHLEIM-ACCOUNT.md)
 - [Technische Hinweise](TECHNICAL-NOTES.md)
 - [GitHub-Store-Katalog](../../Store/README.md)
+- [Store-Anleitungen: Deutsch](../../Store/Deutsch/README.md) · [English](../../Store/Englisch/README.md) · [Nederlands](../../Store/Niederländisch/README.md)
 - [Dokumentationsübersicht](../../docs/README.md)
+
+## Konto und Cloud-Sicherung in Leichter Sprache
+
+- [Deutsch](../../docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md)
+- [English](../../docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md)
+- [Nederlands](../../docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md)
 
 ## Store-Anleitungen in Leichter Sprache
 
