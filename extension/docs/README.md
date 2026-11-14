@@ -54,3 +54,9 @@ Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie ka
 - [Technische Hinweise](TECHNICAL-NOTES.md)
 - [GitHub-Store-Katalog](../../Store/README.md)
 - [Dokumentationsübersicht](../../docs/README.md)
+
+## Store-Anleitungen in Leichter Sprache
+
+- [Deutsch – Schleim-Store](../../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
+- [English – Schleim-Store](../../docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md)
+- [Nederlands – Schleim-Store](../../docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md)
