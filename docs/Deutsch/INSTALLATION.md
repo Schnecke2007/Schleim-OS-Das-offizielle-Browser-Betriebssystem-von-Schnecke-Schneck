@@ -30,7 +30,7 @@ Der Schleim-Store ist nur nach Anmeldung mit einem Schleim-Konto verfügbar.
 2. Schleim OS öffnet zuerst die GitHub-App-Seite [Schleim OS Account](https://github.com/apps/schleim-os-account).
 3. Installiere die App für dein GitHub-Konto.
 4. Kehre zu Schleim OS zurück und wähle **Ich habe die App installiert – weiter**.
-5. Folge dem angezeigten Gerätecode. Schleim OS kopiert ihn nach kurzer Verzögerung automatisch und öffnet anschließend die GitHub-Gerätefreigabe.
+5. Folge dem angezeigten Gerätecode. Schleim OS versucht, ihn nach kurzer Verzögerung automatisch zu kopieren. Falls das nicht klappt, kannst du **Code kopieren** wählen. Danach öffnet sich die GitHub-Gerätefreigabe.
 6. Bestätige die App auf der echten GitHub-Seite.
 
 Nach der Autorisierung prüft Schleim OS, ob die App-Installation erkannt wird. Details stehen in der [Anleitung zum Schleim-Konto](../../extension/docs/SCHLEIM-KONTO.md).
