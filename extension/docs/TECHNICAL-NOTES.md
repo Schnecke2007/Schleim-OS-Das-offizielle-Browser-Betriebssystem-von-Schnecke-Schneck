@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.13.0
+# Technische Hinweise – Version 3.13.1
 
 ## Plattform und Erweiterungsformat
 
