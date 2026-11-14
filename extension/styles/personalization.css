@@ -149,3 +149,7 @@
 .ssos-store-lock-hero { text-align:center; overflow:hidden; }
 .ssos-store-lock-hero .large-emoji { display:block; margin-top:10px; font-size:44px; }
 .ssos-store-gate .ssos-store-account { margin:0; }
+
+/* GitHub app installation-first sign-in and device code controls. */
+.ssos-cloud-device-code { user-select:all; letter-spacing:.12em; }
+.ssos-cloud-card [data-ssos-cloud-copy] { margin:8px 0; }
