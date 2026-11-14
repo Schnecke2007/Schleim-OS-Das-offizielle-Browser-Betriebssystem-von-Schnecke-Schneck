@@ -233,6 +233,21 @@
         "en": "Claude is an AI assistant for questions, writing, ideas and coding help. The claude.ai website opens in a new browser tab.",
         "nl": "Claude is een AI-assistent voor vragen, teksten, ideeën en hulp bij programmeren. De website claude.ai wordt in een nieuw browsertabblad geopend."
       }
+    },
+    {
+      "id": "sonos-control",
+      "name": "Sonos",
+      "icon": "🔊",
+      "url": "https://www.sonos.com/",
+      "category": "media",
+      "addedAt": "2026-11-14",
+      "featured": true,
+      "tags": "sonos lautsprecher musik audio multiroom spotify radio wiedergabe",
+      "description": {
+        "de": "Steuere deine Sonos-Lautsprecher, wähle Räume aus, sieh die aktuelle Wiedergabe und starte gespeicherte Sonos-Favoriten und Playlists.",
+        "en": "Control your Sonos speakers, choose rooms, view now playing and start saved Sonos favorites and playlists.",
+        "nl": "Bedien je Sonos-speakers, kies kamers, bekijk wat er wordt afgespeeld en start opgeslagen Sonos-favorieten en afspeellijsten."
+      }
     }
   ]
 }
