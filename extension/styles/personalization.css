@@ -118,3 +118,28 @@
 .ssos-rating-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}
 .ssos-rating-dialog-actions .app-button{margin:0}
 @media(max-width:480px){.ssos-rating-dialog form{padding:16px}.ssos-rating-dialog-actions{display:grid;grid-template-columns:1fr 1fr}.ssos-rating-dialog-actions .app-button{justify-content:center}}
+
+/* Schleim-Konto and private GitHub cloud backup */
+.ssos-cloud-account{margin:16px 0}
+.ssos-cloud-card{padding:15px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#25180ff2,#18211af2);box-shadow:0 14px 35px #0002;color:var(--ink)}
+.ssos-cloud-title{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.ssos-cloud-title>span:first-child{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:13px;background:color-mix(in srgb,var(--accent) 16%,transparent);font-size:22px}
+.ssos-cloud-title h3{margin:0 0 3px;font-size:15px;letter-spacing:-.025em}
+.ssos-cloud-title p{margin:0;color:var(--muted);font-size:9px;line-height:1.5}
+.ssos-cloud-connected{margin-left:auto;color:#83c78c;font-size:12px}
+.ssos-cloud-card>.app-button{margin:5px 0 8px}
+.ssos-cloud-device-code{margin:12px 0;padding:13px;border:1px dashed var(--accent);border-radius:13px;background:#0003;text-align:center;font-size:clamp(24px,7vw,34px);font-weight:800;letter-spacing:.16em;font-variant-numeric:tabular-nums}
+.ssos-cloud-meta{display:grid;grid-template-columns:minmax(90px,.55fr) minmax(0,1.45fr);gap:7px 12px;margin:12px 0;padding:11px;border:1px solid var(--line);border-radius:12px;background:#0002}
+.ssos-cloud-meta span{color:var(--muted);font-size:9px}
+.ssos-cloud-meta b,.ssos-cloud-meta a{font-size:10px;overflow-wrap:anywhere}
+.ssos-cloud-meta a,.ssos-cloud-help{color:var(--accent)}
+.ssos-cloud-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.ssos-cloud-actions .app-button{flex:1;justify-content:center;margin:0}
+.ssos-cloud-note{margin:9px 0;color:var(--muted);font-size:9px;line-height:1.6}
+.ssos-cloud-help{display:inline-block;margin:2px 0 8px;font-size:9px;text-decoration:none}
+.ssos-cloud-logout{padding:5px 0;border:0;background:none;color:var(--muted);font:inherit;font-size:9px;text-decoration:underline;cursor:pointer}
+.ssos-cloud-status{min-height:16px;margin:9px 0 0;color:#b8d5ad;font-size:9px;line-height:1.55;overflow-wrap:anywhere}
+.ssos-cloud-status.is-error{color:#ffb3a7}
+.ssos-store-account{margin:14px 0 18px}
+.ssos-settings-cloud{margin:14px 0}
+@media(max-width:520px){.ssos-cloud-card{padding:12px}.ssos-cloud-meta{grid-template-columns:1fr;gap:4px}.ssos-cloud-meta span:not(:first-child){margin-top:6px}.ssos-cloud-actions{display:grid;grid-template-columns:1fr}.ssos-cloud-actions .app-button{width:100%}}
