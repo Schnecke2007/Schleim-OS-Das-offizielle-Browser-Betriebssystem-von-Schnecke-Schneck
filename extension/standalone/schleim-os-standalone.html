@@ -355,7 +355,7 @@ body[data-device="desktop"] .language-screen,.device[data-device="desktop"] .lan
           </button>
           <div class="section-heading"><span>Entdecke die Apps</span><button id="showAllApps" type="button">Alle anzeigen <span>→</span></button></div>
           <div class="app-grid" id="homeAppGrid"></div>
-          <p class="ssos-arrange-hint">Kachel länger gedrückt halten und an die gewünschte Position ziehen. Die Reihenfolge wird automatisch gespeichert und im JSON-Backup mitgesichert.</p>
+          <p class="ssos-arrange-hint">Kachel länger gedrückt halten und an die gewünschte Position ziehen. Diese Standalone-Demo speichert die Reihenfolge nur lokal in diesem Browser. Sie bietet keine Cloud-Sicherung.</p>
 
           <div class="section-heading project-heading"><span>Im Spotlight</span><span class="tiny-label">ENTDECKEN</span></div>
           <button class="mini-project" id="openCloud" type="button">
@@ -1390,7 +1390,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Sperrbildschirm', city:'Wetter-Ort / Stadt', weather:'Wetter aktualisieren', shortcuts:'Sperrbildschirm-Verknüpfungen',
       shortcutName:'Name', shortcutUrl:'Ziel-URL', shortcutIcon:'Symbol', saveLock:'Sperrbildschirm speichern',
       export:'Homescreen exportieren', import:'Homescreen importieren', backup:'Konfigurationsdatei (JSON)',
-      backupInfo:'Deine Einstellungen bleiben lokal in diesem Browser. Exportiere eine JSON-Datei als Sicherung und importiere sie bei Bedarf auf diesem oder einem anderen Gerät. Es gibt keine automatische Cloud-Synchronisierung.',
+      backupInfo:'Diese Standalone-Demo speichert Einstellungen nur lokal in diesem Browser. Sie enthält keine GitHub-Anmeldung und keine Cloud-Sicherung.',
       exportDone:'JSON-Sicherung exportiert.', importBad:'Diese Konfigurationsdatei ist ungültig oder nicht kompatibel.', importConfirm:'Der Import ersetzt die in der Sicherungsdatei enthaltenen Einstellungen. Möchtest du fortfahren?',
       designSaved:'Personalisierung gespeichert.', wallpaperSaved:'Hintergrundbild gespeichert.', weatherPending:'Wetter wird geladen …',
       weatherMissing:'Lege in den Einstellungen eine Stadt fest.', weatherError:'Wetterdaten konnten nicht geladen werden.',
@@ -1405,7 +1405,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Lock screen', city:'Weather location / city', weather:'Refresh weather', shortcuts:'Lock screen shortcuts',
       shortcutName:'Name', shortcutUrl:'Target URL', shortcutIcon:'Icon', saveLock:'Save lock screen',
       export:'Export home screen', import:'Import home screen', backup:'Configuration file (JSON)',
-      backupInfo:'Your settings stay local in this browser. Export a JSON file as a backup and import it when needed on this or another device. There is no automatic cloud sync.',
+      backupInfo:'This standalone demo stores settings only in this browser. It does not include GitHub sign-in or cloud backup.',
       exportDone:'JSON backup exported.', importBad:'This configuration file is invalid or incompatible.', importConfirm:'Importing replaces the settings contained in the backup file. Do you want to continue?',
       designSaved:'Personalization saved.', wallpaperSaved:'Wallpaper saved.', weatherPending:'Loading weather …',
       weatherMissing:'Set a city in Settings.', weatherError:'Could not load weather data.',
@@ -1420,7 +1420,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       lockSettings:'Vergrendelscherm', city:'Weerlocatie / stad', weather:'Weer vernieuwen', shortcuts:'Snelkoppelingen op vergrendelscherm',
       shortcutName:'Naam', shortcutUrl:'Doel-URL', shortcutIcon:'Symbool', saveLock:'Vergrendelscherm opslaan',
       export:'Startscherm exporteren', import:'Startscherm importeren', backup:'Configuratiebestand (JSON)',
-      backupInfo:'Je instellingen blijven lokaal in deze browser. Exporteer een JSON-bestand als back-up en importeer het indien nodig op dit of een ander apparaat. Er is geen automatische cloudsynchronisatie.',
+      backupInfo:'Deze standalone demo bewaart instellingen alleen lokaal in deze browser. GitHub-aanmelding en cloudback-up zijn niet beschikbaar in de demo.',
       exportDone:'JSON-back-up geëxporteerd.', importBad:'Dit configuratiebestand is ongeldig of niet compatibel.', importConfirm:'Door te importeren worden de instellingen uit het back-upbestand vervangen. Wil je doorgaan?',
       designSaved:'Personalisatie opgeslagen.', wallpaperSaved:'Achtergrond opgeslagen.', weatherPending:'Weer wordt geladen …',
       weatherMissing:'Stel een stad in bij Instellingen.', weatherError:'Weergegevens konden niet worden geladen.',
@@ -1667,7 +1667,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       </div>
       <div class="ssos-card">
         <h4>💾 ${currentLanguage()==='en'?'Import & Export':currentLanguage()==='nl'?'Importeren & exporteren':'Import & Export'}</h4>
-        <p class="body-copy">${currentLanguage()==='en'?'Importing and exporting settings is not available in the demo. This feature is included in the full browser extension.':currentLanguage()==='nl'?'Instellingen importeren en exporteren is niet beschikbaar in de demo. Deze functie is opgenomen in de volledige browserextensie.':'Der Import und Export von Einstellungen ist in der Demo nicht verfügbar. Diese Funktion ist in der vollständigen Browser-Extension enthalten.'}</p>
+        <p class="body-copy">${currentLanguage()==='en'?'This standalone demo stores settings only in this browser. Cloud backup is available in the full extension under Settings → Schleim account.':currentLanguage()==='nl'?'Deze standalone demo bewaart instellingen alleen in deze browser. Cloudback-up is beschikbaar in de volledige extensie via Instellingen → Schleim-account.':'Diese Standalone-Demo speichert Einstellungen nur lokal in diesem Browser. Die Cloud-Sicherung gibt es in der vollständigen Erweiterung unter Einstellungen → Schleim-Konto.'}</p>
       </div>
 `;
     mount.appendChild(section);
