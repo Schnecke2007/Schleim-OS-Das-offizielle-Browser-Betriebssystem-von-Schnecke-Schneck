@@ -23,9 +23,10 @@ Volg deze stappen:
 5. Ga terug naar Schleim OS.
 6. Kies **Ik heb de app geïnstalleerd – verder**.
 7. Schleim OS toont een code.
-8. Na korte tijd wordt de code gekopieerd.
-9. De GitHub-pagina om de code in te voeren wordt geopend.
-10. Voer de code in op GitHub en geef toestemming voor de app.
+8. Schleim OS probeert de code na korte tijd te kopiëren.
+9. Als dat niet lukt, kies je **Code kopiëren**.
+10. De GitHub-pagina om de code in te voeren wordt geopend.
+11. Voer de code in op GitHub en geef toestemming voor de app.
 
 Je kunt de code ook zelf kopiëren.
 
