@@ -39,7 +39,7 @@
       ownerMismatch:'Das gefundene Repository gehört nicht zum angemeldeten GitHub-Konto.',
       retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte Cloud-Sicherung',
       notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto',
-      storeLoginIntro:'Melde dich mit deinem Schleim-Konto an, um den Schleim-Store freizuschalten.', installFirst:'Installiere zuerst die GitHub-App.', installIntro:'Die GitHub-App-Seite wurde geöffnet. Installiere Schleim OS Account in deinem GitHub-Konto und fahre danach hier fort.',
+      storeLoginIntro:'Melde dich mit deinem Schleim-Konto an, um den Schleim-Store freizuschalten.', storeUnlocked:'Der Schleim-Store ist freigeschaltet.', installFirst:'Installiere zuerst die GitHub-App.', installIntro:'Die GitHub-App-Seite wurde geöffnet. Installiere Schleim OS Account in deinem GitHub-Konto und fahre danach hier fort.',
       continueAfterInstall:'Ich habe die App installiert – weiter', checkingInstallation:'Prüfe die GitHub-App-Installation …', waitingForInstallation:'Warte, bis GitHub die Installation deinem Konto zuordnet …',
       installationMissing:'Die GitHub-App wurde noch nicht erkannt. Installiere sie auf deinem GitHub-Konto und versuche es erneut.',
       codeCopied:'Der Gerätecode wurde in die Zwischenablage kopiert.', copyCode:'Code kopieren', copyFailed:'Automatisches Kopieren nicht möglich. Kopiere den angezeigten Code manuell.',
@@ -69,7 +69,7 @@
       ownerMismatch:'The repository found does not belong to the signed-in GitHub account.',
       retry:'Try again', help:'Open setup guide', lastBackup:'Last cloud backup',
       notYet:'No backup on this device yet', account:'GitHub account',
-      storeLoginIntro:'Sign in with your Schleim account to unlock the Schleim-Store.', installFirst:'Install the GitHub App first.', installIntro:'The GitHub App page has opened. Install Schleim OS Account in your GitHub account, then continue here.',
+      storeLoginIntro:'Sign in with your Schleim account to unlock the Schleim-Store.', storeUnlocked:'The Schleim-Store is unlocked.', installFirst:'Install the GitHub App first.', installIntro:'The GitHub App page has opened. Install Schleim OS Account in your GitHub account, then continue here.',
       continueAfterInstall:'I installed the app – continue', checkingInstallation:'Checking the GitHub App installation …', waitingForInstallation:'Waiting for GitHub to associate the installation with your account …',
       installationMissing:'The GitHub App has not been detected yet. Install it on your GitHub account and try again.',
       codeCopied:'The device code was copied to the clipboard.', copyCode:'Copy code', copyFailed:'Automatic copying is unavailable. Copy the displayed code manually.',
@@ -99,7 +99,7 @@
       ownerMismatch:'De gevonden repository is niet van het aangemelde GitHub-account.',
       retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste cloudback-up',
       notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account',
-      storeLoginIntro:'Meld je aan met je Schleim-account om de Schleim-Store te ontgrendelen.', installFirst:'Installeer eerst de GitHub-app.', installIntro:'De GitHub-app-pagina is geopend. Installeer Schleim OS Account in je GitHub-account en ga daarna hier verder.',
+      storeLoginIntro:'Meld je aan met je Schleim-account om de Schleim-Store te ontgrendelen.', storeUnlocked:'De Schleim-Store is ontgrendeld.', installFirst:'Installeer eerst de GitHub-app.', installIntro:'De GitHub-app-pagina is geopend. Installeer Schleim OS Account in je GitHub-account en ga daarna hier verder.',
       continueAfterInstall:'Ik heb de app geïnstalleerd – verder', checkingInstallation:'De GitHub-app-installatie controleren …', waitingForInstallation:'Wachten totdat GitHub de installatie aan je account koppelt …',
       installationMissing:'De GitHub-app is nog niet herkend. Installeer de app in je GitHub-account en probeer het opnieuw.',
       codeCopied:'De apparaatcode is naar het klembord gekopieerd.', copyCode:'Code kopiëren', copyFailed:'Automatisch kopiëren is niet beschikbaar. Kopieer de getoonde code handmatig.',
@@ -175,7 +175,7 @@
         '<p class="ssos-cloud-note">'+esc(t('notConfigured'))+'</p>'+
         '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
         '<a class="ssos-cloud-help" href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/extension/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
-        '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p><p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
+        '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+(loginOnly?'':'<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>')+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
       return;
     }
@@ -219,7 +219,7 @@
       return;
     }
     if(loginOnly){
-      panel.innerHTML='<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐌</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('connected'))+' <b>@'+esc(session.user.login)+'</b></p></div><span class="ssos-cloud-connected">●</span></div><p class="ssos-cloud-note">'+esc(t('created'))+'</p></div>';
+      panel.innerHTML='<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐌</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('connected'))+' <b>@'+esc(session.user.login)+'</b></p></div><span class="ssos-cloud-connected">●</span></div><p class="ssos-cloud-note">'+esc(t('storeUnlocked'))+'</p></div>';
       return;
     }
     const repoUrl = session.repo?.html_url || ('https://github.com/'+session.user.login+'/'+REPO_NAME);
@@ -300,7 +300,7 @@
       },3900);
       pollForAuthorization(flow);
     } catch (error) {
-      deviceFlow=null;installationStage=false;mountPanels();setStatus(error.message||t('authError'),true);
+      deviceFlow=null;installationStage=false;try{verificationWindow?.close();}catch{} verificationWindow=null;mountPanels();setStatus(error.message||t('authError'),true);
     }
   }
   async function appInstallationDetected() {
