@@ -23,9 +23,10 @@ Follow these steps:
 5. Return to Schleim OS.
 6. Select **I installed the app – continue**.
 7. Schleim OS shows a code.
-8. After a short delay, Schleim OS copies the code.
-9. The GitHub page for entering the code opens.
-10. Enter the code on GitHub and approve the app.
+8. After a short delay, Schleim OS tries to copy the code.
+9. If this does not work, select **Copy code**.
+10. The GitHub page for entering the code opens.
+11. Enter the code on GitHub and approve the app.
 
 You can also copy the code yourself.
 
