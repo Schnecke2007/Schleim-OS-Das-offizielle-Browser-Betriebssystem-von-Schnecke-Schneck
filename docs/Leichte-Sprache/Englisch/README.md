@@ -15,7 +15,8 @@ You see a personal start page with tiles for apps and websites.
 - Open apps and websites from tiles.
 - Move the tiles.
 - Change the design, colour and background.
-- Save your settings to the cloud with your Schleim account.
+- Save your settings manually under **Settings → Schleim account**.
+- The backup is not created automatically.
 - The Schleim-Store shows apps and websites. You need a Schleim account to use the Store.
 - Use the interface in German, English or Dutch.
 
@@ -35,7 +36,11 @@ Read the [plain-language installation guide](INSTALLATION.md).
 
 The Schleim-Store is only available after sign-in. You can search for apps, install them and rate them.
 
+There is no cloud backup in the Store. Backup is available only in Settings.
+
 [Read the simple Schleim-Store guide](SCHLEIM-STORE.md)
+
+[Read about the Schleim account and cloud backup](ACCOUNT-CLOUD.md)
 
 ## Get help
 
