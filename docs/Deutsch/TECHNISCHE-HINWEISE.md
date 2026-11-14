@@ -13,6 +13,7 @@
 - **Personalisierung und Schleim-Store:** `scripts/personalization.js`
 - **GitHub-Anmeldung und Cloud-Sicherung:** `scripts/schleim-account.js`
 - **Store-Admin-Portal:** `scripts/slime-store-admin.js`
+- **GitHub-Update-Center:** `scripts/update-center.js`
 - **Stylesheets:** `styles/main.css` und `styles/personalization.css`
 - **Rechtstext-Übersetzungen:** `locales/legal-translations.js`
 - **Standalone-Demo:** `standalone/schleim-os-standalone.html`
@@ -40,6 +41,12 @@ Der Schleim-Store ist nur mit einem angemeldeten Schleim-Konto verfügbar. Die S
 ## Berechtigungen
 
 Das Manifest enthält unter anderem `storage` und `clipboardWrite`. Die Zwischenablage-Berechtigung wird für das automatische Kopieren des GitHub-Gerätecodes verwendet. Optionale Host-Berechtigungen können von der Anwendung angefordert werden, wenn eine Funktion sie benötigt. Lies Berechtigungsabfragen sorgfältig.
+
+## Update-Center
+
+Das Update-Center wird in den Einstellungen angezeigt. Es liest die Manifest-Version im GitHub-Hauptzweig über `raw.githubusercontent.com` und vergleicht sie mit `chrome.runtime.getManifest().version`. Bei einer neueren Version wird ein Link zum vollständigen Repository-ZIP angeboten. Das Skript installiert keine Dateien und ersetzt die laufende Erweiterung nicht.
+
+Der Browser muss den ZIP-Import oder seine Aktualisierungsfunktion selbst ausführen. `chrome.runtime.requestUpdateCheck()` wird nicht als GitHub-Installer verwendet, da diese API den vom Browser konfigurierten Erweiterungs-Update-Kanal prüft.
 
 ## Werbung und externe Verbindungen
 
