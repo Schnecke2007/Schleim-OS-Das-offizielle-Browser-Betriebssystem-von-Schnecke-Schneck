@@ -1,109 +1,43 @@
-# Sonos-App für Schleim OS
+# Sonos in Schleim OS
 
-Die native Sonos-App befindet sich im **Schleim-Store → Medien → Sonos**. Nach der Installation erscheint Sonos als Kachel auf dem Schleim-OS-Startbildschirm.
+Die Sonos-Kachel öffnet standardmäßig die offizielle browserbasierte Sonos-Steuerung:
 
-## Funktionen
+**https://play.sonos.com/**
 
-- Sonos-Konto per OAuth 2.0 verbinden und Verbindung trennen
-- Sonos-Haushalt, Lautsprecher und Raumgruppen auswählen
-- Aktuellen Titel, Künstler, Album, Cover und Wiedergabequelle anzeigen
-- Wiedergabe, Pause, vorheriger/nächster Titel und 15-Sekunden-Sprung
-- Fortschrittsbalken und Lautstärkeregelung
-- Gruppen-Stummschaltung
-- Zufallswiedergabe, Wiederholen, Titelwiederholung und Überblenden
-- Sonos-Favoriten und Sonos-Playlists laden
-- Titel, Sender oder Playlists über das Textfeld anhand ihrer gespeicherten Favoriten-/Playlist-Namen starten
+## Einfache Nutzung
 
-## Warum eine Cloudflare-Bridge benötigt wird
+1. Öffne die Sonos-App-Kachel in Schleim OS.
+2. Tippe auf **Offizielle Sonos-Websteuerung öffnen**.
+3. Melde dich direkt auf der Sonos-Webseite mit deinem Sonos-Konto an.
+4. Wähle dein Sonos-System bzw. deine Lautsprecher und steuere die Wiedergabe.
 
-Die Sonos Control API verlangt für den OAuth-Codeaustausch und die Aktualisierung der Tokens das Client-Secret deiner Sonos-Integration. Sonos schreibt ausdrücklich vor, dass dieser Vorgang serverseitig und nicht direkt im Browser stattfinden soll. Deshalb enthält die Erweiterung **keinen** Sonos-Client-Secret.
+Schleim OS fragt keine Sonos-Zugangsdaten ab und speichert weder Passwort noch API-Token. Es ist kein Sonos-Developer-Key, keine selbst erstellte Sonos-Control-Integration, kein Cloudflare-Worker und kein KV-Speicher notwendig.
 
-Die optionale Cloudflare-Worker-Bridge übernimmt:
-1. Den Start der Sonos-Anmeldung und den HTTPS-Callback.
-2. Den OAuth-Codeaustausch sowie spätere Token-Erneuerungen.
-3. Die sichere Ablage von Access- und Refresh-Token in einem privaten Cloudflare-KV-Namespace.
-4. Die Weiterleitung einer begrenzten Auswahl erlaubter Sonos-Control-API-Aufrufe.
+Die Websteuerung wird in einem eigenen Browser-Tab geöffnet. Sie wird absichtlich nicht in ein iframe eingebettet, damit Anmeldung und Wiedergabe nicht von Einbettungs- oder Drittanbieter-Cookie-Beschränkungen abhängen.
 
-Schleim OS speichert lokal nur die Worker-URL, ausgewählte Raum-/Haushalts-IDs und eine zufällige Sitzungskennung. Diese Daten werden unter `sonosControlConfig` gespeichert und nicht in das Schleim-Cloud-Backup aufgenommen. Die Sonos-Tokens liegen nicht im GitHub-Store-Katalog und nicht im Schleim-Cloud-Backup.
+## Alternative für eine spätere direkte In-App-Steuerung
 
-## Einmalige Einrichtung
+Wenn die Wiedergabe unbedingt innerhalb von Schleim OS gesteuert werden soll, ist Home Assistant eine mögliche Alternative:
 
-### 1. Sonos Control Integration anlegen
+- Home Assistant erkennt Sonos-Lautsprecher im lokalen Netzwerk automatisch, sofern die Netzwerkbedingungen stimmen.
+- In Home Assistant wird ein Sonos-Gerät über **Einstellungen → Geräte & Dienste** eingerichtet.
+- Anschließend lässt sich ein Long-Lived Access Token im Home-Assistant-Profil erstellen.
+- Eine spätere Schleim-OS-Anbindung könnte dann nur die Home-Assistant-URL und dieses Zugriffstoken benötigen.
 
-1. Öffne den [Sonos Developer Portal / Integration Manager](https://developer.sonos.com/).
-2. Melde dich mit deinem Sonos-Entwicklerkonto an.
-3. Erstelle eine neue **Control Integration**.
-4. Vergib einen Namen, zum Beispiel **Schleim OS Sonos**.
-5. Erstelle eine Client Credential Key und notiere Client-ID und Client-Secret. Behandle das Secret wie ein Passwort.
-6. Die Redirect-URL wird im nächsten Schritt eingetragen. Sie muss öffentlich erreichbar sein und HTTPS verwenden.
+Diese Variante braucht allerdings einen laufenden Home-Assistant-Server und eine einmalige Einrichtung. Sie ist deshalb nicht die vorausgewählte Standardlösung.
 
-### 2. Cloudflare KV erstellen
+## Sonos 27mcp
 
-1. Öffne das [Cloudflare Dashboard](https://dash.cloudflare.com/).
-2. Erstelle unter **Workers & Pages → KV** einen privaten KV-Namespace, zum Beispiel `SONOS_SESSIONS`.
-3. Notiere die Namespace-ID.
+Sonos bietet außerdem den MCP-Server `https://mcp.ws.sonos.com/mcp`. Er benötigt keine vorher selbst erstellte Client-ID oder API-Key: kompatible MCP-Clients registrieren sich dynamisch und führen eine Sonos-Kontoautorisierung durch. Sonos beschreibt den Dienst ausdrücklich für KI-/MCP-Clients und weist darauf hin, dass sich die verfügbaren Tools und deren Schemas ohne Vorankündigung ändern können. Er wird deshalb nicht als fest verdrahtete REST-API in der Schleim-OS-App verwendet.
 
-### 3. Worker bereitstellen
+## Alte Cloudflare-Bridge
 
-Die Worker-Datei liegt unter:
-- `integrations/sonos-worker/src/index.js`
-- `integrations/sonos-worker/wrangler.toml`
+Die bisherige Sonos-Control-API-Bridge unter `integrations/sonos-worker/` bleibt aus Kompatibilitätsgründen im Repository erhalten, wird von der aktuellen Sonos-Kachel aber nicht mehr verwendet. Für die einfache Sonos-Websteuerung muss sie nicht deployed oder konfiguriert werden.
 
-Du kannst die Datei als Cloudflare Worker über das Dashboard einfügen oder das Wrangler-Projekt verwenden.
+## Offizielle Links
 
-Binde den KV-Namespace mit dem Binding-Namen **SONOS_SESSIONS** an den Worker. Erstelle unter **Settings → Variables and Secrets** folgende Werte:
-
-| Name | Typ | Wert |
-|---|---|---|
-| `SONOS_CLIENT_ID` | Variable | Client-ID aus dem Sonos Integration Manager |
-| `SONOS_CLIENT_SECRET` | Secret | Client-Secret aus dem Sonos Integration Manager |
-| `SONOS_REDIRECT_URI` | Variable | Vollständige Worker-Adresse mit `/oauth/callback` |
-
-Beispiel für die Redirect-URL:
-`https://dein-worker.dein-konto.workers.dev/oauth/callback`
-
-Trage **genau dieselbe vollständige HTTPS-Adresse** im Sonos Integration Manager als Redirect-URL für deine Integration ein. Die Adresse muss exakt übereinstimmen.
-
-Wenn du Wrangler verwendest, ersetze in `wrangler.toml` die Platzhalter-KV-ID und Worker-Adresse. Lege das Client-Secret anschließend als Secret an, zum Beispiel über `wrangler secret put SONOS_CLIENT_SECRET`; speichere es nicht in einer öffentlichen Datei.
-
-Nach dem Deployment sollte `https://DEIN-WORKER/health` den Dienststatus und `configured: true` melden.
-
-### 4. Sonos in Schleim OS verbinden
-
-1. Installiere **Sonos** im Schleim-Store.
-2. Öffne die Sonos-Kachel auf dem Startbildschirm.
-3. Füge im Feld **Cloudflare-Worker-URL** nur den HTTPS-Ursprung ein, zum Beispiel `https://dein-worker.dein-konto.workers.dev` – ohne Pfad.
-4. Tippe auf **Server speichern** und erlaube den Netzwerkzugriff für diese Adresse.
-5. Tippe auf **Mit Sonos verbinden**.
-6. Melde dich im geöffneten Sonos-Fenster an und erlaube **Schleim OS Sonos** den Zugriff.
-7. Nach der Freigabe lädt Schleim OS deine Haushalte, Raumgruppen, Favoriten und Playlists.
-
-Die Verbindung ist anschließend in der Sonos-App gespeichert. Zum Beenden der Verbindung verwende **Sonos trennen** in der App. Damit wird die serverseitige Sitzung gelöscht.
-
-## Grenzen der Texteingabe
-
-Das Textfeld gleicht deine Eingabe mit den Namen deiner **gespeicherten Sonos-Favoriten und Sonos-Playlists** ab. Zum Beispiel kann „Spiele Radio Essen“ einen passenden Favoriten starten, wenn dieser in Sonos als Favorit gespeichert ist.
-
-Die offizielle Control API stellt Drittanbieter-Integrationen keine allgemeine Freitextsuche über alle verbundenen Musikdienste bereit. Eine beliebige Suche wie „Spiele Titel XY von Künstler Z“ über Spotify, Apple Music, Amazon Music und alle anderen Dienste kann diese App deshalb nicht einfach selbst ausführen. Speichere solche Titel oder Sender zuerst in der Sonos-App als Favorit oder Playlist.
-
-## Datenschutz und Sicherheit
-
-- Das Sonos-Client-Secret bleibt als Cloudflare Secret auf dem Server.
-- Access- und Refresh-Tokens bleiben im privaten Cloudflare-KV-Namespace.
-- Im Browser liegt nur eine zufällige Sitzungskennung.
-- Die Sonos-Sitzung ist getrennt vom Schleim-Konto.
-- Die Sonos-Sitzung wird nicht in die SchleimCloud-Sicherung aufgenommen.
-- Sonos-Verbindungen und Wiedergabesteuerung benötigen eine Internetverbindung zur Sonos Control API.
-
-## Hinweise
-
-Die App zeigt Metadaten und Albumcover so an, wie sie von Sonos geliefert werden, und weist die Wiedergabequelle aus. Die Oberfläche aktualisiert den Wiedergabestatus regelmäßig. Eine Sonos-Echtzeit-Event-Subscription ist in dieser ersten Integration noch nicht aktiviert.
-
-## Offizielle Sonos-Dokumentation
-
-- [Authorize – OAuth 2.0 und Client Credentials](https://docs.sonos.com/docs/authorize)
-- [Discover – Haushalte, Gruppen und Player](https://docs.sonos.com/docs/discover)
-- [Control API – Überblick](https://docs.sonos.com/docs/control)
-- [Playback und Metadaten](https://docs.sonos.com/reference/playback)
-- [Favoriten abrufen und starten](https://docs.sonos.com/reference/favorites-getfavorites-householdid)
-- [Playlists abrufen und starten](https://docs.sonos.com/reference/playlists-getplaylists-householdid)
+- [Sonos Web](https://play.sonos.com/)
+- [Sonos 27mcp – offizielle Sonos-Informationen](https://tech-blog.sonos.com/posts/sonos-27mcp/)
+- [Sonos 27mcp – Einrichtungsanleitung](https://support.sonos.com/de-at/article/control-your-sonos-system-with-ai-using-sonos-27mcp)
+- [Home Assistant – Sonos-Integration](https://www.home-assistant.io/integrations/sonos/)
+- [Home Assistant – REST API](https://developers.home-assistant.io/docs/api/rest/)
