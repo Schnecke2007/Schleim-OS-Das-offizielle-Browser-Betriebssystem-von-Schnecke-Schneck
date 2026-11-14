@@ -1,12 +1,25 @@
-# Sprachdateien
+# Sprachdateien und Übersetzungen
 
-- `legal-translations.js` enthält vollständige englische und niederländische Leseübersetzungen der drei lokal eingebundenen Rechtstexte.
-- Die übrige lokale OS-Oberfläche verwendet die im `scripts/app.js` und `scripts/personalization.js` eingebauten Sprachwörterbücher.
-- Extern gerenderte Provider-Inhalte (Wix, Google Sites, CodePen, Websim, Social Media) sind aufgrund der Same-Origin-Policy nicht direkt durch die Host-Seite übersetzbar; die App zeigt dafür einen Google-Translate-Link.
+Schleim OS unterstützt Deutsch, Englisch und Niederländisch. Die Übersetzungen liegen derzeit an mehreren Stellen:
 
+- `scripts/app.js` enthält die Beschriftungen der Hauptoberfläche, Apps und Navigation.
+- `scripts/personalization.js` enthält Übersetzungen für Personalisierung, Schleim-Store, Bewertungen, App-Vorschläge und Store-Sperrhinweise.
+- `scripts/schleim-account.js` enthält Übersetzungen für Anmeldung, GitHub-App-Installation, Gerätecode, Cloud-Backup und Wiederherstellung.
+- `scripts/slime-store-admin.js` enthält Texte für das Store-Admin-Portal.
+- `locales/legal-translations.js` enthält die lokal eingebundenen Rechtstext-Übersetzungen.
 
-## Leichte Sprache und Demo
+Die Oberfläche nutzt also nicht ausschließlich Dateien in diesem Ordner. Wenn neue Funktionen hinzukommen, müssen die Sprachwörterbücher in den jeweils zuständigen JavaScript-Dateien für **de**, **en** und **nl** aktualisiert werden.
 
-[Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
+## Leichte Sprache
 
-[Deutsch – Leichte Sprache](../../docs/Leichte-Sprache/Deutsch/README.md) · [English – plain language](../../docs/Leichte-Sprache/Englisch/README.md) · [Nederlands – eenvoudige taal](../../docs/Leichte-Sprache/Niederländisch/README.md)
+Die leicht verständlichen Anleitungen sind getrennt von den UI-Übersetzungen unter `docs/Leichte-Sprache/` abgelegt:
+
+- `Deutsch/`
+- `Englisch/`
+- `Niederländisch/`
+
+Dort gibt es Installations-, Hilfe- und Techniktexte. Die Store-Anleitung steht jeweils in `SCHLEIM-STORE.md`.
+
+## Externe Inhalte
+
+Extern gerenderte Provider-Inhalte (Wix, Google Sites, CodePen, Websim, Social Media) sind aufgrund der Same-Origin-Policy nicht direkt durch die Host-Seite übersetzbar. Die App kann dafür einen Google-Translate-Link anzeigen.
