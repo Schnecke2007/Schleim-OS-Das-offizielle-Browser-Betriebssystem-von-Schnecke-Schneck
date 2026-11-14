@@ -14,7 +14,7 @@ Der Browser-Importer erkennt die Erweiterung im Unterordner `extension`. Die gen
 
 ## Schleim-Store
 
-Der Schleim-Store ist nur nach Anmeldung mit einem Schleim-Konto verfügbar. Beim ersten Anmelden öffnet Schleim OS zuerst die GitHub-App-Seite. Installiere **Schleim OS Account**, kehre zurück und wähle **Ich habe die App installiert – weiter**. Danach wird der Gerätecode angezeigt, automatisch kopiert und die GitHub-Gerätefreigabe geöffnet. Nach der Autorisierung prüft Schleim OS, ob GitHub die App-Installation erkannt hat. Die Prüfung kann bis zu fünf Minuten dauern.
+Der Schleim-Store ist nur nach Anmeldung mit einem Schleim-Konto verfügbar. Beim ersten Anmelden öffnet Schleim OS zuerst die GitHub-App-Seite. Installiere **Schleim OS Account**, kehre zurück und wähle **Ich habe die App installiert – weiter**. Danach wird der Gerätecode angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung automatisch zu kopieren. Falls das nicht klappt, kannst du ihn manuell kopieren. Anschließend öffnet sich die GitHub-Gerätefreigabe. Nach der Autorisierung prüft Schleim OS, ob GitHub die App-Installation erkannt hat. Die Prüfung kann bis zu fünf Minuten dauern.
 
 Anleitung: [Schleim-Store – Deutsch](../../Store/Deutsch/README.md) · [English](../../Store/Englisch/README.md) · [Nederlands](../../Store/Niederländisch/README.md).
 
