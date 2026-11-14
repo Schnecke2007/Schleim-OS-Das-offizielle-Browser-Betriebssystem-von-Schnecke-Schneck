@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.13.3 · Chromium-Erweiterung · Manifest V3**
+**Version 3.13.4 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -24,7 +24,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Kacheln per Maus oder Touch neu anordnen
 - Personalisierung von Akzentfarbe, Hintergrund und Sperrbildschirm
 - Schleim-Store mit Kategorien, Suche, Empfehlungen, Bewertungen und App-Vorschlägen
-- Native Sonos-App mit OAuth-Anmeldung, Raumgruppen, Wiedergabesteuerung, Lautstärke, Favoriten und Playlists (Cloudflare-Bridge erforderlich)
+- Sonos-Einstieg zur offiziellen Sonos-Websteuerung – ohne API-Schlüssel, Developer-Integration oder Cloudflare-Bridge
 - Store-Zugriff nur nach Anmeldung mit einem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsprüfung und Gerätecode
 - Update-Center: GitHub-Version prüfen und aktuelle Repository-ZIP herunterladen; die Browser-Installation bleibt ein bestätigter manueller Schritt
@@ -64,7 +64,7 @@ Der ZIP-Download installiert sich nicht selbst. Chrome erlaubt einer Erweiterung
 
 ## Sonos-Integration
 
-Die Sonos-App benötigt eine separat bereitgestellte Cloudflare-Worker-Bridge und eine Sonos Control Integration. OAuth-Client-Secret und Sonos-Tokens verbleiben serverseitig. Einrichtung und Funktionsgrenzen: [Sonos-App einrichten](docs/SONOS-APP.md).
+Die Sonos-App öffnet die offizielle [Sonos-Websteuerung](https://play.sonos.com/). Melde dich direkt bei Sonos an. Schleim OS benötigt dafür keine API-Schlüssel, Cloudflare-Worker oder eigene Server. Eine mögliche Home-Assistant-Variante für eine spätere In-App-Steuerung ist in [Sonos-App einrichten](docs/SONOS-APP.md) beschrieben.
 
 ## Cloud-Sicherung
 
