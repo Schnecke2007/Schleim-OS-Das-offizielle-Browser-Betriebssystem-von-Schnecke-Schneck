@@ -319,7 +319,7 @@
     return String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
       .replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40) || 'Medium';
   }
-  async function getCaptureDate(file) {
+  // Read the EXIF DateTimeOriginal tag (0x9003) when a JPEG contains it.\n  async function getCaptureDate(file) {
     const fallback = new Date(file.lastModified || Date.now());
     if (!/^image\/(jpeg|jpg)$/i.test(file.type || '')) return {date:fallback,source:'file-last-modified'};
     try {
