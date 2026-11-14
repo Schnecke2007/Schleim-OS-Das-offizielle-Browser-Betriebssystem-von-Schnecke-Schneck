@@ -4,8 +4,8 @@ Das Schleim-Konto verwendet dein eigenes GitHub-Konto als Identität. Schleim OS
 
 ## 1. GitHub-App erstellen
 
-1. Öffne [GitHub Developer Settings → GitHub Apps](https://github.com/settings/apps) und wähle **New GitHub App**.
-2. Verwende als Namen beispielsweise **Schleim OS Account**.
+1. Deine bereits erstellte App findest du hier: [Schleim OS Account auf GitHub](https://github.com/apps/schleim-os-account). Die Einstellungen verwaltest du unter [GitHub Developer Settings → GitHub Apps](https://github.com/settings/apps).
+2. Verwende als Namen **Schleim OS Account**.
 3. Als Homepage-URL kannst du das [Schleim-OS-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck) eintragen.
 4. Aktiviere **Enable Device Flow**. Für diesen Anmeldeweg wird keine Callback-URL benötigt.
 5. **Wähle die Sichtbarkeit passend aus:** Wenn andere Schleim-OS-Nutzer ihr eigenes GitHub-Konto verbinden sollen, muss die App **Public** sein. Eine private App kann nur auf dem Konto installiert werden, dem sie gehört. Wenn ausschließlich du selbst das Konto nutzt, kannst du sie privat lassen.
@@ -19,7 +19,7 @@ Das Schleim-Konto verwendet dein eigenes GitHub-Konto als Identität. Schleim OS
 
 **Warum diese Berechtigungen?** Die E-Mail-Berechtigung prüft, ob dein primäres GitHub-E-Mail-Konto bereits verifiziert ist. Repository creation erlaubt die automatische Erstellung des privaten Cloud-Repositorys. Contents wird benötigt, um die Sicherungsdatei hoch- und herunterzuladen. GitHub gibt einer App automatisch Zugriff auf die Repositories, die sie selbst erstellt. Daher muss die App nicht pauschal Zugriff auf sämtliche vorhandenen Repositories bekommen.
 
-7. Speichere die App. Installiere sie auf deinem GitHub-Konto. Bei einer öffentlichen App können andere Nutzer sie ebenfalls auf ihrem GitHub-Konto installieren. Für die Cloud-Funktion müssen sie die App-Installation und anschließend die Geräteautorisierung bei GitHub bestätigen.
+7. Speichere die App. Du und andere Nutzer können sie über [Schleim OS Account installieren](https://github.com/apps/schleim-os-account). Für die Cloud-Funktion müssen Nutzer die App-Installation und anschließend die Geräteautorisierung bei GitHub bestätigen.
 
 **Sicherheitshinweis zum Gerätecode:** GitHub beschreibt Device Flow vor allem für CLI-, IoT- und andere Geräte ohne normalen Browser-Redirect. Für Browser-Anwendungen ist ein PKCE-Redirect grundsätzlich vorzuziehen. Der Gerätecode ist hier gewählt, weil Schleim OS als manuell installierte Erweiterung keine einheitliche Redirect-Adresse auf allen Browsern besitzt. Nutzer sollten den Code ausschließlich auf `github.com/login/device` eingeben und dort prüfen, dass die Freigabe tatsächlich **Schleim OS Account** betrifft. Gib einen Gerätecode niemals an Personen weiter.
 
