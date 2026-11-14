@@ -117,11 +117,13 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 - [Installation guide](docs/Englisch/INSTALLATION.md)
 - [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
+- [Schleim account and cloud backup](docs/Englisch/SCHLEIM-ACCOUNT.md)
+- [Store guide](Store/Englisch/README.md)
 - [Documentation overview – all languages](docs/README.md)
 
 ## 📖 Plain-language documentation
 
-Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md).
+Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md). There is also a plain-language guide to [sign-in and cloud backup](docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md).
 
 ## 📁 Project structure
 
@@ -131,6 +133,9 @@ Would you prefer short sentences and simple explanations? Read the [English plai
 │   ├── ISSUE_TEMPLATE/
 │   └── workflows/
 ├── Store/
+│   ├── Deutsch/
+│   ├── Englisch/
+│   ├── Niederländisch/
 │   ├── ai/
 │   ├── communication/
 │   ├── knowledge/
@@ -155,6 +160,7 @@ Would you prefer short sentences and simple explanations? Read the [English plai
 │   ├── scripts/
 │   │   ├── app.js
 │   │   ├── personalization.js
+│   │   ├── schleim-account.js
 │   │   └── slime-store-admin.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
