@@ -89,3 +89,8 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 - [Deutsch – Schleim-Store](../../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
 - [English – Schleim-Store](../../docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md)
 - [Nederlands – Schleim-Store](../../docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md)
+
+
+## Sonos-App
+
+- [Sonos-App einrichten](./SONOS-APP.md)
