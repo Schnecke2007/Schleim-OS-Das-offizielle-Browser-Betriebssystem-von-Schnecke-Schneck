@@ -8,14 +8,14 @@ Dieses Verzeichnis enthält die freigegebenen Apps des Schleim-Stores. Jede App 
 |---|---|---:|
 | [Tools](./tools/README.md) | tools | 1 |
 | [KI & Chatbots](./ai/README.md) | ai | 2 |
-| [Medien](./media/README.md) | media | 5 |
+| [Medien](./media/README.md) | media | 6 |
 | [Wissen](./knowledge/README.md) | knowledge | 2 |
 | [Navigation](./navigation/README.md) | navigation | 1 |
 | [Produktivität](./productivity/README.md) | productivity | 1 |
 | [Kommunikation](./communication/README.md) | communication | 1 |
 | [Suche & Datenschutz](./privacy/README.md) | privacy | 1 |
 | [Shopping & Online-Shops](./shopping/README.md) | shopping | 1 |
-| **Gesamt** | | **15** |
+| **Gesamt** | | **16** |
 
 ## Store-Zugriff in Schleim OS
 
