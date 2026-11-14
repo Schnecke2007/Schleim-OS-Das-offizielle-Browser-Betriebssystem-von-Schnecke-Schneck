@@ -18,7 +18,8 @@ Dort gibt es Kacheln für Apps und Webseiten.
 - Du kannst die Kacheln verschieben.
 - Du kannst das Aussehen ändern.
 - Du kannst eine Farbe und einen Hintergrund auswählen.
-- Du kannst deine Einstellungen als JSON-Datei sichern.
+- Du kannst deine Einstellungen mit deinem Schleim-Konto in der Cloud sichern.
+- Der Schleim-Store zeigt Apps und Webseiten. Für den Store brauchst du ein Schleim-Konto.
 - Die Oberfläche gibt es auf Deutsch, Englisch und Niederländisch.
 
 ## Schleim OS ausprobieren
@@ -34,6 +35,12 @@ Die Demo ist eine einzelne HTML-Datei. Sie ist zum Ausprobieren da. Sie installi
 Lade zuerst die vollständige ZIP-Datei von GitHub herunter. Entpacke die Datei nicht. Danach importierst du die ZIP-Datei in einem Browser, der diesen Import unterstützt.
 
 Die genaue Anleitung steht hier: [Installation in Leichter Sprache](INSTALLATION.md).
+
+## Der Schleim-Store
+
+Der Schleim-Store ist nur nach einer Anmeldung verfügbar. Du kannst dort Apps suchen, installieren und bewerten.
+
+[Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
 
 ## Hilfe bekommen
 
