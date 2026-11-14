@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.14.0 · Chromium-Erweiterung · Manifest V3**
+**Version 3.14.1 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -32,7 +32,8 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Kamera-App mit Front-/Rückkamera, Fotos und Videoaufnahmen
 - Separates privates Medien-Repository `schleim-os-cloud-photos-and-videos`
 - Speicherübersicht mit Foto-/Videoanzahl und belegten MB/GB unter **Einstellungen → Schleim-Konto**
-- Lokale schlüssel-freie Metadatensuche mit Synonymen (keine automatische Bildmotiv-Erkennung)
+- Metadatensuche mit Synonymen auf allen unterstützten Geräten
+- Optionale KI-Bildbeschreibung und semantische Suche mit lokalem Gemini Nano in geeigneten Chrome-Desktop-Erweiterungen, ohne API-Schlüssel
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich unter **Einstellungen → Schleim-Konto**
 - Backup-Format 2 mit App-Reihenfolge, installierten Store-Apps und Hintergrundbild
 - Benutzeroberfläche auf Deutsch, Englisch und Niederländisch
@@ -45,7 +46,8 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - `scripts/app.js` – Apps, Navigation und Oberfläche
 - `scripts/personalization.js` – Personalisierung, Store-Oberfläche und Homescreen-Reihenfolge
 - `scripts/schleim-account.js` – GitHub-App-Anmeldung, Installationserkennung, Einstellungs-Backup und Medien-Repository-Zugriff
-- `scripts/schleim-photos-cloud.js` – Kamera, Foto-/Video-Cloud, Upload, Galerie, Suche und Speicherstatistik
+- `scripts/schleim-photos-cloud.js` – Kamera, Foto-/Video-Cloud, Upload, Galerie, Metadatensuche und Speicherstatistik
+- `scripts/schleim-photo-ai.js` – optionale lokale Bildanalyse und KI-Suchbegriff-Erweiterung über die Chrome Prompt API
 - `scripts/slime-store-admin.js` – Admin-Portal zum Prüfen und Veröffentlichen von Store-Vorschlägen
 - `scripts/update-center.js` – prüft die GitHub-Manifest-Version und bietet den ZIP-Download an
 - `data/store-apps.json` und `data/store-ratings.json` – Laufzeitkatalog und Bewertungsstatistik

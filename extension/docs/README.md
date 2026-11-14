@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.14.0
+# Schleim OS – Erweiterungsdokumentation · Version 3.14.1
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -13,7 +13,7 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 - Private Foto-/Video-Cloud mit Kamera-App, Upload, Mediathek und Speicherübersicht
 - Front-/Rückkamera für Foto- und Videoaufnahmen über Browser-Medien-APIs
 - Ordner nach Jahr und Monat; EXIF-Aufnahmedatum bei unterstützten JPEG-Fotos
-- Lokale, schlüssel-freie Suche in Metadaten und Synonymen
+- Metadatensuche mit Synonymen sowie optionale lokale KI-Bildbeschreibung und semantische Suche (Chrome Prompt API, kein API-Schlüssel)
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich in den Einstellungen
 - Update-Center zum Prüfen der GitHub-Version und Herunterladen der aktuellen Repository-ZIP
 - Deutsch, Englisch und Niederländisch
@@ -31,7 +31,9 @@ Die Store-Sperre betrifft die Oberfläche der Erweiterung. Der Katalog und die B
 
 Die Erweiterung verwendet zusätzlich zum Einstellungs-Backup-Repository `schleim-os-cloud` das separate private Repository `schleim-os-cloud-photos-and-videos`. Es wird nach der Anmeldung unter **Einstellungen → Schleim-Konto → Schleim OS Foto Video Cloud Speicher** gesucht und bei Bedarf nach Auswahl privat angelegt. Medien liegen unter `Fotos/JJJJ/JJJJ-MM/` bzw. `Videos/JJJJ/JJJJ-MM/`; `_metadata/media-index.json` enthält Typ, Datum, Dateigröße, Dateiname, Beschreibung und Stichwörter. JPEG-Dateien können ihr EXIF-Aufnahmedatum liefern. Für andere Formate gilt als Fallback der Datei-Zeitstempel.
 
-Die Suche läuft lokal mit Namen, Datum, Stichwörtern und Synonymen, ohne KI-API-Schlüssel. Sie erkennt keine Bildmotive direkt im Bildinhalt. Dateien sind derzeit auf 50 MiB pro Upload begrenzt. GitHub ist versionsbasierter Repository-Speicher und kein unbegrenzter Foto-Cloud-Anbieter; entfernte Dateien können in der Git-Historie erhalten bleiben.
+Die normale Suche nutzt lokal Dateinamen, Datum, Medientyp, Beschreibungen, Stichwörter und Synonyme. Optional kann die Fotos-App in unterstützten Chrome-Desktop-Erweiterungen die Chrome Prompt API mit Gemini Nano aktivieren: Neue Fotos werden auf dem Gerät beschrieben, und die KI erweitert Suchanfragen um passende Begriffe. Dafür ist kein API-Schlüssel nötig; Fotos für diese Analyse werden nicht an einen externen KI-Dienst gesendet. Beim ersten Start muss Chrome das Modell herunterladen. Die Verfügbarkeit hängt von Chrome-Version, Betriebssystem und Hardware ab. Ist die API nicht verfügbar, funktioniert die Metadatensuche weiter. Die Bildbeschreibung ist derzeit für Fotos vorgesehen, Videos bleiben über Metadaten durchsuchbar.
+
+Das Medien-Repository wird beim erstmaligen Verknüpfen nach ausdrücklichem Klick auf **Privaten Cloud-Speicher jetzt verknüpfen** im angemeldeten GitHub-Konto erstellt. Es muss `private=true` haben und dem angemeldeten Konto gehören. Die installierte GitHub-App benötigt dazu die Berechtigung zur Repository-Erstellung sowie Contents-Lese-/Schreibzugriff. Dateien sind derzeit auf 50 MiB pro Upload begrenzt. GitHub ist versionsbasierter Repository-Speicher und kein unbegrenzter Foto-Cloud-Anbieter; entfernte Dateien können in der Git-Historie erhalten bleiben.
 
 ## Speicherung und Cloud-Backup
 
@@ -68,6 +70,7 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 
 ## Versionshinweise
 
+- [Release Notes 3.14.1](RELEASE-NOTES-3.14.1.md)
 - [Release Notes 3.13.7](RELEASE-NOTES-3.13.7.md)
 - [Release Notes 3.13.6](RELEASE-NOTES-3.13.6.md)
 - [Release Notes 3.13.5](RELEASE-NOTES-3.13.5.md)

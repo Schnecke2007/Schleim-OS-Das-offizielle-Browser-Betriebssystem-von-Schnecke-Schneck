@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.14.0
+# Technische Hinweise – Version 3.14.1
 
 ## Plattform und Erweiterungsformat
 
@@ -13,7 +13,8 @@
 - `scripts/app.js` steuert Apps und Navigation.
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung, Einstellungs-Backup und den Zugriff auf das private Medien-Repository.
-- `scripts/schleim-photos-cloud.js` verwaltet Foto-/Video-Uploads, Metadaten, lokale Suche, Kamera, Galerie und Speicherstatistik.
+- `scripts/schleim-photos-cloud.js` verwaltet Foto-/Video-Uploads, Metadaten, Metadatensuche, Kamera, Galerie und Speicherstatistik.
+- `scripts/schleim-photo-ai.js` nutzt optional die Chrome Prompt API für lokale Bildbeschreibungen und KI-gestützte Suchbegriff-Erweiterung.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
@@ -37,7 +38,11 @@ Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Oh
 
 Das Medien-Repository `schleim-os-cloud-photos-and-videos` wird getrennt vom Einstellungs-Repository `schleim-os-cloud` verwaltet. Das Konto-Modul prüft Besitzer-ID und `private=true` und erstellt das Medien-Repository bei Bedarf über die GitHub-Repository-API. Die Medienschnittstelle akzeptiert nur Content-Pfade und verwendet dieselbe Schleim-Konto-Sitzung.
 
-Dateien werden nach Medientyp, Aufnahmejahr und -monat sortiert. JPEG-EXIF `DateTimeOriginal` wird – soweit verfügbar und lesbar – ausgewertet; andernfalls gilt `File.lastModified`. Die Suche ist eine lokale Metadaten-/Synonymsuche, keine KI-Bilderkennung. Uploads sind auf 50 MiB je Datei begrenzt. GitHub-Repository-Versionierung ist für große Mediensammlungen nur eingeschränkt geeignet.
+Dateien werden nach Medientyp, Aufnahmejahr und -monat sortiert. JPEG-EXIF `DateTimeOriginal` wird – soweit verfügbar und lesbar – ausgewertet; andernfalls gilt `File.lastModified`. Die Metadatensuche funktioniert ohne externe Dienste. Optional stellt `schleim-photo-ai.js` über `LanguageModel.availability()` und `LanguageModel.create()` eine lokale Gemini-Nano-Sitzung bereit. Neue Fotos können nach ausdrücklicher Aktivierung lokal beschrieben werden; die Ergebnisse werden als Beschreibung und Stichwörter in den Medien-Metadaten gespeichert. Die KI-Suche erweitert Suchbegriffe lokal und bewertet Treffer anhand der gespeicherten Metadaten. Für Videos werden derzeit nur Metadaten und Dateinamen indexiert.
+
+Die Chrome Prompt API steht nur in unterstützten Chrome-Erweiterungskontexten und auf geeigneter Hardware zur Verfügung. Beim ersten Aufruf wird das Modell heruntergeladen. Es ist kein API-Schlüssel erforderlich; die Bildanalyse läuft lokal und sendet das Bild nicht an Google oder einen anderen KI-Dienst. Auf nicht unterstützten Geräten bleibt die Metadatensuche erhalten. Die KI analysiert nur neue Fotos, die nach Aktivierung hochgeladen werden; bereits vorhandene Bilder werden nicht automatisch rückwirkend analysiert.
+
+Das Medien-Repository wird erst beim Klick auf die Verknüpfungsaktion im angemeldeten GitHub-Konto angelegt, wenn es dort noch nicht existiert. Die GitHub-App benötigt Repository-Erstellung (write) sowie Contents (read/write). Uploads sind auf 50 MiB je Datei begrenzt. GitHub-Repository-Versionierung ist für große Mediensammlungen nur eingeschränkt geeignet; entfernte Dateien können in der Git-Historie erhalten bleiben.
 
 ## Speicherung und Backup
 
