@@ -7,7 +7,7 @@ Dieses Verzeichnis enthält die freigegebenen Apps, sortiert nach Kategorie. Jed
 | Kategorie | Ordner | Apps |
 |---|---|---:|
 | [Tools](./tools/README.md) | tools | 1 |
-| [KI & Chatbots](./ai/README.md) | ai | 1 |
+| [KI & Chatbots](./ai/README.md) | ai | 2 |
 | [Medien](./media/README.md) | media | 5 |
 | [Wissen](./knowledge/README.md) | knowledge | 2 |
 | [Navigation](./navigation/README.md) | navigation | 1 |
