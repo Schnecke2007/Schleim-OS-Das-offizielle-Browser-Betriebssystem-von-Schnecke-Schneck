@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.12.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -38,6 +38,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
+- Update-Center in den Einstellungen: GitHub-Version prüfen und neueste ZIP-Datei herunterladen; die Installation bestätigt der Browser
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -77,6 +78,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
 - **Schleim-Konto:** Die Anmeldung startet mit der GitHub-App-Seite. Nach der Installation bestätigst du sie in Schleim OS. Der Gerätecode wird angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung automatisch zu kopieren. Falls das nicht möglich ist, kannst du ihn manuell kopieren. Danach öffnet sich die GitHub-Gerätefreigabe. Nach der Bestätigung prüft Schleim OS die App-Installation und erstellt bei Bedarf dein privates Repository `schleim-os-cloud`.
 - **Cloud-Sicherung:** Die Sicherung und Wiederherstellung findest du ausschließlich unter **Einstellungen → Schleim-Konto**. Gesichert werden die gespeicherten Schleim-OS-Einstellungen, die App-Reihenfolge, installierte Store-Apps und das Hintergrundbild. Es gibt keine automatische Synchronisierung bei jeder Änderung. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
+- **Updates:** Unter **Einstellungen → Schleim OS aktualisieren** kannst du die GitHub-Version prüfen und die neueste ZIP-Datei herunterladen. Die abschließende Installation erfolgt über die vom Browser unterstützte Import- oder Aktualisierungsfunktion. [Update-Anleitung](docs/Deutsch/UPDATES.md).
 
 # 🛠️ Schleim OS – Fehlerbehebung
 
@@ -119,11 +121,12 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 - [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
 - [Schleim-Konto und Cloud-Sicherung](extension/docs/SCHLEIM-KONTO.md)
 - [Store-Anleitung](Store/Deutsch/README.md)
+- [Update-Anleitung](docs/Deutsch/UPDATES.md)
 - [Dokumentationsübersicht – alle Sprachen](docs/README.md)
 
 ## 📖 Dokumentation in Leichter Sprache
 
-Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md). Eine leicht verständliche Erklärung zur [Anmeldung und Cloud-Sicherung](docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md) gibt es ebenfalls.
+Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md). Eine leicht verständliche Erklärung zur [Anmeldung und Cloud-Sicherung](docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md) sowie zum [Aktualisieren](docs/Leichte-Sprache/Deutsch/UPDATES.md) gibt es ebenfalls.
 
 ## 📁 Projektstruktur
 
@@ -164,7 +167,8 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 │   │   ├── app.js
 │   │   ├── personalization.js
 │   │   ├── schleim-account.js
-│   │   └── slime-store-admin.js
+│   │   ├── slime-store-admin.js
+│   │   └── update-center.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
 │   ├── manifest.json
