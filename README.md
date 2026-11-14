@@ -117,11 +117,13 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 - [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
 - [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
+- [Schleim-Konto und Cloud-Sicherung](extension/docs/SCHLEIM-KONTO.md)
+- [Store-Anleitung](Store/Deutsch/README.md)
 - [Dokumentationsübersicht – alle Sprachen](docs/README.md)
 
 ## 📖 Dokumentation in Leichter Sprache
 
-Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md).
+Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md). Eine leicht verständliche Erklärung zur [Anmeldung und Cloud-Sicherung](docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md) gibt es ebenfalls.
 
 ## 📁 Projektstruktur
 
@@ -131,6 +133,9 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 │   ├── ISSUE_TEMPLATE/
 │   └── workflows/
 ├── Store/
+│   ├── Deutsch/
+│   ├── Englisch/
+│   ├── Niederländisch/
 │   ├── ai/
 │   ├── communication/
 │   ├── knowledge/
