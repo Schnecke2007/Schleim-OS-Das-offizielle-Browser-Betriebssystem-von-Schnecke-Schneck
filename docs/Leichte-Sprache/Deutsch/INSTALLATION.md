@@ -41,4 +41,14 @@ Wenn Schleim OS nicht erscheint, prüfe, ob die Erweiterung eingeschaltet ist.
 Die Schaltfläche kann in jedem Browser anders heißen.
 Der ZIP-Import funktioniert nur in Browsern, die diese Funktion anbieten.
 
+## Den Schleim-Store benutzen
+
+Für den Schleim-Store brauchst du ein Schleim-Konto.
+Öffne den Store und tippe auf **Mit GitHub verbinden**.
+Installiere zuerst die GitHub-App **Schleim OS Account**.
+Kehre danach zu Schleim OS zurück und tippe auf **Ich habe die App installiert – weiter**.
+Folge den Schritten mit dem Gerätecode.
+
+[Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
+
 [Hilfe und Fehlerbehebung](HILFE.md) · [Normale Installationsanleitung](../../Deutsch/INSTALLATION.md)
