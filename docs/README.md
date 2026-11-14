@@ -7,9 +7,10 @@ Die Dokumentation ist nach Sprache geordnet. Für jede Sprache stehen eine Insta
 - [Installationsanleitung](Deutsch/INSTALLATION.md)
 - [Fehlerbehebung](Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](Deutsch/TECHNISCHE-HINWEISE.md)
-- [JSON-Backup: Homescreen exportieren und importieren](Deutsch/JSON-BACKUP.md)
-- [JSON backup guide](Englisch/JSON-BACKUP.md)
-- [JSON-back-up handleiding](Niederländisch/JSON-BACKUP.md)
+- [Schleim-Konto und GitHub-Cloud-Sicherung](../extension/docs/SCHLEIM-KONTO.md)
+- [Hinweis zu älteren JSON-Backups – Deutsch](Deutsch/JSON-BACKUP.md)
+- [Notice about legacy JSON backups – English](Englisch/JSON-BACKUP.md)
+- [Informatie over oudere JSON-back-ups – Nederlands](Niederländisch/JSON-BACKUP.md)
 
 ## 🇬🇧 English
 
