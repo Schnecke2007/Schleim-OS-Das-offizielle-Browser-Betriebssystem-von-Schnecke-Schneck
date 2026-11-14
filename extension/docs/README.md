@@ -8,12 +8,12 @@ Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen
 - Werbefreie Extension-Oberfläche ohne Werbe-IFrames
 - Kein Werbe-URL-Aufruf, keine Werbeprüfung und keine Werbe-Start-Sperre
 - Freies Umordnen sämtlicher Homescreen-Kacheln per Ziehen (Desktop und Touch)
-- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung bleibt lokal und wird über das manuelle JSON-Backup übertragen
+- Persistente Reihenfolge in `ssos-personalization-v1.homeOrder`; die Personalisierung bleibt lokal und kann über das Schleim-Konto in einem privaten GitHub-Repository gesichert werden
 - Schleim-Store mit Suche, Empfehlungen, App-Installation und Deinstallation; ohne GitHub-Anmeldung nutzbar
-- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und manuelles JSON-Backup mit Export und Import
+- HEX-Akzentfarbe, Wallpaper, Sperrbildschirm und Cloud-Sicherung mit dem Schleim-Konto
 - Deutsch, Englisch und Niederländisch
 
-Schleim OS speichert Einstellungen lokal. Im Einstellungsbereich kannst du den Homescreen als JSON-Datei exportieren und später wieder importieren. Es gibt keine automatische Cloud- oder Browser-Synchronisierung. Details: [JSON-Backup](../../docs/Deutsch/JSON-BACKUP.md).
+Schleim OS hält aktive Einstellungen lokal im Browser. Über das **Schleim-Konto** verbindest du GitHub, erstellst ein privates Repository `schleim-os-cloud` und kannst deine Daten manuell in die Cloud sichern oder wiederherstellen. Eine Sicherung bei jeder Änderung findet nicht automatisch statt. Details: [Schleim-Konto einrichten](SCHLEIM-KONTO.md).
 
 ## Installation
 
