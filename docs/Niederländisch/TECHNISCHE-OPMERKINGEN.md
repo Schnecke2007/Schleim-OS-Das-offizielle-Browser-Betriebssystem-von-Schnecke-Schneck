@@ -1,4 +1,4 @@
-# 🧩 Schleim OS – Technische opmerkingen · Versie 3.11.0
+# 🧩 Schleim OS – Technische opmerkingen · Versie 3.12.0
 
 ## Platform en extensieformaat
 
