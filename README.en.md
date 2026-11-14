@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.9.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -37,7 +37,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Schleim-Store with recommendations, categories, search, installation and removal of web apps
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store is available without GitHub sign-in
-- Manual JSON backup: export home screen settings and import them again when needed
+- Schleim account with GitHub sign-in and private cloud backup of the home screen
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
@@ -75,11 +75,11 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **JSON backup:** Open Settings and select **Export home screen** to download a JSON file. Use **Import home screen** to restore it later or transfer it to another device. Transfer is manual. See the [JSON backup guide](docs/Englisch/JSON-BACKUP.md).
+- **Schleim account:** Connect your GitHub account through GitHub's official device authorization. Schleim OS then creates the private `schleim-os-cloud` repository. Use **Back up to cloud now** and **Restore cloud backup** to save or restore your settings on another device. See the [Schleim account setup guide](extension/docs/SCHLEIM-KONTO.md).
 
-The JSON backup is created locally and is not uploaded automatically. Transfer the file yourself when moving settings to another device.
+The cloud backup is stored in your private GitHub repository. GitHub access tokens and passwords are never written into the backup file.
 
-Schleim OS keeps settings locally in each browser. Use the JSON backup to move settings between devices; nothing is uploaded automatically.
+Schleim OS keeps its working settings locally in the browser and uses the private GitHub repository for manual cloud backups and restores.
 
 # 🛠️ Schleim OS – Troubleshooting
 
@@ -94,7 +94,7 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
 | **External content is missing or remains blank.** | Check your internet connection. Some providers block their pages from being embedded on other websites. |
-| **Settings are missing after switching browsers.** | Settings are stored locally in each browser. Export a JSON backup on the old device and import it in the new browser through **Settings → Import home screen**. |
+| **Settings are missing after switching browsers.** | Sign in with the same GitHub account and choose **Restore cloud backup**. |
 | **Installation does not work in Chrome for Android.** | Chrome for Android does not support regular Chrome extensions. Use an Android browser that supports extensions and direct ZIP import. |
 
 ## Need more help?
