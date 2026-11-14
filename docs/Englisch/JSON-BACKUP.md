@@ -1,29 +1,23 @@
-# JSON backup for Schleim OS
+# Cloud backup with the Schleim account
 
-Schleim OS stores your personalization locally in the browser. It does not perform automatic cloud or browser synchronization. Use the JSON file to back up your settings manually and restore them on the same or another device.
+> **Note about older versions:** The local JSON import/export feature was replaced by the Schleim account in Schleim OS 3.10.0. This page is now a notice for JSON backup files created by older versions.
 
-## Export a backup
+## Create a new backup
 
-1. Open **Settings** in Schleim OS.
-2. Scroll to **Configuration file (JSON)**.
-3. Select **Export home screen**.
-4. The file `schnecke-schneck-homescreen-YYYY-MM-DD.json` is downloaded. Keep it somewhere safe.
+1. Set up the GitHub App first. See [Set up the Schleim account](../../extension/docs/SCHLEIM-KONTO.md).
+2. Open the **Schleim Store** or **Settings**.
+3. In the **Schleim account** section, choose **Connect with GitHub**.
+4. Confirm the one-time device code directly on GitHub.
+5. Select **Back up to cloud now**.
 
-The export contains saved Schleim OS settings with the `ssos-` prefix, including custom website tiles, tile order, design, accent color, wallpaper, lock-screen settings and installed Store apps. Locally stored wallpaper images can make the JSON file larger.
+Schleim OS creates or updates `schleim-os-backup.json` in your private GitHub repository named `schleim-os-cloud`.
 
-## Import a backup
+## Restore on another device
 
-1. Open Schleim OS on the target device and go to **Settings**.
-2. Scroll to **Configuration file (JSON)**.
-3. Select **Import home screen**.
-4. Choose the JSON file you exported earlier.
-5. Confirm the import. Schleim OS then reloads the interface.
+Sign in to the Schleim account on that device with the same GitHub account, then choose **Restore cloud backup**. The current device's settings will be replaced with the saved backup.
 
-Importing replaces the settings contained in the backup on the target device. Export the target device's current settings first if you need to keep them.
+## Older JSON files
 
-## Important
+JSON files exported by earlier Schleim OS versions can no longer be imported through the interface in version 3.10.0. Keep existing files separately. Older files are not automatically migrated to the cloud.
 
-- The backup is not uploaded or transferred automatically.
-- To move to another device, transfer the JSON file yourself.
-- The JSON file may contain personal website shortcuts and custom settings. Share it only with people you trust.
-- The Schleim-Store remains available without sign-in.
+**Security:** The cloud repository must remain private. Schleim OS never stores passwords or access tokens in the backup file.
