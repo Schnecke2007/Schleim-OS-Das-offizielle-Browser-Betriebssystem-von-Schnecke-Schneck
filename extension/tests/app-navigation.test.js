@@ -70,6 +70,8 @@ test('Photo cloud uses a separate private repository and the existing Schleim ac
 });
 
 test('Media uploads use date folders, metadata and a bounded file size', () => {
+  assert.doesNotMatch(photosCloudSource, /\\\\n\\s+async function getCaptureDate/);
+  assert.match(photosCloudSource, /\\n  async function getCaptureDate/);
   assert.match(photosCloudSource, /MAX_FILE_BYTES = 50 \* 1024 \* 1024/);
   assert.match(photosCloudSource, /const folder = type === 'video' \? 'Videos' : 'Fotos'/);
   assert.match(photosCloudSource, /year \+ '\/' \+ year \+ '-' \+ month/);
