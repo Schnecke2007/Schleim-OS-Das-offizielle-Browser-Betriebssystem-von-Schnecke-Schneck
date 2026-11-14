@@ -19,7 +19,7 @@
       save:'Jetzt in der Cloud sichern', restore:'Cloud-Sicherung wiederherstellen', logout:'Abmelden',
       notConfigured:'Die Schleim-OS-GitHub-App ist noch nicht eingerichtet. Die Client-ID fehlt.',
       setup:'GitHub-App einrichten', setupNote:'Die App muss Device Flow aktivieren und die Berechtigungen aus der Einrichtungsanleitung besitzen.',
-      device:'Öffne GitHub und gib diesen einmaligen Code ein:', openGitHub:'GitHub-Gerätefreigabe öffnen', waiting:'Warte auf die Bestätigung bei GitHub …',
+      device:'Öffne GitHub und gib diesen einmaligen Code ein:', openGitHub:'GitHub-Gerätefreigabe öffnen', cancel:'Abbrechen', waiting:'Warte auf die Bestätigung bei GitHub …',
       created:'Schleim-Konto verbunden. Dein privates Backup-Repository ist bereit.',
       saved:'Cloud-Sicherung erfolgreich gespeichert.', restored:'Cloud-Sicherung geladen. Schleim OS wird neu gestartet …',
       confirmRestore:'Die lokale Schleim-OS-Konfiguration wird durch die Cloud-Sicherung ersetzt. Fortfahren?',
@@ -44,7 +44,7 @@
       save:'Back up to cloud now', restore:'Restore cloud backup', logout:'Sign out',
       notConfigured:'The Schleim OS GitHub App has not been configured yet. The client ID is missing.',
       setup:'Set up GitHub App', setupNote:'The app must enable Device Flow and have the permissions listed in the setup guide.',
-      device:'Open GitHub and enter this one-time code:', openGitHub:'Open GitHub device authorization', waiting:'Waiting for confirmation on GitHub …',
+      device:'Open GitHub and enter this one-time code:', openGitHub:'Open GitHub device authorization', cancel:'Cancel', waiting:'Waiting for confirmation on GitHub …',
       created:'Schleim account connected. Your private backup repository is ready.',
       saved:'Cloud backup saved successfully.', restored:'Cloud backup restored. Schleim OS is restarting …',
       confirmRestore:'Your local Schleim OS configuration will be replaced with the cloud backup. Continue?',
@@ -69,7 +69,7 @@
       save:'Nu opslaan in de cloud', restore:'Cloudback-up herstellen', logout:'Afmelden',
       notConfigured:'De Schleim OS GitHub-app is nog niet ingesteld. De client-ID ontbreekt.',
       setup:'GitHub-app instellen', setupNote:'De app moet Device Flow inschakelen en de machtigingen uit de installatiehandleiding hebben.',
-      device:'Open GitHub en voer deze eenmalige code in:', openGitHub:'GitHub-apparaatmachtiging openen', waiting:'Wachten op bevestiging bij GitHub …',
+      device:'Open GitHub en voer deze eenmalige code in:', openGitHub:'GitHub-apparaatmachtiging openen', cancel:'Annuleren', waiting:'Wachten op bevestiging bij GitHub …',
       created:'Schleim-account verbonden. Je privéback-uprepository is klaar.',
       saved:'Cloudback-up succesvol opgeslagen.', restored:'Cloudback-up hersteld. Schleim OS wordt opnieuw gestart …',
       confirmRestore:'Je lokale Schleim OS-configuratie wordt vervangen door de cloudback-up. Doorgaan?',
@@ -159,7 +159,7 @@
         '<div class="ssos-cloud-device-code">'+esc(deviceFlow.userCode)+'</div>'+
         '<a class="app-button" href="'+esc(deviceFlow.verificationUri)+'" target="_blank" rel="noopener noreferrer">'+esc(t('openGitHub'))+' ↗</a>'+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite">'+esc(t('waiting'))+'</p>'+
-        '<button class="app-button secondary" type="button" data-ssos-cloud-cancel>Abbrechen</button></div>';
+        '<button class="app-button secondary" type="button" data-ssos-cloud-cancel>'+esc(t('cancel'))+'</button></div>';
       return;
     }
     if (!session?.user) {
@@ -254,7 +254,7 @@
         deviceFlow=null;mountPanels();setStatus(t('expired'),true);
       }
     } catch (error) {
-      deviceFlow=null;mountPanels();setStatus(error.message||t('authError'),true);
+      deviceFlow=null;session=null;storageRemove().catch(()=>{});mountPanels();setStatus(error.status===403?t('repoPermission'):(error.message||t('authError')),true);
     } finally {
       polling=false;
     }
@@ -460,7 +460,10 @@
       if(action){event.preventDefault();handleAction(action);}
     });
     if(document.body&&!observer){
-      observer=new MutationObserver(()=>mountPanels());
+      observer=new MutationObserver(records=>{
+        const addedPanel=records.some(record=>[...record.addedNodes].some(node=>node.nodeType===1&&(node.matches?.('[data-ssos-cloud-account]')||node.querySelector?.('[data-ssos-cloud-account]'))));
+        if(addedPanel)mountPanels();
+      });
       observer.observe(document.body,{childList:true,subtree:true});
     }
   }
