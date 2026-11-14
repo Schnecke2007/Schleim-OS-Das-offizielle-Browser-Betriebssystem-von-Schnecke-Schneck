@@ -23,9 +23,10 @@ So meldest du dich an:
 5. Gehe zurück zu Schleim OS.
 6. Tippe auf **Ich habe die App installiert – weiter**.
 7. Schleim OS zeigt einen Code.
-8. Der Code wird nach kurzer Zeit kopiert.
-9. Die GitHub-Seite zum Eingeben des Codes öffnet sich.
-10. Gib den Code bei GitHub ein und bestätige die App.
+8. Schleim OS versucht, den Code nach kurzer Zeit zu kopieren.
+9. Wenn das nicht klappt, tippe auf **Code kopieren**.
+10. Die GitHub-Seite zum Eingeben des Codes öffnet sich.
+11. Gib den Code bei GitHub ein und bestätige die App.
 
 Du kannst den Code auch selbst kopieren.
 
