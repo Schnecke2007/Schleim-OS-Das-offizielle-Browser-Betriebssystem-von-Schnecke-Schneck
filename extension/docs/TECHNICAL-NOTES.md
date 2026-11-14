@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.12.0
+# Technische Hinweise – Version 3.13.0
 
 ## Plattform und Erweiterungsformat
 
@@ -14,6 +14,8 @@
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
+- `scripts/sonos-app.js` stellt die native Sonos-Oberfläche mit OAuth-Sitzung, Lautsprecher-/Gruppenauswahl, Wiedergabesteuerung und Favoriten-/Playlist-Start bereit.
+- `../integrations/sonos-worker/src/index.js` ist die serverseitige OAuth- und Control-API-Bridge. Sonos-Client-Secret sowie Access-/Refresh-Tokens verbleiben auf dem Server.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
 - `locales/legal-translations.js` enthält Übersetzungen der Rechtstexte. Die übrigen Oberflächentexte werden über Sprachwörterbücher in den JavaScript-Dateien gepflegt.
@@ -48,6 +50,10 @@ Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Oh
 Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig über `raw.githubusercontent.com`. Er vergleicht ausschließlich die numerische Manifest-Version. Bei einer höheren GitHub-Version wird der Download des vollständigen Repository-Archivs angeboten. Der Download wird durch eine direkte Benutzeraktion geöffnet. Das Skript ersetzt keine Erweiterungsdateien und installiert keine Pakete. Für die Installation ist die vom Browser erlaubte Import- oder Update-Funktion notwendig.
 
 `chrome.runtime.requestUpdateCheck()` wird bewusst nicht verwendet: Diese API fragt den Update-Kanal der installierten Erweiterung ab und ist kein allgemeiner GitHub-ZIP-Installer. Siehe [Chrome Update Lifecycle](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle).
+
+## Sonos-Integration
+
+Die Sonos-App verwendet die offizielle Sonos Control API über einen separat bereitzustellenden Cloudflare Worker. Die Anmeldung erfolgt per OAuth Authorization Code Flow. Der Worker speichert Sonos-Tokens in einem privaten KV-Namespace und stellt der Erweiterung nur eine zufällige Sitzungskennung bereit. `sonosControlConfig` wird lokal gespeichert und nicht in das Schleim-Cloud-Backup aufgenommen. Eine Anleitung für Sonos Developer Integration, Cloudflare Worker und KV steht in `SONOS-APP.md`. Texteingaben können gespeicherte Sonos-Favoriten und Playlists finden und starten; eine universelle Musiksuche über beliebige verbundene Dienste wird von der Control API für Drittanbieter nicht allgemein angeboten.
 
 ## Werbung und externe Verbindungen
 
