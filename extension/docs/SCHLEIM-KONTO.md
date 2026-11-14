@@ -64,7 +64,7 @@ Bei **Abmelden** entfernt Schleim OS die lokal gespeicherten Anmeldetokens. Dadu
 Das Repository muss privat bleiben. Schleim OS verweigert das Speichern, wenn das Repository öffentlich ist.
 
 
-## 4. Anmeldung für den Schleim-Store
+## 6. Anmeldung für den Schleim-Store
 
 Der Schleim-Store innerhalb von Schleim OS ist nur verfügbar, wenn ein Schleim-Konto angemeldet ist. Ohne aktive Anmeldung bleiben Katalog, Kategorien, Bewertungen, Installations- und Vorschlagsfunktionen gesperrt. Nach der Anmeldung wird der Store automatisch freigeschaltet; beim Abmelden wird er wieder gesperrt.
 
