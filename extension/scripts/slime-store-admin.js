@@ -114,7 +114,7 @@
       '- Die App wird automatisch unter Store/<category>/<app-id>.json abgelegt.\n'+
       '- Die jeweilige Kategorie-README und diese Übersicht werden bei jeder Veröffentlichung aktualisiert.\n'+
       '- Der Laufzeitkatalog der Browser-Erweiterung bleibt extension/data/store-apps.json; er wird zusammen mit den Kategorie-Dateien in einem Commit aktualisiert.\n\n'+
-      '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Der Schleim-Store innerhalb von Schleim OS wird erst nach Anmeldung mit einem Schleim-Konto freigeschaltet. Die Katalogdateien dieses öffentlichen Repositorys bleiben direkt auf GitHub sichtbar. Diese Anmeldungssperre schützt daher die Store-Oberfläche, nicht die öffentlichen Repository-Dateien. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.\n';
+      '**Öffentlichkeit:** Alle Dateien in diesem Ordner sind öffentlich einsehbar. Der Schleim-Store innerhalb von Schleim OS wird erst nach Anmeldung mit einem Schleim-Konto freigeschaltet. Die Cloud-Sicherung befindet sich ausschließlich in den Einstellungen. Die Katalogdateien dieses öffentlichen Repositorys bleiben direkt auf GitHub sichtbar. Diese Anmeldungssperre schützt daher die Store-Oberfläche, nicht die öffentlichen Repository-Dateien. Keine Tokens, Passwörter oder privaten Sicherungsdaten hier ablegen.\n';
   }
   async function commitStoreFiles(files,message,expectedParentSha){
     const ref=await api('/git/ref/heads/'+BRANCH);
