@@ -75,7 +75,7 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Schleim-Konto:** Die Anmeldung startet mit der GitHub-App-Seite. Nach der Installation bestätigst du sie in Schleim OS. Der Gerätecode wird angezeigt, automatisch kopiert und die GitHub-Gerätefreigabe geöffnet. Nach der Bestätigung prüft Schleim OS die App-Installation und erstellt bei Bedarf dein privates Repository `schleim-os-cloud`.
+- **Schleim-Konto:** Die Anmeldung startet mit der GitHub-App-Seite. Nach der Installation bestätigst du sie in Schleim OS. Der Gerätecode wird angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung automatisch zu kopieren. Falls das nicht möglich ist, kannst du ihn manuell kopieren. Danach öffnet sich die GitHub-Gerätefreigabe. Nach der Bestätigung prüft Schleim OS die App-Installation und erstellt bei Bedarf dein privates Repository `schleim-os-cloud`.
 - **Cloud-Sicherung:** Die Sicherung und Wiederherstellung findest du ausschließlich unter **Einstellungen → Schleim-Konto**. Gesichert werden die gespeicherten Schleim-OS-Einstellungen, die App-Reihenfolge, installierte Store-Apps und das Hintergrundbild. Es gibt keine automatische Synchronisierung bei jeder Änderung. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
 
 # 🛠️ Schleim OS – Fehlerbehebung
