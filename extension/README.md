@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.13.4 · Chromium-Erweiterung · Manifest V3**
+**Version 3.13.5 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -24,7 +24,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Kacheln per Maus oder Touch neu anordnen
 - Personalisierung von Akzentfarbe, Hintergrund und Sperrbildschirm
 - Schleim-Store mit Kategorien, Suche, Empfehlungen, Bewertungen und App-Vorschlägen
-- Sonos-Einstieg zur offiziellen Sonos-Websteuerung – ohne API-Schlüssel, Developer-Integration oder Cloudflare-Bridge
+- Eingebettete Sonos-Web-App mit 1280-Pixel-Desktop-Viewport und optionaler Skalierung (Sonos-Frame-Richtlinien können Einbettung begrenzen)
 - Store-Zugriff nur nach Anmeldung mit einem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsprüfung und Gerätecode
 - Update-Center: GitHub-Version prüfen und aktuelle Repository-ZIP herunterladen; die Browser-Installation bleibt ein bestätigter manueller Schritt
