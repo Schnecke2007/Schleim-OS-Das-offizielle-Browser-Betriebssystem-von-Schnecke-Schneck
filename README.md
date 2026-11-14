@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.10.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.11.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -36,7 +36,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Personalisierung von Design, Akzentfarbe und Hintergrund
 - Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
-- Schleim-Store ohne GitHub-Anmeldung nutzbar
+- Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
@@ -44,7 +44,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 
 ## 🛍️ Der Schleim-Store
 
-Der **Schleim-Store** ist ohne GitHub-Anmeldung nutzbar. Du kannst Webseiten und Web-Apps entdecken, bewerten sowie auf dem Startbildschirm installieren oder entfernen. Da das Projekt-Repository öffentlich ist, können die Katalogdateien außerdem direkt auf GitHub eingesehen werden.
+Der **Schleim-Store** ist nur nach einer Anmeldung mit dem Schleim-Konto verfügbar. Ohne Anmeldung bleiben App-Katalog, Suche, Bewertungen, Installationen und Vorschläge gesperrt. Nach erfolgreicher Anmeldung wird der Store freigeschaltet. Die Katalogdateien im öffentlichen GitHub-Repository bleiben unabhängig davon direkt auf GitHub einsehbar.
 
 - **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
 - **Installieren:** Eine App wird als Kachel hinzugefügt und öffnet die zugehörige Webseite in einem neuen Browser-Tab.
@@ -55,7 +55,7 @@ Der **Schleim-Store** ist ohne GitHub-Anmeldung nutzbar. Du kannst Webseiten und
 
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
-**Transparenz:** Das GitHub-Repository und die App-Vorschläge als Issues sind öffentlich einsehbar. Reiche deshalb keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Der Schleim-Store ist ohne Anmeldung nutzbar; die Katalogdateien in diesem öffentlichen Repository sind auch direkt auf GitHub einsehbar.
+**Transparenz:** Das GitHub-Repository, der Store-Katalog, Bewertungen und App-Vorschläge als Issues sind öffentlich einsehbar. Reiche dort keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Anmeldung schützt die Store-Oberfläche in Schleim OS, nicht die Dateien im öffentlichen Repository.
 
 ## 📥 Download und Installation
 
@@ -75,9 +75,8 @@ Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichn
 - **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
 - **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
 - **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Schleim-Konto:** Verbinde dein GitHub-Konto über die offizielle GitHub-Gerätefreigabe. Schleim OS erstellt anschließend das private Repository `schleim-os-cloud`. Über **Jetzt in der Cloud sichern** und **Cloud-Sicherung wiederherstellen** kannst du deine Einstellungen speichern oder auf einem anderen Gerät zurückholen. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
-
-Die JSON-Sicherung wird lokal erstellt und nicht automatisch hochgeladen. Übertrage die Datei selbst auf ein anderes Gerät und importiere sie dort über die Einstellungen.
+- **Schleim-Konto:** Die Anmeldung startet mit der GitHub-App-Seite. Nach der Installation bestätigst du sie in Schleim OS. Der Gerätecode wird angezeigt, automatisch kopiert und die GitHub-Gerätefreigabe geöffnet. Nach der Bestätigung prüft Schleim OS die App-Installation und erstellt bei Bedarf dein privates Repository `schleim-os-cloud`.
+- **Cloud-Sicherung:** Die Sicherung und Wiederherstellung findest du ausschließlich unter **Einstellungen → Schleim-Konto**. Gesichert werden die gespeicherten Schleim-OS-Einstellungen, die App-Reihenfolge, installierte Store-Apps und das Hintergrundbild. Es gibt keine automatische Synchronisierung bei jeder Änderung. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
 
 # 🛠️ Schleim OS – Fehlerbehebung
 
@@ -92,7 +91,7 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
 | **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Melde dich in Schleim OS mit demselben GitHub-Konto an und wähle **Cloud-Sicherung wiederherstellen**. |
+| **Einstellungen fehlen nach einem Browserwechsel.** | Öffne **Einstellungen → Schleim-Konto**, melde dich mit demselben GitHub-Konto an und wähle **Cloud-Sicherung wiederherstellen**. |
 | **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
 
 ## Weitere Hilfe
