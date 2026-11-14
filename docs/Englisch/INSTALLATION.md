@@ -1,33 +1,44 @@
 # 📥 Schleim OS – Installation Guide
 
-This guide explains how to install Schleim OS in supported Chromium-based browsers on Android and desktop. Your browser must provide a direct ZIP-file import option in its extension manager.
+This guide explains how to install the extension in a Chromium-based browser that supports direct ZIP-extension import. This feature is not available in every browser or on every platform.
 
 ## 1. Download the complete GitHub repository
 
 1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Click the green **Code** button near the top.
-3. Select **Download ZIP**.
-4. Save the ZIP archive to your device.
+2. Select **Code → Download ZIP**.
+3. Save the complete repository on your device.
 
-Make sure to download the **entire repository**. The browser extension is located in its `extension` subfolder. Keep the ZIP archive as it is – do **not** extract it.
+## 2. Import the repository ZIP in your browser
 
-## 2. Install the repository ZIP directly in your Chromium browser
-
-1. Open the extension manager of your supported Chromium-based browser.
+1. Open the extension manager in a supported Chromium-based browser.
 2. Enable **Developer mode** if required.
-3. Find the button for importing an extension file. It may be labelled **“From .zip/.crx/.user.js”**.
-4. Tap or click that button.
-5. Select the **complete GitHub repository ZIP** you downloaded – not individual files and not an extracted folder.
-6. The browser processes the ZIP archive and should detect the extension in the `extension` subfolder. Follow the displayed prompts and confirm the installation.
+3. Find the direct ZIP-extension import option. It may be called **“From .zip/.crx/.user.js”**.
+4. Select the complete repository ZIP.
+5. Confirm the import.
 
-> 💡 **Important:** The ZIP file is imported directly from GitHub into the browser. Extracting it beforehand is not part of this installation process.
+**Important:** Do not extract the ZIP file before importing it. The browser must detect the extension in the `extension` subfolder.
 
-> 📱 **Android and desktop:** These instructions apply to supported Chromium-based browsers on both platforms. The exact button label and location may vary by browser and device. The browser must provide ZIP import support.
+## 3. Start Schleim OS
 
-## 3. After installation
+Open a new browser tab. If Schleim OS does not appear, check that the extension is installed and enabled.
 
-Open a new browser tab. If Schleim OS does not appear, check the extension manager to make sure the extension was installed successfully and is enabled. For further help, see the [troubleshooting guide](TROUBLESHOOTING.md).
+## 4. First use of the Schleim-Store
+
+The Schleim-Store is available only after you sign in with a Schleim account.
+
+1. Open the Schleim-Store and select **Connect with GitHub**.
+2. Schleim OS first opens the [Schleim OS Account GitHub App page](https://github.com/apps/schleim-os-account).
+3. Install the app for your GitHub account.
+4. Return to Schleim OS and select **I installed the app – continue**.
+5. Follow the device-code screen. Schleim OS copies the code after a short delay and then opens GitHub device authorization.
+6. Approve the app on the real GitHub page.
+
+After authorization, Schleim OS checks whether the app installation is detected. See the [Schleim account guide](../../extension/docs/SCHLEIM-KONTO.md) for details.
+
+## 5. Cloud backup
+
+Cloud backup is available only under **Settings → Schleim account**. You can manually save or restore a backup there. It also includes the home-screen app order, installed Store apps and your wallpaper.
 
 ---
 
-[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md)
+[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md) · [Troubleshooting](TROUBLESHOOTING.md)
