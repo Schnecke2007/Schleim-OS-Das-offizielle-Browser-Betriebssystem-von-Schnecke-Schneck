@@ -31,6 +31,12 @@ Du kannst die Standalone-Demo in einem neuen Browser-Tab öffnen:
 
 Die Demo ist eine einzelne HTML-Datei. Sie ist zum Ausprobieren da. Sie installiert keine Browser-Erweiterung.
 
+## Updates
+
+Du kannst in den Einstellungen nach neuen Versionen suchen.
+
+[Updates einfach erklärt](UPDATES.md)
+
 ## Die Erweiterung installieren
 
 Lade zuerst die vollständige ZIP-Datei von GitHub herunter. Entpacke die Datei nicht. Danach importierst du die ZIP-Datei in einem Browser, der diesen Import unterstützt.
