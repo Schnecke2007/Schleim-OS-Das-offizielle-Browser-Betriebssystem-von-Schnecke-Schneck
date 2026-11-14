@@ -1,33 +1,49 @@
-# 🧩 Schleim OS – Technische Hinweise
+# 🧩 Schleim OS – Technische Hinweise · Version 3.11.0
 
 ## Plattform und Erweiterungsformat
 
-- **Plattform:** Chromium-basierte Browser
+- **Plattform:** Chromium-basierte Browser mit Erweiterungsunterstützung
 - **Erweiterungsformat:** Manifest V3
 - **Haupteinstiegspunkt:** `pages/newtab.html`
 - **Neuer-Tab-Überschreibung:** `chrome_url_overrides.newtab`
 
-## Installation
-
-Die dokumentierte Installation verwendet den direkten Import des vollständigen GitHub-Repository-ZIP über die ZIP-Importfunktion eines unterstützten Chromium-Browsers. Das Archiv enthält die Erweiterung im Unterordner `extension` und wird vor dem Import nicht entpackt. Die Importfunktion ist browser- und plattformabhängig.
-
 ## Projektdateien
 
-- **Lokale Oberflächen-Skripte:** `scripts/app.js` und `scripts/personalization.js`
+- **Oberfläche und Navigation:** `scripts/app.js`
+- **Personalisierung und Schleim-Store:** `scripts/personalization.js`
+- **GitHub-Anmeldung und Cloud-Sicherung:** `scripts/schleim-account.js`
+- **Store-Admin-Portal:** `scripts/slime-store-admin.js`
 - **Stylesheets:** `styles/main.css` und `styles/personalization.css`
-- **Sprach- und Rechtstext-Übersetzungen:** `locales/legal-translations.js`
-- **Standalone-Version:** `standalone/schleim-os-standalone.html`
+- **Rechtstext-Übersetzungen:** `locales/legal-translations.js`
+- **Standalone-Demo:** `standalone/schleim-os-standalone.html`
 
-## Speicherung und Sicherungen
+## Installation
 
-Schleim OS hält die aktiven Personalisierungsdaten lokal im Browser. Über das **Schleim-Konto** kannst du dich mit GitHub verbinden, ein privates Repository `schleim-os-cloud` erstellen lassen und eine Sicherung manuell hochladen oder wiederherstellen. Es findet keine automatische Synchronisierung bei jeder Änderung statt. Details: [Schleim-Konto](../../extension/docs/SCHLEIM-KONTO.md).
-## Werbung und externe Verbindungen
+Die dokumentierte Installation importiert die vollständige Repository-ZIP direkt in einem unterstützten Chromium-Browser. Das Archiv enthält die Erweiterung im Unterordner `extension` und wird vor dem Import nicht entpackt. Die ZIP-Importfunktion ist browser- und plattformabhängig.
 
-Die Erweiterungsoberfläche ist werbefrei. Sie enthält keine Werbe-IFrames, keine Prüfung der Erreichbarkeit von Werbung und keine werbebedingte Start-Sperre. Externe Apps und Websites können weiterhin Netzwerkverbindungen herstellen, wenn du sie öffnest.
+## Speicherung und Cloud-Sicherung
+
+Schleim OS speichert aktive Einstellungen lokal im Browserprofil. Die Cloud-Sicherung wird manuell unter **Einstellungen → Schleim-Konto** gestartet oder wiederhergestellt. Es gibt keine automatische Synchronisierung nach jeder Änderung.
+
+Das Backup-Format 2 enthält die gespeicherten `ssos-` Einstellungen und ausdrücklich:
+- die Reihenfolge der App-Kacheln (`ssos-personalization-v1.homeOrder`),
+- installierte Store-Apps (`ssos-store-v1.installed`),
+- die System-Hintergrundauswahl (`ssos-wallpaper`),
+- ein eigenes Hintergrundbild und seine Bilddaten bzw. URL.
+
+Format-1-Backups können weiterhin wiederhergestellt werden. Die frühere lokale JSON-Import-/Export-Funktion ist nicht mehr Teil der Benutzeroberfläche.
+
+## Schleim-Store und Anmeldung
+
+Der Schleim-Store ist nur mit einem angemeldeten Schleim-Konto verfügbar. Die Store-Oberfläche prüft die authentifizierte Sitzung. Beim Abmelden werden Store-Inhalte und installierte Store-Kacheln gesperrt bzw. ausgeblendet. Die Dateien im öffentlichen GitHub-Store-Katalog bleiben direkt auf GitHub sichtbar.
 
 ## Berechtigungen
 
-Optionale Host-Berechtigungen sind im Manifest deklariert und können von der Anwendung angefordert werden, wenn eine Funktion sie benötigt. Lies die Berechtigungsabfrage des Browsers sorgfältig, bevor du den Zugriff erlaubst.
+Das Manifest enthält unter anderem `storage` und `clipboardWrite`. Die Zwischenablage-Berechtigung wird für das automatische Kopieren des GitHub-Gerätecodes verwendet. Optionale Host-Berechtigungen können von der Anwendung angefordert werden, wenn eine Funktion sie benötigt. Lies Berechtigungsabfragen sorgfältig.
+
+## Werbung und externe Verbindungen
+
+Die Erweiterungsoberfläche enthält keine Werbe-IFrames, Werbe-URLs oder werbebedingte Start-Sperre. Externe Apps und Websites können Netzwerkverbindungen herstellen, wenn du sie öffnest.
 
 ---
 
