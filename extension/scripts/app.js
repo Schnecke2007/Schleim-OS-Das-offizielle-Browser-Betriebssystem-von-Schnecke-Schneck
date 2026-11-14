@@ -641,7 +641,7 @@
       }else{
         rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
       }
-      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore'||id==='sonos')?rendered:localize(rendered);
     }
     if(id==='sonos') window.SSOSSonosApp?.mount?.(els.appContent);
     $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
