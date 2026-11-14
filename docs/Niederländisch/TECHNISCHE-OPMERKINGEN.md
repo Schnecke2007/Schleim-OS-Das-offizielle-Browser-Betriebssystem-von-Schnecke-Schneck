@@ -20,8 +20,7 @@ De gedocumenteerde installatie gebruikt rechtstreekse import van de volledige Gi
 
 ## Opslag en back-ups
 
-Schleim OS slaat personalisatiegegevens lokaal op in de browser. Via **Instellingen → Configuratiebestand (JSON)** kun je het startscherm exporteren en later op hetzelfde of een ander apparaat importeren. Er vindt geen automatische cloud- of browsersynchronisatie plaats. Zie de [handleiding voor JSON-back-ups](JSON-BACKUP.md).
-
+Schleim OS bewaart actieve personalisatiegegevens lokaal in de browser. Met het **Schleim-account** kun je GitHub verbinden, een privérepository `schleim-os-cloud` laten maken en handmatig een back-up uploaden of herstellen. Wijzigingen worden niet na elke bewerking automatisch gesynchroniseerd. Zie de [installatiehandleiding voor het Schleim-account](../../extension/docs/SCHLEIM-KONTO.md).
 ## Reclame en externe verbindingen
 
 De extensie-interface is reclamevrij. De interface bevat geen advertentie-iframes, geen controles of advertenties bereikbaar zijn en geen opstartblokkering vanwege advertenties. Externe apps en websites kunnen nog steeds netwerkverzoeken uitvoeren wanneer de gebruiker ze opent.
