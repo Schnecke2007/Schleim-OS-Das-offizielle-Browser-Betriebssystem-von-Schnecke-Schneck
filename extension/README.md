@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck 🐌
 
-**Version 3.9.1 · Chrome-/Chromium-Erweiterung**
+**Version 3.10.0 · Chrome-/Chromium-Erweiterung**
 
 **Manifest V3 · Chromium · werbefreie Extension-Oberfläche · frei sortierbarer Homescreen**
 
@@ -24,7 +24,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen können. Di
 - `scripts/app.js` – Apps, Navigation und Rechtliches
 - `scripts/personalization.js` – Store-Oberfläche, Personalisierung und Kachel-Anordnung
 - `scripts/slime-store-admin.js` – separates Admin-Portal zum Prüfen und Veröffentlichen von Store-Vorschlägen
-- JSON-Backup – manuelles Exportieren und Importieren der Personalisierung über die Einstellungen
+- `scripts/schleim-account.js` – GitHub-Anmeldung, privates Cloud-Repository sowie Cloud-Sicherung und -Wiederherstellung
 - `data/store-apps.json` und `data/store-ratings.json` – Store-Katalog und veröffentlichte Bewertungsstatistik; einzelne Stimmen und Feedbacktexte werden im Repository-Ordner `Bewertungen/` als JSON archiviert
 - `styles/` – Design, Personalisierung und Admin-Portal
 - `locales/` – Rechtstext-Übersetzungen
@@ -44,4 +44,4 @@ Die Chrome-Erweiterung lädt keine Werbeanzeigen. Es gibt keine Werbe-IFrames, k
 
 ## Speicherung
 
-Schleim OS speichert die Personalisierungsdaten lokal im Browserprofil. Im Einstellungsbereich kannst du den Homescreen als JSON-Datei exportieren und diese Datei später wieder importieren. Es gibt keine automatische Cloud- oder Browser-Synchronisierung. Eine Anleitung findest du unter [JSON-Backup](../docs/Deutsch/JSON-BACKUP.md).
+Schleim OS hält die aktiven Personalisierungsdaten lokal im Browserprofil. Über das **Schleim-Konto** kannst du dich mit GitHub verbinden, ein privates Repository `schleim-os-cloud` erstellen lassen und eine Sicherung manuell hochladen oder wiederherstellen. Die Anmeldung verwendet die offizielle GitHub-Gerätefreigabe; GitHub-Passwörter und Zugriffstokens werden niemals im Sicherungs-JSON abgelegt. Die GitHub-App muss einmalig konfiguriert werden. Anleitung: [Schleim-Konto einrichten](docs/SCHLEIM-KONTO.md).
