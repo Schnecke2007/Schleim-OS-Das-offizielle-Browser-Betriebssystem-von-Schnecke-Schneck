@@ -1,6 +1,6 @@
 # Cloudback-up met het Schleim-account
 
-> **Opmerking over oudere versies:** De vorige lokale JSON-import- en exportfunctie is niet meer beschikbaar in de interface van Schleim OS 3.11.0. Deze pagina beschrijft de huidige cloudback-up en wat je met oudere bestanden kunt doen.
+> **Opmerking over oudere versies:** De vorige lokale JSON-import- en exportfunctie is niet meer beschikbaar in de interface van Schleim OS 3.12.0. Deze pagina beschrijft de huidige cloudback-up en wat je met oudere bestanden kunt doen.
 
 ## Een nieuwe cloudback-up maken
 
