@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.11.0
+# Schleim OS – Erweiterungsdokumentation · Version 3.12.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -11,6 +11,7 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 - Store-Sperre: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsseite, Gerätecode, versuchtem automatischem Kopieren und Installationserkennung
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich in den Einstellungen
+- Update-Center zum Prüfen der GitHub-Version und Herunterladen der aktuellen Repository-ZIP
 - Deutsch, Englisch und Niederländisch
 - Werbefreie Extension-Oberfläche
 
@@ -47,8 +48,17 @@ Die Importfunktion ist browser- und plattformabhängig. Chrome für Android unte
 
 Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie kann die Erweiterungsfunktionen, insbesondere GitHub-Konto, Store-Sperre und Cloud-Backup, nicht vollständig ersetzen.
 
+## Updates
+
+Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Version auf GitHub und bietet bei einer neueren Version den ZIP-Download an. Es installiert die ZIP-Datei nicht selbst; die Browser-Import- oder Update-Funktion muss anschließend verwendet werden.
+
+- [Update-Anleitung – Deutsch](../../docs/Deutsch/UPDATES.md)
+- [Update guide – English](../../docs/Englisch/UPDATES.md)
+- [Updatehandleiding – Nederlands](../../docs/Niederländisch/UPDATES.md)
+
 ## Versionshinweise
 
+- [Release Notes 3.12.0](RELEASE-NOTES-3.12.0.md)
 - [Release Notes 3.11.0](RELEASE-NOTES-3.11.0.md)
 
 ## Technische Referenzen
@@ -61,6 +71,12 @@ Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie ka
 - [GitHub-Store-Katalog](../../Store/README.md)
 - [Store-Anleitungen: Deutsch](../../Store/Deutsch/README.md) · [English](../../Store/Englisch/README.md) · [Nederlands](../../Store/Niederländisch/README.md)
 - [Dokumentationsübersicht](../../docs/README.md)
+
+## Updates in Leichter Sprache
+
+- [Deutsch](../../docs/Leichte-Sprache/Deutsch/UPDATES.md)
+- [English](../../docs/Leichte-Sprache/Englisch/UPDATES.md)
+- [Nederlands](../../docs/Leichte-Sprache/Niederländisch/UPDATES.md)
 
 ## Konto und Cloud-Sicherung in Leichter Sprache
 
