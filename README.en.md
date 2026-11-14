@@ -75,7 +75,7 @@ The browser importer detects Schleim OS in the `extension` subfolder. The button
 - **Rearrange tiles:** Drag a tile with your mouse. On touch devices, press and hold a tile before moving it.
 - **Personalize:** Open the settings area in the interface.
 - **Discover apps:** Open the Schleim-Store, search for web apps and install or remove the ones you want.
-- **Schleim account:** Sign-in starts by opening the GitHub App page. After installation, confirm the next step in Schleim OS. The device code is displayed, copied automatically and the GitHub device authorization page opens. After approval, Schleim OS checks the app installation and creates your private `schleim-os-cloud` repository if needed.
+- **Schleim account:** Sign-in starts by opening the GitHub App page. After installation, confirm the next step in Schleim OS. The device code is displayed. Schleim OS tries to copy it after a short delay. If this is not possible, you can copy it manually. The GitHub device authorization page then opens. After approval, Schleim OS checks the app installation and creates your private `schleim-os-cloud` repository if needed.
 - **Cloud backup:** Backup and restore are available only under **Settings → Schleim account**. The backup includes saved Schleim OS settings, home-screen app order, installed Store apps and the wallpaper. Changes are not synchronized automatically. See the [Schleim account setup guide](extension/docs/SCHLEIM-KONTO.md). GitHub access tokens and passwords are never written into the backup file.
 
 # 🛠️ Schleim OS – Troubleshooting
