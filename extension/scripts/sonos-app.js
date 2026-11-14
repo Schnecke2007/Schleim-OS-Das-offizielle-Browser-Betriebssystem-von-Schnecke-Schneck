@@ -652,12 +652,12 @@
     root.dataset.sonosBound = '1';
     root.querySelector('#ssosSonosWorkerUrl').value = config.workerUrl || '';
     root.addEventListener('click', async event => {
-      const button = event.target.closest('[data-sonos-action]');
-      if (!button) return;
       const favoriteButton = event.target.closest('[data-sonos-favorite-id]');
       if (favoriteButton) { await playFavorite(favoriteButton.dataset.sonosFavoriteId); return; }
       const playlistButton = event.target.closest('[data-sonos-playlist-id]');
       if (playlistButton) { await playPlaylist(playlistButton.dataset.sonosPlaylistId); return; }
+      const button = event.target.closest('[data-sonos-action]');
+      if (!button) return;
       const kind = button.dataset.sonosAction;
       if (kind === 'save-worker') { await saveWorker(); return; }
       if (kind === 'connect') { await connectSonos(); return; }
