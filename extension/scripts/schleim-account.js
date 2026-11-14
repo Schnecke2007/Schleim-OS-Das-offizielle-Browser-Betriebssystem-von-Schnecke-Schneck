@@ -1,0 +1,473 @@
+(() => {
+  'use strict';
+
+  // Public identifier only. Set this after creating the Schleim OS GitHub App.
+  // Never put a GitHub App private key or client secret in this extension.
+  const GITHUB_APP_CLIENT_ID = 'GITHUB_APP_CLIENT_ID_HERE';
+  const API = 'https://api.github.com';
+  const DEVICE_CODE_URL = 'https://github.com/login/device/code';
+  const TOKEN_URL = 'https://github.com/login/oauth/access_token';
+  const REPO_NAME = 'schleim-os-cloud';
+  const BACKUP_PATH = 'schleim-os-backup.json';
+  const STORAGE_KEY = 'ssos-schleim-account-session-v1';
+  const API_VERSION = '2022-11-28';
+
+  const TEXT = {
+    de: {
+      title:'Schleim-Konto', intro:'Verbinde dein GitHub-Konto und sichere deine Schleim-OS-Einstellungen in einem privaten Repository.',
+      login:'Mit GitHub verbinden', connected:'Verbunden als', email:'Verifizierte E-Mail', repository:'Privates Cloud-Repository',
+      save:'Jetzt in der Cloud sichern', restore:'Cloud-Sicherung wiederherstellen', logout:'Abmelden',
+      notConfigured:'Die Schleim-OS-GitHub-App ist noch nicht eingerichtet. Die Client-ID fehlt.',
+      setup:'GitHub-App einrichten', setupNote:'Die App muss Device Flow aktivieren und die Berechtigungen aus der Einrichtungsanleitung besitzen.',
+      device:'Öffne GitHub und gib diesen einmaligen Code ein:', openGitHub:'GitHub-Gerätefreigabe öffnen', waiting:'Warte auf die Bestätigung bei GitHub …',
+      created:'Schleim-Konto verbunden. Dein privates Backup-Repository ist bereit.',
+      saved:'Cloud-Sicherung erfolgreich gespeichert.', restored:'Cloud-Sicherung geladen. Schleim OS wird neu gestartet …',
+      confirmRestore:'Die lokale Schleim-OS-Konfiguration wird durch die Cloud-Sicherung ersetzt. Fortfahren?',
+      noBackup:'In deinem privaten Repository wurde noch keine Sicherungsdatei gefunden.',
+      emailMissing:'Dein GitHub-Konto hat keine verifizierte primäre E-Mail-Adresse. Bitte bestätige sie zuerst direkt bei GitHub.',
+      repoPublic:'Das Repository schleim-os-cloud ist nicht privat. Aus Sicherheitsgründen wird dort keine Sicherung gespeichert.',
+      repoPermission:'GitHub hat den Zugriff verweigert. Prüfe die App-Berechtigungen: Repository creation (write), Contents (read/write) und Email addresses (read).',
+      cancelled:'Anmeldung abgebrochen.', expired:'Der GitHub-Code ist abgelaufen. Starte die Anmeldung erneut.',
+      authError:'GitHub-Anmeldung fehlgeschlagen.', backupError:'Cloud-Sicherung fehlgeschlagen.',
+      accountNotice:'Dein GitHub-Passwort wird ausschließlich auf GitHub eingegeben. Schleim OS fragt es nicht ab und speichert es nicht. Dein GitHub-Benutzername und die bestätigte E-Mail werden zur Kontoanzeige verwendet.',
+      privacy:'Das Backup-Repository ist privat. Zugriffstokens werden lokal in den Erweiterungsdaten gespeichert und niemals in das Backup-Repository geschrieben. Du kannst die App-Berechtigung jederzeit in deinen GitHub-Einstellungen widerrufen.',
+      signOutConfirm:'Möchtest du dich vom Schleim-Konto abmelden? Die private Sicherung auf GitHub bleibt erhalten.',
+      signingIn:'GitHub-Anmeldung wird vorbereitet …', creating:'Privates Backup-Repository wird gesucht oder erstellt …',
+      noPermission:'GitHub-App-Berechtigungen fehlen oder die App wurde nicht auf diesem Konto installiert.',
+      ownerMismatch:'Das gefundene Repository gehört nicht zum angemeldeten GitHub-Konto.',
+      retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte lokale Synchronisierung',
+      notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto'
+    },
+    en: {
+      title:'Schleim account', intro:'Connect your GitHub account and back up your Schleim OS settings in a private repository.',
+      login:'Connect with GitHub', connected:'Connected as', email:'Verified email', repository:'Private cloud repository',
+      save:'Back up to cloud now', restore:'Restore cloud backup', logout:'Sign out',
+      notConfigured:'The Schleim OS GitHub App has not been configured yet. The client ID is missing.',
+      setup:'Set up GitHub App', setupNote:'The app must enable Device Flow and have the permissions listed in the setup guide.',
+      device:'Open GitHub and enter this one-time code:', openGitHub:'Open GitHub device authorization', waiting:'Waiting for confirmation on GitHub …',
+      created:'Schleim account connected. Your private backup repository is ready.',
+      saved:'Cloud backup saved successfully.', restored:'Cloud backup restored. Schleim OS is restarting …',
+      confirmRestore:'Your local Schleim OS configuration will be replaced with the cloud backup. Continue?',
+      noBackup:'No backup file was found in your private repository.',
+      emailMissing:'Your GitHub account has no verified primary email address. Verify it directly on GitHub first.',
+      repoPublic:'The schleim-os-cloud repository is not private. No backup will be saved there for security reasons.',
+      repoPermission:'GitHub denied access. Check the app permissions: Repository creation (write), Contents (read/write), and Email addresses (read).',
+      cancelled:'Sign-in cancelled.', expired:'The GitHub code expired. Start sign-in again.',
+      authError:'GitHub sign-in failed.', backupError:'Cloud backup failed.',
+      accountNotice:'Your GitHub password is entered only on GitHub. Schleim OS never asks for or stores it. Your GitHub username and verified email are used to identify the account.',
+      privacy:'The backup repository is private. Access tokens are stored locally in the extension data and are never written to the backup repository. You can revoke the app authorization in your GitHub settings at any time.',
+      signOutConfirm:'Sign out of the Schleim account? Your private GitHub backup will remain.',
+      signingIn:'Preparing GitHub sign-in …', creating:'Looking for or creating your private backup repository …',
+      noPermission:'GitHub App permissions are missing, or the app has not been installed on this account.',
+      ownerMismatch:'The repository found does not belong to the signed-in GitHub account.',
+      retry:'Try again', help:'Open setup guide', lastBackup:'Last local sync',
+      notYet:'No backup on this device yet', account:'GitHub account'
+    },
+    nl: {
+      title:'Schleim-account', intro:'Verbind je GitHub-account en maak een back-up van je Schleim OS-instellingen in een privérepository.',
+      login:'Verbinden met GitHub', connected:'Verbonden als', email:'Geverifieerd e-mailadres', repository:'Privé-cloudrepository',
+      save:'Nu opslaan in de cloud', restore:'Cloudback-up herstellen', logout:'Afmelden',
+      notConfigured:'De Schleim OS GitHub-app is nog niet ingesteld. De client-ID ontbreekt.',
+      setup:'GitHub-app instellen', setupNote:'De app moet Device Flow inschakelen en de machtigingen uit de installatiehandleiding hebben.',
+      device:'Open GitHub en voer deze eenmalige code in:', openGitHub:'GitHub-apparaatmachtiging openen', waiting:'Wachten op bevestiging bij GitHub …',
+      created:'Schleim-account verbonden. Je privéback-uprepository is klaar.',
+      saved:'Cloudback-up succesvol opgeslagen.', restored:'Cloudback-up hersteld. Schleim OS wordt opnieuw gestart …',
+      confirmRestore:'Je lokale Schleim OS-configuratie wordt vervangen door de cloudback-up. Doorgaan?',
+      noBackup:'Er is nog geen back-upbestand gevonden in je privérepository.',
+      emailMissing:'Je GitHub-account heeft geen geverifieerd primair e-mailadres. Verifieer het eerst rechtstreeks bij GitHub.',
+      repoPublic:'De repository schleim-os-cloud is niet privé. Om veiligheidsredenen wordt daar geen back-up opgeslagen.',
+      repoPermission:'GitHub heeft de toegang geweigerd. Controleer de app-machtigingen: Repository creation (write), Contents (read/write) en Email addresses (read).',
+      cancelled:'Aanmelding geannuleerd.', expired:'De GitHub-code is verlopen. Start de aanmelding opnieuw.',
+      authError:'GitHub-aanmelding mislukt.', backupError:'Cloudback-up mislukt.',
+      accountNotice:'Je GitHub-wachtwoord voer je uitsluitend in op GitHub. Schleim OS vraagt het niet en slaat het niet op. Je GitHub-gebruikersnaam en geverifieerde e-mailadres worden gebruikt voor je account.',
+      privacy:'De back-uprepository is privé. Toegangstokens worden lokaal in de extensiegegevens opgeslagen en nooit in de back-uprepository geplaatst. Je kunt de app-machtiging op elk moment intrekken in je GitHub-instellingen.',
+      signOutConfirm:'Afmelden bij het Schleim-account? Je privéback-up op GitHub blijft behouden.',
+      signingIn:'GitHub-aanmelding voorbereiden …', creating:'Privéback-uprepository zoeken of maken …',
+      noPermission:'GitHub-appmachtigingen ontbreken of de app is niet op dit account geïnstalleerd.',
+      ownerMismatch:'De gevonden repository is niet van het aangemelde GitHub-account.',
+      retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste lokale synchronisatie',
+      notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account'
+    }
+  };
+
+  const language = () => document.body?.dataset.language || 'de';
+  const t = key => TEXT[language()]?.[key] || TEXT.de[key] || key;
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+  const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+  let session = null;
+  let deviceFlow = null;
+  let polling = false;
+  let observer = null;
+
+  function storageGet() {
+    return new Promise((resolve, reject) => {
+      const area = globalThis.chrome?.storage?.local;
+      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      area.get(STORAGE_KEY, result => {
+        const error = chrome.runtime?.lastError;
+        if (error) reject(new Error(error.message));
+        else resolve(result?.[STORAGE_KEY] || null);
+      });
+    });
+  }
+  function storageSet(value) {
+    return new Promise((resolve, reject) => {
+      const area = globalThis.chrome?.storage?.local;
+      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      area.set({[STORAGE_KEY]:value}, () => {
+        const error = chrome.runtime?.lastError;
+        if (error) reject(new Error(error.message));
+        else resolve();
+      });
+    });
+  }
+  function storageRemove() {
+    return new Promise((resolve, reject) => {
+      const area = globalThis.chrome?.storage?.local;
+      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      area.remove(STORAGE_KEY, () => {
+        const error = chrome.runtime?.lastError;
+        if (error) reject(new Error(error.message));
+        else resolve();
+      });
+    });
+  }
+
+  function setStatus(message, isError=false) {
+    document.querySelectorAll('[data-ssos-cloud-status]').forEach(node => {
+      node.textContent = message || '';
+      node.classList.toggle('is-error', !!isError);
+    });
+  }
+  function renderPanel(panel) {
+    if (!panel) return;
+    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
+      panel.innerHTML =
+        '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div></div>'+
+        '<p class="ssos-cloud-note">'+esc(t('notConfigured'))+'</p>'+
+        '<a class="app-button secondary" href="https://github.com/settings/apps/new" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
+        '<a class="ssos-cloud-help" href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/extension/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
+        '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p><p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
+        '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
+      return;
+    }
+    if (deviceFlow) {
+      panel.innerHTML =
+        '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐙</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('device'))+'</p></div></div>'+
+        '<div class="ssos-cloud-device-code">'+esc(deviceFlow.userCode)+'</div>'+
+        '<a class="app-button" href="'+esc(deviceFlow.verificationUri)+'" target="_blank" rel="noopener noreferrer">'+esc(t('openGitHub'))+' ↗</a>'+
+        '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite">'+esc(t('waiting'))+'</p>'+
+        '<button class="app-button secondary" type="button" data-ssos-cloud-cancel>Abbrechen</button></div>';
+      return;
+    }
+    if (!session?.user) {
+      panel.innerHTML =
+        '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div></div>'+
+        '<button class="app-button" type="button" data-ssos-cloud-login>🐙 '+esc(t('login'))+'</button>'+
+        '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+
+        '<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
+        '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
+      return;
+    }
+    const repoUrl = session.repo?.html_url || ('https://github.com/'+session.user.login+'/'+REPO_NAME);
+    panel.innerHTML =
+      '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>🐌</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('connected'))+' <b>@'+esc(session.user.login)+'</b></p></div><span class="ssos-cloud-connected">●</span></div>'+
+      '<div class="ssos-cloud-meta"><span>'+esc(t('email'))+'</span><b>'+esc(session.user.email||'—')+'</b><span>'+esc(t('repository'))+'</span><a href="'+esc(repoUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(session.repo?.full_name||session.user.login+'/'+REPO_NAME)+' ↗</a></div>'+
+      '<div class="ssos-cloud-actions"><button class="app-button" type="button" data-ssos-cloud-save>☁️ '+esc(t('save'))+'</button><button class="app-button secondary" type="button" data-ssos-cloud-restore>↩ '+esc(t('restore'))+'</button></div>'+
+      '<p class="ssos-cloud-note">'+esc(session.lastBackupAt ? t('lastBackup')+': '+new Date(session.lastBackupAt).toLocaleString() : t('notYet'))+'</p>'+
+      '<button class="ssos-cloud-logout" type="button" data-ssos-cloud-logout>'+esc(t('logout'))+'</button>'+
+      '<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p><p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
+  }
+  function mountPanels() {
+    document.querySelectorAll('[data-ssos-cloud-account]').forEach(renderPanel);
+  }
+  function formBody(values) {
+    return new URLSearchParams(values).toString();
+  }
+  async function oauthPost(url, values) {
+    const response = await fetch(url, {
+      method:'POST',
+      headers:{Accept:'application/json','Content-Type':'application/x-www-form-urlencoded'},
+      body:formBody(values),
+      cache:'no-store',
+      credentials:'omit'
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error_description || data.message || ('GitHub HTTP '+response.status));
+    return data;
+  }
+  async function requestDeviceCode() {
+    const data = await oauthPost(DEVICE_CODE_URL, {
+      client_id:GITHUB_APP_CLIENT_ID,
+      scope:'offline_access'
+    });
+    if (!data.device_code || !data.user_code || !data.verification_uri) {
+      throw new Error(data.error_description || data.error || t('authError'));
+    }
+    return {
+      deviceCode:data.device_code,
+      userCode:data.user_code,
+      verificationUri:data.verification_uri,
+      interval:Math.max(5,Number(data.interval)||5),
+      expiresAt:Date.now()+(Math.max(60,Number(data.expires_in)||900)*1000)
+    };
+  }
+  async function startLogin() {
+    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
+      setStatus(t('notConfigured'),true); return;
+    }
+    try {
+      setStatus(t('signingIn'));
+      deviceFlow = await requestDeviceCode();
+      mountPanels();
+      pollForAuthorization(deviceFlow);
+    } catch (error) {
+      deviceFlow=null;mountPanels();setStatus(error.message||t('authError'),true);
+    }
+  }
+  async function pollForAuthorization(flow) {
+    if (polling) return;
+    polling=true;
+    let interval=flow.interval;
+    try {
+      while (deviceFlow===flow && Date.now()<flow.expiresAt) {
+        await pause(interval*1000);
+        if (deviceFlow!==flow) return;
+        const data=await oauthPost(TOKEN_URL,{
+          client_id:GITHUB_APP_CLIENT_ID,
+          device_code:flow.deviceCode,
+          grant_type:'urn:ietf:params:oauth:grant-type:device_code'
+        });
+        if (data.error==='authorization_pending') continue;
+        if (data.error==='slow_down') { interval+=5; continue; }
+        if (data.error==='access_denied') throw new Error(t('cancelled'));
+        if (data.error==='expired_token') throw new Error(t('expired'));
+        if (data.error) throw new Error(data.error_description||data.error);
+        if (!data.access_token) throw new Error(t('authError'));
+        deviceFlow=null;
+        await completeLogin(data);
+        return;
+      }
+      if (deviceFlow===flow) {
+        deviceFlow=null;mountPanels();setStatus(t('expired'),true);
+      }
+    } catch (error) {
+      deviceFlow=null;mountPanels();setStatus(error.message||t('authError'),true);
+    } finally {
+      polling=false;
+    }
+  }
+  async function githubApi(path, options={}) {
+    await ensureFreshToken();
+    const response=await fetch(API+path,{
+      ...options,
+      headers:{
+        Accept:'application/vnd.github+json',
+        Authorization:'Bearer '+session.accessToken,
+        'X-GitHub-Api-Version':API_VERSION,
+        ...(options.body?{'Content-Type':'application/json'}:{}),
+        ...(options.headers||{})
+      },
+      cache:'no-store',
+      credentials:'omit'
+    });
+    const raw=await response.text();
+    let data=null;try{data=raw?JSON.parse(raw):null;}catch{}
+    if(!response.ok){
+      const error=new Error(data?.message||('GitHub API HTTP '+response.status));
+      error.status=response.status;error.data=data;
+      throw error;
+    }
+    return data;
+  }
+  async function ensureFreshToken() {
+    if (!session?.accessToken) throw new Error(t('authError'));
+    if (!session.expiresAt || session.expiresAt>Date.now()+60000) return;
+    if (!session.refreshToken || (session.refreshExpiresAt && session.refreshExpiresAt<Date.now()+60000)) {
+      await storageRemove();session=null;mountPanels();throw new Error(t('authError')+' Please connect again.');
+    }
+    const data=await oauthPost(TOKEN_URL,{
+      client_id:GITHUB_APP_CLIENT_ID,
+      grant_type:'refresh_token',
+      refresh_token:session.refreshToken
+    });
+    if (!data.access_token) throw new Error(data.error_description||data.error||t('authError'));
+    session={
+      ...session,
+      accessToken:data.access_token,
+      refreshToken:data.refresh_token||session.refreshToken,
+      expiresAt:Date.now()+(Number(data.expires_in)||28800)*1000,
+      refreshExpiresAt:Date.now()+(Number(data.refresh_token_expires_in)||15897600)*1000
+    };
+    await storageSet(session);
+  }
+  async function completeLogin(tokens) {
+    session={
+      accessToken:tokens.access_token,
+      refreshToken:tokens.refresh_token||'',
+      expiresAt:Date.now()+(Number(tokens.expires_in)||28800)*1000,
+      refreshExpiresAt:Date.now()+(Number(tokens.refresh_token_expires_in)||0)*1000,
+      user:null,
+      repo:null,
+      lastBackupAt:null
+    };
+    setStatus(t('creating'));
+    const user=await githubApi('/user');
+    const emails=await githubApi('/user/emails?per_page=100');
+    const primary=(Array.isArray(emails)?emails:[]).find(item=>item.primary===true&&item.verified===true);
+    if (!primary?.email) {
+      session=null;mountPanels();throw new Error(t('emailMissing'));
+    }
+    session.user={id:user.id,login:user.login,name:user.name||user.login,email:primary.email};
+    await ensureCloudRepository();
+    await storageSet(session);
+    mountPanels();setStatus(t('created'));
+  }
+  async function ensureCloudRepository() {
+    if (!session?.user?.login) throw new Error(t('authError'));
+    let repository;
+    try {
+      repository=await githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+REPO_NAME);
+    } catch (error) {
+      if (error.status!==404) throw error;
+      repository=await githubApi('/user/repos',{
+        method:'POST',
+        body:JSON.stringify({
+          name:REPO_NAME,
+          description:'Privater Schleim-OS-Cloudspeicher für persönliche Geräteeinstellungen und Backups.',
+          private:true,
+          auto_init:true,
+          has_issues:false,
+          has_projects:false,
+          has_wiki:false
+        })
+      });
+    }
+    if (Number(repository.owner?.id)!==Number(session.user.id)) throw new Error(t('ownerMismatch'));
+    if (repository.private!==true) throw new Error(t('repoPublic'));
+    session.repo={
+      id:repository.id,
+      full_name:repository.full_name,
+      html_url:repository.html_url,
+      default_branch:repository.default_branch||'main'
+    };
+  }
+  function encodeBase64Utf8(value) {
+    const bytes=new TextEncoder().encode(value);
+    let binary='';
+    for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));
+    return btoa(binary);
+  }
+  function decodeBase64Utf8(value) {
+    const binary=atob(String(value||'').replace(/\s/g,''));
+    const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  }
+  function collectPreferences() {
+    const preferences={};
+    for(let index=0;index<localStorage.length;index++){
+      const key=localStorage.key(index);
+      if(!key||!/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key))continue;
+      if(key===STORAGE_KEY||key.startsWith('ssosGithubCloud'))continue;
+      try{preferences[key]=JSON.parse(localStorage.getItem(key));}
+      catch{preferences[key]=localStorage.getItem(key);}
+    }
+    return preferences;
+  }
+  async function saveCloudBackup() {
+    if(!session?.user||!session?.repo)throw new Error(t('authError'));
+    setStatus(t('creating'));
+    const backup={
+      format:'schleim-os-cloud-backup',
+      schemaVersion:1,
+      exportedAt:new Date().toISOString(),
+      owner:{id:session.user.id,login:session.user.login},
+      preferences:collectPreferences()
+    };
+    if(!Object.keys(backup.preferences).length)throw new Error('No Schleim OS settings were found to back up.');
+    const path='/repos/'+session.repo.full_name+'/contents/'+BACKUP_PATH;
+    let sha;
+    try{
+      const current=await githubApi(path+'?ref='+encodeURIComponent(session.repo.default_branch));
+      sha=current.sha;
+    }catch(error){if(error.status!==404)throw error;}
+    const body={
+      message:'Schleim OS cloud backup',
+      content:encodeBase64Utf8(JSON.stringify(backup,null,2)+'\n'),
+      ...(sha?{sha}:{})
+    };
+    await githubApi(path,{method:'PUT',body:JSON.stringify(body)});
+    session.lastBackupAt=backup.exportedAt;
+    await storageSet(session);
+    mountPanels();setStatus(t('saved'));
+  }
+  async function restoreCloudBackup() {
+    if(!session?.user||!session?.repo)throw new Error(t('authError'));
+    if(!confirm(t('confirmRestore')))return;
+    const path='/repos/'+session.repo.full_name+'/contents/'+BACKUP_PATH+'?ref='+encodeURIComponent(session.repo.default_branch);
+    let file;
+    try{file=await githubApi(path);}
+    catch(error){if(error.status===404){setStatus(t('noBackup'),true);return;}throw error;}
+    const backup=JSON.parse(decodeBase64Utf8(file.content));
+    if(backup?.format!=='schleim-os-cloud-backup'||backup.schemaVersion!==1||
+       Number(backup.owner?.id)!==Number(session.user.id)||
+       !backup.preferences||typeof backup.preferences!=='object'||Array.isArray(backup.preferences)){
+      throw new Error('The cloud backup is invalid or belongs to another GitHub account.');
+    }
+    const entries=Object.entries(backup.preferences).filter(([key])=>
+      /^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)&&key!==STORAGE_KEY&&!key.startsWith('ssosGithubCloud')
+    );
+    if(!entries.length)throw new Error('The cloud backup does not contain Schleim OS settings.');
+    for(let index=localStorage.length-1;index>=0;index--){
+      const key=localStorage.key(index);
+      if(key?.startsWith('ssos-')&&key!==STORAGE_KEY&&!key.startsWith('ssosGithubCloud'))localStorage.removeItem(key);
+    }
+    for(const [key,value] of entries)localStorage.setItem(key,JSON.stringify(value));
+    setStatus(t('restored'));
+    setTimeout(()=>window.location.reload(),900);
+  }
+  async function signOut() {
+    if(!confirm(t('signOutConfirm')))return;
+    deviceFlow=null;session=null;
+    await storageRemove();
+    mountPanels();setStatus(t('cancelled'));
+  }
+  async function handleAction(action) {
+    const button=action.closest('button');
+    if(button)button.disabled=true;
+    try{
+      if(action.matches('[data-ssos-cloud-login]'))await startLogin();
+      else if(action.matches('[data-ssos-cloud-cancel]')){deviceFlow=null;mountPanels();setStatus(t('cancelled'));}
+      else if(action.matches('[data-ssos-cloud-save]'))await saveCloudBackup();
+      else if(action.matches('[data-ssos-cloud-restore]'))await restoreCloudBackup();
+      else if(action.matches('[data-ssos-cloud-logout]'))await signOut();
+    }catch(error){
+      const friendly=error.status===403||error.status===404? t('repoPermission') : (error.message||t('backupError'));
+      setStatus(friendly,true);
+    }finally{if(button?.isConnected)button.disabled=false;}
+  }
+  function init() {
+    mountPanels();
+    storageGet().then(value=>{
+      if(value?.accessToken&&value?.user&&value?.repo){
+        session=value;mountPanels();
+      }
+    }).catch(error=>setStatus(error.message,true));
+    document.addEventListener('click',event=>{
+      const action=event.target.closest('[data-ssos-cloud-login],[data-ssos-cloud-cancel],[data-ssos-cloud-save],[data-ssos-cloud-restore],[data-ssos-cloud-logout]');
+      if(action){event.preventDefault();handleAction(action);}
+    });
+    if(document.body&&!observer){
+      observer=new MutationObserver(()=>mountPanels());
+      observer.observe(document.body,{childList:true,subtree:true});
+    }
+  }
+  window.SSOSCloudAccount=Object.freeze({
+    mount:mountPanels,
+    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null}:null
+  });
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
