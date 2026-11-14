@@ -15,6 +15,8 @@ The browser opens the file `pages/newtab.html`. This file shows the Schleim OS h
 - `pages/newtab.html`: The page you see.
 - `scripts/app.js`: Many of the interface features.
 - `scripts/personalization.js`: Settings and personal changes.
+- `scripts/schleim-account.js`: GitHub sign-in and cloud backup.
+- `scripts/slime-store-admin.js`: Store suggestion administration.
 - `styles/main.css`: The page design.
 - `styles/personalization.css`: The design of personalization tools.
 - `locales/legal-translations.js`: Translations of legal texts.
@@ -28,6 +30,10 @@ You can save your settings in a private GitHub cloud with your Schleim account. 
 
 The backup also includes the app order, installed Store apps and your wallpaper.
 
+You start the backup manually. It is not saved automatically after every change.
+
+The current backup format is version 2. Older format-1 backups can still be restored.
+
 You must sign in with your Schleim account to use the Schleim-Store.
 
 ## Internet and permissions
@@ -37,4 +43,4 @@ Some websites do not allow their pages to appear inside another page.
 
 The browser may ask you for permission. Read these questions carefully.
 
-[Technical notes in regular English](../../Englisch/TECHNICAL-NOTES.md) · [Simple Schleim-Store guide](SCHLEIM-STORE.md)
+[Technical notes in regular English](../../Englisch/TECHNICAL-NOTES.md) · [Simple Schleim-Store guide](SCHLEIM-STORE.md) · [Account and cloud backup](ACCOUNT-CLOUD.md)
