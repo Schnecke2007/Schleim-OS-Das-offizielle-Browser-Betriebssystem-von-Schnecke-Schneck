@@ -38,6 +38,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store: access requires signing in with a Schleim account
 - Schleim account with GitHub sign-in and private cloud backup of the home screen
+- Native Sonos app in the Schleim-Store: choose speakers and rooms, control playback, volume, favorites and playlists (one-time Cloudflare Bridge setup required)
 - Settings update center: check the GitHub version and download the latest ZIP; the browser handles the final installation
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
@@ -48,7 +49,7 @@ This project is not a standalone operating system that replaces Windows, Android
 The **Schleim-Store** is available only after signing in with a Schleim account. Without sign-in, the app catalogue, search, ratings, installations and submissions remain locked. The Store unlocks after successful sign-in. Catalogue files in the public GitHub repository remain directly visible on GitHub.
 
 - **Discover:** Recommendations, new apps, top ratings and categories.
-- **Install:** An app is added as a home-screen tile and opens its website in a new browser tab.
+- **Install:** A web app opens in a new browser tab. Native Schleim OS apps such as Sonos run directly inside Schleim OS.
 - **Submit:** Visitors can suggest websites through the public [GitHub submission form](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
 - **Submit local websites:** Imported or previously saved websites appear under “Previously added websites”. Choose “Submit to the Schleim-Store” to copy their details into the submission form. Add a meaningful description and submit the proposal on GitHub for review.
 - **Rate:** The star buttons open a GitHub form where visitors can add optional written feedback. After successful processing, the issue is closed automatically. Each rating is stored with the GitHub username and feedback as a JSON file in the public `Bewertungen/` folder. GitHub Actions calculates the published Store average and vote count from these files; the latest rating per GitHub account and app is counted.
