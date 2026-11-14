@@ -31,8 +31,8 @@ test('standalone uses the all-elements helper for app launch and tile cleanup', 
 test('Sonos stays inside Schleim OS and uses the official Sonos web app', () => {
   assert.match(sonosSource, /<iframe[^>]+id="ssosSonosFrame"/);
   assert.match(sonosSource, /https:\/\/play\.sonos\.com\/de-de\/web-app/);
-  assert.match(sonosSource, /width="1280"/);
-  assert.match(sonosSource, /height="900"/);
+  assert.match(sonosSource, /DESKTOP_WIDTH = 1280/);
+  assert.match(sonosSource, /FRAME_HEIGHT = 900/);
   assert.match(sonosSource, /data-sonos-action="fit"/);
   assert.match(sonosSource, /setTimeout\(\(\) => \{[\s\S]*?18000/);
 });
