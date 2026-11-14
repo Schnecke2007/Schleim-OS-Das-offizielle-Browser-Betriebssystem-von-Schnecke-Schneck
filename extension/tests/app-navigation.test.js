@@ -88,6 +88,16 @@ test('Camera uses the browser front/rear camera APIs and video recording', () =>
   assert.match(photosCloudSource, /data-camera-switch/);
 });
 
+test('Photo cloud settings observer disconnects before rendering its own mutations', () => {
+  const observerBlock = photosCloudSource.slice(
+    photosCloudSource.indexOf('const settingsHostSelector'),
+    photosCloudSource.indexOf("window.addEventListener('beforeunload'")
+  );
+  assert.match(observerBlock, /observer\.disconnect\(\)/);
+  assert.match(observerBlock, /hostWasAdded/);
+  assert.doesNotMatch(observerBlock, /new MutationObserver\(\(\) =>\s*\{\s*if \(\$\(settingsHostSelector\)\) mountSettings\(\)/);
+});
+
 test('Photos search combines metadata fallback with optional on-device AI', () => {
   assert.match(photosCloudSource, /function searchItems/);
   assert.match(photosCloudSource, /SYNONYMS/);

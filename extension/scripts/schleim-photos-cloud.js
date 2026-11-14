@@ -822,10 +822,23 @@
       if (state.activeApp === 'images') refreshMediaApp();
       if (state.activeApp === 'settings') mountSettings();
     });
-    const observer = new MutationObserver(() => {
-      if ($('[data-ssos-photo-cloud-settings]')) mountSettings();
-    });
-    observer.observe(document.body,{childList:true,subtree:true});
+    // Wait only for the settings mount to be inserted. Observing the whole
+    // document while mountSettings() changes host.innerHTML causes our own
+    // mutations to retrigger mountSettings forever and freeze the extension.
+    const settingsHostSelector = '[data-ssos-photo-cloud-settings]';
+    if ($(settingsHostSelector)) {
+      mountSettings();
+    } else {
+      const observer = new MutationObserver(records => {
+        const hostWasAdded = records.some(record => Array.from(record.addedNodes).some(node =>
+          node.nodeType === 1 && (node.matches(settingsHostSelector) || node.querySelector(settingsHostSelector))
+        ));
+        if (!hostWasAdded) return;
+        observer.disconnect();
+        mountSettings();
+      });
+      observer.observe(document.body,{childList:true,subtree:true});
+    }
     window.addEventListener('beforeunload',stopCamera);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',init,{once:true});
