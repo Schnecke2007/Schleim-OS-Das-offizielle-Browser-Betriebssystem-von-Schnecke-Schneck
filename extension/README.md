@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.11.0 · Chromium-Erweiterung · Manifest V3**
+**Version 3.12.0 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -26,6 +26,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Schleim-Store mit Kategorien, Suche, Empfehlungen, Bewertungen und App-Vorschlägen
 - Store-Zugriff nur nach Anmeldung mit einem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsprüfung und Gerätecode
+- Update-Center: GitHub-Version prüfen und aktuelle Repository-ZIP herunterladen; die Browser-Installation bleibt ein bestätigter manueller Schritt
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich unter **Einstellungen → Schleim-Konto**
 - Backup-Format 2 mit App-Reihenfolge, installierten Store-Apps und Hintergrundbild
 - Benutzeroberfläche auf Deutsch, Englisch und Niederländisch
@@ -39,6 +40,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - `scripts/personalization.js` – Personalisierung, Store-Oberfläche und Homescreen-Reihenfolge
 - `scripts/schleim-account.js` – GitHub-App-Anmeldung, Installationserkennung und Cloud-Sicherung
 - `scripts/slime-store-admin.js` – Admin-Portal zum Prüfen und Veröffentlichen von Store-Vorschlägen
+- `scripts/update-center.js` – prüft die GitHub-Manifest-Version und bietet den ZIP-Download an
 - `data/store-apps.json` und `data/store-ratings.json` – Laufzeitkatalog und Bewertungsstatistik
 - `styles/` – Oberflächen-, Personalisierungs- und Admin-Styles
 - `locales/legal-translations.js` – zusätzliche Übersetzungen der Rechtstexte
@@ -52,6 +54,12 @@ Die Benutzeroberfläche verwendet Sprachwörterbücher in den JavaScript-Dateien
 Der Schleim-Store bleibt gesperrt, solange kein Schleim-Konto angemeldet ist. Ohne Anmeldung werden Store-Katalog, Bewertungen, Installation, Deinstallation und Vorschläge nicht angezeigt. Nach der Anmeldung wird der Store freigeschaltet. Beim Abmelden wird er wieder gesperrt.
 
 Die Store-Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository bleiben direkt auf GitHub sichtbar. Die Anmeldung schützt die Store-Oberfläche, nicht die Repository-Dateien.
+
+## Updates
+
+Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version kann die vollständige Repository-ZIP direkt heruntergeladen werden.
+
+Der ZIP-Download installiert sich nicht selbst. Chrome erlaubt einer Erweiterung nicht, beliebige heruntergeladene ZIP-Dateien still zu installieren. Nach dem Download muss die Aktualisierung über die vom Browser unterstützte Import- oder Update-Funktion abgeschlossen werden. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
 
 ## Cloud-Sicherung
 
