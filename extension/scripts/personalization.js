@@ -344,7 +344,7 @@
       tile.innerHTML='<span class="icon-tile">'+iconMarkup(app)+'</span><small>'+esc(app.name)+'</small>';
       grid.appendChild(tile);
     });
-    storeState.installed.forEach(id=>{
+    if(hasStoreAccess())storeState.installed.forEach(id=>{
       const app=STORE_CATALOG.find(item=>item.id===id);if(!app)return;
       const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-store-tile';
       tile.dataset.ssosStoreApp=app.id;tile.title=app.name;
