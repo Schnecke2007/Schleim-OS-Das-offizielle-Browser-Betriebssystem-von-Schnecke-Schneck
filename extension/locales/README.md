@@ -5,6 +5,7 @@ Schleim OS unterstützt Deutsch, Englisch und Niederländisch. Die Übersetzunge
 - `scripts/app.js` enthält die Beschriftungen der Hauptoberfläche, Apps und Navigation.
 - `scripts/personalization.js` enthält Übersetzungen für Personalisierung, Schleim-Store, Bewertungen, App-Vorschläge und Store-Sperrhinweise.
 - `scripts/schleim-account.js` enthält Übersetzungen für Anmeldung, GitHub-App-Installation, Gerätecode, Cloud-Backup und Wiederherstellung.
+- `scripts/slime-store-admin.js` enthält die Texte für das Admin-Portal und seine Formulare.
 - `scripts/slime-store-admin.js` enthält Texte für das Store-Admin-Portal.
 - `locales/legal-translations.js` enthält die lokal eingebundenen Rechtstext-Übersetzungen.
 
@@ -18,7 +19,9 @@ Die leicht verständlichen Anleitungen sind getrennt von den UI-Übersetzungen u
 - `Englisch/`
 - `Niederländisch/`
 
-Dort gibt es Installations-, Hilfe- und Techniktexte. Die Store-Anleitung steht jeweils in `SCHLEIM-STORE.md`.
+Dort gibt es Installations-, Hilfe-, Technik-, Konto- und Cloud-Backup-Texte. Die Store-Anleitung steht jeweils in `SCHLEIM-STORE.md`.
+
+Die drei Store-Anleitungen in normaler Sprache liegen unter `Store/Deutsch/`, `Store/Englisch/` und `Store/Niederländisch/`. Die allgemeine Konto- und Cloud-Dokumentation liegt unter `docs/Deutsch/`, `docs/Englisch/` und `docs/Niederländisch/`; die deutsche Hauptreferenz ist `extension/docs/SCHLEIM-KONTO.md`.
 
 ## Externe Inhalte
 
