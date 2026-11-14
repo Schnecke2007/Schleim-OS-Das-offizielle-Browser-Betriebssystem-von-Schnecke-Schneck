@@ -37,4 +37,14 @@ If Schleim OS does not appear, check that the extension is installed and enabled
 
 The button name can be different in each browser. Direct ZIP import only works in browsers that support it.
 
+## Use the Schleim-Store
+
+You need a Schleim account to use the Schleim-Store.
+Open the Store and select **Connect with GitHub**.
+First install the **Schleim OS Account** GitHub App.
+Return to Schleim OS and select **I installed the app – continue**.
+Follow the steps with the device code.
+
+[Read the simple Schleim-Store guide](SCHLEIM-STORE.md)
+
 [Help and troubleshooting](HELP.md) · [Regular installation guide](../../Englisch/INSTALLATION.md)
