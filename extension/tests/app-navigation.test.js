@@ -6,8 +6,11 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const appSource = fs.readFileSync(path.join(root, 'scripts/app.js'), 'utf8');
 const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-standalone.html'), 'utf8');
-const sonosSource = fs.readFileSync(path.join(root, 'scripts/sonos-app.js'), 'utf8');
+const personalizationSource = fs.readFileSync(path.join(root, 'scripts/personalization.js'), 'utf8');
+const newtabSource = fs.readFileSync(path.join(root, 'pages/newtab.html'), 'utf8');
 const personalizationCss = fs.readFileSync(path.join(root, 'styles/personalization.css'), 'utf8');
+const storeCatalog = JSON.parse(fs.readFileSync(path.join(root, 'data/store-apps.json'), 'utf8'));
+const sonosStoreRecord = JSON.parse(fs.readFileSync(path.join(root, '../Store/media/sonos-control.json'), 'utf8'));
 
 // $() returns one Element (or null); only $$() returns an iterable array.
 // Calling .forEach() on a $() result prevents openApp() from reaching the
@@ -28,18 +31,15 @@ test('standalone uses the all-elements helper for app launch and tile cleanup', 
   assert.match(standaloneSource, /\$\$\('\.ssos-custom-tile',\s*grid\)\.forEach/);
 });
 
-test('Sonos stays inside Schleim OS and uses the official Sonos web app', () => {
-  assert.match(sonosSource, /<iframe[^>]+id="ssosSonosFrame"/);
-  assert.match(sonosSource, /https:\/\/play\.sonos\.com\/de-de\/web-app/);
-  assert.match(sonosSource, /DESKTOP_WIDTH = 1280/);
-  assert.match(sonosSource, /FRAME_HEIGHT = 900/);
-  assert.match(sonosSource, /data-sonos-action="fit"/);
-  assert.match(sonosSource, /setTimeout\(\(\) => \{[\s\S]*?18000/);
-});
-
-test('Sonos desktop viewport has frame sizing and scroll styles', () => {
-  assert.match(personalizationCss, /\.ssos-sonos-frame-viewport/);
-  assert.match(personalizationCss, /\.ssos-sonos-frame-canvas iframe/);
-  assert.match(personalizationCss, /width:1280px/);
-  assert.match(personalizationCss, /height:900px/);
+test('Sonos is a standard Store web app opened in a new browser tab', () => {
+  const catalogEntry = storeCatalog.apps.find(app => app.id === 'sonos-control');
+  assert.ok(catalogEntry, 'Sonos must exist in the runtime Store catalogue');
+  assert.equal(catalogEntry.url, 'https://play.sonos.com/');
+  assert.equal(sonosStoreRecord.id, 'sonos-control');
+  assert.equal(sonosStoreRecord.url, catalogEntry.url);
+  assert.match(personalizationSource, /window\.open\(app\.url,'_blank','noopener,noreferrer'\)/);
+  assert.doesNotMatch(personalizationSource, /app\.id==='sonos-control'/);
+  assert.doesNotMatch(appSource, /SSOSSonosApp|ssos-open-native-app/);
+  assert.doesNotMatch(newtabSource, /sonos-app\.js/);
+  assert.doesNotMatch(personalizationCss, /ssos-sonos-/);
 });

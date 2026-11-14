@@ -1,29 +1,31 @@
-name: Validate Schleim OS app navigation and Sonos integration
+name: Validate Schleim OS app navigation and Store web apps
 
 on:
   push:
     branches: [main]
     paths:
       - '.github/workflows/sonos-validation.yml'
-      - 'extension/scripts/sonos-app.js'
       - 'extension/scripts/app.js'
       - 'extension/scripts/personalization.js'
+      - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
-      - 'integrations/sonos-worker/**'
       - 'extension/manifest.json'
       - 'extension/data/store-apps.json'
+      - 'Store/media/sonos-control.json'
+      - 'Store/media/README.md'
       - 'extension/standalone/schleim-os-standalone.html'
       - 'extension/tests/**'
   pull_request:
     paths:
       - '.github/workflows/sonos-validation.yml'
-      - 'extension/scripts/sonos-app.js'
       - 'extension/scripts/app.js'
       - 'extension/scripts/personalization.js'
+      - 'extension/pages/newtab.html'
       - 'extension/styles/personalization.css'
-      - 'integrations/sonos-worker/**'
       - 'extension/manifest.json'
       - 'extension/data/store-apps.json'
+      - 'Store/media/sonos-control.json'
+      - 'Store/media/README.md'
       - 'extension/standalone/schleim-os-standalone.html'
       - 'extension/tests/**'
   workflow_dispatch:
@@ -40,8 +42,6 @@ jobs:
           node-version: 22
       - name: Check JavaScript syntax
         run: |
-          node --check extension/scripts/sonos-app.js
-          node --check integrations/sonos-worker/src/index.js
           node --check extension/scripts/app.js
           node --check extension/scripts/personalization.js
       - name: Check app navigation regressions

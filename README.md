@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.13.5-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.13.6-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -38,7 +38,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
-- Sonos-App im Schleim-Store: eingebettete offizielle Sonos-Web-App mit 1280-Pixel-Desktop-Viewport und anpassbarer Skalierung
+- Sonos als normale Web-App im Schleim-Store: öffnet die offizielle Sonos-Web-App in einem neuen Browser-Tab
 - Update-Center in den Einstellungen: GitHub-Version prüfen und neueste ZIP-Datei herunterladen; die Installation bestätigt der Browser
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
@@ -49,7 +49,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 Der **Schleim-Store** ist nur nach einer Anmeldung mit dem Schleim-Konto verfügbar. Ohne Anmeldung bleiben App-Katalog, Suche, Bewertungen, Installationen und Vorschläge gesperrt. Nach erfolgreicher Anmeldung wird der Store freigeschaltet. Die Katalogdateien im öffentlichen GitHub-Repository bleiben unabhängig davon direkt auf GitHub einsehbar.
 
 - **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
-- **Installieren:** Eine Web-App öffnet sich in einem neuen Browser-Tab. Der Sonos-Einstieg öffnet die offizielle Sonos-Websteuerung in einem eigenen Tab.
+- **Installieren:** Jede Store-Web-App öffnet sich nach der Installation über dieselbe Funktion in einem neuen Browser-Tab.
 - **Einreichen:** Besucher können eigene Webseiten über das öffentliche [GitHub-Einreichungsformular](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md) vorschlagen.
 - **Lokale Webseiten übernehmen:** Importierte oder bereits lokal gespeicherte Webseiten erscheinen unter „Bisherige eigene Webseiten“. Mit „Im Schleim-Store einreichen“ werden ihre Daten in das Einreichungsformular übernommen. Ergänze eine aussagekräftige Beschreibung und sende den Vorschlag zur Prüfung auf GitHub ab.
 - **Bewerten:** Über die Sterne öffnest du ein GitHub-Formular und kannst zusätzlich einen Feedbacktext eintragen. Nach erfolgreicher Verarbeitung wird das Issue automatisch geschlossen. Jede Bewertung wird mit GitHub-Benutzername und optionalem Feedback als JSON-Datei im öffentlichen Ordner `Bewertungen/` gespeichert. GitHub Actions berechnet daraus den veröffentlichten Sterne-Durchschnitt und die Stimmenzahl. Pro GitHub-Konto und App zählt die neueste Bewertung.

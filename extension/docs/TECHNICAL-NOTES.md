@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.13.4
+# Technische Hinweise – Version 3.13.6
 
 ## Plattform und Erweiterungsformat
 
@@ -14,7 +14,6 @@
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
-- `scripts/sonos-app.js` stellt den einfachen Einstieg zur offiziellen Sonos-Websteuerung bereit. Die Anmeldung und Wiedergabe werden vollständig von Sonos verwaltet.
 - `../integrations/sonos-worker/src/index.js` bleibt als ältere, optionale Sonos-Control-API-Bridge im Repository erhalten, wird von der aktuellen Sonos-Kachel jedoch nicht mehr verwendet.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
@@ -51,15 +50,13 @@ Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig üb
 
 `chrome.runtime.requestUpdateCheck()` wird bewusst nicht verwendet: Diese API fragt den Update-Kanal der installierten Erweiterung ab und ist kein allgemeiner GitHub-ZIP-Installer. Siehe [Chrome Update Lifecycle](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle).
 
-## Sonos-Integration
+## Sonos-Web-App im Store
 
-Die aktuelle Sonos-Kachel öffnet `https://play.sonos.com/` in einem eigenen Browser-Tab. Schleim OS speichert keine Sonos-Zugangsdaten und benötigt dafür weder eine Sonos-Developer-Integration noch einen Cloudflare Worker oder KV-Speicher.
+Sonos ist ein normaler Web-App-Eintrag in `Store/media/sonos-control.json` und `data/store-apps.json`. Die ID `sonos-control` bleibt stabil, damit vorhandene Installationen erhalten bleiben. Beim Start prüft der allgemeine Store-Launcher die Schleim-Konto-Anmeldung und die Installation und öffnet anschließend `app.url` mit `window.open(..., '_blank', 'noopener,noreferrer')` in einem neuen Browser-Tab.
 
-Die frühere Cloudflare-Bridge unter `integrations/sonos-worker/` ist Legacy-Code und wird von der aktuellen Benutzeroberfläche nicht aufgerufen. Sie bleibt zunächst aus Kompatibilitätsgründen im Repository.
+Es gibt keine eigene Sonos-Systemkachel, keinen Sonos-spezifischen Renderer und kein Sonos-iFrame mehr. Die Anmeldung und Wiedergabe werden vollständig von der offiziellen Sonos-Web-App verwaltet. Schleim OS fragt keine Sonos-Zugangsdaten ab und benötigt für diesen Start keine API-Schlüssel oder eigenen Server.
 
-Als möglicher späterer Weg für eine eingebettete Steuerung kommt Home Assistant infrage. Dafür wären ein laufender Home-Assistant-Server, die Sonos-Integration und ein Long-Lived Access Token erforderlich. Die einfache Sonos-Websteuerung benötigt diese Komponenten nicht.
-
-Sonos 27mcp ist für kompatible MCP-/KI-Clients vorgesehen. Da Sonos die verfügbaren Tools und deren Schemata ohne Vorankündigung ändern kann und den Dienst nicht als festes API für normale Apps beschreibt, wird dieser Endpoint nicht als REST-API in Schleim OS fest verdrahtet.
+Der frühere Cloudflare-Worker unter `integrations/sonos-worker/` bleibt als nicht verwendeter Legacy-Code im Repository. Die Store-Web-App ruft ihn nicht auf.
 
 ## Werbung und externe Verbindungen
 

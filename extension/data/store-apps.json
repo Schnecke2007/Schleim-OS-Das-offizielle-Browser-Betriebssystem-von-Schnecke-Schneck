@@ -244,9 +244,9 @@
       "featured": true,
       "tags": "sonos lautsprecher musik audio multiroom spotify radio wiedergabe",
       "description": {
-        "de": "Öffne die offizielle Sonos-Websteuerung direkt aus Schleim OS. Keine API-Schlüssel oder eigene Server-Einrichtung erforderlich.",
-        "en": "Open the official Sonos web control from Schleim OS. No API keys or self-hosted server setup required.",
-        "nl": "Open de officiële Sonos-webbediening vanuit Schleim OS. Geen API-sleutels of eigen serverinstallatie nodig."
+        "de": "Öffnet die offizielle Sonos-Web-App in einem neuen Browser-Tab. Die Anmeldung erfolgt direkt bei Sonos.",
+        "en": "Opens the official Sonos web app in a new browser tab. Sign in directly with Sonos.",
+        "nl": "Opent de officiële Sonos-webapp in een nieuw browsertabblad. Je meldt je rechtstreeks bij Sonos aan."
       }
     }
   ]
