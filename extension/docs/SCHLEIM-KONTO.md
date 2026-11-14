@@ -62,3 +62,10 @@ GitHub-Zugriffstokens werden lokal im Erweiterungsprofil gespeichert, damit die 
 Bei **Abmelden** entfernt Schleim OS die lokal gespeicherten Anmeldetokens. Dadurch wird die Autorisierung bei GitHub nicht automatisch widerrufen. Um den Zugriff vollständig zu entziehen, entferne die GitHub-App zusätzlich in deinen GitHub-Kontoeinstellungen unter **Applications**.
 
 Das Repository muss privat bleiben. Schleim OS verweigert das Speichern, wenn das Repository öffentlich ist.
+
+
+## 4. Anmeldung für den Schleim-Store
+
+Der Schleim-Store innerhalb von Schleim OS ist nur verfügbar, wenn ein Schleim-Konto angemeldet ist. Ohne aktive Anmeldung bleiben Katalog, Kategorien, Bewertungen, Installations- und Vorschlagsfunktionen gesperrt. Nach der Anmeldung wird der Store automatisch freigeschaltet; beim Abmelden wird er wieder gesperrt.
+
+**Wichtige Abgrenzung:** Das ist eine Zugriffssperre in der Schleim-OS-Oberfläche. Die Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository bleiben weiterhin direkt über GitHub einsehbar. Vertrauliche Daten gehören nicht in diese öffentlichen Dateien.
