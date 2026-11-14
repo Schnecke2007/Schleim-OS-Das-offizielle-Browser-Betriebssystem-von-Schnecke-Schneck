@@ -38,6 +38,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - App-voorstellen indienen via een GitHub-issueformulier
 - Schleim-Store: toegang is alleen mogelijk na aanmelding met een Schleim-account
 - Schleim-account met GitHub-aanmelding en privécloudback-up van het startscherm
+- Native Sonos-app in de Schleim-Store: speakers en kamers kiezen en afspelen, volume, favorieten en afspeellijsten bedienen (eenmalige configuratie van de Cloudflare Bridge vereist)
 - Updatecentrum in de instellingen: GitHub-versie controleren en de nieuwste ZIP downloaden; de browser verzorgt de uiteindelijke installatie
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
@@ -48,7 +49,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 De **Schleim-Store** is alleen beschikbaar nadat je je met een Schleim-account hebt aangemeld. Zonder aanmelding blijven de appcatalogus, zoekfunctie, beoordelingen, installaties en voorstellen vergrendeld. Na een succesvolle aanmelding wordt de Store vrijgegeven. Catalogusbestanden in de openbare GitHub-repository blijven rechtstreeks op GitHub zichtbaar.
 
 - **Ontdekken:** Aanbevelingen, nieuwe apps, hoogste beoordelingen en categorieën.
-- **Installeren:** Een app wordt als tegel toegevoegd en opent de bijbehorende website in een nieuw browsertabblad.
+- **Installeren:** Een webapp opent in een nieuw browsertabblad. Native Schleim OS-apps zoals Sonos starten rechtstreeks binnen Schleim OS.
 - **Voorstellen:** Bezoekers kunnen websites voorstellen via het openbare [GitHub-inzendformulier](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md).
 - **Lokale websites indienen:** Geïmporteerde of eerder opgeslagen websites verschijnen onder „Eerder toegevoegde websites“. Kies „Indienen bij de Schleim-Store“ om de gegevens naar het inzendformulier over te nemen. Voeg een duidelijke beschrijving toe en dien het voorstel ter beoordeling in op GitHub.
 - **Beoordelen:** Met de sterren open je een GitHub-formulier waar je optioneel tekstuele feedback kunt toevoegen. Na succesvolle verwerking wordt het issue automatisch gesloten. Elke beoordeling wordt met de GitHub-gebruikersnaam en feedback als JSON-bestand opgeslagen in de openbare map `Bewertungen/`. GitHub Actions berekent het gepubliceerde Store-gemiddelde en het aantal stemmen op basis van deze bestanden; per GitHub-account en app telt de nieuwste beoordeling.
