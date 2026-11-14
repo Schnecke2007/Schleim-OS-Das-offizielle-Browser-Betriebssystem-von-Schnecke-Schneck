@@ -278,6 +278,7 @@
     let startY = 0;
     let holdTimer = null;
     let suppressClickUntil = 0;
+    let dragMoved = false;
     document.addEventListener('click', event => {
       if (Date.now() <= suppressClickUntil && event.target.closest('#homeAppGrid .app-icon')) {
         event.preventDefault(); event.stopImmediatePropagation();
@@ -287,10 +288,14 @@
       if (holdTimer) clearTimeout(holdTimer);
       holdTimer = null;
       if (dragging) {
-        suppressClickUntil = Date.now() + 450;
         candidate?.classList.remove('ssos-dragging');
         grid.classList.remove('ssos-reorder-active');
-        saveHomeOrder();
+        // A long press alone must remain a normal app tap. Suppress the
+        // generated click and save the order only after the pointer moved.
+        if (dragMoved) {
+          suppressClickUntil = Date.now() + 180;
+          saveHomeOrder();
+        }
       }
       candidate = null;
       dragging = false;
@@ -298,7 +303,7 @@
     grid.addEventListener('pointerdown', event => {
       const tile = event.target.closest('.app-icon');
       if (!tile || !grid.contains(tile) || event.button > 0) return;
-      candidate = tile; startX = event.clientX; startY = event.clientY; dragging = false;
+      candidate = tile; startX = event.clientX; startY = event.clientY; dragging = false; dragMoved = false;
       if (event.pointerType === 'touch') {
         holdTimer = setTimeout(() => {
           if (!candidate) return;
@@ -313,6 +318,7 @@
       const distance = Math.hypot(event.clientX - startX, event.clientY - startY);
       if (!dragging && event.pointerType !== 'touch' && distance > 5) {
         dragging = true;
+        dragMoved = true;
         candidate.classList.add('ssos-dragging');
         grid.classList.add('ssos-reorder-active');
       }
@@ -320,6 +326,7 @@
         if (event.pointerType === 'touch' && distance > 10) finish();
         return;
       }
+      if (distance > 8) dragMoved = true;
       event.preventDefault();
       const element = document.elementFromPoint(event.clientX, event.clientY);
       const target = element?.closest('.app-icon');
