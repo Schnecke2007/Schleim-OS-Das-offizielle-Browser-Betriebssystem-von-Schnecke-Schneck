@@ -43,13 +43,16 @@ function allowedApiPath(path, method) {
   if (new RegExp('^/households/' + id + '/(groups|favorites|playlists)$').test(path)) return method === 'GET';
   if (new RegExp('^/groups/' + id + '/playback$').test(path)) return method === 'GET';
   if (new RegExp('^/groups/' + id + '/playbackMetadata$').test(path)) return method === 'GET';
-  if (new RegExp('^/groups/' + id + '/groupVolume
+  if (new RegExp('^/groups/' + id + '/groupVolume$').test(path)) return method === 'GET' || method === 'POST';
+  if (new RegExp('^/groups/' + id + '/groupVolume/mute$').test(path)) return method === 'POST';
   if (new RegExp('^/groups/' + id + '/favorites$').test(path)) return method === 'POST';
   if (new RegExp('^/groups/' + id + '/playlists$').test(path)) return method === 'POST';
   if (new RegExp('^/groups/' + id + '/playback/(play|pause|togglePlayPause|skipToNextTrack|skipToPreviousTrack)$').test(path)) return method === 'POST';
-  if (new RegExp('^/groups/' + id + '/playback/seek
+  if (new RegExp('^/groups/' + id + '/playback/seek$').test(path)) return method === 'POST';
+  if (new RegExp('^/groups/' + id + '/playback/playMode$').test(path)) return method === 'POST';
   return false;
 }
+
 async function tokenRequest(env, form) {
   if (!env.SONOS_CLIENT_ID || !env.SONOS_CLIENT_SECRET || !env.SONOS_REDIRECT_URI) throw new Error('Sonos credentials are not configured on the bridge.');
   const credentials = btoa(env.SONOS_CLIENT_ID + ':' + env.SONOS_CLIENT_SECRET);
