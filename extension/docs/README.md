@@ -94,3 +94,9 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 ## Sonos-App
 
 - [Sonos-App einrichten](./SONOS-APP.md)
+
+
+## Release notes 3.13.0
+
+- [Release Notes 3.13.0](./RELEASE-NOTES-3.13.0.md)
+- [Sonos-App einrichten](./SONOS-APP.md)
