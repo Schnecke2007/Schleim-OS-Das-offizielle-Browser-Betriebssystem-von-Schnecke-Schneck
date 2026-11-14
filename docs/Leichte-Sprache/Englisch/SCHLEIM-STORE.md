@@ -61,6 +61,22 @@ Installed Store apps are temporarily hidden from the home screen.
 
 They appear again after you sign in.
 
+## Cloud backup
+
+There is no cloud backup in the Schleim-Store.
+
+You can find it only here:
+
+**Settings → Schleim account**
+
+You must start the backup yourself.
+
+It also saves your app order, installed Store apps and wallpaper.
+
+The backup is not created automatically.
+
+[Schleim account and cloud backup in plain language](ACCOUNT-CLOUD.md)
+
 ## Important
 
 Sign-in protects the Store inside Schleim OS.
