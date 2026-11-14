@@ -1,12 +1,47 @@
-# Technische Hinweise – Version 3.9.1
+# Technische Hinweise – Version 3.11.0
 
-- Shop-URL: `https://sites.google.com/view/schneckenshop/`; die vorherige eigenständige `shop.html` wurde aus der neuen Ausgabe entfernt.
-- Browsererweiterung: Manifest V3 mit `chrome_url_overrides.newtab`.
-- Erweiterungs-Root: nur `manifest.json`. Die Neuer-Tab-Seite liegt unter `pages/`, Scripts unter `scripts/`, Styles unter `styles/`, Icons unter `assets/icons/`, Übersetzungen unter `locales/` und Dokumentation unter `docs/`.
-- Optional host permissions: Webseiten-Metadaten werden nur nach Zustimmung zu der ausgewählten Website abgerufen. Wetter wird über Open-Meteo geladen.
-- Eigene Apps und Personalisierungsdaten werden lokal gespeichert. Das JSON-Backup exportiert die gespeicherten `ssos-`-Daten manuell und kann auf einem anderen Gerät importiert werden.
-- Externe Frames bleiben unter der jeweiligen Provider-Origin; Browser-Same-Origin-Regeln verhindern das automatische Überschreiben ihrer Texte. Ein Google-Translate-Link bleibt als Ausweichmöglichkeit verfügbar.
-- Deutsche offizielle Rechtstexte bleiben unverändert. Die englische und niederländische Ausgabe sind zusätzliche Leseübersetzungen und keine rechtsverbindliche Übersetzung.
-- Die Extension enthält keine Werbe-IFrames, keine Werbe-URL, keine Werbe-Hostberechtigung und keine Werbe-Erreichbarkeitsprüfung.
+## Plattform und Erweiterungsformat
 
-Die Homescreen-Reihenfolge wird in `ssos-personalization-v1.homeOrder` gespeichert und in die manuelle JSON-Sicherung aufgenommen. Das bestehende JSON-Backup enthält diese Property weiterhin.
+- **Plattform:** Chromium-basierte Browser mit Erweiterungsunterstützung
+- **Erweiterungsformat:** Manifest V3
+- **Neuer-Tab-Einstiegspunkt:** `pages/newtab.html`
+- **Neuer-Tab-Override:** `chrome_url_overrides.newtab`
+
+## Projektstruktur
+
+- `pages/` enthält die Erweiterungsoberfläche.
+- `scripts/app.js` steuert Apps und Navigation.
+- `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
+- `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
+- `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
+- `styles/` enthält die Stylesheets.
+- `locales/legal-translations.js` enthält Übersetzungen der Rechtstexte. Die übrigen Oberflächentexte werden über Sprachwörterbücher in den JavaScript-Dateien gepflegt.
+- `data/store-apps.json` und `data/store-ratings.json` sind die Laufzeitdaten für Katalog und Bewertungen.
+
+## Anmeldung und Berechtigungen
+
+Das Manifest verwendet unter anderem:
+- `storage` für lokale Erweiterungsdaten und die Schleim-Konto-Sitzung
+- `clipboardWrite` für das automatische Kopieren des GitHub-Gerätecodes
+- Host-Berechtigungen für GitHub-API, GitHub-Geräteautorisierung und öffentliche Laufzeitdaten
+
+Die GitHub-App verwendet den Device Flow. Der Anmeldeablauf öffnet zunächst die Installationsseite. Nach der Installation bestätigt die Person den nächsten Schritt, erhält einen Gerätecode und autorisiert die App auf GitHub. Danach prüft Schleim OS über `GET /user/installations`, ob die App-Installation für das Konto sichtbar ist.
+
+## Store-Zugriff
+
+Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Ohne gültige Sitzung bleiben Store-Katalog, Suche, Bewertungen, Installation, Deinstallation und Vorschlagsfunktionen gesperrt. Die öffentlichen Katalogdateien im GitHub-Repository sind dadurch nicht geschützt.
+
+## Speicherung und Backup
+
+- Personalisierungsdaten und Homescreen-Reihenfolge liegen lokal im Browserprofil.
+- Die Startbildschirm-Reihenfolge wird in `ssos-personalization-v1.homeOrder` gespeichert.
+- Installierte Store-Apps liegen in `ssos-store-v1.installed`.
+- Die ausgewählten System-Wallpaper-Einstellungen liegen in `ssos-wallpaper`; eigene Wallpaper-Daten werden in `ssos-personalization-v1` gespeichert.
+- Die Cloud-Sicherung ist eine manuelle Aktion unter **Einstellungen → Schleim-Konto**.
+- Backup-Format 2 umfasst alle unterstützten `ssos-` Einstellungen und zusätzlich explizite Snapshot-Felder für App-Reihenfolge, Store-Installationen und Hintergrundbild.
+- Format-1-Backups können weiterhin wiederhergestellt werden. Lokale JSON-Import-/Export-Steuerelemente sind nicht mehr Teil der aktuellen Oberfläche.
+- Es findet keine automatische Synchronisierung nach jeder Änderung statt.
+
+## Werbung und externe Verbindungen
+
+Die Erweiterungsoberfläche enthält keine Werbe-IFrames, Werbe-URL-Aufrufe oder werbebedingte Start-Sperre. Externe Apps und Websites können Netzwerkverbindungen herstellen, wenn sie geöffnet werden.
