@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.13.1
+# Technische Hinweise – Version 3.13.4
 
 ## Plattform und Erweiterungsformat
 
@@ -14,8 +14,8 @@
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
-- `scripts/sonos-app.js` stellt die native Sonos-Oberfläche mit OAuth-Sitzung, Lautsprecher-/Gruppenauswahl, Wiedergabesteuerung und Favoriten-/Playlist-Start bereit.
-- `../integrations/sonos-worker/src/index.js` ist die serverseitige OAuth- und Control-API-Bridge. Sonos-Client-Secret sowie Access-/Refresh-Tokens verbleiben auf dem Server.
+- `scripts/sonos-app.js` stellt den einfachen Einstieg zur offiziellen Sonos-Websteuerung bereit. Die Anmeldung und Wiedergabe werden vollständig von Sonos verwaltet.
+- `../integrations/sonos-worker/src/index.js` bleibt als ältere, optionale Sonos-Control-API-Bridge im Repository erhalten, wird von der aktuellen Sonos-Kachel jedoch nicht mehr verwendet.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
 - `locales/legal-translations.js` enthält Übersetzungen der Rechtstexte. Die übrigen Oberflächentexte werden über Sprachwörterbücher in den JavaScript-Dateien gepflegt.
@@ -53,7 +53,13 @@ Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig üb
 
 ## Sonos-Integration
 
-Die Sonos-App verwendet die offizielle Sonos Control API über einen separat bereitzustellenden Cloudflare Worker. Die Anmeldung erfolgt per OAuth Authorization Code Flow mit getrennten, zufälligen Werten für den einmaligen OAuth-Status und den langlebigen Bearer-Sitzungsschlüssel. Der Worker speichert Sonos-Tokens in einem privaten KV-Namespace, erlaubt Browserzugriffe nur von unterstützten Erweiterungsherkünften und beschränkt API-Aufrufe auf eine feste Routen-Allowlist. `sonosControlConfig` wird lokal gespeichert und nicht in das Schleim-Cloud-Backup aufgenommen. Eine Anleitung für Sonos Developer Integration, Cloudflare Worker und KV steht in `SONOS-APP.md`. Das Textfeld startet gespeicherte Sonos-Favoriten und Playlists. Die allgemeine Musiksuche über mehrere Musikdienste wird separat über die geplante Spotify-Web-API-Anbindung ergänzt; sie ist in Version 3.13.1 noch nicht aktiv.
+Die aktuelle Sonos-Kachel öffnet `https://play.sonos.com/` in einem eigenen Browser-Tab. Schleim OS speichert keine Sonos-Zugangsdaten und benötigt dafür weder eine Sonos-Developer-Integration noch einen Cloudflare Worker oder KV-Speicher.
+
+Die frühere Cloudflare-Bridge unter `integrations/sonos-worker/` ist Legacy-Code und wird von der aktuellen Benutzeroberfläche nicht aufgerufen. Sie bleibt zunächst aus Kompatibilitätsgründen im Repository.
+
+Als möglicher späterer Weg für eine eingebettete Steuerung kommt Home Assistant infrage. Dafür wären ein laufender Home-Assistant-Server, die Sonos-Integration und ein Long-Lived Access Token erforderlich. Die einfache Sonos-Websteuerung benötigt diese Komponenten nicht.
+
+Sonos 27mcp ist für kompatible MCP-/KI-Clients vorgesehen. Da Sonos die verfügbaren Tools und deren Schemata ohne Vorankündigung ändern kann und den Dienst nicht als festes API für normale Apps beschreibt, wird dieser Endpoint nicht als REST-API in Schleim OS fest verdrahtet.
 
 ## Werbung und externe Verbindungen
 
