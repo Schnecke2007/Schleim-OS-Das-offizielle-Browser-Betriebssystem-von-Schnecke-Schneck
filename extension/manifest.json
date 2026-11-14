@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck",
   "short_name": "Schleim OS",
-  "version": "3.10.0",
-  "description": "Schleim OS – personalisierbare Neuer-Tab-Oberfläche mit Schleim-Store und optionaler GitHub-Cloud-Sicherung.",
+  "version": "3.11.0",
+  "description": "Schleim OS – personalisierbare Neuer-Tab-Oberfläche mit anmeldungspflichtigem Schleim-Store und optionaler GitHub-Cloud-Sicherung in den Einstellungen.",
   "chrome_url_overrides": {
     "newtab": "pages/newtab.html"
   },
@@ -27,7 +27,8 @@
     "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: blob: http: https:; frame-src https: http:; connect-src 'self' http: https:"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
   "minimum_chrome_version": "102"
 }
