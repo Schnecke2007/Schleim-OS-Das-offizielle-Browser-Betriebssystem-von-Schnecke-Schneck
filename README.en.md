@@ -121,7 +121,7 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 
 ## 📖 Plain-language documentation
 
-Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics.
+Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md).
 
 ## 📁 Project structure
 
