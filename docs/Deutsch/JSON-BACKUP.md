@@ -1,6 +1,6 @@
 # Cloud-Sicherung mit dem Schleim-Konto
 
-> **Hinweis zu älteren Versionen:** Die frühere lokale JSON-Import- und Exportfunktion ist in der aktuellen Oberfläche von Schleim OS 3.11.0 nicht mehr verfügbar. Diese Seite erklärt die aktuelle Cloud-Sicherung und den Umgang mit alten Dateien.
+> **Hinweis zu älteren Versionen:** Die frühere lokale JSON-Import- und Exportfunktion ist in der aktuellen Oberfläche von Schleim OS 3.12.0 nicht mehr verfügbar. Diese Seite erklärt die aktuelle Cloud-Sicherung und den Umgang mit alten Dateien.
 
 ## Neue Cloud-Sicherung erstellen
 
