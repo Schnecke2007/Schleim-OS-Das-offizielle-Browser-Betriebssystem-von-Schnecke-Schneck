@@ -159,6 +159,7 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 │   ├── scripts/
 │   │   ├── app.js
 │   │   ├── personalization.js
+│   │   ├── schleim-account.js
 │   │   └── slime-store-admin.js
 │   ├── standalone/schleim-os-standalone.html
 │   ├── styles/
