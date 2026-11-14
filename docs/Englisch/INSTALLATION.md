@@ -30,7 +30,7 @@ The Schleim-Store is available only after you sign in with a Schleim account.
 2. Schleim OS first opens the [Schleim OS Account GitHub App page](https://github.com/apps/schleim-os-account).
 3. Install the app for your GitHub account.
 4. Return to Schleim OS and select **I installed the app – continue**.
-5. Follow the device-code screen. Schleim OS copies the code after a short delay and then opens GitHub device authorization.
+5. Follow the device-code screen. Schleim OS tries to copy the code after a short delay. If this does not work, use **Copy code**. The GitHub device authorization page then opens.
 6. Approve the app on the real GitHub page.
 
 After authorization, Schleim OS checks whether the app installation is detected. See the [Schleim account guide](../../extension/docs/SCHLEIM-KONTO.md) for details.
