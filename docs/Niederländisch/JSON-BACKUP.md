@@ -1,29 +1,23 @@
-# JSON-back-up voor Schleim OS
+# Cloudback-up met het Schleim-account
 
-Schleim OS slaat je personalisatie lokaal op in de browser. Er vindt geen automatische cloud- of browsersynchronisatie plaats. Met het JSON-bestand kun je je instellingen handmatig back-uppen en op hetzelfde of een ander apparaat herstellen.
+> **Opmerking over oudere versies:** De lokale JSON-import- en exportfunctie is in Schleim OS 3.10.0 vervangen door het Schleim-account. Deze pagina is nu alleen nog een melding voor JSON-back-ups uit oudere versies.
 
-## Een back-up exporteren
+## Een nieuwe back-up maken
 
-1. Open **Instellingen** in Schleim OS.
-2. Scrol naar **Configuratiebestand (JSON)**.
-3. Kies **Startscherm exporteren**.
-4. Het bestand `schnecke-schneck-homescreen-JJJJ-MM-DD.json` wordt gedownload. Bewaar het op een veilige plek.
+1. Stel eerst de GitHub-app in. Zie [Schleim-account instellen](../../extension/docs/SCHLEIM-KONTO.md).
+2. Open de **Schleim Store** of **Instellingen**.
+3. Kies bij **Schleim-account** de optie **Verbinden met GitHub**.
+4. Bevestig de eenmalige apparaatcode rechtstreeks bij GitHub.
+5. Kies **Nu opslaan in de cloud**.
 
-De export bevat de opgeslagen Schleim OS-instellingen met het voorvoegsel `ssos-`, waaronder eigen websitetegels, de volgorde van tegels, ontwerp, accentkleur, achtergrond, vergrendelscherminstellingen en geïnstalleerde Store-apps. Lokaal opgeslagen achtergrondafbeeldingen kunnen het JSON-bestand groter maken.
+Schleim OS maakt het bestand `schleim-os-backup.json` aan in je privérepository `schleim-os-cloud` of werkt het bij.
 
-## Een back-up importeren
+## Herstellen op een ander apparaat
 
-1. Open Schleim OS op het doelapparaat en ga naar **Instellingen**.
-2. Scrol naar **Configuratiebestand (JSON)**.
-3. Kies **Startscherm importeren**.
-4. Selecteer het JSON-bestand dat je eerder hebt geëxporteerd.
-5. Bevestig de import. Schleim OS laadt de interface daarna opnieuw.
+Meld je op dat apparaat met hetzelfde GitHub-account aan bij het Schleim-account en kies **Cloudback-up herstellen**. De huidige instellingen van het apparaat worden vervangen door de opgeslagen back-up.
 
-Het importeren vervangt de instellingen uit het back-upbestand op het doelapparaat. Exporteer eerst de huidige instellingen van dat apparaat als je deze wilt bewaren.
+## Oudere JSON-bestanden
 
-## Belangrijk
+JSON-bestanden die met eerdere versies van Schleim OS zijn geëxporteerd, kunnen in versie 3.10.0 niet meer via de interface worden geïmporteerd. Bewaar bestaande bestanden apart. Oude bestanden worden niet automatisch naar de cloud gemigreerd.
 
-- De back-up wordt niet automatisch geüpload of overgedragen.
-- Voor een apparaatwissel moet je het JSON-bestand zelf naar het andere apparaat overbrengen.
-- Het JSON-bestand kan persoonlijke websitelinks en eigen instellingen bevatten. Deel het daarom alleen met personen die je vertrouwt.
-- De Schleim-Store blijft zonder aanmelding beschikbaar.
+**Beveiliging:** De cloudrepository moet privé blijven. Schleim OS slaat geen wachtwoorden of toegangstokens op in het back-upbestand.
