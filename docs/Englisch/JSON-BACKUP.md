@@ -1,6 +1,6 @@
 # Cloud backup with the Schleim account
 
-> **Note about older versions:** The previous local JSON import/export feature is no longer available in the Schleim OS 3.11.0 interface. This page explains the current cloud backup and what to do with older files.
+> **Note about older versions:** The previous local JSON import/export feature is no longer available in the Schleim OS 3.12.0 interface. This page explains the current cloud backup and what to do with older files.
 
 ## Create a new cloud backup
 
