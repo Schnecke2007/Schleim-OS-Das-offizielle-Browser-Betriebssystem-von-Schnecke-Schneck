@@ -15,7 +15,8 @@ Je ziet dan een eigen startpagina met tegels voor apps en websites.
 - Apps en websites openen via tegels.
 - De tegels verplaatsen.
 - Het ontwerp, de kleur en de achtergrond veranderen.
-- Instellingen opslaan in een JSON-bestand.
+- Je instellingen met je Schleim-account in de cloud opslaan.
+- De Schleim-Store toont apps en websites. Je hebt een Schleim-account nodig om de Store te gebruiken.
 - De interface gebruiken in het Duits, Engels en Nederlands.
 
 ## Probeer de demo
@@ -31,6 +32,12 @@ Pak het bestand niet uit.
 Importeer het ZIP-bestand in een browser die deze import ondersteunt.
 
 Lees de [installatiehandleiding in eenvoudige taal](INSTALLATIE.md).
+
+## De Schleim-Store
+
+De Schleim-Store is alleen beschikbaar na aanmelding. Je kunt apps zoeken, installeren en beoordelen.
+
+[Lees de eenvoudige uitleg over de Schleim-Store](SCHLEIM-STORE.md)
 
 ## Hulp krijgen
 
