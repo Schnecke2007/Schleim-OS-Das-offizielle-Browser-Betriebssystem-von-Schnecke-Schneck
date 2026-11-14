@@ -58,6 +58,7 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 
 ## Versionshinweise
 
+- [Release Notes 3.13.3](RELEASE-NOTES-3.13.3.md)
 - [Release Notes 3.13.2](RELEASE-NOTES-3.13.2.md)
 - [Release Notes 3.13.1](RELEASE-NOTES-3.13.1.md)
 - [Release Notes 3.13.0](RELEASE-NOTES-3.13.0.md)
