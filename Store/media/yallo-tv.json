@@ -1,0 +1,16 @@
+{
+  "id": "yallo-tv",
+  "name": "Yallo TV",
+  "url": "https://yallo.tv/",
+  "category": "media",
+  "icon": "🌐",
+  "iconUrl": "https://yallo.tv/favicon.ico",
+  "tags": "yallo tv",
+  "addedAt": "2026-11-14",
+  "featured": true,
+  "description": {
+    "de": "Yallo TV – Dein ultimatives TV-Erlebnis mit Schweizer Vielfalt!\n\nErlebe Fernsehen völlig neu mit Yallo TV. Streame deine Lieblingssender, packende Serien und Live-Sport in brillanter Qualität. Dank nahtloser Schweizer IP-Anbindung genießt du vollen Zugriff auf das Schweizer Fernsehprogramm, Replay-Funktionen und brillante HD-Streams – egal, wo du gerade bist.",
+    "en": "Yallo TV – Your ultimate TV experience with Swiss diversity!\n\nExperience television in a whole new way with Yallo TV. Stream your favorite channels, gripping series, and live sports in brilliant quality. Thanks to seamless Swiss IP routing, enjoy full access to Swiss broadcasting, replay features, and stunning HD streams – wherever you are.",
+    "nl": "Yallo TV – Jouw ultieme tv-beleving met Zwitserse veelzijdigheid!\n\nErvaar televisie op een hele nieuwe manier met Yallo TV. Stream je favoriete zenders, spannende series en live sport in schitterende kwaliteit. Dankzij een soepele Zwitserse IP-verbinding geniet je van volledige toegang tot de Zwitserse tv-programmering, terugkijkfuncties en haarscherpe HD-streams – waar je ook bent."
+  }
+}
