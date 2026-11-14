@@ -450,7 +450,7 @@
       const description=state?.ready?st('loginRequiredIntro'):st('checkingAccount');
       return '<div class="ssos-store-page ssos-store-gate">'+
         '<div class="app-hero ssos-store-lock-hero"><p class="eyebrow">SCHNECKE SCHNECK · SCHLEIM-STORE</p><h2>'+esc(st('loginRequiredTitle'))+'</h2><p>'+esc(description)+'</p><span class="large-emoji">🔒</span></div>'+
-        '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account></section></div>';
+        '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account data-ssos-cloud-mode="login"></section></div>';
     }
     storeView.query='';storeView.category='all';
     const categories=[...new Set(STORE_CATALOG.map(app=>app.category))];
@@ -458,7 +458,6 @@
     const categoryOptions=Object.entries(STORE_TEXT[LANG()]?.categories||STORE_TEXT.de.categories).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
     const markup='<div class="ssos-store-page"><div class="app-hero ssos-store-hero"><p class="eyebrow">SCHNECKE SCHNECK · SCHLEIM-STORE</p><h2>Schleim-Store</h2><p>'+esc(st('intro'))+'</p><span class="large-emoji">🛍️</span></div>'+
       '<label class="ssos-store-search"><span>⌕</span><input id="ssosStoreSearch" type="search" placeholder="'+esc(st('search'))+'" autocomplete="off"></label>'+
-      '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account></section>'+
       '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
       '<div class="ssos-store-system-note">🔒 '+esc(st('systemNote'))+'</div><div class="ssos-store-system-note">⭐ '+esc(st('ratingPublic'))+'</div>'+
       '<div id="ssosStoreDiscover">'+
@@ -750,7 +749,19 @@
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, refreshStoreRatings:loadStoreRatings, getStoreCatalog:()=>hasStoreAccess()?STORE_CATALOG.map(app=>({...app,description:{...app.description}})):[], getApps, openCustomApp, openStoreApp});
+  function getCloudBackupDesign() {
+    let systemWallpaper='midnight';
+    try { const raw=localStorage.getItem('ssos-wallpaper'); if(raw!==null)systemWallpaper=JSON.parse(raw); }
+    catch { const raw=localStorage.getItem('ssos-wallpaper'); if(raw!==null)systemWallpaper=raw; }
+    return {
+      personalization:JSON.parse(JSON.stringify(config)),
+      store:JSON.parse(JSON.stringify(storeState)),
+      homeAppOrder:Array.isArray(config.homeOrder)?[...config.homeOrder]:[],
+      installedStoreApps:[...storeState.installed],
+      wallpaper:{system:systemWallpaper,customUrl:config.wallpaperUrl||'',customImageIncluded:!!config.wallpaperData}
+    };
+  }
+  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, refreshStoreRatings:loadStoreRatings, getStoreCatalog:()=>hasStoreAccess()?STORE_CATALOG.map(app=>({...app,description:{...app.description}})):[], getApps, getCloudBackupDesign, openCustomApp, openStoreApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
