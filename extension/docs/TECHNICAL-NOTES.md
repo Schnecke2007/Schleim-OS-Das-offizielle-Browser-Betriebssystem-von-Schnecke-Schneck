@@ -53,7 +53,7 @@ Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig üb
 
 ## Sonos-Integration
 
-Die Sonos-App verwendet die offizielle Sonos Control API über einen separat bereitzustellenden Cloudflare Worker. Die Anmeldung erfolgt per OAuth Authorization Code Flow. Der Worker speichert Sonos-Tokens in einem privaten KV-Namespace und stellt der Erweiterung nur eine zufällige Sitzungskennung bereit. `sonosControlConfig` wird lokal gespeichert und nicht in das Schleim-Cloud-Backup aufgenommen. Eine Anleitung für Sonos Developer Integration, Cloudflare Worker und KV steht in `SONOS-APP.md`. Texteingaben können gespeicherte Sonos-Favoriten und Playlists finden und starten; eine universelle Musiksuche über beliebige verbundene Dienste wird von der Control API für Drittanbieter nicht allgemein angeboten.
+Die Sonos-App verwendet die offizielle Sonos Control API über einen separat bereitzustellenden Cloudflare Worker. Die Anmeldung erfolgt per OAuth Authorization Code Flow mit getrennten, zufälligen Werten für den einmaligen OAuth-Status und den langlebigen Bearer-Sitzungsschlüssel. Der Worker speichert Sonos-Tokens in einem privaten KV-Namespace, erlaubt Browserzugriffe nur von unterstützten Erweiterungsherkünften und beschränkt API-Aufrufe auf eine feste Routen-Allowlist. `sonosControlConfig` wird lokal gespeichert und nicht in das Schleim-Cloud-Backup aufgenommen. Eine Anleitung für Sonos Developer Integration, Cloudflare Worker und KV steht in `SONOS-APP.md`. Das Textfeld startet gespeicherte Sonos-Favoriten und Playlists. Die allgemeine Musiksuche über mehrere Musikdienste wird separat über die geplante Spotify-Web-API-Anbindung ergänzt; sie ist in Version 3.13.1 noch nicht aktiv.
 
 ## Werbung und externe Verbindungen
 
