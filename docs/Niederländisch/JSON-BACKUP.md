@@ -32,3 +32,6 @@ JSON-bestanden uit de vorige lokale exportfunctie kunnen niet via de huidige int
 Oudere cloudback-ups in formaat 1 die met het Schleim-account zijn gemaakt, kunnen nog steeds worden hersteld.
 
 **Beveiliging:** De cloudrepository moet privé blijven. GitHub-wachtwoorden en toegangstokens worden nooit in het back-upbestand opgeslagen.
+
+
+**Opmerking over de standalone-demo:** Het aparte bestand `extension/standalone/schleim-os-standalone.html` heeft eigen lokale import-/exportfuncties voor demo-instellingen. Dit is niet de cloudback-up van de volledige extensie en neemt geen GitHub-accountsessie mee.
