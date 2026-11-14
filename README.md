@@ -38,7 +38,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - App-Vorschläge über ein GitHub-Issue-Formular einreichen
 - Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
-- Sonos-App im Schleim-Store: öffnet die offizielle Sonos-Websteuerung – ohne API-Key, Cloudflare-Bridge oder eigene Server-Einrichtung
+- Sonos-App im Schleim-Store: eingebettete offizielle Sonos-Web-App mit 1280-Pixel-Desktop-Viewport und anpassbarer Skalierung
 - Update-Center in den Einstellungen: GitHub-Version prüfen und neueste ZIP-Datei herunterladen; die Installation bestätigt der Browser
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
