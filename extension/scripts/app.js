@@ -53,6 +53,7 @@
     {id:'google',name:'Google-Profil',icon:'⭐',hint:'Creator Studio bewerten',keys:'google bewertung rezension maps'},
     {id:'images',name:'Bilder',icon:'🖼️',hint:'Bildergalerie der offiziellen Fan-Webseite',keys:'bilder galerie fotos wix medien'},
     {id:'legal',name:'Rechtliches',icon:'⚖️',hint:'Impressum, Datenschutz und AGBs',keys:'rechtliches impressum datenschutz agb agbs bedingungen'},
+    {id:'sonos',name:'Sonos',icon:'🔊',hint:'Sonos-Lautsprecher und Musik steuern',keys:'sonos lautsprecher musik raumgruppe play pause volume spotify radio'},
     {id:'settings',name:'Einstellungen',icon:'⚙️',hint:'Darstellung und Kontrollzentrum',keys:'einstellungen wallpaper design helligkeit'}
   ];
 
@@ -96,11 +97,11 @@
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings'},
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Images',legal:'Legal information',settings:'Settings',sonos:'Sonos'},
     nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Afbeeldingen',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Official fan website image gallery',legal:'Imprint, privacy policy and terms',settings:'Appearance and language',sonos:'Control Sonos speakers and music'},
     nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Ontdek apps in de Schleim-Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
@@ -603,6 +604,7 @@
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
     slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Schleim-Store konnte nicht geladen werden.</p>',
+    sonos:()=>window.SSOSSonosApp?.render?.() || '<p class="body-copy">Sonos-App konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
@@ -631,7 +633,7 @@
     try{
       rendered=RENDERERS[id]();
       if(typeof rendered!=='string'||!rendered.trim())throw new Error('The app renderer returned no content.');
-      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='slimestore'||id==='sonos')?rendered:localize(rendered);
     }catch(error){
       console.error('[Schleim OS] Could not open app:',id,error);
       if(id==='images'){
@@ -641,7 +643,8 @@
       }
       els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     }
-    $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
+    if(id==='sonos') window.SSOSSonosApp?.mount?.(els.appContent);
+    $('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=WIX_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige Wix-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
@@ -649,6 +652,7 @@
     els.home.classList.add('hidden');els.panel.classList.add('hidden');els.search.classList.add('hidden');els.app.classList.remove('hidden');
     els.appContent.scrollTop=0;
   }
+  window.addEventListener('ssos-open-native-app',event=>{if(event.detail?.id==='sonos')openApp('sonos');});
   function goHome(){activeAppId=null;projectHubActive=false;contactHubActive=false;els.app.classList.add('hidden');els.panel.classList.add('hidden');els.search.classList.add('hidden');els.lock.classList.add('hidden');els.home.classList.remove('hidden');}
   function openControl(){els.panel.classList.remove('hidden');els.search.classList.add('hidden');syncControl();}
   function openSearch(){els.search.classList.remove('hidden');els.panel.classList.add('hidden');els.searchInput.value='';renderSearch('');setTimeout(()=>els.searchInput.focus(),80);}
