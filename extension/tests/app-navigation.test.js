@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const root = path.resolve(__dirname, '../..');
+const root = path.resolve(__dirname, '..');
 const appSource = fs.readFileSync(path.join(root, 'scripts/app.js'), 'utf8');
 const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-standalone.html'), 'utf8');
 
