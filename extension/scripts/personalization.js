@@ -453,7 +453,8 @@
     const categoryOptions=Object.entries(STORE_TEXT[LANG()]?.categories||STORE_TEXT.de.categories).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
     const markup='<div class="app-hero ssos-store-hero"><p class="eyebrow">SCHNECKE SCHNECK · SCHLEIM-STORE</p><h2>Schleim-Store</h2><p>'+esc(st('intro'))+'</p><span class="large-emoji">🛍️</span></div>'+
       '<label class="ssos-store-search"><span>⌕</span><input id="ssosStoreSearch" type="search" placeholder="'+esc(st('search'))+'" autocomplete="off"></label>'+
-      '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account></section>'+\n      '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
+      '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account></section>'+
+      '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
       '<div class="ssos-store-system-note">🔒 '+esc(st('systemNote'))+'</div><div class="ssos-store-system-note">⭐ '+esc(st('ratingPublic'))+'</div>'+
       '<div id="ssosStoreDiscover">'+
         '<section class="ssos-store-section"><h3>'+esc(st('recommended'))+'</h3><div class="ssos-store-grid" id="ssosStoreFeatured"></div></section>'+
@@ -593,8 +594,7 @@
         <div class="ssos-form-actions"><button class="app-button" type="button" id="ssosSaveLock">${esc(t('saveLock'))}</button><button class="app-button secondary" type="button" id="ssosRefreshWeather">${esc(t('weather'))}</button></div>
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
-      <div class="ssos-card">
-        <div class="ssos-cloud-account ssos-settings-cloud" data-ssos-cloud-account></div>
+      <div class="ssos-cloud-account ssos-settings-cloud" data-ssos-cloud-account></div>
 `;
     mount.appendChild(section);
     $('#ssosAccentPicker').addEventListener('input',e=>$('#ssosAccentHex').value=e.target.value);
