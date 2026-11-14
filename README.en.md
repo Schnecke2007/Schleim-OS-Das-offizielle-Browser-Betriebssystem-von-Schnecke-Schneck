@@ -38,7 +38,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Submit app suggestions through a GitHub issue form
 - Schleim-Store: access requires signing in with a Schleim account
 - Schleim account with GitHub sign-in and private cloud backup of the home screen
-- Sonos app entry in the Schleim-Store: opens the official Sonos web control – no API key, Cloudflare Bridge or self-hosted server setup required
+- Sonos app in the Schleim-Store: embeds the official Sonos web app using a 1280-pixel desktop layout viewport with optional scaling
 - Settings update center: check the GitHub version and download the latest ZIP; the browser handles the final installation
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
