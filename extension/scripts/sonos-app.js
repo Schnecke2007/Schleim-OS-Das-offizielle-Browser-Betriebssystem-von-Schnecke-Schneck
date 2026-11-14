@@ -465,8 +465,7 @@
       const results = await Promise.all([
         api('/groups/' + groupId + '/playback'),
         api('/groups/' + groupId + '/playbackMetadata'),
-        api('/groups/' + groupId + '/groupVolume'),
-        api('/groups/' + groupId + '/playback/playMode').catch(() => ({}))
+        api('/groups/' + groupId + '/groupVolume')
       ]);
       playback = results[0] || {};
       metadata = results[1] || {};
@@ -609,7 +608,7 @@
   async function playPlaylist(id) {
     const groupId = safeId(selectedGroup());
     if (!groupId || !id) return;
-    await action('/groups/' + groupId + '/playlists', 'POST', { playlistId: id, action: 'PLAY_NOW' });
+    await action('/groups/' + groupId + '/playlists', 'POST', { playlistId: id, action: 'PLAY_NOW', playOnCompletion: true });
   }
   function normalizeSearch(value) {
     return String(value || '').toLocaleLowerCase(lang()).replace(/^(spiele|spiel|play|speel)\s+/i, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
