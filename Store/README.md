@@ -21,9 +21,9 @@ Dieses Verzeichnis enthält die freigegebenen Apps des Schleim-Stores. Jede App 
 
 Der Schleim-Store innerhalb der Browser-Erweiterung ist nur nach Anmeldung mit einem **Schleim-Konto** verfügbar. Ohne Anmeldung bleiben Katalog, Suche, Bewertungen, Installationen, Deinstallationen und App-Vorschläge gesperrt.
 
-Beim ersten Anmelden öffnet Schleim OS die GitHub-App-Seite [Schleim OS Account](https://github.com/apps/schleim-os-account). Installiere die App für dein GitHub-Konto und bestätige danach in Schleim OS den nächsten Schritt. Der Gerätecode wird angezeigt, automatisch kopiert und die GitHub-Gerätefreigabe geöffnet. Nach der Autorisierung prüft Schleim OS, ob GitHub die App-Installation erkannt hat.
+Beim ersten Anmelden öffnet Schleim OS die GitHub-App-Seite [Schleim OS Account](https://github.com/apps/schleim-os-account). Installiere die App für dein GitHub-Konto und bestätige danach in Schleim OS den nächsten Schritt. Der Gerätecode wird angezeigt. Nach kurzer Verzögerung versucht Schleim OS, ihn automatisch zu kopieren; manuelles Kopieren bleibt möglich. Danach öffnet sich die GitHub-Gerätefreigabe. Nach der Autorisierung prüft Schleim OS, ob GitHub die App-Installation erkannt hat. Die Prüfung kann bis zu fünf Minuten dauern.
 
-**Die Cloud-Sicherung gehört nicht zum Store.** Sie ist ausschließlich unter **Einstellungen → Schleim-Konto** verfügbar.
+**Die Cloud-Sicherung gehört nicht zum Store.** Sie ist ausschließlich unter **Einstellungen → Schleim-Konto** verfügbar und wird manuell gestartet. Es gibt keine automatische Synchronisierung nach jeder Änderung.
 
 ## App-Vorschläge und Veröffentlichung
 
@@ -36,6 +36,14 @@ Beim ersten Anmelden öffnet Schleim OS die GitHub-App-Seite [Schleim OS Account
 ## Öffentlichkeit und Datenschutz
 
 Dieses Verzeichnis und seine Dateien sind Teil eines öffentlichen GitHub-Repositories. Die Anmeldung schützt die Store-Oberfläche in Schleim OS, nicht die Dateien hier auf GitHub. App-Namen, URLs, Kategorien, Beschreibungen, Bewertungen und eingereichte GitHub-Issues können öffentlich eingesehen werden. Lege hier keine Tokens, Passwörter, privaten Daten oder vertraulichen Inhalte ab.
+
+## Store-Anleitungen in drei Sprachen
+
+- [Deutsch – Store-Anleitung](./Deutsch/README.md)
+- [English – Store guide](./Englisch/README.md)
+- [Nederlands – Store-handleiding](./Niederländisch/README.md)
+
+Die Anleitungen erklären Anmeldung, Installation, Bewertungen, Vorschläge, Abmeldung und den Ort der Cloud-Sicherung.
 
 ## Store in Leichter Sprache
 
