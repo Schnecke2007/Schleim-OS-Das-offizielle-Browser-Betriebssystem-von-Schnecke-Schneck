@@ -26,6 +26,12 @@ Je ziet dan een eigen startpagina met tegels voor apps en websites.
 
 De demo is één HTML-bestand. Je kunt de interface ermee uitproberen. De demo installeert geen browseruitbreiding.
 
+## Updates
+
+Je kunt in de instellingen controleren op nieuwe versies.
+
+[Lees de eenvoudige updatehandleiding](UPDATES.md)
+
 ## De uitbreiding installeren
 
 Download het volledige ZIP-bestand van GitHub.
