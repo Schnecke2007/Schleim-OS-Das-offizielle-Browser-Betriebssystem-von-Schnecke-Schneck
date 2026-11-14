@@ -83,3 +83,8 @@ Backups im älteren Format 1 können weiterhin wiederhergestellt werden. Die fr�
 - [Hauptdokumentation](../../docs/README.md)
 - [Installationsanleitung](../../docs/Deutsch/INSTALLATION.md)
 - [Technische Hinweise](TECHNICAL-NOTES.md)
+- [English account guide](../../docs/Englisch/SCHLEIM-ACCOUNT.md)
+- [Nederlandse accountgids](../../docs/Niederländisch/SCHLEIM-ACCOUNT.md)
+- [Leichte Sprache – Deutsch](../../docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md)
+- [Plain language – English](../../docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md)
+- [Eenvoudige taal – Nederlands](../../docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md)
