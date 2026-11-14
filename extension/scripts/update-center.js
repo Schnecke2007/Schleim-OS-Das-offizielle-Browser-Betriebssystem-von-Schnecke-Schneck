@@ -150,7 +150,7 @@
       status.textContent = text.checking;
 
       try {
-        if (!currentVersion || !/^\\d+(?:\\.\\d+){1,3}$/.test(currentVersion)) {
+        if (!currentVersion || !/^\d+(?:\.\d+){1,3}$/.test(currentVersion)) {
           throw new Error('installed-version');
         }
 
@@ -169,7 +169,7 @@
           remoteManifest.name !== currentManifest.name ||
           remoteManifest.manifest_version !== 3 ||
           typeof remoteManifest.version !== 'string' ||
-          !/^\\d+(?:\\.\\d+){1,3}$/.test(remoteManifest.version)
+          !/^\d+(?:\.\d+){1,3}$/.test(remoteManifest.version)
         ) {
           throw new Error('invalid-manifest');
         }
