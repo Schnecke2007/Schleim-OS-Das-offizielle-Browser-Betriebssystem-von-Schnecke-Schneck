@@ -35,9 +35,19 @@ Manche Webseiten erlauben nicht, dass sie in Schleim OS angezeigt werden.
 
 ## Einstellungen fehlen
 
-Die Einstellungen werden im Browser-Profil gespeichert.
-Bei einem anderen Browser können die Einstellungen fehlen.
-Nutze die JSON-Sicherung, wenn du sie vorher erstellt hast.
+Die Einstellungen werden zuerst im Browser gespeichert.
+Für einen anderen Browser kannst du die Cloud-Sicherung nutzen.
+Öffne **Einstellungen → Schleim-Konto**.
+Melde dich mit demselben GitHub-Konto an.
+Wähle **Cloud-Sicherung wiederherstellen**.
+
+## Der Schleim-Store ist gesperrt
+
+Du bist nicht angemeldet.
+Öffne den Store und wähle **Mit GitHub verbinden**.
+Prüfe, ob du die GitHub-App **Schleim OS Account** installiert hast.
+
+[Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
 
 ## Du brauchst weitere Hilfe?
 
