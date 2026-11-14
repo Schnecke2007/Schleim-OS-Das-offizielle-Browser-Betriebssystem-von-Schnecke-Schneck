@@ -537,14 +537,14 @@
       seek.disabled = !canSeek;
     }
     const playing = state === 'PLAYBACK_STATE_PLAYING' || state === 'PLAYING';
+    const actions = playback.availablePlaybackActions || playback.playbackAction || {};
     const playButton = root.querySelector('#ssosSonosPlayPause');
     if (playButton) {
-      const stopInstead = !playing && actions.canPause === false && actions.canStop === true;
-      playButton.textContent = playing ? 'Ⅱ' : '▶';
+      const stopInstead = actions.canPause === false && actions.canStop === true;
+      playButton.textContent = playing ? (stopInstead ? '■' : 'Ⅱ') : '▶';
       playButton.setAttribute('aria-label', playing ? (stopInstead ? t('stop') : t('pause')) : t('play'));
       playButton.title = playing ? (stopInstead ? t('stop') : t('pause')) : t('play');
     }
-    const actions = playback.availablePlaybackActions || playback.playbackAction || {};
     const previous = root.querySelector('[data-sonos-action="previous"]');
     const next = root.querySelector('[data-sonos-action="next"]');
     if (previous) previous.disabled = actions.canSkipBack === false;
