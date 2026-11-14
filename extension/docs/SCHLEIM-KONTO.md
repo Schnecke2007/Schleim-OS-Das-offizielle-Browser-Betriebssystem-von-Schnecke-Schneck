@@ -69,3 +69,18 @@ Das Repository muss privat bleiben. Schleim OS verweigert das Speichern, wenn da
 Der Schleim-Store innerhalb von Schleim OS ist nur verfügbar, wenn ein Schleim-Konto angemeldet ist. Ohne aktive Anmeldung bleiben Katalog, Kategorien, Bewertungen, Installations- und Vorschlagsfunktionen gesperrt. Nach der Anmeldung wird der Store automatisch freigeschaltet; beim Abmelden wird er wieder gesperrt.
 
 **Wichtige Abgrenzung:** Das ist eine Zugriffssperre in der Schleim-OS-Oberfläche. Die Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository bleiben weiterhin direkt über GitHub einsehbar. Vertrauliche Daten gehören nicht in diese öffentlichen Dateien.
+
+
+## 7. Cloud-Sicherung und vollständiges Design
+
+Die Cloud-Sicherung wird ausschließlich unter **Einstellungen → Schleim-Konto** gestartet und wiederhergestellt. Im Schleim-Store gibt es keine Sicherungs- oder Wiederherstellungssteuerung.
+
+Eine neue Sicherung (Formatversion 2) umfasst weiterhin alle gespeicherten `ssos-` Einstellungen. Zusätzlich werden die wichtigsten Designbestandteile ausdrücklich erfasst: die Reihenfolge der Apps auf dem Startbildschirm, installierte Store-Apps und das Hintergrundbild (Systemhintergrund sowie eigene Bild-URL bzw. lokal gespeichertes Bild). Bereits vorhandene Sicherungen im Format 1 können weiterhin wiederhergestellt werden.
+
+## 8. Neue Anmeldeabfolge
+
+Beim ersten Anmeldeversuch öffnet Schleim OS zuerst die GitHub-App-Seite. Nach der Installation wird über **„Ich habe die App installiert – weiter“** der Gerätecode angefordert. Der Code wird angezeigt, nach kurzer Verzögerung in die Zwischenablage kopiert und anschließend wird die GitHub-Gerätefreigabe geöffnet. Der Code kann weiterhin manuell kopiert und die Gerätefreigabe über den sichtbaren Link geöffnet werden.
+
+Nach der Geräteautorisierung prüft Schleim OS über `GET /user/installations`, ob GitHub die App-Installation diesem Konto zuordnet. Wird sie noch nicht gefunden, wartet Schleim OS weiter und bietet den Installationslink an.
+
+**Technische Grenze:** Vor dem ersten OAuth-/Device-Flow besitzt Schleim OS noch kein GitHub-App-Benutzertoken. GitHub stellt die Installationsliste aber nur für einen authentifizierten GitHub-App-Benutzertoken bereit. Deshalb öffnet Schleim OS zuerst die App-Seite und wartet auf deine Bestätigung; die API-Prüfung erfolgt nach der Geräteautorisierung. Siehe [GitHub-Dokumentation zu Benutzerinstallationen](https://docs.github.com/en/rest/apps/installations?apiVersion=2026-03-10).
