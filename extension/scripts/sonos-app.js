@@ -28,6 +28,7 @@
       previous: 'Vorheriger Titel',
       play: 'Wiedergabe',
       pause: 'Pause',
+      stop: 'Stopp',
       next: 'Nächster Titel',
       rewind: '15 Sekunden zurück',
       forward: '15 Sekunden vor',
@@ -87,6 +88,7 @@
       previous: 'Previous track',
       play: 'Play',
       pause: 'Pause',
+      stop: 'Stop',
       next: 'Next track',
       rewind: 'Rewind 15 seconds',
       forward: 'Fast forward 15 seconds',
@@ -146,6 +148,7 @@
       previous: 'Vorig nummer',
       play: 'Afspelen',
       pause: 'Pauzeren',
+      stop: 'Stoppen',
       next: 'Volgend nummer',
       rewind: '15 seconden terug',
       forward: '15 seconden vooruit',
@@ -468,7 +471,7 @@
       playback = results[0] || {};
       metadata = results[1] || {};
       volume = results[2] || {};
-      playModes = results[3]?.playModes || results[3] || {};
+      playModes = results[0]?.playModes || {};
       updatePlaybackUI();
     } catch (error) {
       setStatus(error.message || t('bridgeError'), true);
@@ -481,21 +484,35 @@
       api('/households/' + householdId + '/favorites').catch(() => ({})),
       api('/households/' + householdId + '/playlists').catch(() => ({}))
     ]);
-    favorites = results[0]?.favorites || results[0]?.items || [];
-    playlists = results[1]?.playlists || results[1]?.items || [];
+    const extractList = value => {
+      if (Array.isArray(value)) return value;
+      if (!value || typeof value !== 'object') return [];
+      for (const key of ['items','favorites','playlists','favoriteList','playlistsList']) {
+        if (Array.isArray(value[key])) return value[key];
+        if (value[key] && typeof value[key] === 'object') {
+          for (const nested of ['items','favorites','playlists','favoriteList','playlistsList']) {
+            if (Array.isArray(value[key][nested])) return value[key][nested];
+          }
+        }
+      }
+      return [];
+    };
+    favorites = extractList(results[0]?.favorites || results[0]?.favoritesList || results[0]);
+    playlists = extractList(results[1]?.playlists || results[1]?.playlistsList || results[1]);
     renderLibrary();
   }
   function currentItem() {
-    return metadata.currentItem || metadata.item || playback.currentItem || {};
+    const current = metadata.currentItem || metadata.item || playback.currentItem || {};
+    return current.track || current;
   }
   function updatePlaybackUI() {
     if (!root?.isConnected) return;
     const item = currentItem();
     const title = item.name || item.title || item.trackName || t('nothingPlaying');
-    const artist = item.artist || item.artistName || '';
-    const album = item.album || item.albumName || '';
-    const art = item.imageUrl || item.artUrl || item.artworkUrl || item.albumArtUri || '';
-    const source = metadata.container?.name || metadata.container?.serviceName || metadata.container?.type || t('attribution');
+    const artist = item.artist?.name || item.artist || item.artistName || '';
+    const album = item.album?.name || item.album || item.albumName || '';
+    const art = item.imageUrl || item.artUrl || item.artworkUrl || item.albumArtUri || metadata.container?.imageUrl || '';
+    const source = metadata.container?.service?.name || metadata.container?.name || metadata.container?.serviceName || metadata.container?.type || t('attribution');
     const state = playback.playbackState || playback.state || 'PLAYBACK_STATE_IDLE';
     const duration = Number(item.durationMillis || item.duration || playback.durationMillis || 0);
     const position = Number(playback.positionMillis || playback.position || item.positionMillis || 0);
@@ -513,7 +530,7 @@
       else artBox.textContent = '🔊';
     }
     const seek = root.querySelector('#ssosSonosSeek');
-    const canSeek = playback.playbackAction?.canSeek !== false && duration > 0;
+    const canSeek = (playback.availablePlaybackActions || playback.playbackAction || {}).canSeek !== false && duration > 0;
     if (seek) {
       seek.max = String(duration || 1000);
       seek.value = String(Math.min(position, duration || 1000));
@@ -522,11 +539,12 @@
     const playing = state === 'PLAYBACK_STATE_PLAYING' || state === 'PLAYING';
     const playButton = root.querySelector('#ssosSonosPlayPause');
     if (playButton) {
+      const stopInstead = !playing && actions.canPause === false && actions.canStop === true;
       playButton.textContent = playing ? 'Ⅱ' : '▶';
-      playButton.setAttribute('aria-label', playing ? t('pause') : t('play'));
-      playButton.title = playing ? t('pause') : t('play');
+      playButton.setAttribute('aria-label', playing ? (stopInstead ? t('stop') : t('pause')) : t('play'));
+      playButton.title = playing ? (stopInstead ? t('stop') : t('pause')) : t('play');
     }
-    const actions = playback.playbackAction || {};
+    const actions = playback.availablePlaybackActions || playback.playbackAction || {};
     const previous = root.querySelector('[data-sonos-action="previous"]');
     const next = root.querySelector('[data-sonos-action="next"]');
     if (previous) previous.disabled = actions.canSkipBack === false;
@@ -675,7 +693,7 @@
         const duration = Number(currentItem().durationMillis || playback.durationMillis || 0);
         const position = Number(playback.positionMillis || playback.position || 0);
         const next = Math.max(0, Math.min(duration || Number.MAX_SAFE_INTEGER, position + (kind === 'forward' ? 15000 : -15000)));
-        await action('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: next });
+        await action('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: next, ...(playback.itemId ? { itemId: playback.itemId } : {}) });
       } else if (kind === 'mute') {
         await api('/groups/' + groupId + '/groupVolume/mute', 'POST', { muted: !volume.muted });
         await refreshPlayback();
@@ -705,7 +723,7 @@
       if (modeMap[event.target.id]) await setPlayMode(modeMap[event.target.id], !!event.target.checked);
       if (event.target.id === 'ssosSonosSeek') {
         const groupId = safeId(selectedGroup());
-        await api('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: Number(event.target.value) })
+        await api('/groups/' + groupId + '/playback/seek', 'POST', { positionMillis: Number(event.target.value), ...(playback.itemId ? { itemId: playback.itemId } : {}) })
           .then(refreshPlayback).catch(error => setStatus(error.message, true));
       }
     });
