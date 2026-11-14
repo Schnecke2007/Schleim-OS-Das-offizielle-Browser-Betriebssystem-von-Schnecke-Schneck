@@ -352,21 +352,22 @@
     return Array.from(bytes, value => value.toString(16).padStart(2, '0')).join('');
   }
   function pause(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-  async function pollAuthorization(state, popup) {
+  async function pollAuthorization(sessionId, popup) {
     setStatus(t('connecting'));
     for (let i = 0; i < 150; i++) {
       await pause(2000);
       if (!root?.isConnected) return;
       try {
         const response = await fetch(config.workerUrl + '/oauth/status', {
-          headers: { 'Authorization': 'Bearer ' + state, 'Accept': 'application/json' },
+          headers: { 'Authorization': 'Bearer ' + sessionId, 'Accept': 'application/json' },
           cache: 'no-store'
         });
         if (response.ok) {
           const data = await response.json();
           if (data.connected) {
-            config.sessionId = state;
+            config.sessionId = sessionId;
             config.pendingState = '';
+            config.pendingSessionId = '';
             await storageSet(config);
             if (popup && !popup.closed) popup.close();
             await loadSonosSystem();
@@ -376,6 +377,9 @@
       } catch { /* The user may still be signing in. */ }
     }
     if (popup && !popup.closed) popup.close();
+    config.pendingState = '';
+    config.pendingSessionId = '';
+    await storageSet(config);
     setStatus(t('failed'), true);
   }
   async function connectSonos() {
@@ -391,12 +395,28 @@
       }
       await checkBridgeHealth();
       const state = makeState();
+      const sessionId = makeState();
       config.pendingState = state;
+      config.pendingSessionId = sessionId;
       await storageSet(config);
-      popup.location.replace(config.workerUrl + '/oauth/login?state=' + encodeURIComponent(state));
-      await pollAuthorization(state, popup);
+
+      const startResponse = await fetch(config.workerUrl + '/oauth/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ state, sessionId }),
+        cache: 'no-store'
+      });
+      const startData = await startResponse.json().catch(() => ({}));
+      if (!startResponse.ok || !startData.authorizationUrl) {
+        throw new Error(startData.error || t('failed'));
+      }
+      popup.location.replace(startData.authorizationUrl);
+      await pollAuthorization(sessionId, popup);
     } catch (error) {
       if (popup && !popup.closed) popup.close();
+      config.pendingState = '';
+      config.pendingSessionId = '';
+      await storageSet(config);
       setStatus(error.message || t('failed'), true);
     }
   }
@@ -663,6 +683,7 @@
     }
     config.sessionId = '';
     config.pendingState = '';
+    config.pendingSessionId = '';
     await storageSet(config);
     households = [];
     groups = [];
@@ -751,7 +772,8 @@
       sessionId: typeof config.sessionId === 'string' ? config.sessionId : '',
       householdId: typeof config.householdId === 'string' ? config.householdId : '',
       groupId: typeof config.groupId === 'string' ? config.groupId : '',
-      pendingState: typeof config.pendingState === 'string' ? config.pendingState : ''
+      pendingState: typeof config.pendingState === 'string' ? config.pendingState : '',
+      pendingSessionId: typeof config.pendingSessionId === 'string' ? config.pendingSessionId : ''
     };
     bindEvents();
     if (config.sessionId && await checkSession()) {
