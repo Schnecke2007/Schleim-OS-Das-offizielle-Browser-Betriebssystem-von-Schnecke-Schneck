@@ -26,6 +26,12 @@ You see a personal start page with tiles for apps and websites.
 
 The demo is one HTML file. It is for trying the interface. It does not install a browser extension.
 
+## Updates
+
+You can check for new versions in Settings.
+
+[Read the update guide in plain language](UPDATES.md)
+
 ## Install the extension
 
 Download the complete ZIP file from GitHub. Do not extract it. Import the ZIP file in a browser that supports direct ZIP import.
