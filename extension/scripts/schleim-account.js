@@ -35,7 +35,7 @@
       signingIn:'GitHub-Anmeldung wird vorbereitet …', creating:'Privates Backup-Repository wird gesucht oder erstellt …',
       noPermission:'GitHub-App-Berechtigungen fehlen oder die App wurde nicht auf diesem Konto installiert.',
       ownerMismatch:'Das gefundene Repository gehört nicht zum angemeldeten GitHub-Konto.',
-      retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte lokale Synchronisierung',
+      retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte Cloud-Sicherung',
       notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto'
     },
     en: {
@@ -60,7 +60,7 @@
       signingIn:'Preparing GitHub sign-in …', creating:'Looking for or creating your private backup repository …',
       noPermission:'GitHub App permissions are missing, or the app has not been installed on this account.',
       ownerMismatch:'The repository found does not belong to the signed-in GitHub account.',
-      retry:'Try again', help:'Open setup guide', lastBackup:'Last local sync',
+      retry:'Try again', help:'Open setup guide', lastBackup:'Last cloud backup',
       notYet:'No backup on this device yet', account:'GitHub account'
     },
     nl: {
@@ -85,7 +85,7 @@
       signingIn:'GitHub-aanmelding voorbereiden …', creating:'Privéback-uprepository zoeken of maken …',
       noPermission:'GitHub-appmachtigingen ontbreken of de app is niet op dit account geïnstalleerd.',
       ownerMismatch:'De gevonden repository is niet van het aangemelde GitHub-account.',
-      retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste lokale synchronisatie',
+      retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste cloudback-up',
       notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account'
     }
   };
