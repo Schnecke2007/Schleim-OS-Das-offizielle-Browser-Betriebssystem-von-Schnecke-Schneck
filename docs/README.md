@@ -8,6 +8,7 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 - [Fehlerbehebung](Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](Deutsch/TECHNISCHE-HINWEISE.md)
 - [Schleim-Konto, GitHub-App und Cloud-Sicherung](../extension/docs/SCHLEIM-KONTO.md)
+- [Store-Anleitung](../Store/Deutsch/README.md)
 - [Hinweis zu älteren lokalen JSON-Backups](Deutsch/JSON-BACKUP.md)
 
 ## 🇬🇧 English
@@ -15,6 +16,8 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 - [Installation guide](Englisch/INSTALLATION.md)
 - [Troubleshooting](Englisch/TROUBLESHOOTING.md)
 - [Technical notes](Englisch/TECHNICAL-NOTES.md)
+- [Schleim account and cloud backup](Englisch/SCHLEIM-ACCOUNT.md)
+- [Store guide](../Store/Englisch/README.md)
 - [Legacy JSON backup notice](Englisch/JSON-BACKUP.md)
 
 ## 🇳🇱 Nederlands
@@ -22,13 +25,15 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 - [Installatiehandleiding](Niederländisch/INSTALLATIE.md)
 - [Problemen oplossen](Niederländisch/PROBLEMEN-OPLOSSEN.md)
 - [Technische opmerkingen](Niederländisch/TECHNISCHE-OPMERKINGEN.md)
+- [Schleim-account en cloudback-up](Niederländisch/SCHLEIM-ACCOUNT.md)
+- [Store-handleiding](../Store/Niederländisch/README.md)
 - [Melding over oude JSON-back-ups](Niederländisch/JSON-BACKUP.md)
 
 ## 📖 Leichte Sprache / Plain language / Eenvoudige taal
 
-- [🇩🇪 Deutsch – Leichte Sprache](Leichte-Sprache/Deutsch/README.md)
-- [🇬🇧 English – plain language](Leichte-Sprache/Englisch/README.md)
-- [🇳🇱 Nederlands – eenvoudige taal](Leichte-Sprache/Niederländisch/README.md)
+- [🇩🇪 Deutsch – Leichte Sprache](Leichte-Sprache/Deutsch/README.md) · [Konto und Cloud-Sicherung](Leichte-Sprache/Deutsch/KONTO-CLOUD.md)
+- [🇬🇧 English – plain language](Leichte-Sprache/Englisch/README.md) · [Account and cloud backup](Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md)
+- [🇳🇱 Nederlands – eenvoudige taal](Leichte-Sprache/Niederländisch/README.md) · [Account en cloudback-up](Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md)
 
 In jedem Sprachordner gibt es eine eigene Anleitung für den Schleim-Store:
 - [Deutsch](Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
