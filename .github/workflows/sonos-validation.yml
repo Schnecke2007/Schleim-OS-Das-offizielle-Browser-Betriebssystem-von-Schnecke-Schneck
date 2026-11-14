@@ -1,4 +1,4 @@
-name: Validate Schleim OS Sonos integration
+name: Validate Schleim OS app navigation and Sonos integration
 
 on:
   push:
@@ -10,6 +10,8 @@ on:
       - 'integrations/sonos-worker/**'
       - 'extension/manifest.json'
       - 'extension/data/store-apps.json'
+      - 'extension/standalone/schleim-os-standalone.html'
+      - 'extension/tests/**'
   pull_request:
     paths:
       - 'extension/scripts/sonos-app.js'
@@ -18,6 +20,8 @@ on:
       - 'integrations/sonos-worker/**'
       - 'extension/manifest.json'
       - 'extension/data/store-apps.json'
+      - 'extension/standalone/schleim-os-standalone.html'
+      - 'extension/tests/**'
   workflow_dispatch:
 
 jobs:
@@ -36,6 +40,8 @@ jobs:
           node --check integrations/sonos-worker/src/index.js
           node --check extension/scripts/app.js
           node --check extension/scripts/personalization.js
+      - name: Check app navigation regressions
+        run: node --test extension/tests/*.test.js
       - name: Validate JSON files
         run: |
           node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8'))"
