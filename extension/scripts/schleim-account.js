@@ -3,7 +3,8 @@
 
   // Public identifier only. Set this after creating the Schleim OS GitHub App.
   // Never put a GitHub App private key or client secret in this extension.
-  const GITHUB_APP_CLIENT_ID = 'GITHUB_APP_CLIENT_ID_HERE';
+  const GITHUB_APP_CLIENT_ID = 'Iv23lihfJBU95UVCrVt1';
+  const GITHUB_APP_INSTALL_URL = 'https://github.com/apps/schleim-os-account';
   const API = 'https://api.github.com';
   const DEVICE_CODE_URL = 'https://github.com/login/device/code';
   const TOKEN_URL = 'https://github.com/login/oauth/access_token';
@@ -18,7 +19,7 @@
       login:'Mit GitHub verbinden', connected:'Verbunden als', email:'Verifizierte E-Mail', repository:'Privates Cloud-Repository',
       save:'Jetzt in der Cloud sichern', restore:'Cloud-Sicherung wiederherstellen', logout:'Abmelden',
       notConfigured:'Die Schleim-OS-GitHub-App ist noch nicht eingerichtet. Die Client-ID fehlt.',
-      setup:'GitHub-App einrichten', setupNote:'Für Nutzerkonten anderer Personen muss deine App öffentlich sein. Aktiviere Device Flow und richte die Berechtigungen laut Anleitung ein.',
+      setup:'GitHub-App installieren', installApp:'GitHub-App bei GitHub installieren', setupNote:'Für Nutzerkonten anderer Personen muss deine App öffentlich sein. Aktiviere Device Flow und richte die Berechtigungen laut Anleitung ein.',
       device:'Öffne GitHub und gib diesen einmaligen Code ein:', openGitHub:'GitHub-Gerätefreigabe öffnen', cancel:'Abbrechen', waiting:'Warte auf die Bestätigung bei GitHub …',
       created:'Schleim-Konto verbunden. Dein privates Backup-Repository ist bereit.',
       saved:'Cloud-Sicherung erfolgreich gespeichert.', restored:'Cloud-Sicherung geladen. Schleim OS wird neu gestartet …',
@@ -43,7 +44,7 @@
       login:'Connect with GitHub', connected:'Connected as', email:'Verified email', repository:'Private cloud repository',
       save:'Back up to cloud now', restore:'Restore cloud backup', logout:'Sign out',
       notConfigured:'The Schleim OS GitHub App has not been configured yet. The client ID is missing.',
-      setup:'Set up GitHub App', setupNote:'Your app must be public for other users to connect. Enable Device Flow and configure the permissions in the setup guide.',
+      setup:'Install GitHub App', installApp:'Install GitHub App on GitHub', setupNote:'Your app must be public for other users to connect. Enable Device Flow and configure the permissions in the setup guide.',
       device:'Open GitHub and enter this one-time code:', openGitHub:'Open GitHub device authorization', cancel:'Cancel', waiting:'Waiting for confirmation on GitHub …',
       created:'Schleim account connected. Your private backup repository is ready.',
       saved:'Cloud backup saved successfully.', restored:'Cloud backup restored. Schleim OS is restarting …',
@@ -68,7 +69,7 @@
       login:'Verbinden met GitHub', connected:'Verbonden als', email:'Geverifieerd e-mailadres', repository:'Privé-cloudrepository',
       save:'Nu opslaan in de cloud', restore:'Cloudback-up herstellen', logout:'Afmelden',
       notConfigured:'De Schleim OS GitHub-app is nog niet ingesteld. De client-ID ontbreekt.',
-      setup:'GitHub-app instellen', setupNote:'Je app moet openbaar zijn zodat andere gebruikers kunnen verbinden. Schakel Device Flow in en stel de machtigingen uit de handleiding in.',
+      setup:'GitHub-app installeren', installApp:'GitHub-app op GitHub installeren', setupNote:'Je app moet openbaar zijn zodat andere gebruikers kunnen verbinden. Schakel Device Flow in en stel de machtigingen uit de handleiding in.',
       device:'Open GitHub en voer deze eenmalige code in:', openGitHub:'GitHub-apparaatmachtiging openen', cancel:'Annuleren', waiting:'Wachten op bevestiging bij GitHub …',
       created:'Schleim-account verbonden. Je privéback-uprepository is klaar.',
       saved:'Cloudback-up succesvol opgeslagen.', restored:'Cloudback-up hersteld. Schleim OS wordt opnieuw gestart …',
@@ -147,7 +148,7 @@
       panel.innerHTML =
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div></div>'+
         '<p class="ssos-cloud-note">'+esc(t('notConfigured'))+'</p>'+
-        '<a class="app-button secondary" href="https://github.com/settings/apps/new" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
+        '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
         '<a class="ssos-cloud-help" href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/extension/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
         '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p><p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
@@ -166,6 +167,7 @@
       panel.innerHTML =
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div></div>'+
         '<button class="app-button" type="button" data-ssos-cloud-login>🐙 '+esc(t('login'))+'</button>'+
+        '<a class="ssos-cloud-help" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('installApp'))+' ↗</a>'+
         '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+
         '<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>'+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
