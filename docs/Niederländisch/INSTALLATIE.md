@@ -30,7 +30,7 @@ De Schleim-Store is alleen beschikbaar nadat je je met een Schleim-account hebt 
 2. Schleim OS opent eerst de GitHub-pagina van [Schleim OS Account](https://github.com/apps/schleim-os-account).
 3. Installeer de app voor je GitHub-account.
 4. Ga terug naar Schleim OS en kies **Ik heb de app geïnstalleerd – verder**.
-5. Volg het scherm met de apparaatcode. Schleim OS kopieert de code na korte tijd en opent daarna de GitHub-apparaatmachtiging.
+5. Volg het scherm met de apparaatcode. Schleim OS probeert de code na korte tijd automatisch te kopiëren. Als dat niet lukt, gebruik je **Code kopiëren**. Daarna opent de GitHub-pagina voor apparaatmachtiging.
 6. Bevestig de app op de echte GitHub-pagina.
 
 Na de toestemming controleert Schleim OS of de app-installatie wordt herkend. Meer informatie staat in de [handleiding voor het Schleim-account](../../extension/docs/SCHLEIM-KONTO.md).
