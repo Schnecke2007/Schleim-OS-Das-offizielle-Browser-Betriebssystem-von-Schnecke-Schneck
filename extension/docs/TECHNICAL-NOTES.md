@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.13.6
+# Technische Hinweise – Version 3.13.7
 
 ## Plattform und Erweiterungsformat
 
@@ -14,7 +14,6 @@
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung und Cloud-Backup.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
-- `../integrations/sonos-worker/src/index.js` bleibt als ältere, optionale Sonos-Control-API-Bridge im Repository erhalten, wird von der aktuellen Sonos-Kachel jedoch nicht mehr verwendet.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
 - `styles/` enthält die Stylesheets.
 - `locales/legal-translations.js` enthält Übersetzungen der Rechtstexte. Die übrigen Oberflächentexte werden über Sprachwörterbücher in den JavaScript-Dateien gepflegt.
@@ -56,7 +55,7 @@ Sonos ist ein normaler Web-App-Eintrag in `Store/media/sonos-control.json` und `
 
 Es gibt keine eigene Sonos-Systemkachel, keinen Sonos-spezifischen Renderer und kein Sonos-iFrame mehr. Die Anmeldung und Wiedergabe werden vollständig von der offiziellen Sonos-Web-App verwaltet. Schleim OS fragt keine Sonos-Zugangsdaten ab und benötigt für diesen Start keine API-Schlüssel oder eigenen Server.
 
-Der frühere Cloudflare-Worker unter `integrations/sonos-worker/` bleibt als nicht verwendeter Legacy-Code im Repository. Die Store-Web-App ruft ihn nicht auf.
+Die frühere experimentelle Worker-Bridge ist nicht Bestandteil dieser Version. Die Sonos-Store-Web-App benötigt sie nicht.
 
 ## Werbung und externe Verbindungen
 

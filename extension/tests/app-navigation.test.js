@@ -31,6 +31,10 @@ test('standalone uses the all-elements helper for app launch and tile cleanup', 
   assert.match(standaloneSource, /\$\$\('\.ssos-custom-tile',\s*grid\)\.forEach/);
 });
 
+test('The obsolete Sonos Worker integration is not part of the repository', () => {
+  assert.equal(fs.existsSync(path.join(root, '../integrations/sonos-worker')), false);
+});
+
 test('Sonos is a standard Store web app opened in a new browser tab', () => {
   const catalogEntry = storeCatalog.apps.find(app => app.id === 'sonos-control');
   assert.ok(catalogEntry, 'Sonos must exist in the runtime Store catalogue');

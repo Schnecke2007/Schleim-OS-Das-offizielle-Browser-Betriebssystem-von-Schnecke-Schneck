@@ -24,4 +24,4 @@ Der Start verwendet denselben allgemeinen Store-Mechanismus wie bei Spotify, You
 
 Der öffentliche Katalogeintrag liegt unter `Store/media/sonos-control.json`; der Laufzeitkatalog liegt in `extension/data/store-apps.json`. Beide Einträge verwenden `https://play.sonos.com/` als Zieladresse. Die Funktion `openStoreApp()` prüft Anmeldung und Installation und öffnet anschließend jede Store-App einheitlich mit `window.open(app.url, '_blank', 'noopener,noreferrer')`.
 
-Die frühere eingebettete Sonos-Oberfläche wurde entfernt. Der alte Cloudflare-Worker unter `integrations/sonos-worker/` ist Legacy-Code und wird von der Store-Web-App nicht aufgerufen.
+Die frühere eingebettete Oberfläche und die experimentelle Worker-Bridge sind nicht Bestandteil der aktuellen Store-Web-App.
