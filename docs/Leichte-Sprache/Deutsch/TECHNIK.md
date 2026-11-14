@@ -15,6 +15,8 @@ Der Browser öffnet die Datei `pages/newtab.html`. Diese Datei zeigt die Startse
 - `pages/newtab.html`: Die Seite, die du siehst.
 - `scripts/app.js`: Viele Funktionen der Oberfläche.
 - `scripts/personalization.js`: Einstellungen und persönliche Anpassungen.
+- `scripts/schleim-account.js`: GitHub-Anmeldung und Cloud-Sicherung.
+- `scripts/slime-store-admin.js`: Verwaltung der Store-Vorschläge.
 - `styles/main.css`: Das Aussehen der Seite.
 - `styles/personalization.css`: Das Aussehen der persönlichen Einstellungen.
 - `locales/legal-translations.js`: Übersetzungen von Rechtstexten.
@@ -28,6 +30,10 @@ Du kannst deine Einstellungen mit deinem Schleim-Konto in einer privaten GitHub-
 
 Die Sicherung enthält auch die Reihenfolge der Apps, installierte Store-Apps und dein Hintergrundbild.
 
+Die Sicherung wird manuell gestartet. Sie wird nicht nach jeder Änderung automatisch gespeichert.
+
+Die aktuelle Sicherung hat das Format 2. Ältere Sicherungen im Format 1 können noch wiederhergestellt werden.
+
 Der Schleim-Store braucht eine Anmeldung mit dem Schleim-Konto.
 
 ## Internet und Rechte
@@ -37,4 +43,4 @@ Manche Webseiten erlauben keine Anzeige in einem anderen Fenster.
 
 Der Browser kann nach Rechten fragen. Lies solche Fragen genau durch.
 
-[Technische Hinweise in normaler Sprache](../../Deutsch/TECHNISCHE-HINWEISE.md) · [Schleim-Store einfach erklärt](SCHLEIM-STORE.md)
+[Technische Hinweise in normaler Sprache](../../Deutsch/TECHNISCHE-HINWEISE.md) · [Schleim-Store einfach erklärt](SCHLEIM-STORE.md) · [Konto und Cloud-Sicherung](KONTO-CLOUD.md)
