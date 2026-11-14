@@ -24,6 +24,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Kacheln per Maus oder Touch neu anordnen
 - Personalisierung von Akzentfarbe, Hintergrund und Sperrbildschirm
 - Schleim-Store mit Kategorien, Suche, Empfehlungen, Bewertungen und App-Vorschlägen
+- Native Sonos-App mit OAuth-Anmeldung, Raumgruppen, Wiedergabesteuerung, Lautstärke, Favoriten und Playlists (Cloudflare-Bridge erforderlich)
 - Store-Zugriff nur nach Anmeldung mit einem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsprüfung und Gerätecode
 - Update-Center: GitHub-Version prüfen und aktuelle Repository-ZIP herunterladen; die Browser-Installation bleibt ein bestätigter manueller Schritt
@@ -60,6 +61,10 @@ Die Store-Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository blei
 Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version kann die vollständige Repository-ZIP direkt heruntergeladen werden.
 
 Der ZIP-Download installiert sich nicht selbst. Chrome erlaubt einer Erweiterung nicht, beliebige heruntergeladene ZIP-Dateien still zu installieren. Nach dem Download muss die Aktualisierung über die vom Browser unterstützte Import- oder Update-Funktion abgeschlossen werden. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
+
+## Sonos-Integration
+
+Die Sonos-App benötigt eine separat bereitgestellte Cloudflare-Worker-Bridge und eine Sonos Control Integration. OAuth-Client-Secret und Sonos-Tokens verbleiben serverseitig. Einrichtung und Funktionsgrenzen: [Sonos-App einrichten](docs/SONOS-APP.md).
 
 ## Cloud-Sicherung
 
