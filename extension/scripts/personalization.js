@@ -453,7 +453,7 @@
     const categoryOptions=Object.entries(STORE_TEXT[LANG()]?.categories||STORE_TEXT.de.categories).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
     const markup='<div class="app-hero ssos-store-hero"><p class="eyebrow">SCHNECKE SCHNECK · SCHLEIM-STORE</p><h2>Schleim-Store</h2><p>'+esc(st('intro'))+'</p><span class="large-emoji">🛍️</span></div>'+
       '<label class="ssos-store-search"><span>⌕</span><input id="ssosStoreSearch" type="search" placeholder="'+esc(st('search'))+'" autocomplete="off"></label>'+
-      '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
+      '<section class="ssos-cloud-account ssos-store-account" data-ssos-cloud-account></section>'+\n      '<div class="ssos-store-categories" id="ssosStoreCategories">'+categoryButtons+'</div>'+
       '<div class="ssos-store-system-note">🔒 '+esc(st('systemNote'))+'</div><div class="ssos-store-system-note">⭐ '+esc(st('ratingPublic'))+'</div>'+
       '<div id="ssosStoreDiscover">'+
         '<section class="ssos-store-section"><h3>'+esc(st('recommended'))+'</h3><div class="ssos-store-grid" id="ssosStoreFeatured"></div></section>'+
@@ -594,14 +594,7 @@
         <p class="body-copy">${esc(t('shortcutDefaults'))}</p>
       </div>
       <div class="ssos-card">
-        <h4>💾 ${esc(t('backup'))}</h4>
-        <p class="body-copy">${esc(t('backupInfo'))}</p>
-        <div class="ssos-form-actions">
-          <button class="app-button" type="button" id="ssosExport">${esc(t('export'))}</button>
-          <button class="app-button secondary" type="button" id="ssosImportTrigger">${esc(t('import'))}</button>
-        </div>
-        <input id="ssosImportFile" type="file" accept=".json,application/json" hidden>
-      </div>
+        <div class="ssos-cloud-account ssos-settings-cloud" data-ssos-cloud-account></div>
 `;
     mount.appendChild(section);
     $('#ssosAccentPicker').addEventListener('input',e=>$('#ssosAccentHex').value=e.target.value);
@@ -660,67 +653,6 @@
     }));
     saveConfig(); refreshWeather(); toast(t('designSaved'));
   }
-  function exportBackup() {
-    const preferences={};
-    for(let i=0;i<localStorage.length;i++){
-      const key=localStorage.key(i); if(!key?.startsWith('ssos-'))continue;
-      try { preferences[key]=JSON.parse(localStorage.getItem(key)); } catch { preferences[key]=localStorage.getItem(key); }
-    }
-    preferences[KEY]=config;
-    const backup={format:'schnecke-schneck-os',schemaVersion:1,exportedAt:new Date().toISOString(),preferences};
-    const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=`schnecke-schneck-homescreen-${new Date().toISOString().slice(0,10)}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1500); toast(t('exportDone'));
-  }
-  async function importBackup(file) {
-    try {
-      const data=JSON.parse(await file.text());
-      const isObject=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
-      const parseMaybe=value=>{
-        if(typeof value!=='string')return value;
-        try{return JSON.parse(value);}catch{return value;}
-      };
-      const directArray=Array.isArray(data)?data:null;
-      const preferences=isObject(data?.preferences)?data.preferences:
-        isObject(data?.data?.preferences)?data.data.preferences:
-        (isObject(data)&&Object.keys(data).some(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key))?data:{});
-      const storedConfig=parseMaybe(preferences[KEY]);
-      const nestedData=isObject(data?.data)?data.data:{};
-      const rootConfig=parseMaybe(data?.config??data?.settings??nestedData.config??nestedData.settings);
-      const candidateConfig=Array.isArray(storedConfig)?{apps:storedConfig}:
-        (isObject(storedConfig)?storedConfig:(isObject(rootConfig)?rootConfig:{}));
-      const separateApps=parseMaybe(preferences['ssos-apps']??preferences['ssos-custom-apps']??preferences['ssos-websites']??preferences['ssos-bookmarks']??preferences['ssos-links']??preferences['ssos-shortcuts']);
-      const hasLegacyUrl=value=>{
-        if(typeof value==='string')return !!safeLegacyUrl(value);
-        if(!isObject(value))return false;
-        return [value.url,value.href,value.link,value.targetUrl,value.targetURL,value.target_url,value.website,value.websiteUrl,value.websiteURL,value.address,value.src,value.appUrl,value.app_url,value.destination,value.uri,value.target?.url,value.target,value.data?.url].some(candidate=>typeof candidate==='string'&&!!safeLegacyUrl(candidate));
-      };
-      const looksLikeLegacyMap=value=>isObject(value)&&Object.entries(value).some(([key,item])=>
-        (/^(?:https?:)?\/\//i.test(key)||/^www\./i.test(key))?!!safeLegacyUrl(key):hasLegacyUrl(item)
-      );
-      const legacyMap=looksLikeLegacyMap(candidateConfig)?candidateConfig:
-        (!data?.preferences&&!data?.data&&!data?.config&&!data?.settings&&looksLikeLegacyMap(data)?data:null);
-      const collection=appCollection(candidateConfig)??appCollection(rootConfig)??appCollection(nestedData)??appCollection(data)??(Array.isArray(separateApps)?separateApps:appCollection(separateApps))??legacyMap??directArray;
-      const recognizedKeys=Object.keys(preferences).filter(key=>/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key));
-      if(!recognizedKeys.length&&!collection)throw new Error('unsupported backup');
-      if(!confirm(t('importConfirm')))return;
-      for(const [key,value] of Object.entries(preferences)){
-        if(!/^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)||key===KEY)continue;
-        localStorage.setItem(key,JSON.stringify(value));
-      }
-      const migrated={
-        ...defaults(),
-        ...(isObject(candidateConfig)?candidateConfig:{}),
-        apps:normalizeLegacyApps(collection??[])
-      };
-      if(Array.isArray(candidateConfig.homeOrder)){
-        migrated.homeOrder=candidateConfig.homeOrder.filter(id=>typeof id==='string'&&id.length<=160).slice(0,250);
-      }
-      localStorage.setItem(KEY,JSON.stringify(migrated));
-      window.location.reload();
-    } catch {
-      toast(t('importBad'));
-    }
-  }
   function clearRetiredCloudCredentials() {
     const area = globalThis.chrome?.storage?.local;
     if (!area?.remove) return;
@@ -766,8 +698,6 @@
       if(e.target.closest('#ssosClearWallpaper')){config.wallpaperUrl='';config.wallpaperData='';saveConfig();toast(t('designSaved'));return;}
       if(e.target.closest('#ssosSaveLock')){saveLockSettings();return;}
       if(e.target.closest('#ssosRefreshWeather')){config.weatherCity=$('#ssosWeatherCity')?.value.trim()||'';saveConfig();refreshWeather();return;}
-      if(e.target.closest('#ssosExport')){exportBackup();return;}
-      if(e.target.closest('#ssosImportTrigger')){$('#ssosImportFile')?.click();return;}
       const lockUrl=e.target.closest('[data-ssos-lock-url]');if(lockUrl){window.open(lockUrl.dataset.ssosLockUrl,'_blank','noopener,noreferrer');return;}
     });
     document.addEventListener('input',e=>{
@@ -792,11 +722,6 @@
         const file=e.target.files?.[0]; if(!file)return;
         try{config.wallpaperData=await compressImage(file,1500000);config.wallpaperUrl='';saveConfig();toast(t('wallpaperSaved'));}catch{toast(t('fileTooLarge'));}
       }
-      if(e.target.id==='ssosImportFile'){
-        const file=e.target.files?.[0];
-        if(file)await importBackup(file);
-        e.target.value='';
-      }
     });
   }
   function openCustomApp(id) {
@@ -811,7 +736,7 @@
   function getApps() {
     return config.apps.map(app=>({id:app.id,name:app.name,url:app.url,icon:app.icon,iconUrl:app.iconUrl}));
   }
-  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, refreshStoreRatings:loadStoreRatings, getStoreCatalog:()=>STORE_CATALOG.map(app=>({...app,description:{...app.description}})), exportBackup, importBackup: file => importBackup(file), getApps, openCustomApp, openStoreApp});
+  window.SSOSPersonalization = Object.freeze({renderStore, refreshStoreCatalog:loadStoreCatalog, refreshStoreRatings:loadStoreRatings, getStoreCatalog:()=>STORE_CATALOG.map(app=>({...app,description:{...app.description}})), getApps, openCustomApp, openStoreApp});
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
   window.dispatchEvent(new Event('ssos-custom-apps-changed'));
 })();
