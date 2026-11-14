@@ -75,7 +75,7 @@ De browserimporteur herkent Schleim OS in de submap `extension`. De naam en loca
 - **Tegels ordenen:** Sleep een tegel met de muis. Houd op apparaten met een touchscreen een tegel ingedrukt voordat je deze verplaatst.
 - **Personaliseren:** Open het instellingengedeelte in de interface.
 - **Apps ontdekken:** Open de Schleim-Store, zoek naar webapps en installeer of verwijder de gewenste apps.
-- **Schleim-account:** De aanmelding opent eerst de GitHub-app-pagina. Na de installatie bevestig je de volgende stap in Schleim OS. De apparaatcode wordt getoond, automatisch gekopieerd en de GitHub-apparaatmachtiging wordt geopend. Na toestemming controleert Schleim OS de app-installatie en maakt zo nodig je privérepository `schleim-os-cloud` aan.
+- **Schleim-account:** De aanmelding opent eerst de GitHub-app-pagina. Na de installatie bevestig je de volgende stap in Schleim OS. De apparaatcode wordt getoond. Schleim OS probeert de code na korte tijd automatisch te kopiëren. Als dat niet lukt, kun je de code zelf kopiëren. Daarna opent de GitHub-pagina voor apparaatmachtiging. Na toestemming controleert Schleim OS de app-installatie en maakt zo nodig je privérepository `schleim-os-cloud` aan.
 - **Cloudback-up:** Back-up maken en herstellen kan alleen via **Instellingen → Schleim-account**. De back-up bevat de opgeslagen Schleim OS-instellingen, de volgorde van de apps op het startscherm, geïnstalleerde Store-apps en de achtergrond. Wijzigingen worden niet automatisch gesynchroniseerd. Zie de [handleiding voor het Schleim-account](extension/docs/SCHLEIM-KONTO.md). GitHub-toegangstokens en wachtwoorden worden nooit in het back-upbestand opgeslagen.
 
 # 🛠️ Schleim OS – Problemen oplossen
