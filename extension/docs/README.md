@@ -1,4 +1,4 @@
-# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.9.1
+# Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck · Version 3.10.0
 
 Manifest-V3-Erweiterung für Chromium-Browser. Die Erweiterung ersetzt den neuen Tab durch die Schleim OS-Oberfläche.
 
