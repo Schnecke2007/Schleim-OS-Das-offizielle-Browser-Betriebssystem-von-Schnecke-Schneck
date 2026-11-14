@@ -11,4 +11,4 @@
 
 **Zugriff in Schleim OS:** Der Schleim-Store wird erst nach Anmeldung mit einem Schleim-Konto freigeschaltet. Dieser öffentliche Katalog bleibt direkt auf GitHub sichtbar. Die Cloud-Sicherung befindet sich ausschließlich unter **Einstellungen → Schleim-Konto**.
 
-[Schleim-Store in Leichter Sprache](../../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md) · [Store-Übersicht und Anmeldung](../README.md)
+[Store-Anleitungen: Deutsch](../Deutsch/README.md) · [English](../Englisch/README.md) · [Nederlands](../Niederländisch/README.md) · [Leichte Sprache](../../docs/README.md)
