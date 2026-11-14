@@ -1630,7 +1630,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   }
   function renderHomeTiles() {
     const grid=$('#homeAppGrid');if(!grid)return;
-    $('.ssos-custom-tile',grid).forEach(el=>el.remove());
+    $$('.ssos-custom-tile',grid).forEach(el=>el.remove());
     config.apps.forEach(app=>{
       const tile=document.createElement('button');tile.type='button';tile.className='app-icon ssos-custom-tile';
       tile.dataset.ssosCustomApp=app.id;tile.title=app.name;
