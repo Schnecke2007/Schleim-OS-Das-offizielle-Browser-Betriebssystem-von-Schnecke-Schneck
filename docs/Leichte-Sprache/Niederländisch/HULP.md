@@ -35,9 +35,19 @@ Sommige websites staan niet toe dat hun pagina in Schleim OS wordt getoond.
 
 ## Je instellingen zijn verdwenen
 
-Instellingen worden in het browserprofiel opgeslagen.
-In een andere browser kunnen de instellingen ontbreken.
-Gebruik je JSON-back-up als je die eerder hebt gemaakt.
+Instellingen worden eerst in je browser opgeslagen.
+Je kunt de cloudback-up gebruiken op een andere browser.
+Open **Instellingen → Schleim-account**.
+Meld je aan met hetzelfde GitHub-account.
+Kies **Cloudback-up herstellen**.
+
+## De Schleim-Store is vergrendeld
+
+Je bent afgemeld.
+Open de Store en kies **Verbinden met GitHub**.
+Controleer of je de GitHub-app **Schleim OS Account** hebt geïnstalleerd.
+
+[Lees de eenvoudige uitleg over de Schleim-Store](SCHLEIM-STORE.md)
 
 ## Meer hulp nodig?
 
