@@ -29,6 +29,9 @@
       description: 'Beschreibung oder Stichwörter (optional)',
       uploadNow: 'Ausgewählte Medien hochladen',
       uploading: 'Upload läuft …',
+      backgroundQueued: 'Upload wurde gestartet. Er läuft im Hintergrund weiter; du kannst diesen Tab schließen.',
+      backgroundProgress: 'Hintergrund-Upload',
+      backgroundComplete: 'Upload im Hintergrund abgeschlossen.',
       uploaded: 'Upload abgeschlossen.',
       tooLarge: 'Die Datei ist größer als 50 MiB. Bitte eine kleinere Datei auswählen.',
       unsupported: 'Nur Bild- und Videodateien werden unterstützt.',
@@ -84,6 +87,9 @@
       description: 'Description or tags (optional)',
       uploadNow: 'Upload selected media',
       uploading: 'Uploading …',
+      backgroundQueued: 'Upload started. It will continue in the background; you can close this tab.',
+      backgroundProgress: 'Background upload',
+      backgroundComplete: 'Background upload completed.',
       uploaded: 'Upload completed.',
       tooLarge: 'The file is larger than 50 MiB. Choose a smaller file.',
       unsupported: 'Only image and video files are supported.',
@@ -139,6 +145,9 @@
       description: 'Beschrijving of tags (optioneel)',
       uploadNow: 'Geselecteerde media uploaden',
       uploading: 'Uploaden …',
+      backgroundQueued: 'Upload gestart. Het gaat op de achtergrond verder; je kunt dit tabblad sluiten.',
+      backgroundProgress: 'Upload op de achtergrond',
+      backgroundComplete: 'Upload op de achtergrond voltooid.
       uploaded: 'Upload voltooid.',
       tooLarge: 'Het bestand is groter dan 50 MiB. Kies een kleiner bestand.',
       unsupported: 'Alleen afbeeldings- en videobestanden worden ondersteund.',
@@ -522,21 +531,78 @@
     await updateIndex(state.items);
     return item;
   }
+  const UPLOAD_DB_NAME = 'ssos-media-upload-queue';
+  const UPLOAD_DB_VERSION = 1;
+  function openUploadDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(UPLOAD_DB_NAME, UPLOAD_DB_VERSION);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains('jobs')) request.result.createObjectStore('jobs', {keyPath:'id'});
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error('Upload-Warteschlange ist nicht verfügbar.'));
+    });
+  }
+  async function saveUploadJob(job) {
+    const db = await openUploadDatabase();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('jobs','readwrite');
+      tx.objectStore('jobs').put(job);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error || new Error('Upload konnte nicht für den Hintergrund gespeichert werden.')); };
+      tx.onabort = () => { db.close(); reject(tx.error || new Error('Speichern der Upload-Warteschlange wurde abgebrochen.')); };
+    });
+  }
   async function uploadFiles(files, description, statusSelector) {
     if (state.busy) return;
     if (!files?.length) throw new Error(t('selectFiles'));
     if (!accountReady()) throw new Error(t('notSignedIn'));
+    if (!state.repository?.private) throw new Error(t('noRepo'));
     state.busy = true;
+    const target = statusSelector || '[data-photos-status]';
     try {
-      for (let index = 0; index < files.length; index++) {
-        setStatus(statusSelector || '[data-photos-status]', t('uploading') + ' (' + (index + 1) + '/' + files.length + ')');
-        await uploadOne(files[index], description);
+      const queuedFiles = [];
+      for (const file of files) {
+        if (!file?.type?.startsWith('image/') && !file?.type?.startsWith('video/')) throw new Error(t('unsupported'));
+        const captureInfo = file.type.startsWith('image/') ? await getCaptureDate(file) : {date:new Date(file.lastModified || Date.now()),source:'file-last-modified'};
+        let aiResult = null;
+        if (file.type.startsWith('image/') && window.SSOSPhotoAI?.isReady?.()) {
+          try { aiResult = await window.SSOSPhotoAI.describeImage(file); }
+          catch (error) { console.warn('[Schleim OS Photos] Local AI description skipped:', error); }
+        }
+        queuedFiles.push({
+          file:file,
+          meta:{
+            originalName:String(file.name || ''),
+            description:String(description || ''),
+            capturedAt:captureInfo.date.toISOString(),
+            dateSource:captureInfo.source,
+            aiDescription:String(aiResult?.description || '').slice(0,260),
+            aiTags:Array.isArray(aiResult?.keywords) ? aiResult.keywords : []
+          }
+        });
       }
-      setStatus(statusSelector || '[data-photos-status]', t('uploaded'));
-      refreshOpenViews();
-      window.dispatchEvent(new Event('ssos-photos-updated'));
+      const jobId = crypto.randomUUID?.() || (Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10));
+      await saveUploadJob({id:jobId,createdAt:Date.now(),files:queuedFiles});
+      const result = await chrome.runtime.sendMessage({type:'SSOS_MEDIA_UPLOAD_START',jobId:jobId});
+      if (!result?.ok) throw new Error(result?.error || 'Der Hintergrund-Upload konnte nicht gestartet werden.');
+      setStatus(target,t('backgroundQueued'));
+      const input = $('[data-photos-files]');
+      if (input) input.value = '';
     } finally {
       state.busy = false;
+    }
+  }
+  function displayBackgroundUploadStatus(status) {
+    if (!status) return;
+    const message = status.phase === 'complete'
+      ? t('backgroundComplete')
+      : status.phase === 'failed'
+        ? (status.message || t('loadError'))
+        : t('backgroundProgress') + ': ' + (status.progress || 0) + '% · ' + (status.filename || status.message || t('uploading'));
+    setStatus('[data-photos-status]',message,status.phase === 'failed');
+    if (status.phase === 'complete') {
+      refreshMediaApp().then(() => setStatus('[data-photos-status]',t('backgroundComplete'))).catch(() => {});
     }
   }
 
@@ -911,6 +977,16 @@
     document.addEventListener('change',handleChange);
     window.addEventListener('ssos-app-opened',handleAppOpen);
     window.addEventListener('ssos-photos-updated',refreshOpenViews);
+    if (globalThis.chrome?.storage?.onChanged) {
+      chrome.storage.onChanged.addListener((changes,area) => {
+        if (area === 'local' && changes['ssos-media-upload-status']?.newValue) {
+          displayBackgroundUploadStatus(changes['ssos-media-upload-status'].newValue);
+        }
+      });
+      chrome.storage.local.get('ssos-media-upload-status').then(result => {
+        if (result?.['ssos-media-upload-status']?.phase === 'progress') displayBackgroundUploadStatus(result['ssos-media-upload-status']);
+      }).catch(() => {});
+    }
     window.addEventListener('ssos-photo-ai-terms-updated',renderGallery);
     window.addEventListener('ssos-account-state-changed',() => {
       if (state.activeApp === 'images') refreshMediaApp();

@@ -255,6 +255,9 @@
     $('#deviceDetectedLabel').textContent=deviceLabel(detectedDevice);$('#deviceDetectedHint').textContent=deviceHint(detectedDevice);
     renderDevicePreviewButtons();
     renderHomeAppGrid();
+  // The completion notification can reopen Schleim OS directly in the Photos app.
+  const requestedApp = new URLSearchParams(location.search).get('openApp');
+  if (requestedApp === 'images') openApp('images');
   }
 
   let selectedLanguage=state.language||'de';
