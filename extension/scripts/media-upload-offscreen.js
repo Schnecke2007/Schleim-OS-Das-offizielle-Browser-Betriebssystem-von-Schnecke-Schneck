@@ -10,7 +10,7 @@
   const REPO_NAME = 'schleim-os-cloud-photos-and-videos';
   const INDEX_PATH = '_metadata/media-index.json';
   const MAX_FILE_BYTES = 50 * 1024 * 1024;
-  const SAFE_FILE_BYTES = 49 * 1024 * 1024;
+  const SAFE_FILE_BYTES = 49 * 1024 * 1024; // Target with headroom; hard upload ceiling remains 50 MiB.
   const activeJobs = new Set();
   let auth = null;
   let lastProgressAt = 0;
@@ -231,20 +231,33 @@
     return new Promise(resolve => canvas.toBlob(resolve,'image/webp',quality));
   }
   async function compressPhoto(file, jobId, index, total) {
-    if (!file.type.startsWith('image/') || typeof createImageBitmap !== 'function') return {blob:file,optimized:false,width:0,height:0,extension:null};
+    if (!file.type.startsWith('image/') || typeof createImageBitmap !== 'function') {
+      if (file.size > MAX_FILE_BYTES) throw new Error('Das Bildformat kann von diesem Browser nicht lokal komprimiert werden und überschreitet 50 MiB.');
+      return {blob:file,optimized:false,width:0,height:0,extension:null};
+    }
     if (await isAnimatedImage(file)) {
-      if (file.size > MAX_FILE_BYTES) throw new Error('Animierte Bilder über 50 MiB können nicht verlustfrei komprimiert werden.');
+      if (file.size > MAX_FILE_BYTES) throw new Error('Animierte Bilder über 50 MiB können nicht ohne Verlust der Animation verarbeitet werden.');
+      await progress(jobId,index,total,'compress',file.name,{ratio:0.32,message:'Animiertes Bild bleibt zur Erhaltung der Animation unverändert'});
       return {blob:file,optimized:false,width:0,height:0,extension:null};
     }
     let bitmap;
-    try { bitmap = await createImageBitmap(file,{imageOrientation:'from-image'}); }
-    catch { return {blob:file,optimized:false,width:0,height:0,extension:null}; }
+    try {
+      bitmap = await createImageBitmap(file,{imageOrientation:'from-image'});
+    } catch {
+      if (file.size > MAX_FILE_BYTES) throw new Error('Das Foto konnte nicht dekodiert und deshalb nicht auf unter 50 MiB komprimiert werden.');
+      return {blob:file,optimized:false,width:0,height:0,extension:null};
+    }
     try {
       const profiles=[
-        {edge:2560,q:0.88},{edge:2048,q:0.80},{edge:1600,q:0.72},
-        {edge:1280,q:0.64},{edge:960,q:0.56},{edge:720,q:0.48}
+        {edge:2560,q:0.90},{edge:2048,q:0.86},{edge:1600,q:0.82},
+        {edge:1280,q:0.76},{edge:960,q:0.70},{edge:720,q:0.62},
+        {edge:540,q:0.54},{edge:420,q:0.46},{edge:320,q:0.38},
+        {edge:240,q:0.30},{edge:180,q:0.24}
       ];
       let best=null;
+      const targetBytes=file.size<=SAFE_FILE_BYTES
+        ? Math.min(SAFE_FILE_BYTES,Math.floor(file.size*0.98))
+        : SAFE_FILE_BYTES;
       for (let p=0;p<profiles.length;p++) {
         const scale=Math.min(1,profiles[p].edge/Math.max(bitmap.width,bitmap.height));
         const width=Math.max(1,Math.round(bitmap.width*scale));
@@ -253,25 +266,29 @@
         canvas.width=width;canvas.height=height;
         const context=canvas.getContext('2d');
         if (!context) break;
-        context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';
+        context.imageSmoothingEnabled=true;
+        context.imageSmoothingQuality='high';
         context.drawImage(bitmap,0,0,width,height);
         const blob=await canvasBlob(canvas,profiles[p].q);
-        canvas.width=0;canvas.height=0;
+        canvas.width=0;
+        canvas.height=0;
         if (!blob) continue;
         if (!best || blob.size<best.blob.size) best={blob:blob,width:width,height:height};
-        await progress(jobId,index,total,'compress',file.name,{ratio:0.12+0.2*((p+1)/profiles.length),message:'Foto wird komprimiert'});
-        if (blob.size<=SAFE_FILE_BYTES) {
-          if (blob.size<=file.size || file.size>SAFE_FILE_BYTES) {
-            return {blob:blob,optimized:true,width:width,height:height,extension:'webp'};
-          }
-          return {blob:file,optimized:false,width:bitmap.width,height:bitmap.height,extension:null};
+        await progress(jobId,index,total,'compress',file.name,{
+          ratio:0.12+0.2*((p+1)/profiles.length),
+          message:'Foto wird als WebP komprimiert ('+(p+1)+'/'+profiles.length+')'
+        });
+        if (blob.size<=targetBytes) {
+          return {blob:blob,optimized:true,width:width,height:height,extension:'webp'};
         }
       }
-      if (best && best.blob.size<=MAX_FILE_BYTES) {
+      if (best && best.blob.size<=MAX_FILE_BYTES && (best.blob.size<file.size || file.size>MAX_FILE_BYTES)) {
         return {blob:best.blob,optimized:true,width:best.width,height:best.height,extension:'webp'};
       }
-      if (file.size<=MAX_FILE_BYTES) return {blob:file,optimized:false,width:bitmap.width,height:bitmap.height,extension:null};
-      throw new Error('Das Foto konnte auch mit starker Komprimierung nicht unter 50 MiB gebracht werden.');
+      if (file.size<=MAX_FILE_BYTES) {
+        return {blob:file,optimized:false,width:bitmap.width,height:bitmap.height,extension:null};
+      }
+      throw new Error('Das Foto konnte auch mit maximaler Komprimierung nicht unter 50 MiB gebracht werden.');
     } finally {
       bitmap.close?.();
     }
@@ -290,73 +307,148 @@
     }
     const objectUrl=URL.createObjectURL(file);
     const video=document.createElement('video');
-    video.preload='auto';video.playsInline=true;video.muted=false;video.volume=0;
+    video.preload='auto';
+    video.playsInline=true;
+    video.muted=false;
+    video.volume=0;
     video.src=objectUrl;
-    let recorder=null,raf=0,stream=null,sourceStream=null;
     try {
       await waitForMedia(video);
       const duration=Number(video.duration);
       if (!Number.isFinite(duration)||duration<=0) throw new Error('Die Videolänge konnte nicht bestimmt werden.');
-      const totalBudget=Math.floor((SAFE_FILE_BYTES*8/duration)*0.78);
-      if (totalBudget<40000) throw new Error('Dieses Video ist für das 50-MiB-Limit zu lang. Kürze es bitte vor dem Upload.');
-      const maxEdge=totalBudget<80000?240:totalBudget<160000?360:totalBudget<300000?720:1280;
-      const scale=Math.min(1,maxEdge/Math.max(video.videoWidth,video.videoHeight));
-      const width=Math.max(2,Math.round(video.videoWidth*scale/2)*2);
-      const height=Math.max(2,Math.round(video.videoHeight*scale/2)*2);
-      const canvas=document.createElement('canvas');
-      canvas.width=width;canvas.height=height;
-      const context=canvas.getContext('2d');
-      if (!context) throw new Error('Video-Canvas konnte nicht erstellt werden.');
-      const canvasStream=canvas.captureStream(24);
-      stream=canvasStream;
-      let audioTracks=[];
-      if (typeof video.captureStream==='function') {
-        try { sourceStream=video.captureStream(); audioTracks=sourceStream.getAudioTracks(); } catch {}
-      }
-      const audioBitrate=audioTracks.length ? Math.min(48000,Math.max(12000,Math.floor(totalBudget*0.12))) : 0;
-      const videoBitrate=Math.max(24000,totalBudget-audioBitrate);
-      audioTracks.forEach(track=>stream.addTrack(track));
-      const mimeTypes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
+      if (!video.videoWidth||!video.videoHeight) throw new Error('Die Videoauflösung konnte nicht gelesen werden.');
+
+      // Keep a safety margin below GitHub's per-file limit. If a browser encoder
+      // overshoots its requested bitrate, progressively lower resolution/FPS/bitrate.
+      const bitrateBudget=Math.floor((SAFE_FILE_BYTES*8/duration)*0.82);
+      if (bitrateBudget<16000) throw new Error('Dieses Video ist für das 50-MiB-Limit zu lang. Bitte kürze es vor dem Upload.');
+
+      const baseEdge=bitrateBudget<80000?240
+        :bitrateBudget<160000?360
+        :bitrateBudget<300000?540
+        :bitrateBudget<600000?720:1280;
+      const baseFps=bitrateBudget<80000?10
+        :bitrateBudget<160000?12
+        :bitrateBudget<300000?15
+        :bitrateBudget<600000?18:24;
+      const profiles=[
+        {edge:baseEdge,fps:baseFps,factor:0.94},
+        {edge:Math.min(baseEdge,960),fps:Math.min(baseFps,20),factor:0.78},
+        {edge:Math.min(baseEdge,720),fps:Math.min(baseFps,16),factor:0.62},
+        {edge:Math.min(baseEdge,540),fps:Math.min(baseFps,12),factor:0.46},
+        {edge:Math.min(baseEdge,360),fps:10,factor:0.32},
+        {edge:240,fps:8,factor:0.22}
+      ];
+      const mimeTypes=[
+        'video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus',
+        'video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'
+      ];
       const mimeType=mimeTypes.find(type=>MediaRecorder.isTypeSupported?.(type));
       if (!mimeType) throw new Error('Kein unterstützter WebM-Codec für die Videokomprimierung gefunden.');
-      const chunks=[];
-      recorder=new MediaRecorder(stream,{
-        mimeType:mimeType,
-        videoBitsPerSecond:videoBitrate,
-        ...(audioBitrate?{audioBitsPerSecond:audioBitrate}:{})
-      });
-      const stopped=new Promise((resolve,reject)=>{
-        recorder.ondataavailable=event=>{if(event.data?.size)chunks.push(event.data);};
-        recorder.onerror=event=>reject(event.error||new Error('Video-Neukodierung fehlgeschlagen.'));
-        recorder.onstop=()=>resolve(new Blob(chunks,{type:recorder.mimeType||'video/webm'}));
-      });
-      const draw=()=>{
-        if (video.ended || video.paused) return;
-        try { context.drawImage(video,0,0,width,height); } catch {}
-        const ratio=Math.max(0,Math.min(1,video.currentTime/duration));
-        progress(jobId,index,total,'compress',file.name,{ratio:0.32+ratio*0.28,message:'Video wird neu kodiert'});
-        raf=requestAnimationFrame(draw);
-      };
-      const playbackFinished = new Promise((resolve,reject)=>{
-        video.addEventListener('ended',resolve,{once:true});
-        video.addEventListener('error',()=>reject(new Error('Fehler beim Lesen des Videos.')),{once:true});
-      });
-      recorder.start(1000);
-      await video.play();
-      draw();
-      if (!video.ended) await playbackFinished;
-      if (raf) cancelAnimationFrame(raf);
-      if (recorder.state!=='inactive') recorder.stop();
-      const blob=await stopped;
-      if (blob.size>MAX_FILE_BYTES) throw new Error('Das Video bleibt trotz Neu-Kodierung größer als 50 MiB. Bitte kürze es oder wähle eine kürzere Aufnahme.');
-      if (!blob.size) throw new Error('Die komprimierte Videodatei ist leer.');
-      return {blob:blob,optimized:true,width:width,height:height,extension:'webm'};
+
+      let smallest=null;
+      for (let attempt=0;attempt<profiles.length;attempt++) {
+        const profile=profiles[attempt];
+        if (video.currentTime>0) {
+          video.pause();
+          await new Promise((resolve,reject)=>{
+            const timer=setTimeout(()=>reject(new Error('Video konnte für einen weiteren Komprimierungsversuch nicht zurückgesetzt werden.')),10000);
+            video.addEventListener('seeked',()=>{clearTimeout(timer);resolve();},{once:true});
+            video.currentTime=0;
+          });
+        }
+
+        const scale=Math.min(1,profile.edge/Math.max(video.videoWidth,video.videoHeight));
+        const width=Math.max(2,Math.round(video.videoWidth*scale/2)*2);
+        const height=Math.max(2,Math.round(video.videoHeight*scale/2)*2);
+        const canvas=document.createElement('canvas');
+        canvas.width=width;
+        canvas.height=height;
+        const context=canvas.getContext('2d');
+        if (!context) throw new Error('Video-Canvas konnte nicht erstellt werden.');
+        const outputStream=canvas.captureStream(profile.fps);
+        let sourceStream=null;
+        let recorder=null;
+        let raf=0;
+        try {
+          const audioTracks=[];
+          if (typeof video.captureStream==='function') {
+            try {
+              sourceStream=video.captureStream();
+              audioTracks.push(...sourceStream.getAudioTracks());
+            } catch (error) {
+              console.warn('[Schleim OS Media Upload] Audio capture unavailable:',error);
+            }
+          }
+          const attemptBudget=Math.max(16000,Math.floor(bitrateBudget*profile.factor));
+          const audioBitrate=audioTracks.length
+            ? Math.min(48000,Math.max(6000,Math.floor(attemptBudget*0.18)))
+            : 0;
+          const videoBitrate=Math.max(8000,attemptBudget-audioBitrate);
+          audioTracks.forEach(track=>outputStream.addTrack(track));
+
+          const chunks=[];
+          recorder=new MediaRecorder(outputStream,{
+            mimeType:mimeType,
+            videoBitsPerSecond:videoBitrate,
+            ...(audioBitrate?{audioBitsPerSecond:audioBitrate}:{})
+          });
+          const stopped=new Promise((resolve,reject)=>{
+            recorder.ondataavailable=event=>{if(event.data?.size)chunks.push(event.data);};
+            recorder.onerror=event=>reject(event.error||new Error('Video-Neukodierung fehlgeschlagen.'));
+            recorder.onstop=()=>resolve(new Blob(chunks,{type:recorder.mimeType||'video/webm'}));
+          });
+          const playbackFinished=new Promise((resolve,reject)=>{
+            video.addEventListener('ended',resolve,{once:true});
+            video.addEventListener('error',()=>reject(new Error('Fehler beim Lesen des Videos.')),{once:true});
+          });
+          const draw=()=>{
+            if (video.ended||video.paused) return;
+            try { context.drawImage(video,0,0,width,height); } catch {}
+            const ratio=Math.max(0,Math.min(1,video.currentTime/duration));
+            const overall=0.30+0.30*((attempt+ratio)/profiles.length);
+            progress(jobId,index,total,'compress',file.name,{
+              ratio:overall,
+              message:'Video wird komprimiert ('+(attempt+1)+'/'+profiles.length+')'
+            });
+            raf=requestAnimationFrame(draw);
+          };
+
+          recorder.start(1000);
+          await video.play();
+          draw();
+          if (!video.ended) await playbackFinished;
+          if (raf) cancelAnimationFrame(raf);
+          if (recorder.state!=='inactive') recorder.stop();
+          const blob=await stopped;
+          if (!blob.size) throw new Error('Die komprimierte Videodatei ist leer.');
+          if (!smallest||blob.size<smallest.blob.size) {
+            smallest={blob:blob,width:width,height:height};
+          }
+          if (blob.size<=MAX_FILE_BYTES) {
+            return {blob:blob,optimized:true,width:width,height:height,extension:'webm'};
+          }
+          await progress(jobId,index,total,'compress',file.name,{
+            ratio:0.30+0.30*((attempt+1)/profiles.length),
+            message:'Datei liegt noch über 50 MiB – Komprimierung wird verstärkt'
+          });
+        } finally {
+          if (raf) cancelAnimationFrame(raf);
+          if (recorder&&recorder.state!=='inactive') { try { recorder.stop(); } catch {} }
+          outputStream.getTracks().forEach(track=>track.stop());
+          sourceStream?.getTracks?.().forEach(track=>track.stop());
+          canvas.width=0;
+          canvas.height=0;
+        }
+      }
+      if (smallest && smallest.blob.size<=MAX_FILE_BYTES) {
+        return {blob:smallest.blob,optimized:true,width:smallest.width,height:smallest.height,extension:'webm'};
+      }
+      throw new Error('Das Video bleibt auch nach mehreren starken Komprimierungsversuchen größer als 50 MiB. Bitte kürze es.');
     } finally {
-      if (raf) cancelAnimationFrame(raf);
-      if (recorder && recorder.state!=='inactive') { try { recorder.stop(); } catch {} }
-      stream?.getTracks?.().forEach(track=>track.stop());
-      sourceStream?.getTracks?.().forEach(track=>track.stop());
-      video.pause();video.removeAttribute('src');video.load();
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
       URL.revokeObjectURL(objectUrl);
     }
   }
