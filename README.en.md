@@ -16,6 +16,15 @@ Want to build your own browser operating system based on this project? A separat
 
 Download and extract the template, then select its folder in a Chromium browser via **Extensions → Developer mode → Load unpacked**. Set up your own GitHub App before using the GitHub cloud features. The template intentionally contains no personal details from the original project.
 
+
+### Complete extension as a standalone template
+
+Need the **complete current browser extension** as a neutral copy, not just a project starter? The separate [`extension-template/`](extension-template/) folder contains the extension features, demo profiles, sample pages, neutral artwork and placeholders for your own details.
+
+[📦 **Download only the complete extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration guide](extension-template/CONFIGURATION.md)
+
+The ZIP contains only the contents of the extension template. The released original extension in `extension/` remains unchanged. Configure your own GitHub App, repositories, contact details and legal information before using or publishing it.
+
 ## 👋 About me
 
 Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.

@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Browser OS | Das offizielle Browser-Betriebssystem von Demo Creator",
+  "short_name": "Browser OS",
+  "version": "3.14.2",
+  "description": "Browser OS – anpassbare Neuer-Tab-Oberfläche mit Browser OS account, Store und privater Foto- und Video-Cloud.",
+  "chrome_url_overrides": {
+    "newtab": "pages/newtab.html"
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "host_permissions": [
+    "https://api.open-meteo.com/*",
+    "https://geocoding-api.open-meteo.com/*",
+    "https://raw.githubusercontent.com/*",
+    "https://api.github.com/*",
+    "https://github.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: blob: http: https:; frame-src https: http:; connect-src 'self' http: https:"
+  },
+  "permissions": [
+    "storage",
+    "clipboardWrite"
+  ],
+  "minimum_chrome_version": "102"
+}

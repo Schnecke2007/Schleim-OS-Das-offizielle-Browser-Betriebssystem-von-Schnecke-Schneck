@@ -16,6 +16,15 @@ Wil je op basis van dit project je eigen browserbesturingssysteem ontwikkelen? E
 
 Download en pak de template uit. Selecteer daarna de map in een Chromium-browser via **Extensies → Ontwikkelaarsmodus → Uitgepakte extensie laden**. Stel je eigen GitHub-app in voordat je de GitHub-cloudfuncties gebruikt. De template bevat bewust geen persoonlijke gegevens uit het oorspronkelijke project.
 
+
+### De volledige extensie als zelfstandig template
+
+Wil je niet alleen een projectbasis, maar de **volledige huidige browserextensie** als neutrale kopie? De aparte map [`extension-template/`](extension-template/) bevat de functies van de extensie, demoprofielen, voorbeeldpagina's, neutrale afbeeldingen en plaatsaanduidingen voor je eigen gegevens.
+
+[📦 **Download alleen de volledige extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratiehandleiding](extension-template/CONFIGURATION.md)
+
+De ZIP bevat uitsluitend de inhoud van de extensietemplate. De gepubliceerde oorspronkelijke extensie in `extension/` blijft ongewijzigd. Configureer eerst je eigen GitHub-app, repositories, contactgegevens en juridische informatie.
+
 ## 👋 Over mij
 
 Hoi! Ik ben **Schnecke Schneck**, ik ben 19 jaar oud en kom uit **Bottrop in Noordrijn-Westfalen, Duitsland**. Online gebruik ik de naam *Schnecke Schneck*. Ik ben vooral geïnteresseerd in technologie en digitale ideeën.

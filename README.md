@@ -16,6 +16,15 @@ Du möchtest ein eigenes Browser-Betriebssystem auf Basis dieses Projekts entwic
 
 Lade nur das Template herunter, entpacke es und wähle den Ordner anschließend in einem Chromium-Browser über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden** aus. Richte vor der Nutzung der GitHub-Cloud-Funktionen deine eigene GitHub App ein. Die Vorlage enthält bewusst keine persönlichen Daten des ursprünglichen Projekts.
 
+
+### Vollständige Extension als eigenständiges Template
+
+Du möchtest nicht nur eine Projekt-Grundlage, sondern die **komplette aktuelle Browser-Erweiterung** als neutrale Kopie? Dafür gibt es zusätzlich den Ordner [`extension-template/`](extension-template/) mit den Funktionen der Extension, Demo-Profilen, Beispielseiten, neutralen Bildern und Platzhaltern für deine eigenen Angaben.
+
+[📦 **Nur die vollständige Extension-Vorlage herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfigurationsanleitung](extension-template/CONFIGURATION.md)
+
+Das ZIP enthält ausschließlich den Inhalt des Extension-Templates. Die veröffentlichte Original-Extension im Ordner `extension/` bleibt unverändert. Vor der Nutzung musst du deine eigenen GitHub-App-, Repository-, Kontakt- und Rechtsangaben eintragen.
+
 ## 👋 Über mich
 
 Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
