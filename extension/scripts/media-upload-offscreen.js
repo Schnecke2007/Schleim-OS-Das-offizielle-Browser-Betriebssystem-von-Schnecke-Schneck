@@ -292,7 +292,7 @@
     const video=document.createElement('video');
     video.preload='auto';video.playsInline=true;video.muted=false;video.volume=0;
     video.src=objectUrl;
-    let recorder=null,raf=0,stream=null;
+    let recorder=null,raf=0,stream=null,sourceStream=null;
     try {
       await waitForMedia(video);
       const duration=Number(video.duration);
@@ -311,7 +311,7 @@
       stream=canvasStream;
       let audioTracks=[];
       if (typeof video.captureStream==='function') {
-        try { audioTracks=video.captureStream().getAudioTracks(); } catch {}
+        try { sourceStream=video.captureStream(); audioTracks=sourceStream.getAudioTracks(); } catch {}
       }
       const audioBitrate=audioTracks.length ? Math.min(48000,Math.max(12000,Math.floor(totalBudget*0.12))) : 0;
       const videoBitrate=Math.max(24000,totalBudget-audioBitrate);
@@ -337,13 +337,14 @@
         progress(jobId,index,total,'compress',file.name,{ratio:0.32+ratio*0.28,message:'Video wird neu kodiert'});
         raf=requestAnimationFrame(draw);
       };
-      recorder.start(1000);
-      await video.play();
-      draw();
-      await new Promise((resolve,reject)=>{
+      const playbackFinished = new Promise((resolve,reject)=>{
         video.addEventListener('ended',resolve,{once:true});
         video.addEventListener('error',()=>reject(new Error('Fehler beim Lesen des Videos.')),{once:true});
       });
+      recorder.start(1000);
+      await video.play();
+      draw();
+      if (!video.ended) await playbackFinished;
       if (raf) cancelAnimationFrame(raf);
       if (recorder.state!=='inactive') recorder.stop();
       const blob=await stopped;
@@ -354,6 +355,7 @@
       if (raf) cancelAnimationFrame(raf);
       if (recorder && recorder.state!=='inactive') { try { recorder.stop(); } catch {} }
       stream?.getTracks?.().forEach(track=>track.stop());
+      sourceStream?.getTracks?.().forEach(track=>track.stop());
       video.pause();video.removeAttribute('src');video.load();
       URL.revokeObjectURL(objectUrl);
     }

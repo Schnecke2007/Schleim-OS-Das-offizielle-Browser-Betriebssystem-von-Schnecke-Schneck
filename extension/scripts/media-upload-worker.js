@@ -3,6 +3,36 @@ const STATUS_KEY = 'ssos-media-upload-status';
 const OFFSCREEN_PATH = 'pages/media-upload.html';
 const NOTIFICATION_PREFIX = 'ssos-media-upload-';
 let creatingOffscreen = null;
+let activeUploadJob = null;
+
+function notificationsGetAll() {
+  return new Promise(resolve => chrome.notifications.getAll(result => {
+    const error = chrome.runtime.lastError;
+    if (error) { console.warn('[Schleim OS] Notifications unavailable:', error.message); resolve({}); }
+    else resolve(result || {});
+  }));
+}
+function notificationCreate(id, options) {
+  return new Promise(resolve => chrome.notifications.create(id, options, result => {
+    const error = chrome.runtime.lastError;
+    if (error) { console.warn('[Schleim OS] Notification could not be created:', error.message); resolve(null); }
+    else resolve(result || id);
+  }));
+}
+function notificationUpdate(id, options) {
+  return new Promise(resolve => chrome.notifications.update(id, options, result => {
+    const error = chrome.runtime.lastError;
+    if (error) { console.warn('[Schleim OS] Notification could not be updated:', error.message); resolve(false); }
+    else resolve(!!result);
+  }));
+}
+function notificationClear(id) {
+  return new Promise(resolve => chrome.notifications.clear(id, result => {
+    const error = chrome.runtime.lastError;
+    if (error) console.warn('[Schleim OS] Notification could not be cleared:', error.message);
+    resolve(!!result);
+  }));
+}
 
 function notificationId(jobId) { return NOTIFICATION_PREFIX + jobId; }
 async function storeStatus(status) {
@@ -36,18 +66,18 @@ async function showProgress(jobId,progress,message) {
     priority:1
   };
   try {
-    const exists=await chrome.notifications.getAll();
-    if (exists[id]) await chrome.notifications.update(id,options);
-    else await chrome.notifications.create(id,options);
+    const exists=await notificationsGetAll();
+    if (exists[id]) await notificationUpdate(id,options);
+    else await notificationCreate(id,options);
   } catch (error) {
     console.warn('[Schleim OS] Fortschrittsbenachrichtigung nicht verfügbar:',error);
   }
 }
 async function showFinished(jobId,total) {
   const id=notificationId(jobId);
-  try { await chrome.notifications.clear(id); } catch {}
+  try { await notificationClear(id); } catch {}
   try {
-    await chrome.notifications.create(id,{
+    await notificationCreate(id,{
       type:'basic',
       iconUrl:chrome.runtime.getURL('assets/icons/icon-128.png'),
       title:'Schleim OS – Upload abgeschlossen',
@@ -63,7 +93,7 @@ async function showFailed(jobId,error) {
   const id=notificationId(jobId);
   try { await chrome.notifications.clear(id); } catch {}
   try {
-    await chrome.notifications.create(id,{
+    await notificationCreate(id,{
       type:'basic',
       iconUrl:chrome.runtime.getURL('assets/icons/icon-128.png'),
       title:'Schleim OS – Upload nicht abgeschlossen',
@@ -74,6 +104,9 @@ async function showFailed(jobId,error) {
   } catch {}
 }
 async function startUpload(jobId) {
+  if (activeUploadJob) throw new Error('Ein Medien-Upload läuft bereits. Warte, bis die aktuelle Warteschlange abgeschlossen ist.');
+  activeUploadJob = jobId;
+  try {
   const stored=await chrome.storage.local.get(STORAGE_KEY);
   const session=stored?.[STORAGE_KEY];
   if (!session?.user?.login || !session?.accessToken) throw new Error('Bitte melde dich zuerst mit deinem Schleim-Konto an.');
@@ -96,6 +129,9 @@ async function startUpload(jobId) {
     }
   });
   if (!result?.ok) throw new Error('Der Hintergrundprozess konnte nicht gestartet werden.');
+  } finally {
+    activeUploadJob = null;
+  }
 }
 chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
   if (message?.type==='SSOS_MEDIA_UPLOAD_START') {
@@ -115,12 +151,16 @@ chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
       completed:message.completed||0,total:message.total||0,
       stage:message.stage||'',filename:message.filename||'',message:message.message||''
     };
-    storeStatus(status);
-    showProgress(message.jobId,status.progress,status.filename
-      ? status.filename+' · '+status.progress+'% · '+status.message
-      : status.progress+'% · '+status.message);
-    sendResponse({ok:true});
-    return false;
+    Promise.all([
+      storeStatus(status),
+      showProgress(message.jobId,status.progress,status.filename
+        ? status.filename+' · '+status.progress+'% · '+status.message
+        : status.progress+'% · '+status.message)
+    ]).then(()=>sendResponse({ok:true})).catch(error=>{
+      console.warn('[Schleim OS] Progress update failed:',error);
+      sendResponse({ok:false});
+    });
+    return true;
   }
   if (message?.type==='SSOS_MEDIA_TOKEN_REFRESHED') {
     chrome.storage.local.get(STORAGE_KEY).then(result=>{
@@ -132,16 +172,18 @@ chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
     return true;
   }
   if (message?.type==='SSOS_MEDIA_UPLOAD_FINISHED') {
-    storeStatus({jobId:message.jobId,phase:'complete',progress:100,completed:message.total||0,total:message.total||0,message:'Upload abgeschlossen.'});
-    showFinished(message.jobId,message.total||0);
-    sendResponse({ok:true});
-    return false;
+    Promise.all([
+      storeStatus({jobId:message.jobId,phase:'complete',progress:100,completed:message.total||0,total:message.total||0,message:'Upload abgeschlossen.'}),
+      showFinished(message.jobId,message.total||0)
+    ]).then(()=>sendResponse({ok:true})).catch(()=>sendResponse({ok:false}));
+    return true;
   }
   if (message?.type==='SSOS_MEDIA_UPLOAD_FAILED') {
-    storeStatus({jobId:message.jobId,phase:'failed',progress:0,message:message.error||'Upload fehlgeschlagen.'});
-    showFailed(message.jobId,message.error);
-    sendResponse({ok:true});
-    return false;
+    Promise.all([
+      storeStatus({jobId:message.jobId,phase:'failed',progress:0,message:message.error||'Upload fehlgeschlagen.'}),
+      showFailed(message.jobId,message.error)
+    ]).then(()=>sendResponse({ok:true})).catch(()=>sendResponse({ok:false}));
+    return true;
   }
   if (message?.target==='offscreen') return false;
   return false;
@@ -149,7 +191,7 @@ chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
 chrome.notifications.onClicked.addListener(notificationIdValue=>{
   if (!notificationIdValue.startsWith(NOTIFICATION_PREFIX)) return;
   chrome.tabs.create({url:chrome.runtime.getURL('pages/newtab.html?openApp=images')});
-  chrome.notifications.clear(notificationIdValue);
+  notificationClear(notificationIdValue);
 });
 chrome.runtime.onStartup.addListener(async()=>{
   const stored=await chrome.storage.local.get(STATUS_KEY);
