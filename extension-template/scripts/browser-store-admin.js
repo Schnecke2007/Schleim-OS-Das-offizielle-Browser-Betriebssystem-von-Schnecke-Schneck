@@ -28,7 +28,7 @@
   async function decryptFile(file,pass){
     if(!file||file.size>128000)throw new Error(t('bad'));
     const data=JSON.parse(await file.text());
-    if(!['Browser OS Browser Store Admin Key','Browser OS Slime Store Admin Key'].includes(data.format)||data.version!==1||data.cipher!=='AES-256-GCM'||data.kdf!=='PBKDF2-SHA-256'||data.iterations!==ITERATIONS)throw new Error(t('bad'));
+    if(data.format!=='Browser OS Browser Store Admin Key'||data.version!==1||data.cipher!=='AES-256-GCM'||data.kdf!=='PBKDF2-SHA-256'||data.iterations!==ITERATIONS)throw new Error(t('bad'));
     const key=await keyFor(pass,fromB64(data.salt),'decrypt');
     const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:fromB64(data.iv)},key,fromB64(data.ciphertext));
     const p=JSON.parse(new TextDecoder().decode(plain));

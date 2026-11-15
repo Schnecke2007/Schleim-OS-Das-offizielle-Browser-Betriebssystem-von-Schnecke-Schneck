@@ -165,6 +165,8 @@ test('Template identifiers and Store admin formats are neutral', () => {
   assert.doesNotMatch(appSource, /slimestore|schleimcloud|slime store|schleim-store/i);
   assert.doesNotMatch(standaloneSource, /slimestore|schleimcloud|Schleim-OS|slime store|schleim-store/i);
   assert.doesNotMatch(storeAdminSource, /Slime Store/i);
+  assert.match(appSource, /id:'browserstore'/);
+  assert.match(appSource, /id:'cloud-demo'/);
   assert.match(storeAdminSource, /Browser OS Browser Store Admin Key/);
 });
 

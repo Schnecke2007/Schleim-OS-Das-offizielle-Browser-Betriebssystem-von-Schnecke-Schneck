@@ -329,7 +329,7 @@ body[data-device="desktop"] .language-screen,.device[data-device="desktop"] .lan
             <button type="button" data-app="projects">🧩 <span>Projects</span></button>
             <button type="button" data-app="social">📸 <span>Social media</span></button>
             <button type="button" data-app="shop">🛍️ <span>Snail shop</span></button>
-            <button type="button" data-app="slimestore">🛍️ <span>Browser Store</span></button>
+            <button type="button" data-app="browserstore">🛍️ <span>Browser Store</span></button>
             <button type="button" data-app="studio">🚀 <span>Creator Studio</span></button>
             <button type="button" data-app="website">🌐 <span>Fan website</span></button>
             <button type="button" data-app="images">🖼️ <span>Images</span></button>
@@ -511,7 +511,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     {id:'studio',name:'Creator Studio',icon:'🚀',hint:'Marke und Leistungen',keys:'creator studio google unternehmen medien software'},
     {id:'website',name:'Demo-Website',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'your website provider fan homepage unterseiten website'},
     {id:'shop',name:'Demo Shop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'YOUR_PRINT_ON_DEMAND_PROVIDER shop merchandise bestellung'},
-    {id:'slimestore',name:'Browser Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'Browser Store Browser store browser store app store apps installieren websites webapps'},
+    {id:'browserstore',name:'Browser Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'Browser Store Browser store browser store app store apps installieren websites webapps'},
     {id:'fanapp',name:'Demo-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'Voice assistant demo – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant voice assistant demo'},
@@ -519,7 +519,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     {id:'schildi',name:'Smartphone UI demo',icon:'📲',hint:'Smartphone-Simulation',keys:'smartphone interface project pin'},
     {id:'chatgpt',name:'Eigenes ChatGPT',icon:'🤖',hint:'Eigene KI-Suchoberfläche',keys:'ki chatgpt künstliche intelligenz suche'},
     {id:'scratch',name:'Scratch-Projekt',icon:'🟧',hint:'Kreatives Programmierprojekt',keys:'scratch programmieren'},
-    {id:'schleimcloud',name:'Cloud storage demo',icon:'☁️',hint:'Cloud storage demo',keys:'cloud storage backup files'},
+    {id:'cloud-demo',name:'Cloud storage demo',icon:'☁️',hint:'Cloud storage demo',keys:'cloud storage backup files'},
     {id:'iptv',name:'IPTV & Medien',icon:'📺',hint:'Streaming und Medien-Setups',keys:'iptv streaming sonos tunein'},
     {id:'tech',name:'Tech Lab',icon:'💻',hint:'Technik und Experimente',keys:'android samsung galaxy linux lineagos raspberry pi'},
     {id:'contact',name:'Kontakt',icon:'✉️',hint:'Nachrichten und Kooperationen',keys:'kontakt whatsapp business email'},
@@ -533,11 +533,11 @@ window.SSOS_LEGAL_TRANSLATIONS = {
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','browserstore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
   // The old static your website provider gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const DEMO_WEBSITE_GALLERY_IMAGES = [];
-  const PROJECT_CHILD_IDS = ['voiceassistant','parentsettings','schildi','chatgpt','scratch','schleimcloud','iptv','tech'];
+  const PROJECT_CHILD_IDS = ['voiceassistant','parentsettings','schildi','chatgpt','scratch','cloud-demo','iptv','tech'];
   const CONTACT_CHILD_IDS = ['whatsapp','email','google'];
   let activeAppId = null;
   let projectHubActive = false;
@@ -572,12 +572,12 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Demo website',shop:'Demo shop',slimestore:'Browser Store',fanapp:'Demo app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Smartphone UI demo',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'Cloud storage demo',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Photos',camera:'Camera',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'About the demo creator',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Demo-Website',shop:'Demo-winkel',slimestore:'Browser Store',fanapp:'Demo-App',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Smartphone UI demo',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'Cloud storage demo',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Demo website',shop:'Demo shop',browserstore:'Browser Store',fanapp:'Demo app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Smartphone UI demo',voiceassistant:'AI voice assistant',scratch:'Scratch project',cloud-demo:'Cloud storage demo',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Photos',camera:'Camera',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'About the demo creator',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Demo-Website',shop:'Demo-winkel',browserstore:'Browser Store',fanapp:'Demo-App',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Smartphone UI demo',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',cloud-demo:'Cloud storage demo',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All demo website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Browser Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Take photos and videos with the front or rear camera',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
-    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de Demo-Website',shop:'Merchandise en print on demand',slimestore:'Ontdek apps in de Browser Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Cloudopslagdemo',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de Demo-Website',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All demo website sections',shop:'Merchandise and print on demand',browserstore:'Discover apps in the Browser Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',cloud-demo:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Take photos and videos with the front or rear camera',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de Demo-Website',shop:'Merchandise en print on demand',browserstore:'Ontdek apps in de Browser Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',cloud-demo:'Cloudopslagdemo',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de Demo-Website',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
   const TEXT = {
@@ -702,7 +702,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
 
   function renderProjects(){return `${appHero('PROJECTS','Ideas become products.','Use these example cards to showcase your own applications, experiments and websites.','🧩')}
     <div class="project-list">${projectOpen('voiceassistant','🎙️','Voice assistant demo','A configurable voice interface')}${projectOpen('parentsettings','👨‍👩‍👧','Settings demo','A sample settings and timer interface')}${projectOpen('schildi','📱','Smartphone UI demo','A responsive smartphone interface')}${projectOpen('chatgpt','🤖','AI chat demo','A sample AI search and chat interface')}${projectOpen('scratch','🟧','Creative coding demo','A sample coding project')}</div>
-    ${section('Additional examples')}<div class="project-list">${projectOpen('schleimcloud','☁️','Cloud storage demo','A sample personal cloud interface')}${projectOpen('iptv','📺','Media demo','A sample media dashboard')}${projectOpen('tech','💻','Technology lab','Devices, operating systems and experiments')}</div>
+    ${section('Additional examples')}<div class="project-list">${projectOpen('cloud-demo','☁️','Cloud storage demo','A sample personal cloud interface')}${projectOpen('iptv','📺','Media demo','A sample media dashboard')}${projectOpen('tech','💻','Technology lab','Devices, operating systems and experiments')}</div>
     ${section('Project page')}${embedPanel('projects','Project website',URLS.projects,'Project overview')}
     <div class="notice">Replace the sample projects and external links with your own work. Do not publish private server addresses or access credentials.</div>${external(URLS.projects,'Open project website',true)}`; }
 
@@ -751,7 +751,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       schildi:{icon:'📱',name:'Smartphone UI demo',intro:'A responsive smartphone-style web interface.',body:'Describe the screens, navigation and sample apps included in your own smartphone interface. Do not present browser-only simulations as real device controls or security features.',tags:['Responsive layout','Navigation','App tiles','UI demo'],source:URLS.schildiPen,cta:'Open CodePen demo'},
       voiceassistant:{icon:'🎙️',name:'Voice assistant demo',intro:'A sample voice-enabled web application.',body:'Explain the voice features, hosting provider, permissions and data handling of your own implementation.',tags:['Voice input','Assistant UI','Settings','Demo'],source:URLS.voiceassistantDemo,cta:'Open demo'},
       scratch:{icon:'🟧',name:'Creative coding demo',intro:'A sample project from a visual coding platform.',body:'Replace this description with the details of your own creative coding project.',tags:['Creative coding','Learning','Programming'],source:URLS.scratch,cta:'Open example platform'},
-      schleimcloud:{icon:'☁️',name:'Cloud storage demo',intro:'An example personal cloud interface.',body:'Describe the storage provider and security model used by your deployment. Do not publish server addresses, tokens or administrative details.',tags:['Cloud storage','Backup','Privacy'],source:null},
+      cloud-demo:{icon:'☁️',name:'Cloud storage demo',intro:'An example personal cloud interface.',body:'Describe the storage provider and security model used by your deployment. Do not publish server addresses, tokens or administrative details.',tags:['Cloud storage','Backup','Privacy'],source:null},
       iptv:{icon:'📺',name:'Media dashboard demo',intro:'An example media and streaming interface.',body:'Describe the services you have permission to use. Never include private stream URLs, credentials or subscription tokens.',tags:['Media','Streaming','Dashboard'],source:null}
     }[id];
     if(!data)return '<p class="body-copy">No demo details are configured for this project.</p>';
@@ -938,10 +938,10 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     home:renderHome,about:renderAbout,social:renderSocial,projects:renderProjects,studio:renderStudio,website:renderWebsite,
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,camera:renderCamera,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
-    slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Browser Store konnte nicht geladen werden.</p>',
+    browserstore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Browser Store konnte nicht geladen werden.</p>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
-    schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
+    cloud-demo:()=>renderProjectDetail('cloud-demo'),iptv:()=>renderProjectDetail('iptv')
   };
 
   function showToast(message){els.toast.textContent=message;els.toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>els.toast.classList.remove('show'),2200);}
@@ -968,7 +968,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
     try{
       rendered=RENDERERS[id]();
       if(typeof rendered!=='string'||!rendered.trim())throw new Error('The app renderer returned no content.');
-      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='browserstore')?rendered:localize(rendered);
     }catch(error){
       console.error('[Browser OS] Could not open app:',id,error);
       if(id==='images'){
@@ -976,7 +976,7 @@ window.SSOS_LEGAL_TRANSLATIONS = {
       }else{
         rendered='<div class="notice warning-notice">Diese App konnte gerade nicht vollständig geladen werden. Kehre zum Startbildschirm zurück und versuche es erneut.</div>';
       }
-      els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
+      els.appContent.innerHTML=(id==='legal'||id==='browserstore')?rendered:localize(rendered);
     }
     $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
     const source=DEMO_WEBSITE_FRAME_PAGES[id];
