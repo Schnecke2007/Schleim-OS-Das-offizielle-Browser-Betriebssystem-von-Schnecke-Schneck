@@ -299,7 +299,7 @@
       if (!Number.isFinite(duration)||duration<=0) throw new Error('Die Videolänge konnte nicht bestimmt werden.');
       const totalBudget=Math.floor((SAFE_FILE_BYTES*8/duration)*0.78);
       if (totalBudget<40000) throw new Error('Dieses Video ist für das 50-MiB-Limit zu lang. Kürze es bitte vor dem Upload.');
-      const maxEdge=1280;
+      const maxEdge=totalBudget<80000?240:totalBudget<160000?360:totalBudget<300000?720:1280;
       const scale=Math.min(1,maxEdge/Math.max(video.videoWidth,video.videoHeight));
       const width=Math.max(2,Math.round(video.videoWidth*scale/2)*2);
       const height=Math.max(2,Math.round(video.videoHeight*scale/2)*2);
@@ -461,6 +461,7 @@
       await deleteJob(jobId);
       await tellWorker('SSOS_MEDIA_UPLOAD_FINISHED',{jobId:jobId,total:total});
     } catch (error) {
+      await deleteJob(jobId).catch(() => {});
       await tellWorker('SSOS_MEDIA_UPLOAD_FAILED',{jobId:jobId,error:String(error?.message||error)});
     } finally {
       activeJobs.delete(jobId);

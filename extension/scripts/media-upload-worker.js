@@ -100,7 +100,10 @@ async function startUpload(jobId) {
 chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
   if (message?.type==='SSOS_MEDIA_UPLOAD_START') {
     startUpload(message.jobId).then(()=>sendResponse({ok:true})).catch(async error=>{
-      await storeStatus({jobId:message.jobId,phase:'failed',progress:0,message:String(error?.message||error)});
+      const existing=(await chrome.storage.local.get(STATUS_KEY))?.[STATUS_KEY];
+      if (!(existing?.phase==='progress' && existing.jobId!==message.jobId)) {
+        await storeStatus({jobId:message.jobId,phase:'failed',progress:0,message:String(error?.message||error)});
+      }
       await showFailed(message.jobId,error?.message||error);
       sendResponse({ok:false,error:String(error?.message||error)});
     });

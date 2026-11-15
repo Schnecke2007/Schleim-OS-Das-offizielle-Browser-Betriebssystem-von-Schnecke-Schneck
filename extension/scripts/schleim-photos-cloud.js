@@ -603,7 +603,13 @@
       }
       const jobId = crypto.randomUUID?.() || (Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10));
       await saveUploadJob({id:jobId,createdAt:Date.now(),files:queuedFiles});
-      const result = await chrome.runtime.sendMessage({type:'SSOS_MEDIA_UPLOAD_START',jobId:jobId});
+      let result;
+      try {
+        result = await chrome.runtime.sendMessage({type:'SSOS_MEDIA_UPLOAD_START',jobId:jobId});
+      } catch (error) {
+        await deleteUploadJob(jobId).catch(() => {});
+        throw error;
+      }
       if (!result?.ok) {
         await deleteUploadJob(jobId).catch(() => {});
         throw new Error(result?.error || 'Der Hintergrund-Upload konnte nicht gestartet werden.');

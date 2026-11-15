@@ -61,7 +61,7 @@ De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke 
 
 ## 📷 Foto- en videocloud
 
-Foto’s worden lokaal naar WebP gecomprimeerd en video’s worden lokaal opnieuw gecodeerd vóór het uploaden. Een achtergrondproces gaat door met comprimeren en uploaden nadat het tabblad Foto’s is gesloten, zolang Chrome geopend blijft. Een voortgangsmelding toont de status; tik op de voltooiingsmelding om de Foto’s-app te openen. Geanimeerde GIF-, APNG- en WebP-bestanden blijven ongewijzigd.
+Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera met voor- en achtercamera, datumgebonden mappen, opslagstatistieken en optioneel AI-zoeken. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoekopdrachten uitbreiden, zonder API-sleutel of verzending naar een AI-server. Op andere apparaten blijft zoeken op metadata beschikbaar. Foto’s worden vóór het uploaden lokaal naar WebP gecomprimeerd en video’s worden lokaal opnieuw gecodeerd. Een achtergrondproces gaat door met comprimeren en uploaden nadat het tabblad Foto’s is gesloten, zolang Chrome geopend blijft. Een voortgangsmelding toont de status; tik op de voltooiingsmelding om de Foto’s-app te openen. Geanimeerde GIF-, APNG- en WebP-bestanden blijven ongewijzigd. Media wordt opgeslagen in een aparte privérepository op GitHub; de uploadlimiet is 50 MiB per bestand.
 
 ## 📥 Downloaden en installeren
 
