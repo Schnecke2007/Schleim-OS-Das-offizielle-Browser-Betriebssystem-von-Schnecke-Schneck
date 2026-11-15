@@ -8,6 +8,14 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
 
+## 🧩 Eigenes Browser OS erstellen
+
+Du möchtest ein eigenes Browser-Betriebssystem auf Basis dieses Projekts entwickeln? Dafür gibt es eine separate, neutrale Vorlage mit der vollständigen Extension-Struktur, Demo-Profil, Beispielgrafiken und Platzhaltern für deine eigenen Angaben. Die originale Erweiterung unter `extension/` bleibt davon unberührt.
+
+[📦 **Nur das Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-os-template.zip) · [Template-Dateien ansehen](template/) · [Konfigurationsanleitung](template/CONFIGURATION.md)
+
+Lade nur das Template herunter, entpacke es und wähle den Ordner anschließend in einem Chromium-Browser über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden** aus. Richte vor der Nutzung der GitHub-Cloud-Funktionen deine eigene GitHub App ein. Die Vorlage enthält bewusst keine persönlichen Daten des ursprünglichen Projekts.
+
 ## 👋 Über mich
 
 Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
