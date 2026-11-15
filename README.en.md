@@ -8,10 +8,6 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Open demo](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Easy Language](docs/Leichte-Sprache/Englisch/README.md)
 
-## 📷 Private photo and video cloud
-
-Schleim OS includes a private photo/video library, front/rear camera, date-based folders, storage statistics and optional AI search. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search queries without an API key or sending photos to an AI server. Metadata search remains available on other devices. **New photos are locally converted to WebP before upload and, when needed, resized to a maximum edge of 2,560 pixels** (90% quality, only when the optimized file is smaller). Animated GIF, APNG and WebP files, as well as videos, remain unchanged. Media is stored in a separate private GitHub repository; the upload limit is 50 MiB per file.
-
 ## 👋 About me
 
 Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.
@@ -62,6 +58,10 @@ The **Schleim-Store** is available only after signing in with a Schleim account.
 The public [Store catalogue](Store/README.md) is organized by category. Each approved app receives its own JSON file in the matching category folder. The extension also uses the central runtime catalogue at `extension/data/store-apps.json`.
 
 **Transparency:** The GitHub repository, Store catalogue, ratings and app suggestions submitted as issues are public. Do not submit passwords, private data or confidential information. Sign-in protects the Store interface inside Schleim OS; it does not make files in the public repository private.
+
+## 📷 Photo and video cloud
+
+Schleim OS includes a private photo/video library, front/rear camera, date-based folders, storage statistics and optional AI search. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search queries without an API key or sending photos to an AI server. Metadata search remains available on other devices. **New photos are locally converted to WebP before upload and, when needed, resized to a maximum edge of 2,560 pixels** (90% quality, only when the optimized file is smaller). Animated GIF, APNG and WebP files, as well as videos, remain unchanged. Media is stored in a separate private GitHub repository; the upload limit is 50 MiB per file.
 
 ## 📥 Download and installation
 

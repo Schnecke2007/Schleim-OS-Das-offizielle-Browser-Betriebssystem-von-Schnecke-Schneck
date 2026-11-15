@@ -8,10 +8,6 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo openen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md)
 
-## 📷 Privéfoto- en videocloud
-
-Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera-app met voor-/achtercamera, datumgebonden mappen, opslagstatistieken en optioneel AI-zoeken. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoekopdrachten uitbreiden, zonder API-sleutel of verzending naar een AI-server. Op andere apparaten blijft zoeken op metadata beschikbaar. **Nieuwe foto’s worden vóór het uploaden lokaal naar WebP geconverteerd en indien nodig verkleind tot maximaal 2.560 pixels aan de langste zijde** (90% kwaliteit, alleen wanneer het geoptimaliseerde bestand kleiner is). Geanimeerde GIF-, APNG- en WebP-bestanden en video’s blijven ongewijzigd. Media wordt opgeslagen in een aparte privérepository op GitHub; de uploadlimiet is 50 MiB per bestand.
-
 ## 👋 Over mij
 
 Hoi! Ik ben **Schnecke Schneck**, ik ben 19 jaar oud en kom uit **Bottrop in Noordrijn-Westfalen, Duitsland**. Online gebruik ik de naam *Schnecke Schneck*. Ik ben vooral geïnteresseerd in technologie en digitale ideeën.
@@ -62,6 +58,10 @@ De **Schleim-Store** is alleen beschikbaar nadat je je met een Schleim-account h
 De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke goedgekeurde app krijgt een eigen JSON-bestand in de bijbehorende categorie. De extensie gebruikt daarnaast de centrale runtime-catalogus in `extension/data/store-apps.json`.
 
 **Transparantie:** De GitHub-repository, de Store-catalogus, beoordelingen en app-voorstellen als issues zijn openbaar zichtbaar. Deel daar geen wachtwoorden, privégegevens of vertrouwelijke informatie. De aanmeldplicht beveiligt de Store-interface binnen Schleim OS; de bestanden in de openbare repository worden er niet privé door.
+
+## 📷 Foto- en videocloud
+
+Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera-app met voor-/achtercamera, datumgebonden mappen, opslagstatistieken en optioneel AI-zoeken. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoekopdrachten uitbreiden, zonder API-sleutel of verzending naar een AI-server. Op andere apparaten blijft zoeken op metadata beschikbaar. **Nieuwe foto’s worden vóór het uploaden lokaal naar WebP geconverteerd en indien nodig verkleind tot maximaal 2.560 pixels aan de langste zijde** (90% kwaliteit, alleen wanneer het geoptimaliseerde bestand kleiner is). Geanimeerde GIF-, APNG- en WebP-bestanden en video’s blijven ongewijzigd. Media wordt opgeslagen in een aparte privérepository op GitHub; de uploadlimiet is 50 MiB per bestand.
 
 ## 📥 Downloaden en installeren
 

@@ -8,10 +8,6 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
 
-## 📷 Neue private Foto- und Video-Cloud
-
-Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, Datumsordnern, Speicherstatistik und optionaler KI-Suche. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchanfragen erweitern – ohne API-Schlüssel und ohne Fotoübertragung an einen KI-Server. Auf anderen Geräten bleibt die Metadatensuche verfügbar. **Neue Fotos werden vor dem Upload lokal als WebP komprimiert und bei Bedarf auf maximal 2.560 Pixel an der längsten Seite verkleinert** (90 % Qualität, sofern die optimierte Datei kleiner ist). Animierte GIF-, APNG- und WebP-Dateien sowie Videos bleiben unverändert. Medien werden in einem getrennten privaten GitHub-Repository gespeichert; das Upload-Limit beträgt 50 MiB pro Datei.
-
 ## 👋 Über mich
 
 Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
@@ -62,6 +58,10 @@ Der **Schleim-Store** ist nur nach einer Anmeldung mit dem Schleim-Konto verfüg
 Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
 
 **Transparenz:** Das GitHub-Repository, der Store-Katalog, Bewertungen und App-Vorschläge als Issues sind öffentlich einsehbar. Reiche dort keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Anmeldung schützt die Store-Oberfläche in Schleim OS, nicht die Dateien im öffentlichen Repository.
+
+## 📷 Foto- und Videocloud
+
+Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, Datumsordnern, Speicherstatistik und optionaler KI-Suche. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchanfragen erweitern – ohne API-Schlüssel und ohne Fotoübertragung an einen KI-Server. Auf anderen Geräten bleibt die Metadatensuche verfügbar. **Neue Fotos werden vor dem Upload lokal als WebP komprimiert und bei Bedarf auf maximal 2.560 Pixel an der längsten Seite verkleinert** (90 % Qualität, sofern die optimierte Datei kleiner ist). Animierte GIF-, APNG- und WebP-Dateien sowie Videos bleiben unverändert. Medien werden in einem getrennten privaten GitHub-Repository gespeichert; das Upload-Limit beträgt 50 MiB pro Datei.
 
 ## 📥 Download und Installation
 
