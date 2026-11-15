@@ -1,12 +1,12 @@
-# Browser OS extension documentation
+# Browser OS – Dokumentation
 
-This folder contains installation, configuration, account, and technical notes for the Browser OS extension template.
+Wähle deine Sprache:
 
-Start with:
+- [Deutsch](Deutsch/README.md)
+- [English](Englisch/README.md)
+- [Nederlands](Niederländisch/README.md)
+- [Leichte Sprache – Deutsch](Leichte-Sprache/Deutsch/README.md)
+- [Easy Language – English](Leichte-Sprache/Englisch/README.md)
+- [Eenvoudige taal – Nederlands](Leichte-Sprache/Niederländisch/README.md)
 
-- [Installation](INSTALLATION.md)
-- [Configuration](../CONFIGURATION.md)
-- [GitHub account and private cloud](SCHLEIM-KONTO.md)
-- [Technical notes](TECHNICAL-NOTES.md)
-
-All profile details, external links, legal information, and GitHub integration settings must be reviewed and configured by the person using the template.
+Weitere technische Hinweise: [Konfiguration](../CONFIGURATION.md), [Konto und private Cloud](ACCOUNT-AND-CLOUD.md), [Technik](TECHNICAL-NOTES.md).

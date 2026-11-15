@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Browser OS – Extension Template",
   "short_name": "Browser OS",
-  "version": "3.14.5",
+  "version": "3.14.6",
   "description": "A configurable Chromium new-tab extension with a Browser Store, private cloud options and demo pages.",
   "chrome_url_overrides": {
     "newtab": "pages/newtab.html"
@@ -23,7 +23,12 @@
   },
   "permissions": [
     "storage",
-    "clipboardWrite"
+    "clipboardWrite",
+    "offscreen",
+    "notifications"
   ],
-  "minimum_chrome_version": "102"
+  "minimum_chrome_version": "109",
+  "background": {
+    "service_worker": "scripts/media-upload-worker.js"
+  }
 }

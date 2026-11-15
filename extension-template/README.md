@@ -1,59 +1,39 @@
-# Browser OS – Chromium extension template
+# Browser OS – Erweiterungs-Vorlage
 
-A configurable Manifest V3 extension for Chromium-based browsers. **Template version: 3.14.5.**
+**Vorlagen-Version: 3.14.6**
 
-Download the [Template ZIP from the latest Schleim OS GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip). The package is prepared for direct import in compatible browsers.
+Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-basierte Browser. Sie enthält Beispieltexte und Platzhalter statt persönlicher Originaldaten.
 
-This neutral template contains demo content, sample artwork and placeholders. It does not include the original creator's profile, contact information, social accounts or GitHub App configuration.
+## Funktionen
 
-## Included features
+- Startseite mit App-Übersicht, Suche, Schnell-Einstellungen und Themes
+- Sprachwahl: Deutsch, Englisch und Niederländisch
+- Beispiel-Konto mit GitHub-Device-Flow und privater Einstellungs-Sicherung
+- Foto- und Video-Cloud mit Galerie, Suche und Kamera-App
+- Browser Store mit Beispielen, Bewertungen und Vorschlagsfunktion
+- Optionale lokale Bildanalyse über die Prompt API
+- Eigenständige HTML-Demo für Webhosting
 
-- Responsive new-tab dashboard for desktop, tablet and mobile
-- App launcher, search, quick settings, themes and personalization
-- Multilingual interface and demo profile pages
-- Browser Store with sample apps, ratings and suggestions
-- Optional GitHub account, private settings backup and media cloud
-- Optional local photo analysis through the browser's Prompt API
-- Standalone demo page and navigation tests
+## Download und Installation
 
-## Install or update the template
+Lade [Browser-OS-Extension-Template.zip aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) herunter. **Die ZIP-Datei nicht entpacken.** Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle die lokale ZIP-Datei und bestätige den Import. Der Download installiert nichts automatisch.
 
-1. Download **Schleim-OS-Extension-Template.zip** from the [latest release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
-2. **Do not extract or modify the ZIP file.**
-3. Open the extension manager in a Chromium-based browser that supports local ZIP-extension import.
-4. Enable **Developer mode** if required.
-5. Select **+ (from .zip/.crx/.user.js)** or the equivalent import option in your browser.
-6. Choose **Schleim-OS-Extension-Template.zip** and confirm the import.
+Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome kann im Entwicklermodus Ordner laden, aber keine ZIP-Dateien direkt importieren.
 
-To update the template later, download the latest Template ZIP and import it using the same option. The browser may ask you to confirm an update or replacement. The download does not install the update by itself.
+## Eigene Version erstellen
 
-## Customize the template
+Arbeite in einem eigenen Git-Repository mit den Quelldateien. Passe `manifest.json`, Profil, Links, Store und die Platzhalter in den Skripten an. Richte eine eigene GitHub App und private Repositories ein, bevor du Konto oder Cloud verwendest.
 
-Use a separate working copy of the source files in your own GitHub repository. You can edit the source files in GitHub or work from a Git checkout. Do not use the downloaded Release ZIP as an extracted working folder.
+Der Update-Center-Platzhalter lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem Release deines konfigurierten Repositories. Verwende beim Veröffentlichen genau diesen Asset-Namen.
 
-Read **CONFIGURATION.md** and replace the placeholders with your own details. Configure your own GitHub App and private repositories before enabling the cloud features.
+## Dokumentation
 
-Edit **manifest.json** to change the extension name, short name, description or version. The project already contains an active Manifest V3 file named **manifest.json**.
+- [Deutsch](docs/Deutsch/README.md)
+- [English](docs/Englisch/README.md)
+- [Nederlands](docs/Niederländisch/README.md)
+- [Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
+- [Konfiguration](CONFIGURATION.md)
+- [Konto und private Cloud](docs/ACCOUNT-AND-CLOUD.md)
+- [Technische Hinweise](docs/TECHNICAL-NOTES.md)
 
-### Template update center
-
-In **scripts/update-center.js**, set:
-
-- `OWNER`: your GitHub username or organization
-- `REPOSITORY`: your repository name
-
-The template updater is deliberately set to download **Schleim-OS-Extension-Template.zip** from the latest release of that configured repository. It does not download the original Schleim OS Extension ZIP. When publishing your own release, use the exact asset name **Schleim-OS-Extension-Template.zip**.
-
-Never put a GitHub App private key, client secret, access token or other secret into extension files.
-
-## Browser compatibility
-
-Direct ZIP import depends on the browser. Standard Google Chrome for Android does not support extensions. Desktop Chrome's **Load unpacked** option loads a folder rather than a ZIP file. To install without extracting, use a compatible browser whose extension manager explicitly supports local ZIP import.
-
-For desktop development with Chrome's **Load unpacked** function, use a checked-out source folder that directly contains **manifest.json**. This is a separate development method; it does not require extracting the Release ZIP.
-
-## Important
-
-The profile, links, legal text, Store entries and images are demo material. Replace them before publishing. The legal-information screens are placeholders, not legal advice or ready-to-use legal notices.
-
-See the [configuration guide](CONFIGURATION.md), the [Template 3.14.5 release notes](docs/RELEASE-NOTES-3.14.5.md) and the files in [docs](docs/).
+Alle Profile, Bilder, Konten, Repositories und rechtlichen Texte sind Beispiele. Ersetze sie vor einer Veröffentlichung.

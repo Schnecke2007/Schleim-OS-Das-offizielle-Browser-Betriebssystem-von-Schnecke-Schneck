@@ -1,72 +1,29 @@
-# Configuration guide
+# Konfigurationsanleitung
 
-This folder is a neutral, functional Manifest V3 extension template. It contains an active **manifest.json**, so Chromium can load it directly as an unpacked extension. The original Schleim OS extension remains separate in **extension/**.
+Diese Vorlage ist neutral. Persönliche Profile, Kontaktdaten, App-Zugangsdaten und Repository-Namen sind Platzhalter.
 
-## 1. Product identity
+## Grunddaten
 
-Edit **manifest.json**:
+Ändere in `manifest.json` den Namen, Kurzname, die Beschreibung und die Version. Passe die Beispieltexte und Links in `scripts/app.js` an. Ersetze die Beispielbilder in `assets/demo/` und `assets/icons/`.
 
-- **name**: your extension name
-- **short_name**: short display name
-- **description**: a short description
-- **version**: your release version
+## GitHub und Update-Center
 
-Update the visible title, brand text, demo profile and sample pages in **pages/newtab.html** and **scripts/app.js**. Replace the sample artwork in **assets/demo/** and **assets/icons/** with your own images.
+Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
 
-The manifest is already named **manifest.json**. You do not need to rename any file. After saving changes, open **chrome://extensions** and select **Reload** for the template.
+## Konto und Cloud
 
-## 2. Profile and demo links
+Konfiguriere deine GitHub-App in `scripts/browser-account.js`. Trage dort die öffentliche Client-ID, App-Kennung und die Namen deiner privaten Repositorys ein. Verwende in `scripts/browser-media-cloud.js` denselben Namen für das Medien-Repository.
 
-Edit **scripts/app.js**:
+Die Hintergrundverarbeitung liegt in `scripts/media-upload-worker.js` und `scripts/media-upload-offscreen.js`. Die Dateien verwenden dieselbe Konto-Sitzung wie das Konto-Modul.
 
-- Set SITE to your own public website.
-- Replace the URLS entries with your own destinations.
-- Update the demo creator profile, sample projects and demo shop.
-- Remove any sample page or link you do not intend to publish.
+## Browser Store
 
-Edit **scripts/personalization.js** if you want the Store's GitHub issue, catalog and ratings links to point to a different repository.
+Bearbeite `data/store-apps.json`. Prüfe die Links und Beispieltexte. Store-Administration und Katalog müssen auf dein eigenes Repository zeigen.
 
-## 3. GitHub repository integration
+## Sicherheit
 
-In **scripts/update-center.js**, set:
+Nur die öffentliche GitHub-App-Client-ID darf in der Erweiterung stehen. Niemals Client-Secrets, private Schlüssel, persönliche Zugriffstoken oder Passwörter eintragen. Sicherungs- und Medien-Repositorys müssen privat sein. Teste alle Funktionen mit einem Testkonto.
 
-- OWNER to your GitHub username or organization
-- REPOSITORY to your repository name
+## Dokumentation
 
-The template update center downloads **Schleim-OS-Extension-Template.zip** from the latest release of this configured repository. Publish your customized template under that exact release asset name. The updater does not download the original Schleim OS Extension ZIP or the repository source archive.
-
-When you use the template as the root of your own repository and publish your own release package, the update center can read the root-level **manifest.json** there.
-
-In **scripts/slime-store-admin.js**, set OWNER, REPO and keep CATALOG aligned with **data/store-apps.json**.
-
-## 4. GitHub App and private cloud
-
-The account and backup features require your own GitHub App. Create and configure it in GitHub, then edit **scripts/schleim-account.js**:
-
-- GITHUB_APP_CLIENT_ID
-- GITHUB_APP_SLUG
-- GITHUB_APP_INSTALL_URL
-- REPO_NAME for the private backup repository
-
-Set the same media repository name in **scripts/schleim-account.js** (PHOTOS_REPO_NAME) and **scripts/schleim-photos-cloud.js** (REPO_NAME). Test login, private backup and media upload with a separate test account first.
-
-Only the public Client ID belongs in the extension. **Never embed a Client Secret, private key, personal access token or other secret.**
-
-## 5. Store content and ratings
-
-- Edit sample entries in **data/store-apps.json**.
-- **data/store-ratings.json** starts empty. Do not copy real user ratings or personal data into a public template.
-- Change the Store issue and catalog URLs in **scripts/personalization.js**.
-- Verify that your repository's issue template and Store automation match your own repository before enabling public submissions.
-
-## 6. Legal information and privacy
-
-The legal-information screens contain placeholders such as **[YOUR NAME]**, **[YOUR STREET AND HOUSE NUMBER]** and **your-email@example.com**. Replace them with legally reviewed information that applies to your project and jurisdiction. Do not publish placeholders as if they were valid legal notices.
-
-## 7. Test and package
-
-After configuration, run the navigation tests from this directory:
-
-**node --test tests/app-navigation.test.js**
-
-To test the published package without extracting it, create a GitHub Release in your configured repository with the asset **Schleim-OS-Extension-Template.zip**. Download it and import it through a browser that supports local ZIP-extension import. Do not extract the ZIP. Test all configured links, permissions, account flows and cloud features before publishing. Standard Chrome for Android does not support extensions; desktop Chrome does not provide direct ZIP import.
+Die übersetzten Anleitungen befinden sich in `docs/Deutsch/`, `docs/Englisch/`, `docs/Niederländisch/` und `docs/Leichte-Sprache/`.

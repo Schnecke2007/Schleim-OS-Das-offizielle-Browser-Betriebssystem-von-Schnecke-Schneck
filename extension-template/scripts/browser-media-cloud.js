@@ -10,7 +10,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
-    objectUrls: [], busy: false, cameraStream: null, mediaRecorder: null,
+    objectUrls: [], busy: false, backgroundBusy: false, cameraStream: null, mediaRecorder: null,
     recordedChunks: [], facingMode: 'environment', activeApp: null
   };
 
@@ -29,6 +29,10 @@
       description: 'Beschreibung oder Stichwörter (optional)',
       uploadNow: 'Ausgewählte Medien hochladen',
       uploading: 'Upload läuft …',
+      backgroundQueued: 'Upload wurde gestartet. Er läuft im Hintergrund weiter; du kannst diesen Tab schließen.',
+      backgroundProgress: 'Hintergrund-Upload',
+      backgroundComplete: 'Upload im Hintergrund abgeschlossen.',
+      backgroundAlreadyRunning: 'Es läuft bereits ein Hintergrund-Upload. Warte, bis er abgeschlossen ist.',
       uploaded: 'Upload abgeschlossen.',
       tooLarge: 'Die Datei ist größer als 50 MiB. Bitte eine kleinere Datei auswählen.',
       unsupported: 'Nur Bild- und Videodateien werden unterstützt.',
@@ -65,13 +69,13 @@
       settingsTitle: 'Browser OS Foto Video Cloud Speicher',
       unlinked: 'Noch nicht verknüpft',
       connectedTo: 'Verbunden mit',
-      connectHint: 'Bei älteren Browser-OS-Versionen wird dieses zweite private Repository noch nicht automatisch angelegt. Verknüpfe es einmalig hier.',
+      connectHint: 'Bei älteren Schleim-OS-Versionen wird dieses zweite private Repository noch nicht automatisch angelegt. Verknüpfe es einmalig hier.',
       accountRequired: 'Für die Verknüpfung ist ein angemeldetes Browser-OS-Konto erforderlich.',
       originalLimit: 'Upload-Limit: 50 MiB pro Datei. GitHub ist ein versionsbasiertes Repository und kein unbegrenzter Medien- oder Backup-Dienst.',
       noCapture: 'Kameraansicht nicht verfügbar. Öffne die Kamera-App erneut.'
     },
     en: {
-      notSignedIn: 'Sign in first under Settings → Browser OS account.',
+      notSignedIn: 'Sign in first under Settings → Schleim account.',
       noRepo: 'Your private photo and video storage is not linked yet.',
       link: 'Link private cloud storage now',
       linking: 'Checking or creating the private photo and video repository …',
@@ -84,6 +88,10 @@
       description: 'Description or tags (optional)',
       uploadNow: 'Upload selected media',
       uploading: 'Uploading …',
+      backgroundQueued: 'Upload started. It will continue in the background; you can close this tab.',
+      backgroundProgress: 'Background upload',
+      backgroundComplete: 'Background upload completed.',
+      backgroundAlreadyRunning: 'A background upload is already running. Wait until it has finished.',
       uploaded: 'Upload completed.',
       tooLarge: 'The file is larger than 50 MiB. Choose a smaller file.',
       unsupported: 'Only image and video files are supported.',
@@ -121,12 +129,12 @@
       unlinked: 'Not linked yet',
       connectedTo: 'Connected to',
       connectHint: 'Older Browser OS versions do not create this second private repository automatically. Link it here once.',
-      accountRequired: 'A signed-in Browser OS account is required.',
+      accountRequired: 'A signed-in Schleim account is required.',
       originalLimit: 'Upload limit: 50 MiB per file. GitHub is a version-controlled repository, not an unlimited media or backup service.',
       noCapture: 'Camera view unavailable. Open the camera app again.'
     },
     nl: {
-      notSignedIn: 'Meld je eerst aan via Instellingen → Browser OS account.',
+      notSignedIn: 'Meld je eerst aan via Instellingen → Schleim-account.',
       noRepo: 'Je privéopslag voor foto’s en video’s is nog niet gekoppeld.',
       link: 'Privécloudopslag nu koppelen',
       linking: 'Privérepository voor foto’s en video’s controleren of aanmaken …',
@@ -139,6 +147,10 @@
       description: 'Beschrijving of tags (optioneel)',
       uploadNow: 'Geselecteerde media uploaden',
       uploading: 'Uploaden …',
+      backgroundQueued: 'Upload gestart. Het gaat op de achtergrond verder; je kunt dit tabblad sluiten.',
+      backgroundProgress: 'Upload op de achtergrond',
+      backgroundComplete: 'Upload op de achtergrond voltooid.',
+      backgroundAlreadyRunning: 'Er loopt al een upload op de achtergrond. Wacht tot deze is voltooid.',
       uploaded: 'Upload voltooid.',
       tooLarge: 'Het bestand is groter dan 50 MiB. Kies een kleiner bestand.',
       unsupported: 'Alleen afbeeldings- en videobestanden worden ondersteund.',
@@ -176,7 +188,7 @@
       unlinked: 'Nog niet gekoppeld',
       connectedTo: 'Verbonden met',
       connectHint: 'Oudere Browser OS-versies maken deze tweede privérepository nog niet automatisch aan. Koppel deze hier eenmalig.',
-      accountRequired: 'Een aangemeld Browser OS account is vereist.',
+      accountRequired: 'Een aangemeld Schleim-account is vereist.',
       originalLimit: 'Uploadlimiet: 50 MiB per bestand. GitHub is een repository met versiebeheer en geen onbeperkte media- of back-updienst.',
       noCapture: 'Cameraweergave niet beschikbaar. Open de camera-app opnieuw.'
     }
@@ -249,7 +261,7 @@
     } catch {
       throw new Error('Die Medien-Metadaten sind beschädigt oder nicht lesbar.');
     }
-    if (parsed?.format !== 'Browser-OS-media-index' || Number(parsed.owner?.id) !== Number(account().getAccount()?.id)) {
+    if (parsed?.format !== 'schleim-os-media-index' || Number(parsed.owner?.id) !== Number(account().getAccount()?.id)) {
       throw new Error('Die Medien-Metadaten sind ungültig oder gehören zu einem anderen Browser-OS-Konto.');
     }
     return {items:Array.isArray(parsed.items) ? parsed.items : [], sha:file.sha || null};
@@ -282,7 +294,7 @@
     const existing = await getIndex();
     const owner = account().getAccount();
     const index = {
-      format:'Browser-OS-media-index',
+      format:'schleim-os-media-index',
       schemaVersion:1,
       owner:{id:owner.id,login:owner.login},
       updatedAt:new Date().toISOString(),
@@ -522,21 +534,109 @@
     await updateIndex(state.items);
     return item;
   }
+  const UPLOAD_DB_NAME = 'ssos-media-upload-queue';
+  const UPLOAD_DB_VERSION = 1;
+  function openUploadDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(UPLOAD_DB_NAME, UPLOAD_DB_VERSION);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains('jobs')) request.result.createObjectStore('jobs', {keyPath:'id'});
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error('Upload-Warteschlange ist nicht verfügbar.'));
+    });
+  }
+  async function saveUploadJob(job) {
+    const db = await openUploadDatabase();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('jobs','readwrite');
+      tx.objectStore('jobs').put(job);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error || new Error('Upload konnte nicht für den Hintergrund gespeichert werden.')); };
+      tx.onabort = () => { db.close(); reject(tx.error || new Error('Speichern der Upload-Warteschlange wurde abgebrochen.')); };
+    });
+  }
+  async function deleteUploadJob(jobId) {
+    const db = await openUploadDatabase();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('jobs','readwrite');
+      tx.objectStore('jobs').delete(jobId);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  }
   async function uploadFiles(files, description, statusSelector) {
     if (state.busy) return;
+    if (state.backgroundBusy) throw new Error(t('backgroundAlreadyRunning'));
     if (!files?.length) throw new Error(t('selectFiles'));
     if (!accountReady()) throw new Error(t('notSignedIn'));
+    if (!state.repository) state.repository = await account().getPhotosRepository();
+    if (!state.repository?.private) throw new Error(t('noRepo'));
+    const currentUpload = await chrome.storage.local.get('ssos-media-upload-status');
+    if (currentUpload?.['ssos-media-upload-status']?.phase === 'progress') {
+      state.backgroundBusy = true;
+      throw new Error(t('backgroundAlreadyRunning'));
+    }
     state.busy = true;
+    const target = statusSelector || '[data-photos-status]';
     try {
-      for (let index = 0; index < files.length; index++) {
-        setStatus(statusSelector || '[data-photos-status]', t('uploading') + ' (' + (index + 1) + '/' + files.length + ')');
-        await uploadOne(files[index], description);
+      const queuedFiles = [];
+      for (const file of files) {
+        if (!file?.type?.startsWith('image/') && !file?.type?.startsWith('video/')) throw new Error(t('unsupported'));
+        const captureInfo = file.type.startsWith('image/') ? await getCaptureDate(file) : {date:new Date(file.lastModified || Date.now()),source:'file-last-modified'};
+        let aiResult = null;
+        if (file.type.startsWith('image/') && window.SSOSPhotoAI?.isReady?.()) {
+          try { aiResult = await window.SSOSPhotoAI.describeImage(file); }
+          catch (error) { console.warn('[Browser OS Photos] Local AI description skipped:', error); }
+        }
+        queuedFiles.push({
+          file:file,
+          meta:{
+            originalName:String(file.name || ''),
+            description:String(description || ''),
+            capturedAt:captureInfo.date.toISOString(),
+            dateSource:captureInfo.source,
+            aiDescription:String(aiResult?.description || '').slice(0,260),
+            aiTags:Array.isArray(aiResult?.keywords) ? aiResult.keywords : []
+          }
+        });
       }
-      setStatus(statusSelector || '[data-photos-status]', t('uploaded'));
-      refreshOpenViews();
-      window.dispatchEvent(new Event('ssos-photos-updated'));
+      const jobId = crypto.randomUUID?.() || (Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10));
+      await saveUploadJob({id:jobId,createdAt:Date.now(),files:queuedFiles});
+      let result;
+      try {
+        result = await chrome.runtime.sendMessage({type:'SSOS_MEDIA_UPLOAD_START',jobId:jobId});
+      } catch (error) {
+        await deleteUploadJob(jobId).catch(() => {});
+        throw error;
+      }
+      if (!result?.ok) {
+        await deleteUploadJob(jobId).catch(() => {});
+        throw new Error(result?.error || 'Der Hintergrund-Upload konnte nicht gestartet werden.');
+      }
+      state.backgroundBusy = true;
+      const uploadButton = $('[data-photos-upload]');
+      if (uploadButton) uploadButton.disabled = true;
+      setStatus(target,t('backgroundQueued'));
+      const input = $('[data-photos-files]');
+      if (input) input.value = '';
     } finally {
       state.busy = false;
+    }
+  }
+  function displayBackgroundUploadStatus(status) {
+    if (!status) return;
+    state.backgroundBusy = status.phase === 'progress';
+    const uploadButton = $('[data-photos-upload]');
+    if (uploadButton) uploadButton.disabled = state.backgroundBusy || !($('[data-photos-files]')?.files?.length);
+    const message = status.phase === 'complete'
+      ? t('backgroundComplete')
+      : status.phase === 'failed'
+        ? (status.message || t('loadError'))
+        : t('backgroundProgress') + ': ' + (status.progress || 0) + '% · ' + (status.filename || status.message || t('uploading'));
+    setStatus('[data-photos-status]',message,status.phase === 'failed');
+    if (status.phase === 'complete') {
+      refreshMediaApp().then(() => setStatus('[data-photos-status]',t('backgroundComplete'))).catch(() => {});
     }
   }
 
@@ -631,7 +731,7 @@
       const url = await readOriginal(item);
       if (downloadOnly) {
         const anchor = document.createElement('a');
-        anchor.href = url;anchor.download = item.downloadName || item.name || ('Browser-OS-media.' + extensionFor({name:item.path}));
+        anchor.href = url;anchor.download = item.downloadName || item.name || ('schleim-os-media.' + extensionFor({name:item.path}));
         document.body.appendChild(anchor);anchor.click();anchor.remove();
       } else {
         const viewer = $('[data-photos-viewer]');
@@ -789,7 +889,7 @@
     const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/jpeg',0.9));
     if (!blob) throw new Error(t('noCapture'));
     const now = new Date();
-    const file = new File([blob],'Browser-OS-Camera-' + now.toISOString().replace(/[:.]/g,'-') + '.jpg',{type:'image/jpeg',lastModified:now.getTime()});
+    const file = new File([blob],'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + '.jpg',{type:'image/jpeg',lastModified:now.getTime()});
     await uploadFiles([file], 'Kameraaufnahme', '[data-camera-status]');
   }
   async function startRecording() {
@@ -802,10 +902,9 @@
     state.mediaRecorder.addEventListener('stop', async () => {
       try {
         const blob = new Blob(state.recordedChunks,{type:state.mediaRecorder?.mimeType || 'video/webm'});
-        if (blob.size > MAX_FILE_BYTES) throw new Error(t('tooLarge'));
         const now = new Date();
         const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
-        const file = new File([blob],'Browser-OS-Camera-Video-' + now.toISOString().replace(/[:.]/g,'-') + '.' + ext,{type:blob.type,lastModified:now.getTime()});
+        const file = new File([blob],'Schleim-Kamera-Video-' + now.toISOString().replace(/[:.]/g,'-') + '.' + ext,{type:blob.type,lastModified:now.getTime()});
         setStatus('[data-camera-status]',t('recordingDone'));
         await uploadFiles([file], 'Kamera-Video', '[data-camera-status]');
       } catch (error) {
@@ -890,7 +989,7 @@
     }
     if (event.target.matches('[data-photos-files]')) {
       const button=$('[data-photos-upload]');
-      if (button) button.disabled=!(event.target.files?.length);
+      if (button) button.disabled=state.backgroundBusy || !(event.target.files?.length);
     }
   }
   function refreshOpenViews() {
@@ -911,6 +1010,16 @@
     document.addEventListener('change',handleChange);
     window.addEventListener('ssos-app-opened',handleAppOpen);
     window.addEventListener('ssos-photos-updated',refreshOpenViews);
+    if (globalThis.chrome?.storage?.onChanged) {
+      chrome.storage.onChanged.addListener((changes,area) => {
+        if (area === 'local' && changes['ssos-media-upload-status']?.newValue) {
+          displayBackgroundUploadStatus(changes['ssos-media-upload-status'].newValue);
+        }
+      });
+      chrome.storage.local.get('ssos-media-upload-status').then(result => {
+        if (result?.['ssos-media-upload-status']?.phase === 'progress') displayBackgroundUploadStatus(result['ssos-media-upload-status']);
+      }).catch(() => {});
+    }
     window.addEventListener('ssos-photo-ai-terms-updated',renderGallery);
     window.addEventListener('ssos-account-state-changed',() => {
       if (state.activeApp === 'images') refreshMediaApp();

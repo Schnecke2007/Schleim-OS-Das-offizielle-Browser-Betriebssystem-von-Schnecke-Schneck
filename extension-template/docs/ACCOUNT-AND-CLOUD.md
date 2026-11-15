@@ -6,10 +6,10 @@ The optional account and cloud functions use GitHub Device Flow. This template d
 
 1. Create your own GitHub App and enable Device Flow.
 2. Configure the repository and account permissions required by the features you want to use.
-3. Set its public Client ID, app slug and installation URL in `scripts/schleim-account.js`.
+3. Set its public Client ID, app slug and installation URL in `scripts/browser-account.js`.
 4. Set `REPO_NAME` to a private repository name for settings backups.
 5. Set `PHOTOS_REPO_NAME` to a separate private repository name for photos and videos.
-6. In `scripts/schleim-photos-cloud.js`, set `REPO_NAME` to exactly the same media repository name as `PHOTOS_REPO_NAME`.
+6. In `scripts/browser-media-cloud.js`, set `REPO_NAME` to exactly the same media repository name as `PHOTOS_REPO_NAME`.
 
 The media repository is created when a signed-in user explicitly links the private media cloud. Keep the settings-backup and media repositories separate.
 

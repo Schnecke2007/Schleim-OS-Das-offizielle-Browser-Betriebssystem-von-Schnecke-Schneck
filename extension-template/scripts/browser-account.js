@@ -27,7 +27,7 @@
       confirmRestore:'Die lokale Browser OS-Konfiguration wird durch die Cloud-Sicherung ersetzt. Fortfahren?',
       noBackup:'In deinem privaten Repository wurde noch keine Sicherungsdatei gefunden.',
       emailMissing:'Dein GitHub-Konto hat keine verifizierte primäre E-Mail-Adresse. Bitte bestätige sie zuerst direkt bei GitHub.',
-      repoPublic:'Das Repository schleim-os-cloud ist nicht privat. Aus Sicherheitsgründen wird dort keine Sicherung gespeichert.',
+      repoPublic:'Das Repository YOUR_PRIVATE_BACKUP_REPOSITORY ist nicht privat. Aus Sicherheitsgründen wird dort keine Sicherung gespeichert.',
       repoPermission:'GitHub hat den Zugriff verweigert. Prüfe die App-Berechtigungen: Repository creation (write), Contents (read/write) und Email addresses (read).',
       cancelled:'Anmeldung abgebrochen.', expired:'Der GitHub-Code ist abgelaufen. Starte die Anmeldung erneut.',
       authError:'GitHub-Anmeldung fehlgeschlagen.', backupError:'Cloud-Sicherung fehlgeschlagen.',
@@ -57,7 +57,7 @@
       confirmRestore:'Your local Browser OS configuration will be replaced with the cloud backup. Continue?',
       noBackup:'No backup file was found in your private repository.',
       emailMissing:'Your GitHub account has no verified primary email address. Verify it directly on GitHub first.',
-      repoPublic:'The schleim-os-cloud repository is not private. No backup will be saved there for security reasons.',
+      repoPublic:'The YOUR_PRIVATE_BACKUP_REPOSITORY repository is not private. No backup will be saved there for security reasons.',
       repoPermission:'GitHub denied access. Check the app permissions: Repository creation (write), Contents (read/write), and Email addresses (read).',
       cancelled:'Sign-in cancelled.', expired:'The GitHub code expired. Start sign-in again.',
       authError:'GitHub sign-in failed.', backupError:'Cloud backup failed.',
@@ -87,7 +87,7 @@
       confirmRestore:'Je lokale Browser OS-configuratie wordt vervangen door de cloudback-up. Doorgaan?',
       noBackup:'Er is nog geen back-upbestand gevonden in je privérepository.',
       emailMissing:'Je GitHub-account heeft geen geverifieerd primair e-mailadres. Verifieer het eerst rechtstreeks bij GitHub.',
-      repoPublic:'De repository schleim-os-cloud is niet privé. Om veiligheidsredenen wordt daar geen back-up opgeslagen.',
+      repoPublic:'De repository YOUR_PRIVATE_BACKUP_REPOSITORY is niet privé. Om veiligheidsredenen wordt daar geen back-up opgeslagen.',
       repoPermission:'GitHub heeft de toegang geweigerd. Controleer de app-machtigingen: Repository creation (write), Contents (read/write) en Email addresses (read).',
       cancelled:'Aanmelding geannuleerd.', expired:'De GitHub-code is verlopen. Start de aanmelding opnieuw.',
       authError:'GitHub-aanmelding mislukt.', backupError:'Cloudback-up mislukt.',
@@ -174,7 +174,7 @@
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(loginOnly?t('storeLoginIntro'):t('intro'))+'</p></div></div>'+
         '<p class="ssos-cloud-note">'+esc(t('notConfigured'))+'</p>'+
         '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
-        '<a class="ssos-cloud-help" href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/blob/main/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
+        '<a class="ssos-cloud-help" href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/blob/main/docs/ACCOUNT-AND-CLOUD.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
         '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+(loginOnly?'':'<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>')+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
       return;
