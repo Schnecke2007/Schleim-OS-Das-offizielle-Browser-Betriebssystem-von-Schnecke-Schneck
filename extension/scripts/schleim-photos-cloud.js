@@ -10,7 +10,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
-    objectUrls: [], busy: false, cameraStream: null, mediaRecorder: null,
+    objectUrls: [], busy: false, backgroundBusy: false, cameraStream: null, mediaRecorder: null,
     recordedChunks: [], facingMode: 'environment', activeApp: null
   };
 
@@ -32,6 +32,7 @@
       backgroundQueued: 'Upload wurde gestartet. Er läuft im Hintergrund weiter; du kannst diesen Tab schließen.',
       backgroundProgress: 'Hintergrund-Upload',
       backgroundComplete: 'Upload im Hintergrund abgeschlossen.',
+      backgroundAlreadyRunning: 'Es läuft bereits ein Hintergrund-Upload. Warte, bis er abgeschlossen ist.',
       uploaded: 'Upload abgeschlossen.',
       tooLarge: 'Die Datei ist größer als 50 MiB. Bitte eine kleinere Datei auswählen.',
       unsupported: 'Nur Bild- und Videodateien werden unterstützt.',
@@ -90,6 +91,7 @@
       backgroundQueued: 'Upload started. It will continue in the background; you can close this tab.',
       backgroundProgress: 'Background upload',
       backgroundComplete: 'Background upload completed.',
+      backgroundAlreadyRunning: 'A background upload is already running. Wait until it has finished.',
       uploaded: 'Upload completed.',
       tooLarge: 'The file is larger than 50 MiB. Choose a smaller file.',
       unsupported: 'Only image and video files are supported.',
@@ -148,6 +150,7 @@
       backgroundQueued: 'Upload gestart. Het gaat op de achtergrond verder; je kunt dit tabblad sluiten.',
       backgroundProgress: 'Upload op de achtergrond',
       backgroundComplete: 'Upload op de achtergrond voltooid.',
+      backgroundAlreadyRunning: 'Er loopt al een upload op de achtergrond. Wacht tot deze is voltooid.',
       uploaded: 'Upload voltooid.',
       tooLarge: 'Het bestand is groter dan 50 MiB. Kies een kleiner bestand.',
       unsupported: 'Alleen afbeeldings- en videobestanden worden ondersteund.',
@@ -553,12 +556,27 @@
       tx.onabort = () => { db.close(); reject(tx.error || new Error('Speichern der Upload-Warteschlange wurde abgebrochen.')); };
     });
   }
+  async function deleteUploadJob(jobId) {
+    const db = await openUploadDatabase();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('jobs','readwrite');
+      tx.objectStore('jobs').delete(jobId);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  }
   async function uploadFiles(files, description, statusSelector) {
     if (state.busy) return;
+    if (state.backgroundBusy) throw new Error(t('backgroundAlreadyRunning'));
     if (!files?.length) throw new Error(t('selectFiles'));
     if (!accountReady()) throw new Error(t('notSignedIn'));
     if (!state.repository) state.repository = await account().getPhotosRepository();
     if (!state.repository?.private) throw new Error(t('noRepo'));
+    const currentUpload = await chrome.storage.local.get('ssos-media-upload-status');
+    if (currentUpload?.['ssos-media-upload-status']?.phase === 'progress') {
+      state.backgroundBusy = true;
+      throw new Error(t('backgroundAlreadyRunning'));
+    }
     state.busy = true;
     const target = statusSelector || '[data-photos-status]';
     try {
@@ -586,7 +604,13 @@
       const jobId = crypto.randomUUID?.() || (Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10));
       await saveUploadJob({id:jobId,createdAt:Date.now(),files:queuedFiles});
       const result = await chrome.runtime.sendMessage({type:'SSOS_MEDIA_UPLOAD_START',jobId:jobId});
-      if (!result?.ok) throw new Error(result?.error || 'Der Hintergrund-Upload konnte nicht gestartet werden.');
+      if (!result?.ok) {
+        await deleteUploadJob(jobId).catch(() => {});
+        throw new Error(result?.error || 'Der Hintergrund-Upload konnte nicht gestartet werden.');
+      }
+      state.backgroundBusy = true;
+      const uploadButton = $('[data-photos-upload]');
+      if (uploadButton) uploadButton.disabled = true;
       setStatus(target,t('backgroundQueued'));
       const input = $('[data-photos-files]');
       if (input) input.value = '';
@@ -596,6 +620,9 @@
   }
   function displayBackgroundUploadStatus(status) {
     if (!status) return;
+    state.backgroundBusy = status.phase === 'progress';
+    const uploadButton = $('[data-photos-upload]');
+    if (uploadButton) uploadButton.disabled = state.backgroundBusy || !($('[data-photos-files]')?.files?.length);
     const message = status.phase === 'complete'
       ? t('backgroundComplete')
       : status.phase === 'failed'
@@ -956,7 +983,7 @@
     }
     if (event.target.matches('[data-photos-files]')) {
       const button=$('[data-photos-upload]');
-      if (button) button.disabled=!(event.target.files?.length);
+      if (button) button.disabled=state.backgroundBusy || !(event.target.files?.length);
     }
   }
   function refreshOpenViews() {
