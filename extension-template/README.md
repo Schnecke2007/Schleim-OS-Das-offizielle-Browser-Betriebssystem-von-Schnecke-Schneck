@@ -1,6 +1,6 @@
 # Browser OS – Chromium extension template
 
-A configurable Manifest V3 new-tab extension for Chromium-based browsers.
+A configurable Manifest V3 new-tab extension for Chromium-based browsers. Current template package version: **3.14.3**.
 
 Download the ready-to-extract template package from the [latest Schleim OS GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) (asset: **Schleim-OS-Extension-Template.zip**).
 

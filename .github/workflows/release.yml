@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: schleim-os-release-\${{ github.ref }}
+  group: schleim-os-release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -31,12 +31,12 @@ jobs:
       - name: Detect whether this push changes the template
         id: template_changes
         env:
-          BEFORE: \${{ github.event.before }}
+          BEFORE: ${{ github.event.before }}
         shell: bash
         run: |
           set -euo pipefail
           CHANGED=false
-          if [[ "$GITHUB_EVENT_NAME" == "push" && "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && git cat-file -e "\${BEFORE}^{commit}" 2>/dev/null; then
+          if [[ "$GITHUB_EVENT_NAME" == "push" && "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
             if ! git diff --quiet "$BEFORE" "$GITHUB_SHA" -- extension-template/; then
               CHANGED=true
             fi
@@ -54,7 +54,7 @@ jobs:
 
           VERSION="$(python3 -c 'import json; print(json.load(open("extension/manifest.json", encoding="utf-8"))["version"])')"
           TEMPLATE_VERSION="$(python3 -c 'import json; print(json.load(open("extension-template/manifest.json", encoding="utf-8"))["version"])')"
-          NOTES="extension/docs/RELEASE-NOTES-\${VERSION}.md"
+          NOTES="extension/docs/RELEASE-NOTES-${VERSION}.md"
 
           if [[ ! "$VERSION" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]]; then
             echo "Invalid extension version: $VERSION" >&2
@@ -77,9 +77,9 @@ jobs:
       - name: Check whether release assets need publishing
         id: release_check
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          TAG: \${{ steps.version.outputs.tag }}
-          TEMPLATE_CHANGED: \${{ steps.template_changes.outputs.changed }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          TEMPLATE_CHANGED: ${{ steps.template_changes.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
@@ -122,9 +122,9 @@ jobs:
       - name: Build release ZIP packages
         if: steps.release_check.outputs.mode != 'none'
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          TAG: \${{ steps.version.outputs.tag }}
-          MODE: \${{ steps.release_check.outputs.mode }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          MODE: ${{ steps.release_check.outputs.mode }}
         shell: bash
         run: |
           set -euo pipefail
@@ -161,10 +161,10 @@ jobs:
       - name: Create new GitHub Release
         if: steps.release_check.outputs.mode == 'create'
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          TAG: \${{ steps.version.outputs.tag }}
-          VERSION: \${{ steps.version.outputs.version }}
-          NOTES: \${{ steps.version.outputs.notes }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          NOTES: ${{ steps.version.outputs.notes }}
         shell: bash
         run: |
           set -euo pipefail
@@ -180,10 +180,10 @@ jobs:
       - name: Repair an existing release with missing assets
         if: steps.release_check.outputs.mode == 'repair'
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          TAG: \${{ steps.version.outputs.tag }}
-          VERSION: \${{ steps.version.outputs.version }}
-          NOTES: \${{ steps.version.outputs.notes }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          NOTES: ${{ steps.version.outputs.notes }}
         shell: bash
         run: |
           set -euo pipefail
@@ -202,8 +202,8 @@ jobs:
       - name: Publish updated template without touching the original extension
         if: steps.release_check.outputs.mode == 'template'
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          TAG: \${{ steps.version.outputs.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
         shell: bash
         run: |
           set -euo pipefail
