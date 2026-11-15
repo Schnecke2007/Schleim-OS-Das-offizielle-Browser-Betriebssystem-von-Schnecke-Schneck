@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.14.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -61,7 +61,7 @@ Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. 
 
 ## 📷 Foto- und Videocloud
 
-Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, Datumsordnern, Speicherstatistik und optionaler KI-Suche. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchanfragen erweitern – ohne API-Schlüssel und ohne Fotoübertragung an einen KI-Server. Auf anderen Geräten bleibt die Metadatensuche verfügbar. **Neue Fotos werden vor dem Upload lokal als WebP komprimiert und bei Bedarf auf maximal 2.560 Pixel an der längsten Seite verkleinert** (90 % Qualität, sofern die optimierte Datei kleiner ist). Animierte GIF-, APNG- und WebP-Dateien sowie Videos bleiben unverändert. Medien werden in einem getrennten privaten GitHub-Repository gespeichert; das Upload-Limit beträgt 50 MiB pro Datei.
+Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, Datumsordnern, Speicherstatistik und optionaler KI-Suche. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchanfragen erweitern – ohne API-Schlüssel und ohne Fotoübertragung an einen KI-Server. Auf anderen Geräten bleibt die Metadatensuche verfügbar. Fotos werden vor dem Upload lokal als WebP komprimiert; Videos werden lokal neu kodiert. Ein Hintergrundprozess führt Komprimierung und Upload weiter aus, wenn der Fotos-Tab geschlossen wird, solange Chrome geöffnet bleibt. Eine Fortschrittsbenachrichtigung zeigt den Upload-Stand; nach Abschluss öffnet ein Tippen darauf direkt die Fotos-App. Animierte GIF-, APNG- und WebP-Dateien bleiben unverändert. Medien werden in einem getrennten privaten GitHub-Repository gespeichert; das Upload-Limit beträgt 50 MiB pro Datei.
 
 ## 📥 Download und Installation
 

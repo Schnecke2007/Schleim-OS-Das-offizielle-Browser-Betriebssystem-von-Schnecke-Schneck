@@ -13,6 +13,7 @@
   const SAFE_FILE_BYTES = 49 * 1024 * 1024;
   const activeJobs = new Set();
   let auth = null;
+  let lastProgressAt = 0;
 
   function openDatabase() {
     return new Promise((resolve, reject) => {
@@ -46,6 +47,9 @@
   }
   function progress(jobId, done, total, stage, filename, details) {
     const ratio = Math.max(0, Math.min(1, Number(details?.ratio) || 0));
+    const finalUpdate = stage === 'done' || done >= total;
+    if (!finalUpdate && Date.now() - lastProgressAt < 900) return Promise.resolve(null);
+    lastProgressAt = Date.now();
     const percent = Math.min(99, Math.round(((done + ratio) / Math.max(1,total)) * 100));
     return tellWorker('SSOS_MEDIA_UPLOAD_PROGRESS', {
       jobId:jobId, progress:percent, completed:done, total:total,

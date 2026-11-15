@@ -557,6 +557,7 @@
     if (state.busy) return;
     if (!files?.length) throw new Error(t('selectFiles'));
     if (!accountReady()) throw new Error(t('notSignedIn'));
+    if (!state.repository) state.repository = await account().getPhotosRepository();
     if (!state.repository?.private) throw new Error(t('noRepo'));
     state.busy = true;
     const target = statusSelector || '[data-photos-status]';
@@ -868,7 +869,6 @@
     state.mediaRecorder.addEventListener('stop', async () => {
       try {
         const blob = new Blob(state.recordedChunks,{type:state.mediaRecorder?.mimeType || 'video/webm'});
-        if (blob.size > MAX_FILE_BYTES) throw new Error(t('tooLarge'));
         const now = new Date();
         const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
         const file = new File([blob],'Schleim-Kamera-Video-' + now.toISOString().replace(/[:.]/g,'-') + '.' + ext,{type:blob.type,lastModified:now.getTime()});
