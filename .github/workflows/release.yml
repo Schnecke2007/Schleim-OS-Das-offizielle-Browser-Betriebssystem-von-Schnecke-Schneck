@@ -7,6 +7,9 @@ on:
       - '.github/workflows/release.yml'
       - 'extension/**'
       - 'extension-template/**'
+  schedule:
+    # GitHub's shortest supported scheduled interval is five minutes.
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -31,30 +34,90 @@ jobs:
           python3 -m json.tool extension-template/manifest.template.json > /dev/null
           VERSION="$(python3 -c 'import json; print(json.load(open("extension/manifest.json", encoding="utf-8"))["version"])')"
           NOTES="extension/docs/RELEASE-NOTES-${VERSION}.md"
+
           if [[ ! "$VERSION" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]]; then
             echo "Invalid extension version: $VERSION" >&2
             exit 1
           fi
+
           if [[ ! -f "$NOTES" ]]; then
             echo "Missing release notes: $NOTES" >&2
             exit 1
           fi
+
+          if [[ ! -f "extension-template/manifest.template.json" ]]; then
+            echo "The template manifest.template.json is missing." >&2
+            exit 1
+          fi
+
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
           echo "notes=$NOTES" >> "$GITHUB_OUTPUT"
 
-      - name: Build separate ZIP packages
+      - name: Check whether this version already has all release assets
+        id: release_check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
         shell: bash
         run: |
+          set -euo pipefail
+
+          if ASSETS="$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null)"; then
+            RELEASE_EXISTS=true
+          else
+            ASSETS=""
+            RELEASE_EXISTS=false
+          fi
+
+          MISSING=false
+          for asset in \
+            "Schleim-OS-Extension.zip" \
+            "Schleim-OS-Extension-Template.zip" \
+            "Schleim-OS-SHA256SUMS.txt"; do
+            if ! printf '%s\n' "$ASSETS" | grep -Fxq "$asset"; then
+              echo "Release asset missing: $asset"
+              MISSING=true
+            fi
+          done
+
+          if [[ "$RELEASE_EXISTS" == "true" && "$MISSING" == "false" ]]; then
+            echo "needs_publish=false" >> "$GITHUB_OUTPUT"
+            echo "release_exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version $TAG is already published with all required assets."
+          else
+            echo "needs_publish=true" >> "$GITHUB_OUTPUT"
+            echo "release_exists=$RELEASE_EXISTS" >> "$GITHUB_OUTPUT"
+            echo "Version $TAG needs publishing or repair."
+          fi
+
+      - name: Build separate ZIP packages
+        if: steps.release_check.outputs.needs_publish == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
           mkdir -p dist/release
+
           (cd extension && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension.zip" .)
           (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension-Template.zip" .)
+
+          # Ensure the original extension has its active manifest at the ZIP root.
+          unzip -Z1 dist/release/Schleim-OS-Extension.zip | sed 's#^\./##' | grep -Fxq 'manifest.json'
+
+          # The template must retain its intentionally renamed special manifest.
+          unzip -Z1 dist/release/Schleim-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.template.json'
+          if unzip -Z1 dist/release/Schleim-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.json'; then
+            echo "The template ZIP must not contain an active manifest.json." >&2
+            exit 1
+          fi
+
           (
             cd dist/release
             sha256sum Schleim-OS-Extension.zip Schleim-OS-Extension-Template.zip > Schleim-OS-SHA256SUMS.txt
           )
 
-      - name: Create GitHub Release and upload assets
+      - name: Create new GitHub Release
+        if: steps.release_check.outputs.needs_publish == 'true' && steps.release_check.outputs.release_exists == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
@@ -62,11 +125,7 @@ jobs:
           NOTES: ${{ steps.version.outputs.notes }}
         shell: bash
         run: |
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "Release $TAG already exists; no duplicate release was created."
-            exit 0
-          fi
-
+          set -euo pipefail
           gh release create "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Schleim-OS-Extension-Template.zip" \
@@ -75,3 +134,30 @@ jobs:
             --title "Schleim OS $VERSION" \
             --notes-file "$NOTES" \
             --target "$GITHUB_SHA"
+
+      - name: Repair an existing release with missing assets
+        if: steps.release_check.outputs.needs_publish == 'true' && steps.release_check.outputs.release_exists == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          NOTES: ${{ steps.version.outputs.notes }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Schleim OS $VERSION" \
+            --notes-file "$NOTES"
+
+          gh release upload "$TAG" \
+            "dist/release/Schleim-OS-Extension.zip" \
+            "dist/release/Schleim-OS-Extension-Template.zip" \
+            "dist/release/Schleim-OS-SHA256SUMS.txt" \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber
+
+      - name: Report that no release update is needed
+        if: steps.release_check.outputs.needs_publish == 'false'
+        shell: bash
+        run: echo "No new version or missing release asset was found. Nothing was changed."
