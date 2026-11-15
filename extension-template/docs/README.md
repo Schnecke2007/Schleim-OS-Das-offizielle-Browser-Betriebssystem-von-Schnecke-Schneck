@@ -1,6 +1,6 @@
 # Browser OS – Dokumentation
 
-Wähle deine Sprache:
+Wähle eine Sprache:
 
 - [Deutsch](Deutsch/README.md)
 - [English](Englisch/README.md)
@@ -9,4 +9,4 @@ Wähle deine Sprache:
 - [Easy Language – English](Leichte-Sprache/Englisch/README.md)
 - [Eenvoudige taal – Nederlands](Leichte-Sprache/Niederländisch/README.md)
 
-Weitere technische Hinweise: [Konfiguration](../CONFIGURATION.md), [Konto und private Cloud](ACCOUNT-AND-CLOUD.md), [Technik](TECHNICAL-NOTES.md).
+Weitere Informationen: [Konfiguration](../CONFIGURATION.md), [Konto und private Cloud](ACCOUNT-AND-CLOUD.md), [Technische Hinweise](TECHNICAL-NOTES.md).

@@ -1,54 +1,28 @@
-# Technical notes
+# Technische Hinweise
 
-## Platform and extension format
+## Plattform
+Die Vorlage nutzt Manifest V3 und ist für Chromium-basierte Browser mit Erweiterungsunterstützung gedacht. Der Einstiegspunkt ist `pages/newtab.html`.
 
-- Platform: Chromium-based browsers with extension support
-- Extension format: Manifest V3
-- New-tab entry point: `pages/newtab.html`
-- New-tab override: `chrome_url_overrides.newtab`
+## Projektstruktur
+- `scripts/app.js`: Startseite, Apps und Navigation.
+- `scripts/personalization.js`: Darstellung, App-Reihenfolge und Store.
+- `scripts/browser-account.js`: GitHub-Anmeldung und private Einstellungs-Sicherung.
+- `scripts/browser-media-cloud.js`: Fotos, Videos, Metadaten, Galerie, Suche und Kamera.
+- `scripts/browser-photo-ai.js`: optionale lokale Bildanalyse.
+- `scripts/browser-store-admin.js`: Verwaltung des Browser Stores.
+- `scripts/media-upload-worker.js`: Hintergrund-Warteschlange und Benachrichtigungen.
+- `scripts/media-upload-offscreen.js`: lokale Medienverarbeitung und Upload.
+- `scripts/update-center.js`: Versionsprüfung und Template-ZIP-Download.
+- `standalone/browser-os-standalone.html`: eigenständige Web-Demo.
 
-## Project structure
+## Konto und Cloud
+Die GitHub-Anmeldung verwendet Device Flow. Du brauchst eine eigene GitHub App. Konto-Sicherung und Medien-Repository sollen getrennt und privat sein. Nur die öffentliche Client-ID darf im Code stehen. Niemals Client-Secrets, private Schlüssel, Zugriffstoken oder Passwörter eintragen.
 
-- `pages/` contains the extension interface.
-- `scripts/app.js` controls apps and navigation.
-- `scripts/personalization.js` manages personalization, home-screen order and Store UI.
-- `scripts/schleim-account.js` manages GitHub App sign-in, device authorization, installation checks, settings backup and private media repository access.
-- `scripts/schleim-photos-cloud.js` manages photo/video uploads, metadata, metadata search, camera, gallery and storage statistics.
-- `scripts/schleim-photo-ai.js` optionally uses the Chrome Prompt API for local image descriptions and AI-assisted search expansion.
-- `scripts/slime-store-admin.js` provides the Store admin portal.
-- `scripts/update-center.js` compares the installed version with the configured public GitHub manifest and displays a ZIP download.
-- `styles/` contains stylesheets.
-- `locales/legal-translations.js` contains demo translations for placeholder legal documents.
-- `data/store-apps.json` and `data/store-ratings.json` contain the runtime catalogue and ratings.
+## Foto- und Video-Cloud
+Die Medien-Cloud unterstützt Fotos, Videos, Galerie, Suche und Kamera. Die Upload-Warteschlange wird lokal gespeichert. Der Service Worker hält den Uploadstatus; das Offscreen-Dokument verarbeitet Medien im Hintergrund. Die maximale Dateigröße beträgt 50 MiB pro Datei. Die konkrete Verarbeitung hängt von Browser-Codecs und verfügbaren APIs ab.
 
-## GitHub configuration and permissions
+## Standalone-Demo
+Die Standalone-Datei zeigt ein Beispiel-Konto, lokale Foto-/Video-Vorschau und eine Kamera-Demo. Sie speichert keine echten Cloud-Daten und führt keine echte GitHub-Anmeldung durch. Kamera-Zugriff braucht die Erlaubnis des Browsers und eine sichere Verbindung (HTTPS oder localhost).
 
-The GitHub account flow uses Device Flow and requires your own GitHub App. Configure the App Client ID, slug, installation URL and repository names as described in [CONFIGURATION.md](../CONFIGURATION.md).
-
-The account backup repository and media repository are separate. Both are intended to be private. The account module checks that the media repository belongs to the signed-in user and is private before using it.
-
-Only the public Client ID may be placed in extension code. Do not include a GitHub App Client Secret, private key, access token or password in this repository.
-
-## Photo and video cloud
-
-The media repository name is configured in both `scripts/schleim-account.js` and `scripts/schleim-photos-cloud.js`. Keep the two values identical. The module creates the repository when the user explicitly links the private media cloud.
-
-Files are organized by media type, capture year and month. JPEG EXIF `DateTimeOriginal` is used where available; otherwise the file modification date is used. Metadata search works without external services. Optional local image descriptions and semantic query expansion use the Chrome Prompt API where supported. Videos currently use metadata and filenames for search.
-
-Still images are optimized locally before upload: the longest edge is limited to 2,560 pixels and WebP quality is 90%. The optimized version is used only when smaller than the original. Animated images and videos are not re-encoded. Uploads are limited to 50 MiB per file.
-
-GitHub repository versioning is not designed as unlimited media storage. Deleted files may remain in repository history. Review repository retention and privacy requirements before using it for important personal data.
-
-## Storage and backup
-
-Personalization and home-screen order are stored locally in the browser profile. Cloud backup is a manual action. It does not synchronize every change automatically.
-
-## Update center
-
-The version check reads the root-level `manifest.json` from the configured GitHub repository branch through `raw.githubusercontent.com`. It compares the numeric manifest version and downloads the `Schleim-OS-Extension-Template.zip` asset from that repository's latest release when a newer version is available. It never downloads the original Schleim OS Extension ZIP or the source-archive ZIP. The downloaded ZIP is not extracted or silently installed; users must import the Template ZIP through a compatible browser's ZIP-import option and confirm the action manually.
-
-## Store and external services
-
-The Store catalogue is a public JSON file in the configured repository. The account sign-in protects the Store interface; it does not make public repository files private. Ratings and app suggestions may be submitted through GitHub, depending on the configuration.
-
-External apps and websites may establish network connections when opened. Review the permissions and privacy policies of any service you add.
+## Update-Center
+Das Template lädt nur das Release-Asset `Schleim-OS-Extension-Template.zip` aus dem konfigurierten Repository. Der Download wird nicht automatisch installiert. Import und Bestätigung erfolgen im Browser.

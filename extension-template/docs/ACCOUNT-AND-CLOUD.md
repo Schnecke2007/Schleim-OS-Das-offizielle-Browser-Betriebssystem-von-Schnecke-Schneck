@@ -1,24 +1,19 @@
-# GitHub account and private cloud setup
+# Konto und private Cloud einrichten
 
-The optional account and cloud functions use GitHub Device Flow. This template does not include a preconfigured GitHub App.
+Die Konto- und Cloud-Funktionen verwenden GitHub Device Flow. Die Vorlage enthält keine fertig eingerichtete GitHub App.
 
-## Before you start
+## Vor dem Start
+1. Erstelle deine eigene GitHub App und aktiviere Device Flow.
+2. Trage die öffentliche Client-ID, den App-Namen und den Installationslink in `scripts/browser-account.js` ein.
+3. Trage ein privates Repository für Einstellungs-Sicherungen ein.
+4. Trage ein separates privates Repository für Fotos und Videos ein.
+5. Verwende denselben Medien-Repository-Namen in `scripts/browser-media-cloud.js` und `scripts/media-upload-offscreen.js`.
 
-1. Create your own GitHub App and enable Device Flow.
-2. Configure the repository and account permissions required by the features you want to use.
-3. Set its public Client ID, app slug and installation URL in `scripts/browser-account.js`.
-4. Set `REPO_NAME` to a private repository name for settings backups.
-5. Set `PHOTOS_REPO_NAME` to a separate private repository name for photos and videos.
-6. In `scripts/browser-media-cloud.js`, set `REPO_NAME` to exactly the same media repository name as `PHOTOS_REPO_NAME`.
+## Sicherheit
+- Eine Client-ID ist öffentlich.
+- Client-Secrets, private Schlüssel, Zugriffstoken und Passwörter gehören nicht in den Erweiterungscode.
+- Prüfe, dass die Repositorys privat sind.
+- Teste Anmeldung, Sicherung, Wiederherstellung und Medien-Upload mit einem Testkonto.
+- Gelöschte Dateien können in der GitHub-Repository-Historie erhalten bleiben.
 
-The media repository is created when a signed-in user explicitly links the private media cloud. Keep the settings-backup and media repositories separate.
-
-## Security
-
-- A GitHub App Client ID is public and may be included in the extension.
-- Never add a GitHub App Client Secret, private key, personal access token, OAuth token or password to this repository.
-- Confirm that both repositories are private before storing user data.
-- Test sign-in, installation checks, backup, restore and media upload with a separate test account.
-- Consider GitHub repository history and retention when storing personal media. Deleted files may remain in commit history.
-
-The Store, update checker and account integration also contain repository placeholders. Configure each feature separately as described in [CONFIGURATION.md](../CONFIGURATION.md).
+Die Store- und Update-Einstellungen müssen ebenfalls auf dein eigenes Repository zeigen. Details stehen in [CONFIGURATION.md](../CONFIGURATION.md).

@@ -1,14 +1,16 @@
-# Language files and translations
+# Sprachdateien und Übersetzungen
 
-The template includes German, English and Dutch UI text.
+Die Benutzeroberfläche unterstützt Deutsch, Englisch und Niederländisch.
 
-- `scripts/app.js` contains labels for the main interface, apps and navigation.
-- `scripts/personalization.js` contains translations for personalization, the Browser Store, ratings, app suggestions and Store access notices.
-- `scripts/schleim-account.js` contains translations for GitHub App sign-in, device authorization, cloud backup and restore.
-- `scripts/slime-store-admin.js` contains the Store admin portal text.
-- `scripts/update-center.js` contains version-check and ZIP-download text.
-- `locales/legal-translations.js` contains translations for the demo legal placeholders.
+- `scripts/app.js`: Startseite, Apps und Navigation.
+- `scripts/personalization.js`: Darstellung, Browser Store, Bewertungen und Vorschläge.
+- `scripts/browser-account.js`: GitHub-Anmeldung, Konto, Sicherung und Wiederherstellung.
+- `scripts/browser-media-cloud.js`: Foto- und Video-Cloud, Kamera, Galerie und Uploads.
+- `scripts/browser-photo-ai.js`: optionale lokale Bildanalyse.
+- `scripts/browser-store-admin.js`: Verwaltung des Browser Stores.
+- `scripts/update-center.js`: Versionsprüfung und Template-ZIP-Download.
+- `legal-translations.js`: Beispieltexte für rechtliche Seiten.
 
-The UI dictionaries are stored in the JavaScript modules, not only in this directory. When adding features, update the dictionaries for `de`, `en` and `nl`.
+Die Sprachtexte liegen in den jeweiligen JavaScript-Modulen. Bei neuen Funktionen müssen die Sprachvarianten `de`, `en` und `nl` ergänzt werden. Die Anleitungen in den Ordnern `docs/Deutsch/`, `docs/Englisch/`, `docs/Niederländisch/` und `docs/Leichte-Sprache/` sind separat organisiert.
 
-External provider content may not be translatable by the extension because it is rendered by a third-party service. Review the provider's current terms and privacy policy before embedding external content.
+Texte externer Anbieter können nicht immer übersetzt werden. Prüfe die Nutzungsbedingungen und Datenschutzhinweise dieser Anbieter.

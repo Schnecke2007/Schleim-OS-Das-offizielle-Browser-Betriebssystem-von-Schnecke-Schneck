@@ -5,11 +5,11 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const appSource = fs.readFileSync(path.join(root, 'scripts/app.js'), 'utf8');
-const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-standalone.html'), 'utf8');
+const standaloneSource = fs.readFileSync(path.join(root, 'standalone/browser-os-standalone.html'), 'utf8');
 const personalizationSource = fs.readFileSync(path.join(root, 'scripts/personalization.js'), 'utf8');
-const accountSource = fs.readFileSync(path.join(root, 'scripts/schleim-account.js'), 'utf8');
-const photosCloudSource = fs.readFileSync(path.join(root, 'scripts/schleim-photos-cloud.js'), 'utf8');
-const photosAISource = fs.readFileSync(path.join(root, 'scripts/schleim-photo-ai.js'), 'utf8');
+const accountSource = fs.readFileSync(path.join(root, 'scripts/browser-account.js'), 'utf8');
+const photosCloudSource = fs.readFileSync(path.join(root, 'scripts/browser-media-cloud.js'), 'utf8');
+const photosAISource = fs.readFileSync(path.join(root, 'scripts/browser-photo-ai.js'), 'utf8');
 const newtabSource = fs.readFileSync(path.join(root, 'pages/newtab.html'), 'utf8');
 const personalizationCss = fs.readFileSync(path.join(root, 'styles/personalization.css'), 'utf8');
 const storeCatalog = JSON.parse(fs.readFileSync(path.join(root, 'data/store-apps.json'), 'utf8'));
@@ -53,7 +53,7 @@ test('Photos and Camera are first-class Browser OS apps', () => {
   assert.match(appSource, /id:'camera',name:'Kamera'/);
   assert.match(appSource, /camera:renderCamera/);
   assert.match(appSource, /ssos-app-opened/);
-  assert.match(newtabSource, /schleim-photos-cloud\.js/);
+  assert.match(newtabSource, /browser-media-cloud\.js/);
 });
 
 test('Photo cloud uses a configurable private repository and the Browser OS account', () => {
@@ -125,7 +125,7 @@ test('Photos search combines metadata fallback with optional on-device AI', () =
   assert.match(photosAISource, /api\.create/);
   assert.match(photosAISource, /type:\s*'image'/);
   assert.match(photosAISource, /No API key/i);
-  assert.match(newtabSource, /schleim-photo-ai\.js/);
+  assert.match(newtabSource, /browser-photo-ai\.js/);
   assert.match(appSource, /data-photos-ai-search/);
 });
 
@@ -133,4 +133,32 @@ test('Settings include a separate photo and video cloud storage panel', () => {
   assert.match(personalizationSource, /data-ssos-photo-cloud-settings/);
   assert.match(photosCloudSource, /function mountSettings/);
   assert.match(personalizationCss, /ssos-photos-stats/);
+});
+
+
+test('Template background media processing is wired through Manifest V3', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json'), 'utf8'));
+  assert.equal(manifest.background.service_worker, 'scripts/media-upload-worker.js');
+  assert.ok(manifest.permissions.includes('offscreen'));
+  assert.ok(manifest.permissions.includes('notifications'));
+  assert.ok(fs.existsSync(path.join(root, 'scripts/media-upload-offscreen.js')));
+  assert.match(photosCloudSource, /SSOS_MEDIA_UPLOAD_START/);
+  assert.match(newtabSource, /browser-media-cloud\.js/);
+});
+
+test('Template documentation is organized in three languages and Easy Language', () => {
+  for (const language of ['Deutsch','Englisch','Niederländisch']) {
+    assert.ok(fs.existsSync(path.join(root,'docs',language,'README.md')));
+  }
+  for (const language of ['Deutsch','Englisch','Niederländisch']) {
+    assert.ok(fs.existsSync(path.join(root,'docs','Leichte-Sprache',language,'README.md')));
+  }
+});
+
+test('Template standalone demo includes account, photo/video and camera areas', () => {
+  assert.match(standaloneSource, /id:'images'/);
+  assert.match(standaloneSource, /id:'camera'/);
+  assert.match(standaloneSource, /camera/i);
+  assert.match(standaloneSource, /video/i);
+  assert.match(standaloneSource, /account/i);
 });

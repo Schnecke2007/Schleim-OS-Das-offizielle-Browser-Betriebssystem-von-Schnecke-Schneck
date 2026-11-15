@@ -1,22 +1,20 @@
-# Sonos as an example Store web app
+# Sonos als Beispiel-App im Browser Store
 
-Sonos is included as an example web-app entry in the Browser OS Store. Its sample catalogue entry opens the official Sonos web app:
+Sonos ist ein Beispiel für eine externe Web-App im Browser Store. Der Eintrag öffnet die offizielle Sonos-Web-App unter:
 
 **https://play.sonos.com/**
 
-## Install and open
+## Öffnen
+1. Öffne den Browser Store.
+2. Suche den Sonos-Beispiel-Eintrag.
+3. Installiere ihn wie eine andere Web-App.
+4. Starte die Kachel. Sonos öffnet sich in einem neuen Browser-Tab.
 
-1. Open the Browser Store.
-2. Find the Sonos example entry.
-3. Install it like any other Store web app.
-4. Launch the tile. The Browser OS Store opens Sonos in a new browser tab.
+Die Vorlage verwendet den normalen Store-Start. Es gibt keinen eigenen Sonos-Player und keinen separaten Worker.
 
-The example uses the standard Store launcher. It does not require a custom Sonos renderer, embedded player or separate worker service.
+## Anmeldung und Datenschutz
+- Melde dich direkt auf der offiziellen Sonos-Webseite an.
+- Die Erweiterung fragt kein Sonos-Passwort ab und speichert es nicht.
+- Verfügbarkeit und Funktionen hängen von Sonos und dem verwendeten Browser ab.
 
-## Sign-in and privacy
-
-- Sign in directly on the official Sonos website.
-- The extension does not request or store Sonos passwords.
-- Availability and features depend on Sonos and the browser in use.
-
-Remove this sample entry from `data/store-apps.json` if you do not want to include it in your own Store.
+Entferne den Beispiel-Eintrag aus `data/store-apps.json`, wenn du ihn nicht in deinem eigenen Store verwenden möchtest.
