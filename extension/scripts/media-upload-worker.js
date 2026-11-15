@@ -91,7 +91,7 @@ async function showFinished(jobId,total) {
 }
 async function showFailed(jobId,error) {
   const id=notificationId(jobId);
-  try { await chrome.notifications.clear(id); } catch {}
+  try { await notificationClear(id); } catch {}
   try {
     await notificationCreate(id,{
       type:'basic',
