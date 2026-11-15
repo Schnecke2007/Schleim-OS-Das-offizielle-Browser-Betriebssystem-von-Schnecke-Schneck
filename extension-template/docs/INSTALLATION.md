@@ -5,7 +5,7 @@ The template is a functional Manifest V3 extension. The release ZIP contains an 
 ## Download, configure and import the template
 
 1. Download [Schleim-OS-Extension-Template.zip from the latest GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
-2. **Do not extract the ZIP file.**
+2. **Do not extract or modify the ZIP file.**
 3. Open the extension manager in a browser that supports local ZIP-extension import.
 4. Enable **Developer mode** if required.
 5. Select **+ (from .zip/.crx/.user.js)** or the equivalent file-import option.
@@ -18,6 +18,10 @@ To update the template, download the latest Template ZIP and import it through t
 Use your own working copy or GitHub repository to edit the source files. See [CONFIGURATION.md](../CONFIGURATION.md) for placeholders, GitHub integration, Store settings, privacy and legal information. The default GitHub account, repository names and profile content are placeholders.
 
 After customization, publish a GitHub Release in your repository with the package asset named **Schleim-OS-Extension-Template.zip**. The template's update center is configured to download this Template asset, not the original Extension ZIP.
+
+## Import the original Schleim OS extension
+
+The original extension is provided separately as [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). It is not changed by the template. **Do not extract this ZIP either.** Import it directly through the same local ZIP-import option if you want the official Schleim OS extension rather than your own template copy.
 
 ## Browser compatibility
 
