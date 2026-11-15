@@ -8,14 +8,6 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Open demo](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Easy Language](docs/Leichte-Sprache/Englisch/README.md)
 
-## 🧩 Build your own Browser OS
-
-Want to create your own version? The complete neutral template, including demo pages, sample artwork and placeholders, is kept separately in [extension-template/](extension-template/).
-
-[📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
-
-**Important:** The template intentionally contains `manifest.template.json` instead of `manifest.json`. Chrome therefore does not recognize it as an installable extension. When you download the complete project, only the original extension in `extension/` is directly loadable. After configuring your own template, rename `manifest.template.json` to `manifest.json`, then load the `extension-template/` folder through **Extensions → Developer mode → Load unpacked**.
-
 ## 👋 About me
 
 Hi! I'm **Schnecke Schneck**, I'm 19 years old and I'm from **Bottrop in North Rhine-Westphalia, Germany**. Online, I go by the name *Schnecke Schneck*, and I'm especially interested in technology and digital ideas.
@@ -194,6 +186,14 @@ Would you prefer short sentences and simple explanations? Read the [English plai
 ├── README.en.md
 └── README.nl.md
 ```
+
+## 🧩 Build your own Browser OS
+
+Want to create your own version? The complete neutral template, including demo pages, sample artwork and placeholders, is kept separately in [extension-template/](extension-template/).
+
+[📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
+
+**Important:** The template intentionally contains `manifest.template.json` instead of `manifest.json`. Chrome therefore does not recognize it as an installable extension. When you download the complete project, only the original extension in `extension/` is directly loadable. After configuring your own template, rename `manifest.template.json` to `manifest.json`, then load the `extension-template/` folder through **Extensions → Developer mode → Load unpacked**.
 
 ## 🔐 Privacy and permissions
 

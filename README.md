@@ -8,14 +8,6 @@
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
 
-## 🧩 Eigenes Browser OS erstellen
-
-Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Template mit Demo-Seiten, Beispielgrafiken und Platzhaltern liegt separat im Ordner [extension-template/](extension-template/).
-
-[📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
-
-**Wichtig:** Das Template enthält absichtlich die Datei `manifest.template.json` statt `manifest.json`. Chrome erkennt es dadurch nicht als installierbare Erweiterung. Beim Download des vollständigen Projekts ist ausschließlich die Original-Extension im Ordner `extension/` direkt ladbar. Wenn du deine eigene Template-Version fertig konfiguriert hast, benenne `manifest.template.json` in `manifest.json` um und lade anschließend den Ordner `extension-template/` über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden**.
-
 ## 👋 Über mich
 
 Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
@@ -197,6 +189,14 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 ├── README.en.md
 └── README.nl.md
 ```
+
+## 🧩 Eigenes Browser OS erstellen
+
+Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Template mit Demo-Seiten, Beispielgrafiken und Platzhaltern liegt separat im Ordner [extension-template/](extension-template/).
+
+[📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
+
+**Wichtig:** Das Template enthält absichtlich die Datei `manifest.template.json` statt `manifest.json`. Chrome erkennt es dadurch nicht als installierbare Erweiterung. Beim Download des vollständigen Projekts ist ausschließlich die Original-Extension im Ordner `extension/` direkt ladbar. Wenn du deine eigene Template-Version fertig konfiguriert hast, benenne `manifest.template.json` in `manifest.json` um und lade anschließend den Ordner `extension-template/` über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden**.
 
 ## 🔐 Datenschutz und Berechtigungen
 
