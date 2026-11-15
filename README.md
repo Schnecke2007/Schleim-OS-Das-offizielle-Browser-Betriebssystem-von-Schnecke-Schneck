@@ -2,11 +2,11 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.5-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.6-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Nur Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
+[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache – alle Sprachen](docs/Leichte-Sprache/README.md)
 
 ## 👋 Über mich
 
@@ -70,7 +70,7 @@ Auf der [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-o
 - [**Schleim OS – Browser-Extension herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – nur die fertige Original-Erweiterung.
 - [**Schleim OS – neutrales Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – Vorlage für eigene Browser-Betriebssysteme.
 
-Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.15.4.md).
+Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.15.6.md).
 
 ## 📥 Download und Installation
 
