@@ -147,7 +147,7 @@
       uploading: 'Uploaden …',
       backgroundQueued: 'Upload gestart. Het gaat op de achtergrond verder; je kunt dit tabblad sluiten.',
       backgroundProgress: 'Upload op de achtergrond',
-      backgroundComplete: 'Upload op de achtergrond voltooid.
+      backgroundComplete: 'Upload op de achtergrond voltooid.',
       uploaded: 'Upload voltooid.',
       tooLarge: 'Het bestand is groter dan 50 MiB. Kies een kleiner bestand.',
       unsupported: 'Alleen afbeeldings- en videobestanden worden ondersteund.',
