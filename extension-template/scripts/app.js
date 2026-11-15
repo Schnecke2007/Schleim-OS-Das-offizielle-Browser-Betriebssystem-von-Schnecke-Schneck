@@ -61,7 +61,7 @@
   const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
   // The old static your website provider gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
-  const your website provider_GALLERY_IMAGES = [];
+  const DEMO_WEBSITE_GALLERY_IMAGES = [];
   const PROJECT_CHILD_IDS = ['voiceassistant','parentsettings','schildi','chatgpt','scratch','schleimcloud','iptv','tech'];
   const CONTACT_CHILD_IDS = ['whatsapp','email','google'];
   let activeAppId = null;
@@ -196,7 +196,7 @@
   const projectOpen = (id,icon,title,desc) => `<button class="project-open" type="button" data-app="${id}"><span class="project-icon">${icon}</span><span><b>${title}</b><small>${desc}</small></span><strong>↗</strong></button>`;
   const feedCard = (title,copy,tags='') => `<article class="feed-card"><div class="feed-top"><span class="feed-avatar">💠</span><span><b>Demo Creator</b><small>Öffentlicher Social-Media-Beitrag</small></span></div><h4>${title}</h4><p>${copy}</p>${tags?`<small class="feed-tags">${tags}</small>`:''}</article>`;
 
-  const your website provider_FOOTER = `<div class="notice">© 2026 Demo project. Alle Rechte vorbehalten. Die zugehörigen AGB, Datenschutzinformationen und das Impressum sind auch auf der Original-Webseite abrufbar.</div>`;
+  const DEMO_WEBSITE_FOOTER = `<div class="notice">© 2026 Demo project. Alle Rechte vorbehalten. Die zugehörigen AGB, Datenschutzinformationen und das Impressum sind auch auf der Original-Webseite abrufbar.</div>`;
 
   function renderHome(){
     const featured = HOME_APP_IDS;
@@ -204,7 +204,7 @@
       <div class="visitor-welcome"><b>Eine Idee. Viele Möglichkeiten. Eine digitale Welt.</b><p>Stöbere durch die Apps, entdecke aktuelle Inhalte und finde die passenden Kontakt- und Projektbereiche.</p></div>
       ${section('Entdecke die Bereiche')}<div class="website-pages">${featured.map(id=>{const a=APPS.find(x=>x.id===id);return `<button type="button" data-app="${id}"><span>${a.icon}</span><b>${localizedAppName(a.id)}</b><small>${localizedAppHint(a)}</small></button>`;}).join('')}</div>
       ${section('Im Spotlight')}<div class="project-list">${projectOpen('projects','🧩','Projektwelt','Alle Projekte und Technikbereiche an einem Ort')}${projectOpen('images','🖼️','Bildergalerie','Öffentliche Bilder der Demo-Website entdecken')}${projectOpen('social','📸','Social-Media-Feed','Öffentliche Beiträge entdecken')}</div>
-      ${section('Kontakt')}<div class="project-list">${internalAppButton('contact','Alle Kontaktwege und Möglichkeiten ansehen')}</div>${your website provider_FOOTER}`;
+      ${section('Kontakt')}<div class="project-list">${internalAppButton('contact','Alle Kontaktwege und Möglichkeiten ansehen')}</div>${DEMO_WEBSITE_FOOTER}`;
   }
 
   function renderAbout(){return `${appHero('ABOUT THE CREATOR','Demo Creator.','A sample profile area for your own introduction, interests and projects.','👤')}
@@ -311,7 +311,7 @@
     ${section('Explore the demo')}<div class="website-pages">${[['about','👤','Profile','Demo profile'],['social','📸','Social media','Demo channels'],['projects','🧩','Projects','Sample projects'],['shop','🛍️','Demo shop','Example shop'],['websiteinfo','ℹ️','About this website','Features'],['fanapp','📱','Demo app','App information']].map(([id,icon,title,desc])=>`<button type="button" data-app="${id}"><span>${icon}</span><b>${title}</b><small>${desc}</small></button>`).join('')}</div>
     ${section('External website')}${embedPanel('site','Your website',URLS.home,'Website preview')}
     ${section('Contact and feedback')}<div class="link-list">${linkCard('✉️','Email','your-email@example.com',URLS.email)}${linkCard('🌐','Website','YOUR_WEBSITE_URL',URLS.home)}</div>
-    ${section('Legal information')}<div class="link-list">${internalAppButton('legal','Imprint · Privacy · Terms')}</div>${your website provider_FOOTER}`; }
+    ${section('Legal information')}<div class="link-list">${internalAppButton('legal','Imprint · Privacy · Terms')}</div>${DEMO_WEBSITE_FOOTER}`; }
 
   function renderShop(){
     const target=URLS.shop;
@@ -471,7 +471,7 @@
 
   function showToast(message){els.toast.textContent=message;els.toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>els.toast.classList.remove('show'),2200);}
   function enterOS(){els.intro.classList.add('hidden');els.home.classList.remove('hidden');}
-  const your website provider_FRAME_PAGES={
+  const DEMO_WEBSITE_FRAME_PAGES={
     about:{url:URLS.about,title:'Über mich'},projects:{url:URLS.projects,title:'Meine Projekte'},
     websiteinfo:{url:URLS.website,title:'Über unsere Webseite'},fanapp:{url:URLS.fanapp,title:'Unsere App'}
   };
@@ -504,7 +504,7 @@
       els.appContent.innerHTML=(id==='legal'||id==='slimestore')?rendered:localize(rendered);
     }
     $$('[data-set-language]',els.appContent).forEach(b=>b.classList.toggle('selected',b.dataset.setLanguage===currentLanguage()));
-    const source=your website provider_FRAME_PAGES[id];
+    const source=DEMO_WEBSITE_FRAME_PAGES[id];
     if(source){
       els.appContent.insertAdjacentHTML('beforeend',`<h3 class="content-heading">Interaktive Originalansicht</h3><div class="embed-shell" id="pageEmbed"><div class="embed-placeholder"><span>🌐</span><b>${esc(source.title)} – Originalseite</b><small>Die vollständige your website provider-Seite wird erst nach deiner Auswahl geladen. So bleiben externe Inhalte zunächst deaktiviert.</small><button class="app-button" type="button" data-load-frame="${id}">Originalseite hier anzeigen</button></div></div>`);
     }
