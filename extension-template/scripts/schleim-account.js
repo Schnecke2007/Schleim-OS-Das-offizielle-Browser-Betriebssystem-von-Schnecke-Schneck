@@ -1,37 +1,37 @@
 (() => {
   'use strict';
 
-  // Public identifier only. Set this after creating the Schleim OS GitHub App.
+  // Public identifier only. Set this after creating the Browser OS GitHub App.
   // Never put a GitHub App private key or client secret in this extension.
-  const GITHUB_APP_CLIENT_ID = 'Iv23lihfJBU95UVCrVt1';
-  const GITHUB_APP_INSTALL_URL = 'https://github.com/apps/schleim-os-account';
-  const GITHUB_APP_SLUG = 'schleim-os-account';
+  const GITHUB_APP_CLIENT_ID = 'YOUR_GITHUB_APP_CLIENT_ID';
+  const GITHUB_APP_INSTALL_URL = 'https://github.com/apps/YOUR_GITHUB_APP_SLUG';
+  const GITHUB_APP_SLUG = 'YOUR_GITHUB_APP_SLUG';
   const API = 'https://api.github.com';
   const DEVICE_CODE_URL = 'https://github.com/login/device/code';
   const TOKEN_URL = 'https://github.com/login/oauth/access_token';
-  const REPO_NAME = 'schleim-os-cloud';
+  const REPO_NAME = 'YOUR_PRIVATE_BACKUP_REPOSITORY';
   const BACKUP_PATH = 'browser-os-backup.json';
   const STORAGE_KEY = 'ssos-schleim-account-session-v1';
   const API_VERSION = '2022-11-28';
 
   const TEXT = {
     de: {
-      title:'Browser-OS-Konto', intro:'Verbinde dein GitHub-Konto und sichere deine Schleim-OS-Einstellungen in einem privaten Repository.',
+      title:'Browser-OS-Konto', intro:'Verbinde dein GitHub-Konto und sichere deine Browser OS-Einstellungen in einem privaten Repository.',
       login:'Mit GitHub verbinden', connected:'Verbunden als', email:'Verifizierte E-Mail', repository:'Privates Cloud-Repository',
       save:'Jetzt in der Cloud sichern', restore:'Cloud-Sicherung wiederherstellen', logout:'Abmelden',
-      notConfigured:'Die Schleim-OS-GitHub-App ist noch nicht eingerichtet. Die Client-ID fehlt.',
+      notConfigured:'Die Browser OS-GitHub-App ist noch nicht eingerichtet. Die Client-ID fehlt.',
       setup:'GitHub-App installieren', installApp:'GitHub-App bei GitHub installieren', setupNote:'Für Nutzerkonten anderer Personen muss deine App öffentlich sein. Aktiviere Device Flow und richte die Berechtigungen laut Anleitung ein.',
       device:'Öffne GitHub und gib diesen einmaligen Code ein:', openGitHub:'GitHub-Gerätefreigabe öffnen', cancel:'Abbrechen', waiting:'Warte auf die Bestätigung bei GitHub …',
       created:'Browser-OS-Konto verbunden. Dein privates Backup-Repository ist bereit.',
-      saved:'Cloud-Sicherung erfolgreich gespeichert.', restored:'Cloud-Sicherung geladen. Schleim OS wird neu gestartet …',
-      confirmRestore:'Die lokale Schleim-OS-Konfiguration wird durch die Cloud-Sicherung ersetzt. Fortfahren?',
+      saved:'Cloud-Sicherung erfolgreich gespeichert.', restored:'Cloud-Sicherung geladen. Browser OS wird neu gestartet …',
+      confirmRestore:'Die lokale Browser OS-Konfiguration wird durch die Cloud-Sicherung ersetzt. Fortfahren?',
       noBackup:'In deinem privaten Repository wurde noch keine Sicherungsdatei gefunden.',
       emailMissing:'Dein GitHub-Konto hat keine verifizierte primäre E-Mail-Adresse. Bitte bestätige sie zuerst direkt bei GitHub.',
       repoPublic:'Das Repository schleim-os-cloud ist nicht privat. Aus Sicherheitsgründen wird dort keine Sicherung gespeichert.',
       repoPermission:'GitHub hat den Zugriff verweigert. Prüfe die App-Berechtigungen: Repository creation (write), Contents (read/write) und Email addresses (read).',
       cancelled:'Anmeldung abgebrochen.', expired:'Der GitHub-Code ist abgelaufen. Starte die Anmeldung erneut.',
       authError:'GitHub-Anmeldung fehlgeschlagen.', backupError:'Cloud-Sicherung fehlgeschlagen.',
-      accountNotice:'Dein GitHub-Passwort gibst du nur direkt bei GitHub ein. Schleim OS fragt es nicht ab und speichert es nicht. Prüfe bei der Gerätefreigabe, dass GitHub tatsächlich „Schleim OS Account“ anzeigt.',
+      accountNotice:'Dein GitHub-Passwort gibst du nur direkt bei GitHub ein. Browser OS fragt es nicht ab und speichert es nicht. Prüfe bei der Gerätefreigabe, dass GitHub tatsächlich „Browser OS Account“ anzeigt.',
       privacy:'Das Backup-Repository ist privat. Zugriffstokens werden lokal in den Erweiterungsdaten gespeichert und niemals in das Backup-Repository geschrieben. Du kannst die App-Berechtigung jederzeit in deinen GitHub-Einstellungen widerrufen.',
       signOutConfirm:'Möchtest du dich vom Browser-OS-Konto abmelden? Die private Sicherung auf GitHub bleibt erhalten.',
       signingIn:'GitHub-Anmeldung wird vorbereitet …', creating:'Privates Backup-Repository wird gesucht oder erstellt …',
@@ -39,29 +39,29 @@
       ownerMismatch:'Das gefundene Repository gehört nicht zum angemeldeten GitHub-Konto.',
       retry:'Erneut versuchen', help:'Einrichtungsanleitung öffnen', lastBackup:'Letzte Cloud-Sicherung',
       notYet:'Noch keine Sicherung auf diesem Gerät', account:'GitHub-Konto',
-      storeLoginIntro:'Melde dich mit deinem Browser-OS-Konto an, um den Schleim-Store freizuschalten.', storeUnlocked:'Der Schleim-Store ist freigeschaltet.', installFirst:'Installiere zuerst die GitHub-App.', installIntro:'Die GitHub-App-Seite wurde geöffnet. Installiere Schleim OS Account in deinem GitHub-Konto und fahre danach hier fort.',
+      storeLoginIntro:'Melde dich mit deinem Browser-OS-Konto an, um den Browser Store freizuschalten.', storeUnlocked:'Der Browser Store ist freigeschaltet.', installFirst:'Installiere zuerst die GitHub-App.', installIntro:'Die GitHub-App-Seite wurde geöffnet. Installiere Browser OS Account in deinem GitHub-Konto und fahre danach hier fort.',
       continueAfterInstall:'Ich habe die App installiert – weiter', checkingInstallation:'Prüfe die GitHub-App-Installation …', waitingForInstallation:'Warte, bis GitHub die Installation deinem Konto zuordnet …',
       installationMissing:'Die GitHub-App wurde noch nicht erkannt. Installiere sie auf deinem GitHub-Konto und versuche es erneut.',
       codeCopied:'Der Gerätecode wurde in die Zwischenablage kopiert.', copyCode:'Code kopieren', copyFailed:'Automatisches Kopieren nicht möglich. Kopiere den angezeigten Code manuell.',
-      installAgain:'GitHub-App öffnen', installPendingTitle:'Installation wird geprüft', installPendingIntro:'GitHub hat die Anmeldung bestätigt. Schleim OS wartet jetzt darauf, dass die GitHub-App in deinem Konto erkannt wird.'
+      installAgain:'GitHub-App öffnen', installPendingTitle:'Installation wird geprüft', installPendingIntro:'GitHub hat die Anmeldung bestätigt. Browser OS wartet jetzt darauf, dass die GitHub-App in deinem Konto erkannt wird.'
     },
     en: {
-      title:'Browser OS account', intro:'Connect your GitHub account and back up your Schleim OS settings in a private repository.',
+      title:'Browser OS account', intro:'Connect your GitHub account and back up your Browser OS settings in a private repository.',
       login:'Connect with GitHub', connected:'Connected as', email:'Verified email', repository:'Private cloud repository',
       save:'Back up to cloud now', restore:'Restore cloud backup', logout:'Sign out',
-      notConfigured:'The Schleim OS GitHub App has not been configured yet. The client ID is missing.',
+      notConfigured:'The Browser OS GitHub App has not been configured yet. The client ID is missing.',
       setup:'Install GitHub App', installApp:'Install GitHub App on GitHub', setupNote:'Your app must be public for other users to connect. Enable Device Flow and configure the permissions in the setup guide.',
       device:'Open GitHub and enter this one-time code:', openGitHub:'Open GitHub device authorization', cancel:'Cancel', waiting:'Waiting for confirmation on GitHub …',
       created:'Browser OS account connected. Your private backup repository is ready.',
-      saved:'Cloud backup saved successfully.', restored:'Cloud backup restored. Schleim OS is restarting …',
-      confirmRestore:'Your local Schleim OS configuration will be replaced with the cloud backup. Continue?',
+      saved:'Cloud backup saved successfully.', restored:'Cloud backup restored. Browser OS is restarting …',
+      confirmRestore:'Your local Browser OS configuration will be replaced with the cloud backup. Continue?',
       noBackup:'No backup file was found in your private repository.',
       emailMissing:'Your GitHub account has no verified primary email address. Verify it directly on GitHub first.',
       repoPublic:'The schleim-os-cloud repository is not private. No backup will be saved there for security reasons.',
       repoPermission:'GitHub denied access. Check the app permissions: Repository creation (write), Contents (read/write), and Email addresses (read).',
       cancelled:'Sign-in cancelled.', expired:'The GitHub code expired. Start sign-in again.',
       authError:'GitHub sign-in failed.', backupError:'Cloud backup failed.',
-      accountNotice:'Enter your GitHub password only on GitHub. Schleim OS never asks for or stores it. When approving the device code, verify that GitHub identifies the app as “Schleim OS Account”.',
+      accountNotice:'Enter your GitHub password only on GitHub. Browser OS never asks for or stores it. When approving the device code, verify that GitHub identifies the app as “Browser OS Account”.',
       privacy:'The backup repository is private. Access tokens are stored locally in the extension data and are never written to the backup repository. You can revoke the app authorization in your GitHub settings at any time.',
       signOutConfirm:'Sign out of the Browser OS account? Your private GitHub backup will remain.',
       signingIn:'Preparing GitHub sign-in …', creating:'Looking for or creating your private backup repository …',
@@ -69,29 +69,29 @@
       ownerMismatch:'The repository found does not belong to the signed-in GitHub account.',
       retry:'Try again', help:'Open setup guide', lastBackup:'Last cloud backup',
       notYet:'No backup on this device yet', account:'GitHub account',
-      storeLoginIntro:'Sign in with your Browser OS account to unlock the Schleim-Store.', storeUnlocked:'The Schleim-Store is unlocked.', installFirst:'Install the GitHub App first.', installIntro:'The GitHub App page has opened. Install Schleim OS Account in your GitHub account, then continue here.',
+      storeLoginIntro:'Sign in with your Browser OS account to unlock the Browser Store.', storeUnlocked:'The Browser Store is unlocked.', installFirst:'Install the GitHub App first.', installIntro:'The GitHub App page has opened. Install Browser OS Account in your GitHub account, then continue here.',
       continueAfterInstall:'I installed the app – continue', checkingInstallation:'Checking the GitHub App installation …', waitingForInstallation:'Waiting for GitHub to associate the installation with your account …',
       installationMissing:'The GitHub App has not been detected yet. Install it on your GitHub account and try again.',
       codeCopied:'The device code was copied to the clipboard.', copyCode:'Copy code', copyFailed:'Automatic copying is unavailable. Copy the displayed code manually.',
-      installAgain:'Open GitHub App', installPendingTitle:'Checking installation', installPendingIntro:'GitHub confirmed the sign-in. Schleim OS is now waiting for the GitHub App to be detected in your account.'
+      installAgain:'Open GitHub App', installPendingTitle:'Checking installation', installPendingIntro:'GitHub confirmed the sign-in. Browser OS is now waiting for the GitHub App to be detected in your account.'
     },
     nl: {
-      title:'Browser-OS-Konto', intro:'Verbind je GitHub-account en maak een back-up van je Schleim OS-instellingen in een privérepository.',
+      title:'Browser-OS-Konto', intro:'Verbind je GitHub-account en maak een back-up van je Browser OS-instellingen in een privérepository.',
       login:'Verbinden met GitHub', connected:'Verbonden als', email:'Geverifieerd e-mailadres', repository:'Privé-cloudrepository',
       save:'Nu opslaan in de cloud', restore:'Cloudback-up herstellen', logout:'Afmelden',
-      notConfigured:'De Schleim OS GitHub-app is nog niet ingesteld. De client-ID ontbreekt.',
+      notConfigured:'De Browser OS GitHub-app is nog niet ingesteld. De client-ID ontbreekt.',
       setup:'GitHub-app installeren', installApp:'GitHub-app op GitHub installeren', setupNote:'Je app moet openbaar zijn zodat andere gebruikers kunnen verbinden. Schakel Device Flow in en stel de machtigingen uit de handleiding in.',
       device:'Open GitHub en voer deze eenmalige code in:', openGitHub:'GitHub-apparaatmachtiging openen', cancel:'Annuleren', waiting:'Wachten op bevestiging bij GitHub …',
       created:'Browser-OS-Konto verbonden. Je privéback-uprepository is klaar.',
-      saved:'Cloudback-up succesvol opgeslagen.', restored:'Cloudback-up hersteld. Schleim OS wordt opnieuw gestart …',
-      confirmRestore:'Je lokale Schleim OS-configuratie wordt vervangen door de cloudback-up. Doorgaan?',
+      saved:'Cloudback-up succesvol opgeslagen.', restored:'Cloudback-up hersteld. Browser OS wordt opnieuw gestart …',
+      confirmRestore:'Je lokale Browser OS-configuratie wordt vervangen door de cloudback-up. Doorgaan?',
       noBackup:'Er is nog geen back-upbestand gevonden in je privérepository.',
       emailMissing:'Je GitHub-account heeft geen geverifieerd primair e-mailadres. Verifieer het eerst rechtstreeks bij GitHub.',
       repoPublic:'De repository schleim-os-cloud is niet privé. Om veiligheidsredenen wordt daar geen back-up opgeslagen.',
       repoPermission:'GitHub heeft de toegang geweigerd. Controleer de app-machtigingen: Repository creation (write), Contents (read/write) en Email addresses (read).',
       cancelled:'Aanmelding geannuleerd.', expired:'De GitHub-code is verlopen. Start de aanmelding opnieuw.',
       authError:'GitHub-aanmelding mislukt.', backupError:'Cloudback-up mislukt.',
-      accountNotice:'Voer je GitHub-wachtwoord alleen op GitHub in. Schleim OS vraagt het niet en slaat het niet op. Controleer bij het goedkeuren van de apparaatcode of GitHub de app „Schleim OS Account“ toont.',
+      accountNotice:'Voer je GitHub-wachtwoord alleen op GitHub in. Browser OS vraagt het niet en slaat het niet op. Controleer bij het goedkeuren van de apparaatcode of GitHub de app „Browser OS Account“ toont.',
       privacy:'De back-uprepository is privé. Toegangstokens worden lokaal in de extensiegegevens opgeslagen en nooit in de back-uprepository geplaatst. Je kunt de app-machtiging op elk moment intrekken in je GitHub-instellingen.',
       signOutConfirm:'Afmelden bij het Browser-OS-Konto? Je privéback-up op GitHub blijft behouden.',
       signingIn:'GitHub-aanmelding voorbereiden …', creating:'Privéback-uprepository zoeken of maken …',
@@ -99,11 +99,11 @@
       ownerMismatch:'De gevonden repository is niet van het aangemelde GitHub-account.',
       retry:'Opnieuw proberen', help:'Installatiehandleiding openen', lastBackup:'Laatste cloudback-up',
       notYet:'Nog geen back-up op dit apparaat', account:'GitHub-account',
-      storeLoginIntro:'Meld je aan met je Browser-OS-Konto om de Schleim-Store te ontgrendelen.', storeUnlocked:'De Schleim-Store is ontgrendeld.', installFirst:'Installeer eerst de GitHub-app.', installIntro:'De GitHub-app-pagina is geopend. Installeer Schleim OS Account in je GitHub-account en ga daarna hier verder.',
+      storeLoginIntro:'Meld je aan met je Browser-OS-Konto om de Browser Store te ontgrendelen.', storeUnlocked:'De Browser Store is ontgrendeld.', installFirst:'Installeer eerst de GitHub-app.', installIntro:'De GitHub-app-pagina is geopend. Installeer Browser OS Account in je GitHub-account en ga daarna hier verder.',
       continueAfterInstall:'Ik heb de app geïnstalleerd – verder', checkingInstallation:'De GitHub-app-installatie controleren …', waitingForInstallation:'Wachten totdat GitHub de installatie aan je account koppelt …',
       installationMissing:'De GitHub-app is nog niet herkend. Installeer de app in je GitHub-account en probeer het opnieuw.',
       codeCopied:'De apparaatcode is naar het klembord gekopieerd.', copyCode:'Code kopiëren', copyFailed:'Automatisch kopiëren is niet beschikbaar. Kopieer de getoonde code handmatig.',
-      installAgain:'GitHub-app openen', installPendingTitle:'Installatie controleren', installPendingIntro:'GitHub heeft de aanmelding bevestigd. Schleim OS wacht nu totdat de GitHub-app in je account wordt herkend.'
+      installAgain:'GitHub-app openen', installPendingTitle:'Installatie controleren', installPendingIntro:'GitHub heeft de aanmelding bevestigd. Browser OS wacht nu totdat de GitHub-app in je account wordt herkend.'
     }
   };
 
@@ -169,12 +169,12 @@
   function renderPanel(panel) {
     if (!panel) return;
     const loginOnly = panel.dataset.ssosCloudMode === 'login';
-    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
+    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'YOUR_GITHUB_APP_CLIENT_ID') {
       panel.innerHTML =
         '<div class="ssos-cloud-card"><div class="ssos-cloud-title"><span>☁️</span><div><h3>'+esc(t('title'))+'</h3><p>'+esc(loginOnly?t('storeLoginIntro'):t('intro'))+'</p></div></div>'+
         '<p class="ssos-cloud-note">'+esc(t('notConfigured'))+'</p>'+
         '<a class="app-button secondary" href="'+esc(GITHUB_APP_INSTALL_URL)+'" target="_blank" rel="noopener noreferrer">'+esc(t('setup'))+' ↗</a>'+
-        '<a class="ssos-cloud-help" href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/blob/main/extension/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
+        '<a class="ssos-cloud-help" href="https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/blob/main/docs/SCHLEIM-KONTO.md" target="_blank" rel="noopener noreferrer">'+esc(t('help'))+' ↗</a>'+
         '<p class="ssos-cloud-note">'+esc(t('accountNotice'))+'</p>'+(loginOnly?'':'<p class="ssos-cloud-note">'+esc(t('privacy'))+'</p>')+
         '<p class="ssos-cloud-status" data-ssos-cloud-status role="status" aria-live="polite"></p></div>';
       return;
@@ -266,7 +266,7 @@
     };
   }
   async function startLogin() {
-    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'GITHUB_APP_CLIENT_ID_HERE') {
+    if (!GITHUB_APP_CLIENT_ID || GITHUB_APP_CLIENT_ID === 'YOUR_GITHUB_APP_CLIENT_ID') {
       setStatus(t('notConfigured'),true); return;
     }
     installationStage=true;
@@ -437,7 +437,7 @@
         method:'POST',
         body:JSON.stringify({
           name:REPO_NAME,
-          description:'Privater Schleim-OS-Cloudspeicher für persönliche Geräteeinstellungen und Backups.',
+          description:'Privater Browser OS-Cloudspeicher für persönliche Geräteeinstellungen und Backups.',
           private:true,
           auto_init:true,
           has_issues:false,
@@ -455,7 +455,7 @@
       default_branch:repository.default_branch||'main'
     };
   }
-  const PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos';
+  const PHOTOS_REPO_NAME='YOUR_MEDIA_REPOSITORY_NAME';
   function normalizePrivateRepository(repository) {
     if(Number(repository.owner?.id)!==Number(session?.user?.id))throw new Error(t('ownerMismatch'));
     if(repository.private!==true)throw new Error('The photo repository must be private. Public repositories are not accepted.');
@@ -490,7 +490,7 @@
       method:'POST',
       body:JSON.stringify({
         name:PHOTOS_REPO_NAME,
-        description:'Private personal photo and video library for Schleim OS.',
+        description:'Private personal photo and video library for Browser OS.',
         private:true,
         auto_init:true,
         has_issues:false,
@@ -542,16 +542,16 @@
     if(!session?.user||!session?.repo)throw new Error(t('authError'));
     setStatus(t('creating'));
     const design=window.SSOSPersonalization?.getCloudBackupDesign?.();
-    if(!design)throw new Error('The complete Schleim OS design snapshot is not available. Reload Schleim OS and try again.');
+    if(!design)throw new Error('The complete Browser OS design snapshot is not available. Reload Browser OS and try again.');
     const backup={
-      format:'schleim-os-cloud-backup',
+      format:'browser-os-cloud-backup',
       schemaVersion:2,
       exportedAt:new Date().toISOString(),
       owner:{id:session.user.id,login:session.user.login},
       design:design?{homeAppOrder:design.homeAppOrder,installedStoreApps:design.installedStoreApps,wallpaper:design.wallpaper}:null,
       preferences:collectPreferences()
     };
-    if(!Object.keys(backup.preferences).length)throw new Error('No Schleim OS settings were found to back up.');
+    if(!Object.keys(backup.preferences).length)throw new Error('No Browser OS settings were found to back up.');
     const path='/repos/'+session.repo.full_name+'/contents/'+BACKUP_PATH;
     let sha;
     try{
@@ -559,7 +559,7 @@
       sha=current.sha;
     }catch(error){if(error.status!==404)throw error;}
     const body={
-      message:'Schleim OS cloud backup',
+      message:'Browser OS cloud backup',
       content:encodeBase64Utf8(JSON.stringify(backup,null,2)+'\n'),
       ...(sha?{sha}:{})
     };
@@ -576,7 +576,7 @@
     try{file=await githubApi(path);}
     catch(error){if(error.status===404){setStatus(t('noBackup'),true);return;}throw error;}
     const backup=JSON.parse(decodeBase64Utf8(file.content));
-    if(backup?.format!=='schleim-os-cloud-backup'||![1,2].includes(backup.schemaVersion)||
+    if(backup?.format!=='browser-os-cloud-backup'||![1,2].includes(backup.schemaVersion)||
        Number(backup.owner?.id)!==Number(session.user.id)||
        !backup.preferences||typeof backup.preferences!=='object'||Array.isArray(backup.preferences)||
        (backup.schemaVersion===2&&(!backup.design||!Array.isArray(backup.design.homeAppOrder)||!Array.isArray(backup.design.installedStoreApps)||!backup.design.wallpaper))){
@@ -597,7 +597,7 @@
     const entries=Object.entries(restoredPreferences).filter(([key])=>
       /^ssos-[a-zA-Z0-9_-]{1,64}$/.test(key)&&key!==STORAGE_KEY&&!key.startsWith('ssosGithubCloud')
     );
-    if(!entries.length)throw new Error('The cloud backup does not contain Schleim OS settings.');
+    if(!entries.length)throw new Error('The cloud backup does not contain Browser OS settings.');
     for(let index=localStorage.length-1;index>=0;index--){
       const key=localStorage.key(index);
       if(key?.startsWith('ssos-')&&key!==STORAGE_KEY&&!key.startsWith('ssosGithubCloud'))localStorage.removeItem(key);

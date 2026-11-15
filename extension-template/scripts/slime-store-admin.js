@@ -39,7 +39,7 @@
   function draw(){
     const root=$('#ssosAdminPortal');if(!root)return;root.hidden=false;
     if(credentials){root.innerHTML=dashboard();fetchIssues();fetchRatings();return;}
-    root.innerHTML='<header class="ssos-admin-head"><div><p class="eyebrow">SCHLEIM OS · PRIVATE ACCESS</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div><span>🔐</span></header>'+
+    root.innerHTML='<header class="ssos-admin-head"><div><p class="eyebrow">BROWSER OS · PRIVATE ACCESS</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('intro'))+'</p></div><span>🔐</span></header>'+
       '<div class="ssos-admin-grid">'+
       '<form id="ssosAdminCreateForm" class="ssos-card ssos-form"><h4>'+esc(t('setup'))+'</h4><p>'+esc(t('setupText'))+'</p>'+
       '<label>'+esc(t('token'))+'<input id="ssosAdminToken" type="password" autocomplete="off" required></label>'+
@@ -53,7 +53,7 @@
       '<p class="ssos-admin-note">'+esc(t('privacy'))+'</p><p id="ssosAdminStatus" class="ssos-admin-status" role="status" aria-live="polite"></p>';
   }
   function dashboard(){
-    return '<header class="ssos-admin-head"><div><p class="eyebrow">SCHLEIM OS · ADMIN</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('session'))+'</p></div><span>🔓</span></header>'+
+    return '<header class="ssos-admin-head"><div><p class="eyebrow">BROWSER OS · ADMIN</p><h3>'+esc(t('title'))+'</h3><p>'+esc(t('session'))+'</p></div><span>🔓</span></header>'+
       '<div class="ssos-admin-toolbar"><button id="ssosAdminRefresh" class="app-button secondary" type="button">'+esc(t('refresh'))+'</button><button id="ssosAdminLogout" class="app-button secondary" type="button">'+esc(t('logout'))+'</button></div>'+
       '<p id="ssosAdminStatus" class="ssos-admin-status" role="status" aria-live="polite">'+esc(t('logged'))+'</p>'+
       '<div class="ssos-admin-grid ssos-admin-review-grid">'+
@@ -141,7 +141,7 @@
     if(!token||pass.length<12||pass!==repeat){status('Token prüfen; Passphrase mindestens 12 Zeichen und beide Eingaben gleich.',true);return;}
     try{
       const file=await encryptFile(token,pass),blob=new Blob([JSON.stringify(file,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
-      const a=document.createElement('a');a.href=url;a.download='schleim-store-admin-key.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+      const a=document.createElement('a');a.href=url;a.download='browser-store-admin-key.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
       $('#ssosAdminToken').value='';$('#ssosAdminPass').value='';$('#ssosAdminRepeat').value='';status(t('ok'));
     }catch(e){status(t('bad')+' '+e.message,true);}
   }

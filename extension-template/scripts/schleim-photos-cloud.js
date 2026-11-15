@@ -71,7 +71,7 @@
       noCapture: 'Kameraansicht nicht verfügbar. Öffne die Kamera-App erneut.'
     },
     en: {
-      notSignedIn: 'Sign in first under Settings → Schleim account.',
+      notSignedIn: 'Sign in first under Settings → Browser OS account.',
       noRepo: 'Your private photo and video storage is not linked yet.',
       link: 'Link private cloud storage now',
       linking: 'Checking or creating the private photo and video repository …',
@@ -121,12 +121,12 @@
       unlinked: 'Not linked yet',
       connectedTo: 'Connected to',
       connectHint: 'Older Browser OS versions do not create this second private repository automatically. Link it here once.',
-      accountRequired: 'A signed-in Schleim account is required.',
+      accountRequired: 'A signed-in Browser OS account is required.',
       originalLimit: 'Upload limit: 50 MiB per file. GitHub is a version-controlled repository, not an unlimited media or backup service.',
       noCapture: 'Camera view unavailable. Open the camera app again.'
     },
     nl: {
-      notSignedIn: 'Meld je eerst aan via Instellingen → Schleim-account.',
+      notSignedIn: 'Meld je eerst aan via Instellingen → Browser OS account.',
       noRepo: 'Je privéopslag voor foto’s en video’s is nog niet gekoppeld.',
       link: 'Privécloudopslag nu koppelen',
       linking: 'Privérepository voor foto’s en video’s controleren of aanmaken …',
@@ -176,7 +176,7 @@
       unlinked: 'Nog niet gekoppeld',
       connectedTo: 'Verbonden met',
       connectHint: 'Oudere Browser OS-versies maken deze tweede privérepository nog niet automatisch aan. Koppel deze hier eenmalig.',
-      accountRequired: 'Een aangemeld Schleim-account is vereist.',
+      accountRequired: 'Een aangemeld Browser OS account is vereist.',
       originalLimit: 'Uploadlimiet: 50 MiB per bestand. GitHub is een repository met versiebeheer en geen onbeperkte media- of back-updienst.',
       noCapture: 'Cameraweergave niet beschikbaar. Open de camera-app opnieuw.'
     }

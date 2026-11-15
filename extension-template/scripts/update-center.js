@@ -6,9 +6,9 @@
   const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/manifest.json`;
   const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/archive/refs/heads/main.zip`;
   const DOCUMENTATION_URLS = {
-    de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Deutsch/UPDATES.md`,
-    en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Englisch/UPDATES.md`,
-    nl: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Niederländisch/UPDATES.md`
+    de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
+    en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
+    nl: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`
   };
 
   const TEXT = {

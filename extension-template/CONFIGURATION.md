@@ -11,7 +11,7 @@ Edit `manifest.json`:
 - `description`: a short description
 - `version`: your release version
 
-Update the visible title, brand text, profile demo, and mascot in `pages/newtab.html`. Replace the demo icons in `assets/icons/` with your own artwork.
+Update the visible title, brand text, profile demo, and mascot in `pages/newtab.html`. The folder includes a neutral `icon.svg` source graphic. If you want a custom Chromium extension icon, create PNG files in the required sizes and add their paths to the `icons` section of `manifest.json`.
 
 ## 2. Profile and demo links
 
