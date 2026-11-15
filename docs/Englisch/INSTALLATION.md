@@ -1,22 +1,21 @@
 # 📥 Schleim OS – Installation Guide
 
-This guide explains how to install the extension in a Chromium-based browser that supports direct ZIP-extension import. This feature is not available in every browser or on every platform.
+## 1. Download the Extension
 
-## 1. Download the complete GitHub repository
+1. Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Extract the ZIP file on your device.
 
-1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Select **Code → Download ZIP**.
-3. Save the complete repository on your device.
+This archive contains only the original extension. The `manifest.json` file is directly inside the extracted folder.
 
-## 2. Import the repository ZIP in your browser
+## 2. Load the Extension in your browser
 
-1. Open the extension manager in a supported Chromium-based browser.
-2. Enable **Developer mode** if required.
-3. Find the direct ZIP-extension import option. It may be called **“From .zip/.crx/.user.js”**.
-4. Select the complete repository ZIP.
-5. Confirm the import.
+1. Open your Chromium browser's extension manager. In Chrome, use `chrome://extensions`.
+2. Enable **Developer mode**.
+3. Select **Load unpacked**.
+4. Choose the extracted folder that directly contains `manifest.json`.
 
-**Important:** Do not extract the ZIP file before importing it. The browser must detect the extension in the `extension` subfolder.
+**Important:** Do not select the parent project folder. For updates, keep using the same local folder where possible. The separate template deliberately contains `manifest.template.json` and is not the original extension.
 
 ## 3. Start Schleim OS
 
@@ -39,6 +38,8 @@ After authorization, Schleim OS checks whether the app installation is detected.
 
 Cloud backup is available only under **Settings → Schleim account**. You can manually save or restore a backup there. It also includes the home-screen app order, installed Store apps and your wallpaper.
 
+[Release downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Update guide](UPDATES.md) · [Troubleshooting](TROUBLESHOOTING.md)
+
 ---
 
-[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md) · [Troubleshooting](TROUBLESHOOTING.md)
+[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md)

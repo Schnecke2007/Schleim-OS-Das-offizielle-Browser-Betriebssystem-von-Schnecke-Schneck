@@ -6,17 +6,16 @@ Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschir
 
 ## Installation
 
-1. Lade das vollständige Repository über GitHub mit **Code → Download ZIP** herunter.
-2. Entpacke die ZIP-Datei nicht.
-3. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der den direkten ZIP-Import unterstützt.
-4. Aktiviere bei Bedarf den Entwicklermodus.
-5. Wähle die ZIP-Importfunktion, zum Beispiel **„From .zip/.crx/.user.js“**.
-6. Wähle die vollständige Repository-ZIP aus und bestätige den Import.
-7. Öffne einen neuen Tab.
+1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
+3. Entpacke die ZIP-Datei.
+4. Öffne in Chrome `chrome://extensions` oder die Erweiterungsverwaltung deines Chromium-Browsers.
+5. Aktiviere den Entwicklermodus und wähle **Entpackte Erweiterung laden**.
+6. Wähle den Ordner, in dem `manifest.json` direkt liegt.
 
-Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome 109 oder neuer wird für den Offscreen-Hintergrundprozess benötigt. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
+Das Release-Paket enthält nur die Original-Extension, nicht das vollständige Repository. Für Updates entpackst du die neue ZIP in denselben Ordner, überschreibst die alten Dateien und klickst anschließend in der Erweiterungsverwaltung auf **Neu laden**.
 
-[Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md) · [Schleim-Store in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
+[Release-Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](../docs/Deutsch/INSTALLATION.md)
 
 ## Funktionen
 
@@ -73,9 +72,9 @@ Die Store-Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository blei
 
 ## Updates
 
-Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version kann die vollständige Repository-ZIP direkt heruntergeladen werden.
+Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version wird `Schleim-OS-Extension.zip` aus dem neuesten GitHub-Release angeboten.
 
-Der ZIP-Download installiert sich nicht selbst. Chrome erlaubt einer Erweiterung nicht, beliebige heruntergeladene ZIP-Dateien still zu installieren. Nach dem Download muss die Aktualisierung über die vom Browser unterstützte Import- oder Update-Funktion abgeschlossen werden. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
+Entpacke die ZIP-Datei in denselben lokalen Ordner, überschreibe die bisherigen Dateien und klicke in der Erweiterungsverwaltung auf **Neu laden**. Die separate Template-ZIP ist nicht für die normale Installation gedacht. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
 
 ## Sonos-Integration
 

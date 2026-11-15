@@ -4,7 +4,7 @@
   const OWNER = 'Schnecke2007';
   const REPOSITORY = 'Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck';
   const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/extension/manifest.json`;
-  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/archive/refs/heads/main.zip`;
+  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/releases/latest/download/Schleim-OS-Extension.zip`;
   const DOCUMENTATION_URLS = {
     de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Deutsch/UPDATES.md`,
     en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Englisch/UPDATES.md`,
@@ -25,7 +25,7 @@
       invalid: 'GitHub hat keine gültige Schleim-OS-Version zurückgegeben.',
       error: 'Die GitHub-Version konnte nicht abgerufen werden. Prüfe deine Internetverbindung und versuche es erneut.',
       checked: 'Zuletzt geprüft:',
-      note: 'Der Download installiert das Update nicht selbst. Öffne danach die Erweiterungsverwaltung und aktualisiere Schleim OS mit der Import-Funktion deines Browsers. Eine automatische Installation aus einer ZIP-Datei wird von Chrome nicht freigegeben.',
+      note: 'Der Download installiert das Update nicht selbst. Entpacke die ZIP-Datei in denselben lokalen Extension-Ordner, überschreibe die vorhandenen Dateien und klicke danach in der Erweiterungsverwaltung auf Neu laden. Verwende möglichst denselben Ordner wie bisher.',
       guide: 'Update-Anleitung öffnen',
       checkAgain: 'Erneut prüfen'
     },
@@ -42,7 +42,7 @@
       invalid: 'GitHub did not return a valid Schleim OS version.',
       error: 'Could not retrieve the GitHub version. Check your internet connection and try again.',
       checked: 'Last checked:',
-      note: 'The download does not install the update by itself. Then open your browser’s extension manager and update Schleim OS with the import function supported by your browser. Chrome does not allow silent installation from a ZIP file.',
+      note: 'The download does not install the update by itself. Extract the ZIP into the same local Extension folder, overwrite the existing files, and then select Reload in your browser’s extension manager. Keep using the same folder where possible.',
       guide: 'Open update guide',
       checkAgain: 'Check again'
     },
@@ -59,7 +59,7 @@
       invalid: 'GitHub heeft geen geldige Schleim OS-versie teruggegeven.',
       error: 'De GitHub-versie kon niet worden opgehaald. Controleer je internetverbinding en probeer het opnieuw.',
       checked: 'Laatst gecontroleerd:',
-      note: 'De download installeert de update niet vanzelf. Open daarna het extensiebeheer van je browser en werk Schleim OS bij met de importfunctie die je browser ondersteunt. Chrome staat stille installatie vanuit een ZIP-bestand niet toe.',
+      note: 'De download installeert de update niet vanzelf. Pak het ZIP-bestand uit in dezelfde lokale Extension-map, overschrijf de bestaande bestanden en kies daarna Opnieuw laden in het extensiebeheer van je browser. Gebruik indien mogelijk dezelfde map.',
       guide: 'Updatehandleiding openen',
       checkAgain: 'Opnieuw controleren'
     }

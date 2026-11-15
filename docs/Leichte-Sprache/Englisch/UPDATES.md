@@ -1,45 +1,29 @@
 # Update Schleim OS – Plain Language
 
-## After the first installation
-
-You do not have to search GitHub for a new version every time.
+## Download a new version
 
 1. Open **Settings** in Schleim OS.
 2. Find **Update Schleim OS**.
 3. Select **Check for updates**.
-4. Schleim OS checks the version on GitHub.
-5. Is there a newer version? A download link appears.
-6. Select **Download the latest ZIP version**.
+4. Is there a new version? Select **Download the latest ZIP version**.
+5. You can also [download the Extension on the Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
 
-## Finish installing the update
+## Install the update
 
-The download does not install the update.
+1. Extract the new ZIP file.
+2. Copy the files into the same folder as the old Extension.
+3. Overwrite the old files.
+4. Open the extension manager.
+5. Select **Reload** for Schleim OS.
+6. Open a new tab.
 
-1. Open your browser's extension manager.
-2. Find the ZIP import function.
-3. Select the ZIP file you downloaded.
-4. Confirm the update if your browser asks.
-5. Open a new tab.
-
-Use the same import function as you used for the first installation.
-
-Not every browser can import ZIP files directly.
-
-## Why is it not fully automatic?
-
-The browser protects extensions.
-
-An extension cannot simply replace itself with a ZIP file.
-
-The browser must allow or confirm the update.
-
-Schleim OS can find and download the new version. Your browser still handles the installation.
+Use the same folder as before, if possible.
 
 ## Important
 
-- The update check compares version numbers.
-- The developer must increase the version number for every new release.
-- The download contains the public project.
-- You do not need to sign in to GitHub to check for updates.
+The download does not install the update by itself.
+Your browser must reload the Extension.
 
-[Regular update guide](../../Englisch/UPDATES.md) · [Help](HELP.md)
+The version number must be increased for every new release.
+
+[Open Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Regular update guide](../../Englisch/UPDATES.md) · [Help](HELP.md)

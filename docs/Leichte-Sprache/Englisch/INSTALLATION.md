@@ -4,38 +4,28 @@
 
 You need a Chromium-based browser.
 The browser must support extensions.
-It must also support direct ZIP import.
 
-Not every browser has this feature.
+## Step 1: Download the Extension
 
-## Step 1: Download the ZIP file
+1. Open the [Schleim OS Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download **Schleim-OS-Extension.zip**: [Download the Extension](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Extract the ZIP file.
 
-1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Click **Code**.
-3. Click **Download ZIP**.
-4. Save the file on your device.
+## Step 2: Load the Extension
 
-This downloads the complete project.
+1. Open the extension manager. In Chrome, use `chrome://extensions`.
+2. Turn on **Developer mode**.
+3. Select **Load unpacked**.
+4. Choose the folder that directly contains `manifest.json`.
 
-## Step 2: Import the ZIP file
+**Important:** Select the extracted Extension folder. Do not select the complete GitHub project folder.
 
-1. Open the browser's extension manager.
-2. Turn on Developer mode if the browser asks you to.
-3. Find the ZIP import option.
-4. It may be called **From .zip/.crx/.user.js**.
-5. Select the ZIP file you downloaded.
-6. Confirm the import.
-
-**Important:** Do not extract the ZIP file first.
-
-The browser must find the extension inside the `extension` folder.
+The template is a separate file. It contains `manifest.template.json` and cannot be loaded directly.
 
 ## Step 3: Open Schleim OS
 
 Open a new browser tab.
-If Schleim OS does not appear, check that the extension is installed and enabled.
-
-The button name can be different in each browser. Direct ZIP import only works in browsers that support it.
+If Schleim OS does not appear, check that the extension is enabled.
 
 ## Use the Schleim-Store
 

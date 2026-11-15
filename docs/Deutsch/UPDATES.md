@@ -1,32 +1,27 @@
 # Schleim OS aktualisieren
 
-Diese Anleitung gilt ab **Schleim OS 3.12.0**. In den Einstellungen gibt es ein Update-Center. Es prüft die Versionsnummer auf GitHub und bietet bei Bedarf den aktuellen Projekt-Download an.
+Im [GitHub-Releasebereich](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) findest du die aktuelle Version und beide Download-Pakete. Das Update-Center vergleicht die installierte Version mit der Version in `extension/manifest.json` auf GitHub und bietet den Download der einzelnen Extension an.
 
-## Nach der ersten Installation
+## Update herunterladen
 
-Du musst das vollständige GitHub-Projekt nicht jedes Mal manuell suchen.
-
-1. Öffne in Schleim OS **Einstellungen**.
-2. Suche den Bereich **Schleim OS aktualisieren**.
-3. Wähle **Nach Updates suchen**.
-4. Schleim OS vergleicht die installierte Version mit der Version in `extension/manifest.json` im GitHub-Hauptzweig.
-5. Wenn eine neuere Version gefunden wird, wähle **Neueste ZIP-Version herunterladen**.
+1. Öffne in Schleim OS **Einstellungen → Schleim OS aktualisieren**.
+2. Wähle **Nach Updates suchen**.
+3. Wenn eine neuere Version verfügbar ist, wähle **Neueste ZIP-Version herunterladen**. Der Button lädt **Schleim-OS-Extension.zip** aus dem aktuellen Release.
+4. Alternativ kannst du die [Extension direkt aus dem neuesten Release herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
 
 ## Update im Browser abschließen
 
-Der Download ist noch keine Installation.
+1. Entpacke die heruntergeladene ZIP-Datei.
+2. Kopiere den Inhalt in denselben lokalen Ordner, in dem die bisherige Extension liegt, und überschreibe die vorhandenen Dateien.
+3. Öffne die Erweiterungsverwaltung deines Browsers (`chrome://extensions` in Chrome).
+4. Klicke bei Schleim OS auf **Neu laden**.
+5. Öffne einen neuen Tab und prüfe im Update-Center die installierte Versionsnummer.
 
-1. Öffne die Erweiterungsverwaltung deines Browsers.
-2. Nutze den ZIP-Import oder die Aktualisierungsfunktion, die dein Browser für Erweiterungen anbietet.
-3. Wähle die heruntergeladene vollständige Repository-ZIP aus.
-4. Bestätige die Aktualisierung, wenn dein Browser danach fragt.
-5. Lade Schleim OS neu oder öffne einen neuen Tab. Prüfe im Update-Center die installierte Versionsnummer.
+Verwende möglichst denselben Ordner wie bei der bisherigen Installation. Entferne die Erweiterung nicht, wenn du die bestehende lokale Installation weiterverwenden möchtest.
 
-**Wichtig:** Entpacke die ZIP-Datei nicht, wenn dein Browser denselben direkten ZIP-Import wie bei der Erstinstallation verwendet. Die genauen Schritte hängen vom Browser ab. Nicht jeder Chromium-Browser besitzt diese Importfunktion.
+## Warum installiert der Button das Update nicht automatisch?
 
-## Warum installiert der Button nicht automatisch?
-
-Chrome erlaubt einer Erweiterung nicht, eine beliebige ZIP-Datei aus dem Internet herunterzuladen und sich selbst damit still zu ersetzen. Die Erweiterungs-API `chrome.runtime.requestUpdateCheck()` fragt den vom Browser eingerichteten Update-Kanal ab; sie installiert keine beliebige GitHub-ZIP-Datei.
+Chrome erlaubt einer Erweiterung nicht, eine beliebige ZIP-Datei aus dem Internet herunterzuladen und sich selbst damit still zu ersetzen. Der Download ist deshalb ein manueller Schritt. Die Erweiterungsverwaltung lädt die aktualisierten Dateien nach dem Klick auf **Neu laden**.
 
 Automatische Updates außerhalb des Chrome Web Stores benötigen einen anderen Verteilungsweg: eine Update-URL mit XML-Update-Manifest und ein signiertes CRX-Paket. Das CRX muss mit demselben privaten Schlüssel signiert sein wie die bereits installierte Erweiterung. Chrome beschränkt selbst gehostete Installationen zusätzlich je nach Betriebssystem und Verwaltungsrichtlinie.
 
@@ -38,9 +33,9 @@ Offizielle Hinweise:
 ## Wichtige Hinweise
 
 - Der Versions-Check liest die Versionsnummer aus dem GitHub-Hauptzweig. Änderungen ohne Erhöhung der Versionsnummer werden nicht als neues Update erkannt.
-- Vor jeder Veröffentlichung muss deshalb die Version in `extension/manifest.json` erhöht werden.
-- Das Update-Center lädt nur die öffentliche ZIP-Datei herunter. Es erhält keine GitHub-Anmeldedaten.
-- Der Browser entscheidet über Installation, Ersetzung und Bestätigung.
+- Vor jeder Veröffentlichung muss deshalb die Version in `extension/manifest.json` erhöht und eine passende Release-Notes-Datei angelegt werden.
+- Das Update-Center lädt nur die öffentliche Extension-ZIP-Datei herunter. Es erhält keine GitHub-Anmeldedaten.
+- Der Browser installiert das Update nicht still; das Neuladen erfolgt über die Erweiterungsverwaltung.
 - Falls du Schleim OS entfernst und neu installierst und dadurch lokale Einstellungen verloren gehen, kannst du sie über **Einstellungen → Schleim-Konto** aus deinem privaten Cloud-Backup wiederherstellen.
 
-[Zur Dokumentationsübersicht](../README.md) · [Installationsanleitung](INSTALLATION.md) · [Leichte Sprache](../Leichte-Sprache/Deutsch/UPDATES.md)
+[Zur GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](INSTALLATION.md) · [Leichte Sprache](../Leichte-Sprache/Deutsch/UPDATES.md)

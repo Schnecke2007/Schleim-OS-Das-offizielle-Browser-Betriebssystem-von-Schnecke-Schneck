@@ -2,6 +2,8 @@
 
 A configurable Manifest V3 new-tab extension for Chromium-based browsers.
 
+Download the ready-to-extract template package from the [latest Schleim OS GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) (asset: **Schleim-OS-Extension-Template.zip**).
+
 This neutral template contains demo content, sample artwork and placeholders. It does not include the original creator's profile, contact information, social accounts or GitHub App configuration.
 
 ## Included features

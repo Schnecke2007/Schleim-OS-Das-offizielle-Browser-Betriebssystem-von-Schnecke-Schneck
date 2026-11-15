@@ -1,16 +1,14 @@
-# Schleim OS 3.12.0 direkt aus der Repository-ZIP installieren
+# Schleim OS 3.15.1 – Installationsanleitung
 
-Diese Anleitung gilt für Version **3.12.0** der Chromium-Erweiterung.
+1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
+3. Entpacke die ZIP-Datei auf deinem Gerät.
+4. Öffne die Erweiterungsverwaltung deines Chromium-Browsers. In Chrome lautet die Adresse `chrome://extensions`.
+5. Aktiviere den **Entwicklermodus**.
+6. Wähle **Entpackte Erweiterung laden**.
+7. Wähle den entpackten Ordner aus, in dem sich `manifest.json` direkt befindet.
 
-1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Wähle **Code → Download ZIP** und lade das vollständige Repository herunter.
-3. Entpacke die ZIP-Datei nicht.
-4. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der ZIP-Erweiterungen importieren kann.
-5. Aktiviere bei Bedarf den Entwicklermodus.
-6. Wähle die Importfunktion, beispielsweise **„From .zip/.crx/.user.js“**, und anschließend die vollständige Repository-ZIP.
-7. Bestätige die Installation und öffne einen neuen Tab.
-
-Der Browser-Importer erkennt die Erweiterung im Unterordner `extension`. Die genaue Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome für Android unterstützt keine regulären Chrome-Erweiterungen; verwende dort einen Android-Browser mit Erweiterungs- und ZIP-Import-Unterstützung.
+Das Release-Paket enthält ausschließlich die Original-Extension. Das Template wird als separates Paket angeboten und enthält absichtlich `manifest.template.json`, damit es nicht versehentlich als zweite Erweiterung geladen wird.
 
 ## Schleim-Store
 
@@ -20,7 +18,7 @@ Anleitung: [Schleim-Store – Deutsch](../../Store/Deutsch/README.md) · [Englis
 
 ## Updates nach der Erstinstallation
 
-Nach der ersten Installation kannst du unter **Einstellungen → Schleim OS aktualisieren** die GitHub-Version prüfen und die neueste ZIP-Datei herunterladen. Der Browser muss das Update danach über seine Import- oder Aktualisierungsfunktion bestätigen. Eine stille Selbstinstallation aus einer ZIP-Datei ist nicht möglich.
+Nach einer neuen Version kannst du im Update-Center die aktuelle Extension-ZIP herunterladen. Entpacke sie in denselben Ordner, überschreibe die vorhandenen Dateien und klicke in der Erweiterungsverwaltung auf **Neu laden**.
 
 Anleitung: [Update-Anleitung](../../docs/Deutsch/UPDATES.md).
 

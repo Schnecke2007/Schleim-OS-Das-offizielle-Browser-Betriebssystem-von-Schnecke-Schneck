@@ -3,39 +3,29 @@
 ## Voordat je begint
 
 Je hebt een Chromium-browser nodig.
-De browser moet uitbreidingen ondersteunen.
-De browser moet ook ZIP-bestanden rechtstreeks kunnen importeren.
+De browser moet extensies ondersteunen.
 
-Niet elke browser heeft deze functie.
+## Stap 1: Download de extensie
 
-## Stap 1: Download het ZIP-bestand
+1. Open de [Releases-pagina van Schleim OS](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download **Schleim-OS-Extension.zip**: [Download de extensie](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Pak het ZIP-bestand uit.
 
-1. Open de [GitHub-repository van Schleim OS](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Klik op **Code**.
-3. Klik op **Download ZIP**.
-4. Sla het bestand op je apparaat op.
+## Stap 2: Laad de extensie
 
-Je downloadt hiermee het volledige project.
+1. Open het extensiebeheer. Gebruik in Chrome `chrome://extensions`.
+2. Schakel **Ontwikkelaarsmodus** in.
+3. Kies **Uitgepakte extensie laden**.
+4. Selecteer de map waarin `manifest.json` direct staat.
 
-## Stap 2: Importeer het ZIP-bestand
+**Belangrijk:** Selecteer de uitgepakte Extension-map. Selecteer niet de volledige GitHub-projectmap.
 
-1. Open het extensiebeheer van de browser.
-2. Schakel de ontwikkelaarsmodus in als de browser daarom vraagt.
-3. Zoek de optie om een ZIP-bestand te importeren.
-4. De knop kan bijvoorbeeld **From .zip/.crx/.user.js** heten.
-5. Kies het ZIP-bestand dat je hebt gedownload.
-6. Bevestig de import.
-
-**Belangrijk:** Pak het ZIP-bestand niet eerst uit.
-
-De browser moet de uitbreiding zelf vinden in de map `extension`.
+De template is een apart bestand. Het bevat `manifest.template.json` en kan niet direct worden geladen.
 
 ## Stap 3: Open Schleim OS
 
-Open een nieuw tabblad.
-Verschijnt Schleim OS niet? Controleer dan of de uitbreiding is geïnstalleerd en ingeschakeld.
-
-De naam van de knop kan per browser verschillen. Rechtstreekse ZIP-import werkt alleen in browsers die dit ondersteunen.
+Open een nieuw browsertabblad.
+Verschijnt Schleim OS niet? Controleer dan of de extensie is ingeschakeld.
 
 ## De Schleim-Store gebruiken
 

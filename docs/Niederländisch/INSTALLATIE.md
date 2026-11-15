@@ -1,22 +1,21 @@
 # 📥 Schleim OS – Installatiehandleiding
 
-Deze handleiding beschrijft hoe je de extensie installeert in een Chromium-browser die het rechtstreeks importeren van ZIP-extensies ondersteunt. Deze functie is niet in elke browser en op elk platform beschikbaar.
+## 1. De extensie downloaden
 
-## 1. De volledige GitHub-repository downloaden
+1. Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Pak het ZIP-bestand uit op je apparaat.
 
-1. Open de [Schleim OS GitHub-repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Kies **Code → Download ZIP**.
-3. Sla de volledige repository op je apparaat op.
+Dit archief bevat alleen de oorspronkelijke extensie. Het bestand `manifest.json` staat direct in de uitgepakte map.
 
-## 2. De repository-ZIP in je browser importeren
+## 2. De extensie in je browser laden
 
-1. Open het extensiebeheer in een ondersteunde Chromium-browser.
-2. Schakel indien nodig de **ontwikkelaarsmodus** in.
-3. Zoek de functie voor het rechtstreeks importeren van een ZIP-extensie. De knop kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten.
-4. Selecteer de volledige repository-ZIP.
-5. Bevestig de import.
+1. Open het extensiebeheer van je Chromium-browser. Gebruik in Chrome `chrome://extensions`.
+2. Schakel **Ontwikkelaarsmodus** in.
+3. Kies **Uitgepakte extensie laden**.
+4. Selecteer de uitgepakte map waarin `manifest.json` direct staat.
 
-**Belangrijk:** Pak het ZIP-bestand niet uit voordat je het importeert. De browser moet de extensie in de submap `extension` herkennen.
+**Belangrijk:** Selecteer niet de bovenliggende projectmap. Gebruik bij updates indien mogelijk dezelfde lokale map. De aparte template bevat bewust `manifest.template.json` en is niet de oorspronkelijke extensie.
 
 ## 3. Schleim OS starten
 
@@ -39,6 +38,8 @@ Na de toestemming controleert Schleim OS of de app-installatie wordt herkend. Me
 
 De cloudback-up is alleen beschikbaar via **Instellingen → Schleim-account**. Je kunt daar handmatig een back-up opslaan of herstellen. De back-up bevat ook de volgorde van de apps op het startscherm, geïnstalleerde Store-apps en je achtergrond.
 
+[Release-downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Updatehandleiding](UPDATES.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md)
+
 ---
 
-[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇬🇧 English installation guide](../Englisch/INSTALLATION.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md)
+[🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇬🇧 English installation guide](../Englisch/INSTALLATION.md)

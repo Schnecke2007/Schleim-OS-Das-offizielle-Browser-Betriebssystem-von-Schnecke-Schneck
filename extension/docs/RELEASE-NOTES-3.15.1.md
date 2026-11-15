@@ -28,3 +28,15 @@
 
 - Aktualisierte Datei scripts/media-upload-offscreen.js mit erweiterten Foto-Profilen und mehrstufiger Video-Neukodierung.
 - Versionsnummer in manifest.json auf 3.15.1 erhöht.
+
+## Fehlerbehebungen und Schutzmaßnahmen
+
+- Die abschließende Größenprüfung verhindert, dass ein Komprimierungsergebnis über 50 MiB an das Medien-Repository übertragen wird.
+- Die Originaldatei wird erst nach erfolgreicher lokaler Verarbeitung und Größenprüfung übertragen. Dateien, die die Grenze weiterhin überschreiten, werden abgewiesen.
+
+## Bekannte Grenzen und mögliche nächste Verbesserungen
+
+- Ein Upload kann nach dem vollständigen Beenden von Chrome nicht weiterlaufen. Eine Wiederaufnahme nach einem Browser-Neustart wäre eine mögliche zukünftige Erweiterung.
+- Animierte GIF-, APNG- und WebP-Dateien sowie SVG bleiben unverändert. Eine spätere Optimierung müsste Animation und Vektorinhalt zuverlässig erhalten.
+- Das Limit von 50 MiB gilt pro Datei. GitHub behält frühere Dateiversionen in der Repository-Historie; langfristiges Repository-Wachstum benötigt deshalb zusätzlich eine Speicher- und Aufbewahrungsstrategie.
+- Die Video-Neukodierung hängt von Browser-Codecs ab. Zusätzliche Codec- und Geräteprüfungen könnten die Kompatibilität weiter verbessern.

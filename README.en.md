@@ -4,7 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
-[🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
+[🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Download Extension only](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
 [🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Open demo](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Easy Language](docs/Leichte-Sprache/Englisch/README.md)
 
@@ -63,17 +63,28 @@ The public [Store catalogue](Store/README.md) is organized by category. Each app
 
 Schleim OS includes a private photo/video library, front/rear camera, date-based folders, storage statistics and optional AI search. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search queries without an API key or sending photos to an AI server. Metadata search remains available on other devices. Static photos are locally optimized through multiple WebP profiles; videos are re-encoded as WebM and, when needed, retried at lower resolution, frame rate and bitrate. A background process continues compression and uploading after the Photos tab closes, as long as Chrome remains open. A progress notification shows the current status; tapping the completion notification opens the Photos app. Animated GIF, APNG and WebP files, as well as SVG files, remain unchanged to preserve their properties. Media is stored in a separate private GitHub repository; the upload limit is 50 MiB per file.
 
+## 📦 Releases and downloads
+
+The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) contains the current version, release notes and two separate packages:
+
+- [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
+- [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – a starter template for your own browser OS.
+
+Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.1.md) for the version history.
+
 ## 📥 Download and installation
 
-1. Open the [Schleim OS GitHub repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Select **Code → Download ZIP** and download the **complete repository**.
-3. **Do not** extract the ZIP file.
-4. Open the extension manager in a supported Chromium-based browser.
-5. Enable **Developer mode** if required.
-6. Choose the ZIP-file import option, for example **“From .zip/.crx/.user.js”**.
-7. Select the complete repository ZIP and confirm the installation.
+1. Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download **Schleim OS – Browser Extension (ZIP)**: [Download the Extension ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Extract the ZIP file on your device.
+4. Open your Chromium browser's extension manager, for example `chrome://extensions` in Chrome.
+5. Enable **Developer mode**.
+6. Select **Load unpacked**.
+7. Choose the extracted folder that directly contains `manifest.json`.
 
-The browser importer detects the original extension in the `extension` subfolder. It contains the only active `manifest.json` in the complete project. The `extension-template` folder uses `manifest.template.json` instead, so it is not detected as a second extension. The button label and location may vary by browser and device.
+**Important:** For a normal installation, download **Schleim-OS-Extension.zip**. It contains only the original extension. The separate template is not directly installable because it deliberately contains `manifest.template.json` instead of `manifest.json`.
+
+**To update:** Extract the new Extension ZIP into the same local folder and overwrite the existing files. Then open the extension manager and select **Reload** for Schleim OS. Keep using the same folder where possible.
 
 ## Using Schleim OS and its settings
 
@@ -91,9 +102,9 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 
 | Problem | Possible solution |
 |---|---|
-| **The ZIP-import button is missing.** | Check whether your browser supports importing ZIP extensions. The button may be labelled **“From .zip/.crx/.user.js”**. |
-| **The ZIP file does not appear.** | First download the complete repository from GitHub using **Code → Download ZIP**. Then check whether your browser's file picker can access your Downloads folder. |
-| **Installation reports an error.** | Make sure you selected the complete repository ZIP and that it has not been modified. Do not select individual files or a different archive. |
+| **The extension does not appear.** | Check that Developer mode is enabled and that you selected the extracted folder containing `manifest.json` directly. |
+| **The manifest cannot be found.** | Select the extracted Extension folder, not the parent project folder. |
+| **Installation reports an error.** | Download the Extension ZIP again from the [Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and extract it fully. |
 | **Schleim OS does not appear in a new tab.** | Check the extension manager to make sure Schleim OS is installed and enabled. Then open a new tab. |
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
@@ -191,7 +202,7 @@ Would you prefer short sentences and simple explanations? Read the [English plai
 
 Want to create your own version? The complete neutral template, including demo pages, sample artwork and placeholders, is kept separately in [extension-template/](extension-template/).
 
-[📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
+[📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
 
 **Important:** The template intentionally contains `manifest.template.json` instead of `manifest.json`. Chrome therefore does not recognize it as an installable extension. When you download the complete project, only the original extension in `extension/` is directly loadable. After configuring your own template, rename `manifest.template.json` to `manifest.json`, then load the `extension-template/` folder through **Extensions → Developer mode → Load unpacked**.
 

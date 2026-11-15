@@ -1,45 +1,29 @@
 # Schleim OS aktualisieren – Leichte Sprache
 
-## Nach der ersten Installation
-
-Du musst nicht jedes Mal selbst auf GitHub nach der neuen Version suchen.
+## Neue Version herunterladen
 
 1. Öffne **Einstellungen** in Schleim OS.
 2. Suche **Schleim OS aktualisieren**.
 3. Tippe auf **Nach Updates suchen**.
-4. Schleim OS prüft die Version auf GitHub.
-5. Gibt es eine neuere Version? Dann erscheint ein Download-Link.
-6. Tippe auf **Neueste ZIP-Version herunterladen**.
+4. Gibt es eine neue Version? Dann tippe auf **Neueste ZIP-Version herunterladen**.
+5. Du kannst die [Extension auch auf der Releases-Seite herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
 
-## Update fertig installieren
+## Update installieren
 
-Der Download allein installiert das Update noch nicht.
+1. Entpacke die neue ZIP-Datei.
+2. Kopiere die Dateien in denselben Ordner wie die alte Extension.
+3. Überschreibe die alten Dateien.
+4. Öffne die Erweiterungsverwaltung.
+5. Klicke bei Schleim OS auf **Neu laden**.
+6. Öffne einen neuen Tab.
 
-1. Öffne die Erweiterungsverwaltung deines Browsers.
-2. Suche die Import-Funktion für ZIP-Dateien.
-3. Wähle die heruntergeladene ZIP-Datei aus.
-4. Bestätige die Aktualisierung, wenn dein Browser danach fragt.
-5. Öffne einen neuen Tab.
-
-Benutze die gleiche Import-Funktion wie bei der ersten Installation.
-
-Nicht jeder Browser kann ZIP-Dateien direkt importieren.
-
-## Warum geht das nicht ganz automatisch?
-
-Der Browser schützt Erweiterungen.
-
-Eine Erweiterung darf sich nicht einfach selbst mit einer ZIP-Datei ersetzen.
-
-Der Browser muss die Aktualisierung erlauben oder bestätigen.
-
-Darum kann Schleim OS die neue Version suchen und herunterladen. Die Installation macht aber weiterhin dein Browser.
+Benutze möglichst denselben Ordner wie vorher.
 
 ## Wichtig
 
-- Der Update-Check vergleicht die Versionsnummer.
-- Der Entwickler muss die Versionsnummer bei einer neuen Veröffentlichung erhöhen.
-- Der Download enthält das öffentliche Projekt.
-- Die Anmeldung bei GitHub ist für den Update-Check nicht nötig.
+Der Download installiert das Update nicht selbst.
+Dein Browser muss die Extension neu laden.
 
-[Normale Update-Anleitung](../../Deutsch/UPDATES.md) · [Hilfe](HILFE.md)
+Für jede neue Version muss die Versionsnummer erhöht werden.
+
+[Releases öffnen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Normale Update-Anleitung](../../Deutsch/UPDATES.md) · [Hilfe](HILFE.md)
