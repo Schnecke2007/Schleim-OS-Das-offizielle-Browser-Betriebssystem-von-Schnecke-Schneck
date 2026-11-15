@@ -257,7 +257,10 @@
     renderHomeAppGrid();
   // The completion notification can reopen Schleim OS directly in the Photos app.
   const requestedApp = new URLSearchParams(location.search).get('openApp');
-  if (requestedApp === 'images') openApp('images');
+  if (requestedApp === 'images') {
+    // Wait until all deferred extension scripts (including the Photos app) have initialized.
+    window.addEventListener('load', () => openApp('images'), {once:true});
+  }
   }
 
   let selectedLanguage=state.language||'de';
