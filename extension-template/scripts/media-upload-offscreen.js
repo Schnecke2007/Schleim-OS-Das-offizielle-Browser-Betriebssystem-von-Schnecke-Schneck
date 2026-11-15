@@ -80,7 +80,7 @@
     if (!auth?.accessToken) throw new Error('Kein gültiger GitHub-Zugang vorhanden. Bitte melde dich erneut an.');
     if (!auth.expiresAt || auth.expiresAt > Date.now() + 60000) return;
     if (!auth.refreshToken || (auth.refreshExpiresAt && auth.refreshExpiresAt < Date.now() + 60000)) {
-      throw new Error('Die GitHub-Sitzung ist abgelaufen. Bitte melde dich in Schleim OS erneut an.');
+      throw new Error('Die GitHub-Sitzung ist abgelaufen. Bitte melde dich in Browser OS erneut an.');
     }
     const body = new URLSearchParams({
       client_id:CLIENT_ID,
@@ -162,7 +162,7 @@
     try {
       const file = await apiRequest(path);
       const parsed = JSON.parse(decodeBase64(file.content));
-      if (parsed?.format !== 'schleim-os-media-index' || Number(parsed.owner?.id) !== Number(auth.user.id)) {
+      if (!['browser-os-media-index','schleim-os-media-index'].includes(parsed?.format) || Number(parsed.owner?.id) !== Number(auth.user.id)) {
         throw new Error('Die Medien-Metadaten gehören nicht zum angemeldeten Konto.');
       }
       return {items:Array.isArray(parsed.items) ? parsed.items : [], sha:file.sha || null};
@@ -183,12 +183,12 @@
   async function updateIndex(items) {
     const existing = await getIndex();
     const index = {
-      format:'schleim-os-media-index', schemaVersion:1,
+      format:'browser-os-media-index', schemaVersion:1,
       owner:{id:auth.user.id,login:auth.user.login},
       updatedAt:new Date().toISOString(), items:items
     };
     const payload = {
-      message:'Update Schleim OS media library index',
+      message:'Update Browser OS media library index',
       content:await blobToBase64(new Blob([JSON.stringify(index,null,2) + '\n'],{type:'application/json'})),
       branch:auth.repo.default_branch || 'main'
     };
@@ -377,7 +377,7 @@
               sourceStream=video.captureStream();
               audioTracks.push(...sourceStream.getAudioTracks());
             } catch (error) {
-              console.warn('[Schleim OS Media Upload] Audio capture unavailable:',error);
+              console.warn('[Browser OS media upload] Audio capture unavailable:',error);
             }
           }
           const attemptBudget=Math.max(16000,Math.floor(bitrateBudget*profile.factor));
@@ -498,16 +498,16 @@
     const folder=type==='video'?'Videos':'Fotos';
     const path=folder+'/'+year+'/'+year+'-'+month+'/'+filename;
     const progressUpload=ratio=>progress(jobId,index,total,'upload',file.name,{ratio:0.60+ratio*0.32,message:'Datei wird zu GitHub übertragen'});
-    const uploaded=await putBlob(path,blob,'Upload '+(type==='video'?'video':'photo')+' to Schleim OS cloud',progressUpload);
+    const uploaded=await putBlob(path,blob,'Upload '+(type==='video'?'video':'photo')+' to Browser OS cloud',progressUpload);
     let thumbnailPath='';
     if (type==='photo') {
       const thumb=await makeThumbnail(blob);
       if (thumb) {
         thumbnailPath='Vorschaubilder/'+year+'/'+year+'-'+month+'/'+id+'.jpg';
         try {
-          await putBlob(thumbnailPath,thumb,'Create Schleim OS media thumbnail');
+          await putBlob(thumbnailPath,thumb,'Create Browser OS media thumbnail');
         } catch (error) {
-          console.warn('[Schleim OS Media Upload] Thumbnail skipped:',error);
+          console.warn('[Browser OS media upload] Thumbnail skipped:',error);
           thumbnailPath='';
         }
       }
@@ -540,7 +540,7 @@
     activeJobs.add(jobId);
     auth=message.auth;
     try {
-      if (!auth?.user?.login||!auth?.accessToken) throw new Error('Bitte melde dich zuerst unter Einstellungen → Schleim-Konto an.');
+      if (!auth?.user?.login||!auth?.accessToken) throw new Error('Bitte melde dich zuerst unter Einstellungen → Browser-OS-Konto an.');
       if (auth.repo?.full_name!==auth.user.login+'/'+REPO_NAME || auth.repo?.private!==true) {
         throw new Error('Das private Foto- und Video-Repository ist nicht verknüpft. Öffne zuerst die Fotos-App und verknüpfe den Speicher.');
       }

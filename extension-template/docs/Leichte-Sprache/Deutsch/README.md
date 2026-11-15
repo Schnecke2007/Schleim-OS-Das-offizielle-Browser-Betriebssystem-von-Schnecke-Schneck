@@ -6,6 +6,7 @@ Hier findest du die Anleitungen für die Browser-OS-Vorlage.
 - [Einstellungen](EINSTELLUNGEN.md)
 - [Konto und Cloud](KONTO-UND-CLOUD.md)
 - [Funktionen](FUNKTIONEN.md)
+- [Versionshinweise](RELEASE-NOTES.md)
 
 Die Vorlage ist ein Beispiel.
 Du kannst sie ändern.

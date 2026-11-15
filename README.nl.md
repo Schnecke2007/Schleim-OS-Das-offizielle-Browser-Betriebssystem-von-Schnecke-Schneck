@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.4-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.5-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases en downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Alleen de extensie downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -68,7 +68,7 @@ Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera me
 Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) vind je de actuele versie, release-opmerkingen en twee aparte pakketten:
 
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
-- [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
+- [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
 
 Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](extension/docs/RELEASE-NOTES-3.15.4.md) voor de versiegeschiedenis.
 
@@ -202,9 +202,9 @@ Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in
 
 Wil je je eigen versie maken? De volledige neutrale template met demopagina's, voorbeeldafbeeldingen en plaatsaanduidingen staat apart in [extension-template/](extension-template/).
 
-[📦 **Download alleen de extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratie](extension-template/CONFIGURATION.md)
+[📦 **Download alleen de extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratie](extension-template/CONFIGURATION.md)
 
-**Template rechtstreeks importeren:** Pak het Template-ZIP-bestand niet uit. Open het extensiebeheer van een browser met ZIP-import, schakel zo nodig Ontwikkelaarsmodus in, kies **+ (from .zip/.crx/.user.js)** en importeer `Schleim-OS-Extension-Template.zip`. De browser vraagt je de import handmatig te bevestigen.
+**Template rechtstreeks importeren:** Pak het Template-ZIP-bestand niet uit. Open het extensiebeheer van een browser met ZIP-import, schakel zo nodig Ontwikkelaarsmodus in, kies **+ (from .zip/.crx/.user.js)** en importeer `Browser-OS-Extension-Template.zip`. De browser vraagt je de import handmatig te bevestigen.
 
 ## 🔐 Privacy en machtigingen
 

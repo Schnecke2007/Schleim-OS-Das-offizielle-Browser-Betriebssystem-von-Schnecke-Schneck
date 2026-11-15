@@ -4,11 +4,11 @@
   const OWNER = 'YOUR_GITHUB_USERNAME';
   const REPOSITORY = 'YOUR_REPOSITORY_NAME';
   const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/manifest.json`;
-  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/releases/latest/download/Schleim-OS-Extension-Template.zip`;
+  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/releases/latest/download/Browser-OS-Extension-Template.zip`;
   const DOCUMENTATION_URLS = {
-    de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
-    en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
-    nl: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`
+    de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Deutsch/INSTALLATION.md`,
+    en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Englisch/INSTALLATION.md`,
+    nl: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Niederländisch/INSTALLATIE.md`
   };
 
   const TEXT = {
@@ -125,7 +125,7 @@
         </div>
         <div class="ssos-form-actions ssos-update-actions">
           <button class="app-button" type="button" data-ssos-update-check>${text.check}</button>
-          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" download="Schleim-OS-Extension-Template.zip" rel="noopener noreferrer" hidden>${text.download}</a>
+          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" download="Browser-OS-Extension-Template.zip" rel="noopener noreferrer" hidden>${text.download}</a>
         </div>
         <p class="ssos-update-status" data-ssos-update-status role="status" aria-live="polite"></p>
         <p class="ssos-update-note">${text.note}</p>

@@ -36,7 +36,7 @@
     {id:'studio',name:'Creator Studio',icon:'🚀',hint:'Marke und Leistungen',keys:'creator studio google unternehmen medien software'},
     {id:'website',name:'Demo-Website',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'your website provider fan homepage unterseiten website'},
     {id:'shop',name:'Demo Shop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'YOUR_PRINT_ON_DEMAND_PROVIDER shop merchandise bestellung'},
-    {id:'slimestore',name:'Browser Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'Browser Store Browser store slime store app store apps installieren websites webapps'},
+    {id:'slimestore',name:'Browser Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'Browser Store Browser store browser store app store apps installieren websites webapps'},
     {id:'fanapp',name:'Demo-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'Voice assistant demo – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant voice assistant demo'},

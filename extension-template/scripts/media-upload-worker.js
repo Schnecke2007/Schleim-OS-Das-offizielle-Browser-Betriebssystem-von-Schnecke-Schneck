@@ -60,7 +60,7 @@ async function showProgress(jobId,progress,message) {
   const options={
     type:'progress',
     iconUrl:chrome.runtime.getURL('assets/icons/icon.svg'),
-    title:'Schleim OS – Medien-Upload',
+    title:'Browser OS – Medien-Upload',
     message:message||'Medien werden komprimiert und hochgeladen …',
     progress:Math.max(0,Math.min(100,Math.round(progress||0))),
     priority:1
@@ -80,7 +80,7 @@ async function showFinished(jobId,total) {
     await notificationCreate(id,{
       type:'basic',
       iconUrl:chrome.runtime.getURL('assets/icons/icon.svg'),
-      title:'Schleim OS – Upload abgeschlossen',
+      title:'Browser OS – Upload abgeschlossen',
       message:(total||0)+' Datei(en) wurden erfolgreich in deine private Medien-Cloud hochgeladen. Tippe hier, um die Fotos-App zu öffnen.',
       priority:2,
       requireInteraction:true
@@ -96,7 +96,7 @@ async function showFailed(jobId,error) {
     await notificationCreate(id,{
       type:'basic',
       iconUrl:chrome.runtime.getURL('assets/icons/icon.svg'),
-      title:'Schleim OS – Upload nicht abgeschlossen',
+      title:'Browser OS – Upload nicht abgeschlossen',
       message:String(error||'Beim Medien-Upload ist ein Fehler aufgetreten.').slice(0,180)+' Tippe hier, um die Fotos-App zu öffnen.',
       priority:2,
       requireInteraction:true
@@ -109,7 +109,7 @@ async function startUpload(jobId) {
   try {
   const stored=await chrome.storage.local.get(STORAGE_KEY);
   const session=stored?.[STORAGE_KEY];
-  if (!session?.user?.login || !session?.accessToken) throw new Error('Bitte melde dich zuerst mit deinem Schleim-Konto an.');
+  if (!session?.user?.login || !session?.accessToken) throw new Error('Bitte melde dich zuerst mit deinem Browser-OS-Konto an.');
   const currentStatus=(await chrome.storage.local.get(STATUS_KEY))?.[STATUS_KEY];
   if (currentStatus?.phase==='progress') throw new Error('Ein Medien-Upload läuft bereits. Warte, bis die aktuelle Warteschlange abgeschlossen ist.');
   let repo=session.photosRepo;
@@ -197,6 +197,6 @@ chrome.runtime.onStartup.addListener(async()=>{
   const stored=await chrome.storage.local.get(STATUS_KEY);
   const status=stored?.[STATUS_KEY];
   if (status?.phase==='progress') {
-    await storeStatus({jobId:status.jobId,phase:'failed',progress:status.progress||0,message:'Browser wurde beendet. Der Upload kann erst fortgesetzt werden, wenn Schleim OS wieder geöffnet wird.'});
+    await storeStatus({jobId:status.jobId,phase:'failed',progress:status.progress||0,message:'Browser wurde beendet. Der Upload kann erst fortgesetzt werden, wenn Browser OS wieder geöffnet wird.'});
   }
 });

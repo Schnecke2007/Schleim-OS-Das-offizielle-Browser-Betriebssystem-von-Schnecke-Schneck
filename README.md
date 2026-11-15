@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.4-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.5-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Nur Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -68,7 +68,7 @@ Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, D
 Auf der [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) findest du die aktuelle Version, Versionshinweise und zwei getrennte Pakete:
 
 - [**Schleim OS – Browser-Extension herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – nur die fertige Original-Erweiterung.
-- [**Schleim OS – neutrales Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – Vorlage für eigene Browser-Betriebssysteme.
+- [**Schleim OS – neutrales Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – Vorlage für eigene Browser-Betriebssysteme.
 
 Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.15.4.md).
 
@@ -205,9 +205,9 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 
 Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Template mit Demo-Seiten, Beispielgrafiken und Platzhaltern liegt separat im Ordner [extension-template/](extension-template/).
 
-[📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
+[📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
 
-**Template direkt importieren:** Entpacke das Template-ZIP nicht. Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, aktiviere bei Bedarf den Entwicklermodus, wähle **+ (from .zip/.crx/.user.js)** und importiere `Schleim-OS-Extension-Template.zip`. Der Browser fordert dich zur manuellen Bestätigung auf.
+**Template direkt importieren:** Entpacke das Template-ZIP nicht. Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, aktiviere bei Bedarf den Entwicklermodus, wähle **+ (from .zip/.crx/.user.js)** und importiere `Browser-OS-Extension-Template.zip`. Der Browser fordert dich zur manuellen Bestätigung auf.
 
 ## 🔐 Datenschutz und Berechtigungen
 

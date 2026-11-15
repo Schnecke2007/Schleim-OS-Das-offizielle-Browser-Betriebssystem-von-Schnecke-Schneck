@@ -9,4 +9,4 @@ Wähle eine Sprache:
 - [Easy Language – English](Leichte-Sprache/Englisch/README.md)
 - [Eenvoudige taal – Nederlands](Leichte-Sprache/Niederländisch/README.md)
 
-Weitere Informationen: [Konfiguration](../CONFIGURATION.md), [Konto und private Cloud](ACCOUNT-AND-CLOUD.md), [Technische Hinweise](TECHNICAL-NOTES.md).
+Weitere Informationen: [Template-Version 3.14.8 – Versionshinweise](RELEASE-NOTES-3.14.8.md), [Konfiguration](../CONFIGURATION.md), [Konto und private Cloud](Deutsch/KONTO-UND-CLOUD.md), [Technische Hinweise](TECHNICAL-NOTES.md).

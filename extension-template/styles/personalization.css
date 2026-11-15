@@ -119,7 +119,7 @@
 .ssos-rating-dialog-actions .app-button{margin:0}
 @media(max-width:480px){.ssos-rating-dialog form{padding:16px}.ssos-rating-dialog-actions{display:grid;grid-template-columns:1fr 1fr}.ssos-rating-dialog-actions .app-button{justify-content:center}}
 
-/* Schleim-Konto and private GitHub cloud backup */
+/* Browser OS account and private GitHub cloud backup */
 .ssos-cloud-account{margin:16px 0}
 .ssos-cloud-card{padding:15px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#25180ff2,#18211af2);box-shadow:0 14px 35px #0002;color:var(--ink)}
 .ssos-cloud-title{display:flex;align-items:center;gap:11px;margin-bottom:12px}

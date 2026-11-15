@@ -25,4 +25,4 @@ Die Medien-Cloud unterstützt Fotos, Videos, Galerie, Suche und Kamera. Die Uplo
 Die Standalone-Datei zeigt ein Beispiel-Konto, lokale Foto-/Video-Vorschau und eine Kamera-Demo. Sie speichert keine echten Cloud-Daten und führt keine echte GitHub-Anmeldung durch. Kamera-Zugriff braucht die Erlaubnis des Browsers und eine sichere Verbindung (HTTPS oder localhost).
 
 ## Update-Center
-Das Template lädt nur das Release-Asset `Schleim-OS-Extension-Template.zip` aus dem konfigurierten Repository. Der Download wird nicht automatisch installiert. Import und Bestätigung erfolgen im Browser.
+Das Template lädt nur das Release-Asset `Browser-OS-Extension-Template.zip` aus dem konfigurierten Repository. Der Download wird nicht automatisch installiert. Import und Bestätigung erfolgen im Browser.

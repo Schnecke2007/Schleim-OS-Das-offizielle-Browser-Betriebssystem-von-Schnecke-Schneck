@@ -8,13 +8,13 @@ Diese Vorlage ist neutral. Persönliche Profile, Kontaktdaten, App-Zugangsdaten 
 
 ## GitHub und Update-Center
 
-Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Schleim-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
+Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
 
 ## Konto und Cloud
 
 Konfiguriere deine GitHub-App in `scripts/browser-account.js`. Trage dort die öffentliche Client-ID, App-Kennung und die Namen deiner privaten Repositorys ein. Verwende in `scripts/browser-media-cloud.js` denselben Namen für das Medien-Repository.
 
-Die Hintergrundverarbeitung liegt in `scripts/media-upload-worker.js` und `scripts/media-upload-offscreen.js`. Die Dateien verwenden dieselbe Konto-Sitzung wie das Konto-Modul.
+Die Hintergrundverarbeitung liegt in `scripts/media-upload-worker.js` und `scripts/media-upload-offscreen.js`. Die Dateien verwenden dieselbe Konto-Sitzung wie das Konto-Modul. Ältere Template-Sitzungen werden beim ersten Start automatisch auf den neutralen Speicherschlüssel migriert.
 
 ## Browser Store
 

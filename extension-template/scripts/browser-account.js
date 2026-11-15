@@ -11,7 +11,8 @@
   const TOKEN_URL = 'https://github.com/login/oauth/access_token';
   const REPO_NAME = 'YOUR_PRIVATE_BACKUP_REPOSITORY';
   const BACKUP_PATH = 'browser-os-backup.json';
-  const STORAGE_KEY = 'ssos-schleim-account-session-v1';
+  const STORAGE_KEY = 'browser-os-account-session-v1';
+  const LEGACY_STORAGE_KEY = 'ssos-schleim-account-session-v1';
   const API_VERSION = '2022-11-28';
 
   const TEXT = {
@@ -130,10 +131,19 @@
     return new Promise((resolve, reject) => {
       const area = globalThis.chrome?.storage?.local;
       if (!area) return reject(new Error('Extension storage is unavailable.'));
-      area.get(STORAGE_KEY, result => {
+      area.get([STORAGE_KEY, LEGACY_STORAGE_KEY], result => {
         const error = chrome.runtime?.lastError;
-        if (error) reject(new Error(error.message));
-        else resolve(result?.[STORAGE_KEY] || null);
+        if (error) return reject(new Error(error.message));
+        const value = result?.[STORAGE_KEY] || result?.[LEGACY_STORAGE_KEY] || null;
+        if (value && !result?.[STORAGE_KEY] && result?.[LEGACY_STORAGE_KEY]) {
+          area.set({[STORAGE_KEY]:value}, () => {
+            const migrationError = chrome.runtime?.lastError;
+            if (!migrationError) area.remove(LEGACY_STORAGE_KEY);
+            resolve(value);
+          });
+          return;
+        }
+        resolve(value);
       });
     });
   }
@@ -152,7 +162,7 @@
     return new Promise((resolve, reject) => {
       const area = globalThis.chrome?.storage?.local;
       if (!area) return reject(new Error('Extension storage is unavailable.'));
-      area.remove(STORAGE_KEY, () => {
+      area.remove([STORAGE_KEY, LEGACY_STORAGE_KEY], () => {
         const error = chrome.runtime?.lastError;
         if (error) reject(new Error(error.message));
         else resolve();

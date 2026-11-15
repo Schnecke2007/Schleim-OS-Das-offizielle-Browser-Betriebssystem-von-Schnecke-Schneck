@@ -38,6 +38,20 @@ jobs:
           for file in extension-template/scripts/*.js; do
             node --check "$file"
           done
+          for file in extension/scripts/*.js; do
+            node --check "$file"
+          done
+          python3 - <<'PY'
+          import pathlib, re
+          for name in ["extension/standalone/schleim-os-standalone.html", "extension-template/standalone/browser-os-standalone.html"]:
+              html = pathlib.Path(name).read_text(encoding="utf-8")
+              blocks = [block for block in re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, re.I | re.S) if block.strip()]
+              if not blocks:
+                  raise SystemExit(f"No inline JavaScript found in {name}")
+              pathlib.Path("/tmp/" + pathlib.Path(name).stem + ".js").write_text(max(blocks, key=len), encoding="utf-8")
+          PY
+          node --check /tmp/schleim-os-standalone.js
+          node --check /tmp/browser-os-standalone.js
           node --test extension-template/tests/app-navigation.test.js
           python3 - <<'PY'
           import json, pathlib, re
@@ -53,7 +67,18 @@ jobs:
           for lang in ("Deutsch", "Englisch", "Niederländisch"):
               assert (root / "docs" / lang / "README.md").is_file()
               assert (root / "docs" / "Leichte-Sprache" / lang / "README.md").is_file()
-          print("Template resources, manifest, translations and standalone structure validated.")
+          required_docs = [
+              "docs/Deutsch/KONTO-UND-CLOUD.md", "docs/Englisch/ACCOUNT-AND-CLOUD.md",
+              "docs/Niederländisch/ACCOUNT-EN-PRIVECLOUD.md",
+              "docs/Leichte-Sprache/Deutsch/KONTO-UND-CLOUD.md",
+              "docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md",
+              "docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md",
+              "docs/Deutsch/EXTERNE-WEB-APP.md", "docs/Englisch/EXTERNAL-WEB-APP.md",
+              "docs/Niederländisch/EXTERNE-WEB-APP.md"]
+          for rel in required_docs:
+              assert (root / rel).is_file(), f"Missing translated template document: {rel}"
+          assert not (root / "docs/SONOS-APP.md").exists(), "Legacy provider-specific template doc must be removed"
+          print("Template resources, manifest, translated guides and standalone structure validated.")
           PY
 
       - name: Detect whether this push changes the template
@@ -122,7 +147,7 @@ jobs:
           MISSING=false
           for asset in \
             "Schleim-OS-Extension.zip" \
-            "Schleim-OS-Extension-Template.zip" \
+            "Browser-OS-Extension-Template.zip" \
             "Schleim-OS-SHA256SUMS.txt"; do
             if ! printf '%s\n' "$ASSETS" | grep -Fxq "$asset"; then
               echo "Release asset missing: $asset"
@@ -165,25 +190,25 @@ jobs:
               --pattern "Schleim-OS-Extension.zip" \
               --dir dist/release
 
-            (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension-Template.zip" .)
+            (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Browser-OS-Extension-Template.zip" .)
           else
             (cd extension && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension.zip" .)
-            (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension-Template.zip" .)
+            (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Browser-OS-Extension-Template.zip" .)
           fi
 
           # Both packages must have an active manifest.json at their archive root.
           unzip -Z1 dist/release/Schleim-OS-Extension.zip | sed 's#^\./##' | grep -Fxq 'manifest.json'
-          unzip -Z1 dist/release/Schleim-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.json'
+          unzip -Z1 dist/release/Browser-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.json'
 
           # The template ZIP must not contain the obsolete renamed manifest.
-          if unzip -Z1 dist/release/Schleim-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.template.json'; then
+          if unzip -Z1 dist/release/Browser-OS-Extension-Template.zip | sed 's#^\./##' | grep -Fxq 'manifest.template.json'; then
             echo "The template ZIP still contains manifest.template.json." >&2
             exit 1
           fi
 
           (
             cd dist/release
-            sha256sum Schleim-OS-Extension.zip Schleim-OS-Extension-Template.zip > Schleim-OS-SHA256SUMS.txt
+            sha256sum Schleim-OS-Extension.zip Browser-OS-Extension-Template.zip > Schleim-OS-SHA256SUMS.txt
           )
 
       - name: Create new GitHub Release
@@ -198,7 +223,7 @@ jobs:
           set -euo pipefail
           gh release create "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
-            "dist/release/Schleim-OS-Extension-Template.zip" \
+            "dist/release/Browser-OS-Extension-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" \
             --title "Schleim OS $VERSION" \
@@ -219,10 +244,11 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --title "Schleim OS $VERSION" \
             --notes-file "$NOTES"
+          gh release delete-asset "$TAG" "Schleim-OS-Extension-Template.zip" --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
-            "dist/release/Schleim-OS-Extension-Template.zip" \
+            "dist/release/Browser-OS-Extension-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" \
             --clobber
@@ -235,8 +261,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          gh release delete-asset "$TAG" "Schleim-OS-Extension-Template.zip" --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Extension-Template.zip" \
+            "dist/release/Browser-OS-Extension-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" \
             --clobber

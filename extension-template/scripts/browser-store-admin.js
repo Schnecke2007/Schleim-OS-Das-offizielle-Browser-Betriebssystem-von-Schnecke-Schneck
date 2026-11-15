@@ -200,7 +200,7 @@
   function parse(issue){
     const body=issue.body||'';
     const title=String(issue.title||'');
-    const fallbackName=title.replace(/^\[(?:Browser Store|Slime Store)\]\s*/i,'').replace(/^(?:App-Vorschlag|App suggestion|Appvoorstel):\s*/i,'').trim();
+    const fallbackName=title.replace(/^\[Browser Store\]\s*/i,'').replace(/^(?:App-Vorschlag|App suggestion|Appvoorstel):\s*/i,'').trim();
     const name=field(body,'Name')||fallbackName;
     const description=field(body,'Description');
     const notes=field(body,'Notes');
@@ -219,7 +219,7 @@
     const root=$('#ssosAdminIssues');if(!root||!credentials)return;root.innerHTML='<p>'+esc(t('loading'))+'</p>';
     try{
       const data=await api('/issues?state=open&per_page=100&sort=created&direction=desc');
-      issues=(Array.isArray(data)?data:[]).filter(x=>!x.pull_request&&/^\[(?:Browser Store|Slime Store)\]/i.test(x.title||''));
+      issues=(Array.isArray(data)?data:[]).filter(x=>!x.pull_request&&/^\[Browser Store\]/i.test(x.title||''));
       root.innerHTML=issues.length?issues.map(x=>'<button type="button" class="ssos-admin-issue'+(selected?.number===x.number?' selected':'')+'" data-admin-issue="'+x.number+'"><b>'+esc(x.title)+'</b><small>#'+x.number+' · '+esc(t('created'))+' '+esc(new Date(x.created_at).toLocaleDateString())+'</small></button>').join():'<p>'+esc(t('empty'))+'</p>';
     }catch(e){const message=permissionMessage(e);root.innerHTML='<p class="ssos-admin-error">'+esc(message)+'</p>';status(message,true);}
   }
