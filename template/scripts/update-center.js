@@ -3,7 +3,7 @@
 
   const OWNER = 'YOUR_GITHUB_USERNAME';
   const REPOSITORY = 'YOUR_REPOSITORY_NAME';
-  const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/extension/manifest.json`;
+  const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/manifest.json`;
   const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/archive/refs/heads/main.zip`;
   const DOCUMENTATION_URLS = {
     de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/Deutsch/UPDATES.md`,
