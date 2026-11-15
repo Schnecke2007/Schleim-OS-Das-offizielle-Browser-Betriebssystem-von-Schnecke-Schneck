@@ -2,25 +2,36 @@
 
 ## Vor dem Start
 
-Du brauchst einen Chromium-Browser.
-Der Browser muss Erweiterungen unterstützen.
+Du brauchst einen Browser, der Chrome-Erweiterungen unterstützt.
+Der Browser muss ZIP-Dateien als Erweiterungen importieren können.
 
 ## Schritt 1: Extension herunterladen
 
 1. Öffne die [Releases-Seite von Schleim OS](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade **Schleim-OS-Extension.zip** herunter: [Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Entpacke die ZIP-Datei.
+2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
+3. **Entpacke die ZIP-Datei nicht.**
 
-## Schritt 2: Extension laden
+Bei einem Update kannst du den Download auch in Schleim OS starten:
+**Einstellungen → Schleim OS aktualisieren → Nach Updates suchen**.
 
-1. Öffne die Erweiterungsverwaltung. In Chrome ist das `chrome://extensions`.
-2. Schalte den **Entwicklermodus** ein.
-3. Klicke auf **Entpackte Erweiterung laden**.
-4. Wähle den Ordner aus, in dem die Datei `manifest.json` direkt liegt.
+## Schritt 2: Extension importieren
 
-**Wichtig:** Wähle den entpackten Extension-Ordner. Nicht den ganzen GitHub-Projektordner.
+1. Öffne die Erweiterungsverwaltung deines Browsers.
+2. Schalte bei Bedarf den **Entwicklermodus** ein.
+3. Tippe auf **+ (from .zip/.crx/.user.js)**.
+4. Wähle die heruntergeladene Datei **Schleim-OS-Extension.zip**.
+5. Bestätige den Import.
 
-Das Template kann auch als eigene Erweiterung geladen werden. Es ist für eigene Änderungen gedacht. Für die normale Installation nimm weiter **Schleim-OS-Extension.zip**.
+Bei einem Update bestätigst du auch die Aktualisierung im Browser.
+
+## Wichtig
+
+Der Download aus Schleim OS installiert das Update nicht selbst.
+Du musst den Import im Browser selbst starten und bestätigen.
+
+Normales Google Chrome für Android unterstützt keine Erweiterungen.
+Auch Desktop-Chrome kann ZIP-Dateien nicht direkt importieren.
+Du brauchst einen Browser mit direktem ZIP-Import.
 
 ## Schritt 3: Schleim OS öffnen
 

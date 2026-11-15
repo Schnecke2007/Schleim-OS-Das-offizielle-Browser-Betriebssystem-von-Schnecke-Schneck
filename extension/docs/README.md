@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.15.1
+# Schleim OS – Erweiterungsdokumentation · Version 3.15.2
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -18,7 +18,7 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 - Ordner nach Jahr und Monat; EXIF-Aufnahmedatum bei unterstützten JPEG-Fotos
 - Metadatensuche mit Synonymen sowie optionale lokale KI-Bildbeschreibung und semantische Suche (Chrome Prompt API, kein API-Schlüssel)
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich in den Einstellungen
-- Update-Center zum Prüfen der GitHub-Version und Herunterladen der aktuellen Repository-ZIP
+- Update-Center zum Prüfen der Original-Extension-Version und direkten Herunterladen des Release-ZIP; der anschließende ZIP-Import wird manuell bestätigt
 - Deutsch, Englisch und Niederländisch
 - Werbefreie Extension-Oberfläche
 
@@ -55,13 +55,15 @@ Die Wiederherstellung ersetzt die lokalen Schleim-OS-Einstellungen durch die Bac
 
 ## Installation
 
-1. Vollständiges GitHub-Repository über **Code → Download ZIP** herunterladen.
-2. ZIP-Datei nicht entpacken.
-3. In einem Chromium-Browser mit direktem ZIP-Erweiterungsimport die vollständige Repository-ZIP importieren.
-4. Falls nötig, Entwicklermodus einschalten.
-5. Erweiterung bestätigen und einen neuen Tab öffnen.
+1. Lade das Release-Paket [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
+2. **Entpacke die ZIP-Datei nicht.**
+3. Öffne die Erweiterungsverwaltung eines Chromium-Browsers mit lokalem ZIP-Import.
+4. Aktiviere bei Bedarf den Entwicklermodus und wähle **+ (from .zip/.crx/.user.js)**.
+5. Wähle die ZIP-Datei und bestätige den Import.
 
-Die Importfunktion ist browser- und plattformabhängig. Chrome für Android unterstützt keine regulären Chrome-Erweiterungen.
+Bei Updates kann der Download direkt über **Einstellungen → Schleim OS aktualisieren** gestartet werden. Der Import und die Bestätigung im Browser bleiben manuell.
+
+Die Importfunktion ist browser- und plattformabhängig. Normales Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome bietet keinen direkten ZIP-Import.
 
 ## Standalone-Demo
 
@@ -69,7 +71,7 @@ Die Datei `standalone/schleim-os-standalone.html` ist eine separate Demo. Sie ka
 
 ## Updates
 
-Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Version auf GitHub und bietet bei einer neueren Version den ZIP-Download an. Es installiert die ZIP-Datei nicht selbst; die Browser-Import- oder Update-Funktion muss anschließend verwendet werden.
+Das Update-Center vergleicht die lokale Version mit der Manifest-Version auf GitHub und lädt bei einer neueren Version das Release-Asset **Schleim-OS-Extension.zip** herunter. Es entpackt die Datei nicht und installiert sie nicht selbst. Der ZIP-Import und die Bestätigung müssen anschließend in der Browser-Erweiterungsverwaltung manuell gestartet werden.
 
 - [Update-Anleitung – Deutsch](../../docs/Deutsch/UPDATES.md)
 - [Update guide – English](../../docs/Englisch/UPDATES.md)
@@ -77,6 +79,7 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 
 ## Versionshinweise
 
+- [Release Notes 3.15.2](RELEASE-NOTES-3.15.2.md)
 - [Release Notes 3.15.1](RELEASE-NOTES-3.15.1.md)
 - [Release Notes 3.15.0](RELEASE-NOTES-3.15.0.md)
 - [Release Notes 3.14.1](RELEASE-NOTES-3.14.1.md)

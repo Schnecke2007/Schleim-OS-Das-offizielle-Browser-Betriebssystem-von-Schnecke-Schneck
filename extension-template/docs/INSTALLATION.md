@@ -1,27 +1,31 @@
 # Browser OS extension template – installation
 
-The template is a separate, directly loadable Manifest V3 Chromium extension. Its ZIP package contains an active **manifest.json** at the package root.
+The template is a functional Manifest V3 extension. The release ZIP contains an active **manifest.json** at the package root and can be imported directly by compatible browsers.
 
-## Download, configure and load the template
+## Download, configure and import the template
 
-1. Download the [Browser Extension Template ZIP from the latest GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
-2. Extract the ZIP file to a folder on your computer.
-3. Follow [CONFIGURATION.md](../CONFIGURATION.md) and replace the demo content and setup placeholders.
-4. Open **chrome://extensions** in a Chromium-based desktop browser.
-5. Enable **Developer mode** and select **Load unpacked**.
-6. Choose the extracted template folder that directly contains **manifest.json**.
+1. Download [Schleim-OS-Extension-Template.zip from the latest GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
+2. **Do not extract the ZIP file.**
+3. Open the extension manager in a browser that supports local ZIP-extension import.
+4. Enable **Developer mode** if required.
+5. Select **+ (from .zip/.crx/.user.js)** or the equivalent file-import option.
+6. Choose **Schleim-OS-Extension-Template.zip** and confirm the import.
 
-No manifest renaming or source-code download from the repository is required.
+To update the template, download the latest Template ZIP and import it through the same browser option. The browser may ask you to confirm the update or replacement. Installation is not performed automatically.
 
-## Install the original Schleim OS extension
+## Customize the template
 
-The original extension is still provided separately as [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). It is not changed by the template. Extract that ZIP and load the folder containing its **manifest.json** if you want the official Schleim OS extension rather than your own template copy.
+Use your own working copy or GitHub repository to edit the source files. See [CONFIGURATION.md](../CONFIGURATION.md) for placeholders, GitHub integration, Store settings, privacy and legal information. The default GitHub account, repository names and profile content are placeholders.
 
-Standard Chrome on Android does not support desktop Chrome extensions. Use a compatible desktop Chromium browser to test the extension.
+After customization, publish a GitHub Release in your repository with the package asset named **Schleim-OS-Extension-Template.zip**. The template's update center is configured to download this Template asset, not the original Extension ZIP.
+
+## Browser compatibility
+
+The direct ZIP-import method depends on the browser. Standard Google Chrome for Android does not support extensions. Desktop Chrome's **Load unpacked** option loads a folder rather than a ZIP file. To install without extracting, use a compatible browser whose extension manager explicitly supports local ZIP import.
 
 ## GitHub and security
 
-The GitHub App integration, Store administration, media cloud and update checker are intentionally unconfigured. Use your own GitHub App and private repositories. A GitHub App Client ID is public; never include an App Client Secret, private key or personal access token in extension files.
+The GitHub App integration, Store administration, media cloud and update checker are intentionally unconfigured until you set your own values. Use your own GitHub App and private repositories. A GitHub App Client ID is public; never include an App Client Secret, private key or personal access token in extension files.
 
 ## Before publishing
 

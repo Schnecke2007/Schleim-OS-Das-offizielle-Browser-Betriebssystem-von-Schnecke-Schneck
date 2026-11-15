@@ -20,7 +20,7 @@
 
 ## Installation
 
-The documented installation imports the complete repository ZIP directly into a supported Chromium-based browser. The archive contains the extension in the `extension` subfolder and is not extracted before import. ZIP-import availability depends on the browser and platform.
+The documented installation imports the release asset `Schleim-OS-Extension.zip` directly into a compatible Chromium-based browser with local ZIP-import support. The archive contains the Extension and its `manifest.json` at the package root and is not extracted before import. ZIP-import availability depends on the browser and platform.
 
 ## Storage and cloud backup
 
@@ -44,7 +44,7 @@ The manifest includes, among others, `storage` and `clipboardWrite`. Clipboard p
 
 ## Update center
 
-The update center is shown in Settings. It reads the manifest version from the GitHub default branch through `raw.githubusercontent.com` and compares it with `chrome.runtime.getManifest().version`. If a newer version is found, it offers a link to the complete repository ZIP. The script does not install files or replace the running extension.
+The update center is shown in Settings. It reads `extension/manifest.json` from the GitHub default branch through `raw.githubusercontent.com` and compares it with `chrome.runtime.getManifest().version`. If a newer version is found, its download button starts the `Schleim-OS-Extension.zip` release asset. The script does not install files or replace the running extension.
 
 The browser must perform the ZIP import or its own update function. `chrome.runtime.requestUpdateCheck()` is not used as a GitHub installer because that API checks the extension update channel configured by the browser.
 

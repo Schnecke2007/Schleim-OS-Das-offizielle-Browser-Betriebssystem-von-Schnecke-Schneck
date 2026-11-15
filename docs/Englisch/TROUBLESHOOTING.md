@@ -5,8 +5,8 @@ This guide helps solve common installation, sign-in and usage problems in Schlei
 | Problem | Possible solution |
 |---|---|
 | **The ZIP-import button is missing.** | Check whether your browser supports direct ZIP-extension import. The button may be labelled **“From .zip/.crx/.user.js”**. |
-| **The ZIP file does not appear.** | Download the complete repository from GitHub using **Code → Download ZIP**. Then check your Downloads folder. |
-| **Installation reports an error.** | Select the complete repository ZIP. Do not extract it first or modify it. |
+| **The ZIP file does not appear.** | In the file picker, open your Downloads folder and select **Schleim-OS-Extension.zip** from the latest release. |
+| **Installation reports an error.** | Download the **Schleim-OS-Extension.zip** release asset again. Keep the ZIP unchanged and do not extract it. |
 | **Schleim OS does not appear in a new tab.** | Check the extension manager to make sure Schleim OS is installed and enabled. Then open a new tab. |
 | **Changes are not displayed.** | Open the extension manager and reload Schleim OS. Then open a new tab. |
 | **The Schleim-Store is locked.** | The Store requires a Schleim account. Select **Connect with GitHub**, install the **Schleim OS Account** app, then continue with the device code. |

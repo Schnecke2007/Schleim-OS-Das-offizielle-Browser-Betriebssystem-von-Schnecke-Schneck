@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases en downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Alleen de extensie downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -39,7 +39,7 @@ Dit project is geen zelfstandig besturingssysteem dat Windows, Android of Linux 
 - Schleim-Store: toegang is alleen mogelijk na aanmelding met een Schleim-account
 - Schleim-account met GitHub-aanmelding en privécloudback-up van het startscherm
 - Sonos als gewone webapp in de Schleim-Store: opent de officiële Sonos-webapp in een nieuw browsertabblad
-- Updatecentrum in de instellingen: GitHub-versie controleren en de nieuwste ZIP downloaden; de browser verzorgt de uiteindelijke installatie
+- Updatecentrum in de instellingen: controleren op een nieuwere versie van de oorspronkelijke Extension en het Release-ZIP-bestand direct downloaden; het importeren en bevestigen start je daarna in de browser
 - Meertalige interface: Duits, Engels en Nederlands
 - Afzonderlijk standalone HTML-bestand in het projectpakket
 - Reclamevrije extensie-interface
@@ -70,21 +70,21 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
 - [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
 
-Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](extension/docs/RELEASE-NOTES-3.15.1.md) voor de versiegeschiedenis.
+Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](extension/docs/RELEASE-NOTES-3.15.2.md) voor de versiegeschiedenis.
 
 ## 📥 Downloaden en installeren
 
-1. Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download **Schleim OS – browserextensie (ZIP)**: [Download de Extension-ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Pak het ZIP-bestand uit op je apparaat.
-4. Open het extensiebeheer van je Chromium-browser, bijvoorbeeld `chrome://extensions` in Chrome.
-5. Schakel **Ontwikkelaarsmodus** in.
-6. Kies **Uitgepakte extensie laden**.
-7. Selecteer de uitgepakte map waarin `manifest.json` direct staat.
+1. Open voor een nieuwe installatie de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). Wanneer er een update beschikbaar is, kun je de download ook starten via **Instellingen → Schleim OS bijwerken**.
+3. **Pak het ZIP-bestand niet uit.** Laat het ongewijzigd in de map Downloads staan.
+4. Open het extensiebeheer van een Chromium-browser die het importeren van ZIP-extensies ondersteunt.
+5. Schakel zo nodig **Ontwikkelaarsmodus** in.
+6. Kies **+ (from .zip/.crx/.user.js)** of de overeenkomstige optie om een extensiebestand te importeren.
+7. Selecteer **Schleim-OS-Extension.zip** en bevestig de import. Bevestig bij een update de vervanging of update die de browser aanbiedt.
 
-**Belangrijk:** Download voor de gewone installatie van Schleim OS **Schleim-OS-Extension.zip**. De aparte template is ook een rechtstreeks laadbare Chromium-extensie en is bedoeld om je eigen versie aan te passen.
+**Updates vanuit Schleim OS:** Je hoeft de Releases-pagina niet handmatig te openen. Ga naar **Instellingen → Schleim OS bijwerken**, controleer op een nieuwere versie en kies de downloadknop. Alleen het daaropvolgende importeren en bevestigen in de browser moet je handmatig starten.
 
-**Bijwerken:** Pak de nieuwe Extension-ZIP uit in dezelfde lokale map en overschrijf de bestaande bestanden. Open daarna het extensiebeheer en klik bij Schleim OS op **Opnieuw laden**. Gebruik indien mogelijk dezelfde map als bij de vorige installatie.
+**Browserondersteuning:** ZIP-import is niet beschikbaar in elke Chromium-browser. De gewone Google Chrome voor Android ondersteunt geen extensies. Desktop-Chrome laadt in de ontwikkelaarsmodus uitgepakte mappen en biedt geen directe ZIP-import. Gebruik voor installatie zonder uitpakken een browser waarvan het extensiebeheer lokale ZIP-import uitdrukkelijk ondersteunt.
 
 ## Schleim OS gebruiken en instellingen beheren
 
@@ -102,9 +102,9 @@ Hier vind je oplossingen voor veelvoorkomende problemen met rechtstreekse ZIP-im
 
 | Probleem | Mogelijke oplossing |
 |---|---|
-| **De extensie verschijnt niet.** | Controleer of de ontwikkelaarsmodus is ingeschakeld en of je de uitgepakte map hebt geselecteerd waarin `manifest.json` direct staat. |
-| **Het manifest wordt niet gevonden.** | Selecteer de uitgepakte Extension-map en niet de bovenliggende projectmap. |
-| **De installatie geeft een foutmelding.** | Download de Extension-ZIP opnieuw vanaf de [Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en pak deze volledig uit. |
+| **De extensie verschijnt niet.** | Controleer of je browser extensies en ZIP-import ondersteunt. Controleer daarna of Schleim OS in het extensiebeheer is geïnstalleerd en ingeschakeld. |
+| **De ZIP-importknop ontbreekt.** | Je browser ondersteunt mogelijk geen lokale ZIP-import. Gebruik een compatibele browser met een functie zoals **From .zip/.crx/.user.js**. |
+| **Het ZIP-bestand wordt niet herkend.** | Download de ongewijzigde [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) opnieuw. Pak het bestand niet uit en wijzig het niet. |
 | **Schleim OS verschijnt niet in een nieuw tabblad.** | Controleer in het extensiebeheer of Schleim OS is geïnstalleerd en ingeschakeld. Open daarna een nieuw tabblad. |
 | **Een andere extensie vervangt ook de nieuw-tabbladpagina.** | Schakel tijdelijk andere extensies uit die eveneens de nieuw-tabbladpagina vervangen. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en gebruik bij Schleim OS de knop **Opnieuw laden** of **Vernieuwen**, indien beschikbaar. Open daarna een nieuw tabblad. |
@@ -204,7 +204,7 @@ Wil je je eigen versie maken? De volledige neutrale template met demopagina's, v
 
 [📦 **Download alleen de extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratie](extension-template/CONFIGURATION.md)
 
-**Template direct laden:** Pak de template-ZIP uit. Open `chrome://extensions`, schakel Ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer de uitgepakte templatemap waarin `manifest.json` direct staat. Hernoemen is niet nodig.
+**Template rechtstreeks importeren:** Pak het Template-ZIP-bestand niet uit. Open het extensiebeheer van een browser met ZIP-import, schakel zo nodig Ontwikkelaarsmodus in, kies **+ (from .zip/.crx/.user.js)** en importeer `Schleim-OS-Extension-Template.zip`. De browser vraagt je de import handmatig te bevestigen.
 
 ## 🔐 Privacy en machtigingen
 

@@ -1,21 +1,27 @@
 # 📥 Schleim OS – Installatiehandleiding
 
-## 1. De extensie downloaden
+## 1. De Extension-ZIP downloaden
 
 1. Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Pak het ZIP-bestand uit op je apparaat.
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). Voor een latere update kun je de download ook starten via **Instellingen → Schleim OS bijwerken**.
+3. **Pak het ZIP-bestand niet uit.** Laat het ongewijzigd in de map Downloads staan.
 
-Dit archief bevat alleen de oorspronkelijke extensie. Het bestand `manifest.json` staat direct in de uitgepakte map.
+## 2. De extensie in je browser importeren
 
-## 2. De extensie in je browser laden
+1. Open het extensiebeheer van een Chromium-browser die het importeren van lokale ZIP-extensies ondersteunt.
+2. Schakel zo nodig **Ontwikkelaarsmodus** in.
+3. Kies **+ (from .zip/.crx/.user.js)** of de vergelijkbare importoptie van je browser.
+4. Selecteer **Schleim-OS-Extension.zip** in je map Downloads.
+5. Bevestig de import en schakel Schleim OS in als de browser daarom vraagt.
 
-1. Open het extensiebeheer van je Chromium-browser. Gebruik in Chrome `chrome://extensions`.
-2. Schakel **Ontwikkelaarsmodus** in.
-3. Kies **Uitgepakte extensie laden**.
-4. Selecteer de uitgepakte map waarin `manifest.json` direct staat.
+Voor een update selecteer je het nieuwe ZIP-bestand via dezelfde importoptie en bevestig je de vervanging of update die de browser aanbiedt. De installatie wordt niet automatisch uitgevoerd.
 
 **Opmerking:** De aparte template is ook een rechtstreeks laadbare Chromium-extensie. Deze is bedoeld voor je eigen aanpassingen; gebruik voor de gewone installatie van Schleim OS nog steeds **Schleim-OS-Extension.zip**.
+
+
+## Browseropmerking
+
+De gewone Google Chrome voor Android ondersteunt geen extensies. Desktop-Chrome biedt geen rechtstreekse ZIP-import. Gebruik voor installatie zonder uitpakken een compatibele browser met lokale ZIP-import.
 
 ## 3. Schleim OS starten
 

@@ -62,7 +62,7 @@ Das Medien-Repository wird erst beim Klick auf die Verknüpfungsaktion im angeme
 
 ## Update-Center
 
-Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig über `raw.githubusercontent.com`. Er vergleicht ausschließlich die numerische Manifest-Version. Bei einer höheren GitHub-Version wird der Download des vollständigen Repository-Archivs angeboten. Der Download wird durch eine direkte Benutzeraktion geöffnet. Das Skript ersetzt keine Erweiterungsdateien und installiert keine Pakete. Für die Installation ist die vom Browser erlaubte Import- oder Update-Funktion notwendig.
+Der Versions-Check liest `extension/manifest.json` aus dem GitHub-Hauptzweig über `raw.githubusercontent.com`. Er vergleicht ausschließlich die numerische Manifest-Version. Bei einer höheren GitHub-Version startet der Download-Button das Release-Asset `Schleim-OS-Extension.zip`. Das Skript ersetzt keine Erweiterungsdateien und installiert keine Pakete. Die ZIP-Datei wird nicht entpackt; der Import und die Bestätigung müssen über die vom Browser bereitgestellte ZIP-Import-Funktion manuell gestartet werden.
 
 `chrome.runtime.requestUpdateCheck()` wird bewusst nicht verwendet: Diese API fragt den Update-Kanal der installierten Erweiterung ab und ist kein allgemeiner GitHub-ZIP-Installer. Siehe [Chrome Update Lifecycle](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle).
 

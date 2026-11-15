@@ -5,8 +5,8 @@ Hier vind je oplossingen voor veelvoorkomende problemen met installatie, aanmeld
 | Probleem | Mogelijke oplossing |
 |---|---|
 | **De ZIP-importknop ontbreekt.** | Controleer of je browser het rechtstreeks importeren van ZIP-extensies ondersteunt. De knop kan bijvoorbeeld **“From .zip/.crx/.user.js”** heten. |
-| **Het ZIP-bestand wordt niet weergegeven.** | Download de volledige repository via GitHub met **Code → Download ZIP**. Controleer daarna je map Downloads. |
-| **De installatie geeft een foutmelding.** | Selecteer de volledige repository-ZIP. Pak het bestand niet eerst uit en wijzig het niet. |
+| **Het ZIP-bestand wordt niet weergegeven.** | Open in de bestandskiezer de map Downloads en selecteer **Schleim-OS-Extension.zip** uit de nieuwste release. |
+| **De installatie geeft een foutmelding.** | Download het releasebestand **Schleim-OS-Extension.zip** opnieuw. Laat het ZIP-bestand ongewijzigd en pak het niet uit. |
 | **Schleim OS verschijnt niet in een nieuw tabblad.** | Controleer in het extensiebeheer of Schleim OS is geïnstalleerd en ingeschakeld. Open daarna een nieuw tabblad. |
 | **Wijzigingen worden niet weergegeven.** | Open het extensiebeheer en laad Schleim OS opnieuw. Open daarna een nieuw tabblad. |
 | **De Schleim-Store is vergrendeld.** | De Store vereist een Schleim-account. Kies **Verbinden met GitHub**, installeer de app **Schleim OS Account** en ga daarna verder met de apparaatcode. |

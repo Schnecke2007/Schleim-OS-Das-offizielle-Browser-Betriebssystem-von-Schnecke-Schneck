@@ -33,6 +33,8 @@ In **scripts/update-center.js**, set:
 - OWNER to your GitHub username or organization
 - REPOSITORY to your repository name
 
+The template update center downloads **Schleim-OS-Extension-Template.zip** from the latest release of this configured repository. Publish your customized template under that exact release asset name. The updater does not download the original Schleim OS Extension ZIP or the repository source archive.
+
 When you use the template as the root of your own repository and publish your own release package, the update center can read the root-level **manifest.json** there.
 
 In **scripts/slime-store-admin.js**, set OWNER, REPO and keep CATALOG aligned with **data/store-apps.json**.
@@ -67,4 +69,4 @@ After configuration, run the navigation tests from this directory:
 
 **node --test tests/app-navigation.test.js**
 
-Load this folder, which already contains **manifest.json**, as an unpacked extension in a Chromium desktop browser. Test all configured links, permissions, account flows and cloud features before publishing.
+To test the published package without extracting it, create a GitHub Release in your configured repository with the asset **Schleim-OS-Extension-Template.zip**. Download it and import it through a browser that supports local ZIP-extension import. Do not extract the ZIP. Test all configured links, permissions, account flows and cloud features before publishing. Standard Chrome for Android does not support extensions; desktop Chrome does not provide direct ZIP import.

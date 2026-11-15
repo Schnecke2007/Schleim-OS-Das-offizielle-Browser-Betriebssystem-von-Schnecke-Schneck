@@ -5,8 +5,8 @@ Hier findest du Lösungen für häufige Probleme bei Installation, Anmeldung und
 | Problem | Mögliche Lösung |
 |---|---|
 | **Die ZIP-Import-Schaltfläche fehlt.** | Prüfe, ob dein Browser den direkten Import von ZIP-Erweiterungen unterstützt. Die Schaltfläche kann beispielsweise **„From .zip/.crx/.user.js“** heißen. |
-| **Die ZIP-Datei wird nicht angezeigt.** | Lade über GitHub mit **Code → Download ZIP** das vollständige Repository herunter. Prüfe anschließend deinen Download-Ordner. |
-| **Die Installation meldet einen Fehler.** | Wähle die vollständige Repository-ZIP. Entpacke sie vorher nicht und ändere sie nicht. |
+| **Die ZIP-Datei wird nicht angezeigt.** | Wähle im Datei-Dialog den Download-Ordner und die Datei **Schleim-OS-Extension.zip** aus dem neuesten Release. |
+| **Die Installation meldet einen Fehler.** | Lade das Release-Asset **Schleim-OS-Extension.zip** erneut herunter. Lass die ZIP-Datei unverändert und entpacke sie nicht. |
 | **Schleim OS erscheint nicht in einem neuen Tab.** | Prüfe in der Erweiterungsverwaltung, ob Schleim OS installiert und aktiviert ist. Öffne danach einen neuen Tab. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und lade Schleim OS neu. Öffne anschließend einen neuen Tab. |
 | **Der Schleim-Store ist gesperrt.** | Der Store braucht eine Anmeldung mit dem Schleim-Konto. Wähle **Mit GitHub verbinden**, installiere die App **Schleim OS Account** und fahre anschließend mit dem Gerätecode fort. |

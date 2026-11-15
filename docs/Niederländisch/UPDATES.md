@@ -1,41 +1,35 @@
 # Schleim OS bijwerken
 
-Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) vind je de actuele versie en beide downloadpakketten. Het updatecentrum vergelijkt de geïnstalleerde versie met de versie in `extension/manifest.json` op GitHub en biedt de afzonderlijke Extension-download aan.
+Het updatecentrum in Schleim OS downloadt de oorspronkelijke Extension rechtstreeks uit de nieuwste [GitHub-release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest). Je hoeft de Releases-pagina niet zelf te openen om de download te starten.
 
 ## De update downloaden
 
 1. Open **Instellingen → Schleim OS bijwerken** in Schleim OS.
 2. Kies **Controleren op updates**.
-3. Is er een nieuwere versie beschikbaar? Kies dan **Nieuwste ZIP-versie downloaden**. De knop downloadt **Schleim-OS-Extension.zip** uit de nieuwste release.
-4. Je kunt de [Extension ook rechtstreeks uit de nieuwste release downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Is er een nieuwere versie beschikbaar? Kies dan **Oorspronkelijke Extension-ZIP downloaden**.
+4. De browser downloadt **Schleim-OS-Extension.zip** rechtstreeks uit de nieuwste release. Je kunt ook [de oorspronkelijke Extension rechtstreeks via Releases downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
 
-## De update in je browser afronden
+## De update in je browser installeren
 
-1. Pak het gedownloade ZIP-bestand uit.
-2. Kopieer de inhoud naar dezelfde lokale map waarin je huidige extensie staat en overschrijf de bestaande bestanden.
-3. Open het extensiebeheer van je browser (`chrome://extensions` in Chrome).
-4. Klik bij Schleim OS op **Opnieuw laden**.
-5. Open een nieuw tabblad en controleer de geïnstalleerde versie in het updatecentrum.
+1. **Pak het ZIP-bestand niet uit.** Laat het archief ongewijzigd.
+2. Open het extensiebeheer van een browser die lokale ZIP-extensies kan importeren.
+3. Schakel zo nodig Ontwikkelaarsmodus in.
+4. Kies **+ (from .zip/.crx/.user.js)** of de vergelijkbare importoptie van je browser.
+5. Selecteer het gedownloade bestand **Schleim-OS-Extension.zip**.
+6. Bevestig de import of update in je browser.
 
-Gebruik indien mogelijk dezelfde map als bij je bestaande installatie. Verwijder de extensie niet als je de huidige lokale installatie wilt behouden.
+Schleim OS start de download voor je. Om veiligheidsredenen wordt de installatie niet automatisch uitgevoerd: je moet de ZIP-import en de bevestiging in de browser zelf starten.
 
-## Waarom installeert de knop de update niet automatisch?
+## Browserondersteuning
 
-Chrome staat niet toe dat een extensie willekeurige ZIP-bestanden van internet downloadt en zichzelf daarmee stil vervangt. Downloaden is daarom een handmatige stap. Het extensiebeheer laadt de bijgewerkte bestanden nadat je op **Opnieuw laden** hebt geklikt.
-
-Automatische updates buiten de Chrome Web Store vereisen een andere distributiemethode: een update-URL met een XML-update-manifest en een ondertekend CRX-pakket. Het CRX-bestand moet zijn ondertekend met dezelfde privésleutel als de reeds geïnstalleerde extensie. Chrome beperkt zelf gehoste installaties bovendien afhankelijk van het besturingssysteem en het beheerbeleid.
-
-Officiële informatie:
-- [Chrome: Updatelevenscyclus van extensies](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle)
-- [Chrome: Extensies distribueren](https://developer.chrome.com/docs/extensions/how-to/distribute)
-- [Chrome: Zelf gehoste extensies op Linux](https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux)
+Deze handleiding zonder uitpakken geldt voor browsers waarvan het extensiebeheer lokale ZIP-import aanbiedt. De gewone Google Chrome voor Android ondersteunt geen extensies. Desktop-Chrome biedt geen rechtstreekse ZIP-import; **Uitgepakte extensie laden** laadt een map. Een browser zonder ZIP-import kan de ZIP niet via deze methode installeren.
 
 ## Belangrijke opmerkingen
 
-- De updatecontrole leest de versie uit de standaardbranch van GitHub. Codewijzigingen zonder verhoging van het versienummer worden niet als nieuwe update herkend.
-- Verhoog vóór elke release het versienummer in `extension/manifest.json` en voeg bijpassende release-opmerkingen toe.
-- Het updatecentrum downloadt alleen het openbare Extension-ZIP-bestand. Het ontvangt geen GitHub-aanmeldgegevens.
-- De browser installeert de update niet stil; laad de extensie opnieuw via het extensiebeheer.
-- Als je Schleim OS verwijdert en opnieuw installeert en lokale instellingen daardoor verloren gaan, kun je ze terugzetten via **Instellingen → Schleim-account** vanuit je privécloudback-up.
+- De updatecontrole leest de versie uit `extension/manifest.json` in de standaardbranch van GitHub. Codewijzigingen zonder verhoging van het versienummer worden niet als nieuwe update herkend.
+- Verhoog vóór een nieuwe release van de oorspronkelijke Extension het versienummer in `extension/manifest.json` en voeg bijpassende release-opmerkingen toe.
+- Het updatecentrum downloadt alleen het openbare ZIP-bestand van de oorspronkelijke Extension. Het ontvangt geen GitHub-aanmeldgegevens.
+- De browserbevestiging blijft handmatig. Alleen het downloaden van de ZIP installeert de update niet.
+- Als je Schleim OS volledig verwijdert en lokale instellingen verliest, kun je die herstellen vanuit je privécloudback-up via **Instellingen → Schleim-account**.
 
 [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installatiehandleiding](INSTALLATIE.md) · [Eenvoudige taal](../Leichte-Sprache/Niederländisch/UPDATES.md)

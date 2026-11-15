@@ -1,21 +1,27 @@
 # 📥 Schleim OS – Installation Guide
 
-## 1. Download the Extension
+## 1. Download the Extension ZIP
 
 1. Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Extract the ZIP file on your device.
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). For a later update, you can also start the download under **Settings → Update Schleim OS**.
+3. **Do not extract the ZIP file.** Keep it unchanged in your Downloads folder.
 
-This archive contains only the original extension. The `manifest.json` file is directly inside the extracted folder.
+## 2. Import the Extension in your browser
 
-## 2. Load the Extension in your browser
+1. Open the extension manager of a Chromium-based browser that supports importing local ZIP extensions.
+2. Enable **Developer mode** if required.
+3. Select **+ (from .zip/.crx/.user.js)** or the equivalent import option in your browser.
+4. Choose **Schleim-OS-Extension.zip** from your Downloads folder.
+5. Confirm the import and enable Schleim OS if the browser asks.
 
-1. Open your Chromium browser's extension manager. In Chrome, use `chrome://extensions`.
-2. Enable **Developer mode**.
-3. Select **Load unpacked**.
-4. Choose the extracted folder that directly contains `manifest.json`.
+For an update, choose the new ZIP file through the same import option and confirm the replacement or update offered by the browser. Installation is not performed automatically.
 
 **Note:** The separate template is also a directly loadable Chromium extension. It is intended for your own customizations; keep using **Schleim-OS-Extension.zip** for the regular Schleim OS installation.
+
+
+## Browser note
+
+Standard Google Chrome for Android does not support extensions. Desktop Chrome also does not offer direct ZIP import; **Load unpacked** loads a folder. This no-extraction procedure is for compatible Chromium-based browsers whose extension manager provides local ZIP import.
 
 ## 3. Start Schleim OS
 

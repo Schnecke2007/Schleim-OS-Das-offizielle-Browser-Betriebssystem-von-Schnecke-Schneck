@@ -20,7 +20,7 @@
 
 ## Installation
 
-Die dokumentierte Installation importiert die vollständige Repository-ZIP direkt in einem unterstützten Chromium-Browser. Das Archiv enthält die Erweiterung im Unterordner `extension` und wird vor dem Import nicht entpackt. Die ZIP-Importfunktion ist browser- und plattformabhängig.
+Die dokumentierte Installation importiert das Release-Paket `Schleim-OS-Extension.zip` direkt in einem kompatiblen Chromium-Browser mit lokaler ZIP-Importfunktion. Die ZIP-Datei enthält die Extension mit `manifest.json` im Paketstamm und wird vor dem Import nicht entpackt. Die ZIP-Importfunktion ist browser- und plattformabhängig.
 
 ## Speicherung und Cloud-Sicherung
 
@@ -44,7 +44,7 @@ Das Manifest enthält unter anderem `storage` und `clipboardWrite`. Die Zwischen
 
 ## Update-Center
 
-Das Update-Center wird in den Einstellungen angezeigt. Es liest die Manifest-Version im GitHub-Hauptzweig über `raw.githubusercontent.com` und vergleicht sie mit `chrome.runtime.getManifest().version`. Bei einer neueren Version wird ein Link zum vollständigen Repository-ZIP angeboten. Das Skript installiert keine Dateien und ersetzt die laufende Erweiterung nicht.
+Das Update-Center wird in den Einstellungen angezeigt. Es liest die Manifest-Version von `extension/manifest.json` im GitHub-Hauptzweig über `raw.githubusercontent.com` und vergleicht sie mit `chrome.runtime.getManifest().version`. Bei einer neueren Version startet der Download-Button das Release-Asset `Schleim-OS-Extension.zip`. Das Skript installiert keine Dateien und ersetzt die laufende Erweiterung nicht.
 
 Der Browser muss den ZIP-Import oder seine Aktualisierungsfunktion selbst ausführen. `chrome.runtime.requestUpdateCheck()` wird nicht als GitHub-Installer verwendet, da diese API den vom Browser konfigurierten Erweiterungs-Update-Kanal prüft.
 

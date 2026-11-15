@@ -38,4 +38,4 @@ Never put a GitHub App private key, client secret, access token or other secret 
 
 The profile, links, legal text, Store entries and images are demo material. Replace them before publishing. The legal-information screens are placeholders, not legal advice or ready-to-use legal notices.
 
-See the [configuration guide](CONFIGURATION.md) and the files in [docs](docs/).
+See the [configuration guide](CONFIGURATION.md), the [Template 3.14.4 release notes](docs/RELEASE-NOTES-3.14.4.md) and the files in [docs](docs/).

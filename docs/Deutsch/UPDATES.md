@@ -1,41 +1,35 @@
 # Schleim OS aktualisieren
 
-Im [GitHub-Releasebereich](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) findest du die aktuelle Version und beide Download-Pakete. Das Update-Center vergleicht die installierte Version mit der Version in `extension/manifest.json` auf GitHub und bietet den Download der einzelnen Extension an.
+Das Update-Center in Schleim OS lädt die Original-Extension direkt aus dem neuesten [GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest). Du musst die Release-Seite zum Herunterladen nicht selbst öffnen.
 
 ## Update herunterladen
 
 1. Öffne in Schleim OS **Einstellungen → Schleim OS aktualisieren**.
 2. Wähle **Nach Updates suchen**.
-3. Wenn eine neuere Version verfügbar ist, wähle **Neueste ZIP-Version herunterladen**. Der Button lädt **Schleim-OS-Extension.zip** aus dem aktuellen Release.
-4. Alternativ kannst du die [Extension direkt aus dem neuesten Release herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. Wenn eine neuere Version verfügbar ist, wähle **Original-Extension-ZIP herunterladen**.
+4. Der Browser lädt **Schleim-OS-Extension.zip** direkt aus dem neuesten Release herunter. Alternativ kannst du [die Original-Extension direkt aus Releases herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
 
-## Update im Browser abschließen
+## Update im Browser installieren
 
-1. Entpacke die heruntergeladene ZIP-Datei.
-2. Kopiere den Inhalt in denselben lokalen Ordner, in dem die bisherige Extension liegt, und überschreibe die vorhandenen Dateien.
-3. Öffne die Erweiterungsverwaltung deines Browsers (`chrome://extensions` in Chrome).
-4. Klicke bei Schleim OS auf **Neu laden**.
-5. Öffne einen neuen Tab und prüfe im Update-Center die installierte Versionsnummer.
+1. **Entpacke die ZIP-Datei nicht.** Die Datei muss unverändert bleiben.
+2. Öffne die Erweiterungsverwaltung eines Browsers, der lokale ZIP-Erweiterungen importieren kann.
+3. Aktiviere bei Bedarf den Entwicklermodus.
+4. Wähle **+ (from .zip/.crx/.user.js)** oder die entsprechende Import-Funktion deines Browsers.
+5. Wähle die heruntergeladene **Schleim-OS-Extension.zip** aus.
+6. Bestätige den Import beziehungsweise das Update im Browser.
 
-Verwende möglichst denselben Ordner wie bei der bisherigen Installation. Entferne die Erweiterung nicht, wenn du die bestehende lokale Installation weiterverwenden möchtest.
+Der Download wird von Schleim OS gestartet. Die Installation wird aus Sicherheitsgründen nicht automatisch ausgeführt: Den ZIP-Import und die anschließende Bestätigung musst du selbst anstoßen.
 
-## Warum installiert der Button das Update nicht automatisch?
+## Browser-Unterstützung
 
-Chrome erlaubt einer Erweiterung nicht, eine beliebige ZIP-Datei aus dem Internet herunterzuladen und sich selbst damit still zu ersetzen. Der Download ist deshalb ein manueller Schritt. Die Erweiterungsverwaltung lädt die aktualisierten Dateien nach dem Klick auf **Neu laden**.
-
-Automatische Updates außerhalb des Chrome Web Stores benötigen einen anderen Verteilungsweg: eine Update-URL mit XML-Update-Manifest und ein signiertes CRX-Paket. Das CRX muss mit demselben privaten Schlüssel signiert sein wie die bereits installierte Erweiterung. Chrome beschränkt selbst gehostete Installationen zusätzlich je nach Betriebssystem und Verwaltungsrichtlinie.
-
-Offizielle Hinweise:
-- [Chrome: Update-Lebenszyklus von Erweiterungen](https://developer.chrome.com/docs/extensions/develop/concepts/extensions-update-lifecycle)
-- [Chrome: Erweiterungen verteilen](https://developer.chrome.com/docs/extensions/how-to/distribute)
-- [Chrome: Selbst gehostete Erweiterungen unter Linux](https://developer.chrome.com/docs/extensions/how-to/distribute/host-on-linux)
+Diese Anleitung ohne Entpacken gilt für Browser, deren Erweiterungsverwaltung einen lokalen ZIP-Import anbietet. Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome bietet keinen direkten ZIP-Import; dort lädt **Entpackte Erweiterung laden** einen Ordner. Ein Browser ohne ZIP-Import kann die ZIP-Datei nicht auf diesem Weg installieren.
 
 ## Wichtige Hinweise
 
-- Der Versions-Check liest die Versionsnummer aus dem GitHub-Hauptzweig. Änderungen ohne Erhöhung der Versionsnummer werden nicht als neues Update erkannt.
-- Vor jeder Veröffentlichung muss deshalb die Version in `extension/manifest.json` erhöht und eine passende Release-Notes-Datei angelegt werden.
-- Das Update-Center lädt nur die öffentliche Extension-ZIP-Datei herunter. Es erhält keine GitHub-Anmeldedaten.
-- Der Browser installiert das Update nicht still; das Neuladen erfolgt über die Erweiterungsverwaltung.
-- Falls du Schleim OS entfernst und neu installierst und dadurch lokale Einstellungen verloren gehen, kannst du sie über **Einstellungen → Schleim-Konto** aus deinem privaten Cloud-Backup wiederherstellen.
+- Der Versions-Check liest die Version aus `extension/manifest.json` im GitHub-Hauptzweig. Codeänderungen ohne Erhöhung der Versionsnummer werden nicht als neues Update erkannt.
+- Vor einer neuen Original-Extension-Veröffentlichung muss die Version in `extension/manifest.json` erhöht und eine passende Release-Notes-Datei angelegt werden.
+- Das Update-Center lädt nur das öffentliche Original-Extension-ZIP. Es erhält keine GitHub-Anmeldedaten.
+- Die Browser-Bestätigung bleibt manuell. Ein Download allein installiert das Update nicht.
+- Falls du Schleim OS vollständig entfernst und lokale Einstellungen verlierst, kannst du sie über **Einstellungen → Schleim-Konto** aus deinem privaten Cloud-Backup wiederherstellen.
 
 [Zur GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](INSTALLATION.md) · [Leichte Sprache](../Leichte-Sprache/Deutsch/UPDATES.md)

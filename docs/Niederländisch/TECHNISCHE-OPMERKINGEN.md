@@ -20,7 +20,7 @@
 
 ## Installatie
 
-De beschreven installatie importeert de volledige repository-ZIP rechtstreeks in een ondersteunde Chromium-browser. Het archief bevat de extensie in de submap `extension` en wordt vóór het importeren niet uitgepakt. De beschikbaarheid van ZIP-import hangt af van de browser en het platform.
+De beschreven installatie importeert het releasebestand `Schleim-OS-Extension.zip` rechtstreeks in een compatibele Chromium-browser met lokale ZIP-import. Het archief bevat de extensie met `manifest.json` in de hoofdmap en wordt vóór het importeren niet uitgepakt. De beschikbaarheid van ZIP-import hangt af van de browser en het platform.
 
 ## Opslag en cloudback-up
 
@@ -44,7 +44,7 @@ Het manifest bevat onder andere `storage` en `clipboardWrite`. De klembordmachti
 
 ## Updatecentrum
 
-Het updatecentrum staat in de instellingen. Het leest de manifestversie van de standaardbranch op GitHub via `raw.githubusercontent.com` en vergelijkt deze met `chrome.runtime.getManifest().version`. Als er een nieuwere versie is, toont het een link naar de volledige repository-ZIP. Het script installeert geen bestanden en vervangt de actieve extensie niet.
+Het updatecentrum staat in de instellingen. Het leest `extension/manifest.json` van de standaardbranch op GitHub via `raw.githubusercontent.com` en vergelijkt deze met `chrome.runtime.getManifest().version`. Als er een nieuwere versie is, start de downloadknop het releasebestand `Schleim-OS-Extension.zip`. Het script installeert geen bestanden en vervangt de actieve extensie niet.
 
 De browser moet zelf de ZIP-import of de eigen updatefunctie uitvoeren. `chrome.runtime.requestUpdateCheck()` wordt niet als GitHub-installer gebruikt, omdat deze API het updatekanaal controleert dat in de browser is ingesteld.
 

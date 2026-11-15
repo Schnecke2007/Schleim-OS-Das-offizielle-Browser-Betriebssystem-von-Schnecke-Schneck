@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Download Extension only](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -39,7 +39,7 @@ This project is not a standalone operating system that replaces Windows, Android
 - Schleim-Store: access requires signing in with a Schleim account
 - Schleim account with GitHub sign-in and private cloud backup of the home screen
 - Sonos as a regular web app in the Schleim-Store: opens the official Sonos web app in a new browser tab
-- Settings update center: check the GitHub version and download the latest ZIP; the browser handles the final installation
+- Settings update center: check for a newer original Extension release and download its ZIP directly; start the ZIP import and confirmation in the browser afterwards
 - Multilingual interface: German, English and Dutch
 - Separate standalone HTML file included in the project package
 - Ad-free extension interface
@@ -70,21 +70,21 @@ The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizi
 - [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
 - [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – a starter template for your own browser OS.
 
-Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.1.md) for the version history.
+Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.2.md) for the version history.
 
 ## 📥 Download and installation
 
-1. Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download **Schleim OS – Browser Extension (ZIP)**: [Download the Extension ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Extract the ZIP file on your device.
-4. Open your Chromium browser's extension manager, for example `chrome://extensions` in Chrome.
-5. Enable **Developer mode**.
-6. Select **Load unpacked**.
-7. Choose the extracted folder that directly contains `manifest.json`.
+1. For a new installation, open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). When an update is available, you can also start the download directly under **Settings → Update Schleim OS**.
+3. **Do not extract the ZIP file.** Keep it unchanged in your Downloads folder.
+4. Open the extension manager in a Chromium-based browser that supports importing ZIP extensions.
+5. Enable **Developer mode** when required.
+6. Select **+ (from .zip/.crx/.user.js)** or the browser's equivalent extension-file import option.
+7. Choose **Schleim-OS-Extension.zip** and confirm the import. For an update, confirm the replacement or update offered by the browser.
 
-**Important:** For the regular Schleim OS installation, download **Schleim-OS-Extension.zip**. The separate template is also a directly loadable Chromium extension and is intended for building your own customized version.
+**Updates from Schleim OS:** You do not need to open the Releases page manually. Go to **Settings → Update Schleim OS**, check for a newer version and select the download button. Only the subsequent file import and confirmation in the browser must be started manually.
 
-**To update:** Extract the new Extension ZIP into the same local folder and overwrite the existing files. Then open the extension manager and select **Reload** for Schleim OS. Keep using the same folder where possible.
+**Browser compatibility:** ZIP import is not available in every Chromium browser. Standard Google Chrome for Android does not support extensions. Desktop Chrome's developer mode loads unpacked folders and does not provide direct ZIP import. To install without extracting, use a browser whose extension manager explicitly supports local ZIP import.
 
 ## Using Schleim OS and its settings
 
@@ -102,9 +102,9 @@ This guide helps solve common problems with direct ZIP import and using Schleim 
 
 | Problem | Possible solution |
 |---|---|
-| **The extension does not appear.** | Check that Developer mode is enabled and that you selected the extracted folder containing `manifest.json` directly. |
-| **The manifest cannot be found.** | Select the extracted Extension folder, not the parent project folder. |
-| **Installation reports an error.** | Download the Extension ZIP again from the [Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and extract it fully. |
+| **The extension does not appear.** | Check that your browser supports extensions and ZIP import. Then check that Schleim OS is installed and enabled in the extension manager. |
+| **The ZIP-import button is missing.** | Your browser may not support local ZIP import. Use a compatible browser with a feature such as **From .zip/.crx/.user.js**. |
+| **The ZIP file is not recognised.** | Download the unchanged [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) again. Do not extract or modify it. |
 | **Schleim OS does not appear in a new tab.** | Check the extension manager to make sure Schleim OS is installed and enabled. Then open a new tab. |
 | **Another extension also replaces the new-tab page.** | Temporarily disable other extensions that also override the new-tab page. |
 | **Changes are not displayed.** | Open the extension manager and use **Reload** or **Refresh** for Schleim OS, if available. Then open a new tab. |
@@ -204,7 +204,7 @@ Want to create your own version? The complete neutral template, including demo p
 
 [📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
 
-**Load the template directly:** Extract the template ZIP. Open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose the extracted template folder that directly contains `manifest.json`. No renaming is required.
+**Import the template directly:** Do not extract the Template ZIP. Open the extension manager in a browser with ZIP import, enable Developer mode if required, select **+ (from .zip/.crx/.user.js)** and import `Schleim-OS-Extension-Template.zip`. The browser asks you to confirm the import manually.
 
 ## 🔐 Privacy and permissions
 

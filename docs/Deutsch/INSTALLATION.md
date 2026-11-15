@@ -1,21 +1,27 @@
 # 📥 Schleim OS – Installationsanleitung
 
-## 1. Extension herunterladen
+## 1. Extension-ZIP herunterladen
 
 1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
-3. Entpacke die ZIP-Datei auf deinem Gerät.
+2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Bei einem späteren Update kannst du den Download auch über **Einstellungen → Schleim OS aktualisieren** starten.
+3. **Entpacke die ZIP-Datei nicht.** Lass sie unverändert im Download-Ordner.
 
-Das Archiv enthält nur die Original-Extension. Die Datei `manifest.json` liegt direkt im entpackten Ordner.
+## 2. Extension im Browser importieren
 
-## 2. Extension im Browser laden
+1. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der den Import lokaler ZIP-Erweiterungen unterstützt.
+2. Aktiviere bei Bedarf den **Entwicklermodus**.
+3. Wähle **+ (from .zip/.crx/.user.js)** oder die vergleichbare Import-Funktion deines Browsers.
+4. Wähle **Schleim-OS-Extension.zip** aus dem Download-Ordner.
+5. Bestätige den Import und aktiviere Schleim OS, falls der Browser danach fragt.
 
-1. Öffne die Erweiterungsverwaltung deines Chromium-Browsers. In Chrome lautet die Adresse `chrome://extensions`.
-2. Aktiviere den **Entwicklermodus**.
-3. Wähle **Entpackte Erweiterung laden**.
-4. Wähle den entpackten Ordner, in dem sich `manifest.json` direkt befindet.
+Bei einem Update wählst du die neue ZIP-Datei auf demselben Weg und bestätigst den vom Browser angebotenen Austausch beziehungsweise das Update. Die Installation wird nicht automatisch ausgeführt.
 
 **Hinweis:** Das separate Template ist ebenfalls eine direkt ladbare Chromium-Erweiterung. Es ist für eigene Anpassungen gedacht; für die normale Schleim-OS-Installation verwende weiterhin **Schleim-OS-Extension.zip**.
+
+
+## Browser-Hinweis
+
+Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome bietet keinen direkten ZIP-Import. Für die Installation ohne Entpacken brauchst du einen kompatiblen Browser mit lokalem ZIP-Import.
 
 ## 3. Schleim OS starten
 

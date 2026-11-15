@@ -34,7 +34,7 @@ You can check for new versions in Settings.
 
 ## Install the extension
 
-Download the complete ZIP file from GitHub. Do not extract it. Import the ZIP file in a browser that supports direct ZIP import.
+Download **Schleim-OS-Extension.zip** from the latest [GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). Do not extract the ZIP. Import it in a browser that supports direct ZIP import.
 
 Read the [plain-language installation guide](INSTALLATION.md).
 

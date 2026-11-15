@@ -45,7 +45,7 @@ Du kannst in den Einstellungen nach neuen Versionen suchen.
 
 ## Die Erweiterung installieren
 
-Lade zuerst die vollständige ZIP-Datei von GitHub herunter. Entpacke die Datei nicht. Danach importierst du die ZIP-Datei in einem Browser, der diesen Import unterstützt.
+Lade **Schleim-OS-Extension.zip** aus dem neuesten [GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Entpacke die ZIP-Datei nicht. Importiere sie anschließend in einem Browser, der den direkten ZIP-Import unterstützt.
 
 Die genaue Anleitung steht hier: [Installation in Leichter Sprache](INSTALLATION.md).
 

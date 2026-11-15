@@ -4,7 +4,7 @@
   const OWNER = 'YOUR_GITHUB_USERNAME';
   const REPOSITORY = 'YOUR_REPOSITORY_NAME';
   const RAW_MANIFEST_URL = `https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/main/manifest.json`;
-  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/archive/refs/heads/main.zip`;
+  const ZIP_DOWNLOAD_URL = `https://github.com/${OWNER}/${REPOSITORY}/releases/latest/download/Schleim-OS-Extension-Template.zip`;
   const DOCUMENTATION_URLS = {
     de: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
     en: `https://github.com/${OWNER}/${REPOSITORY}/blob/main/docs/INSTALLATION.md`,
@@ -20,12 +20,12 @@
       checking: 'GitHub-Version wird geprüft …',
       latest: 'Du verwendest bereits die neueste veröffentlichte Version.',
       available: 'Eine neuere Version ist verfügbar:',
-      download: 'Neueste ZIP-Version herunterladen',
+      download: 'Template-ZIP herunterladen',
       older: 'Die GitHub-Version ist älter als deine installierte Version. Es wird kein Downgrade angeboten.',
       invalid: 'GitHub hat keine gültige Browser-OS-Version zurückgegeben.',
       error: 'Die GitHub-Version konnte nicht abgerufen werden. Prüfe deine Internetverbindung und versuche es erneut.',
       checked: 'Zuletzt geprüft:',
-      note: 'Der Download installiert das Update nicht selbst. Öffne danach die Erweiterungsverwaltung und aktualisiere Browser OS mit der Import-Funktion deines Browsers. Eine automatische Installation aus einer ZIP-Datei wird von Chrome nicht freigegeben.',
+      note: 'Der Button lädt das Template-ZIP aus dem neuesten Release deines konfigurierten GitHub-Repositories herunter. Entpacke die ZIP-Datei nicht. Öffne danach die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle „From .zip/.crx/.user.js“, suche die heruntergeladene Template-Datei und bestätige den Import oder das Update manuell.',
       guide: 'Update-Anleitung öffnen',
       checkAgain: 'Erneut prüfen'
     },
@@ -37,12 +37,12 @@
       checking: 'Checking the GitHub version …',
       latest: 'You are already using the latest published version.',
       available: 'A newer version is available:',
-      download: 'Download the latest ZIP version',
+      download: 'Download the Template ZIP',
       older: 'The GitHub version is older than your installed version. No downgrade is offered.',
       invalid: 'GitHub did not return a valid Browser OS version.',
       error: 'Could not retrieve the GitHub version. Check your internet connection and try again.',
       checked: 'Last checked:',
-      note: 'The download does not install the update by itself. Then open your browser’s extension manager and update Browser OS with the import function supported by your browser. Chrome does not allow silent installation from a ZIP file.',
+      note: 'This button downloads the Template ZIP from the latest release of your configured GitHub repository. Do not extract the ZIP. Then open the extension manager in a browser with ZIP import, select “From .zip/.crx/.user.js”, choose the downloaded template file and manually confirm the import or update.',
       guide: 'Open update guide',
       checkAgain: 'Check again'
     },
@@ -54,12 +54,12 @@
       checking: 'GitHub-versie controleren …',
       latest: 'Je gebruikt al de nieuwste gepubliceerde versie.',
       available: 'Er is een nieuwere versie beschikbaar:',
-      download: 'Nieuwste ZIP-versie downloaden',
+      download: 'Template-ZIP downloaden',
       older: 'De GitHub-versie is ouder dan je geïnstalleerde versie. Er wordt geen downgrade aangeboden.',
       invalid: 'GitHub heeft geen geldige Browser OS-versie teruggegeven.',
       error: 'De GitHub-versie kon niet worden opgehaald. Controleer je internetverbinding en probeer het opnieuw.',
       checked: 'Laatst gecontroleerd:',
-      note: 'De download installeert de update niet vanzelf. Open daarna het extensiebeheer van je browser en werk Browser OS bij met de importfunctie die je browser ondersteunt. Chrome staat stille installatie vanuit een ZIP-bestand niet toe.',
+      note: 'Deze knop downloadt het Template-ZIP-bestand uit de nieuwste release van je ingestelde GitHub-repository. Pak het ZIP-bestand niet uit. Open daarna het extensiebeheer van een browser met ZIP-import, kies “From .zip/.crx/.user.js”, selecteer het gedownloade templatebestand en bevestig de import of update handmatig.',
       guide: 'Updatehandleiding openen',
       checkAgain: 'Opnieuw controleren'
     }
@@ -125,7 +125,7 @@
         </div>
         <div class="ssos-form-actions ssos-update-actions">
           <button class="app-button" type="button" data-ssos-update-check>${text.check}</button>
-          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" target="_blank" rel="noopener noreferrer" hidden>${text.download}</a>
+          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" download="Schleim-OS-Extension-Template.zip" rel="noopener noreferrer" hidden>${text.download}</a>
         </div>
         <p class="ssos-update-status" data-ssos-update-status role="status" aria-live="polite"></p>
         <p class="ssos-update-note">${text.note}</p>
@@ -139,6 +139,16 @@
     const checkButton = root.querySelector('[data-ssos-update-check]');
     const downloadLink = root.querySelector('[data-ssos-update-download]');
     const status = root.querySelector('[data-ssos-update-status]');
+
+    downloadLink?.addEventListener('click', () => {
+      if (status) {
+        status.textContent = lang === 'de'
+          ? 'Der Template-Download wurde gestartet. Importiere die ZIP-Datei anschließend manuell in der Erweiterungsverwaltung.'
+          : lang === 'nl'
+            ? 'De template-download is gestart. Importeer het ZIP-bestand daarna handmatig via het extensiebeheer.'
+            : 'The template download has started. Then manually import the ZIP file through your browser’s extension manager.';
+      }
+    });
 
     checkButton?.addEventListener('click', async () => {
       if (!checkButton || !status || !downloadLink) return;

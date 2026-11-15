@@ -1,19 +1,19 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.15.1 · Chromium-Erweiterung · Manifest V3**
+**Version 3.15.2 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
 ## Installation
 
-1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
-3. Entpacke die ZIP-Datei.
-4. Öffne in Chrome `chrome://extensions` oder die Erweiterungsverwaltung deines Chromium-Browsers.
-5. Aktiviere den Entwicklermodus und wähle **Entpackte Erweiterung laden**.
-6. Wähle den Ordner, in dem `manifest.json` direkt liegt.
+1. Lade die Original-Extension aus dem [neuesten GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
+2. Für Updates kannst du den Download auch direkt unter **Einstellungen → Schleim OS aktualisieren** starten.
+3. **Entpacke die ZIP-Datei nicht.**
+4. Öffne die Erweiterungsverwaltung eines Chromium-Browsers, der lokale ZIP-Erweiterungen importieren kann.
+5. Aktiviere bei Bedarf den Entwicklermodus und wähle **+ (from .zip/.crx/.user.js)**.
+6. Wähle **Schleim-OS-Extension.zip** und bestätige den Import beziehungsweise das Update manuell.
 
-Das Release-Paket enthält nur die Original-Extension, nicht das vollständige Repository. Für Updates entpackst du die neue ZIP in denselben Ordner, überschreibst die alten Dateien und klickst anschließend in der Erweiterungsverwaltung auf **Neu laden**.
+Die ZIP-Datei ist das fertige Original-Extension-Paket und wird direkt aus GitHub Releases heruntergeladen. Nur das Importieren und Bestätigen im Browser bleibt ein manueller Schritt. Normales Chrome für Android unterstützt keine Erweiterungen; Desktop-Chrome bietet keinen direkten ZIP-Import.
 
 [Release-Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](../docs/Deutsch/INSTALLATION.md)
 
@@ -26,7 +26,7 @@ Das Release-Paket enthält nur die Original-Extension, nicht das vollständige R
 - Sonos als normale Web-App im Schleim-Store; der Start erfolgt wie bei anderen Store-Apps in einem neuen Browser-Tab
 - Store-Zugriff nur nach Anmeldung mit einem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsprüfung und Gerätecode
-- Update-Center: GitHub-Version prüfen und aktuelle Repository-ZIP herunterladen; die Browser-Installation bleibt ein bestätigter manueller Schritt
+- Update-Center: GitHub-Version prüfen und die Original-Extension-ZIP aus dem neuesten Release direkt herunterladen; ZIP-Import und Bestätigung startest du manuell im Browser
 - Fotos-App als private Foto-/Video-Mediathek mit Suche, Upload und Datumsordnern
 - Hintergrund-Upload über einen Offscreen-Prozess: Uploads laufen beim Schließen des Fotos-Tabs weiter, solange Chrome geöffnet bleibt
 - Fortschrittsbenachrichtigung mit Prozentanzeige und Abschlussmeldung, die direkt die Fotos-App öffnet
@@ -45,7 +45,7 @@ Das Release-Paket enthält nur die Original-Extension, nicht das vollständige R
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.15.1](docs/RELEASE-NOTES-3.15.1.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
+- [Release Notes 3.15.2](docs/RELEASE-NOTES-3.15.2.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
 - [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
@@ -72,9 +72,9 @@ Die Store-Katalog- und Bewertungsdateien im öffentlichen GitHub-Repository blei
 
 ## Updates
 
-Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version wird `Schleim-OS-Extension.zip` aus dem neuesten GitHub-Release angeboten.
+Unter **Einstellungen → Schleim OS aktualisieren** vergleicht das Update-Center die installierte Version mit `extension/manifest.json` im GitHub-Hauptzweig. Bei einer neueren Version lädt der Download-Button die Datei `Schleim-OS-Extension.zip` direkt aus dem neuesten Release herunter.
 
-Entpacke die ZIP-Datei in denselben lokalen Ordner, überschreibe die bisherigen Dateien und klicke in der Erweiterungsverwaltung auf **Neu laden**. Die separate Template-ZIP ist nicht für die normale Installation gedacht. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
+Entpacke die ZIP-Datei nicht. Öffne danach die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle **+ (from .zip/.crx/.user.js)** und bestätige den Import beziehungsweise das Update. Die manuelle Bestätigung im Browser bleibt erforderlich. Die Template-ZIP ist für eigene angepasste Varianten gedacht. Siehe [Update-Anleitung](../docs/Deutsch/UPDATES.md), [English](../docs/Englisch/UPDATES.md) und [Nederlands](../docs/Niederländisch/UPDATES.md).
 
 ## Sonos-Integration
 

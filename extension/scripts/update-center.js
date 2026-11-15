@@ -20,12 +20,12 @@
       checking: 'GitHub-Version wird geprüft …',
       latest: 'Du verwendest bereits die neueste veröffentlichte Version.',
       available: 'Eine neuere Version ist verfügbar:',
-      download: 'Neueste ZIP-Version herunterladen',
+      download: 'Original-Extension-ZIP herunterladen',
       older: 'Die GitHub-Version ist älter als deine installierte Version. Es wird kein Downgrade angeboten.',
       invalid: 'GitHub hat keine gültige Schleim-OS-Version zurückgegeben.',
       error: 'Die GitHub-Version konnte nicht abgerufen werden. Prüfe deine Internetverbindung und versuche es erneut.',
       checked: 'Zuletzt geprüft:',
-      note: 'Der Download installiert das Update nicht selbst. Entpacke die ZIP-Datei in denselben lokalen Extension-Ordner, überschreibe die vorhandenen Dateien und klicke danach in der Erweiterungsverwaltung auf Neu laden. Verwende möglichst denselben Ordner wie bisher.',
+      note: 'Der Button lädt die Original-Extension direkt aus dem neuesten GitHub-Release herunter. Entpacke die ZIP-Datei nicht. Öffne danach die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle „From .zip/.crx/.user.js“, suche die heruntergeladene Datei und bestätige den Import oder das Update manuell. Nicht jeder Browser unterstützt diesen Import.',
       guide: 'Update-Anleitung öffnen',
       checkAgain: 'Erneut prüfen'
     },
@@ -37,12 +37,12 @@
       checking: 'Checking the GitHub version …',
       latest: 'You are already using the latest published version.',
       available: 'A newer version is available:',
-      download: 'Download the latest ZIP version',
+      download: 'Download original Extension ZIP',
       older: 'The GitHub version is older than your installed version. No downgrade is offered.',
       invalid: 'GitHub did not return a valid Schleim OS version.',
       error: 'Could not retrieve the GitHub version. Check your internet connection and try again.',
       checked: 'Last checked:',
-      note: 'The download does not install the update by itself. Extract the ZIP into the same local Extension folder, overwrite the existing files, and then select Reload in your browser’s extension manager. Keep using the same folder where possible.',
+      note: 'This button downloads the original Extension directly from the latest GitHub release. Do not extract the ZIP. Then open the extension manager in a browser with ZIP import, select “From .zip/.crx/.user.js”, choose the downloaded file and manually confirm the import or update. Not every browser supports this import.',
       guide: 'Open update guide',
       checkAgain: 'Check again'
     },
@@ -54,12 +54,12 @@
       checking: 'GitHub-versie controleren …',
       latest: 'Je gebruikt al de nieuwste gepubliceerde versie.',
       available: 'Er is een nieuwere versie beschikbaar:',
-      download: 'Nieuwste ZIP-versie downloaden',
+      download: 'Oorspronkelijke Extension-ZIP downloaden',
       older: 'De GitHub-versie is ouder dan je geïnstalleerde versie. Er wordt geen downgrade aangeboden.',
       invalid: 'GitHub heeft geen geldige Schleim OS-versie teruggegeven.',
       error: 'De GitHub-versie kon niet worden opgehaald. Controleer je internetverbinding en probeer het opnieuw.',
       checked: 'Laatst gecontroleerd:',
-      note: 'De download installeert de update niet vanzelf. Pak het ZIP-bestand uit in dezelfde lokale Extension-map, overschrijf de bestaande bestanden en kies daarna Opnieuw laden in het extensiebeheer van je browser. Gebruik indien mogelijk dezelfde map.',
+      note: 'Deze knop downloadt de oorspronkelijke Extension rechtstreeks uit de nieuwste GitHub-release. Pak het ZIP-bestand niet uit. Open daarna het extensiebeheer van een browser met ZIP-import, kies “From .zip/.crx/.user.js”, selecteer het gedownloade bestand en bevestig de import of update handmatig. Niet elke browser ondersteunt deze import.',
       guide: 'Updatehandleiding openen',
       checkAgain: 'Opnieuw controleren'
     }
@@ -125,7 +125,7 @@
         </div>
         <div class="ssos-form-actions ssos-update-actions">
           <button class="app-button" type="button" data-ssos-update-check>${text.check}</button>
-          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" target="_blank" rel="noopener noreferrer" hidden>${text.download}</a>
+          <a class="app-button secondary" data-ssos-update-download href="${ZIP_DOWNLOAD_URL}" download="Schleim-OS-Extension.zip" rel="noopener noreferrer" hidden>${text.download}</a>
         </div>
         <p class="ssos-update-status" data-ssos-update-status role="status" aria-live="polite"></p>
         <p class="ssos-update-note">${text.note}</p>
@@ -139,6 +139,16 @@
     const checkButton = root.querySelector('[data-ssos-update-check]');
     const downloadLink = root.querySelector('[data-ssos-update-download]');
     const status = root.querySelector('[data-ssos-update-status]');
+
+    downloadLink?.addEventListener('click', () => {
+      if (status) {
+        status.textContent = lang === 'de'
+          ? 'Der Download wurde gestartet. Importiere anschließend die ZIP-Datei manuell in der Erweiterungsverwaltung.'
+          : lang === 'nl'
+            ? 'De download is gestart. Importeer het ZIP-bestand daarna handmatig via het extensiebeheer.'
+            : 'The download has started. Then manually import the ZIP file through your browser’s extension manager.';
+      }
+    });
 
     checkButton?.addEventListener('click', async () => {
       if (!checkButton || !status || !downloadLink) return;

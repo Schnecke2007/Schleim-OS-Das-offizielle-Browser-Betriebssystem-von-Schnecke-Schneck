@@ -1,14 +1,16 @@
-# Schleim OS 3.15.1 – Installationsanleitung
+# Schleim OS 3.15.2 – Installationsanleitung
 
-1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter.
-3. Entpacke die ZIP-Datei auf deinem Gerät.
-4. Öffne die Erweiterungsverwaltung deines Chromium-Browsers. In Chrome lautet die Adresse `chrome://extensions`.
-5. Aktiviere den **Entwicklermodus**.
-6. Wähle **Entpackte Erweiterung laden**.
-7. Wähle den entpackten Ordner aus, in dem sich `manifest.json` direkt befindet.
+1. Lade [Schleim-OS-Extension.zip aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Bei Updates kannst du den Download auch unter **Einstellungen → Schleim OS aktualisieren** starten.
+2. **Entpacke die ZIP-Datei nicht.**
+3. Öffne die Erweiterungsverwaltung eines Chromium-Browsers mit lokalem ZIP-Import.
+4. Aktiviere bei Bedarf den Entwicklermodus und wähle **+ (from .zip/.crx/.user.js)**.
+5. Wähle die heruntergeladene ZIP-Datei und bestätige den Import beziehungsweise das Update.
 
-Das Release-Paket enthält ausschließlich die Original-Extension. Das Template wird als separates Paket angeboten und enthält absichtlich `manifest.template.json`, damit es nicht versehentlich als zweite Erweiterung geladen wird.
+Das Release-Paket enthält ausschließlich die Original-Extension. Das Template ist ein separates ZIP-Paket und wird nicht für die normale Schleim-OS-Installation verwendet.
+
+## Browser-Hinweis
+
+Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome bietet keinen direkten ZIP-Import. Für die Installation ohne Entpacken brauchst du einen kompatiblen Browser mit lokalem ZIP-Import.
 
 ## Schleim-Store
 
@@ -18,7 +20,7 @@ Anleitung: [Schleim-Store – Deutsch](../../Store/Deutsch/README.md) · [Englis
 
 ## Updates nach der Erstinstallation
 
-Nach einer neuen Version kannst du im Update-Center die aktuelle Extension-ZIP herunterladen. Entpacke sie in denselben Ordner, überschreibe die vorhandenen Dateien und klicke in der Erweiterungsverwaltung auf **Neu laden**.
+Nach einer neuen Version kannst du den Download im Update-Center unter **Einstellungen → Schleim OS aktualisieren** starten. Entpacke die ZIP-Datei nicht. Öffne danach die Erweiterungsverwaltung, wähle **+ (from .zip/.crx/.user.js)**, importiere die heruntergeladene ZIP-Datei und bestätige das Update manuell.
 
 Anleitung: [Update-Anleitung](../../docs/Deutsch/UPDATES.md).
 

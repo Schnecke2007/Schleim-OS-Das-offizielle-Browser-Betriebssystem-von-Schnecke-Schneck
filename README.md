@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Nur Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -39,7 +39,7 @@ Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder L
 - Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
 - Sonos als normale Web-App im Schleim-Store: öffnet die offizielle Sonos-Web-App in einem neuen Browser-Tab
-- Update-Center in den Einstellungen: GitHub-Version prüfen und neueste ZIP-Datei herunterladen; die Installation bestätigt der Browser
+- Update-Center in den Einstellungen: neue Original-Extension-Version prüfen und das Release-ZIP direkt herunterladen; den ZIP-Import und die Bestätigung startest du anschließend im Browser
 - Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
 - Separate Standalone-HTML-Datei im Projektpaket
 - Werbefreie Erweiterungsoberfläche
@@ -70,21 +70,21 @@ Auf der [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-o
 - [**Schleim OS – Browser-Extension herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – nur die fertige Original-Erweiterung.
 - [**Schleim OS – neutrales Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – Vorlage für eigene Browser-Betriebssysteme.
 
-Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.15.1.md).
+Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.15.2.md).
 
 ## 📥 Download und Installation
 
-1. Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade **Schleim OS – Browser-Extension (ZIP)** herunter: [Direkt herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Entpacke die ZIP-Datei auf deinem Gerät.
-4. Öffne die Erweiterungsverwaltung deines Chromium-Browsers, zum Beispiel `chrome://extensions`.
-5. Aktiviere den **Entwicklermodus**.
-6. Klicke auf **Entpackte Erweiterung laden**.
-7. Wähle den entpackten Ordner aus, in dem sich `manifest.json` direkt befindet.
+1. Für eine Neuinstallation öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Lade [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Bei einem verfügbaren Update kannst du den Download auch direkt über **Einstellungen → Schleim OS aktualisieren** starten.
+3. **Entpacke die ZIP-Datei nicht.** Lass sie unverändert im Download-Ordner.
+4. Öffne die Erweiterungsverwaltung eines Chromium-basierten Browsers, der den Import von ZIP-Erweiterungen unterstützt.
+5. Aktiviere bei Bedarf den **Entwicklermodus**.
+6. Wähle **+ (from .zip/.crx/.user.js)** oder die entsprechende Funktion zum Importieren einer Erweiterungsdatei.
+7. Wähle **Schleim-OS-Extension.zip** aus und bestätige den Import. Bei einem Update bestätigst du den vom Browser angebotenen Austausch beziehungsweise die Aktualisierung.
 
-**Wichtig:** Für die normale Nutzung von Schleim OS lade **Schleim-OS-Extension.zip** herunter. Das separate Template ist ebenfalls eine direkt ladbare Chromium-Erweiterung und dient zum Anpassen einer eigenen Variante.
+**Updates über Schleim OS:** Du musst die Release-Seite nicht manuell aufrufen. Öffne **Einstellungen → Schleim OS aktualisieren**, suche nach einer neuen Version und wähle den Download-Button. Nur der anschließende Import und die Bestätigung im Browser müssen manuell angestoßen werden.
 
-**Bei einem Update:** Entpacke die neue Extension-ZIP in denselben lokalen Ordner und überschreibe die vorhandenen Dateien. Öffne anschließend die Erweiterungsverwaltung und klicke bei Schleim OS auf **Neu laden**. Verwende möglichst denselben Ordner wie bei der bisherigen Installation.
+**Wichtig zur Browser-Unterstützung:** Die ZIP-Import-Funktion ist nicht Bestandteil jedes Chromium-Browsers. Das normale Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome lädt im Entwicklermodus entpackte Ordner und bietet keinen direkten ZIP-Import. Für die Installation ohne Entpacken benötigst du einen Browser, dessen Erweiterungsverwaltung den lokalen ZIP-Import ausdrücklich anbietet.
 
 ## Bedienung und Einstellungen
 
@@ -102,9 +102,9 @@ Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und be
 
 | Problem | Mögliche Lösung |
 |---|---|
-| **Die Extension wird nicht angezeigt.** | Prüfe, ob der Entwicklermodus aktiv ist und ob du den entpackten Ordner gewählt hast, in dem `manifest.json` direkt liegt. |
-| **Das Manifest wird nicht gefunden.** | Wähle den entpackten Extension-Ordner und nicht den übergeordneten Projektordner. |
-| **Die Installation meldet einen Fehler.** | Lade die Extension-ZIP erneut von der [Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) herunter und entpacke sie vollständig. |
+| **Die Extension wird nicht angezeigt.** | Prüfe, ob dein Browser Erweiterungen und den ZIP-Import unterstützt. Prüfe danach, ob Schleim OS in der Erweiterungsverwaltung installiert und aktiviert ist. |
+| **Die ZIP-Import-Schaltfläche fehlt.** | Dein Browser unterstützt möglicherweise keinen lokalen ZIP-Import. Verwende einen kompatiblen Browser mit einer Funktion wie **From .zip/.crx/.user.js**. |
+| **Die ZIP-Datei wird nicht erkannt.** | Lade die unveränderte [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) erneut herunter. Entpacke oder bearbeite sie nicht. |
 | **Schleim OS erscheint nicht in einem neuen Tab.** | Prüfe in der Erweiterungsverwaltung, ob Schleim OS installiert und aktiviert ist. Öffne danach einen neuen Tab. |
 | **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
 | **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
@@ -207,7 +207,7 @@ Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Templa
 
 [📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
 
-**Template direkt laden:** Entpacke das Template-ZIP. Öffne anschließend `chrome://extensions`, aktiviere den Entwicklermodus, wähle **Entpackte Erweiterung laden** und dann den Template-Ordner, in dem `manifest.json` direkt liegt. Ein Umbenennen ist nicht nötig.
+**Template direkt importieren:** Entpacke das Template-ZIP nicht. Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, aktiviere bei Bedarf den Entwicklermodus, wähle **+ (from .zip/.crx/.user.js)** und importiere `Schleim-OS-Extension-Template.zip`. Der Browser fordert dich zur manuellen Bestätigung auf.
 
 ## 🔐 Datenschutz und Berechtigungen
 

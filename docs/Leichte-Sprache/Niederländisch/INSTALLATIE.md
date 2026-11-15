@@ -2,25 +2,36 @@
 
 ## Voordat je begint
 
-Je hebt een Chromium-browser nodig.
-De browser moet extensies ondersteunen.
+Je hebt een browser nodig die Chrome-extensies ondersteunt.
+De browser moet ZIP-bestanden als extensies kunnen importeren.
 
 ## Stap 1: Download de extensie
 
 1. Open de [Releases-pagina van Schleim OS](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download **Schleim-OS-Extension.zip**: [Download de extensie](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Pak het ZIP-bestand uit.
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. **Pak het ZIP-bestand niet uit.**
 
-## Stap 2: Laad de extensie
+Voor een update kun je de download ook starten in Schleim OS:
+**Instellingen → Schleim OS bijwerken → Controleren op updates**.
 
-1. Open het extensiebeheer. Gebruik in Chrome `chrome://extensions`.
-2. Schakel **Ontwikkelaarsmodus** in.
-3. Kies **Uitgepakte extensie laden**.
-4. Selecteer de map waarin `manifest.json` direct staat.
+## Stap 2: De extensie importeren
 
-**Belangrijk:** Selecteer de uitgepakte Extension-map. Selecteer niet de volledige GitHub-projectmap.
+1. Open het extensiebeheer van je browser.
+2. Schakel zo nodig **Ontwikkelaarsmodus** in.
+3. Tik op **+ (from .zip/.crx/.user.js)**.
+4. Selecteer het gedownloade bestand **Schleim-OS-Extension.zip**.
+5. Bevestig de import.
 
-Je kunt de template ook als aparte extensie laden. Deze is bedoeld voor je eigen wijzigingen. Gebruik voor de gewone installatie nog steeds **Schleim-OS-Extension.zip**.
+Bevestig bij een update ook de update in je browser.
+
+## Belangrijk
+
+De download vanuit Schleim OS installeert de update niet vanzelf.
+Je moet de import zelf starten en bevestigen in je browser.
+
+De gewone Google Chrome voor Android ondersteunt geen extensies.
+Desktop-Chrome kan ZIP-bestanden ook niet rechtstreeks importeren.
+Je hebt een browser met directe ZIP-import nodig.
 
 ## Stap 3: Open Schleim OS
 

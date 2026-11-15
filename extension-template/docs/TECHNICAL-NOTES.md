@@ -45,7 +45,7 @@ Personalization and home-screen order are stored locally in the browser profile.
 
 ## Update center
 
-The version check reads the root-level `manifest.json` from the configured GitHub repository branch through `raw.githubusercontent.com`. It compares the numeric manifest version and offers a ZIP download when a newer version is available. The extension does not replace its own files or silently install downloaded packages; users must complete installation through the browser's supported extension-management flow.
+The version check reads the root-level `manifest.json` from the configured GitHub repository branch through `raw.githubusercontent.com`. It compares the numeric manifest version and downloads the `Schleim-OS-Extension-Template.zip` asset from that repository's latest release when a newer version is available. It never downloads the original Schleim OS Extension ZIP or the source-archive ZIP. The downloaded ZIP is not extracted or silently installed; users must import the Template ZIP through a compatible browser's ZIP-import option and confirm the action manually.
 
 ## Store and external services
 

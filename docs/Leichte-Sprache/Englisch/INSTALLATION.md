@@ -2,25 +2,36 @@
 
 ## Before you start
 
-You need a Chromium-based browser.
-The browser must support extensions.
+You need a browser that supports Chrome extensions.
+The browser must be able to import ZIP files as extensions.
 
 ## Step 1: Download the Extension
 
 1. Open the [Schleim OS Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Download **Schleim-OS-Extension.zip**: [Download the Extension](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
-3. Extract the ZIP file.
+2. Download [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+3. **Do not extract the ZIP file.**
 
-## Step 2: Load the Extension
+For an update, you can also start the download in Schleim OS:
+**Settings → Update Schleim OS → Check for updates**.
 
-1. Open the extension manager. In Chrome, use `chrome://extensions`.
-2. Turn on **Developer mode**.
-3. Select **Load unpacked**.
-4. Choose the folder that directly contains `manifest.json`.
+## Step 2: Import the Extension
 
-**Important:** Select the extracted Extension folder. Do not select the complete GitHub project folder.
+1. Open your browser's extension manager.
+2. Turn on **Developer mode** if needed.
+3. Tap **+ (from .zip/.crx/.user.js)**.
+4. Choose the downloaded **Schleim-OS-Extension.zip** file.
+5. Confirm the import.
 
-You can also load the template as a separate extension. It is meant for your own changes. For the regular Schleim OS installation, keep using **Schleim-OS-Extension.zip**.
+For an update, confirm the update in your browser too.
+
+## Important
+
+The download from Schleim OS does not install the update by itself.
+You must start and confirm the import in your browser.
+
+Standard Google Chrome for Android does not support extensions.
+Desktop Chrome cannot import ZIP files directly either.
+You need a browser with direct ZIP import.
 
 ## Step 3: Open Schleim OS
 

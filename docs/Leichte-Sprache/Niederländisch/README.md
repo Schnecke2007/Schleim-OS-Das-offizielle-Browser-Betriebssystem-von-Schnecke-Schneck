@@ -34,9 +34,9 @@ Je kunt in de instellingen controleren op nieuwe versies.
 
 ## De uitbreiding installeren
 
-Download het volledige ZIP-bestand van GitHub.
-Pak het bestand niet uit.
-Importeer het ZIP-bestand in een browser die deze import ondersteunt.
+Download **Schleim-OS-Extension.zip** uit de nieuwste [GitHub-release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip).
+Pak het ZIP-bestand niet uit.
+Importeer het in een browser die rechtstreekse ZIP-import ondersteunt.
 
 Lees de [installatiehandleiding in eenvoudige taal](INSTALLATIE.md).
 
