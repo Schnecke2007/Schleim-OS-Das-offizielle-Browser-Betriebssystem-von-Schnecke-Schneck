@@ -1,4 +1,4 @@
-# Technische Hinweise – Version 3.14.1
+# Technische Hinweise – Version 3.15.0
 
 ## Plattform und Erweiterungsformat
 
@@ -13,7 +13,10 @@
 - `scripts/app.js` steuert Apps und Navigation.
 - `scripts/personalization.js` verwaltet Personalisierung, Homescreen-Reihenfolge und den Store.
 - `scripts/schleim-account.js` verwaltet GitHub-App-Anmeldung, Geräteautorisierung, Installationserkennung, Einstellungs-Backup und den Zugriff auf das private Medien-Repository.
-- `scripts/schleim-photos-cloud.js` verwaltet Foto-/Video-Uploads, Metadaten, Metadatensuche, Kamera, Galerie und Speicherstatistik.
+- `scripts/schleim-photos-cloud.js` verwaltet Fotos-App, Upload-Warteschlange, Metadaten, Metadatensuche, Kamera, Galerie und Speicherstatistik.
+- `scripts/media-upload-worker.js` koordiniert Hintergrundjobs, Fortschritts-/Abschlussbenachrichtigungen und GitHub-Sitzung.
+- `scripts/media-upload-offscreen.js` komprimiert Fotos, kodiert Videos neu und überträgt Medien unabhängig vom geöffneten Tab.
+- `pages/media-upload.html` ist die statische Offscreen-Seite für den Medienprozess.
 - `scripts/schleim-photo-ai.js` nutzt optional die Chrome Prompt API für lokale Bildbeschreibungen und KI-gestützte Suchbegriff-Erweiterung.
 - `scripts/slime-store-admin.js` stellt das Store-Admin-Portal bereit.
 - `scripts/update-center.js` vergleicht die installierte Version mit dem öffentlichen GitHub-Manifest und zeigt bei Bedarf den ZIP-Download.
@@ -26,6 +29,8 @@
 Das Manifest verwendet unter anderem:
 - `storage` für lokale Erweiterungsdaten und die Schleim-Konto-Sitzung
 - `clipboardWrite` für das automatische Kopieren des GitHub-Gerätecodes
+- `offscreen` für die Verarbeitung von Blob-/Medieninhalten ohne geöffneten Fotos-Tab
+- `notifications` für Fortschritts- und Abschlussmeldungen
 - Host-Berechtigungen für GitHub-API, GitHub-Geräteautorisierung und öffentliche Laufzeitdaten
 
 Die GitHub-App verwendet den Device Flow. Der Anmeldeablauf öffnet zunächst die Installationsseite. Nach der Installation bestätigt die Person den nächsten Schritt, erhält einen Gerätecode und autorisiert die App auf GitHub. Danach prüft Schleim OS über `GET /user/installations`, ob die App-Installation für das Konto sichtbar ist.
@@ -42,7 +47,7 @@ Dateien werden nach Medientyp, Aufnahmejahr und -monat sortiert. JPEG-EXIF `Date
 
 Die Chrome Prompt API steht nur in unterstützten Chrome-Erweiterungskontexten und auf geeigneter Hardware zur Verfügung. Beim ersten Aufruf wird das Modell heruntergeladen. Es ist kein API-Schlüssel erforderlich; die Bildanalyse läuft lokal und sendet das Bild nicht an Google oder einen anderen KI-Dienst. Auf nicht unterstützten Geräten bleibt die Metadatensuche erhalten. Die KI analysiert nur neue Fotos, die nach Aktivierung hochgeladen werden; bereits vorhandene Bilder werden nicht automatisch rückwirkend analysiert.
 
-Das Medien-Repository wird erst beim Klick auf die Verknüpfungsaktion im angemeldeten GitHub-Konto angelegt, wenn es dort noch nicht existiert. Die GitHub-App benötigt Repository-Erstellung (write) sowie Contents (read/write). Uploads sind auf 50 MiB je Datei begrenzt. GitHub-Repository-Versionierung ist für große Mediensammlungen nur eingeschränkt geeignet; entfernte Dateien können in der Git-Historie erhalten bleiben.
+Das Medien-Repository wird erst beim Klick auf die Verknüpfungsaktion im angemeldeten GitHub-Konto angelegt, wenn es dort noch nicht existiert. Die GitHub-App benötigt Repository-Erstellung (write) sowie Contents (read/write). Uploads sind auf 50 MiB je Datei begrenzt. Statische, unterstützte Fotos werden lokal als WebP optimiert; Videos werden lokal als WebM neu kodiert. Animierte Bilder bleiben unverändert. Ein Chrome-Offscreen-Dokument hält Komprimierung und Upload bei geschlossenem Fotos-Tab am Laufen, solange Chrome aktiv bleibt. Der Service Worker aktualisiert eine Fortschrittsbenachrichtigung; der Abschluss öffnet per Klick die Fotos-App. Chrome muss geöffnet bleiben, und Videoneukodierung kann CPU-intensiv sein. GitHub-Repository-Versionierung ist für große Mediensammlungen nur eingeschränkt geeignet; entfernte Dateien können in der Git-Historie erhalten bleiben.
 
 ## Speicherung und Backup
 

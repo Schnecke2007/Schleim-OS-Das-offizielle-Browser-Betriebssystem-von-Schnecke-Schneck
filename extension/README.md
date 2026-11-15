@@ -14,7 +14,7 @@ Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschir
 6. Wähle die vollständige Repository-ZIP aus und bestätige den Import.
 7. Öffne einen neuen Tab.
 
-Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
+Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Importfunktion unterscheidet sich je nach Browser und Plattform. Chrome 109 oder neuer wird für den Offscreen-Hintergrundprozess benötigt. Chrome für Android unterstützt keine normalen Chrome-Erweiterungen.
 
 [Schleim OS live ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [Installation in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/INSTALLATION.md) · [Schleim-Store in Leichter Sprache](../docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
 
@@ -46,6 +46,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
+- [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
 - `scripts/app.js` – Apps, Navigation und Oberfläche

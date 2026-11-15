@@ -258,8 +258,8 @@
   // The completion notification can reopen Schleim OS directly in the Photos app.
   const requestedApp = new URLSearchParams(location.search).get('openApp');
   if (requestedApp === 'images') {
-    // Wait until all deferred extension scripts (including the Photos app) have initialized.
-    window.addEventListener('load', () => openApp('images'), {once:true});
+    // Deferred extension scripts finish before DOMContentLoaded; the Photos listener is ready then.
+    document.addEventListener('DOMContentLoaded', () => openApp('images'), {once:true});
   }
   }
 

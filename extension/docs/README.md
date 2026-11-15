@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.14.1
+# Schleim OS – Erweiterungsdokumentation · Version 3.15.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -11,6 +11,9 @@ Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Si
 - Store-Sperre: Zugriff nur nach Anmeldung mit dem Schleim-Konto
 - GitHub-App-Anmeldung mit Installationsseite, Gerätecode, versuchtem automatischem Kopieren und Installationserkennung
 - Private Foto-/Video-Cloud mit Kamera-App, Upload, Mediathek und Speicherübersicht
+- Hintergrund-Upload nach dem Schließen des Fotos-Tabs über ein Chrome-Offscreen-Dokument
+- Live-Fortschrittsbenachrichtigung und Abschlussmeldung mit direktem Sprung zur Fotos-App
+- Lokale WebP-Komprimierung statischer Bilder und lokale Video-Neukodierung als WebM
 - Front-/Rückkamera für Foto- und Videoaufnahmen über Browser-Medien-APIs
 - Ordner nach Jahr und Monat; EXIF-Aufnahmedatum bei unterstützten JPEG-Fotos
 - Metadatensuche mit Synonymen sowie optionale lokale KI-Bildbeschreibung und semantische Suche (Chrome Prompt API, kein API-Schlüssel)
@@ -30,6 +33,10 @@ Die Store-Sperre betrifft die Oberfläche der Erweiterung. Der Katalog und die B
 ## Foto- und Video-Cloud
 
 Die Erweiterung verwendet zusätzlich zum Einstellungs-Backup-Repository `schleim-os-cloud` das separate private Repository `schleim-os-cloud-photos-and-videos`. Es wird nach der Anmeldung unter **Einstellungen → Schleim-Konto → Schleim OS Foto Video Cloud Speicher** gesucht und bei Bedarf nach Auswahl privat angelegt. Medien liegen unter `Fotos/JJJJ/JJJJ-MM/` bzw. `Videos/JJJJ/JJJJ-MM/`; `_metadata/media-index.json` enthält Typ, Datum, Dateigröße, Dateiname, Beschreibung und Stichwörter. JPEG-Dateien können ihr EXIF-Aufnahmedatum liefern. Für andere Formate gilt als Fallback der Datei-Zeitstempel.
+
+Beim Start eines Uploads werden die ausgewählten Dateien zunächst in einer lokalen IndexedDB-Warteschlange gespeichert. Ein separates Chrome-Offscreen-Dokument übernimmt anschließend Komprimierung und GitHub-Upload; dadurch läuft der Vorgang weiter, wenn der Fotos-Tab geschlossen oder Chrome minimiert wird. Chrome selbst muss geöffnet bleiben. Die Erweiterung zeigt eine Fortschrittsbenachrichtigung mit Prozentwert. Nach Abschluss erscheint eine eigene Benachrichtigung; ein Klick darauf öffnet Schleim OS direkt in der Fotos-App. Benachrichtigungen müssen im Browser und Betriebssystem zugelassen sein.
+
+Statische, vom Browser dekodierbare Fotos werden lokal als WebP optimiert. Wenn die WebP-Datei größer wäre und das Original bereits unter der Grenze liegt, bleibt das Original erhalten. Animierte GIF-, APNG- und WebP-Dateien werden nicht verändert, damit die Animation erhalten bleibt. Videos werden lokal als WebM neu kodiert; die Zielgröße liegt unter 50 MiB. Sehr lange Videos oder nicht unterstützte Quellformate können trotz Komprimierung abgewiesen werden. Die Neukodierung kann je nach Videolänge spürbar Zeit und Rechenleistung benötigen.
 
 Die normale Suche nutzt lokal Dateinamen, Datum, Medientyp, Beschreibungen, Stichwörter und Synonyme. Optional kann die Fotos-App in unterstützten Chrome-Desktop-Erweiterungen die Chrome Prompt API mit Gemini Nano aktivieren: Neue Fotos werden auf dem Gerät beschrieben, und die KI erweitert Suchanfragen um passende Begriffe. Dafür ist kein API-Schlüssel nötig; Fotos für diese Analyse werden nicht an einen externen KI-Dienst gesendet. Beim ersten Start muss Chrome das Modell herunterladen. Die Verfügbarkeit hängt von Chrome-Version, Betriebssystem und Hardware ab. Ist die API nicht verfügbar, funktioniert die Metadatensuche weiter. Die Bildbeschreibung ist derzeit für Fotos vorgesehen, Videos bleiben über Metadaten durchsuchbar.
 
@@ -70,6 +77,7 @@ Das Update-Center vergleicht die lokal installierte Version mit der Manifest-Ver
 
 ## Versionshinweise
 
+- [Release Notes 3.15.0](RELEASE-NOTES-3.15.0.md)
 - [Release Notes 3.14.1](RELEASE-NOTES-3.14.1.md)
 - [Release Notes 3.13.7](RELEASE-NOTES-3.13.7.md)
 - [Release Notes 3.13.6](RELEASE-NOTES-3.13.6.md)
