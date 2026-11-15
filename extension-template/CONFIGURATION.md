@@ -12,7 +12,7 @@ Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-N
 
 ## Konto und Cloud
 
-Konfiguriere deine GitHub-App in `scripts/browser-account.js`. Trage dort die öffentliche Client-ID, App-Kennung und die Namen deiner privaten Repositorys ein. Verwende in `scripts/browser-media-cloud.js` denselben Namen für das Medien-Repository.
+Konfiguriere deine GitHub-App in `scripts/browser-account.js`. Trage dort die öffentliche Client-ID, App-Kennung und die Namen deiner privaten Repositorys ein. Der Name des Foto-/Video-Repositorys muss an vier Stellen exakt übereinstimmen: `PHOTOS_REPO_NAME` in `scripts/browser-account.js`, `REPO_NAME` in `scripts/browser-media-cloud.js`, `MEDIA_REPO_NAME` in `scripts/media-upload-worker.js` und `REPO_NAME` in `scripts/media-upload-offscreen.js`. Ersetze überall `YOUR_MEDIA_REPOSITORY_NAME` durch denselben eigenen Repository-Namen.
 
 Die Hintergrundverarbeitung liegt in `scripts/media-upload-worker.js` und `scripts/media-upload-offscreen.js`. Die Dateien verwenden dieselbe Konto-Sitzung wie das Konto-Modul. Ältere Template-Sitzungen werden beim ersten Start automatisch auf den neutralen Speicherschlüssel migriert.
 
