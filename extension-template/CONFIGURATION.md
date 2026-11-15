@@ -1,10 +1,10 @@
 # Configuration guide
 
-This folder is a neutral source template. Its manifest is named **manifest.template.json** so Chromium does not detect it as an installable extension while the original extension remains in the main repository.
+This folder is a neutral, functional Manifest V3 extension template. It contains an active **manifest.json**, so Chromium can load it directly as an unpacked extension. The original Schleim OS extension remains separate in **extension/**.
 
 ## 1. Product identity
 
-Edit **manifest.template.json**:
+Edit **manifest.json**:
 
 - **name**: your extension name
 - **short_name**: short display name
@@ -13,7 +13,7 @@ Edit **manifest.template.json**:
 
 Update the visible title, brand text, demo profile and sample pages in **pages/newtab.html** and **scripts/app.js**. Replace the sample artwork in **assets/demo/** and **assets/icons/** with your own images.
 
-**Do not rename the manifest yet.** First complete the configuration below. Once the template is ready to test as an extension, rename **manifest.template.json** to **manifest.json** inside this folder.
+The manifest is already named **manifest.json**. You do not need to rename any file. After saving changes, open **chrome://extensions** and select **Reload** for the template.
 
 ## 2. Profile and demo links
 
@@ -33,7 +33,7 @@ In **scripts/update-center.js**, set:
 - OWNER to your GitHub username or organization
 - REPOSITORY to your repository name
 
-After you rename the manifest to **manifest.json** and publish the extension files at your repository root, the update center can read that root-level manifest.
+When you use the template as the root of your own repository and publish your own release package, the update center can read the root-level **manifest.json** there.
 
 In **scripts/slime-store-admin.js**, set OWNER, REPO and keep CATALOG aligned with **data/store-apps.json**.
 
@@ -63,8 +63,8 @@ The legal-information screens contain placeholders such as **[YOUR NAME]**, **[Y
 
 ## 7. Test and package
 
-After configuration and renaming the manifest, run the navigation tests from this directory:
+After configuration, run the navigation tests from this directory:
 
 **node --test tests/app-navigation.test.js**
 
-Load the folder containing the renamed **manifest.json** as an unpacked extension in a Chromium desktop browser. Test all configured links, permissions, account flows and cloud features before publishing.
+Load this folder, which already contains **manifest.json**, as an unpacked extension in a Chromium desktop browser. Test all configured links, permissions, account flows and cloud features before publishing.

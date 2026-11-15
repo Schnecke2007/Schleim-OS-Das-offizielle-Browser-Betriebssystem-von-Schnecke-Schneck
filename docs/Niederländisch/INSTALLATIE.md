@@ -15,7 +15,7 @@ Dit archief bevat alleen de oorspronkelijke extensie. Het bestand `manifest.json
 3. Kies **Uitgepakte extensie laden**.
 4. Selecteer de uitgepakte map waarin `manifest.json` direct staat.
 
-**Belangrijk:** Selecteer niet de bovenliggende projectmap. Gebruik bij updates indien mogelijk dezelfde lokale map. De aparte template bevat bewust `manifest.template.json` en is niet de oorspronkelijke extensie.
+**Opmerking:** De aparte template is ook een rechtstreeks laadbare Chromium-extensie. Deze is bedoeld voor je eigen aanpassingen; gebruik voor de gewone installatie van Schleim OS nog steeds **Schleim-OS-Extension.zip**.
 
 ## 3. Schleim OS starten
 

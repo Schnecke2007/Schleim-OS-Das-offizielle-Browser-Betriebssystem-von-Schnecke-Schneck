@@ -20,7 +20,7 @@ Der Browser muss Erweiterungen unterstützen.
 
 **Wichtig:** Wähle den entpackten Extension-Ordner. Nicht den ganzen GitHub-Projektordner.
 
-Das Template ist eine andere Datei. Es enthält `manifest.template.json` und ist nicht direkt installierbar.
+Das Template kann auch als eigene Erweiterung geladen werden. Es ist für eigene Änderungen gedacht. Für die normale Installation nimm weiter **Schleim-OS-Extension.zip**.
 
 ## Schritt 3: Schleim OS öffnen
 

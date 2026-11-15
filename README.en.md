@@ -82,7 +82,7 @@ Each release describes new features, improvements, known limitations and bug fix
 6. Select **Load unpacked**.
 7. Choose the extracted folder that directly contains `manifest.json`.
 
-**Important:** For a normal installation, download **Schleim-OS-Extension.zip**. It contains only the original extension. The separate template is not directly installable because it deliberately contains `manifest.template.json` instead of `manifest.json`.
+**Important:** For the regular Schleim OS installation, download **Schleim-OS-Extension.zip**. The separate template is also a directly loadable Chromium extension and is intended for building your own customized version.
 
 **To update:** Extract the new Extension ZIP into the same local folder and overwrite the existing files. Then open the extension manager and select **Reload** for Schleim OS. Keep using the same folder where possible.
 
@@ -204,7 +204,7 @@ Want to create your own version? The complete neutral template, including demo p
 
 [📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
 
-**Important:** The template intentionally contains `manifest.template.json` instead of `manifest.json`. Chrome therefore does not recognize it as an installable extension. When you download the complete project, only the original extension in `extension/` is directly loadable. After configuring your own template, rename `manifest.template.json` to `manifest.json`, then load the `extension-template/` folder through **Extensions → Developer mode → Load unpacked**.
+**Load the template directly:** Extract the template ZIP. Open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose the extracted template folder that directly contains `manifest.json`. No renaming is required.
 
 ## 🔐 Privacy and permissions
 

@@ -21,18 +21,16 @@ This neutral template contains demo content, sample artwork and placeholders. It
 1. Download and extract the **Browser Extension Template** ZIP.
 2. Read **CONFIGURATION.md** and replace the placeholders with your own details.
 3. Configure your own GitHub App and private repositories before enabling the cloud features.
-4. When you are ready to test it as an extension, rename **manifest.template.json** to **manifest.json**.
+4. Edit **manifest.json** only if you want to change the template name, description or version.
 
-The manifest file is deliberately not named **manifest.json**. Chrome therefore does not detect or install this template when the complete project ZIP is imported. The original extension in the main repository remains under the separate **extension/** folder.
+The template already contains an active Manifest V3 file named **manifest.json**. Chromium can therefore load it directly as an unpacked extension. The original Schleim OS extension remains separate in the **extension/** folder and is not changed by this template.
 
 ## Load your customized copy
-
-After renaming the manifest file:
 
 1. Open **chrome://extensions** in a Chromium-based desktop browser.
 2. Enable **Developer mode**.
 3. Select **Load unpacked**.
-4. Choose this template folder (now containing **manifest.json**).
+4. Choose the extracted template folder that directly contains **manifest.json**.
 
 Never put a GitHub App private key, client secret, access token or other secret into extension files.
 

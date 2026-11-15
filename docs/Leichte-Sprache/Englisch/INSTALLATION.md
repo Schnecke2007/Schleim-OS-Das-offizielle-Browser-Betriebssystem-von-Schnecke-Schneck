@@ -20,7 +20,7 @@ The browser must support extensions.
 
 **Important:** Select the extracted Extension folder. Do not select the complete GitHub project folder.
 
-The template is a separate file. It contains `manifest.template.json` and cannot be loaded directly.
+You can also load the template as a separate extension. It is meant for your own changes. For the regular Schleim OS installation, keep using **Schleim-OS-Extension.zip**.
 
 ## Step 3: Open Schleim OS
 

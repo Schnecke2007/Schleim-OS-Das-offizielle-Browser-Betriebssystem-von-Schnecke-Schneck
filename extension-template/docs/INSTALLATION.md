@@ -1,20 +1,21 @@
 # Browser OS extension template – installation
 
-The template is deliberately not directly installable when first downloaded. Its manifest is named **manifest.template.json**, not **manifest.json**. This prevents Chromium from recognizing it as an extension while the original project is installed from the separate **extension/** folder.
+The template is a separate, directly loadable Manifest V3 Chromium extension. Its ZIP package contains an active **manifest.json** at the package root.
 
-## Prepare and load your own template
+## Download, configure and load the template
 
-1. Download the [Browser Extension Template ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip).
+1. Download the [Browser Extension Template ZIP from the latest GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
 2. Extract the ZIP file to a folder on your computer.
 3. Follow [CONFIGURATION.md](../CONFIGURATION.md) and replace the demo content and setup placeholders.
-4. When ready to test the customized template, rename **manifest.template.json** to **manifest.json**.
-5. Open **chrome://extensions** in a Chromium-based desktop browser.
-6. Enable **Developer mode** and select **Load unpacked**.
-7. Choose the template folder that now contains **manifest.json**.
+4. Open **chrome://extensions** in a Chromium-based desktop browser.
+5. Enable **Developer mode** and select **Load unpacked**.
+6. Choose the extracted template folder that directly contains **manifest.json**.
 
-## Install the original project extension
+No manifest renaming or source-code download from the repository is required.
 
-When using the complete project ZIP, load only the original **extension/** folder. It contains the active **manifest.json**. The **extension-template/** folder intentionally does not contain an active Chrome manifest, so it is not detected as another extension.
+## Install the original Schleim OS extension
+
+The original extension is still provided separately as [Schleim-OS-Extension.zip](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip). It is not changed by the template. Extract that ZIP and load the folder containing its **manifest.json** if you want the official Schleim OS extension rather than your own template copy.
 
 Standard Chrome on Android does not support desktop Chrome extensions. Use a compatible desktop Chromium browser to test the extension.
 

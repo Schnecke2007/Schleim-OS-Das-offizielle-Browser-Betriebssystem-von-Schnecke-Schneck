@@ -20,7 +20,7 @@ De browser moet extensies ondersteunen.
 
 **Belangrijk:** Selecteer de uitgepakte Extension-map. Selecteer niet de volledige GitHub-projectmap.
 
-De template is een apart bestand. Het bevat `manifest.template.json` en kan niet direct worden geladen.
+Je kunt de template ook als aparte extensie laden. Deze is bedoeld voor je eigen wijzigingen. Gebruik voor de gewone installatie nog steeds **Schleim-OS-Extension.zip**.
 
 ## Stap 3: Open Schleim OS
 

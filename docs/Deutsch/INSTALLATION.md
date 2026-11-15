@@ -15,7 +15,7 @@ Das Archiv enthält nur die Original-Extension. Die Datei `manifest.json` liegt 
 3. Wähle **Entpackte Erweiterung laden**.
 4. Wähle den entpackten Ordner, in dem sich `manifest.json` direkt befindet.
 
-**Wichtig:** Wähle nicht den übergeordneten Projektordner. Verwende für Updates möglichst denselben lokalen Ordner. Das separate Template enthält absichtlich `manifest.template.json` und ist nicht die Original-Extension.
+**Hinweis:** Das separate Template ist ebenfalls eine direkt ladbare Chromium-Erweiterung. Es ist für eigene Anpassungen gedacht; für die normale Schleim-OS-Installation verwende weiterhin **Schleim-OS-Extension.zip**.
 
 ## 3. Schleim OS starten
 

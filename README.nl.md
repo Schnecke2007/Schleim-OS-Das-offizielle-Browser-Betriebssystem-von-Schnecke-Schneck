@@ -82,7 +82,7 @@ Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en w
 6. Kies **Uitgepakte extensie laden**.
 7. Selecteer de uitgepakte map waarin `manifest.json` direct staat.
 
-**Belangrijk:** Download voor de gewone installatie **Schleim-OS-Extension.zip**. Dit bestand bevat alleen de oorspronkelijke extensie. De aparte template kan niet rechtstreeks worden geïnstalleerd, omdat deze bewust `manifest.template.json` in plaats van `manifest.json` bevat.
+**Belangrijk:** Download voor de gewone installatie van Schleim OS **Schleim-OS-Extension.zip**. De aparte template is ook een rechtstreeks laadbare Chromium-extensie en is bedoeld om je eigen versie aan te passen.
 
 **Bijwerken:** Pak de nieuwe Extension-ZIP uit in dezelfde lokale map en overschrijf de bestaande bestanden. Open daarna het extensiebeheer en klik bij Schleim OS op **Opnieuw laden**. Gebruik indien mogelijk dezelfde map als bij de vorige installatie.
 
@@ -204,7 +204,7 @@ Wil je je eigen versie maken? De volledige neutrale template met demopagina's, v
 
 [📦 **Download alleen de extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratie](extension-template/CONFIGURATION.md)
 
-**Belangrijk:** De template bevat bewust `manifest.template.json` in plaats van `manifest.json`. Chrome herkent deze daardoor niet als installeerbare extensie. Bij het downloaden van het volledige project is alleen de oorspronkelijke extensie in `extension/` direct laadbaar. Nadat je je eigen template hebt geconfigureerd, hernoem je `manifest.template.json` naar `manifest.json` en laad je vervolgens de map `extension-template/` via **Extensies → Ontwikkelaarsmodus → Uitgepakte extensie laden**.
+**Template direct laden:** Pak de template-ZIP uit. Open `chrome://extensions`, schakel Ontwikkelaarsmodus in, kies **Uitgepakte extensie laden** en selecteer de uitgepakte templatemap waarin `manifest.json` direct staat. Hernoemen is niet nodig.
 
 ## 🔐 Privacy en machtigingen
 

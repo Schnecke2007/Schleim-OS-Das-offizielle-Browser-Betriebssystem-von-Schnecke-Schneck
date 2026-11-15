@@ -15,7 +15,7 @@ This archive contains only the original extension. The `manifest.json` file is d
 3. Select **Load unpacked**.
 4. Choose the extracted folder that directly contains `manifest.json`.
 
-**Important:** Do not select the parent project folder. For updates, keep using the same local folder where possible. The separate template deliberately contains `manifest.template.json` and is not the original extension.
+**Note:** The separate template is also a directly loadable Chromium extension. It is intended for your own customizations; keep using **Schleim-OS-Extension.zip** for the regular Schleim OS installation.
 
 ## 3. Start Schleim OS
 

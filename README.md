@@ -82,7 +82,7 @@ Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen u
 6. Klicke auf **Entpackte Erweiterung laden**.
 7. Wähle den entpackten Ordner aus, in dem sich `manifest.json` direkt befindet.
 
-**Wichtig:** Für die normale Installation benötigst du **Schleim-OS-Extension.zip**. Sie enthält nur die Original-Extension. Das separate Template ist nicht direkt installierbar, weil es absichtlich `manifest.template.json` statt `manifest.json` enthält.
+**Wichtig:** Für die normale Nutzung von Schleim OS lade **Schleim-OS-Extension.zip** herunter. Das separate Template ist ebenfalls eine direkt ladbare Chromium-Erweiterung und dient zum Anpassen einer eigenen Variante.
 
 **Bei einem Update:** Entpacke die neue Extension-ZIP in denselben lokalen Ordner und überschreibe die vorhandenen Dateien. Öffne anschließend die Erweiterungsverwaltung und klicke bei Schleim OS auf **Neu laden**. Verwende möglichst denselben Ordner wie bei der bisherigen Installation.
 
@@ -207,7 +207,7 @@ Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Templa
 
 [📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
 
-**Wichtig:** Das Template enthält absichtlich die Datei `manifest.template.json` statt `manifest.json`. Chrome erkennt es dadurch nicht als installierbare Erweiterung. Beim Download des vollständigen Projekts ist ausschließlich die Original-Extension im Ordner `extension/` direkt ladbar. Wenn du deine eigene Template-Version fertig konfiguriert hast, benenne `manifest.template.json` in `manifest.json` um und lade anschließend den Ordner `extension-template/` über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden**.
+**Template direkt laden:** Entpacke das Template-ZIP. Öffne anschließend `chrome://extensions`, aktiviere den Entwicklermodus, wähle **Entpackte Erweiterung laden** und dann den Template-Ordner, in dem `manifest.json` direkt liegt. Ein Umbenennen ist nicht nötig.
 
 ## 🔐 Datenschutz und Berechtigungen
 
