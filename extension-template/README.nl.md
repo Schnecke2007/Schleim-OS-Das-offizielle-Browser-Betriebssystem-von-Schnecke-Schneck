@@ -16,7 +16,7 @@ Browser OS is een neutraal, meertalig Manifest V3-template voor Chromium-browser
 
 ## Downloaden en installeren
 
-Download [Browser-OS-Extension-Template.zip uit de nieuwste release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip). **Pak het ZIP-bestand niet uit.** Open het extensiebeheer van een browser die lokale ZIP-import ondersteunt, selecteer het ZIP-bestand en bevestig de import. Alleen downloaden installeert niets.
+Download [Schleim-OS-Extension-Template.zip uit de nieuwste release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip). **Pak het ZIP-bestand niet uit.** Open het extensiebeheer van een browser die lokale ZIP-import ondersteunt, selecteer het ZIP-bestand en bevestig de import. Alleen downloaden installeert niets.
 
 De gewone Google Chrome voor Android ondersteunt geen extensies. Desktop-Chrome kan in de ontwikkelaarsmodus een map laden, maar geen ZIP-bestanden rechtstreeks importeren.
 
@@ -24,7 +24,7 @@ De gewone Google Chrome voor Android ondersteunt geen extensies. Desktop-Chrome 
 
 Gebruik een eigen Git-repository voor de bronbestanden. Pas `manifest.json`, profiel, links, Store-inhoud en de tijdelijke waarden in de scripts aan. Configureer je eigen GitHub App en privé-repositories voordat je account- of cloudfuncties gebruikt.
 
-De updatefunctie downloadt uitsluitend `Browser-OS-Extension-Template.zip` uit de nieuwste release van je ingestelde repository. Gebruik exact deze bestandsnaam voor je eigen release.
+De updatefunctie downloadt uitsluitend `Schleim-OS-Extension-Template.zip` uit de nieuwste release van je ingestelde repository. Gebruik exact deze bestandsnaam voor je eigen release.
 
 ## Documentatie
 

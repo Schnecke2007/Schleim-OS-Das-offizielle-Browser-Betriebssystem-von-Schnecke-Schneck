@@ -8,7 +8,7 @@ Diese Vorlage ist neutral. Persönliche Profile, Kontaktdaten, App-Zugangsdaten 
 
 ## GitHub und Update-Center
 
-Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
+Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Schleim-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
 
 ## Konto und Cloud
 

@@ -16,7 +16,7 @@ Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-ba
 
 ## Download und Installation
 
-Lade [Browser-OS-Extension-Template.zip aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) herunter. **Die ZIP-Datei nicht entpacken.** Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle die lokale ZIP-Datei und bestätige den Import. Der Download installiert nichts automatisch.
+Lade [Schleim-OS-Extension-Template.zip aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) herunter. **Die ZIP-Datei nicht entpacken.** Öffne die Erweiterungsverwaltung eines Browsers mit ZIP-Import, wähle die lokale ZIP-Datei und bestätige den Import. Der Download installiert nichts automatisch.
 
 Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome kann im Entwicklermodus Ordner laden, aber keine ZIP-Dateien direkt importieren.
 
@@ -24,7 +24,7 @@ Normales Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Ch
 
 Arbeite in einem eigenen Git-Repository mit den Quelldateien. Passe `manifest.json`, Profil, Links, Store und die Platzhalter in den Skripten an. Richte eine eigene GitHub App und private Repositories ein, bevor du Konto oder Cloud verwendest.
 
-Der Update-Center-Platzhalter lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem Release deines konfigurierten Repositories. Verwende beim Veröffentlichen genau diesen Asset-Namen.
+Der Update-Center-Platzhalter lädt ausschließlich `Schleim-OS-Extension-Template.zip` aus dem Release deines konfigurierten Repositories. Verwende beim Veröffentlichen genau diesen Asset-Namen.
 
 ## Dokumentation
 

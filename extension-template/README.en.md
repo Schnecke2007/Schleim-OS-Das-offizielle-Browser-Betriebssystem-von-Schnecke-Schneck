@@ -16,7 +16,7 @@ Browser OS is a neutral, multilingual Manifest V3 template for Chromium-based br
 
 ## Download and install
 
-Download [Browser-OS-Extension-Template.zip from the latest release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip). **Do not extract the ZIP file.** Open the extension manager in a browser that supports local ZIP import, select the ZIP file and confirm the import. Downloading does not install anything automatically.
+Download [Schleim-OS-Extension-Template.zip from the latest release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip). **Do not extract the ZIP file.** Open the extension manager in a browser that supports local ZIP import, select the ZIP file and confirm the import. Downloading does not install anything automatically.
 
 Standard Google Chrome for Android does not support extensions. Desktop Chrome can load a folder in Developer mode, but cannot directly import ZIP files.
 
@@ -24,7 +24,7 @@ Standard Google Chrome for Android does not support extensions. Desktop Chrome c
 
 Use a separate Git repository for your working source. Customize `manifest.json`, profile, links, Store content and placeholders in the scripts. Configure your own GitHub App and private repositories before using account or cloud features.
 
-The update-center placeholder downloads only `Browser-OS-Extension-Template.zip` from the latest release of your configured repository. Publish your package using that exact asset name.
+The update-center placeholder downloads only `Schleim-OS-Extension-Template.zip` from the latest release of your configured repository. Publish your package using that exact asset name.
 
 ## Documentation
 

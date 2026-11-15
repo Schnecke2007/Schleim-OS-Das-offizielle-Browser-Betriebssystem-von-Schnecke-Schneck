@@ -1,6 +1,6 @@
 # Installation
 
-1. Download `Browser-OS-Extension-Template.zip` from the [latest release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
+1. Download `Schleim-OS-Extension-Template.zip` from the [latest release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip).
 2. **Do not extract the ZIP file.**
 3. Open the extension manager in a browser that supports local ZIP import.
 4. Enable Developer mode if required.
