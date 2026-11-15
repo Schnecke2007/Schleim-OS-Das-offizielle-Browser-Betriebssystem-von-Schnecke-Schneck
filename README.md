@@ -1,262 +1,31 @@
-# Schleim OS 🐌
+# Browser OS – Chromium extension template
 
-**Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
+A configurable Manifest V3 new-tab extension for Chromium-based browsers.
 
-![Version](https://img.shields.io/badge/version-3.14.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+This folder is a reusable template. It contains demo content and setup placeholders, not the original creator's profile, contact information, social accounts, or GitHub App configuration.
 
-[🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Projekt als ZIP herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
+## Included features
 
-[🇩🇪 Deutsch](README.md) · [🇬🇧 English](README.en.md) · [🇳🇱 Nederlands](README.nl.md) · [🧪 Demo öffnen](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) · [📖 Leichte Sprache](docs/Leichte-Sprache/Deutsch/README.md)
+- Responsive new-tab dashboard for desktop, tablet, and mobile layouts
+- App launcher, search, quick settings, themes, and personalization
+- Multilingual interface and demo profile pages
+- Browser Store with categories, search, ratings, and app suggestions
+- Optional GitHub-based account, settings backup, and media cloud
+- Optional local photo analysis through the browser's Prompt API
+- Standalone demo page and automated navigation tests
 
-## 🧩 Eigenes Browser OS erstellen
+## Quick start
 
-Du möchtest ein eigenes Browser-Betriebssystem auf Basis dieses Projekts entwickeln? Dafür gibt es eine separate, neutrale Vorlage mit der vollständigen Extension-Struktur, Demo-Profil, Beispielgrafiken und Platzhaltern für deine eigenen Angaben. Die originale Erweiterung unter `extension/` bleibt davon unberührt.
+1. Download and extract the **Browser Extension Template** ZIP.
+2. Open `chrome://extensions` in a Chromium-based desktop browser.
+3. Enable Developer mode and select **Load unpacked**.
+4. Choose the extracted template directory.
+5. Read [CONFIGURATION.md](CONFIGURATION.md) before using GitHub account, Store administration, cloud, or update features.
 
-[📦 **Nur das Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-os-template.zip) · [Template-Dateien ansehen](template/) · [Konfigurationsanleitung](template/CONFIGURATION.md)
+The GitHub integrations are intentionally unconfigured. Replace all `YOUR_…` values with your own configuration. Never put a GitHub App private key, client secret, access token, or other secret into extension files.
 
-Lade nur das Template herunter, entpacke es und wähle den Ordner anschließend in einem Chromium-Browser über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden** aus. Richte vor der Nutzung der GitHub-Cloud-Funktionen deine eigene GitHub App ein. Die Vorlage enthält bewusst keine persönlichen Daten des ursprünglichen Projekts.
+## Important
 
+The profile, links, legal text, Store entries, and images are demo material. Replace them before publishing. The legal-information screen is only a placeholder and is not legal advice or a ready-to-use legal notice.
 
-### Vollständige Extension als eigenständiges Template
-
-Du möchtest nicht nur eine Projekt-Grundlage, sondern die **komplette aktuelle Browser-Erweiterung** als neutrale Kopie? Dafür gibt es zusätzlich den Ordner [`extension-template/`](extension-template/) mit den Funktionen der Extension, Demo-Profilen, Beispielseiten, neutralen Bildern und Platzhaltern für deine eigenen Angaben.
-
-[📦 **Nur die vollständige Extension-Vorlage herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfigurationsanleitung](extension-template/CONFIGURATION.md)
-
-Das ZIP enthält ausschließlich den Inhalt des Extension-Templates. Die veröffentlichte Original-Extension im Ordner `extension/` bleibt unverändert. Vor der Nutzung musst du deine eigenen GitHub-App-, Repository-, Kontakt- und Rechtsangaben eintragen.
-
-## 👋 Über mich
-
-Hey! Ich bin **Schnecke Schneck**, 19 Jahre alt und komme aus **Bottrop in Nordrhein-Westfalen, Deutschland**. Im Internet bin ich unter dem Namen *Schnecke Schneck* unterwegs und beschäftige mich besonders gerne mit Technik und digitalen Ideen.
-
-Zu meinen Hobbys gehören **Programmieren, Webdesign sowie das Entwickeln und Gestalten von Websites und Apps**. Außerdem interessiere ich mich für **künstliche Intelligenz (KI), Computer, digitale Systeme und neue Technologien**. Ich probiere gerne Werkzeuge aus, lerne Neues dazu und setze eigene Ideen in kleinen und größeren Projekten um.
-
-Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionierendes zu machen! Ich finde es spannend zu verstehen, wie Technik im Hintergrund arbeitet, Probleme selbst zu lösen und digitale Projekte kreativ zu gestalten. Dabei nutze ich auch KI als Unterstützung zum Lernen, Planen und Entwickeln.
-
-**Schleim OS** ist eines meiner eigenen Projekte. Mit meinen Projekten möchte ich meine Begeisterung für Technik teilen und zeigen, was man mit Neugier, Kreativität und digitalen Werkzeugen erschaffen kann. 🐌💻
-
-## 🧪 Schleim OS live ausprobieren
-
-[**Demo in einem neuen Browser-Tab öffnen**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
-
-## 🚀 Was ist Schleim OS?
-
-Schleim OS ist eine Browser-Erweiterung, die den normalen neuen Tab durch eine eigene Oberfläche ersetzt. Statt einer leeren oder standardmäßigen Tab-Seite öffnet sich ein persönlicher Startbildschirm mit Apps und Verknüpfungen.
-
-Das Projekt ist kein eigenständiges Betriebssystem, das Windows, Android oder Linux ersetzt. Es läuft innerhalb eines kompatiblen Browsers und nutzt dessen Erweiterungsfunktionen.
-
-## ⭐ Funktionen
-
-- Eigene Neuer-Tab-Seite für Chrome und kompatible Chromium-Browser
-- Startbildschirm mit Apps und Website-Verknüpfungen
-- App-Kacheln per Drag-and-drop neu anordnen
-- Personalisierung von Design, Akzentfarbe und Hintergrund
-- Schleim-Store mit Empfehlungen, Kategorien, Suche, Installation und Deinstallation von Web-Apps
-- App-Vorschläge über ein GitHub-Issue-Formular einreichen
-- Schleim-Store: Zugriff nur nach Anmeldung mit dem Schleim-Konto
-- Schleim-Konto mit GitHub-Anmeldung und privater Cloud-Sicherung des Homescreens
-- Sonos als normale Web-App im Schleim-Store: öffnet die offizielle Sonos-Web-App in einem neuen Browser-Tab
-- Update-Center in den Einstellungen: GitHub-Version prüfen und neueste ZIP-Datei herunterladen; die Installation bestätigt der Browser
-- Mehrsprachige Oberfläche: Deutsch, Englisch und Niederländisch
-- Separate Standalone-HTML-Datei im Projektpaket
-- Werbefreie Erweiterungsoberfläche
-
-## 🛍️ Der Schleim-Store
-
-Der **Schleim-Store** ist nur nach einer Anmeldung mit dem Schleim-Konto verfügbar. Ohne Anmeldung bleiben App-Katalog, Suche, Bewertungen, Installationen und Vorschläge gesperrt. Nach erfolgreicher Anmeldung wird der Store freigeschaltet. Die Katalogdateien im öffentlichen GitHub-Repository bleiben unabhängig davon direkt auf GitHub einsehbar.
-
-- **Entdecken:** Empfehlungen, neue Apps, Top-Bewertungen und Kategorien.
-- **Installieren:** Jede Store-Web-App öffnet sich nach der Installation über dieselbe Funktion in einem neuen Browser-Tab.
-- **Einreichen:** Besucher können eigene Webseiten über das öffentliche [GitHub-Einreichungsformular](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues/new?template=app-submission.md) vorschlagen.
-- **Lokale Webseiten übernehmen:** Importierte oder bereits lokal gespeicherte Webseiten erscheinen unter „Bisherige eigene Webseiten“. Mit „Im Schleim-Store einreichen“ werden ihre Daten in das Einreichungsformular übernommen. Ergänze eine aussagekräftige Beschreibung und sende den Vorschlag zur Prüfung auf GitHub ab.
-- **Bewerten:** Über die Sterne öffnest du ein GitHub-Formular und kannst zusätzlich einen Feedbacktext eintragen. Nach erfolgreicher Verarbeitung wird das Issue automatisch geschlossen. Jede Bewertung wird mit GitHub-Benutzername und optionalem Feedback als JSON-Datei im öffentlichen Ordner `Bewertungen/` gespeichert. GitHub Actions berechnet daraus den veröffentlichten Sterne-Durchschnitt und die Stimmenzahl. Pro GitHub-Konto und App zählt die neueste Bewertung.
-- **Prüfen und veröffentlichen:** Vorschläge erscheinen nicht automatisch. Vorschläge werden vor der Veröffentlichung geprüft und freigegeben.
-
-Der öffentliche [Store-Katalog](Store/README.md) ist nach Kategorien sortiert. Jede freigegebene App erhält eine eigene JSON-Datei im passenden Kategorieordner. Die Erweiterung nutzt zusätzlich den zentralen Laufzeitkatalog unter `extension/data/store-apps.json`.
-
-**Transparenz:** Das GitHub-Repository, der Store-Katalog, Bewertungen und App-Vorschläge als Issues sind öffentlich einsehbar. Reiche dort keine Passwörter, privaten Daten oder vertraulichen Inhalte ein. Die Anmeldung schützt die Store-Oberfläche in Schleim OS, nicht die Dateien im öffentlichen Repository.
-
-## 📷 Foto- und Videocloud
-
-Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, Datumsordnern, Speicherstatistik und optionaler KI-Suche. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchanfragen erweitern – ohne API-Schlüssel und ohne Fotoübertragung an einen KI-Server. Auf anderen Geräten bleibt die Metadatensuche verfügbar. **Neue Fotos werden vor dem Upload lokal als WebP komprimiert und bei Bedarf auf maximal 2.560 Pixel an der längsten Seite verkleinert** (90 % Qualität, sofern die optimierte Datei kleiner ist). Animierte GIF-, APNG- und WebP-Dateien sowie Videos bleiben unverändert. Medien werden in einem getrennten privaten GitHub-Repository gespeichert; das Upload-Limit beträgt 50 MiB pro Datei.
-
-## 📥 Download und Installation
-
-1. Öffne das [Schleim-OS-GitHub-Repository](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck).
-2. Klicke auf **Code → Download ZIP** und lade das **vollständige Repository** herunter.
-3. Entpacke die ZIP-Datei **nicht**.
-4. Öffne die Erweiterungsverwaltung eines unterstützten Chromium-Browsers.
-5. Aktiviere bei Bedarf den **Entwicklermodus**.
-6. Wähle die Importfunktion für ZIP-Dateien, beispielsweise **„From .zip/.crx/.user.js“**.
-7. Wähle die vollständige Repository-ZIP aus und bestätige die Installation.
-
-Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichnung und Position der Import-Schaltfläche kann je nach Browser und Gerät variieren. Voraussetzung ist ein Browser, der den direkten ZIP-Import unterstützt.
-
-## Bedienung und Einstellungen
-
-- **Apps starten:** Eine Kachel auf dem Startbildschirm auswählen.
-- **Kacheln sortieren:** Eine Kachel mit der Maus ziehen. Auf Touchgeräten die Kachel gedrückt halten und verschieben.
-- **Personalisieren:** Den Einstellungsbereich in der Oberfläche öffnen.
-- **Apps entdecken:** Den Schleim-Store öffnen, nach Web-Apps suchen und gewünschte Apps installieren oder wieder entfernen.
-- **Schleim-Konto:** Die Anmeldung startet mit der GitHub-App-Seite. Nach der Installation bestätigst du sie in Schleim OS. Der Gerätecode wird angezeigt. Schleim OS versucht, ihn nach kurzer Verzögerung automatisch zu kopieren. Falls das nicht möglich ist, kannst du ihn manuell kopieren. Danach öffnet sich die GitHub-Gerätefreigabe. Nach der Bestätigung prüft Schleim OS die App-Installation und erstellt bei Bedarf dein privates Repository `schleim-os-cloud`.
-- **Cloud-Sicherung:** Die Sicherung und Wiederherstellung findest du ausschließlich unter **Einstellungen → Schleim-Konto**. Gesichert werden die gespeicherten Schleim-OS-Einstellungen, die App-Reihenfolge, installierte Store-Apps und das Hintergrundbild. Es gibt keine automatische Synchronisierung bei jeder Änderung. Details: [Schleim-Konto einrichten](extension/docs/SCHLEIM-KONTO.md).
-- **Updates:** Unter **Einstellungen → Schleim OS aktualisieren** kannst du die GitHub-Version prüfen und die neueste ZIP-Datei herunterladen. Die abschließende Installation erfolgt über die vom Browser unterstützte Import- oder Aktualisierungsfunktion. [Update-Anleitung](docs/Deutsch/UPDATES.md).
-
-# 🛠️ Schleim OS – Fehlerbehebung
-
-Hier findest du Lösungen für häufige Probleme beim direkten ZIP-Import und bei der Verwendung von Schleim OS.
-
-| Problem | Mögliche Lösung |
-|---|---|
-| **Die ZIP-Import-Schaltfläche fehlt.** | Prüfe, ob dein Browser den Import von ZIP-Erweiterungen unterstützt. Die Schaltfläche kann beispielsweise **„From .zip/.crx/.user.js“** heißen. |
-| **Die ZIP-Datei wird nicht angezeigt.** | Lade zuerst über GitHub **Code → Download ZIP** das vollständige Repository herunter. Prüfe anschließend, ob dein Browser-Dateiauswahldialog den Download-Ordner anzeigt. |
-| **Die Installation meldet einen Fehler.** | Stelle sicher, dass du das vollständige Repository-ZIP ausgewählt hast und es unverändert geblieben ist. Verwende nicht einzelne Dateien oder ein anderes Archiv. |
-| **Schleim OS erscheint nicht in einem neuen Tab.** | Prüfe in der Erweiterungsverwaltung, ob Schleim OS installiert und aktiviert ist. Öffne danach einen neuen Tab. |
-| **Eine andere Erweiterung ersetzt ebenfalls den neuen Tab.** | Deaktiviere testweise andere Erweiterungen, die ebenfalls die Neuer-Tab-Seite ersetzen. |
-| **Änderungen werden nicht angezeigt.** | Öffne die Erweiterungsverwaltung und verwende bei Schleim OS die Schaltfläche **Aktualisieren** bzw. **Neu laden**, sofern vorhanden. Öffne anschließend einen neuen Tab. |
-| **Externe Inhalte fehlen oder bleiben leer.** | Prüfe deine Internetverbindung. Manche Anbieter blockieren die Einbettung ihrer Seiten in andere Websites. |
-| **Einstellungen fehlen nach einem Browserwechsel.** | Öffne **Einstellungen → Schleim-Konto**, melde dich mit demselben GitHub-Konto an und wähle **Cloud-Sicherung wiederherstellen**. |
-| **Die Installation funktioniert in Chrome für Android nicht.** | Chrome für Android unterstützt keine regulären Chrome-Erweiterungen. Verwende einen Android-Browser, der Erweiterungen und direkten ZIP-Import unterstützt. |
-
-## Weitere Hilfe
-
-Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues). Beschreibe dabei möglichst genau, welchen Browser und welche Version du verwendest und welche Schritte zum Fehler führen. Teile keine Passwörter oder vertraulichen Zugangsdaten.
-
----
-
-[🇬🇧 English troubleshooting](docs/Englisch/TROUBLESHOOTING.md) · [🇳🇱 Nederlandse probleemoplossing](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
-
-## 💡 Hinweise
-
-- Schleim OS ersetzt die Neuer-Tab-Seite, nicht die gesamte Browseroberfläche.
-- Inkognito-Fenster können eigene Einschränkungen haben.
-- Google Chrome für Android unterstützt keine normalen Desktop-Erweiterungen.
-- Externe Inhalte benötigen gegebenenfalls eine Internetverbindung.
-
-## 🌐 Sprachen und Dokumentation
-
-- [Deutsch – Hauptdokumentation](README.md)
-- [English – documentation](README.en.md)
-- [Nederlands – documentatie](README.nl.md)
-- [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
-- [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
-- [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
-- [Schleim-Konto und Cloud-Sicherung](extension/docs/SCHLEIM-KONTO.md)
-- [Store-Anleitung](Store/Deutsch/README.md)
-- [Update-Anleitung](docs/Deutsch/UPDATES.md)
-- [Dokumentationsübersicht – alle Sprachen](docs/README.md)
-
-## 📖 Dokumentation in Leichter Sprache
-
-Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md). Eine leicht verständliche Erklärung zur [Anmeldung und Cloud-Sicherung](docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md) sowie zum [Aktualisieren](docs/Leichte-Sprache/Deutsch/UPDATES.md) gibt es ebenfalls.
-
-## 📁 Projektstruktur
-
-```text
-.
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   └── workflows/
-├── Store/
-│   ├── Deutsch/
-│   ├── Englisch/
-│   ├── Niederländisch/
-│   ├── ai/
-│   ├── communication/
-│   ├── knowledge/
-│   ├── media/
-│   ├── navigation/
-│   ├── privacy/
-│   ├── productivity/
-│   ├── shopping/
-│   └── tools/
-├── Bewertungen/
-│   ├── README.md
-│   └── <issue-number>.json
-├── docs/
-│   ├── Deutsch/
-│   ├── Englisch/
-│   ├── Leichte-Sprache/
-│   ├── Niederländisch/
-│   └── README.md
-├── extension/
-│   ├── assets/icons/
-│   ├── data/
-│   ├── docs/
-│   ├── locales/
-│   ├── pages/newtab.html
-│   ├── scripts/
-│   │   ├── app.js
-│   │   ├── personalization.js
-│   │   ├── schleim-account.js
-│   │   ├── slime-store-admin.js
-│   │   └── update-center.js
-│   ├── standalone/schleim-os-standalone.html
-│   ├── styles/
-│   ├── manifest.json
-│   ├── README.md
-│   └── SHA256SUMS.txt
-├── legal/
-│   ├── Deutsch/
-│   ├── Englisch/
-│   ├── Niederländisch/
-│   └── README.md
-├── .gitignore
-├── README.md
-├── README.en.md
-└── README.nl.md
-```
-
-## 🔐 Datenschutz und Berechtigungen
-
-Schleim OS speichert Oberflächen- und Personalisierungseinstellungen lokal im Browserprofil. Die Erweiterung verwendet die in `manifest.json` aufgeführten Berechtigungen. Externe Apps und Websites können beim Öffnen eine Verbindung zu ihren jeweiligen Anbietern herstellen; deren Datenschutzbestimmungen gelten zusätzlich.
-
-Die Erweiterungsoberfläche enthält keine Werbe-IFrames, keine Werbe-Erreichbarkeitsprüfung und keine werbebedingte Start-Sperre. Aussagen zu Werbung in übernommenen Rechtstexten beziehen sich auf die dort beschriebene Website und nicht auf eine Werbeeinbindung in der Extension.
-
-## ⚖️ Rechtliche Informationen
-
-- [Allgemeine Geschäftsbedingungen (AGB) & Community-Richtlinien](legal/Deutsch/AGB.md)
-- [Datenschutzerklärung](legal/Deutsch/DATENSCHUTZ.md)
-- [Impressum](legal/Deutsch/IMPRESSUM.md)
-
-## 📬 Kontakt und Support
-
-Du hast Fragen zu Schleim OS, benötigst Hilfe bei der Installation oder möchtest ein Problem melden? Du kannst mich direkt kontaktieren:
-
-- **WhatsApp:** [Schreibe mir eine Nachricht](https://wa.me/491773988636) unter **+49 177 3988636**.
-- **E-Mail:** [info.schnecke.schneck@gmail.com](mailto:info.schnecke.schneck@gmail.com).
-
-Damit ich dir möglichst gut helfen kann, beschreibe bitte kurz dein Anliegen. Bei technischen Problemen helfen außerdem der verwendete Browser, dessen Version und eine Beschreibung der einzelnen Schritte. Bitte sende niemals Passwörter oder andere vertrauliche Zugangsdaten.
-
-## 💬 Feedback
-
-Deine Meinung ist mir wichtig! Ich freue mich über Bewertungen, Verbesserungsvorschläge, Ideen und Hinweise auf Fehler. Du kannst dein Feedback auf folgenden Wegen teilen:
-
-- **GitHub:** [Feedback, Fragen oder Fehler als Issue melden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/issues).
-- **Google-Unternehmensprofil:** [Schnecke-Schneck Creator Studio bewerten](https://g.page/r/CfqIlATGmPYUEBM/review).
-- **E-Mail:** [Feedback per E-Mail senden](mailto:info.schnecke.schneck@gmail.com).
-- **WhatsApp:** [Feedback direkt per WhatsApp senden](https://wa.me/491773988636).
-
-Vielen Dank, dass du dir die Zeit nimmst, Schleim OS und meine Arbeit zu unterstützen! ❤️
-
-## 📱 Folge mir auf Social Media
-
-Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mich, wenn du mir auf Instagram und TikTok folgst:
-
-- **Instagram:** [@schnecke_schneck2007](https://www.instagram.com/schnecke_schneck2007/)
-- **TikTok:** [@schnecke_schneck2007](https://www.tiktok.com/@schnecke_schneck2007)
-
----
-
-## 🤝 Mitwirkende & Credits
-
-- **Projektentwicklung und Verantwortung:** Schnecke Schneck.
-- **KI-Unterstützung:** [ChatGPT von OpenAI](https://chatgpt.com/) – Unterstützung bei Ideenfindung, Planung, Programmierung, Fehleranalyse, Dokumentation und Übersetzungen.
-
-*Hinweis: ChatGPT ist ein KI-Assistent und keine menschliche Person oder ein eigenständiger GitHub-Contributor. Die Projektidee, Entscheidungen und Verantwortung für Schleim OS liegen bei Schnecke Schneck.*
-
----
-
-**Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
-
-© 2026 Schnecke Schneck.
+See [the configuration guide](CONFIGURATION.md) and the files in [docs](docs/).
