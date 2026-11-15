@@ -1,6 +1,6 @@
 # Browser OS – Extension Template
 
-**Template version: 3.14.6**
+**Template version: 3.14.7**
 
 Browser OS is a neutral, multilingual Manifest V3 template for Chromium-based browsers. It uses sample content and placeholders instead of personal data from the original project.
 

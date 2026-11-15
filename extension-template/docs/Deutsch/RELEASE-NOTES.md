@@ -1,4 +1,4 @@
-# Versionshinweise – Browser OS Template 3.14.6
+# Versionshinweise – Browser OS Template 3.14.7
 
 - Neutrale Dateinamen für Konto, Foto-KI, Medien-Cloud, Store-Verwaltung und Standalone-Demo.
 - Persönliche und originale Projektbezeichnungen aus den sichtbaren Vorlagenhinweisen entfernt.

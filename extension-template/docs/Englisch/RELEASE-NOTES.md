@@ -1,4 +1,4 @@
-# Release notes – Browser OS Template 3.14.6
+# Release notes – Browser OS Template 3.14.7
 
 - Added neutral file names for account, photo AI, media cloud, Store administration and standalone demo.
 - Removed original project naming from visible template documentation.

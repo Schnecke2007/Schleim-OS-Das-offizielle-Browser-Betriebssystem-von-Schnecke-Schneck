@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.2-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.4-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Download Extension only](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -70,7 +70,7 @@ The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizi
 - [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
 - [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension-Template.zip) – a starter template for your own browser OS.
 
-Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.2.md) for the version history.
+Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.4.md) for the version history.
 
 ## 📥 Download and installation
 

@@ -1,4 +1,4 @@
-# Release-informatie – Browser OS Template 3.14.6
+# Release-informatie – Browser OS Template 3.14.7
 
 - Neutrale bestandsnamen toegevoegd voor account, foto-AI, mediacloud, Store-beheer en zelfstandige demo.
 - Oorspronkelijke projectnamen verwijderd uit zichtbare template-documentatie.

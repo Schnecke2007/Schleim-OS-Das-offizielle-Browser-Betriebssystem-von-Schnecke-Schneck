@@ -1,6 +1,6 @@
 # Browser OS – Erweiterungs-Vorlage
 
-**Vorlagen-Version: 3.14.6**
+**Vorlagen-Version: 3.14.7**
 
 Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-basierte Browser. Sie enthält Beispieltexte und Platzhalter statt persönlicher Originaldaten.
 

@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.15.2 · Chromium-Erweiterung · Manifest V3**
+**Version 3.15.4 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -45,7 +45,7 @@ Die ZIP-Datei ist das fertige Original-Extension-Paket und wird direkt aus GitHu
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.15.2](docs/RELEASE-NOTES-3.15.2.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
+- [Release Notes 3.15.4](docs/RELEASE-NOTES-3.15.4.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
 - [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
