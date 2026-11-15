@@ -10,20 +10,11 @@
 
 ## 🧩 Bouw je eigen Browser OS
 
-Wil je op basis van dit project je eigen browserbesturingssysteem ontwikkelen? Er is een aparte, neutrale template beschikbaar met de volledige extensiestructuur, een demoprofiel, voorbeeldafbeeldingen en plaatsaanduidingen voor je eigen gegevens. De oorspronkelijke extensie in `extension/` blijft onaangeroerd.
+Wil je je eigen versie maken? De volledige neutrale template met demopagina's, voorbeeldafbeeldingen en plaatsaanduidingen staat apart in [extension-template/](extension-template/).
 
-[📦 **Download alleen de template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-os-template.zip) · [Bekijk de templatebestanden](template/) · [Configuratiehandleiding](template/CONFIGURATION.md)
+[📦 **Download alleen de extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratie](extension-template/CONFIGURATION.md)
 
-Download en pak de template uit. Selecteer daarna de map in een Chromium-browser via **Extensies → Ontwikkelaarsmodus → Uitgepakte extensie laden**. Stel je eigen GitHub-app in voordat je de GitHub-cloudfuncties gebruikt. De template bevat bewust geen persoonlijke gegevens uit het oorspronkelijke project.
-
-
-### De volledige extensie als zelfstandig template
-
-Wil je niet alleen een projectbasis, maar de **volledige huidige browserextensie** als neutrale kopie? De aparte map [`extension-template/`](extension-template/) bevat de functies van de extensie, demoprofielen, voorbeeldpagina's, neutrale afbeeldingen en plaatsaanduidingen voor je eigen gegevens.
-
-[📦 **Download alleen de volledige extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Bekijk de templatebestanden](extension-template/) · [Configuratiehandleiding](extension-template/CONFIGURATION.md)
-
-De ZIP bevat uitsluitend de inhoud van de extensietemplate. De gepubliceerde oorspronkelijke extensie in `extension/` blijft ongewijzigd. Configureer eerst je eigen GitHub-app, repositories, contactgegevens en juridische informatie.
+**Belangrijk:** De template bevat bewust `manifest.template.json` in plaats van `manifest.json`. Chrome herkent deze daardoor niet als installeerbare extensie. Bij het downloaden van het volledige project is alleen de oorspronkelijke extensie in `extension/` direct laadbaar. Nadat je je eigen template hebt geconfigureerd, hernoem je `manifest.template.json` naar `manifest.json` en laad je vervolgens de map `extension-template/` via **Extensies → Ontwikkelaarsmodus → Uitgepakte extensie laden**.
 
 ## 👋 Over mij
 
@@ -90,7 +81,7 @@ Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera-ap
 6. Kies de importoptie voor ZIP-bestanden, bijvoorbeeld **“From .zip/.crx/.user.js”**.
 7. Selecteer de volledige repository-ZIP en bevestig de installatie.
 
-De browserimporteur herkent Schleim OS in de submap `extension`. De naam en locatie van de importknop kunnen per browser en apparaat verschillen. De browser moet rechtstreekse ZIP-import ondersteunen.
+De browserimporteur herkent de oorspronkelijke extensie in de submap `extension`. Deze bevat het enige actieve `manifest.json` in het volledige project. De map `extension-template` gebruikt daarentegen `manifest.template.json` en wordt daarom niet als tweede extensie herkend. De naam en locatie van de importknop kunnen per browser en apparaat verschillen.
 
 ## Schleim OS gebruiken en instellingen beheren
 

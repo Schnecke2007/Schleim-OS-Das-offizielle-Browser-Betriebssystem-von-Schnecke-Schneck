@@ -10,20 +10,11 @@
 
 ## 🧩 Build your own Browser OS
 
-Want to build your own browser operating system based on this project? A separate neutral template is available with the complete extension structure, a demo profile, sample artwork and placeholders for your own details. The original extension in `extension/` remains untouched.
+Want to create your own version? The complete neutral template, including demo pages, sample artwork and placeholders, is kept separately in [extension-template/](extension-template/).
 
-[📦 **Download only the template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-os-template.zip) · [Browse template files](template/) · [Configuration guide](template/CONFIGURATION.md)
+[📦 **Download only the extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration](extension-template/CONFIGURATION.md)
 
-Download and extract the template, then select its folder in a Chromium browser via **Extensions → Developer mode → Load unpacked**. Set up your own GitHub App before using the GitHub cloud features. The template intentionally contains no personal details from the original project.
-
-
-### Complete extension as a standalone template
-
-Need the **complete current browser extension** as a neutral copy, not just a project starter? The separate [`extension-template/`](extension-template/) folder contains the extension features, demo profiles, sample pages, neutral artwork and placeholders for your own details.
-
-[📦 **Download only the complete extension template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Browse template files](extension-template/) · [Configuration guide](extension-template/CONFIGURATION.md)
-
-The ZIP contains only the contents of the extension template. The released original extension in `extension/` remains unchanged. Configure your own GitHub App, repositories, contact details and legal information before using or publishing it.
+**Important:** The template intentionally contains `manifest.template.json` instead of `manifest.json`. Chrome therefore does not recognize it as an installable extension. When you download the complete project, only the original extension in `extension/` is directly loadable. After configuring your own template, rename `manifest.template.json` to `manifest.json`, then load the `extension-template/` folder through **Extensions → Developer mode → Load unpacked**.
 
 ## 👋 About me
 
@@ -90,7 +81,7 @@ Schleim OS includes a private photo/video library, front/rear camera, date-based
 6. Choose the ZIP-file import option, for example **“From .zip/.crx/.user.js”**.
 7. Select the complete repository ZIP and confirm the installation.
 
-The browser importer detects Schleim OS in the `extension` subfolder. The button label and location may vary by browser and device. The browser must support direct ZIP import.
+The browser importer detects the original extension in the `extension` subfolder. It contains the only active `manifest.json` in the complete project. The `extension-template` folder uses `manifest.template.json` instead, so it is not detected as a second extension. The button label and location may vary by browser and device.
 
 ## Using Schleim OS and its settings
 

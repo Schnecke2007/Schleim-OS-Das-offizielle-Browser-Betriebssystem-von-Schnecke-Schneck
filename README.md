@@ -10,20 +10,11 @@
 
 ## 🧩 Eigenes Browser OS erstellen
 
-Du möchtest ein eigenes Browser-Betriebssystem auf Basis dieses Projekts entwickeln? Dafür gibt es eine separate, neutrale Vorlage mit der vollständigen Extension-Struktur, Demo-Profil, Beispielgrafiken und Platzhaltern für deine eigenen Angaben. Die originale Erweiterung unter `extension/` bleibt davon unberührt.
+Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Template mit Demo-Seiten, Beispielgrafiken und Platzhaltern liegt separat im Ordner [extension-template/](extension-template/).
 
-[📦 **Nur das Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-os-template.zip) · [Template-Dateien ansehen](template/) · [Konfigurationsanleitung](template/CONFIGURATION.md)
+[📦 **Nur das Extension-Template herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfiguration](extension-template/CONFIGURATION.md)
 
-Lade nur das Template herunter, entpacke es und wähle den Ordner anschließend in einem Chromium-Browser über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden** aus. Richte vor der Nutzung der GitHub-Cloud-Funktionen deine eigene GitHub App ein. Die Vorlage enthält bewusst keine persönlichen Daten des ursprünglichen Projekts.
-
-
-### Vollständige Extension als eigenständiges Template
-
-Du möchtest nicht nur eine Projekt-Grundlage, sondern die **komplette aktuelle Browser-Erweiterung** als neutrale Kopie? Dafür gibt es zusätzlich den Ordner [`extension-template/`](extension-template/) mit den Funktionen der Extension, Demo-Profilen, Beispielseiten, neutralen Bildern und Platzhaltern für deine eigenen Angaben.
-
-[📦 **Nur die vollständige Extension-Vorlage herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/browser-extension-template.zip) · [Template-Dateien ansehen](extension-template/) · [Konfigurationsanleitung](extension-template/CONFIGURATION.md)
-
-Das ZIP enthält ausschließlich den Inhalt des Extension-Templates. Die veröffentlichte Original-Extension im Ordner `extension/` bleibt unverändert. Vor der Nutzung musst du deine eigenen GitHub-App-, Repository-, Kontakt- und Rechtsangaben eintragen.
+**Wichtig:** Das Template enthält absichtlich die Datei `manifest.template.json` statt `manifest.json`. Chrome erkennt es dadurch nicht als installierbare Erweiterung. Beim Download des vollständigen Projekts ist ausschließlich die Original-Extension im Ordner `extension/` direkt ladbar. Wenn du deine eigene Template-Version fertig konfiguriert hast, benenne `manifest.template.json` in `manifest.json` um und lade anschließend den Ordner `extension-template/` über **Erweiterungen → Entwicklermodus → Entpackte Erweiterung laden**.
 
 ## 👋 Über mich
 
@@ -90,7 +81,7 @@ Schleim OS enthält eine private Foto-/Video-Mediathek mit Front-/Rückkamera, D
 6. Wähle die Importfunktion für ZIP-Dateien, beispielsweise **„From .zip/.crx/.user.js“**.
 7. Wähle die vollständige Repository-ZIP aus und bestätige die Installation.
 
-Der Browser-Importer erkennt Schleim OS im Unterordner `extension`. Die Bezeichnung und Position der Import-Schaltfläche kann je nach Browser und Gerät variieren. Voraussetzung ist ein Browser, der den direkten ZIP-Import unterstützt.
+Der Browser-Importer erkennt die Original-Extension im Unterordner `extension`. Dieser enthält das einzige aktive `manifest.json` im vollständigen Projekt. Der Ordner `extension-template` verwendet dagegen `manifest.template.json` und wird deshalb nicht als zweite Erweiterung erkannt. Die Bezeichnung und Position der Import-Schaltfläche kann je nach Browser und Gerät variieren.
 
 ## Bedienung und Einstellungen
 
