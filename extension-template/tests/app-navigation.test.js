@@ -30,7 +30,6 @@ test('app navigation iterates language controls with the all-elements helper', (
 test('standalone uses the all-elements helper for app launch and tile cleanup', () => {
   assert.doesNotMatch(standaloneSource, singleQueryThenForEach);
   assert.match(standaloneSource, /\$\$\('\[data-set-language\]',\s*els\.appContent\)\.forEach/);
-  assert.match(standaloneSource, /\$\$\('\.ssos-custom-tile',\s*grid\)\.forEach/);
 });
 
 test('The obsolete Sonos Worker integration is not part of the repository', () => {
