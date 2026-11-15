@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'ssos-schleim-account-session-v1';
+const STORAGE_KEY = 'browser-os-account-session-v1';
+const LEGACY_STORAGE_KEY = 'ssos-schleim-account-session-v1';
+const MEDIA_REPO_NAME = 'YOUR_MEDIA_REPOSITORY_NAME';
 const STATUS_KEY = 'ssos-media-upload-status';
 const OFFSCREEN_PATH = 'pages/media-upload.html';
 const NOTIFICATION_PREFIX = 'ssos-media-upload-';
@@ -107,13 +109,17 @@ async function startUpload(jobId) {
   if (activeUploadJob) throw new Error('Ein Medien-Upload läuft bereits. Warte, bis die aktuelle Warteschlange abgeschlossen ist.');
   activeUploadJob = jobId;
   try {
-  const stored=await chrome.storage.local.get(STORAGE_KEY);
-  const session=stored?.[STORAGE_KEY];
+  const stored=await chrome.storage.local.get([STORAGE_KEY,LEGACY_STORAGE_KEY]);
+  const session=stored?.[STORAGE_KEY] || stored?.[LEGACY_STORAGE_KEY];
+  if (session && !stored?.[STORAGE_KEY] && stored?.[LEGACY_STORAGE_KEY]) {
+    await chrome.storage.local.set({[STORAGE_KEY]:session});
+    await chrome.storage.local.remove(LEGACY_STORAGE_KEY);
+  }
   if (!session?.user?.login || !session?.accessToken) throw new Error('Bitte melde dich zuerst mit deinem Browser-OS-Konto an.');
   const currentStatus=(await chrome.storage.local.get(STATUS_KEY))?.[STATUS_KEY];
   if (currentStatus?.phase==='progress') throw new Error('Ein Medien-Upload läuft bereits. Warte, bis die aktuelle Warteschlange abgeschlossen ist.');
   let repo=session.photosRepo;
-  if (!repo?.full_name || repo.full_name!==session.user.login+'/schleim-os-cloud-photos-and-videos') {
+  if (!repo?.full_name || repo.full_name!==session.user.login+'/'+MEDIA_REPO_NAME) {
     throw new Error('Das private Foto- und Video-Repository ist nicht verknüpft. Öffne zuerst die Fotos-App und verknüpfe den Speicher.');
   }
   if (repo.private!==true) throw new Error('Das Foto- und Video-Repository muss privat sein.');
