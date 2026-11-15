@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.15.0 · Chromium-Erweiterung · Manifest V3**
+**Version 3.15.1 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -31,7 +31,7 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 - Fotos-App als private Foto-/Video-Mediathek mit Suche, Upload und Datumsordnern
 - Hintergrund-Upload über einen Offscreen-Prozess: Uploads laufen beim Schließen des Fotos-Tabs weiter, solange Chrome geöffnet bleibt
 - Fortschrittsbenachrichtigung mit Prozentanzeige und Abschlussmeldung, die direkt die Fotos-App öffnet
-- Lokale WebP-Komprimierung für statische Fotos und Video-Neukodierung als WebM; jede hochgeladene Datei bleibt unter 50 MiB
+- Statische Fotos werden lokal mit abgestuften WebP-Profilen optimiert; Videos als WebM neu kodiert und bei Bedarf in mehreren Durchgängen weiter verkleinert. Uploads über 50 MiB werden verhindert.
 - Kamera-App mit Front-/Rückkamera, Fotos und Videoaufnahmen
 - Separates privates Medien-Repository `schleim-os-cloud-photos-and-videos`
 - Speicherübersicht mit Foto-/Videoanzahl und belegten MB/GB unter **Einstellungen → Schleim-Konto**
@@ -46,7 +46,8 @@ Der Browser muss die Erweiterung im Unterordner `extension` erkennen. Die Import
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, Komprimierung und bekannte Grenzen
+- [Release Notes 3.15.1](docs/RELEASE-NOTES-3.15.1.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
+- [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
 - `scripts/app.js` – Apps, Navigation und Oberfläche

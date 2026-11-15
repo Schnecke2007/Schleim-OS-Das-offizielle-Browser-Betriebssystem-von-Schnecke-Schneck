@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download the project as ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -61,7 +61,7 @@ The public [Store catalogue](Store/README.md) is organized by category. Each app
 
 ## 📷 Photo and video cloud
 
-Schleim OS includes a private photo/video library, front/rear camera, date-based folders, storage statistics and optional AI search. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search queries without an API key or sending photos to an AI server. Metadata search remains available on other devices. Photos are compressed locally to WebP and videos are re-encoded locally before upload. A background process continues compression and uploading after the Photos tab closes, as long as Chrome remains open. A progress notification shows the current status; tapping the completion notification opens the Photos app. Animated GIF, APNG and WebP files remain unchanged. Media is stored in a separate private GitHub repository; the upload limit is 50 MiB per file.
+Schleim OS includes a private photo/video library, front/rear camera, date-based folders, storage statistics and optional AI search. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search queries without an API key or sending photos to an AI server. Metadata search remains available on other devices. Static photos are locally optimized through multiple WebP profiles; videos are re-encoded as WebM and, when needed, retried at lower resolution, frame rate and bitrate. A background process continues compression and uploading after the Photos tab closes, as long as Chrome remains open. A progress notification shows the current status; tapping the completion notification opens the Photos app. Animated GIF, APNG and WebP files, as well as SVG files, remain unchanged to preserve their properties. Media is stored in a separate private GitHub repository; the upload limit is 50 MiB per file.
 
 ## 📥 Download and installation
 

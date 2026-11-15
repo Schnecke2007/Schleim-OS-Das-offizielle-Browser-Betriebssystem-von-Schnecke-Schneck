@@ -2,7 +2,7 @@
 
 **Het officiële browserbesturingssysteem van Schnecke Schneck** – jouw persoonlijke, aanpasbare startpagina voor de browser, met app-tegels, personalisatie en een responsief ontwerp voor desktop, tablet en smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.15.1-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
 
 [🌍 Officiële website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Download het project als ZIP](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/archive/refs/heads/main.zip)
 
@@ -61,7 +61,7 @@ De openbare [Store-catalogus](Store/README.md) is ingedeeld per categorie. Elke 
 
 ## 📷 Foto- en videocloud
 
-Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera met voor- en achtercamera, datumgebonden mappen, opslagstatistieken en optioneel AI-zoeken. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoekopdrachten uitbreiden, zonder API-sleutel of verzending naar een AI-server. Op andere apparaten blijft zoeken op metadata beschikbaar. Foto’s worden vóór het uploaden lokaal naar WebP gecomprimeerd en video’s worden lokaal opnieuw gecodeerd. Een achtergrondproces gaat door met comprimeren en uploaden nadat het tabblad Foto’s is gesloten, zolang Chrome geopend blijft. Een voortgangsmelding toont de status; tik op de voltooiingsmelding om de Foto’s-app te openen. Geanimeerde GIF-, APNG- en WebP-bestanden blijven ongewijzigd. Media wordt opgeslagen in een aparte privérepository op GitHub; de uploadlimiet is 50 MiB per bestand.
+Schleim OS bevat een privébibliotheek voor foto’s en video’s, een camera met voor- en achtercamera, datumgebonden mappen, opslagstatistieken en optioneel AI-zoeken. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoekopdrachten uitbreiden, zonder API-sleutel of verzending naar een AI-server. Op andere apparaten blijft zoeken op metadata beschikbaar. Statische foto’s worden lokaal met meerdere WebP-profielen geoptimaliseerd; video’s worden als WebM opnieuw gecodeerd en indien nodig opnieuw verwerkt met een lagere resolutie, beeldsnelheid en bitrate. Een achtergrondproces gaat door met comprimeren en uploaden nadat het tabblad Foto’s is gesloten, zolang Chrome geopend blijft. Een voortgangsmelding toont de status; tik op de voltooiingsmelding om de Foto’s-app te openen. Geanimeerde GIF-, APNG- en WebP-bestanden en SVG-bestanden blijven ongewijzigd om hun eigenschappen te behouden. Media wordt opgeslagen in een aparte privérepository op GitHub; de uploadlimiet is 50 MiB per bestand.
 
 ## 📥 Downloaden en installeren
 
