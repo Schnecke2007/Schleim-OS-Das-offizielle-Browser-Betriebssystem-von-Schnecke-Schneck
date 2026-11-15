@@ -1,25 +1,18 @@
-# Neue Version 3.14.8
-
-## Änderungen
-
-- Das Beispiel-Konto nutzt einen neutralen Namen.
-- Alte Konto-Sitzungen können übernommen werden.
-- Der Name für den Foto- und Video-Speicher ist frei einstellbar.
-- Der Upload prüft jetzt diesen Namen.
-- Neue Medien-Daten haben einen neutralen Namen.
-- Alte Medien-Daten können weiter gelesen werden.
-- Die App-Namen in der Vorlage sind neutral.
+# Neue Vorlage-Version 3.14.9
 
 ## Dokumentation
+- Die Anleitungen sind jetzt besser nach Sprache geordnet.
+- Es gibt eine Übersicht für Deutsch, Englisch und Niederländisch.
+- Es gibt eine neue einfache Anleitung für die Einrichtung.
 
-- Konto und Cloud werden in Deutsch, Englisch und Niederländisch erklärt.
-- Es gibt diese Erklärungen auch in Leichter Sprache.
-- Die README-Links wurden geprüft.
-- Eine alte Sonos-Datei wurde entfernt.
-- Die Template-ZIP heißt jetzt `Browser-OS-Extension-Template.zip`.
+## Vorlage
+- Die Datei-Namen sind neutral.
+- Eigene Daten bleiben Platzhalter.
+- Die Vorlage hat weiter Konto, Cloud, Fotos, Videos, Kamera, Store und Hintergrund-Upload.
+- Die Web-Demo nutzt Beispieldaten. Sie meldet sich nicht bei GitHub an und lädt keine Medien hoch.
 
 ## Installation
-
-Die ZIP-Datei wird nicht entpackt.
-Du importierst sie im Browser.
-Der Browser fragt dich nach der Bestätigung.
+Die Template-ZIP heißt weiterhin `Browser-OS-Extension-Template.zip`.
+Entpacke die ZIP-Datei nicht.
+Importiere sie in einem Browser, der ZIP-Import unterstützt.
+Bestätige die Installation im Browser.

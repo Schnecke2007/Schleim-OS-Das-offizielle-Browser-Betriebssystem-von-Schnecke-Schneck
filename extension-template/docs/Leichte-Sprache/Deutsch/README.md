@@ -8,6 +8,6 @@ Hier findest du die Anleitungen für die Browser-OS-Vorlage.
 - [Funktionen](FUNKTIONEN.md)
 - [Versionshinweise](RELEASE-NOTES.md)
 
-Die Vorlage ist ein Beispiel.
-Du kannst sie ändern.
-Deine eigenen Daten musst du selbst eintragen.
+Die Vorlage ist ein Beispiel. Du kannst sie ändern. Deine eigenen Daten musst du selbst eintragen.
+
+[Konfiguration Schritt für Schritt](KONFIGURATION.md) · [Alle Sprachen](../README.md)

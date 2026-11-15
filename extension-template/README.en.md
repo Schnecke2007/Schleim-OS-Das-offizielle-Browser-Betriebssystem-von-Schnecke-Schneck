@@ -1,6 +1,6 @@
 # Browser OS – Extension Template
 
-**Template version: 3.14.8**
+**Template version: 3.14.9**
 
 Browser OS is a neutral, multilingual Manifest V3 template for Chromium-based browsers. It uses demo content, sample artwork and placeholders instead of personal data from the original project.
 
@@ -32,7 +32,10 @@ The update-center placeholder downloads only **Browser-OS-Extension-Template.zip
 - [Deutsch](docs/Deutsch/README.md)
 - [English](docs/Englisch/README.md)
 - [Nederlands](docs/Niederländisch/README.md)
+- [Easy Language – German](docs/Leichte-Sprache/Deutsch/README.md)
 - [Easy Language – English](docs/Leichte-Sprache/Englisch/README.md)
+- [Easy Language – Dutch](docs/Leichte-Sprache/Niederländisch/README.md)
+- [Documentation language index](docs/README.md)
 - [Configuration](docs/Englisch/CONFIGURATION.md)
 - [Account and private cloud](docs/Englisch/ACCOUNT-AND-CLOUD.md)
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)

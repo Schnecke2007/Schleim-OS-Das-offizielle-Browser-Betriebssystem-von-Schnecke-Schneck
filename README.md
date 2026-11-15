@@ -20,7 +20,7 @@ Was mich daran begeistert? Aus einer Idee Schritt für Schritt etwas Funktionier
 
 ## 🧪 Schleim OS live ausprobieren
 
-[**Demo in einem neuen Browser-Tab öffnen**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren.
+[**Demo in einem neuen Browser-Tab öffnen**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – du kannst die Standalone-Version direkt testen. Für die Demo musst du die Erweiterung nicht installieren. Das Demo-Konto, die Foto-/Video-Cloud, Galerie und Kamera verwenden Beispieldaten und lokale Browser-Vorschauen; es gibt keine echte GitHub-Anmeldung und keinen Medien-Upload an einen Server.
 
 ## 🚀 Was ist Schleim OS?
 

@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.15.2
+# Schleim OS – Erweiterungsdokumentation · Version 3.15.6
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -79,7 +79,9 @@ Das Update-Center vergleicht die lokale Version mit der Manifest-Version auf Git
 
 ## Versionshinweise
 
-- [Release Notes 3.15.2](RELEASE-NOTES-3.15.2.md)
+- [Release Notes 3.15.6](RELEASE-NOTES-3.15.6.md)
+- [Release Notes 3.15.5](RELEASE-NOTES-3.15.5.md)
+- [Release Notes 3.15.4](RELEASE-NOTES-3.15.4.md)
 - [Release Notes 3.15.1](RELEASE-NOTES-3.15.1.md)
 - [Release Notes 3.15.0](RELEASE-NOTES-3.15.0.md)
 - [Release Notes 3.14.1](RELEASE-NOTES-3.14.1.md)
@@ -123,21 +125,11 @@ Das Update-Center vergleicht die lokale Version mit der Manifest-Version auf Git
 - [Nederlands – Schleim-Store](../../docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md)
 
 
-## Sonos-App
+## Externe Web-Apps
 
-- [Sonos-App einrichten](./SONOS-APP.md)
+Store-Angebote wie Sonos werden als normale Web-Apps gestartet und in einem neuen Browser-Tab geöffnet. Es gibt dafür keine separate Sonos-System-App oder eingebettete Sonos-Oberfläche.
 
 
-## Release notes 3.13.7
-
-- [Release Notes 3.13.7](./RELEASE-NOTES-3.13.7.md)
-- [Release Notes 3.13.6](./RELEASE-NOTES-3.13.6.md)
-- [Release Notes 3.13.5](./RELEASE-NOTES-3.13.5.md)
-- [Release Notes 3.13.4](./RELEASE-NOTES-3.13.4.md)
-- [Release Notes 3.13.3](./RELEASE-NOTES-3.13.3.md)
-- [Release Notes 3.13.2](./RELEASE-NOTES-3.13.2.md)
-- [Release Notes 3.13.1](./RELEASE-NOTES-3.13.1.md)
-- [Sonos-App einrichten](./SONOS-APP.md)
 
 ## Previous release notes
 

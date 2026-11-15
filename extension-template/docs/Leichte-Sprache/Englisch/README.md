@@ -8,6 +8,6 @@ Here are the guides for the Browser OS template.
 - [Features](FEATURES.md)
 - [Release notes](RELEASE-NOTES.md)
 
-This template is an example.
-You can change it.
-You must add your own details.
+This template is an example. You can change it. You must add your own details.
+
+[Configuration step by step](CONFIGURATION.md) · [All easy-language versions](../README.md)

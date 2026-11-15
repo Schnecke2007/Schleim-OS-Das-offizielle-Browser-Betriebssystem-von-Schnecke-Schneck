@@ -1,19 +1,14 @@
-# Konto und private Cloud einrichten
+# Account and private cloud – language selector
 
-Die Konto- und Cloud-Funktionen verwenden GitHub Device Flow. Die Vorlage enthält keine fertig eingerichtete GitHub App.
+Choose the account and cloud guide for your language:
 
-## Vor dem Start
-1. Erstelle deine eigene GitHub App und aktiviere Device Flow.
-2. Trage die öffentliche Client-ID, den App-Namen und den Installationslink in `scripts/browser-account.js` ein.
-3. Trage ein privates Repository für Einstellungs-Sicherungen ein.
-4. Trage ein separates privates Repository für Fotos und Videos ein.
-5. Verwende denselben Medien-Repository-Namen in `scripts/browser-media-cloud.js` und `scripts/media-upload-offscreen.js`.
+- [Deutsch – Konto und private Cloud](Deutsch/KONTO-UND-CLOUD.md)
+- [English – Account and private cloud](Englisch/ACCOUNT-AND-CLOUD.md)
+- [Nederlands – Account en privécloud](Niederländisch/ACCOUNT-EN-PRIVECLOUD.md)
 
-## Sicherheit
-- Eine Client-ID ist öffentlich.
-- Client-Secrets, private Schlüssel, Zugriffstoken und Passwörter gehören nicht in den Erweiterungscode.
-- Prüfe, dass die Repositorys privat sind.
-- Teste Anmeldung, Sicherung, Wiederherstellung und Medien-Upload mit einem Testkonto.
-- Gelöschte Dateien können in der GitHub-Repository-Historie erhalten bleiben.
+Easy Language:
+- [Deutsch](Leichte-Sprache/Deutsch/KONTO-UND-CLOUD.md)
+- [English](Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md)
+- [Nederlands](Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md)
 
-Die Store- und Update-Einstellungen müssen ebenfalls auf dein eigenes Repository zeigen. Details stehen in [CONFIGURATION.md](../CONFIGURATION.md).
+The template does not contain a configured GitHub App. Create your own app and use private repositories for account backup and media. Never store app secrets, private keys, personal access tokens or passwords in extension code.

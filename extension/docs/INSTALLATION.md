@@ -1,4 +1,4 @@
-# Schleim OS 3.15.2 – Installationsanleitung
+# Schleim OS 3.15.6 – Installationsanleitung
 
 1. Lade [Schleim-OS-Extension.zip aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Bei Updates kannst du den Download auch unter **Einstellungen → Schleim OS aktualisieren** starten.
 2. **Entpacke die ZIP-Datei nicht.**

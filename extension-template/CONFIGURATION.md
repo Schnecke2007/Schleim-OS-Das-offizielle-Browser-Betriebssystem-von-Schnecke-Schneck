@@ -1,29 +1,17 @@
-# Konfigurationsanleitung
+# Template configuration / Konfiguration / Configuratie
 
-Diese Vorlage ist neutral. Persönliche Profile, Kontaktdaten, App-Zugangsdaten und Repository-Namen sind Platzhalter.
+This page is a language selector for the neutral Browser OS template. Choose the detailed guide in your language.
 
-## Grunddaten
+- [Deutsch – Konfiguration](docs/Deutsch/KONFIGURATION.md)
+- [English – Configuration](docs/Englisch/CONFIGURATION.md)
+- [Nederlands – Configuratie](docs/Niederländisch/CONFIGURATIE.md)
 
-Ändere in `manifest.json` den Namen, Kurzname, die Beschreibung und die Version. Passe die Beispieltexte und Links in `scripts/app.js` an. Ersetze die Beispielbilder in `assets/demo/` und `assets/icons/`.
+## Easy Language / Leichte Sprache / Eenvoudige taal
 
-## GitHub und Update-Center
+- [Deutsch](docs/Leichte-Sprache/Deutsch/EINSTELLUNGEN.md)
+- [English](docs/Leichte-Sprache/Englisch/SETTINGS.md)
+- [Nederlands](docs/Leichte-Sprache/Niederländisch/INSTELLINGEN.md)
 
-Trage in `scripts/update-center.js` deinen GitHub-Benutzernamen und Repository-Namen ein. Der Update-Center lädt ausschließlich `Browser-OS-Extension-Template.zip` aus dem neuesten Release dieses Repositorys.
+Use the template with your own GitHub account, GitHub App and private repositories. The repository owner, app ID, media repository name, Store links and profile details are placeholders. Never add app secrets, private keys, personal access tokens or passwords to extension files.
 
-## Konto und Cloud
-
-Konfiguriere deine GitHub-App in `scripts/browser-account.js`. Trage dort die öffentliche Client-ID, App-Kennung und die Namen deiner privaten Repositorys ein. Der Name des Foto-/Video-Repositorys muss an vier Stellen exakt übereinstimmen: `PHOTOS_REPO_NAME` in `scripts/browser-account.js`, `REPO_NAME` in `scripts/browser-media-cloud.js`, `MEDIA_REPO_NAME` in `scripts/media-upload-worker.js` und `REPO_NAME` in `scripts/media-upload-offscreen.js`. Ersetze überall `YOUR_MEDIA_REPOSITORY_NAME` durch denselben eigenen Repository-Namen.
-
-Die Hintergrundverarbeitung liegt in `scripts/media-upload-worker.js` und `scripts/media-upload-offscreen.js`. Die Dateien verwenden dieselbe Konto-Sitzung wie das Konto-Modul. Ältere Template-Sitzungen werden beim ersten Start automatisch auf den neutralen Speicherschlüssel migriert.
-
-## Browser Store
-
-Bearbeite `data/store-apps.json`. Prüfe die Links und Beispieltexte. Store-Administration und Katalog müssen auf dein eigenes Repository zeigen.
-
-## Sicherheit
-
-Nur die öffentliche GitHub-App-Client-ID darf in der Erweiterung stehen. Niemals Client-Secrets, private Schlüssel, persönliche Zugriffstoken oder Passwörter eintragen. Sicherungs- und Medien-Repositorys müssen privat sein. Teste alle Funktionen mit einem Testkonto.
-
-## Dokumentation
-
-Die übersetzten Anleitungen befinden sich in `docs/Deutsch/`, `docs/Englisch/`, `docs/Niederländisch/` und `docs/Leichte-Sprache/`.
+The release ZIP is imported directly in browsers that support local ZIP import. Do not extract it for that import flow. The browser still asks you to confirm installation or update.

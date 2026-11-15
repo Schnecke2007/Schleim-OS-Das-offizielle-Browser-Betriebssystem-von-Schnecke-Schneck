@@ -20,7 +20,7 @@ What excites me most is turning an idea into something that actually works! I lo
 
 ## 🧪 Try Schleim OS live
 
-[**Open the demo in a new browser tab**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – try the standalone version directly. You do not need to install the extension to use the demo.
+[**Open the demo in a new browser tab**](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html) – try the standalone version directly. You do not need to install the extension to use the demo. The sample account, photo/video cloud, gallery and camera use demo data and local browser previews; there is no real GitHub sign-in or media upload to a server.
 
 ## 🚀 What is Schleim OS?
 

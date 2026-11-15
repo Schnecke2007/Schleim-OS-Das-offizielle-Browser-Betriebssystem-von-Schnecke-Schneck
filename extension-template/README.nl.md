@@ -1,6 +1,6 @@
 # Browser OS – Extensie-template
 
-**Templateversie: 3.14.8**
+**Templateversie: 3.14.9**
 
 Browser OS is een neutraal, meertalig Manifest V3-template voor Chromium-browsers. Het bevat demoteksten, voorbeeldafbeeldingen en tijdelijke invulvelden in plaats van persoonlijke gegevens uit het oorspronkelijke project.
 
@@ -32,7 +32,10 @@ De updatefunctie downloadt uitsluitend **Browser-OS-Extension-Template.zip** uit
 - [Deutsch](docs/Deutsch/README.md)
 - [English](docs/Englisch/README.md)
 - [Nederlands](docs/Niederländisch/README.md)
+- [Leichte Sprache – Deutsch](docs/Leichte-Sprache/Deutsch/README.md)
+- [Easy Language – English](docs/Leichte-Sprache/Englisch/README.md)
 - [Eenvoudige taal – Nederlands](docs/Leichte-Sprache/Niederländisch/README.md)
+- [Documentatie en taalkeuze](docs/README.md)
 - [Configuratie](docs/Niederländisch/CONFIGURATIE.md)
 - [Account en privécloud](docs/Niederländisch/ACCOUNT-EN-PRIVECLOUD.md)
 - [Technische informatie](docs/Niederländisch/TECHNIEK.md)

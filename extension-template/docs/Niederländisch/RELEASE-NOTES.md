@@ -1,24 +1,18 @@
-# Release-informatie – Browser OS Template 3.14.8
-
-## Nieuwe en verbeterde functies
-
-- Neutrale Browser OS-accountopslagsleutel met eenmalige migratie van oudere templatesessies.
-- De foto- en videocloud gebruikt een instelbare privérepository.
-- De achtergrondworker controleert dezelfde ingestelde mediarepository als de account-, media- en offscreenmodules.
-- Bestaande media-indexen blijven leesbaar; nieuwe indexen gebruiken een neutraal Browser OS-formaat.
-- Template-app-ID's zijn gewijzigd van oorspronkelijke projectnamen naar neutrale Browser OS-namen.
-- Storebeheer accepteert nu alleen nog het neutrale Browser Store-formaat.
+# Release-informatie – Browser OS Template 3.14.9
 
 ## Documentatie
+- Taalpagina's zijn duidelijk geordend in Duits, Engels en Nederlands.
+- Een centrale pagina linkt naar alle drie de versies in eenvoudige taal.
+- Nieuwe configuratiehandleidingen in eenvoudige taal leggen de GitHub App, privé-repositories en mediacloud uit.
+- Algemene documentatiepagina's verwijzen nu naar de juiste taal.
 
-- Volledige account- en cloudhandleidingen toegevoegd in het Duits, Engels en Nederlands.
-- Eenvoudige taal bevat nu account- en cloudhandleidingen in alle drie de talen.
-- README-links verwijzen nu naar bestaande bestanden in elke taalmap.
-- Een verouderd Sonos-specifiek document is verwijderd.
-- Het releasebestand van het template heet nu `Browser-OS-Extension-Template.zip`.
+## Template
+- Bestandsnamen en modules zijn gecontroleerd. Ze gebruiken neutrale Browser OS-namen.
+- Persoonlijke gegevens, App-ID's, GitHub-namen en repositorynamen blijven invulvelden.
+- Account, privéback-up van instellingen, foto-/videocloud, camera, Store en achtergrondupload blijven aanwezig.
+- Het standalonebestand blijft een demodemo met voorbeeldgegevens, zonder echte GitHub-aanmelding of media-uploads.
 
-## Installatie en updates
-
-- Importeer de Template-ZIP rechtstreeks in compatibele browsers. Pak het bestand niet uit.
-- Downloaden installeert het template niet automatisch. Importeren en bevestigen gebeurt in de browser.
-- Het updatecentrum van het template downloadt alleen het templatebestand uit je eigen ingestelde repository.
+## Installatie
+- Templateversie 3.14.9.
+- Releasebestand: `Browser-OS-Extension-Template.zip`.
+- Pak het ZIP-bestand in compatibele browsers niet uit; importeren en bevestigen gebeurt in de browser.

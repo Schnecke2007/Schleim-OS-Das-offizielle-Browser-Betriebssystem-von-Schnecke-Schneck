@@ -1,6 +1,6 @@
 # Browser OS – Erweiterungs-Vorlage
 
-**Vorlagen-Version: 3.14.8**
+**Vorlagen-Version: 3.14.9**
 
 Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-basierte Browser. Sie enthält Demo-Texte, Beispielgrafiken und Platzhalter statt persönlicher Originaldaten.
 
@@ -35,6 +35,7 @@ Der Update-Center-Platzhalter lädt ausschließlich **Browser-OS-Extension-Templ
 - [Leichte Sprache – Deutsch](docs/Leichte-Sprache/Deutsch/README.md)
 - [Easy Language – English](docs/Leichte-Sprache/Englisch/README.md)
 - [Eenvoudige taal – Nederlands](docs/Leichte-Sprache/Niederländisch/README.md)
+- [Sprachübersicht und alle Anleitungen](docs/README.md)
 - [Konfiguration](docs/Deutsch/KONFIGURATION.md)
 - [Konto und private Cloud](docs/Deutsch/KONTO-UND-CLOUD.md)
 - [Technische Hinweise](docs/Deutsch/TECHNIK.md)

@@ -1,25 +1,18 @@
-# Nieuwe versie 3.14.8
-
-## Wijzigingen
-
-- Het voorbeeldaccount heeft nu een neutrale naam.
-- Oude accountsessies kunnen worden overgezet.
-- Je kunt de naam van de privéfoto- en videorepository instellen.
-- De achtergrondupload controleert deze naam.
-- Nieuwe media-indexen hebben een neutrale naam.
-- Oude media-indexen kunnen nog worden gelezen.
-- App-ID's in het template gebruiken nu neutrale namen.
+# Nieuwe templateversie 3.14.9
 
 ## Documentatie
+- De handleidingen zijn nu beter op taal geordend.
+- Er is een overzicht voor Duits, Engels en Nederlands.
+- Er is een nieuwe eenvoudige handleiding voor de configuratie.
 
-- Account- en cloudhandleidingen zijn beschikbaar in het Duits, Engels en Nederlands.
-- Er zijn ook handleidingen in eenvoudige taal in alle drie de talen.
-- README-links zijn gecontroleerd.
-- Een oud Sonos-document is verwijderd.
-- De Template-ZIP heet nu `Browser-OS-Extension-Template.zip`.
+## Template
+- De bestandsnamen zijn neutraal.
+- Je eigen gegevens blijven invulvelden.
+- Het template heeft nog steeds account, cloud, foto's, video's, camera, Store en achtergrondupload.
+- De webdemo gebruikt voorbeeldgegevens. Er is geen GitHub-aanmelding en er worden geen media geüpload.
 
 ## Installatie
-
+De Template-ZIP heet nog steeds `Browser-OS-Extension-Template.zip`.
 Pak het ZIP-bestand niet uit.
-Importeer het in je browser.
-De browser vraagt om bevestiging.
+Importeer het in een browser die ZIP-import ondersteunt.
+Bevestig de installatie in de browser.
