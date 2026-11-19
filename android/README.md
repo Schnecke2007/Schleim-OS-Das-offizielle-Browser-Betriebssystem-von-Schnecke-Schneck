@@ -29,7 +29,7 @@ This is the original Schleim OS interface running as a bundled GeckoView WebExte
 
 Native Android notification testing and the Android browser-role selector are provided by the app shell. They do not automatically replace all extension notification behavior.
 
-## Build
+## Build (0.1.0-alpha02)
 
 The GitHub Actions workflow copies the complete `extension/` directory into `android/app/src/main/assets/extension/`, generates the GeckoView-compatible manifest in that build copy, and runs Gradle to assemble an ARM64 debug APK. The Android shell installs the bundled extension and opens `pages/newtab.html` from its `moz-extension://` base URL. It does not use `file:///android_asset/start.html` or the Standalone Demo.
 
