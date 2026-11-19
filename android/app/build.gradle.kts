@@ -33,5 +33,5 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation("org.mozilla.geckoview:geckoview-stable:${providers.gradleProperty("geckoviewVersion").get()}")
+    implementation("org.mozilla.geckoview:geckoview:${providers.gradleProperty("geckoviewVersion").get()}")
 }
