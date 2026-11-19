@@ -27,7 +27,9 @@ class MainActivity : Activity() {
     private lateinit var geckoView: GeckoView
     private lateinit var session: GeckoSession
     private lateinit var address: EditText
-    private var runtime: GeckoRuntime? = null\n    private var homePageUrl: String? = null\n    private var pendingExternalUrl: String? = null
+    private var runtime: GeckoRuntime? = null
+    private var homePageUrl: String? = null
+    private var pendingExternalUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -172,7 +174,9 @@ class MainActivity : Activity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        intent.data?.toString()?.let {\n            if (::session.isInitialized) load(it) else pendingExternalUrl = it\n        }
+        intent.data?.toString()?.let {
+            if (::session.isInitialized) load(it) else pendingExternalUrl = it
+        }
     }
 
     override fun onDestroy() {
@@ -181,7 +185,8 @@ class MainActivity : Activity() {
     }
 
     companion object {
-        private const val BUNDLED_EXTENSION_URI = "resource://android/assets/extension/"\n        private const val EXTENSION_ID = "schleim-os-android@schneckeschneck.de"
+        private const val BUNDLED_EXTENSION_URI = "resource://android/assets/extension/"
+        private const val EXTENSION_ID = "schleim-os-android@schneckeschneck.de"
         private const val CHANNEL_ID = "schleim_os_general"
         private const val NOTIFICATION_ID = 1501
         private const val REQUEST_NOTIFICATIONS = 1502
