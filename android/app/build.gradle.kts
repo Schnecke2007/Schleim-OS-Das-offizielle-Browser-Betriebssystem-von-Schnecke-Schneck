@@ -1,0 +1,36 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    namespace = "de.schneckeschneck.schleimos"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "de.schneckeschneck.schleimos"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "0.1.0-alpha01"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions { jvmTarget = "17" }
+
+    buildTypes {
+        debug { applicationIdSuffix = ".debug" }
+        release {
+            isMinifyEnabled = false
+            // Release signing is intentionally not configured until a private,
+            // persistent keystore is supplied through GitHub Actions secrets.
+        }
+    }
+}
+
+dependencies {
+    implementation("org.mozilla.geckoview:geckoview-stable:${providers.gradleProperty("geckoviewVersion").get()}")
+}
