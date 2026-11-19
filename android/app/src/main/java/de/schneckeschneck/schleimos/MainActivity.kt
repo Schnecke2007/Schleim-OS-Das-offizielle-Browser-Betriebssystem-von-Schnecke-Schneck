@@ -49,7 +49,7 @@ class MainActivity : Activity() {
         }
         address = EditText(this).apply {
             hint = "Webadresse oder Suchbegriff"
-            singleLine = true
+            setSingleLine(true)
             setTextColor(Color.WHITE)
             setHintTextColor(Color.LTGRAY)
             setBackgroundColor(Color.rgb(75, 49, 31))
