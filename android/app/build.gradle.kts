@@ -17,6 +17,10 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0-alpha01"
+        // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
+        ndk {
+            abiFilters += listOf("arm64-v8a")
+        }
     }
 
     compileOptions {
