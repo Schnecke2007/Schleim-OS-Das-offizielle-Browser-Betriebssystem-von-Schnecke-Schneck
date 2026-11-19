@@ -87,7 +87,7 @@ jobs:
           manifest.pop("minimum_chrome_version", None)
 
           manifest_path.write_text(
-              json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n",
+              json.dumps(manifest, ensure_ascii=False, indent=2) + chr(10),
               encoding="utf-8"
           )
 
@@ -120,7 +120,8 @@ jobs:
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
-          unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"\n          unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
+          unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
+          unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           cp "$APK" "Schleim-OS-Android-0.1.0-alpha01-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
