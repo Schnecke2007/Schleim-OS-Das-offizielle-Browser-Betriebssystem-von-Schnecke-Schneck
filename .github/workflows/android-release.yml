@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'android/**'
-      - 'extension/standalone/schleim-os-standalone.html'
+      - 'extension/**'
       - '.github/workflows/android-release.yml'
   release:
     types: [published]
@@ -47,12 +47,61 @@ jobs:
           VERSION="153.0.20260810162159"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using pinned GeckoView $VERSION (API 36.1 compatible dependency set)."
-      - name: Copy current standalone demo into Android assets
+      - name: Bundle the original Schleim OS extension for GeckoView
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p android/app/src/main/assets
-          cp extension/standalone/schleim-os-standalone.html android/app/src/main/assets/start.html
-          test -s android/app/src/main/assets/start.html
+          ASSET_DIR="android/app/src/main/assets/extension"
+          rm -rf "$ASSET_DIR"
+          mkdir -p "$ASSET_DIR"
+          cp -a extension/. "$ASSET_DIR/"
+
+          # Keep the Chrome source manifest untouched. This Android-only copy
+          # gets the Gecko extension ID and Firefox-compatible MV3 background
+          # script fallback required by GeckoView.
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest_path = Path("android/app/src/main/assets/extension/manifest.json")
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+          manifest["browser_specific_settings"] = {
+              "gecko": {
+                  "id": "schleim-os-android@schneckeschneck.de"
+              }
+          }
+
+          background = manifest.get("background") or {}
+          service_worker = background.pop("service_worker", None)
+          if service_worker:
+              background["scripts"] = [service_worker]
+          if background:
+              manifest["background"] = background
+
+          # GeckoView/Firefox has no Chrome offscreen-document API.
+          manifest["permissions"] = [
+              permission for permission in manifest.get("permissions", [])
+              if permission != "offscreen"
+          ]
+          manifest.pop("minimum_chrome_version", None)
+
+          manifest_path.write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n",
+              encoding="utf-8"
+          )
+
+          assert manifest["manifest_version"] == 3
+          assert "pages/newtab.html" == manifest["chrome_url_overrides"]["newtab"]
+          assert "scripts/media-upload-worker.js" in manifest["background"]["scripts"]
+          assert "offscreen" not in manifest.get("permissions", [])
+          assert Path("android/app/src/main/assets/extension/pages/newtab.html").is_file()
+          print("Original Schleim OS extension bundled; Android-specific Gecko manifest prepared.")
+          PY
+
+          test -s "$ASSET_DIR/manifest.json"
+          test -s "$ASSET_DIR/pages/newtab.html"
+          test -s "$ASSET_DIR/scripts/media-upload-worker.js"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -71,9 +120,9 @@ jobs:
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
-          unzip -l "$APK" | grep -Fq "assets/start.html"
+          unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"\n          unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           cp "$APK" "Schleim-OS-Android-0.1.0-alpha01-debug.apk"
-          echo "APK built, package metadata validated and bundled start page found."
+          echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
