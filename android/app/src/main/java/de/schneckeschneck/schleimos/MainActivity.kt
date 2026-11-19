@@ -93,17 +93,24 @@ class MainActivity : Activity() {
         geckoRuntime.getWebExtensionController()
             .ensureBuiltIn(BUNDLED_EXTENSION_URI, EXTENSION_ID)
             .accept({ extension ->
-                homePageUrl = extension.metaData.baseUrl + "pages/newtab.html"
-                session = GeckoSession()
-                session.open(geckoRuntime)
-                geckoView.setSession(session)
-                val destination = pendingExternalUrl ?: initialUrl ?: homePageUrl!!
-                pendingExternalUrl = null
-                load(destination)
+                if (extension == null) {
+                    showNotification(
+                        "Schleim OS konnte nicht starten",
+                        "GeckoView hat keine integrierte Erweiterung zurückgegeben."
+                    )
+                } else {
+                    homePageUrl = extension.metaData.baseUrl + "pages/newtab.html"
+                    session = GeckoSession()
+                    session.open(geckoRuntime)
+                    geckoView.setSession(session)
+                    val destination = pendingExternalUrl ?: initialUrl ?: homePageUrl!!
+                    pendingExternalUrl = null
+                    load(destination)
+                }
             }, { error ->
                 showNotification(
                     "Schleim OS konnte nicht starten",
-                    error.message ?: "Die integrierte Schleim-OS-Erweiterung konnte nicht geladen werden."
+                    error?.message ?: "Die integrierte Schleim-OS-Erweiterung konnte nicht geladen werden."
                 )
             })
     }
