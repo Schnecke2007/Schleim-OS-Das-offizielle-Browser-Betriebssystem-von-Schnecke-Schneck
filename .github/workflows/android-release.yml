@@ -152,5 +152,29 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          gh release upload "$TAG" "Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
+          mkdir -p dist/release
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "Schleim-OS-Extension.zip" \
+            --pattern "Browser-OS-Extension-Template.zip" \
+            --dir dist/release
+          cp "Schleim-OS-Android-0.1.0-alpha02-debug.apk" dist/release/
+
+          (
+            cd dist/release
+            sha256sum \
+              Schleim-OS-Extension.zip \
+              Browser-OS-Extension-Template.zip \
+              Schleim-OS-Android-0.1.0-alpha02-debug.apk \
+              > Schleim-OS-SHA256SUMS.txt
+          )
+
+          # Remove the earlier demo-based Android APK so only the original-extension
+          # Android build remains available in the release.
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha01-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+
+          gh release upload "$TAG" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
+            "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
