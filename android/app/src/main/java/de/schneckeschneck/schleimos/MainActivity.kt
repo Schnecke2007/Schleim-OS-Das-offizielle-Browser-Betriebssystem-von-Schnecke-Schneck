@@ -27,13 +27,13 @@ class MainActivity : Activity() {
     private lateinit var geckoView: GeckoView
     private lateinit var session: GeckoSession
     private lateinit var address: EditText
-    private var runtime: GeckoRuntime? = null
+    private var runtime: GeckoRuntime? = null\n    private var homePageUrl: String? = null\n    private var pendingExternalUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         buildBrowserUi()
-        openBrowser(intent?.data?.toString() ?: START_PAGE)
+        openBrowser(intent?.data?.toString())
         requestNotificationPermissionIfNeeded()
     }
 
@@ -60,7 +60,7 @@ class MainActivity : Activity() {
         }
         toolbar.addView(address, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
         toolbar.addView(makeButton("Los") { navigate(address.text.toString()) })
-        toolbar.addView(makeButton("⌂") { load(START_PAGE) })
+        toolbar.addView(makeButton("⌂") { homePageUrl?.let { load(it) } })
         toolbar.addView(makeButton("↻") { session.reload() })
         root.addView(toolbar)
         geckoView = GeckoView(this)
@@ -82,16 +82,38 @@ class MainActivity : Activity() {
         setOnClickListener { action() }
     }
 
-    private fun openBrowser(url: String) {
+    private fun openBrowser(initialUrl: String?) {
         val geckoRuntime = runtime ?: GeckoRuntime.create(this).also { runtime = it }
-        session = GeckoSession()
-        session.open(geckoRuntime)
-        geckoView.setSession(session)
-        load(url)
+
+        // Install the real Schleim OS extension from the APK assets. GeckoView
+        // exposes extension pages through their moz-extension:// base URL,
+        // not through Android WebView's file:///android_asset/ path.
+        geckoRuntime.getWebExtensionController()
+            .ensureBuiltIn(BUNDLED_EXTENSION_URI, EXTENSION_ID)
+            .accept({ extension ->
+                homePageUrl = extension.metaData.baseUrl + "pages/newtab.html"
+                session = GeckoSession()
+                session.open(geckoRuntime)
+                geckoView.setSession(session)
+                val destination = pendingExternalUrl ?: initialUrl ?: homePageUrl!!
+                pendingExternalUrl = null
+                load(destination)
+            }, { error ->
+                showNotification(
+                    "Schleim OS konnte nicht starten",
+                    error.message ?: "Die integrierte Schleim-OS-Erweiterung konnte nicht geladen werden."
+                )
+            })
     }
 
     private fun load(url: String) {
-        val target = if (url == START_PAGE) url else normalizeUrl(url)
+        val target = when {
+            url.startsWith("moz-extension://") -> url
+            url.startsWith("resource://") -> url
+            url.startsWith("file://") -> url
+            url.startsWith("https://") || url.startsWith("http://") -> url
+            else -> normalizeUrl(url)
+        }
         address.setText(target)
         session.loadUri(target)
     }
@@ -150,7 +172,7 @@ class MainActivity : Activity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        intent.data?.toString()?.let { load(it) }
+        intent.data?.toString()?.let {\n            if (::session.isInitialized) load(it) else pendingExternalUrl = it\n        }
     }
 
     override fun onDestroy() {
@@ -159,7 +181,7 @@ class MainActivity : Activity() {
     }
 
     companion object {
-        private const val START_PAGE = "file:///android_asset/start.html"
+        private const val BUNDLED_EXTENSION_URI = "resource://android/assets/extension/"\n        private const val EXTENSION_ID = "schleim-os-android@schneckeschneck.de"
         private const val CHANNEL_ID = "schleim_os_general"
         private const val NOTIFICATION_ID = 1501
         private const val REQUEST_NOTIFICATIONS = 1502
