@@ -29,3 +29,6 @@ The initial artifact is debug-signed by the Android build system. It is installa
 3. Port GitHub device authorization and private cloud flows, then verify them against a test repository.
 4. Integrate native camera/media pickers, upload progress notifications, and persistent WorkManager uploads.
 5. Configure a private signing key and publish a stable release APK only after device-level tests.
+
+
+The generated debug APK is uploaded to the current GitHub Release only after the APK build and package validation steps pass.
