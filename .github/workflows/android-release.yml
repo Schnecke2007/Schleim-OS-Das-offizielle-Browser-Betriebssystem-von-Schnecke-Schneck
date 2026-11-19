@@ -39,20 +39,36 @@ jobs:
           # Install only the current platform, build tools and platform tools.
           packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
 
-      - name: Resolve latest stable GeckoView
+      - name: Resolve stable GeckoView version
         id: geckoview
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import urllib.request, xml.etree.ElementTree as ET
-          url = "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview-stable/maven-metadata.xml"
-          with urllib.request.urlopen(url, timeout=30) as response:
-              root = ET.fromstring(response.read())
-          versions = [v.text for v in root.findall("./versioning/versions/version") if v.text]
-          if not versions:
-              raise SystemExit("Mozilla Maven did not return any stable GeckoView versions")
-          print("version=" + versions[-1])
+          from urllib.error import HTTPError, URLError
+
+          # The current stable artifact is published as "geckoview".
+          # The old workflow queried the non-existent geckoview-stable metadata path.
+          url = "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/maven-metadata.xml"
+          fallback = "160.0.20261116130455"
+          try:
+              request = urllib.request.Request(url, headers={"User-Agent": "Schleim-OS-Android-Build"})
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  root = ET.fromstring(response.read())
+              version = root.findtext("./versioning/release") or root.findtext("./versioning/latest")
+              if not version:
+                  versions = [v.text for v in root.findall("./versioning/versions/version") if v.text]
+                  version = versions[-1] if versions else None
+              if not version:
+                  raise RuntimeError("Maven metadata contains no version")
+          except (HTTPError, URLError, TimeoutError, RuntimeError) as error:
+              print(f"::warning::Could not read GeckoView Maven metadata ({error}); using verified stable fallback {fallback}")
+              version = fallback
+
+          if not version or not version[0].isdigit():
+              raise SystemExit(f"Invalid GeckoView version: {version!r}")
+          print("version=" + version)
           PY
           echo "Using GeckoView ${{ steps.geckoview.outputs.version }}"
 
