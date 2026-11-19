@@ -122,14 +122,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha01-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha02-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha01-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha02-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -152,5 +152,5 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          gh release upload "$TAG" "Schleim-OS-Android-0.1.0-alpha01-debug.apk" \
+          gh release upload "$TAG" "Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --clobber
