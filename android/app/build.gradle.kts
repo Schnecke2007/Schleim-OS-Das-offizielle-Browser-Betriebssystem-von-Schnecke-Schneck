@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "de.schneckeschneck.schleimos"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "de.schneckeschneck.schleimos"

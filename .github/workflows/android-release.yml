@@ -37,7 +37,7 @@ jobs:
         with:
           # The old unqualified "tools" SDK package was removed by Google.
           # Install only the current platform, build tools and platform tools.
-          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          packages: 'platform-tools platforms;android-37 build-tools;36.0.0'
 
       - name: Resolve stable GeckoView version
         id: geckoview
@@ -82,7 +82,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.9'
+          gradle-version: '9.6.0'
 
       - name: Build debug APK
         working-directory: android
