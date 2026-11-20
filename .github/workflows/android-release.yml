@@ -1,14 +1,12 @@
 name: Build Schleim Browser Android APK
 
 on:
+  # Publish the consolidated 3.16.0 release only when all documentation,
+  # project files and template tooling have been committed.
   push:
     branches: [main]
     paths:
-      - 'android/**'
-      - 'extension/**'
-      - '.github/workflows/android-release.yml'
-  release:
-    types: [published]
+      - 'Android-App/release-trigger.txt'
   workflow_dispatch:
 
 permissions:
@@ -145,8 +143,10 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 21" in gradle
-          assert 'versionName = "0.1.0-alpha21"' in gradle
+          assert "versionCode = 22" in gradle
+          assert 'versionName = "0.1.0-alpha22"' in gradle
+          assert '"version": "3.16.0"' in Path("extension/manifest.json").read_text()
+          assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert 'android:label="Schleim Browser"' in android_manifest
           assert 'android:icon="@mipmap/ic_launcher"' in android_manifest
@@ -265,111 +265,89 @@ jobs:
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           unzip -l "$APK" | grep -Fq "ic_launcher.png"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha21.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha22.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha21.apk
+          path: Schleim-Browser-Android-0.1.0-alpha22.apk
           if-no-files-found: error
           retention-days: 30
 
-      - name: Select target release
+      - name: Prepare Schleim OS 3.16.0 release
         id: target
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "release" ]]; then
-            TAG="$GITHUB_REF_NAME"
-          else
-            TAG="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)"
+          TAG="v3.16.0"
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Schleim OS 3.16.0 – Android-Browser" \
+              --notes-file docs/Englisch/RELEASE-NOTES-3.16.0.md
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
-      - name: Upload APK to GitHub Release
+      - name: Package Extension and Android Studio template
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG: ${{ steps.target.outputs.tag }}
+          GECKOVIEW_VERSION: ${{ steps.geckoview.outputs.version }}
         run: |
           set -euo pipefail
+          rm -rf dist/release dist/android-template
           mkdir -p dist/release
-          gh release download "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --pattern "Schleim-OS-Extension.zip" \
-            --pattern "Browser-OS-Extension-Template.zip" \
-            --dir dist/release
-          cp "Schleim-Browser-Android-0.1.0-alpha21.apk" dist/release/
+
+          (cd extension && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-OS-Extension.zip" .)
+          (cd extension-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Browser-OS-Extension-Template.zip" .)
+
+          python3 Android-App/tools/build_template.py \
+            --android android \
+            --extension extension \
+            --docs Android-App \
+            --output dist/android-template
+
+          gradle --no-daemon --stacktrace \
+            -p dist/android-template/Android-App \
+            wrapper --gradle-version 8.13 --distribution-type bin
+
+          # Build the generated, placeholder-only project once as a release check.
+          gradle --no-daemon --stacktrace \
+            -p dist/android-template/Android-App \
+            -PgeckoviewVersion="$GECKOVIEW_VERSION" \
+            :app:assembleDebug
+
+          (cd dist/android-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-Browser-Android-Studio-Template.zip" Android-App)
+          cp "Schleim-Browser-Android-0.1.0-alpha22.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha21.apk \
+              Schleim-Browser-Android-0.1.0-alpha22.apk \
+              Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
           )
 
-          # Remove the earlier demo-based Android APK so only the original-extension
-          # Android build remains available in the release.
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha01-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha03-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha04-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha05-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
+          unzip -t dist/release/Schleim-OS-Extension.zip >/dev/null
+          unzip -t dist/release/Browser-OS-Extension-Template.zip >/dev/null
+          unzip -t dist/release/Schleim-Browser-Android-Studio-Template.zip >/dev/null
+          echo "All three project archives and the Alpha 22 APK are ready."
 
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha06-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha07-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha08-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha09-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha10-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha11-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha12-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha13-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha14-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha15-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha16-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha18.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha19.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha20.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-
+      - name: Publish the complete 3.16.0 release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.target.outputs.tag }}
+        run: |
+          set -euo pipefail
           gh release upload "$TAG" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha21.apk" \
+            "dist/release/Schleim-OS-Extension.zip" \
+            "dist/release/Browser-OS-Extension-Template.zip" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
 
@@ -384,7 +362,8 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha21.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
 
@@ -393,11 +372,20 @@ jobs:
             sha256sum -c Schleim-OS-SHA256SUMS.txt
           )
 
-          cmp -s \
-            "Schleim-Browser-Android-0.1.0-alpha21.apk" \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha21.apk"
+          for asset in \
+            Schleim-OS-Extension.zip \
+            Browser-OS-Extension-Template.zip \
+            Schleim-Browser-Android-0.1.0-alpha22.apk \
+            Schleim-Browser-Android-Studio-Template.zip; do
+            cmp -s "dist/release/$asset" "dist/verify/$asset"
+          done
+
+          unzip -p dist/verify/Schleim-Browser-Android-Studio-Template.zip \
+            Android-App/app/src/main/java/com/example/yourbrowser/MainActivity.kt >/dev/null
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha21.apk"
-          echo "Published release files match the local build; checksums and APK signature verified."
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha22.apk"
+
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          echo "Release v3.16.0 published; every archive, checksum and APK signature verified."
