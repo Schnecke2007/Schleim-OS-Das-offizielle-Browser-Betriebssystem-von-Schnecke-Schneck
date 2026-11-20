@@ -49,3 +49,7 @@ Die Cloud-Sicherung findest du ausschließlich unter **Einstellungen → Schleim
 ---
 
 [🇬🇧 English installation guide](../Englisch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md)
+
+## Separate Android-App
+
+Neben der Browser-Extension gibt es jetzt **Schleim Browser** als eigenständige Android-App. Die Android-App wird nicht über den Erweiterungsimport installiert. Lade stattdessen die APK aus dem [neuesten Release](ANDROID-BROWSER.md) herunter und installiere sie direkt auf deinem Android-Gerät.
