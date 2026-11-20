@@ -1215,10 +1215,11 @@ class MainActivity : Activity() {
         runtime.getWebExtensionController().list().accept({ installed ->
             runOnUiThread {
                 listHost.removeAllViews()
-                if (installed.isEmpty()) {
+                val availableExtensions = installed ?: emptyList()
+                if (availableExtensions.isEmpty()) {
                     listHost.addView(dialogMessage("Keine Erweiterungen gefunden."))
                 } else {
-                    installed.sortedBy { it.metaData.name ?: it.id }.forEach { item ->
+                    availableExtensions.sortedBy { it.metaData.name ?: it.id }.forEach { item ->
                         val name = item.metaData.name ?: item.id
                         val description = "Version " + item.metaData.version +
                             if (item.isBuiltIn) " · Integriert" else if (item.metaData.enabled) " · Aktiv" else " · Deaktiviert"
@@ -1348,7 +1349,12 @@ class MainActivity : Activity() {
             .install(Uri.fromFile(file).toString(), WebExtensionController.INSTALLATION_METHOD_FROM_FILE)
             .accept({ installed ->
                 runOnUiThread {
-                    showToast((installed.metaData.name ?: installed.id) + " wurde installiert.")
+                    val newExtension = installed
+                    if (newExtension == null) {
+                        showToast("Die Erweiterung wurde nicht installiert.")
+                        return@runOnUiThread
+                    }
+                    showToast((newExtension.metaData.name ?: newExtension.id) + " wurde installiert.")
                     showExtensionsDialog()
                 }
             }, { error ->
