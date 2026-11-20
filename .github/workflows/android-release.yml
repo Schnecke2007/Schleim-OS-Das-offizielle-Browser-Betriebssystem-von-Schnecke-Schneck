@@ -273,6 +273,9 @@ jobs:
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha09-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
 
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha10-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Android-0.1.0-alpha11-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
