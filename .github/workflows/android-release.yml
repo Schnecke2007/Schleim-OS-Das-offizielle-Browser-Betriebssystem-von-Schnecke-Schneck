@@ -333,7 +333,17 @@ jobs:
             echo "Android Studio source template is unexpectedly large: $TEMPLATE_SIZE bytes" >&2
             exit 1
           fi
-          if unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Eq '(^|/)(build|[.]gradle|[.]kotlin)/|[.](apk|aab|hprof)            sha256sum \
+          if unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Eq '(^|/)(build|[.]gradle|[.]kotlin)/|[.](apk|aab|hprof)$'; then
+            echo "Generated build output or cache was found in the Android Studio template ZIP." >&2
+            exit 1
+          fi
+
+          # Copy the separately validated production APK into the release package.
+          cp "Schleim-Browser-Android-0.1.0-alpha22.apk" dist/release/
+
+          (
+            cd dist/release
+            sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
               Schleim-Browser-Android-0.1.0-alpha22.apk \
@@ -479,3 +489,4 @@ jobs:
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
           echo "Release v3.16.0 published; every archive, checksum and APK signature verified."
+
