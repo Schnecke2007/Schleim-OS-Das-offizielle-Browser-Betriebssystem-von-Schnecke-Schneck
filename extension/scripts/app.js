@@ -492,19 +492,16 @@
       </section>`;
   }
   function renderCamera(){
-    return `${appHero('KAMERA','Deine Schleim-OS-Webkamera.','Öffne die integrierte Webkamera mit Live-Vorschau, JavaScript-Fotoaufnahme und Videoaufzeichnung. Deine Aufnahmen werden direkt in deine private Foto- und Video-Cloud übernommen.','📷')}
+    return `${appHero('KAMERA','Deine Schleim-OS-Webkamera.','Die Original-Extension verwendet eine normale JavaScript-Webkamera mit Live-Vorschau, Fotoaufnahme und Videoaufzeichnung.','📷')}
       <section class="ssos-camera-app" data-camera-app>
-        <div class="ssos-camera-native-panel" data-native-camera-panel hidden>
-          <div class="ssos-camera-native-card">
-            <span class="ssos-camera-native-icon">📷</span>
-            <b>Integrierte Schleim-OS-Webkamera</b>
-            <p>Schleim OS öffnet eine eigene HTTPS-Webkamera in einer geschützten Android-WebView. Die Live-Vorschau und Aufnahme laufen über JavaScript und die Web Media API – ohne externe Kamera-App.</p>
+        <section class="ssos-camera-android-panel" data-android-camera-notice hidden>
+          <div class="ssos-camera-android-card">
+            <span class="ssos-camera-android-icon">📱</span>
+            <b>Android-Anwendung – Kamera</b>
+            <p><strong>Hinweis:</strong> Foto- und Videoaufnahmen werden in der Schleim-OS-Android-App nicht unterstützt. Die Kamerafunktion ist in der Android-Anwendung deaktiviert.</p>
+            <p>Dieser Bereich gehört ausschließlich zur Android-Anwendung. Die Original-Extension behält ihre separate JavaScript-Webkamera mit Live-Vorschau und den gewohnten Buttons „Kamera starten“, „Kamera deaktivieren“, „Foto aufnehmen“ und „Video aufnehmen“.</p>
           </div>
-          <div class="ssos-camera-actions">
-            <button class="app-button" type="button" data-camera-native-photo>📷 Foto aufnehmen</button>
-            <button class="app-button secondary" type="button" data-camera-native-video>🎥 Video aufnehmen</button>
-          </div>
-        </div>
+        </section>
         <div class="ssos-camera-browser-panel" data-browser-camera-panel hidden>
           <div class="ssos-camera-preview-wrap"><video data-camera-preview autoplay muted playsinline></video><span class="ssos-camera-live">LIVE</span></div>
           <div class="ssos-camera-actions">
@@ -512,11 +509,11 @@
             <button class="app-button secondary" type="button" data-camera-switch>↔ Front-/Rückkamera</button>
             <button class="app-button" type="button" data-camera-photo>● Foto aufnehmen</button>
             <button class="app-button secondary" type="button" data-camera-record>◉ Video aufnehmen</button>
-            <button class="app-button secondary" type="button" data-camera-stop>■ Kamera stoppen</button>
+            <button class="app-button secondary" type="button" data-camera-stop>■ Kamera deaktivieren</button>
           </div>
+          <p class="ssos-camera-note">Die Kamera benötigt deine ausdrückliche Browserfreigabe. Fotos und Videos werden nach der Aufnahme in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
         </div>
         <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
-        <p class="ssos-camera-note">Unter Android verwendet Schleim OS eine lokale HTTPS-Webkamera mit JavaScript. Kamera- und Mikrofonzugriff werden über die Android-Systemberechtigungen freigegeben. Die fertige Aufnahme wird in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
       </section>`;
   }
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}

@@ -11,7 +11,7 @@
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
     objectUrls: [], busy: false, backgroundBusy: false,
-    androidCameraMode: false, androidCameraBusy: false, cameraStream: null, cameraStarted: false,
+    cameraStream: null, cameraStarted: false,
     cameraRecorder: null, cameraChunks: [], cameraRecording: false,
     facingMode: 'environment', activeApp: null
   };
@@ -54,20 +54,20 @@
       localSearchNote: 'Die Suche funktioniert ohne API-Schlüssel. Auf unterstützten Chrome-Desktopgeräten kann Gemini Nano Fotos direkt auf dem Gerät beschreiben und Suchbegriffe erweitern. Auf anderen Geräten nutzt sie Dateinamen, Datum, Beschreibungen, Stichwörter und Synonyme.',
       cameraHint: 'Nutze die Vorder- oder Rückkamera. Aufnahmen werden direkt in deine private Foto- und Video-Cloud geladen.',
       startCamera: 'Kamera starten',
-      stopCamera: 'Kamera stoppen',
+      stopCamera: 'Kamera deaktivieren',
       switchCamera: 'Kamera wechseln',
       takePhoto: 'Foto aufnehmen',
       record: 'Video aufnehmen',
       stopRecord: 'Aufnahme beenden',
       cameraUnavailable: 'Kamera wird von diesem Browser oder Gerät nicht unterstützt.',
-      cameraDenied: 'Kamerazugriff wurde verweigert. Erlaube den Zugriff in den Android-App-Berechtigungen.',
+      cameraDenied: 'Kamerazugriff wurde verweigert. Prüfe die Browser-Berechtigungen für diese Website oder Erweiterung.',
+      androidCameraUnsupported: 'Foto- und Videoaufnahmen werden in der Android-Anwendung nicht unterstützt. Die Kamerafunktion ist dort deaktiviert.',
       cameraStartHint: 'Tippe auf „Kamera starten“, um den Kamerazugriff freizugeben.',
-      cameraMissing: 'Keine Kamera erkannt. Prüfe unter Android → Einstellungen → Apps → Schleim OS → Berechtigungen, ob Kamera erlaubt ist. Schließe andere Kamera-Apps und starte Schleim OS erneut.',
+      cameraMissing: 'Keine Kamera erkannt. Prüfe, ob dein Gerät eine Kamera besitzt und ob sie nicht von einer anderen Anwendung verwendet wird.',
       cameraBusy: 'Die Kamera ist gerade nicht verfügbar. Schließe andere Apps, die die Kamera verwenden, und versuche es erneut.',
-      cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Öffne Schleim OS direkt in der Android-App.',
-      cameraReady: 'Schleim-OS-Webkamera bereit. Wähle Foto oder Video.',
-      cameraOpening: 'JavaScript-Webkamera wird geöffnet …',
-      cameraCancelled: 'Aufnahme abgebrochen.',
+      cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Verwende die Original-Extension in einem Browser mit sicherem Kamerazugriff (HTTPS oder Erweiterungsseite).',
+      cameraReady: 'Webkamera bereit. Wähle Foto oder Video.',
+      cameraOpening: 'Webkamera wird geöffnet …',
       recording: 'Videoaufnahme läuft …',
       recordingDone: 'Videoaufnahme beendet. Upload wird vorbereitet …',
       selectFiles: 'Wähle zuerst mindestens eine Datei aus.',
@@ -80,7 +80,7 @@
       connectHint: 'Bei älteren Schleim-OS-Versionen wird dieses zweite private Repository noch nicht automatisch angelegt. Verknüpfe es einmalig hier.',
       accountRequired: 'Für die Verknüpfung ist ein angemeldetes Schleim-Konto erforderlich.',
       originalLimit: 'Upload-Limit: 50 MiB pro Datei. GitHub ist ein versionsbasiertes Repository und kein unbegrenzter Medien- oder Backup-Dienst.',
-      noCapture: 'Kameraansicht nicht verfügbar. Öffne die Kamera-App erneut.'
+      noCapture: 'Kameraansicht nicht verfügbar. Starte die Webkamera erneut.'
     },
     en: {
       notSignedIn: 'Sign in first under Settings → Schleim account.',
@@ -119,20 +119,20 @@
       localSearchNote: 'Search works without an API key. On supported Chrome desktop devices, Gemini Nano can describe photos on-device and expand search terms. Other devices use filenames, dates, descriptions, tags and synonyms.',
       cameraHint: 'Use the front or rear camera. Captures are uploaded directly to your private photo and video cloud.',
       startCamera: 'Start camera',
-      stopCamera: 'Stop camera',
+      stopCamera: 'Turn camera off',
       switchCamera: 'Switch camera',
       takePhoto: 'Take photo',
       record: 'Record video',
       stopRecord: 'Stop recording',
       cameraUnavailable: 'Camera access is not supported by this browser or device.',
-      cameraDenied: 'Camera access was denied. Allow it in Android app permissions.',
+      cameraDenied: 'Camera access was denied. Check this website or extension’s camera permission in your browser.',
+      androidCameraUnsupported: 'Photo and video capture are not supported in the Android application. The camera feature is disabled there.',
       cameraStartHint: 'Tap “Start camera” to request camera access.',
-      cameraMissing: 'No camera was detected. Check Android Settings → Apps → Schleim OS → Permissions, allow Camera, close other camera apps and restart Schleim OS.',
+      cameraMissing: 'No camera detected. Check that the device has a camera and that another application is not using it.',
       cameraBusy: 'The camera is currently unavailable. Close other apps using the camera and try again.',
-      cameraSecureContext: 'Camera access is unavailable in this browser context. Open Schleim OS directly in the Android app.',
-      cameraReady: 'Android camera is ready. Choose photo or video.',
-      cameraOpening: 'Opening Android camera …',
-      cameraCancelled: 'Capture cancelled.',
+      cameraSecureContext: 'Camera access is unavailable in this browser context. Use the original extension in a browser that supports camera access in a secure context (HTTPS or an extension page).',
+      cameraReady: 'Webcam ready. Choose photo or video.',
+      cameraOpening: 'Opening webcam …',
       recording: 'Video recording is in progress …',
       recordingDone: 'Recording finished. Preparing upload …',
       selectFiles: 'Choose at least one file first.',
@@ -145,7 +145,7 @@
       connectHint: 'Older Schleim OS versions do not create this second private repository automatically. Link it here once.',
       accountRequired: 'A signed-in Schleim account is required.',
       originalLimit: 'Upload limit: 50 MiB per file. GitHub is a version-controlled repository, not an unlimited media or backup service.',
-      noCapture: 'Camera view unavailable. Open the camera app again.'
+      noCapture: 'Camera view unavailable. Start the webcam again.'
     },
     nl: {
       notSignedIn: 'Meld je eerst aan via Instellingen → Schleim-account.',
@@ -184,20 +184,20 @@
       localSearchNote: 'Zoeken werkt zonder API-sleutel. Op ondersteunde Chrome-desktopapparaten kan Gemini Nano foto’s lokaal beschrijven en zoektermen uitbreiden. Andere apparaten gebruiken bestandsnamen, datums, beschrijvingen, tags en synoniemen.',
       cameraHint: 'Gebruik de voor- of achtercamera. Opnamen worden direct naar je privéfoto- en videocloud geüpload.',
       startCamera: 'Camera starten',
-      stopCamera: 'Camera stoppen',
+      stopCamera: 'Camera uitschakelen',
       switchCamera: 'Camera wisselen',
       takePhoto: 'Foto maken',
       record: 'Video opnemen',
       stopRecord: 'Opname stoppen',
       cameraUnavailable: 'Cameratoegang wordt niet ondersteund door deze browser of dit apparaat.',
-      cameraDenied: 'Cameratoegang is geweigerd. Sta toegang toe bij de Android-appmachtigingen.',
+      cameraDenied: 'Cameratoegang is geweigerd. Controleer de cameratoestemming voor deze website of extensie in je browser.',
+      androidCameraUnsupported: 'Foto- en video-opnamen worden niet ondersteund in de Android-app. De camerafunctie is daar uitgeschakeld.',
       cameraStartHint: 'Tik op “Camera starten” om cameratoegang aan te vragen.',
-      cameraMissing: 'Geen camera gevonden. Controleer Android-instellingen → Apps → Schleim OS → Machtigingen, sta Camera toe, sluit andere camera-apps en start Schleim OS opnieuw.',
+      cameraMissing: 'Geen camera gevonden. Controleer of het apparaat een camera heeft en of een andere app deze niet gebruikt.',
       cameraBusy: 'De camera is momenteel niet beschikbaar. Sluit andere apps die de camera gebruiken en probeer het opnieuw.',
-      cameraSecureContext: 'Cameratoegang is niet beschikbaar in deze browsercontext. Open Schleim OS rechtstreeks in de Android-app.',
-      cameraReady: 'Android-camera is klaar. Kies foto of video.',
-      cameraOpening: 'Android-camera openen …',
-      cameraCancelled: 'Opname geannuleerd.',
+      cameraSecureContext: 'Cameratoegang is niet beschikbaar in deze browsercontext. Gebruik de originele extensie in een browser met cameraondersteuning in een beveiligde context (HTTPS of een extensiepagina).',
+      cameraReady: 'Webcamera gereed. Kies foto of video.',
+      cameraOpening: 'Webcamera wordt geopend …',
       recording: 'Video-opname bezig …',
       recordingDone: 'Opname voltooid. Upload wordt voorbereid …',
       selectFiles: 'Kies eerst ten minste één bestand.',
@@ -210,7 +210,7 @@
       connectHint: 'Oudere Schleim OS-versies maken deze tweede privérepository nog niet automatisch aan. Koppel deze hier eenmalig.',
       accountRequired: 'Een aangemeld Schleim-account is vereist.',
       originalLimit: 'Uploadlimiet: 50 MiB per bestand. GitHub is een repository met versiebeheer en geen onbeperkte media- of back-updienst.',
-      noCapture: 'Cameraweergave niet beschikbaar. Open de camera-app opnieuw.'
+      noCapture: 'Cameraweergave niet beschikbaar. Start die webcamera opnieuw.'
     }
   };
 
@@ -870,46 +870,22 @@
     await refreshMediaApp();
     await mountSettings();
   }
-  async function captureWithAndroidWebCamera(mediaType) {
-    const runtime = globalThis.browser?.runtime;
-    if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
-    if (state.androidCameraBusy) return;
-    state.androidCameraBusy = true;
-    const buttons = Array.from(document.querySelectorAll('[data-camera-native-photo],[data-camera-native-video]'));
-    for (const button of buttons) button.disabled = true;
-    setStatus('[data-camera-status]', t('cameraOpening'));
-    try {
-      const response = await runtime.sendNativeMessage('browser',{action:'camera.capture',mediaType:mediaType});
-      if (response?.cancelled) { setStatus('[data-camera-status]',t('cameraCancelled')); return; }
-      if (!response?.ok || typeof response.base64 !== 'string') throw new Error(response?.error || t('cameraUnavailable'));
-      const binary = atob(response.base64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-      const mimeType = response.mimeType || (mediaType === 'video' ? 'video/mp4' : 'image/jpeg');
-      const blob = new Blob([bytes],{type:mimeType});
-      if (!blob.size) throw new Error(t('noCapture'));
-      const now = new Date();
-      const fallbackName = 'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + (mediaType === 'video' ? '.mp4' : '.jpg');
-      const file = new File([blob],response.fileName || fallbackName,{type:mimeType,lastModified:now.getTime()});
-      await uploadFiles([file],mediaType === 'video' ? 'Android-Kamera-Video' : 'Android-Kamera-Foto','[data-camera-status]');
-    } finally {
-      state.androidCameraBusy = false;
-      for (const button of buttons) {
-        if (button.isConnected) button.disabled = false;
-      }
-    }
-  }
-
   function mountCamera() {
     const root = $('[data-camera-app]');
     if (!root) return;
     const runtime = globalThis.browser?.runtime;
-    state.androidCameraMode = /Android/i.test(navigator.userAgent || '') && typeof runtime?.sendNativeMessage === 'function';
-    const nativePanel = $('[data-native-camera-panel]',root);
+    const isAndroidApplication = /Android/i.test(navigator.userAgent || '') &&
+      typeof runtime?.sendNativeMessage === 'function';
+    const androidNotice = $('[data-android-camera-notice]',root);
     const browserPanel = $('[data-browser-camera-panel]',root);
-    if (nativePanel) nativePanel.hidden = !state.androidCameraMode;
-    if (browserPanel) browserPanel.hidden = state.androidCameraMode;
-    setStatus('[data-camera-status]',state.androidCameraMode ? t('cameraReady') : t('cameraStartHint'));
+    if (androidNotice) androidNotice.hidden = !isAndroidApplication;
+    if (browserPanel) browserPanel.hidden = isAndroidApplication;
+    if (isAndroidApplication) {
+      stopBrowserCamera();
+      setStatus('[data-camera-status]',t('androidCameraUnsupported'));
+      return;
+    }
+    setStatus('[data-camera-status]',t('cameraStartHint'));
   }
 
   async function startBrowserCamera() {
@@ -1002,16 +978,6 @@
       const description=$('[data-photos-description]')?.value || '';
       try { await uploadFiles(files,description);if(input)input.value=''; }
       catch (error) { setStatus('[data-photos-status]',error.message || t('loadError'),true); }
-      return;
-    }
-    if (event.target.closest('[data-camera-native-photo]')) {
-      try { await captureWithAndroidWebCamera('photo'); }
-      catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
-      return;
-    }
-    if (event.target.closest('[data-camera-native-video]')) {
-      try { await captureWithAndroidWebCamera('video'); }
-      catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
       return;
     }
     if (event.target.closest('[data-camera-start]')) {
