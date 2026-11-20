@@ -15,8 +15,8 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 18
-        versionName = "0.1.0-alpha18"
+        versionCode = 19
+        versionName = "0.1.0-alpha19"
         // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -40,6 +40,43 @@ android {
             // persistent keystore is supplied through GitHub Actions secrets.
         }
     }
+}
+
+/*
+ * Use the repository's supplied Schleim Browser PNG as the actual Android
+ * launcher icon. Keeping this in Gradle also makes local builds use the same
+ * source image as GitHub Actions.
+ */
+val prepareLauncherIcon by tasks.registering {
+    val sourceIcon = file("src/main/file_00000000f7dc8210993324a486df07ef.png")
+    val targetIcon = file("src/main/res/mipmap-xxxhdpi/ic_launcher.png")
+    val oldIcon = file("src/main/res/mipmap-xxxhdpi/ic_launcher.webp")
+
+    inputs.file(sourceIcon)
+    outputs.file(targetIcon)
+
+    doLast {
+        check(sourceIcon.isFile) {
+            "The supplied Schleim Browser launcher PNG is missing: ${sourceIcon.path}"
+        }
+        val header = sourceIcon.inputStream().use { input -> ByteArray(24).also { check(input.read(it) == it.size) } }
+        check(
+            header[0] == 0x89.toByte() &&
+                header[1] == 0x50.toByte() &&
+                header[2] == 0x4E.toByte() &&
+                header[3] == 0x47.toByte()
+        ) {
+            "The supplied launcher image is not a valid PNG."
+        }
+        targetIcon.parentFile.mkdirs()
+        sourceIcon.copyTo(targetIcon, overwrite = true)
+        oldIcon.delete()
+        println("Schleim Browser launcher icon copied from the supplied repository PNG.")
+    }
+}
+
+tasks.named("preBuild").configure {
+    dependsOn(prepareLauncherIcon)
 }
 
 dependencies {
