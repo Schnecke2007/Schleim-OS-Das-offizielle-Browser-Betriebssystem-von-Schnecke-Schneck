@@ -977,9 +977,9 @@
     state.cameraRecording = false;
     setStatus('[data-camera-status]', 'Lokaler Kameradienst wird vorbereitet …');
     try {
-      const sendNativeMessage = globalThis.browser?.runtime?.sendNativeMessage;
-      if (typeof sendNativeMessage !== 'function') throw new Error('Die native Kamera-Schnittstelle ist in diesem Browser nicht verfügbar.');
-      const response = await sendNativeMessage('browser',{action:'camera.url'});
+      const runtime = globalThis.browser?.runtime;
+      if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die Verbindung zur Android-Kamera ist nicht aktiviert. Bitte aktualisiere Schleim OS und starte die App erneut.');
+      const response = await runtime.sendNativeMessage('browser',{action:'camera.url'});
       if (!response?.ok || !response.url) throw new Error(response?.error || 'Der lokale Kameradienst konnte nicht gestartet werden.');
       const cameraUrl = new URL(response.url);
       if (cameraUrl.protocol !== 'http:' || cameraUrl.hostname !== '127.0.0.1') throw new Error('Die Kamera wurde nicht über den geschützten lokalen Dienst bereitgestellt.');
