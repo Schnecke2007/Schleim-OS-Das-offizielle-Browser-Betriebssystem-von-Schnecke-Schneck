@@ -58,7 +58,11 @@
       record: 'Video aufnehmen',
       stopRecord: 'Aufnahme beenden',
       cameraUnavailable: 'Kamera wird von diesem Browser oder Gerät nicht unterstützt.',
-      cameraDenied: 'Kamerazugriff wurde verweigert. Erlaube den Zugriff in den Browser-Einstellungen.',
+      cameraDenied: 'Kamerazugriff wurde verweigert. Erlaube den Zugriff in den Android-App-Berechtigungen.',
+      cameraStartHint: 'Tippe auf „Kamera starten“, um den Kamerazugriff freizugeben.',
+      cameraMissing: 'Keine Kamera gefunden. Prüfe, ob eine Kamera verfügbar und die Android-Berechtigung für Schleim OS aktiviert ist.',
+      cameraBusy: 'Die Kamera ist gerade nicht verfügbar. Schließe andere Apps, die die Kamera verwenden, und versuche es erneut.',
+      cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Öffne Schleim OS direkt in der Android-App.',
       cameraReady: 'Kamera ist bereit.',
       recording: 'Videoaufnahme läuft …',
       recordingDone: 'Videoaufnahme beendet. Upload wird vorbereitet …',
@@ -117,7 +121,11 @@
       record: 'Record video',
       stopRecord: 'Stop recording',
       cameraUnavailable: 'Camera access is not supported by this browser or device.',
-      cameraDenied: 'Camera access was denied. Allow access in your browser settings.',
+      cameraDenied: 'Camera access was denied. Allow it in Android app permissions.',
+      cameraStartHint: 'Tap “Start camera” to request camera access.',
+      cameraMissing: 'No camera was detected. Check that a camera is available and Schleim OS has Android camera permission.',
+      cameraBusy: 'The camera is currently unavailable. Close other apps using the camera and try again.',
+      cameraSecureContext: 'Camera access is unavailable in this browser context. Open Schleim OS directly in the Android app.',
       cameraReady: 'Camera is ready.',
       recording: 'Video recording is in progress …',
       recordingDone: 'Recording finished. Preparing upload …',
@@ -176,7 +184,11 @@
       record: 'Video opnemen',
       stopRecord: 'Opname stoppen',
       cameraUnavailable: 'Cameratoegang wordt niet ondersteund door deze browser of dit apparaat.',
-      cameraDenied: 'Cameratoegang is geweigerd. Sta toegang toe in de browserinstellingen.',
+      cameraDenied: 'Cameratoegang is geweigerd. Sta toegang toe bij de Android-appmachtigingen.',
+      cameraStartHint: 'Tik op “Camera starten” om cameratoegang aan te vragen.',
+      cameraMissing: 'Geen camera gevonden. Controleer of er een camera beschikbaar is en Schleim OS Android-cameratoegang heeft.',
+      cameraBusy: 'De camera is momenteel niet beschikbaar. Sluit andere apps die de camera gebruiken en probeer het opnieuw.',
+      cameraSecureContext: 'Cameratoegang is niet beschikbaar in deze browsercontext. Open Schleim OS rechtstreeks in de Android-app.',
       cameraReady: 'Camera is klaar.',
       recording: 'Video-opname bezig …',
       recordingDone: 'Opname voltooid. Upload wordt voorbereid …',
@@ -850,20 +862,47 @@
     await refreshMediaApp();
     await mountSettings();
   }
+  function cameraError(error) {
+    const name = String(error?.name || '');
+    if (name === 'NotAllowedError' || name === 'PermissionDeniedError') return new Error(t('cameraDenied'));
+    if (name === 'NotFoundError' || name === 'DevicesNotFoundError') return new Error(t('cameraMissing'));
+    if (name === 'NotReadableError' || name === 'TrackStartError') return new Error(t('cameraBusy'));
+    if (name === 'SecurityError' || name === 'TypeError') return new Error(t('cameraSecureContext'));
+    return new Error(error?.message || t('cameraUnavailable'));
+  }
+
   async function startCamera() {
     if (!navigator.mediaDevices?.getUserMedia) throw new Error(t('cameraUnavailable'));
+    if (!window.isSecureContext) throw new Error(t('cameraSecureContext'));
     stopCamera();
     const preview = $('[data-camera-preview]');
-    const constraints = {audio:false,video:{facingMode:{ideal:state.facingMode},width:{ideal:1920},height:{ideal:1080}}};
+    const preferred = {
+      audio:false,
+      video:{
+        facingMode:{ideal:state.facingMode},
+        width:{ideal:1920},
+        height:{ideal:1080}
+      }
+    };
     try {
-      state.cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+      try {
+        state.cameraStream = await navigator.mediaDevices.getUserMedia(preferred);
+      } catch (error) {
+        // Retry with the browser's default camera if an Android device does not
+        // expose the requested front/rear facing mode.
+        if (['NotFoundError','OverconstrainedError'].includes(error?.name)) {
+          state.cameraStream = await navigator.mediaDevices.getUserMedia({audio:false,video:true});
+        } else {
+          throw error;
+        }
+      }
     } catch (error) {
-      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') throw new Error(t('cameraDenied'));
-      throw error;
+      throw cameraError(error);
     }
     if (preview) {
       preview.srcObject = state.cameraStream;
-      await preview.play().catch(() => {});
+      try { await preview.play(); }
+      catch (error) { console.warn('[Schleim OS Camera] Preview could not autoplay:',error); }
     }
     setStatus('[data-camera-status]', t('cameraReady'));
   }
@@ -920,8 +959,8 @@
   function mountCamera() {
     const root = $('[data-camera-app]');
     if (!root) return;
-    const start = $('[data-camera-start]');
-    if (start) startCamera().catch(error => setStatus('[data-camera-status]',error.message || t('cameraDenied'),true));
+    // Request camera access only after an explicit user action.
+    setStatus('[data-camera-status]', t('cameraStartHint'));
   }
   async function handleClick(event) {
     const link = event.target.closest('[data-photos-link]');
