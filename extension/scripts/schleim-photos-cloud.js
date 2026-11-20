@@ -875,7 +875,7 @@
     if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
     if (state.androidCameraBusy) return;
     state.androidCameraBusy = true;
-    const buttons = $('[data-camera-native-photo],[data-camera-native-video]');
+    const buttons = $$('[data-camera-native-photo],[data-camera-native-video]');
     buttons.forEach(button=>{button.disabled=true;});
     setStatus('[data-camera-status]', t('cameraOpening'));
     try {
