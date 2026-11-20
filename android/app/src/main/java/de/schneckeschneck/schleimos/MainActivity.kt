@@ -498,10 +498,6 @@ class MainActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BROWSER_ROLE) return
-        if (requestCode == REQUEST_CAMERA_CAPTURE) {
-            finishAndroidCameraCapture(resultCode, data)
-            return
-        }
         if (requestCode != REQUEST_FILE_PICKER) return
 
         val prompt = pendingFilePrompt
