@@ -1,5 +1,3 @@
 Schleim OS 3.16.0 final Android release package
 
-The production Alpha 22 APK and full Android Studio template have passed build and privacy validation.
-
-Rebuild the source template, clean build outputs, caches and APKs before zipping, enforce the 30 MB size limit, and update the release v3.16.0 assets and SHA-256 file. Keep the current Alpha 22 APK and original Extension packages.
+Publish the already verified Alpha 22 Android APK and the Android Studio template. The template must be built once for validation, then stripped of generated build folders, Gradle caches, local.properties and APK/AAB outputs before ZIP packaging. Keep the source archive below 30 MB and verify the release checksums.
