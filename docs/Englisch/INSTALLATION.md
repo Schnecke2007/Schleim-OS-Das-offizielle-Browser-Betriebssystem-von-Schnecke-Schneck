@@ -49,3 +49,7 @@ Cloud backup is available only under **Settings → Schleim account**. You can m
 ---
 
 [🇩🇪 Deutsche Installationsanleitung](../Deutsch/INSTALLATION.md) · [🇳🇱 Nederlandse installatiehandleiding](../Niederländisch/INSTALLATIE.md)
+
+## Separate Android app
+
+In addition to the browser Extension, **Schleim Browser** is now available as a standalone Android app. It is not installed through the browser extension importer. Download the APK from the [latest release](ANDROID-BROWSER.md) and install it directly on your Android device.
