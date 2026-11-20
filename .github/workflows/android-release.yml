@@ -145,8 +145,8 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 20" in gradle
-          assert 'versionName = "0.1.0-alpha20"' in gradle
+          assert "versionCode = 21" in gradle
+          assert 'versionName = "0.1.0-alpha21"' in gradle
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert 'android:label="Schleim Browser"' in android_manifest
           assert 'android:icon="@mipmap/ic_launcher"' in android_manifest
@@ -219,6 +219,11 @@ jobs:
           assert "override fun onPause()" in main
           assert "activeSession()?.let { session ->" in main
           assert "override fun onResume()" in main
+          assert "private val ioExecutor = Executors.newFixedThreadPool(2)" in main
+          assert "ioExecutor.execute {" in main
+          assert "private fun pruneBackgroundTabsForNewTab()" in main
+          assert "private const val MAX_OPEN_TABS = 6" in main
+          assert "private const val MAX_DOWNLOAD_ROWS = 100" in main
           assert "https://www.google.com/search?q=" in main
           assert "private fun toggleDesktopMode()" in main
           assert "private fun showDownloadsDialog()" in main
@@ -260,14 +265,14 @@ jobs:
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           unzip -l "$APK" | grep -Fq "ic_launcher.png"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha20.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha21.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha20.apk
+          path: Schleim-Browser-Android-0.1.0-alpha21.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -296,14 +301,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-Browser-Android-0.1.0-alpha20.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha21.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha20.apk \
+              Schleim-Browser-Android-0.1.0-alpha21.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -360,9 +365,11 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha19.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha20.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha20.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha21.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
 
@@ -377,7 +384,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha20.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha21.apk" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
 
@@ -387,10 +394,10 @@ jobs:
           )
 
           cmp -s \
-            "Schleim-Browser-Android-0.1.0-alpha20.apk" \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha20.apk"
+            "Schleim-Browser-Android-0.1.0-alpha21.apk" \
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha21.apk"
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha20.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha21.apk"
           echo "Published release files match the local build; checksums and APK signature verified."
