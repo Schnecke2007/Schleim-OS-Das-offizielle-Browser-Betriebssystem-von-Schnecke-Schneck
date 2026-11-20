@@ -33,3 +33,9 @@ This no-extraction guide applies to browsers whose extension manager offers loca
 - If you completely remove Schleim OS and lose local settings, you can restore them from your private cloud backup under **Settings → Schleim account**.
 
 [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installation guide](INSTALLATION.md) · [Plain-language guide](../Leichte-Sprache/Englisch/UPDATES.md)
+
+## Update the Android app
+
+The **Schleim Browser** Android app is updated separately from the browser Extension. Download the current APK from the [GitHub release](ANDROID-BROWSER.md) and open it on your Android device.
+
+**Debug-signing note:** Android may reject an in-place update. Back up important local data and check your cloud backup first. Then uninstall the old app and install the new APK. Uninstalling can remove local app data.
