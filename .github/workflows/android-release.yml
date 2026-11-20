@@ -343,6 +343,9 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
+          # Keep only the current Android APK in this consolidated release.
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha21.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
