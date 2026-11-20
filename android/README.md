@@ -54,3 +54,15 @@ The Android workflow builds an ARM64 debug APK and uploads it to the latest GitH
 - Dadurch kann Alpha 15 als eigenständige Anwendung neben einer älteren Debug-Installation installiert werden. Eine Deinstallation der bisherigen App vor dem ersten Start ist nicht erforderlich.
 - Die bisherige App und ihre lokalen Daten bleiben zunächst unangetastet. Einstellungen oder lokale Sitzungsdaten werden nicht automatisch zwischen den beiden Android-Paket-IDs übertragen; Cloud-Inhalte bleiben im privaten GitHub-Medien-Repository.
 - Die Android-Kamera bleibt deaktiviert; die Trennung zur Webkamera der Original-Extension bleibt unverändert.
+
+
+## Alpha 0.1.0-alpha16 – Browser-Oberfläche
+
+- Die native Browser-Oberfläche wurde zu einer kompakten Browserleiste mit Zurück, Vorwärts, Adresse/Suche, Startseite, Reload, Tabs und Menü umgebaut.
+- Die Adresszeile öffnet erkannte URLs direkt; reine Suchbegriffe werden über Google gesucht.
+- Die Schleim-OS-Extension bleibt die Startseite. Die Browserleisten verwenden den dunklen Schleim-OS-Hintergrund (#251205).
+- Das Menü enthält Desktop-Ansicht, Downloads, Erweiterungen und Einstellungen.
+- Downloads werden im app-eigenen Downloadbereich gespeichert und können geöffnet oder geteilt werden.
+- Mozilla-signierte XPI-WebExtensions können importiert, installiert, aktiviert, deaktiviert und entfernt werden. Integrierte Schleim-OS-Extension bleibt geschützt.
+- Einstellungen enthalten den Benachrichtigungstest und die Auswahl des Android-Standardbrowsers.
+- Die App erhält für Alpha 16 eine neue Paket-ID, damit sie neben Alpha 15 installierbar ist. Die lokalen Einstellungen der beiden App-Installationen werden nicht automatisch zusammengeführt.

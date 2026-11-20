@@ -209,7 +209,7 @@ class MainActivity : Activity() {
             background = ColorDrawable(Color.TRANSPARENT)
             setPadding(dp(2), 0, dp(2), 0)
             imeOptions = EditorInfo.IME_ACTION_GO
-            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_URI
+            inputType = android.text.InputType.TYPE_CLASS_TEXT
             setOnEditorActionListener { _, action, _ ->
                 if (action == EditorInfo.IME_ACTION_GO || action == EditorInfo.IME_ACTION_DONE) {
                     navigate(address.text.toString())
