@@ -604,12 +604,12 @@
       let completed = 0;
       try {
         for (const file of files) {
-          setStatus(androidStatusTarget,t('uploading')+' ('+(completed+1)+'/'+files.length+')');
+          setStatus(target,t('uploading')+' ('+(completed+1)+'/'+files.length+')');
           await uploadOne(file,description);
           completed += 1;
         }
         await refreshMediaApp();
-        setStatus(androidStatusTarget,t('uploaded'));
+        setStatus(target,t('uploaded'));
       } catch (error) {
         if (completed > 0) await refreshMediaApp().catch(() => {});
         throw error;
@@ -624,7 +624,6 @@
       throw new Error(t('backgroundAlreadyRunning'));
     }
     state.busy = true;
-    const target = statusSelector || '[data-photos-status]';
     try {
       const queuedFiles = [];
       for (const file of files) {
