@@ -2,7 +2,7 @@
 
 **The official browser operating system by Schnecke Schneck** – your personal, customizable browser start page with app tiles, personalization and a responsive design for desktop, tablet and smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.15.7-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium-green)
+![Version](https://img.shields.io/badge/version-3.16.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium%20%2B%20Android-green)
 
 [🌍 Official website](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Download Extension only](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -26,7 +26,18 @@ What excites me most is turning an idea into something that actually works! I lo
 
 Schleim OS is a browser extension that replaces the browser's regular new-tab page with its own interface. Instead of an empty or default tab page, a personal home screen with apps and shortcuts opens.
 
-This project is not a standalone operating system that replaces Windows, Android or Linux. It runs inside a compatible browser and uses that browser's extension features.
+Schleim OS now has two variants: a browser Extension for compatible Chromium browsers and the standalone Android app **Schleim Browser**, based on Mozilla GeckoView. The Android app does not replace Android; it is a browser with the Schleim OS interface built in.
+
+## 📱 Schleim Browser for Android
+
+**Schleim Browser** is now available as a standalone Android app. It bundles the original Schleim OS Extension in Mozilla GeckoView and adds a browser toolbar, tabs, downloads, XPI extension management and Android file dialogs.
+
+- Minimum requirement: Android 8.0 or newer, 64-bit ARM (arm64-v8a).
+- Camera and microphone capture are intentionally disabled in the Android app.
+- The Android app is updated separately from the browser Extension.
+- The app is currently labelled as an alpha release.
+
+[**Download Android APK**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk) · [Android guide](docs/Englisch/ANDROID-BROWSER.md) · [Android Studio template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## ⭐ Features
 
@@ -70,7 +81,7 @@ The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizi
 - [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
 - [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – a starter template for your own browser OS.
 
-Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.15.7.md) for the version history.
+Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.16.0.md) for the version history.
 
 ## 📥 Download and installation
 
@@ -133,6 +144,8 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 - [English – main documentation](README.en.md)
 - [Nederlands – documentatie](README.nl.md)
 - [Installation guide](docs/Englisch/INSTALLATION.md)
+- [Schleim Browser for Android](docs/Englisch/ANDROID-BROWSER.md)
+- [Release notes 3.16.0](docs/Englisch/RELEASE-NOTES-3.16.0.md)
 - [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
 - [Schleim account and cloud backup](docs/Englisch/SCHLEIM-ACCOUNT.md)
@@ -143,6 +156,10 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 ## 📖 Plain-language documentation
 
 Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md). There is also a plain-language guide to [sign-in and cloud backup](docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md) and [updating Schleim OS](docs/Leichte-Sprache/Englisch/UPDATES.md).
+
+## 📱 Android-App-Dokumentation
+
+[Schleim Browser – Android guide](docs/Englisch/ANDROID-BROWSER.md) · [Android-Studio-Vorlage](Android-App/README.en.md)
 
 ## 📁 Project structure
 
