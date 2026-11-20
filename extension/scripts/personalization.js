@@ -519,7 +519,7 @@
     return markup+'</div>';
   }
   function saveStoreState(){
-    if(!hasStoreAccess())return;
+    // Installation state is local browser data; persist removals even if account state changes during confirmation.
     try{localStorage.setItem(STORE_KEY,JSON.stringify(storeState));}catch{toast(t('fileTooLarge'));}
     renderHomeTiles();renderStoreSections();window.dispatchEvent(new Event('ssos-store-changed'));
   }
