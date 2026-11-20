@@ -33,3 +33,9 @@ Deze handleiding zonder uitpakken geldt voor browsers waarvan het extensiebeheer
 - Als je Schleim OS volledig verwijdert en lokale instellingen verliest, kun je die herstellen vanuit je privécloudback-up via **Instellingen → Schleim-account**.
 
 [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installatiehandleiding](INSTALLATIE.md) · [Eenvoudige taal](../Leichte-Sprache/Niederländisch/UPDATES.md)
+
+## De Android-app bijwerken
+
+De Android-app **Schleim Browser** wordt afzonderlijk bijgewerkt van de browser-Extension. Download de actuele APK uit de [GitHub-release](ANDROID-BROWSER.md) en open deze op je Android-apparaat.
+
+**Opmerking over debug-ondertekening:** Android kan een update over de bestaande app weigeren. Maak eerst een back-up van belangrijke lokale gegevens en controleer je cloudback-up. Verwijder daarna de oude app en installeer de nieuwe APK. Verwijderen kan lokale appgegevens wissen.
