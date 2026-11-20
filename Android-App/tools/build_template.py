@@ -135,7 +135,7 @@ def main() -> None:
         'providers.gradleProperty("geckoviewVersion").orElse("153.0.20260810162159").get()'
     )
     build_text = re.sub(
-        r'''/\*\s*Use the repository's supplied Schleim Browser PNG.*?tasks\.named\("preBuild"\)\.configure\s*\{\s*dependsOn\(prepareLauncherIcon\)\s*\}\s*''',
+        r'''/\*\s*\*\s*Use the repository's supplied Schleim Browser PNG.*?tasks\.named\("preBuild"\)\.configure\s*\{\s*dependsOn\(prepareLauncherIcon\)\s*\}\s*''',
         "",
         build_text,
         flags=re.S
