@@ -331,12 +331,12 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist/verify
-          gh release download "$TAG" \\
-            --repo "$GITHUB_REPOSITORY" \\
-            --pattern "Schleim-OS-Extension.zip" \\
-            --pattern "Browser-OS-Extension-Template.zip" \\
-            --pattern "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \\
-            --pattern "Schleim-OS-SHA256SUMS.txt" \\
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "Schleim-OS-Extension.zip" \
+            --pattern "Browser-OS-Extension-Template.zip" \
+            --pattern "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
+            --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
 
           (
@@ -344,11 +344,11 @@ jobs:
             sha256sum -c Schleim-OS-SHA256SUMS.txt
           )
 
-          cmp -s \\
-            "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \\
+          cmp -s \
+            "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
             "dist/verify/Schleim-OS-Android-0.1.0-alpha17-debug.apk"
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \\
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
             "dist/verify/Schleim-OS-Android-0.1.0-alpha17-debug.apk"
           echo "Published release files match the local build; checksums and APK signature verified."
