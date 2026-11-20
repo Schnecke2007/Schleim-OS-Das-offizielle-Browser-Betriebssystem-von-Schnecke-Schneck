@@ -201,7 +201,7 @@ def main() -> None:
     settings_file = project / "settings.gradle.kts"
     settings_text = settings_file.read_text(encoding="utf-8")
     settings_file.write_text(
-        re.sub(r'(?m)^\\s*rootProject\\.name\\s*=\\s*"[^"]+"', 'rootProject.name = "YourBrowser"', settings_text),
+        re.sub(r'(?m)^\s*rootProject\.name\s*=\s*"[^"]+"', 'rootProject.name = "YourBrowser"', settings_text),
         encoding="utf-8"
     )
     for name in ("README.md", "README.en.md", "README.nl.md"):
@@ -212,7 +212,7 @@ def main() -> None:
         # Keep the template README self-contained by turning those links into
         # an explicit URL placeholder the template owner can configure.
         readme_text = re.sub(
-            r'\\]\\(\\.\\./docs/(?:Deutsch|Englisch|Niederländisch)/ANDROID-BROWSER\\.md\\)',
+            r'\]\(\.\./docs/(?:Deutsch|Englisch|Niederländisch)/ANDROID-BROWSER\.md\)',
             '](https://example.com/docs/android-browser)',
             readme_text
         )
