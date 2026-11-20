@@ -28,3 +28,14 @@ Niet elke browser kan ZIP-bestanden importeren. De gewone Chrome voor Android on
 Je hebt een browser nodig met een importoptie voor ZIP-extensies. Laat het ZIP-bestand ongewijzigd.
 
 [Open Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Normale updatehandleiding](../../Niederländisch/UPDATES.md) · [Hulp](HULP.md)
+
+## De Android-app bijwerken
+
+De Android-app heeft eigen updates.
+Download de nieuwe APK uit de [GitHub-release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en installeer deze.
+
+De Android-app wordt niet bijgewerkt via het Extension-updatecentrum.
+Soms moet je de oude app eerst verwijderen als Android de update weigert.
+Maak eerst een back-up van belangrijke lokale gegevens.
+
+[Android-updates in eenvoudige taal](ANDROID-BROWSER.md)
