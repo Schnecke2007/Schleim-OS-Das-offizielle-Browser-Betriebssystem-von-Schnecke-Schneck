@@ -134,6 +134,8 @@ jobs:
           assert camera_activity_path.is_file()
           camera_activity = camera_activity_path.read_text()
           assert "ProcessCameraProvider.getInstance(this)" in camera_activity
+          assert "ComponentActivity" in camera_activity
+          assert "androidx.activity:activity:1.13.0" in Path("android/app/build.gradle.kts").read_text()
           assert "PreviewView(this)" in camera_activity
           assert "ImageCapture.Builder()" in camera_activity
           assert "VideoCapture.withOutput(recorder)" in camera_activity

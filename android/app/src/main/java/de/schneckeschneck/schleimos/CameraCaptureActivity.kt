@@ -1,7 +1,7 @@
 package de.schneckeschneck.schleimos
 
 import android.Manifest
-import android.app.Activity
+import androidx.activity.ComponentActivity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -41,7 +41,7 @@ import java.io.File
  * It owns preview, permissions, photo capture and video recording, then returns
  * a private cache-file path to MainActivity for transfer to the WebExtension.
  */
-class CameraCaptureActivity : Activity() {
+class CameraCaptureActivity : ComponentActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var statusText: TextView
     private lateinit var captureButton: Button
