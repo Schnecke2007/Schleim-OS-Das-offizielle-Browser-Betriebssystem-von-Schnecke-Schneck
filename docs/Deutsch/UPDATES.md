@@ -33,3 +33,9 @@ Diese Anleitung ohne Entpacken gilt für Browser, deren Erweiterungsverwaltung e
 - Falls du Schleim OS vollständig entfernst und lokale Einstellungen verlierst, kannst du sie über **Einstellungen → Schleim-Konto** aus deinem privaten Cloud-Backup wiederherstellen.
 
 [Zur GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](INSTALLATION.md) · [Leichte Sprache](../Leichte-Sprache/Deutsch/UPDATES.md)
+
+## Android-App aktualisieren
+
+Die Android-App **Schleim Browser** wird getrennt von der Browser-Extension aktualisiert. Lade die aktuelle APK aus dem [GitHub-Release](ANDROID-BROWSER.md) herunter und öffne sie auf deinem Android-Gerät.
+
+**Hinweis zur Debug-Signierung:** Android kann ein direktes Update ablehnen. Sichere in diesem Fall zuerst wichtige lokale Daten und prüfe deine Cloud-Sicherung. Deinstalliere danach die alte App und installiere die neue APK. Eine Deinstallation kann lokale App-Daten löschen.
