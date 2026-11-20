@@ -105,6 +105,22 @@ jobs:
           test -s "$ASSET_DIR/manifest.json"
           test -s "$ASSET_DIR/pages/newtab.html"
           test -s "$ASSET_DIR/scripts/media-upload-worker.js"
+          node --check "$ASSET_DIR/scripts/app.js"
+          node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
+          python3 - <<'PY'
+          from pathlib import Path
+          main = Path("android/app/src/main/java/de/schneckeschneck/schleimos/MainActivity.kt").read_text()
+          callback = main.split("override fun onNewSession", 1)[1].split("override fun onLoadRequest", 1)[0]
+          assert "GeckoResult.fromValue(newSession)" in callback
+          assert "newSession.open(" not in callback
+          assert "createTab(null)" not in callback
+          assert "geckoView.releaseSession()" in main
+          camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
+          mount = camera.split("function mountCamera()", 1)[1].split("async function handleClick", 1)[0]
+          assert "startCamera()" not in mount
+          assert "cameraStartHint" in mount
+          print("Android tab lifecycle and user-initiated camera regression checks passed.")
+          PY
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -125,14 +141,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha03-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha04-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha03-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha04-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -161,14 +177,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha03-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha04-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha03-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha04-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -178,8 +194,10 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha03-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha03-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha04-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
