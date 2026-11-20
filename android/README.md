@@ -1,4 +1,4 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha16)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha17)
 
 The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
@@ -65,4 +65,13 @@ The Android workflow builds an ARM64 debug APK and uploads it to the latest GitH
 - Downloads werden im app-eigenen Downloadbereich gespeichert und können geöffnet oder geteilt werden.
 - Mozilla-signierte XPI-WebExtensions können importiert, installiert, aktiviert, deaktiviert und entfernt werden. Integrierte Schleim-OS-Extension bleibt geschützt.
 - Einstellungen enthalten den Benachrichtigungstest und die Auswahl des Android-Standardbrowsers.
-- Die App erhält für Alpha 16 eine neue Paket-ID, damit sie neben Alpha 15 installierbar ist. Die lokalen Einstellungen der beiden App-Installationen werden nicht automatisch zusammengeführt.
+- Alpha 16 nutzt die Paket-ID `de.schneckeschneck.schleimos.browser` und wird separat neben der Alpha-15-App installiert. Lokale Einstellungen werden nicht automatisch zwischen den Installationen übertragen.
+
+
+## Alpha 0.1.0-alpha17 – Installationskompatibilität
+
+- Verwendet die neue, eigenständige Paket-ID `de.schneckeschneck.schleimos.androidbrowser`, um Konflikte mit früheren Schleim-OS-Installationen auszuschließen.
+- Die Versionsnummer ist 0.1.0-alpha17 (versionCode 17).
+- Der Android-Build prüft vor der Veröffentlichung zusätzlich die APK-Signatur mit `apksigner verify`.
+- Diese Prüfung bestätigt die technische Signatur der APK, ersetzt aber keinen Test auf einem realen Samsung-Gerät.
+- Die APK wird weiterhin als Debug-Build mit einer automatisch erzeugten Debug-Signatur erstellt. Für dauerhaft nahtlose Updates bleibt ein privater, beständiger Signaturschlüssel erforderlich.
