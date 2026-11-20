@@ -213,8 +213,12 @@
 .ssos-photos-viewer-panel small{color:#fff;font-size:9px;overflow-wrap:anywhere}
 .ssos-photos-repo-link{font-size:9px;overflow-wrap:anywhere}
 .ssos-photos-repo-link a{color:var(--accent)}
+.ssos-camera-native-card{display:flex;flex-direction:column;align-items:center;gap:9px;padding:24px 18px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
+.ssos-camera-native-icon{font-size:34px}
+.ssos-camera-native-card b{font-size:13px}
+.ssos-camera-native-card p{max-width:440px;margin:0;color:var(--muted);font-size:10px;line-height:1.55}
 .ssos-camera-preview-wrap{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#050505;aspect-ratio:4/5;max-height:58vh}
-.ssos-camera-preview-wrap video,.ssos-camera-preview-wrap iframe{display:block;width:100%;height:100%;object-fit:cover;border:0;background:#050505}
+.ssos-camera-preview-wrap video{display:block;width:100%;height:100%;object-fit:cover;border:0;background:#050505}
 .ssos-camera-live{position:absolute;top:11px;left:11px;padding:5px 8px;border-radius:8px;background:#b72e27;color:#fff;font-size:8px;font-weight:800;letter-spacing:.12em}
 .ssos-camera-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
 .ssos-camera-actions .app-button{width:100%;justify-content:center;margin:0;padding:10px 7px;font-size:9px}

@@ -492,18 +492,31 @@
       </section>`;
   }
   function renderCamera(){
-    return `${appHero('KAMERA','Deine Schleim-OS-Kamera.','Nutze die Front- oder Rückkamera, nimm Fotos und Videos auf und lade sie direkt in deine private Foto- und Video-Cloud.','📷')}
+    return `${appHero('KAMERA','Deine Schleim-OS-Kamera.','Nimm Fotos und Videos mit der Android-Kamera-App auf und lade sie direkt in deine private Foto- und Video-Cloud.','📷')}
       <section class="ssos-camera-app" data-camera-app>
-        <div class="ssos-camera-preview-wrap"><iframe data-camera-host title="Schleim OS lokale Kamera" allow="camera; microphone" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin"></iframe><span class="ssos-camera-live">LIVE</span></div>
-        <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
-        <div class="ssos-camera-actions">
-          <button class="app-button secondary" type="button" data-camera-start>▶ Kamera starten</button>
-          <button class="app-button secondary" type="button" data-camera-switch>↔ Front-/Rückkamera</button>
-          <button class="app-button" type="button" data-camera-photo>● Foto aufnehmen</button>
-          <button class="app-button secondary" type="button" data-camera-record>◉ Video aufnehmen</button>
-          <button class="app-button secondary" type="button" data-camera-stop>■ Kamera stoppen</button>
+        <div class="ssos-camera-native-panel" data-native-camera-panel hidden>
+          <div class="ssos-camera-native-card">
+            <span class="ssos-camera-native-icon">📷</span>
+            <b>Android-Kamera verwenden</b>
+            <p>Schleim OS öffnet die auf deinem Smartphone installierte Kamera-App. Nach der Aufnahme wird das Foto oder Video automatisch für den Cloud-Upload übernommen.</p>
+          </div>
+          <div class="ssos-camera-actions">
+            <button class="app-button" type="button" data-camera-native-photo>📷 Foto aufnehmen</button>
+            <button class="app-button secondary" type="button" data-camera-native-video>🎥 Video aufnehmen</button>
+          </div>
         </div>
-        <p class="ssos-camera-note">Die Kamera läuft in einem geschützten lokalen Browser-Kontext auf deinem Gerät. Die Aufnahme wird nach dem Aufnehmen in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
+        <div class="ssos-camera-browser-panel" data-browser-camera-panel hidden>
+          <div class="ssos-camera-preview-wrap"><video data-camera-preview autoplay muted playsinline></video><span class="ssos-camera-live">LIVE</span></div>
+          <div class="ssos-camera-actions">
+            <button class="app-button secondary" type="button" data-camera-start>▶ Kamera starten</button>
+            <button class="app-button secondary" type="button" data-camera-switch>↔ Front-/Rückkamera</button>
+            <button class="app-button" type="button" data-camera-photo>● Foto aufnehmen</button>
+            <button class="app-button secondary" type="button" data-camera-record>◉ Video aufnehmen</button>
+            <button class="app-button secondary" type="button" data-camera-stop>■ Kamera stoppen</button>
+          </div>
+        </div>
+        <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
+        <p class="ssos-camera-note">Unter Android werden Kamera und Mikrofon vor der Aufnahme über die Android-Systemberechtigungen freigegeben. Die fertige Aufnahme wird in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
       </section>`;
   }
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}

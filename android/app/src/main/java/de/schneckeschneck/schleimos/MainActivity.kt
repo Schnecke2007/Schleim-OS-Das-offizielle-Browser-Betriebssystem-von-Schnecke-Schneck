@@ -7,13 +7,16 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.role.RoleManager
 import android.content.Context
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.util.Log
+import android.util.Base64
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +26,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
 import org.json.JSONObject
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoResult
@@ -30,6 +34,7 @@ import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoView
 import org.mozilla.geckoview.WebExtension
+import java.io.File
 
 class MainActivity : Activity() {
     private lateinit var rootFrame: FrameLayout
@@ -44,8 +49,9 @@ class MainActivity : Activity() {
     private val tabs = mutableListOf<GeckoSession>()
     private var activeTabIndex = 0
     private var displayedSession: GeckoSession? = null
-    private var localCameraServer: LocalCameraServer? = null
-    private var localCameraServerError: String? = null
+    private var pendingCameraResult: GeckoResult<Any>? = null
+    private var pendingCameraFile: File? = null
+    private var pendingCameraMimeType: String? = null
 
     private var mediaSession: GeckoSession? = null
     private var mediaView: GeckoView? = null
@@ -61,12 +67,6 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         buildBrowserUi()
-        try {
-            localCameraServer = LocalCameraServer(this).also { it.start() }
-        } catch (error: Exception) {
-            localCameraServerError = error.message ?: error.javaClass.simpleName
-            Log.e(TAG, "Local camera host could not start", error)
-        }
         runtime = GeckoRuntime.create(this)
         openBrowser(intent?.data?.toString())
         requestNotificationPermissionIfNeeded()
@@ -171,11 +171,7 @@ class MainActivity : Activity() {
                 else -> JSONObject()
             }
             return when (payload.optString("action")) {
-                "camera.url" -> {
-                    val url = localCameraServer?.url
-                    if (url != null) GeckoResult.fromValue(JSONObject().put("ok", true).put("url", url))
-                    else GeckoResult.fromValue(JSONObject().put("ok", false).put("error", localCameraServerError ?: "Lokaler Kameradienst ist nicht verfügbar."))
-                }
+                "camera.capture" -> captureWithAndroidCamera(payload.optString("mediaType"))
                 "media.ensure" -> ensureMediaUploadPage()
                 "media.stop" -> {
                     stopMediaUploadPage()
@@ -208,6 +204,103 @@ class MainActivity : Activity() {
         }
     }
 
+    private fun captureWithAndroidCamera(mediaType: String): GeckoResult<Any> {
+        if (mediaType != "photo" && mediaType != "video") {
+            return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Unbekannter Aufnahmetyp."))
+        }
+        if (pendingCameraResult != null) {
+            return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Eine Kameraaufnahme läuft bereits."))
+        }
+
+        val result = GeckoResult<Any>()
+        pendingCameraResult = result
+        val requested = if (mediaType == "video") {
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+        } else {
+            arrayOf(Manifest.permission.CAMERA)
+        }
+        requestAndroidPermissions(requested) { granted ->
+            if (granted) launchAndroidCamera(mediaType)
+            else completeCameraCapture(JSONObject().put("ok", false).put("error", "Die Android-Berechtigung für Kamera oder Mikrofon wurde nicht erteilt."))
+        }
+        return result
+    }
+
+    private fun launchAndroidCamera(mediaType: String) {
+        try {
+            val directory = File(cacheDir, "camera-captures")
+            if (!directory.exists() && !directory.mkdirs()) {
+                throw IllegalStateException("Der temporäre Kameraordner konnte nicht erstellt werden.")
+            }
+            val extension = if (mediaType == "video") ".mp4" else ".jpg"
+            val file = File.createTempFile("schleim-os-capture-", extension, directory)
+            val outputUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+            val action = if (mediaType == "video") MediaStore.ACTION_VIDEO_CAPTURE else MediaStore.ACTION_IMAGE_CAPTURE
+            val captureIntent = Intent(action).apply {
+                putExtra(MediaStore.EXTRA_OUTPUT, outputUri)
+                if (mediaType == "video") {
+                    putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1)
+                    putExtra(MediaStore.EXTRA_SIZE_LIMIT, MAX_CAMERA_CAPTURE_BYTES)
+                }
+                clipData = ClipData.newUri(contentResolver, "Schleim OS Kameraaufnahme", outputUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            }
+            pendingCameraFile = file
+            pendingCameraMimeType = if (mediaType == "video") "video/mp4" else "image/jpeg"
+            startActivityForResult(captureIntent, REQUEST_CAMERA_CAPTURE)
+        } catch (error: Exception) {
+            completeCameraCapture(JSONObject().put("ok", false).put("error", error.message ?: "Die Android-Kamera konnte nicht geöffnet werden."))
+        }
+    }
+
+    private fun finishAndroidCameraCapture(resultCode: Int, data: Intent?) {
+        if (resultCode != RESULT_OK) {
+            completeCameraCapture(JSONObject().put("ok", false).put("cancelled", true))
+            return
+        }
+        val file = pendingCameraFile
+        if (file == null) {
+            completeCameraCapture(JSONObject().put("ok", false).put("error", "Die Kameraausgabe fehlt."))
+            return
+        }
+        try {
+            if ((!file.exists() || file.length() == 0L) && data?.data != null) {
+                contentResolver.openInputStream(data.data!!)?.use { input ->
+                    file.outputStream().use { output -> input.copyTo(output) }
+                }
+            }
+            if (!file.exists() || file.length() == 0L) {
+                throw IllegalStateException("Die Kamera hat keine Aufnahme zurückgegeben.")
+            }
+            if (file.length() > MAX_CAMERA_CAPTURE_BYTES) {
+                throw IllegalStateException("Die Aufnahme ist größer als 50 MiB. Bitte nimm ein kürzeres Video auf.")
+            }
+            val bytes = file.readBytes()
+            val fallbackMime = pendingCameraMimeType ?: "application/octet-stream"
+            val returnedMime = data?.data?.let { contentResolver.getType(it) }
+            val mimeType = returnedMime?.takeIf { it.startsWith("image/") || it.startsWith("video/") } ?: fallbackMime
+            val suffix = if (mimeType.startsWith("video/")) "mp4" else "jpg"
+            val fileName = "Schleim-Kamera-${System.currentTimeMillis()}.$suffix"
+            completeCameraCapture(
+                JSONObject()
+                    .put("ok", true)
+                    .put("mimeType", mimeType)
+                    .put("fileName", fileName)
+                    .put("base64", Base64.encodeToString(bytes, Base64.NO_WRAP))
+            )
+        } catch (error: Exception) {
+            completeCameraCapture(JSONObject().put("ok", false).put("error", error.message ?: "Die Kameraaufnahme konnte nicht gelesen werden."))
+        }
+    }
+
+    private fun completeCameraCapture(response: JSONObject) {
+        val result = pendingCameraResult
+        pendingCameraResult = null
+        pendingCameraFile?.delete()
+        pendingCameraFile = null
+        pendingCameraMimeType = null
+        result?.complete(response)
+    }
     private fun ensureMediaUploadPage(): GeckoResult<Any> {
         if (mediaPageReady && mediaSession != null) {
             MediaUploadService.start(this)
@@ -561,6 +654,10 @@ class MainActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BROWSER_ROLE) return
+        if (requestCode == REQUEST_CAMERA_CAPTURE) {
+            finishAndroidCameraCapture(resultCode, data)
+            return
+        }
         if (requestCode != REQUEST_FILE_PICKER) return
 
         val prompt = pendingFilePrompt
@@ -607,8 +704,7 @@ class MainActivity : Activity() {
         pendingFilePrompt = null
         pendingPermissionCallbacks.values.forEach { callback -> runCatching { callback(false) } }
         pendingPermissionCallbacks.clear()
-        runCatching { localCameraServer?.close() }
-        localCameraServer = null
+        completeCameraCapture(JSONObject().put("ok", false).put("cancelled", true).put("error", "Schleim OS wurde geschlossen."))
         if (displayedSession != null) runCatching { geckoView.releaseSession() }
         displayedSession = null
         tabs.forEach { runCatching { it.close() } }
@@ -630,6 +726,8 @@ class MainActivity : Activity() {
         private const val REQUEST_NOTIFICATIONS = 1502
         private const val REQUEST_BROWSER_ROLE = 1503
         private const val REQUEST_FILE_PICKER = 1504
+        private const val REQUEST_CAMERA_CAPTURE = 1505
+        private const val MAX_CAMERA_CAPTURE_BYTES = 50L * 1024L * 1024L
         private const val REQUEST_PERMISSION_BASE = 4100
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
     }

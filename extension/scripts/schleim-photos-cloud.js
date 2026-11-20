@@ -11,8 +11,9 @@
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
     objectUrls: [], busy: false, backgroundBusy: false,
-    cameraHostOrigin: null, cameraHostReady: false, cameraPendingCommands: new Map(),
-    cameraStarted: false, cameraRecording: false, facingMode: 'environment', activeApp: null
+    androidCameraMode: false, cameraStream: null, cameraStarted: false,
+    cameraRecorder: null, cameraChunks: [], cameraRecording: false,
+    facingMode: 'environment', activeApp: null
   };
 
   const TEXT = {
@@ -64,7 +65,9 @@
       cameraMissing: 'Keine Kamera erkannt. Prüfe unter Android → Einstellungen → Apps → Schleim OS → Berechtigungen, ob Kamera erlaubt ist. Schließe andere Kamera-Apps und starte Schleim OS erneut.',
       cameraBusy: 'Die Kamera ist gerade nicht verfügbar. Schließe andere Apps, die die Kamera verwenden, und versuche es erneut.',
       cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Öffne Schleim OS direkt in der Android-App.',
-      cameraReady: 'Kamera ist bereit.',
+      cameraReady: 'Android-Kamera bereit. Wähle Foto oder Video.',
+      cameraOpening: 'Android-Kamera wird geöffnet …',
+      cameraCancelled: 'Aufnahme abgebrochen.',
       recording: 'Videoaufnahme läuft …',
       recordingDone: 'Videoaufnahme beendet. Upload wird vorbereitet …',
       selectFiles: 'Wähle zuerst mindestens eine Datei aus.',
@@ -127,7 +130,9 @@
       cameraMissing: 'No camera was detected. Check Android Settings → Apps → Schleim OS → Permissions, allow Camera, close other camera apps and restart Schleim OS.',
       cameraBusy: 'The camera is currently unavailable. Close other apps using the camera and try again.',
       cameraSecureContext: 'Camera access is unavailable in this browser context. Open Schleim OS directly in the Android app.',
-      cameraReady: 'Camera is ready.',
+      cameraReady: 'Android camera is ready. Choose photo or video.',
+      cameraOpening: 'Opening Android camera …',
+      cameraCancelled: 'Capture cancelled.',
       recording: 'Video recording is in progress …',
       recordingDone: 'Recording finished. Preparing upload …',
       selectFiles: 'Choose at least one file first.',
@@ -190,7 +195,9 @@
       cameraMissing: 'Geen camera gevonden. Controleer Android-instellingen → Apps → Schleim OS → Machtigingen, sta Camera toe, sluit andere camera-apps en start Schleim OS opnieuw.',
       cameraBusy: 'De camera is momenteel niet beschikbaar. Sluit andere apps die de camera gebruiken en probeer het opnieuw.',
       cameraSecureContext: 'Cameratoegang is niet beschikbaar in deze browsercontext. Open Schleim OS rechtstreeks in de Android-app.',
-      cameraReady: 'Camera is klaar.',
+      cameraReady: 'Android-camera is klaar. Kies foto of video.',
+      cameraOpening: 'Android-camera openen …',
+      cameraCancelled: 'Opname geannuleerd.',
       recording: 'Video-opname bezig …',
       recordingDone: 'Opname voltooid. Upload wordt voorbereid …',
       selectFiles: 'Kies eerst ten minste één bestand.',
@@ -863,141 +870,107 @@
     await refreshMediaApp();
     await mountSettings();
   }
-  const CAMERA_MESSAGE_CHANNEL = 'schleim-os-camera';
-
-  function cameraError(error) {
-    const name = String(error?.name || '');
-    const message = String(error?.message || '');
-    if (name === 'NotAllowedError' || name === 'PermissionDeniedError') return new Error(t('cameraDenied'));
-    if (name === 'NotFoundError' || name === 'DevicesNotFoundError' ||
-        /object not found|requested device not found|no device found/i.test(message)) return new Error(t('cameraMissing'));
-    if (name === 'NotReadableError' || name === 'TrackStartError') return new Error(t('cameraBusy'));
-    if (name === 'SecurityError' || name === 'TypeError') return new Error(t('cameraSecureContext'));
-    return new Error(message || t('cameraUnavailable'));
-  }
-
-  function handleCameraHostMessage(event) {
-    const frame = $('[data-camera-host]');
-    if (!frame || event.source !== frame.contentWindow || !state.cameraHostOrigin || event.origin !== state.cameraHostOrigin) return;
-    const message = event.data;
-    if (!message || message.channel !== CAMERA_MESSAGE_CHANNEL) return;
-    if (message.type === 'ready') {
-      state.cameraHostReady = true;
-      const startButton = $('[data-camera-start]');
-      if (startButton) startButton.disabled = false;
-      setStatus('[data-camera-status]', t('cameraStartHint'));
-      return;
-    }
-    if (message.type === 'status') {
-      setStatus('[data-camera-status]', String(message.message || ''));
-      return;
-    }
-    if (message.type !== 'response' || !message.requestId) return;
-    const pending = state.cameraPendingCommands.get(message.requestId);
-    if (!pending) return;
-    clearTimeout(pending.timer);
-    state.cameraPendingCommands.delete(message.requestId);
-    if (message.ok) {
-      pending.resolve(message.blob ?? message.value ?? true);
-    } else {
-      const error = new Error(message.error?.message || t('cameraUnavailable'));
-      error.name = message.error?.name || 'Error';
-      pending.reject(cameraError(error));
-    }
-  }
-
-  function cameraCommand(action, details = {}) {
-    const frame = $('[data-camera-host]');
-    if (!frame?.contentWindow || !state.cameraHostOrigin || !state.cameraHostReady) {
-      return Promise.reject(new Error('Der lokale Kameradienst ist noch nicht bereit. Öffne die Kamera-App erneut.'));
-    }
-    const requestId = crypto.randomUUID?.() || (Date.now().toString(36) + Math.random().toString(36).slice(2,10));
-    return new Promise((resolve,reject) => {
-      const timer = setTimeout(() => {
-        state.cameraPendingCommands.delete(requestId);
-        reject(new Error('Die Kamera hat nicht rechtzeitig geantwortet. Bitte versuche es erneut.'));
-      }, 30000);
-      state.cameraPendingCommands.set(requestId,{resolve,reject,timer});
-      frame.contentWindow.postMessage(
-        Object.assign({channel:CAMERA_MESSAGE_CHANNEL,requestId:requestId,action:action},details),
-        state.cameraHostOrigin
-      );
-    });
-  }
-
-  async function startCamera() {
-    const result = await cameraCommand('start',{facingMode:state.facingMode});
-    state.cameraStarted = true;
-    setStatus('[data-camera-status]', t('cameraReady') + (result?.deviceName ? ' · ' + result.deviceName : ''));
-  }
-  function stopCamera() {
-    const wasStarted = state.cameraStarted || state.cameraRecording;
-    state.cameraStarted = false;
-    state.cameraRecording = false;
-    if (wasStarted && state.cameraHostReady) cameraCommand('stop').catch(() => {});
-  }
-  async function switchCamera() {
-    state.facingMode = state.facingMode === 'environment' ? 'user' : 'environment';
-    await startCamera();
-  }
-  async function takePhoto() {
-    if (!state.cameraStarted) throw new Error(t('noCapture'));
-    const blob = await cameraCommand('photo');
-    if (!(blob instanceof Blob) || !blob.size) throw new Error(t('noCapture'));
+  async function captureWithAndroidCamera(mediaType) {
+    const runtime = globalThis.browser?.runtime;
+    if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
+    setStatus('[data-camera-status]', t('cameraOpening'));
+    const response = await runtime.sendNativeMessage('browser',{action:'camera.capture',mediaType:mediaType});
+    if (response?.cancelled) { setStatus('[data-camera-status]',t('cameraCancelled')); return; }
+    if (!response?.ok || typeof response.base64 !== 'string') throw new Error(response?.error || t('cameraUnavailable'));
+    const binary = atob(response.base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const mimeType = response.mimeType || (mediaType === 'video' ? 'video/mp4' : 'image/jpeg');
+    const blob = new Blob([bytes],{type:mimeType});
+    if (!blob.size) throw new Error(t('noCapture'));
     const now = new Date();
-    const file = new File([blob],'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + '.jpg',{type:blob.type || 'image/jpeg',lastModified:now.getTime()});
-    await uploadFiles([file], 'Kameraaufnahme', '[data-camera-status]');
-  }
-  async function startRecording() {
-    if (!state.cameraStarted) await startCamera();
-    await cameraCommand('record-start');
-    state.cameraRecording = true;
-    setStatus('[data-camera-status]',t('recording'));
-  }
-  async function stopRecording() {
-    if (!state.cameraRecording) return;
-    state.cameraRecording = false;
-    const blob = await cameraCommand('record-stop');
-    if (!(blob instanceof Blob) || !blob.size) throw new Error(t('noCapture'));
-    const now = new Date();
-    const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
-    const file = new File([blob],'Schleim-Kamera-Video-' + now.toISOString().replace(/[:.]/g,'-') + '.' + ext,{type:blob.type || 'video/webm',lastModified:now.getTime()});
-    setStatus('[data-camera-status]',t('recordingDone'));
-    await uploadFiles([file], 'Kamera-Video', '[data-camera-status]');
+    const fallbackName = 'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + (mediaType === 'video' ? '.mp4' : '.jpg');
+    const file = new File([blob],response.fileName || fallbackName,{type:mimeType,lastModified:now.getTime()});
+    await uploadFiles([file],mediaType === 'video' ? 'Android-Kamera-Video' : 'Android-Kamera-Foto','[data-camera-status]');
   }
 
-  async function mountCamera() {
+  function mountCamera() {
     const root = $('[data-camera-app]');
     if (!root) return;
-    const frame = $('[data-camera-host]',root);
-    const startButton = $('[data-camera-start]',root);
-    if (startButton) startButton.disabled = true;
-    state.cameraHostReady = false;
-    state.cameraStarted = false;
-    state.cameraRecording = false;
-    setStatus('[data-camera-status]', 'Lokaler Kameradienst wird vorbereitet …');
-    try {
-      const runtime = globalThis.browser?.runtime;
-      if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die Verbindung zur Android-Kamera ist nicht aktiviert. Bitte aktualisiere Schleim OS und starte die App erneut.');
-      const response = await runtime.sendNativeMessage('browser',{action:'camera.url'});
-      if (!response?.ok || !response.url) throw new Error(response?.error || 'Der lokale Kameradienst konnte nicht gestartet werden.');
-      const cameraUrl = new URL(response.url);
-      if (cameraUrl.protocol !== 'http:' || cameraUrl.hostname !== '127.0.0.1') throw new Error('Die Kamera wurde nicht über den geschützten lokalen Dienst bereitgestellt.');
-      state.cameraHostOrigin = cameraUrl.origin;
-      if (!window.__ssosCameraHostMessageHandler) {
-        window.addEventListener('message',handleCameraHostMessage);
-        window.__ssosCameraHostMessageHandler = true;
-      }
-      if (!frame) throw new Error('Die Kamera-Vorschau konnte nicht angelegt werden.');
-      frame.referrerPolicy = 'no-referrer';
-      frame.src = cameraUrl.href;
-      setStatus('[data-camera-status]', 'Lokale Kamera ist bereit zum Verbinden …');
-    } catch (error) {
-      state.cameraHostOrigin = null;
-      setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true);
-    }
+    const runtime = globalThis.browser?.runtime;
+    state.androidCameraMode = /Android/i.test(navigator.userAgent || '') && typeof runtime?.sendNativeMessage === 'function';
+    const nativePanel = $('[data-native-camera-panel]',root);
+    const browserPanel = $('[data-browser-camera-panel]',root);
+    if (nativePanel) nativePanel.hidden = !state.androidCameraMode;
+    if (browserPanel) browserPanel.hidden = state.androidCameraMode;
+    setStatus('[data-camera-status]',state.androidCameraMode ? t('cameraReady') : t('cameraStartHint'));
   }
 
+  async function startBrowserCamera() {
+    if (!navigator.mediaDevices?.getUserMedia) throw new Error(t('cameraUnavailable'));
+    stopBrowserCamera();
+    const attempts = [
+      {audio:true,video:{facingMode:{ideal:state.facingMode},width:{ideal:1920},height:{ideal:1080}}},
+      {audio:true,video:{facingMode:{ideal:state.facingMode}}},
+      {audio:false,video:true}
+    ];
+    let lastError = null;
+    for (let i=0;i<attempts.length;i++) {
+      try { state.cameraStream = await navigator.mediaDevices.getUserMedia(attempts[i]); break; }
+      catch (error) { lastError = error; if (!['NotFoundError','OverconstrainedError','ConstraintNotSatisfiedError','TypeError'].includes(error?.name) || i === attempts.length-1) throw error; }
+    }
+    if (!state.cameraStream) throw lastError || new Error(t('cameraUnavailable'));
+    const preview = $('[data-camera-preview]');
+    if (preview) { preview.srcObject = state.cameraStream; await preview.play(); }
+    state.cameraStarted = true;
+    setStatus('[data-camera-status]',t('cameraReady'));
+  }
+
+  function stopBrowserCamera() {
+    if (state.cameraRecorder && state.cameraRecorder.state !== 'inactive') { try { state.cameraRecorder.stop(); } catch {} }
+    state.cameraRecorder = null; state.cameraChunks = []; state.cameraRecording = false; state.cameraStarted = false;
+    state.cameraStream?.getTracks?.().forEach(track=>track.stop()); state.cameraStream = null;
+    const preview = $('[data-camera-preview]'); if (preview) preview.srcObject = null;
+  }
+
+  async function takeBrowserPhoto() {
+    if (!state.cameraStarted) throw new Error(t('noCapture'));
+    const preview = $('[data-camera-preview]');
+    if (!preview?.videoWidth) throw new Error(t('noCapture'));
+    const canvas = document.createElement('canvas'); canvas.width = preview.videoWidth; canvas.height = preview.videoHeight;
+    const context = canvas.getContext('2d'); if (!context) throw new Error(t('noCapture'));
+    context.drawImage(preview,0,0,canvas.width,canvas.height);
+    const blob = await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',0.92));
+    canvas.width = 0; canvas.height = 0;
+    if (!blob) throw new Error(t('noCapture'));
+    const now = new Date();
+    const file = new File([blob],'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + '.jpg',{type:'image/jpeg',lastModified:now.getTime()});
+    await uploadFiles([file],'Kameraaufnahme','[data-camera-status]');
+  }
+
+  async function startBrowserRecording() {
+    if (!state.cameraStarted) await startBrowserCamera();
+    if (typeof MediaRecorder === 'undefined') throw new Error(t('cameraUnavailable'));
+    const stream = state.cameraStream;
+    const mimeType = ['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'].find(type=>MediaRecorder.isTypeSupported?.(type));
+    state.cameraChunks = [];
+    state.cameraRecorder = new MediaRecorder(stream,mimeType ? {mimeType} : undefined);
+    state.cameraRecorder.addEventListener('dataavailable',event=>{if(event.data?.size)state.cameraChunks.push(event.data);});
+    state.cameraRecorder.start(1000); state.cameraRecording = true;
+    setStatus('[data-camera-status]',t('recording'));
+  }
+
+  async function stopBrowserRecording() {
+    const recorder = state.cameraRecorder;
+    if (!recorder || recorder.state === 'inactive') return;
+    const blob = await new Promise((resolve,reject)=>{
+      recorder.addEventListener('error',event=>reject(event.error || new Error(t('cameraUnavailable'))),{once:true});
+      recorder.addEventListener('stop',()=>resolve(new Blob(state.cameraChunks,{type:recorder.mimeType || 'video/webm'})),{once:true});
+      recorder.stop();
+    });
+    state.cameraRecorder = null; state.cameraChunks = []; state.cameraRecording = false;
+    if (!blob.size) throw new Error(t('noCapture'));
+    const now = new Date(); const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
+    const file = new File([blob],'Schleim-Kamera-Video-' + now.toISOString().replace(/[:.]/g,'-') + '.' + ext,{type:blob.type || 'video/webm',lastModified:now.getTime()});
+    await uploadFiles([file],'Kamera-Video','[data-camera-status]');
+  }
+
+  function stopCamera() { stopBrowserCamera(); }
   async function handleClick(event) {
     const link = event.target.closest('[data-photos-link]');
     if (link) {
@@ -1020,27 +993,38 @@
       catch (error) { setStatus('[data-photos-status]',error.message || t('loadError'),true); }
       return;
     }
+    if (event.target.closest('[data-camera-native-photo]')) {
+      try { await captureWithAndroidCamera('photo'); }
+      catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
+      return;
+    }
+    if (event.target.closest('[data-camera-native-video]')) {
+      try { await captureWithAndroidCamera('video'); }
+      catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
+      return;
+    }
     if (event.target.closest('[data-camera-start]')) {
-      try { await startCamera(); } catch (error) { setStatus('[data-camera-status]',error.message || t('cameraDenied'),true); }
+      try { await startBrowserCamera(); } catch (error) { setStatus('[data-camera-status]',error.message || t('cameraDenied'),true); }
       return;
     }
     if (event.target.closest('[data-camera-stop]')) { stopCamera();setStatus('[data-camera-status]',t('stopCamera'));return; }
     if (event.target.closest('[data-camera-switch]')) {
-      try { await switchCamera(); } catch (error) { setStatus('[data-camera-status]',error.message || t('cameraDenied'),true); }
+      state.facingMode = state.facingMode === 'environment' ? 'user' : 'environment';
+      try { await startBrowserCamera(); } catch (error) { setStatus('[data-camera-status]',error.message || t('cameraDenied'),true); }
       return;
     }
     if (event.target.closest('[data-camera-photo]')) {
-      try { await takePhoto(); } catch (error) { setStatus('[data-camera-status]',error.message || t('loadError'),true); }
+      try { await takeBrowserPhoto(); } catch (error) { setStatus('[data-camera-status]',error.message || t('loadError'),true); }
       return;
     }
     if (event.target.closest('[data-camera-record]')) {
       const button = event.target.closest('[data-camera-record]');
       try {
         if (state.cameraRecording) {
-          await stopRecording();
+          await stopBrowserRecording();
           button.textContent=t('record');
         } else {
-          await startRecording();
+          await startBrowserRecording();
           button.textContent=t('stopRecord');
         }
       } catch (error) {

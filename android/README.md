@@ -1,4 +1,4 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha07)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha08)
 
 The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
@@ -7,7 +7,7 @@ The Android APK bundles the original Schleim OS WebExtension from `extension/` a
 - **GitHub account and settings backup:** Uses the original Schleim OS GitHub Device Flow, private backup repository, token refresh and settings export/import. GeckoView's WebExtension storage and native popup/window handling are used.
 - **Photo/video cloud:** Uses the original private GitHub media repository and metadata index. The original IndexedDB upload queue and compression page are loaded in a hidden GeckoView session.
 - **Background upload:** The Android app starts a foreground `dataSync` service while the hidden media page is processing the queued files. Native Android notifications receive upload progress, completion and failure events. The service is stopped after the queue finishes.
-- **Camera:** Android serves a small camera host page from a random-port HTTP server bound only to `127.0.0.1`. The Android-packaged WebExtension manifest includes `geckoViewAddons` and `nativeMessaging`, which enables the extension page to request the local camera URL from the Android app. The app embeds this trusted loopback-origin page with explicit `camera`/`microphone` iframe permissions. GeckoView delegates camera/microphone access to Android: `MainActivity` requests `CAMERA` and `RECORD_AUDIO` through the system permission dialog before granting the media source. Captured photo/video `Blob` data is sent back to the extension page with `postMessage` and continues through the existing private-cloud upload queue. The local server closes with the activity.
+- **Camera:** The Android build uses the device's installed camera app through Android's standard `ACTION_IMAGE_CAPTURE` and `ACTION_VIDEO_CAPTURE` intents. Schleim OS requests the Android `CAMERA` permission before photo capture and both `CAMERA` and `RECORD_AUDIO` before video capture. A private AndroidX `FileProvider` URI points to a temporary file in the app cache; the finished file is returned to the WebExtension through GeckoView native messaging as Base64 data, converted to a browser `File`, and uploaded through the existing private-cloud queue. No local HTTP camera server, loopback page, or camera iframe is used.
 - **New tabs and popups:** `TARGET_WINDOW_NEW` is intercepted in `onLoadRequest`. Schleim OS creates and displays the tab itself, rather than switching sessions during GeckoView's popup-session lifecycle. `about:blank` popups are supported so scripts can navigate them after opening.
 - **IFrames:** HTTP(S) subframes are allowed by the browser navigation delegate and the Schleim OS app frames request autoplay/fullscreen/clipboard capabilities where relevant.
 
@@ -24,20 +24,19 @@ Android may stop foreground data-sync work after its platform time limits or if 
 The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
 
 
-## Alpha 0.1.0-alpha07 fixes
+## Alpha 0.1.0-alpha08 fixes
 
-- Adds the missing `nativeMessaging` permission to the Android-only bundled WebExtension manifest alongside `geckoViewAddons`. This restores `browser.runtime.sendNativeMessage()` for extension pages without granting native messaging to ordinary content scripts.
-- Keeps Android system runtime permission requests for both camera and microphone. GeckoView receives the media grant only after Android reports the requested permissions as granted.
-
-- Routes new-window requests through the app's own tab manager to avoid GeckoView popup-session ownership conflicts.
-- Requests camera and microphone permissions before granting a media source and supports fallback source selection by media type.
-- Retries camera acquisition with simpler constraints when the requested facing mode or resolution is unavailable.
+- Replaces the local loopback camera workaround with native Android photo/video capture intents.
+- Uses Android runtime permissions and a private FileProvider cache URI for the resulting capture file.
+- Transfers the completed media file from MainActivity to the WebExtension through GeckoView native messaging, then reuses the existing private-cloud upload queue.
+- Retains the direct browser camera fallback for browsers outside the Android GeckoView app.
+- Removes the local camera HTTP server and camera-host asset from the Android project.
 - Keeps GeckoView 153.0.20260810162159 for this build. GeckoView 160 requires Android API 37 and AGP 9.1; the current project toolchain is Android API 36.1/AGP 8.13. A toolchain upgrade is deliberately deferred rather than shipping an unverified SDK migration.
 
+## Alpha 0.1.0-alpha08 native Android camera
 
-## Alpha 0.1.0-alpha07 camera workaround
-
-- Mozilla has a public report for Firefox Android/GeckoView where `getUserMedia()` fails from a WebExtension page although it works in a regular website context.
-- The camera is therefore hosted in a local `http://127.0.0.1` page, a potentially trustworthy loopback origin under secure-context rules. The server binds only to loopback, uses a random port and per-run token, and exposes only the camera host document.
-- The embedded page requests camera access under the local origin and transfers captured photo/video Blobs back to Schleim OS through a source- and origin-checked `postMessage` channel. Upload continues through the existing private repository queue.
-- This is a compatibility workaround and still requires camera/iframe permission testing on the physical target device.
+- Opens the installed Android camera app with `MediaStore.ACTION_IMAGE_CAPTURE` for photos and `MediaStore.ACTION_VIDEO_CAPTURE` for videos.
+- Requests the app's Android camera permission before photo capture and camera plus microphone permissions before video capture. The camera app itself owns the live preview and recording controls.
+- Supplies a private cache-file URI through AndroidX `FileProvider` and explicit temporary read/write URI grants. No shared storage permission is required.
+- Reads the returned image/video file, enforces a 50 MiB capture limit, passes it to the extension through the existing GeckoView native-messaging delegate, and uploads it through the existing private media repository.
+- Requires physical-device verification for the installed camera application's handling of output URIs, permission prompts, and video format.
