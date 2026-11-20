@@ -15,8 +15,8 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 19
-        versionName = "0.1.0-alpha19"
+        versionCode = 20
+        versionName = "0.1.0-alpha20"
         // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
         ndk {
             abiFilters += listOf("arm64-v8a")
