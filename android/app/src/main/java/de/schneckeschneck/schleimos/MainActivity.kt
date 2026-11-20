@@ -348,7 +348,7 @@ class MainActivity : Activity() {
                         }
                         append("\n\nInstalliere nur Erweiterungen aus vertrauenswürdigen Quellen.")
                     }
-                    AlertDialog.Builder(this)
+                    AlertDialog.Builder(this@MainActivity)
                         .setTitle("Erweiterung installieren?")
                         .setMessage(details)
                         .setPositiveButton("Installieren") { _, _ ->
