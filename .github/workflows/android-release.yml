@@ -226,14 +226,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha17-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha17-neu.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha17-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha17-neu.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -262,14 +262,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha17-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha17-neu.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha17-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha17-neu.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -320,7 +320,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
 
@@ -335,7 +335,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
+            --pattern "Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
 
@@ -345,10 +345,10 @@ jobs:
           )
 
           cmp -s \
-            "Schleim-OS-Android-0.1.0-alpha17-debug.apk" \
-            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-debug.apk"
+            "Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
+            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-neu.apk"
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-debug.apk"
+            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-neu.apk"
           echo "Published release files match the local build; checksums and APK signature verified."
