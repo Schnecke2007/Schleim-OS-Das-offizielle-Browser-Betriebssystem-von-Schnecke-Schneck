@@ -73,3 +73,15 @@ Es gibt auch Texte zu Datenschutz, Regeln und Kontakt. Diese Texte sind wichtig.
 
 ---
 [Zur normalen deutschen Dokumentation](../../Deutsch/INSTALLATION.md) · [Zur Dokumentationsübersicht](../../README.md)
+
+## Die Android-App
+
+Es gibt jetzt auch **Schleim Browser** für Android.
+Das ist eine eigene Browser-App.
+Sie läuft ab Android 8.0 auf 64-Bit-ARM-Geräten.
+
+Du installierst die APK-Datei aus dem GitHub-Release.
+Die Android-App ist nicht die Browser-Extension.
+Sie wird getrennt aktualisiert.
+
+[Android-App einfach erklärt](ANDROID-BROWSER.md)
