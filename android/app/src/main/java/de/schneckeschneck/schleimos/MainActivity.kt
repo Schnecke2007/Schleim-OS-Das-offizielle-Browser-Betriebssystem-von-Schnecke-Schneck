@@ -2,12 +2,15 @@ package de.schneckeschneck.schleimos
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.ClipData
+import android.content.ComponentName
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -16,7 +19,9 @@ import android.util.Log
 import android.util.Base64
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +57,7 @@ class MainActivity : Activity() {
     private var pendingCameraResult: GeckoResult<Any>? = null
     private var pendingCameraFile: File? = null
     private var pendingCameraMimeType: String? = null
+    private var pendingCameraGrantedPackage: String? = null
 
     private var mediaSession: GeckoSession? = null
     private var mediaView: GeckoView? = null
@@ -208,20 +214,34 @@ class MainActivity : Activity() {
         if (mediaType != "photo" && mediaType != "video") {
             return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Unbekannter Aufnahmetyp."))
         }
-        if (pendingCameraResult != null) {
-            return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Eine Kameraaufnahme läuft bereits."))
-        }
 
         val result = GeckoResult<Any>()
-        pendingCameraResult = result
-        val requested = if (mediaType == "video") {
-            arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
-        } else {
-            arrayOf(Manifest.permission.CAMERA)
-        }
-        requestAndroidPermissions(requested) { granted ->
-            if (granted) launchAndroidCamera(mediaType)
-            else completeCameraCapture(JSONObject().put("ok", false).put("error", "Die Android-Berechtigung für Kamera oder Mikrofon wurde nicht erteilt."))
+        runOnUiThread {
+            if (isFinishing || isDestroyed) {
+                result.complete(JSONObject().put("ok", false).put("error", "Schleim OS ist nicht mehr aktiv."))
+                return@runOnUiThread
+            }
+            if (pendingCameraResult != null) {
+                result.complete(JSONObject().put("ok", false).put("error", "Eine Kameraaufnahme läuft bereits."))
+                return@runOnUiThread
+            }
+
+            pendingCameraResult = result
+            val requested = if (mediaType == "video") {
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+            } else {
+                arrayOf(Manifest.permission.CAMERA)
+            }
+            Log.i(TAG, "Camera button pressed: type=$mediaType")
+            requestAndroidPermissions(requested) { granted ->
+                if (granted) {
+                    Log.i(TAG, "Camera permissions granted: type=$mediaType")
+                    launchAndroidCamera(mediaType)
+                } else {
+                    Log.w(TAG, "Camera permissions were not granted: type=$mediaType")
+                    completeCameraCapture(JSONObject().put("ok", false).put("error", "Die Android-Berechtigung für Kamera oder Mikrofon wurde nicht erteilt."))
+                }
+            }
         }
         return result
     }
@@ -245,8 +265,24 @@ class MainActivity : Activity() {
                 clipData = ClipData.newUri(contentResolver, "Schleim OS Kameraaufnahme", outputUri)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             }
+
+            val handlers = packageManager.queryIntentActivities(captureIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            val selected = handlers.firstOrNull {
+                it.activityInfo.packageName == SAMSUNG_CAMERA_PACKAGE
+            } ?: handlers.firstOrNull()
+            if (selected == null) {
+                throw ActivityNotFoundException("Auf diesem Gerät wurde keine kompatible Android-Kamera-App gefunden.")
+            }
+
+            val cameraPackage = selected.activityInfo.packageName
+            captureIntent.component = ComponentName(cameraPackage, selected.activityInfo.name)
+            val uriFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            grantUriPermission(cameraPackage, outputUri, uriFlags)
+
             pendingCameraFile = file
             pendingCameraMimeType = if (mediaType == "video") "video/mp4" else "image/jpeg"
+            pendingCameraGrantedPackage = cameraPackage
+            Log.i(TAG, "Launching camera: package=$cameraPackage, action=$action")
             startActivityForResult(captureIntent, REQUEST_CAMERA_CAPTURE)
         } catch (error: Exception) {
             completeCameraCapture(JSONObject().put("ok", false).put("error", error.message ?: "Die Android-Kamera konnte nicht geöffnet werden."))
@@ -267,6 +303,14 @@ class MainActivity : Activity() {
             if ((!file.exists() || file.length() == 0L) && data?.data != null) {
                 contentResolver.openInputStream(data.data!!)?.use { input ->
                     file.outputStream().use { output -> input.copyTo(output) }
+                }
+            }
+            if ((!file.exists() || file.length() == 0L) && pendingCameraMimeType == "image/jpeg") {
+                val thumbnail = data?.extras?.get("data") as? android.graphics.Bitmap
+                if (thumbnail != null) {
+                    file.outputStream().use { output ->
+                        thumbnail.compress(android.graphics.Bitmap.CompressFormat.JPEG, 92, output)
+                    }
                 }
             }
             if (!file.exists() || file.length() == 0L) {
@@ -296,9 +340,22 @@ class MainActivity : Activity() {
     private fun completeCameraCapture(response: JSONObject) {
         val result = pendingCameraResult
         pendingCameraResult = null
-        pendingCameraFile?.delete()
+
+        val file = pendingCameraFile
+        val grantedPackage = pendingCameraGrantedPackage
+        if (file != null && grantedPackage != null) {
+            runCatching {
+                val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+                revokeUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+            }
+        }
+        file?.delete()
         pendingCameraFile = null
         pendingCameraMimeType = null
+        pendingCameraGrantedPackage = null
         result?.complete(response)
     }
     private fun ensureMediaUploadPage(): GeckoResult<Any> {
@@ -550,6 +607,11 @@ class MainActivity : Activity() {
         requestedPermissions: Array<out String>?,
         onResult: (Boolean) -> Unit
     ) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            runOnUiThread { requestAndroidPermissions(requestedPermissions, onResult) }
+            return
+        }
+
         val missing = requestedPermissions?.distinct().orEmpty().filter {
             checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED
         }
@@ -558,15 +620,57 @@ class MainActivity : Activity() {
             return
         }
 
+        val preferences = getSharedPreferences(PERMISSION_PREFS, MODE_PRIVATE)
+        val permanentlyDenied = missing.filter { permission ->
+            preferences.getBoolean("asked:$permission", false) &&
+                !shouldShowRequestPermissionRationale(permission)
+        }
+        if (permanentlyDenied.isNotEmpty()) {
+            onResult(false)
+            showPermissionSettingsDialog(permanentlyDenied)
+            return
+        }
+
+        missing.forEach { permission ->
+            preferences.edit().putBoolean("asked:$permission", true).apply()
+        }
         val requestCode = REQUEST_PERMISSION_BASE + (++permissionRequestCounter % 100000)
         pendingPermissionCallbacks[requestCode] = onResult
         try {
+            Log.i(TAG, "Requesting Android permissions: ${missing.joinToString()}")
             requestPermissions(missing.toTypedArray(), requestCode)
-        } catch (_: Exception) {
+        } catch (error: Exception) {
             pendingPermissionCallbacks.remove(requestCode)
+            Log.e(TAG, "Android permission request failed", error)
             onResult(false)
-            showNotification("Schleim OS", "Android-Berechtigung konnte nicht angefordert werden.")
+            showNotification("Schleim OS", error.message ?: "Android-Berechtigung konnte nicht angefordert werden.")
         }
+    }
+
+    private fun showPermissionSettingsDialog(permissions: List<String>) {
+        val names = permissions.map {
+            when (it) {
+                Manifest.permission.CAMERA -> "Kamera"
+                Manifest.permission.RECORD_AUDIO -> "Mikrofon"
+                else -> it
+            }
+        }.distinct().joinToString(" und ")
+        AlertDialog.Builder(this)
+            .setTitle("Berechtigung erforderlich")
+            .setMessage("Der Zugriff auf $names wurde dauerhaft abgelehnt. Öffne die Android-App-Einstellungen und erlaube den Zugriff dort.")
+            .setNegativeButton("Abbrechen", null)
+            .setPositiveButton("Einstellungen öffnen") { _, _ ->
+                runCatching {
+                    startActivity(
+                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.parse("package:$packageName")
+                        }
+                    )
+                }.onFailure { error ->
+                    showNotification("Schleim OS", error.message ?: "Einstellungen konnten nicht geöffnet werden.")
+                }
+            }
+            .show()
     }
 
     private fun load(url: String) {
@@ -695,7 +799,15 @@ class MainActivity : Activity() {
         val granted = permissions.isNotEmpty() &&
             permissions.size == grantResults.size &&
             grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+        Log.i(TAG, "Permission result: granted=$granted, permissions=${permissions.joinToString()}")
+        val permanentlyDenied = permissions.indices
+            .filter { index ->
+                grantResults.getOrNull(index) != PackageManager.PERMISSION_GRANTED &&
+                    !shouldShowRequestPermissionRationale(permissions[index])
+            }
+            .map { permissions[it] }
         callback(granted)
+        if (permanentlyDenied.isNotEmpty()) showPermissionSettingsDialog(permanentlyDenied)
     }
 
     override fun onDestroy() {
@@ -729,6 +841,8 @@ class MainActivity : Activity() {
         private const val REQUEST_CAMERA_CAPTURE = 1505
         private const val MAX_CAMERA_CAPTURE_BYTES = 50L * 1024L * 1024L
         private const val REQUEST_PERMISSION_BASE = 4100
+        private const val PERMISSION_PREFS = "schleim_os_permission_requests"
+        private const val SAMSUNG_CAMERA_PACKAGE = "com.sec.android.app.camera"
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
     }
 }

@@ -11,7 +11,7 @@
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
     objectUrls: [], busy: false, backgroundBusy: false,
-    androidCameraMode: false, cameraStream: null, cameraStarted: false,
+    androidCameraMode: false, androidCameraBusy: false, cameraStream: null, cameraStarted: false,
     cameraRecorder: null, cameraChunks: [], cameraRecording: false,
     facingMode: 'environment', activeApp: null
   };
@@ -873,20 +873,29 @@
   async function captureWithAndroidCamera(mediaType) {
     const runtime = globalThis.browser?.runtime;
     if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
+    if (state.androidCameraBusy) return;
+    state.androidCameraBusy = true;
+    const buttons = $('[data-camera-native-photo],[data-camera-native-video]');
+    buttons.forEach(button=>{button.disabled=true;});
     setStatus('[data-camera-status]', t('cameraOpening'));
-    const response = await runtime.sendNativeMessage('browser',{action:'camera.capture',mediaType:mediaType});
-    if (response?.cancelled) { setStatus('[data-camera-status]',t('cameraCancelled')); return; }
-    if (!response?.ok || typeof response.base64 !== 'string') throw new Error(response?.error || t('cameraUnavailable'));
-    const binary = atob(response.base64);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    const mimeType = response.mimeType || (mediaType === 'video' ? 'video/mp4' : 'image/jpeg');
-    const blob = new Blob([bytes],{type:mimeType});
-    if (!blob.size) throw new Error(t('noCapture'));
-    const now = new Date();
-    const fallbackName = 'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + (mediaType === 'video' ? '.mp4' : '.jpg');
-    const file = new File([blob],response.fileName || fallbackName,{type:mimeType,lastModified:now.getTime()});
-    await uploadFiles([file],mediaType === 'video' ? 'Android-Kamera-Video' : 'Android-Kamera-Foto','[data-camera-status]');
+    try {
+      const response = await runtime.sendNativeMessage('browser',{action:'camera.capture',mediaType:mediaType});
+      if (response?.cancelled) { setStatus('[data-camera-status]',t('cameraCancelled')); return; }
+      if (!response?.ok || typeof response.base64 !== 'string') throw new Error(response?.error || t('cameraUnavailable'));
+      const binary = atob(response.base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const mimeType = response.mimeType || (mediaType === 'video' ? 'video/mp4' : 'image/jpeg');
+      const blob = new Blob([bytes],{type:mimeType});
+      if (!blob.size) throw new Error(t('noCapture'));
+      const now = new Date();
+      const fallbackName = 'Schleim-Kamera-' + now.toISOString().replace(/[:.]/g,'-') + (mediaType === 'video' ? '.mp4' : '.jpg');
+      const file = new File([blob],response.fileName || fallbackName,{type:mimeType,lastModified:now.getTime()});
+      await uploadFiles([file],mediaType === 'video' ? 'Android-Kamera-Video' : 'Android-Kamera-Foto','[data-camera-status]');
+    } finally {
+      state.androidCameraBusy = false;
+      buttons.forEach(button=>{if(button.isConnected)button.disabled=false;});
+    }
   }
 
   function mountCamera() {
