@@ -107,7 +107,7 @@ jobs:
           test -s "$ASSET_DIR/pages/newtab.html"
           test -s "$ASSET_DIR/scripts/media-upload-worker.js"
           test ! -e "android/app/src/main/assets/camera/camera-host.html"
-          test -s "android/app/src/main/res/xml/camera_capture_paths.xml"
+          test -s "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
           node --check "$ASSET_DIR/scripts/app.js"
           node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
           python3 - <<'PY'
@@ -125,11 +125,26 @@ jobs:
           assert "callback.grant(videoSource, audioSource)" in main
           assert "MediaSource.TYPE_VIDEO" in main
           assert '"camera.capture"' in main
-          assert "MediaStore.ACTION_IMAGE_CAPTURE" in main
-          assert "MediaStore.ACTION_VIDEO_CAPTURE" in main
-          assert "FileProvider.getUriForFile" in main
-          assert "requestAndroidPermissions(requested)" in main
+          assert "CameraCaptureActivity::class.java" in main
+          assert "finishAndroidCameraCapture(resultCode, data)" in main
           assert "MAX_CAMERA_CAPTURE_BYTES" in main
+          assert "MediaStore.ACTION_IMAGE_CAPTURE" not in main
+          assert "MediaStore.ACTION_VIDEO_CAPTURE" not in main
+          camera_activity_path = Path("android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt")
+          assert camera_activity_path.is_file()
+          camera_activity = camera_activity_path.read_text()
+          assert "ProcessCameraProvider.getInstance(this)" in camera_activity
+          assert "PreviewView(this)" in camera_activity
+          assert "ImageCapture.Builder()" in camera_activity
+          assert "VideoCapture.withOutput(recorder)" in camera_activity
+          assert "VideoRecordEvent.Finalize" in camera_activity
+          assert "requestPermissions(" in camera_activity
+          assert "Settings.ACTION_APPLICATION_DETAILS_SETTINGS" in camera_activity
+          assert "CameraSelector.LENS_FACING_BACK" in camera_activity
+          assert "CameraSelector.LENS_FACING_FRONT" in camera_activity
+          assert "EXTRA_FILE_PATH" in camera_activity
+          assert "androidx.camera:camera-camera2:1.7.0" in Path("android/app/build.gradle.kts").read_text()
+          assert "androidx.camera:camera-video:1.7.0" in Path("android/app/build.gradle.kts").read_text()
           assert "LocalCameraServer" not in main
           assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/LocalCameraServer.kt").exists()
           assert not Path("android/app/src/main/assets/camera/camera-host.html").exists()
@@ -148,10 +163,11 @@ jobs:
           assert "data-native-camera-panel" in markup
           assert "data-camera-host" not in markup
           android_manifest = Path("android/app/src/main/AndroidManifest.xml").read_text()
-          assert "androidx.core.content.FileProvider" in android_manifest
-          assert "@xml/camera_capture_paths" in android_manifest
-          assert "android.media.action.IMAGE_CAPTURE" in android_manifest
-          assert "android.media.action.VIDEO_CAPTURE" in android_manifest
+          assert 'android:name=".CameraCaptureActivity"' in android_manifest
+          assert 'android:exported="false"' in android_manifest
+          assert "FileProvider" not in android_manifest
+          assert "android.media.action.IMAGE_CAPTURE" not in android_manifest
+          assert "android.media.action.VIDEO_CAPTURE" not in android_manifest
           assert "runOnUiThread" in main
           assert "Looper.getMainLooper()" in main
           assert "queryIntentActivities" in main
@@ -160,7 +176,7 @@ jobs:
           assert "androidCameraBusy" in camera
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          print("Android native camera intents, permissions, FileProvider output, GeckoView Base64 bridge and multi-MIME file-picker checks passed.")
+          print("Integrated CameraX preview, photo/video capture, runtime permissions, GeckoView Base64 bridge and multi-MIME file-picker checks passed.")
           PY
 
       - name: Set up Gradle
@@ -182,14 +198,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha10-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha11-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha10-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha11-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -218,14 +234,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha10-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha11-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha10-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha11-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -255,6 +271,6 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha10-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha11-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
