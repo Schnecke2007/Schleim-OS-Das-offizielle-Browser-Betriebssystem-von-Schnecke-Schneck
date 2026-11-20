@@ -62,3 +62,15 @@ The short explanations do not replace the official legal documents.
 
 ---
 [Regular English documentation](../../Englisch/INSTALLATION.md) · [Documentation overview](../../README.md)
+
+## The Android app
+
+There is now also **Schleim Browser** for Android.
+It is a separate browser app.
+It runs on Android 8.0 or newer on 64-bit ARM devices.
+
+Install the APK file from the GitHub release.
+The Android app is not the browser Extension.
+It has separate updates.
+
+[Android app in plain language](ANDROID-BROWSER.md)
