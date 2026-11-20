@@ -49,3 +49,17 @@ Follow the steps with the device code.
 [Read the simple Schleim-Store guide](SCHLEIM-STORE.md)
 
 [Help and troubleshooting](HELP.md) · [Regular installation guide](../../Englisch/INSTALLATION.md)
+
+## Install the Android app
+
+You can also use the **Schleim Browser** Android app.
+
+1. Open the [latest GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
+2. Download **Schleim-Browser-Android-0.1.0-alpha22.apk**.
+3. Open the file on your Android device.
+4. Allow installation from this source if Android asks.
+5. Tap **Install**.
+
+The Android app is a separate browser. It is not the Chrome Extension.
+
+[Android guide with more details](../ANDROID-BROWSER.md)
