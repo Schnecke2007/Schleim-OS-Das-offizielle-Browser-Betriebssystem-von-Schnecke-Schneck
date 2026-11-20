@@ -24,3 +24,7 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 ---
 
 [🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇳🇱 Nederlandse probleemoplossing](../Niederländisch/PROBLEMEN-OPLOSSEN.md)
+
+## Android app
+
+Problems with the native Android app (installation, updates, unresponsive pages or GeckoView) are covered in the separate [Android troubleshooting guide](ANDROID-BROWSER.md#troubleshooting). The Android app is separate from the Chrome Extension.
