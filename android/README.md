@@ -29,4 +29,4 @@ The Android workflow builds an ARM64 debug APK and uploads it to the latest GitH
 - Routes new-window requests through the app's own tab manager to avoid GeckoView popup-session ownership conflicts.
 - Requests camera and microphone permissions before granting a media source and supports fallback source selection by media type.
 - Retries camera acquisition with simpler constraints when the requested facing mode or resolution is unavailable.
-- Updates the pinned GeckoView runtime to 160.0.20261116130455.
+- Keeps GeckoView 153.0.20260810162159 for this build. GeckoView 160 requires Android API 37 and AGP 9.1; the current project toolchain is Android API 36.1/AGP 8.13. A toolchain upgrade is deliberately deferred rather than shipping an unverified SDK migration.

@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="160.0.20261116130455"
+          VERSION="153.0.20260810162159"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using pinned GeckoView $VERSION (API 36.1 compatible dependency set)."
       - name: Bundle the original Schleim OS extension for GeckoView
