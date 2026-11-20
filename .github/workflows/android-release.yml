@@ -170,13 +170,14 @@ jobs:
           assert "android.media.action.VIDEO_CAPTURE" not in android_manifest
           assert "runOnUiThread" in main
           assert "Looper.getMainLooper()" in main
-          assert "queryIntentActivities" in main
-          assert "SAMSUNG_CAMERA_PACKAGE" in main
+          assert "queryIntentActivities" not in main
+          assert "SAMSUNG_CAMERA_PACKAGE" not in main
+          assert "androidx.camera" in Path("android/app/build.gradle.kts").read_text()
           assert "showPermissionSettingsDialog" in main
           assert "androidCameraBusy" in camera
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          print("Integrated CameraX preview, photo/video capture, runtime permissions, GeckoView Base64 bridge and multi-MIME file-picker checks passed.")
+          print("Integrated CameraX preview, photo/video capture, runtime permissions, internal capture handoff and GeckoView Base64 bridge checks passed.")
           PY
 
       - name: Set up Gradle
