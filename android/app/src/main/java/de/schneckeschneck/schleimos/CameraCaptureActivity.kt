@@ -166,7 +166,7 @@ class CameraCaptureActivity : Activity() {
     @Suppress("DEPRECATION")
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>,
+        permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
