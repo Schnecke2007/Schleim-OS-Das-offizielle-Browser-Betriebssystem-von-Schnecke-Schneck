@@ -286,6 +286,26 @@ class MainActivity : Activity() {
         showSessionInBrowser(tabs[activeTabIndex])
     }
 
+    private fun focusNewTabWhenReady(session: GeckoSession, attemptsLeft: Int = 20) {
+        geckoView.post {
+            if (isFinishing || isDestroyed || !tabs.contains(session)) return@post
+            if (session.isOpen) {
+                activeTabIndex = tabs.indexOf(session)
+                runCatching { showSessionInBrowser(session) }
+                    .onFailure {
+                        showNotification("Schleim OS", "Der neue Tab konnte nicht angezeigt werden.")
+                    }
+            } else if (attemptsLeft > 0) {
+                geckoView.postDelayed(
+                    { focusNewTabWhenReady(session, attemptsLeft - 1) },
+                    25L
+                )
+            } else {
+                showNotification("Schleim OS", "GeckoView hat den neuen Tab nicht rechtzeitig geöffnet.")
+            }
+        }
+    }
+
     private fun updateTabsButton() {
         tabsButton.text = "Tabs " + tabs.size + " · " + (if (tabs.isEmpty()) 0 else activeTabIndex + 1)
     }
@@ -301,12 +321,7 @@ class MainActivity : Activity() {
                 tabs.add(newSession)
                 activeTabIndex = tabs.lastIndex
                 updateTabsButton()
-                geckoView.postDelayed({
-                    if (!isFinishing && tabs.contains(newSession) && newSession.isOpen) {
-                        runCatching { showSessionInBrowser(newSession) }
-                            .onFailure { showNotification("Schleim OS", "Der neue Tab konnte nicht angezeigt werden.") }
-                    }
-                }, 50L)
+                focusNewTabWhenReady(newSession)
                 return GeckoResult.fromValue(newSession)
             }
 
@@ -406,10 +421,13 @@ class MainActivity : Activity() {
                 val result = GeckoResult<GeckoSession.PromptDelegate.PromptResponse>()
                 pendingFilePrompt = prompt
                 pendingFileResult = result
+                val allowedMimeTypes = prompt.mimeTypes?.distinct()?.toTypedArray() ?: emptyArray()
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
-                    type = prompt.mimeTypes?.firstOrNull() ?: "*/*"
-                    if (!prompt.mimeTypes.isNullOrEmpty()) putExtra(Intent.EXTRA_MIME_TYPES, prompt.mimeTypes)
+                    // Android requires */* as the base type when EXTRA_MIME_TYPES contains
+                    // several types (for example image/* and video/*).
+                    type = if (allowedMimeTypes.size > 1) "*/*" else allowedMimeTypes.firstOrNull() ?: "*/*"
+                    if (allowedMimeTypes.size > 1) putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)
                     putExtra(
                         Intent.EXTRA_ALLOW_MULTIPLE,
                         prompt.type == GeckoSession.PromptDelegate.FilePrompt.Type.MULTIPLE
