@@ -151,8 +151,8 @@ jobs:
           assert "navigator.mediaDevices.getUserMedia" in camera_html
           assert "MediaRecorder" in camera_html
           assert "playsinline" in camera_html
-          assert "AndroidCamera.beginCapture" in camera_html
-          assert "AndroidCamera.appendCaptureChunk" in camera_html
+          assert "bridge.beginCapture" in camera_html
+          assert "bridge.appendCaptureChunk" in camera_html
           assert "LocalCameraServer" not in main
           assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/LocalCameraServer.kt").exists()
           assert not Path("android/app/src/main/assets/camera/camera-host.html").exists()
