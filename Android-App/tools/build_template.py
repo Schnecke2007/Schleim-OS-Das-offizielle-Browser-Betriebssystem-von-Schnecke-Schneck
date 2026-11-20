@@ -81,7 +81,9 @@ def patch_text_files(root: Path) -> None:
         except UnicodeDecodeError:
             continue
         for source, target in REPLACEMENTS:
-            value = value.replace(source, target)
+            # Personal identifiers may appear with different capitalization
+            # in translated UI text and embedded standalone pages.
+            value = re.sub(re.escape(source), lambda _match: target, value, flags=re.IGNORECASE)
         file.write_text(value, encoding="utf-8")
 
 def main() -> None:
