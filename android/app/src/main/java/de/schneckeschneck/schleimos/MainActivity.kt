@@ -50,8 +50,7 @@ class MainActivity : Activity() {
 
     private var pendingFilePrompt: GeckoSession.PromptDelegate.FilePrompt? = null
     private var pendingFileResult: GeckoResult<GeckoSession.PromptDelegate.PromptResponse>? = null
-    private var pendingPermissionCallback: GeckoSession.PermissionDelegate.Callback? = null
-    private var pendingPermissionRequestCode = 0
+    private val pendingPermissionCallbacks = mutableMapOf<Int, GeckoSession.PermissionDelegate.Callback>()
     private var permissionRequestCounter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -245,10 +244,14 @@ class MainActivity : Activity() {
         )
         pendingMediaReady = null
         mediaPageReady = false
-        mediaSession?.close()
-        mediaSession = null
-        mediaView?.let { rootFrame.removeView(it) }
+        val oldSession = mediaSession
+        mediaView?.let { view ->
+            runCatching { view.releaseSession() }
+            rootFrame.removeView(view)
+        }
         mediaView = null
+        oldSession?.close()
+        mediaSession = null
         MediaUploadService.stop(this)
     }
 
@@ -258,10 +261,16 @@ class MainActivity : Activity() {
         session.open(runtime)
         tabs.add(session)
         activeTabIndex = tabs.lastIndex
-        geckoView.setSession(session)
-        updateTabsButton()
+        showSessionInBrowser(session)
         if (!url.isNullOrBlank()) session.loadUri(normalizeUrlOrExtension(url))
         return session
+    }
+
+    private fun showSessionInBrowser(session: GeckoSession) {
+        geckoView.releaseSession()
+        geckoView.setSession(session)
+        session.setFocused(true)
+        updateTabsButton()
     }
 
     private fun createUserTab() {
@@ -274,10 +283,7 @@ class MainActivity : Activity() {
             return
         }
         activeTabIndex = (activeTabIndex + 1) % tabs.size
-        val session = tabs[activeTabIndex]
-        geckoView.setSession(session)
-        session.setFocused(true)
-        updateTabsButton()
+        showSessionInBrowser(tabs[activeTabIndex])
     }
 
     private fun updateTabsButton() {
@@ -289,8 +295,19 @@ class MainActivity : Activity() {
     private fun attachSessionDelegates(session: GeckoSession) {
         session.setNavigationDelegate(object : GeckoSession.NavigationDelegate {
             override fun onNewSession(session: GeckoSession, uri: String): GeckoResult<GeckoSession>? {
-                // target=_blank and window.open() create a real browser tab.
-                return GeckoResult.fromValue(createTab(null))
+                // GeckoView opens the returned session itself; it must still be unopened here.
+                val newSession = GeckoSession()
+                attachSessionDelegates(newSession)
+                tabs.add(newSession)
+                activeTabIndex = tabs.lastIndex
+                updateTabsButton()
+                geckoView.postDelayed({
+                    if (!isFinishing && tabs.contains(newSession) && newSession.isOpen) {
+                        runCatching { showSessionInBrowser(newSession) }
+                            .onFailure { showNotification("Schleim OS", "Der neue Tab konnte nicht angezeigt werden.") }
+                    }
+                }, 50L)
+                return GeckoResult.fromValue(newSession)
             }
 
             override fun onLoadRequest(
@@ -333,17 +350,23 @@ class MainActivity : Activity() {
                 permissions: Array<out String>?,
                 callback: GeckoSession.PermissionDelegate.Callback
             ) {
-                val requested = permissions?.distinct()?.toTypedArray() ?: emptyArray()
-                if (requested.isEmpty() || requested.all {
-                    checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED
-                }) {
+                val requested = permissions?.distinct().orEmpty()
+                val missing = requested.filter {
+                    checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED
+                }
+                if (missing.isEmpty()) {
                     callback.grant()
                     return
                 }
-                val requestCode = REQUEST_PERMISSION_BASE + (++permissionRequestCounter % 1000)
-                pendingPermissionCallback = callback
-                pendingPermissionRequestCode = requestCode
-                requestPermissions(requested, requestCode)
+                val requestCode = REQUEST_PERMISSION_BASE + (++permissionRequestCounter % 100000)
+                pendingPermissionCallbacks[requestCode] = callback
+                try {
+                    requestPermissions(missing.toTypedArray(), requestCode)
+                } catch (_: Exception) {
+                    pendingPermissionCallbacks.remove(requestCode)
+                    callback.reject()
+                    showNotification("Schleim OS", "Android-Berechtigung konnte nicht angefordert werden.")
+                }
             }
 
             override fun onMediaPermissionRequest(
@@ -414,7 +437,8 @@ class MainActivity : Activity() {
     private fun load(url: String) {
         val target = normalizeUrlOrExtension(url)
         address.setText(target)
-        activeSession()?.loadUri(target)
+        val current = activeSession()
+        if (current == null) createTab(target) else current.loadUri(target)
     }
 
     private fun navigate(input: String) {
@@ -481,7 +505,10 @@ class MainActivity : Activity() {
         val app = intent.getStringExtra(EXTRA_OPEN_APP)
         if (!app.isNullOrBlank()) {
             val home = extensionHomeUrl
-            if (home != null) load(home + "?openApp=" + Uri.encode(app))
+            if (home != null) {
+                val target = home + "?openApp=" + Uri.encode(app)
+                if (activeSession() == null) createTab(target) else load(target)
+            }
             return
         }
         intent.data?.toString()?.let {
@@ -525,23 +552,27 @@ class MainActivity : Activity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode != pendingPermissionRequestCode) return
-        val callback = pendingPermissionCallback
-        pendingPermissionCallback = null
-        pendingPermissionRequestCode = 0
-        if (callback == null) return
-        if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) callback.grant()
-        else callback.reject()
+        val callback = pendingPermissionCallbacks.remove(requestCode) ?: return
+        if (
+            permissions.isNotEmpty() &&
+            permissions.size == grantResults.size &&
+            grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+        ) callback.grant() else callback.reject()
     }
 
     override fun onDestroy() {
         pendingFileResult?.complete(pendingFilePrompt?.dismiss())
         pendingFileResult = null
         pendingFilePrompt = null
+        pendingPermissionCallbacks.values.forEach { callback -> runCatching { callback.reject() } }
+        pendingPermissionCallbacks.clear()
+        runCatching { geckoView.releaseSession() }
         tabs.forEach { runCatching { it.close() } }
         tabs.clear()
+        mediaView?.let { runCatching { it.releaseSession() } }
         mediaSession?.let { runCatching { it.close() } }
         mediaSession = null
+        mediaView = null
         super.onDestroy()
     }
 
