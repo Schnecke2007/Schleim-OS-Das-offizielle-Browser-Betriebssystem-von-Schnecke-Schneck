@@ -81,6 +81,8 @@ class MainActivity : Activity() {
     private val sessionTitles = mutableMapOf<GeckoSession, String>()
     private var desktopMode = false
     private val downloadExecutor = Executors.newSingleThreadExecutor()
+    // Keep file listing, document writes and XPI copying away from Android's UI thread.
+    private val ioExecutor = Executors.newFixedThreadPool(2)
 
     private var mediaSession: GeckoSession? = null
     private var mediaView: GeckoView? = null
@@ -484,17 +486,24 @@ class MainActivity : Activity() {
             result.complete(JSONObject().put("ok", false).put("error", "Speichern abgebrochen."))
             return
         }
-        try {
-            val bytes = Base64.decode(encoded, Base64.DEFAULT)
-            contentResolver.openOutputStream(data.data!!, "w")?.use { output ->
-                output.write(bytes)
-                output.flush()
-            } ?: throw IllegalStateException("Die Zieldatei konnte nicht geöffnet werden.")
-            result.complete(JSONObject().put("ok", true).put("fileName", fileName))
-            showToast("Datei gespeichert: " + fileName)
-        } catch (error: Exception) {
-            result.complete(JSONObject().put("ok", false).put("error", error.message ?: "Datei konnte nicht gespeichert werden."))
-            showToast("Datei konnte nicht gespeichert werden.")
+        val destinationUri = data.data!!
+        ioExecutor.execute {
+            try {
+                val bytes = Base64.decode(encoded, Base64.DEFAULT)
+                contentResolver.openOutputStream(destinationUri, "w")?.use { output ->
+                    output.write(bytes)
+                    output.flush()
+                } ?: throw IllegalStateException("Die Zieldatei konnte nicht geöffnet werden.")
+                result.complete(JSONObject().put("ok", true).put("fileName", fileName))
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("Datei gespeichert: " + fileName)
+                }
+            } catch (error: Exception) {
+                result.complete(JSONObject().put("ok", false).put("error", error.message ?: "Datei konnte nicht gespeichert werden."))
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("Datei konnte nicht gespeichert werden.")
+                }
+            }
         }
     }
 
@@ -573,6 +582,7 @@ class MainActivity : Activity() {
         }
 
     private fun createTab(url: String?): GeckoSession {
+        pruneBackgroundTabsForNewTab()
         val session = GeckoSession(sessionSettings())
         attachSessionDelegates(session)
         session.open(runtime)
@@ -586,6 +596,25 @@ class MainActivity : Activity() {
         }
         updateTabsButton()
         return session
+    }
+
+    /**
+     * GeckoSession retains page state and renderer resources while a tab exists.
+     * Keep a small, predictable tab budget on phones so long browsing sessions
+     * cannot accumulate an unbounded number of content sessions.
+     */
+    private fun pruneBackgroundTabsForNewTab() {
+        while (tabs.size >= MAX_OPEN_TABS) {
+            val victimIndex = tabs.indices.firstOrNull { it != activeTabIndex } ?: return
+            val victim = tabs.removeAt(victimIndex)
+            runCatching { victim.setFocused(false) }
+            runCatching { victim.setActive(false) }
+            runCatching { victim.close() }
+            navigationStates.remove(victim)
+            sessionUrls.remove(victim)
+            sessionTitles.remove(victim)
+            if (activeTabIndex > victimIndex) activeTabIndex--
+        }
     }
 
     private fun showSessionInBrowser(session: GeckoSession) {
@@ -1107,56 +1136,72 @@ class MainActivity : Activity() {
 
     private fun showDownloadsDialog() {
         val parts = createDialogShell("Downloads", "Dateien, die du mit Schleim OS heruntergeladen hast.")
-        val folder = downloadsDirectory()
-        val files = folder.listFiles()?.filter { it.isFile }?.sortedByDescending { it.lastModified() } ?: emptyList()
-        if (files.isEmpty()) {
-            parts.body.addView(dialogMessage("Noch keine Downloads vorhanden. Dateien, die eine Website zum Herunterladen anbietet, erscheinen hier."))
-        } else {
-            parts.body.addView(dialogMessage(files.size.toString() + " Datei(en)"))
-            files.forEach { file ->
-                val row = LinearLayout(this).apply {
-                    orientation = LinearLayout.VERTICAL
-                    setPadding(dp(10), dp(9), dp(10), dp(9))
-                    background = roundedBackground(surface, border, 10)
+        val loading = dialogMessage("Downloads werden geladen …")
+        parts.body.addView(loading)
+        showDialog(parts.dialog)
+
+        ioExecutor.execute {
+            val allFiles = runCatching {
+                downloadsDirectory().listFiles()?.filter { it.isFile }?.sortedByDescending { it.lastModified() } ?: emptyList()
+            }.getOrDefault(emptyList())
+            val files = allFiles.take(MAX_DOWNLOAD_ROWS)
+            runOnUiThread {
+                if (isFinishing || isDestroyed || !parts.dialog.isShowing) return@runOnUiThread
+                parts.body.removeAllViews()
+                if (files.isEmpty()) {
+                    parts.body.addView(dialogMessage("Noch keine Downloads vorhanden. Dateien, die eine Website zum Herunterladen anbietet, erscheinen hier."))
+                    return@runOnUiThread
                 }
-                row.addView(TextView(this).apply {
-                    text = file.name
-                    textSize = 10f
-                    setTextColor(textPrimary)
-                    typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
-                    maxLines = 2
-                    ellipsize = android.text.TextUtils.TruncateAt.MIDDLE
-                })
-                val date = SimpleDateFormat("dd.MM.yyyy · HH:mm", Locale.getDefault()).format(Date(file.lastModified()))
-                row.addView(TextView(this).apply {
-                    text = formatBytes(file.length()) + " · " + date
-                    textSize = 8f
-                    setTextColor(textMuted)
-                    setPadding(0, dp(3), 0, dp(7))
-                })
-                val actions = LinearLayout(this).apply {
-                    orientation = LinearLayout.HORIZONTAL
-                    gravity = Gravity.CENTER_VERTICAL
+                val countLabel = if (allFiles.size > files.size) {
+                    "Neueste " + files.size + " von " + allFiles.size + " Dateien"
+                } else {
+                    files.size.toString() + " Datei(en)"
                 }
-                if (file.extension.equals("xpi", true)) {
-                    actions.addView(makeTextButton("Installieren") {
-                        parts.dialog.dismiss()
-                        installExtensionFile(file)
-                    }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
+                parts.body.addView(dialogMessage(countLabel))
+                files.forEach { file ->
+                    val row = LinearLayout(this).apply {
+                        orientation = LinearLayout.VERTICAL
+                        setPadding(dp(10), dp(9), dp(10), dp(9))
+                        background = roundedBackground(surface, border, 10)
+                    }
+                    row.addView(TextView(this).apply {
+                        text = file.name
+                        textSize = 10f
+                        setTextColor(textPrimary)
+                        typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+                        maxLines = 2
+                        ellipsize = android.text.TextUtils.TruncateAt.MIDDLE
+                    })
+                    val date = SimpleDateFormat("dd.MM.yyyy · HH:mm", Locale.getDefault()).format(Date(file.lastModified()))
+                    row.addView(TextView(this).apply {
+                        text = formatBytes(file.length()) + " · " + date
+                        textSize = 8f
+                        setTextColor(textMuted)
+                        setPadding(0, dp(3), 0, dp(7))
+                    })
+                    val actions = LinearLayout(this).apply {
+                        orientation = LinearLayout.HORIZONTAL
+                        gravity = Gravity.CENTER_VERTICAL
+                    }
+                    if (file.extension.equals("xpi", true)) {
+                        actions.addView(makeTextButton("Installieren") {
+                            parts.dialog.dismiss()
+                            installExtensionFile(file)
+                        }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
+                    }
+                    actions.addView(makeTextButton("Öffnen") {
+                        openDownloadedFile(file)
+                    }, LinearLayout.LayoutParams(0, dp(34), 1f))
+                    actions.addView(makeTextButton("Teilen") {
+                        shareDownloadedFile(file)
+                    }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginStart = dp(6) })
+                    row.addView(actions)
+                    parts.body.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                        bottomMargin = dp(7)
+                    })
                 }
-                actions.addView(makeTextButton("Öffnen") {
-                    openDownloadedFile(file)
-                }, LinearLayout.LayoutParams(0, dp(34), 1f))
-                actions.addView(makeTextButton("Teilen") {
-                    shareDownloadedFile(file)
-                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginStart = dp(6) })
-                row.addView(actions)
-                parts.body.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                    bottomMargin = dp(7)
-                })
             }
         }
-        showDialog(parts.dialog)
     }
 
     private fun downloadsDirectory(): File {
@@ -1403,16 +1448,25 @@ class MainActivity : Activity() {
             showToast("Bitte eine Mozilla-signierte .xpi-Datei auswählen. ZIP- und CRX-Dateien werden nicht unterstützt.")
             return
         }
-        val folder = File(cacheDir, "extension-import")
-        if (!folder.exists()) folder.mkdirs()
-        val destination = File(folder, name.replace(Regex("[^A-Za-z0-9._-]"), "_"))
-        try {
-            contentResolver.openInputStream(uri)?.use { input ->
-                FileOutputStream(destination).use { output -> input.copyTo(output) }
-            } ?: throw IllegalStateException("Die ausgewählte Datei konnte nicht geöffnet werden.")
-            installExtensionFile(destination)
-        } catch (error: Exception) {
-            showToast("XPI-Datei konnte nicht übernommen werden: " + (error.message ?: "Fehler"))
+        showToast("XPI-Datei wird vorbereitet …")
+        val safeName = name.replace(Regex("[^A-Za-z0-9._-]"), "_")
+        val destination = File(File(cacheDir, "extension-import"), safeName)
+        ioExecutor.execute {
+            try {
+                destination.parentFile?.mkdirs()
+                contentResolver.openInputStream(uri)?.use { input ->
+                    FileOutputStream(destination).use { output -> input.copyTo(output) }
+                } ?: throw IllegalStateException("Die ausgewählte Datei konnte nicht geöffnet werden.")
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) installExtensionFile(destination)
+                }
+            } catch (error: Exception) {
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) {
+                        showToast("XPI-Datei konnte nicht übernommen werden: " + (error.message ?: "Fehler"))
+                    }
+                }
+            }
         }
     }
 
@@ -1599,6 +1653,7 @@ class MainActivity : Activity() {
         mediaSession = null
         mediaView = null
         downloadExecutor.shutdown()
+        ioExecutor.shutdown()
         super.onDestroy()
     }
 
@@ -1617,5 +1672,7 @@ class MainActivity : Activity() {
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"
+        private const val MAX_OPEN_TABS = 6
+        private const val MAX_DOWNLOAD_ROWS = 100
     }
 }
