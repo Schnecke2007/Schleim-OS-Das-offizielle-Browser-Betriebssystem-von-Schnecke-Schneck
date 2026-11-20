@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.15.5 · Chromium-Erweiterung · Manifest V3**
+**Version 3.16.0 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -16,6 +16,20 @@ Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschir
 Die ZIP-Datei ist das fertige Original-Extension-Paket und wird direkt aus GitHub Releases heruntergeladen. Nur das Importieren und Bestätigen im Browser bleibt ein manueller Schritt. Normales Chrome für Android unterstützt keine Erweiterungen; Desktop-Chrome bietet keinen direkten ZIP-Import.
 
 [Release-Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [Installationsanleitung](../docs/Deutsch/INSTALLATION.md)
+
+## Separate Android-App
+
+Neben der Chromium-Extension gibt es **Schleim Browser** als eigenständige Android-App auf Basis von Mozilla GeckoView. Sie enthält die Schleim-OS-Oberfläche und wird unabhängig von der Extension installiert und aktualisiert. Die Android-App ist nicht Bestandteil dieses Extension-ZIP-Pakets.
+
+- [Android-APK herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk)
+- [Android-Anleitung auf Deutsch](../docs/Deutsch/ANDROID-BROWSER.md)
+- [Android guide in English](../docs/Englisch/ANDROID-BROWSER.md)
+- [Android-handleiding in het Nederlands](../docs/Niederländisch/ANDROID-BROWSER.md)
+- [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+
+Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Kamera- und Mikrofonaufnahme sind in der Android-App deaktiviert; die Browser-Extension behält ihre eigene, geräteabhängige Webkamera-Funktion.
+
+
 
 ## Funktionen
 
