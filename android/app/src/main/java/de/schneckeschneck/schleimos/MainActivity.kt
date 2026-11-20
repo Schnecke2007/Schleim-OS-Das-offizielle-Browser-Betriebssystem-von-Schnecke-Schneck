@@ -319,11 +319,11 @@ class MainActivity : Activity() {
 
             override fun onLocationChange(
                 session: GeckoSession,
-                url: String,
-                perms: List<GeckoSession.PermissionDelegate.ContentPermission>,
-                hasUserGesture: Boolean?
+                url: String?,
+                perms: MutableList<GeckoSession.PermissionDelegate.ContentPermission>,
+                hasUserGesture: Boolean
             ) {
-                if (session === activeSession()) address.setText(url)
+                if (session === activeSession() && url != null) address.setText(url)
             }
         })
 
