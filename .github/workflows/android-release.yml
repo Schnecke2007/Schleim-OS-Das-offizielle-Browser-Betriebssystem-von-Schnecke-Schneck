@@ -98,7 +98,7 @@ jobs:
           assert "pages/newtab.html" == manifest["chrome_url_overrides"]["newtab"]
           assert "scripts/media-upload-worker.js" in manifest["background"]["scripts"]
           assert "offscreen" not in manifest.get("permissions", [])
-assert "nativeMessaging" in manifest.get("permissions", [])
+          assert "nativeMessaging" in manifest.get("permissions", [])
           assert Path("android/app/src/main/assets/extension/pages/newtab.html").is_file()
           print("Original Schleim OS extension bundled; Android-specific Gecko manifest prepared.")
           PY
