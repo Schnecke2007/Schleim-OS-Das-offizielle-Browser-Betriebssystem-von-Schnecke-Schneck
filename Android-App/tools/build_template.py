@@ -34,6 +34,9 @@ REPLACEMENTS = [
     ("Schleim-OS", "YOUR_PRODUCT_SLUG"),
     ("SchleimOS", "YourBrowser"),
     ("schnecke_schneck2007", "YOUR_SOCIAL_HANDLE"),
+    ("schnecke_2007", "YOUR_SNAPCHAT_HANDLE"),
+    ("0177 3988636", "YOUR_PHONE_NUMBER"),
+    ("01773988636", "YOUR_PHONE_NUMBER"),
     ("schneckeschneck.de", "YOUR_DOMAIN"),
     ("Bottrop", "YOUR_CITY"),
     ("de.schneckeschneck.schleimos", "com.example.yourbrowser"),
@@ -47,6 +50,13 @@ FORBIDDEN_MARKERS = (
     "info.schnecke.schneck@gmail.com",
     "491773988636",
     "schleim-os-android@schneckeschneck.de",
+    "schnecke_schneck2007",
+    "schnecke_2007",
+    "bottrop",
+    "schneckeschneck.de",
+    "schnecke1.wixsite.com",
+    "0177 3988636",
+    "01773988636",
 )
 
 def png_rgba(width: int, height: int, color=(112, 82, 53, 255)) -> bytes:
