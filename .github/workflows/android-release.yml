@@ -105,6 +105,7 @@ jobs:
           test -s "$ASSET_DIR/manifest.json"
           test -s "$ASSET_DIR/pages/newtab.html"
           test -s "$ASSET_DIR/scripts/media-upload-worker.js"
+          test -s "android/app/src/main/assets/camera/camera-host.html"
           node --check "$ASSET_DIR/scripts/app.js"
           node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
           python3 - <<'PY'
@@ -117,15 +118,25 @@ jobs:
           assert "private fun requestAndroidPermissions(" in main
           assert "callback.grant(videoSource, audioSource)" in main
           assert "MediaSource.TYPE_VIDEO" in main
+          assert '"camera.url"' in main
+          assert "LocalCameraServer(this).also { it.start() }" in main
+          assert "localCameraServer?.close()" in main
+          server = Path("android/app/src/main/java/de/schneckeschneck/schleimos/LocalCameraServer.kt").read_text()
+          assert 'InetAddress.getByName("127.0.0.1")' in server
+          assert 'camera/camera-host.html' in server
+          host = Path("android/app/src/main/assets/camera/camera-host.html").read_text()
+          assert "navigator.mediaDevices.getUserMedia" in host
+          assert "parent.postMessage" in host
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
-          mount = camera.split("function mountCamera()", 1)[1].split("async function handleClick", 1)[0]
-          assert "startCamera()" not in mount
-          assert "cameraStartHint" in mount
-          assert "object not found" in camera
-          assert "{audio:false,video:true}" in camera
+          assert "sendNativeMessage('browser',{action:'camera.url'})" in camera
+          assert "cameraCommand('photo')" in camera
+          assert "cameraCommand('record-stop')" in camera
+          markup = Path("extension/scripts/app.js").read_text()
+          assert 'allow="camera; microphone"' in markup
+          assert "data-camera-host" in markup
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          print("Android new-window routing, session ownership, runtime camera permissions, camera fallback and multi-MIME file-picker checks passed.")
+          print("Android new-window routing, local camera host, iframe media permissions, Blob upload bridge and multi-MIME file-picker checks passed.")
           PY
 
       - name: Set up Gradle
@@ -147,14 +158,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha05-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha06-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha05-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha06-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -183,14 +194,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha05-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha06-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha05-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha06-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -204,8 +215,10 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha04-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha05-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha05-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha06-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber

@@ -494,7 +494,7 @@
   function renderCamera(){
     return `${appHero('KAMERA','Deine Schleim-OS-Kamera.','Nutze die Front- oder Rückkamera, nimm Fotos und Videos auf und lade sie direkt in deine private Foto- und Video-Cloud.','📷')}
       <section class="ssos-camera-app" data-camera-app>
-        <div class="ssos-camera-preview-wrap"><video data-camera-preview autoplay muted playsinline></video><span class="ssos-camera-live">LIVE</span></div>
+        <div class="ssos-camera-preview-wrap"><iframe data-camera-host title="Schleim OS lokale Kamera" allow="camera; microphone" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin"></iframe><span class="ssos-camera-live">LIVE</span></div>
         <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
         <div class="ssos-camera-actions">
           <button class="app-button secondary" type="button" data-camera-start>▶ Kamera starten</button>
@@ -503,7 +503,7 @@
           <button class="app-button secondary" type="button" data-camera-record>◉ Video aufnehmen</button>
           <button class="app-button secondary" type="button" data-camera-stop>■ Kamera stoppen</button>
         </div>
-        <p class="ssos-camera-note">Die Kamera benötigt deine ausdrückliche Browserfreigabe. Die Aufnahme wird nach dem Aufnehmen in die private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
+        <p class="ssos-camera-note">Die Kamera läuft in einem geschützten lokalen Browser-Kontext auf deinem Gerät. Die Aufnahme wird nach dem Aufnehmen in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
       </section>`;
   }
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}

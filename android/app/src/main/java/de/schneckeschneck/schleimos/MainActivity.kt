@@ -11,6 +11,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -43,6 +44,8 @@ class MainActivity : Activity() {
     private val tabs = mutableListOf<GeckoSession>()
     private var activeTabIndex = 0
     private var displayedSession: GeckoSession? = null
+    private var localCameraServer: LocalCameraServer? = null
+    private var localCameraServerError: String? = null
 
     private var mediaSession: GeckoSession? = null
     private var mediaView: GeckoView? = null
@@ -58,6 +61,12 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         buildBrowserUi()
+        try {
+            localCameraServer = LocalCameraServer(this).also { it.start() }
+        } catch (error: Exception) {
+            localCameraServerError = error.message ?: error.javaClass.simpleName
+            Log.e(TAG, "Local camera host could not start", error)
+        }
         runtime = GeckoRuntime.create(this)
         openBrowser(intent?.data?.toString())
         requestNotificationPermissionIfNeeded()
@@ -162,6 +171,11 @@ class MainActivity : Activity() {
                 else -> JSONObject()
             }
             return when (payload.optString("action")) {
+                "camera.url" -> {
+                    val url = localCameraServer?.url
+                    if (url != null) GeckoResult.fromValue(JSONObject().put("ok", true).put("url", url))
+                    else GeckoResult.fromValue(JSONObject().put("ok", false).put("error", localCameraServerError ?: "Lokaler Kameradienst ist nicht verfügbar."))
+                }
                 "media.ensure" -> ensureMediaUploadPage()
                 "media.stop" -> {
                     stopMediaUploadPage()
@@ -370,6 +384,7 @@ class MainActivity : Activity() {
                 audio: Array<out GeckoSession.PermissionDelegate.MediaSource>?,
                 callback: GeckoSession.PermissionDelegate.MediaCallback
             ) {
+                Log.i(TAG, "Media request origin=$uri video=${video?.size ?: 0} audio=${audio?.size ?: 0}; videoSources=${video?.joinToString { it.name + ":" + it.source + "/" + it.type } ?: "not-requested"}")
                 val videoSource = video?.firstOrNull {
                     it.source == GeckoSession.PermissionDelegate.MediaSource.SOURCE_CAMERA &&
                         it.type == GeckoSession.PermissionDelegate.MediaSource.TYPE_VIDEO
@@ -592,6 +607,8 @@ class MainActivity : Activity() {
         pendingFilePrompt = null
         pendingPermissionCallbacks.values.forEach { callback -> runCatching { callback(false) } }
         pendingPermissionCallbacks.clear()
+        runCatching { localCameraServer?.close() }
+        localCameraServer = null
         if (displayedSession != null) runCatching { geckoView.releaseSession() }
         displayedSession = null
         tabs.forEach { runCatching { it.close() } }
@@ -604,6 +621,7 @@ class MainActivity : Activity() {
     }
 
     companion object {
+        private const val TAG = "SchleimOS"
         private const val BUNDLED_EXTENSION_URI = "resource://android/assets/extension/"
         private const val EXTENSION_ID = "schleim-os-android@schneckeschneck.de"
         private const val NATIVE_APP_ID = "browser"
