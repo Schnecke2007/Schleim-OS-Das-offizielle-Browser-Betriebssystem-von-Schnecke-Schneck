@@ -37,12 +37,6 @@ Du kannst in den Einstellungen nach neuen Versionen suchen.
 
 [Updates einfach erklärt](UPDATES.md)
 
-## Updates
-
-Du kannst in den Einstellungen nach neuen Versionen suchen.
-
-[Updates einfach erklärt](UPDATES.md)
-
 ## Die Erweiterung installieren
 
 Lade **Schleim-OS-Extension.zip** aus dem neuesten [GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) herunter. Entpacke die ZIP-Datei nicht. Importiere sie anschließend in einem Browser, der den direkten ZIP-Import unterstützt.
