@@ -2,12 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
-    <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <application
         android:allowBackup="true"
         android:label="Schleim OS Browser"
@@ -31,10 +27,6 @@
                 <data android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CameraCaptureActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Material.NoActionBar" />
         <service
             android:name=".MediaUploadService"
             android:exported="false"

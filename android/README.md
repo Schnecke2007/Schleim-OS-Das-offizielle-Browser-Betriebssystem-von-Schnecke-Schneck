@@ -1,4 +1,4 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha12)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha13)
 
 The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
@@ -7,15 +7,15 @@ The Android APK bundles the original Schleim OS WebExtension from `extension/` a
 - **GitHub account and settings backup:** Uses the original Schleim OS GitHub Device Flow, private backup repository, token refresh and settings export/import. GeckoView's WebExtension storage and native popup/window handling are used.
 - **Photo/video cloud:** Uses the original private GitHub media repository and metadata index. The original IndexedDB upload queue and compression page are loaded in a hidden GeckoView session.
 - **Background upload:** The Android app starts a foreground `dataSync` service while the hidden media page is processing the queued files. Native Android notifications receive upload progress, completion and failure events. The service is stopped after the queue finishes.
-- **Camera:** Replaces the previous CameraX and external-camera approaches with a separate Android System WebView using JavaScript `navigator.mediaDevices.getUserMedia()` and `MediaRecorder`. The local camera page is served through AndroidX `WebViewAssetLoader` at the reserved HTTPS origin `https://appassets.androidplatform.net`, so it runs in a secure browser context. `WebChromeClient.onPermissionRequest` checks that exact origin, requests Android `CAMERA` and `RECORD_AUDIO` permissions as needed, and grants only WebView's video/audio capture resources. The page automatically opens the live preview, supports rear/front camera switching, takes JPEG photos with canvas, and records audio/video with MediaRecorder. Captures are transferred to a private cache file in bounded Base64 chunks through a narrowly scoped JavaScript bridge, checked against 50 MiB, then passed through GeckoView native messaging to the existing private-cloud upload queue. No CameraX, FileProvider, loopback HTTP server, external camera intent, or remote camera page is used.
+- **Camera:** Camera and microphone capture are deliberately not supported in the Android application. The Android APK contains no camera capture Activity, no camera asset, and requests neither Android `CAMERA` nor `RECORD_AUDIO` permission. GeckoView's media-permission callbacks explicitly reject capture requests, so the app does not display camera or microphone permission prompts. The Android-specific camera section explains this limitation. The original browser extension remains separate and retains its normal JavaScript webcam, live preview, front/rear switch, photo button, video recording button and camera-off control in browsers that support `getUserMedia()` and `MediaRecorder`.
 - **New tabs and popups:** `TARGET_WINDOW_NEW` is intercepted in `onLoadRequest`. Schleim OS creates and displays the tab itself, rather than switching sessions during GeckoView's popup-session lifecycle. `about:blank` popups are supported so scripts can navigate them after opening.
 - **IFrames:** HTTP(S) subframes are allowed by the browser navigation delegate and the Schleim OS app frames request autoplay/fullscreen/clipboard capabilities where relevant.
 
-## Camera security and compatibility
+## Camera separation
 
-The camera page uses the Android-reserved `appassets.androidplatform.net` HTTPS origin through `WebViewAssetLoader`; it does not enable file-URL access or content-URL access. The JavaScript bridge is attached only to this local page, and the WebView blocks navigation away from its camera asset. Camera and microphone permissions are requested separately, so photo capture does not require microphone permission. Video uses the WebView's installed Chromium media stack; codec support depends on the Android System WebView version. The page prefers WebM/VP8/Opus and falls back to supported MP4 when available.
+The Android application intentionally has no camera or microphone capture capability. It does not request camera/microphone permissions and explicitly rejects GeckoView media-capture permission requests. In the Android-specific camera section, the user sees a clear notice that photo and video capture are not supported in the app.
 
-Actual hardware access, codecs and recording behaviour still require validation on physical devices, including the Samsung Galaxy S24.
+The original browser extension continues to use the normal JavaScript Web Camera API. It keeps the live preview, camera start/deactivate controls, front/rear camera switching, photo capture and video recording. This browser functionality is not replaced by or bundled with an Android-native camera implementation.
 
 ## Compatibility boundaries
 
@@ -29,12 +29,11 @@ Android may stop foreground data-sync work after its platform time limits or if 
 
 The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
 
-## Alpha 0.1.0-alpha12 camera replacement
+## Alpha 0.1.0-alpha13 camera separation
 
-- Removes CameraX and the external camera-app intent approach.
-- Adds a dedicated local HTTPS camera page displayed in Android System WebView.
-- Opens the live camera automatically using JavaScript `getUserMedia()`.
-- Uses WebView's own permission request callback plus Android camera/microphone runtime permissions.
-- Captures photos with HTML canvas and records videos with browser `MediaRecorder`.
-- Transfers captured data in small chunks to an app-private temporary file to avoid one large Base64 bridge call.
-- Keeps the existing GeckoView native messaging and private GitHub media upload queue.
+- Removes the Android camera Activity and its local WebView camera page.
+- Removes Android camera and microphone permissions and the WebView camera dependency.
+- Explicitly rejects media-capture permission requests inside the Android app.
+- Adds a separate Android-application notice: photo and video capture are not supported in the Android app.
+- Restores the normal JavaScript webcam panel exclusively for the original browser extension, including preview and all camera controls.
+- Keeps the existing private photo/video cloud library, manual uploads and background upload queue.
