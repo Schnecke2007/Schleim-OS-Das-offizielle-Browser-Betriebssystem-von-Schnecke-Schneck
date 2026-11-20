@@ -1,0 +1,10 @@
+Schleim OS 3.16.0 Android release completion
+
+Build and validate:
+- Schleim Browser Android APK 0.1.0-alpha22
+- Android Studio template ZIP with neutral placeholders
+- Original browser Extension ZIP
+- Browser Extension template ZIP
+- SHA-256 checksum file
+
+The Android release workflow must validate both the production APK and the generated Android Studio template before replacing the assets in release v3.16.0.
