@@ -62,6 +62,57 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
+
+          manifest_path = Path("android/app/src/main/assets/extension/manifest.json")
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+          manifest["browser_specific_settings"] = {
+              "gecko": {
+                  "id": "schleim-os-android@schneckeschneck.de"
+              }
+          }
+          manifest["permissions"] = list(dict.fromkeys(
+              manifest.get("permissions", []) + ["geckoViewAddons", "nativeMessaging"]
+          ))
+
+          background = manifest.get("background") or {}
+          service_worker = background.pop("service_worker", None)
+          if service_worker:
+              background["scripts"] = [service_worker]
+          if background:
+              manifest["background"] = background
+
+          # GeckoView/Firefox has no Chrome offscreen-document API.
+          manifest["permissions"] = [
+              permission for permission in manifest.get("permissions", [])
+              if permission != "offscreen"
+          ]
+          manifest.pop("minimum_chrome_version", None)
+
+          manifest_path.write_text(
+              json.dumps(manifest, ensure_ascii=False, indent=2) + chr(10),
+              encoding="utf-8"
+          )
+
+          assert manifest["manifest_version"] == 3
+          assert "pages/newtab.html" == manifest["chrome_url_overrides"]["newtab"]
+          assert "scripts/media-upload-worker.js" in manifest["background"]["scripts"]
+          assert "offscreen" not in manifest.get("permissions", [])
+          assert "nativeMessaging" in manifest.get("permissions", [])
+          assert Path("android/app/src/main/assets/extension/pages/newtab.html").is_file()
+          print("Original Schleim OS extension bundled; Android-specific Gecko manifest prepared.")
+          PY
+
+          test -s "$ASSET_DIR/manifest.json"
+          test -s "$ASSET_DIR/pages/newtab.html"
+          test -s "$ASSET_DIR/scripts/media-upload-worker.js"
+          test ! -e "android/app/src/main/assets/camera/camera-host.html"
+          test ! -e "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
+          test ! -e "android/app/src/main/assets/camera/camera.html"
+          node --check "$ASSET_DIR/scripts/app.js"
+          node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
+          python3 - <<'PY'
+          from pathlib import Path
           import json
 
           bundle_manifest = json.loads(Path("android/app/src/main/assets/extension/manifest.json").read_text())
@@ -123,90 +174,6 @@ jobs:
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
           print("Android camera removed; original extension JavaScript webcam and its controls retained. Android media capture is explicitly rejected.")
-          PY
-
-          test -s "$ASSET_DIR/manifest.json"
-          test -s "$ASSET_DIR/pages/newtab.html"
-          test -s "$ASSET_DIR/scripts/media-upload-worker.js"
-          test ! -e "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
-          test ! -e "android/app/src/main/assets/camera/camera.html"
-          node --check "$ASSET_DIR/scripts/app.js"
-          node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
-          python3 - <<'PY'
-          from pathlib import Path
-          import json
-          bundle_manifest = json.loads(Path("android/app/src/main/assets/extension/manifest.json").read_text())
-          assert "geckoViewAddons" in bundle_manifest.get("permissions", [])
-          assert "nativeMessaging" in bundle_manifest.get("permissions", [])
-          main = Path("android/app/src/main/java/de/schneckeschneck/schleimos/MainActivity.kt").read_text()
-          assert "onNewSession" not in main
-          assert "request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW" in main
-          assert "createTab(uri)" in main
-          assert "displayedSession" in main
-          assert "private fun requestAndroidPermissions(" in main
-          assert "callback.grant(videoSource, audioSource)" in main
-          assert "MediaSource.TYPE_VIDEO" in main
-          assert '"camera.capture"' in main
-          assert "CameraCaptureActivity::class.java" in main
-          assert "finishAndroidCameraCapture(resultCode, data)" in main
-          assert "MAX_CAMERA_CAPTURE_BYTES" in main
-          assert "MediaStore.ACTION_IMAGE_CAPTURE" not in main
-          assert "MediaStore.ACTION_VIDEO_CAPTURE" not in main
-          camera_activity_path = Path("android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt")
-          assert camera_activity_path.is_file()
-          camera_activity = camera_activity_path.read_text()
-          assert "WebViewAssetLoader" in camera_activity
-          assert "WebChromeClient" in camera_activity
-          assert "onPermissionRequest" in camera_activity
-          assert "PermissionRequest.RESOURCE_VIDEO_CAPTURE" in camera_activity
-          assert "PermissionRequest.RESOURCE_AUDIO_CAPTURE" in camera_activity
-          assert "https://appassets.androidplatform.net/assets/camera/camera.html" in camera_activity
-          assert "@JavascriptInterface" in camera_activity
-          assert "appendCaptureChunk" in camera_activity
-          assert "EXTRA_FILE_PATH" in camera_activity
-          assert "androidx.webkit:webkit:1.18.0" in Path("android/app/build.gradle.kts").read_text()
-          assert "androidx.camera" not in Path("android/app/build.gradle.kts").read_text()
-          camera_html_path = Path("android/app/src/main/assets/camera/camera.html")
-          assert camera_html_path.is_file()
-          camera_html = camera_html_path.read_text()
-          assert "navigator.mediaDevices.getUserMedia" in camera_html
-          assert "MediaRecorder" in camera_html
-          assert "playsinline" in camera_html
-          assert "bridge.beginCapture" in camera_html
-          assert "bridge.appendCaptureChunk" in camera_html
-          assert "LocalCameraServer" not in main
-          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/LocalCameraServer.kt").exists()
-          assert not Path("android/app/src/main/assets/camera/camera-host.html").exists()
-          camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
-          assert "action:'camera.capture'" in camera
-          assert "captureWithAndroidWebCamera('photo')" in camera
-          assert "captureWithAndroidWebCamera('video')" in camera
-          assert "const buttons = Array.from(document.querySelectorAll('[data-camera-native-photo],[data-camera-native-video]'));" in camera
-          assert "for (const button of buttons) button.disabled = true;" in camera
-          assert "buttons.forEach" not in camera
-          assert "if (button.isConnected) button.disabled = false;" in camera
-          assert "data-camera-native-photo" in camera
-          assert "data-camera-native-video" in camera
-          assert "camera.url" not in camera
-          markup = Path("extension/scripts/app.js").read_text()
-          assert "data-native-camera-panel" in markup
-          assert "data-camera-host" not in markup
-          android_manifest = Path("android/app/src/main/AndroidManifest.xml").read_text()
-          assert 'android:name=".CameraCaptureActivity"' in android_manifest
-          assert 'android:exported="false"' in android_manifest
-          assert "FileProvider" not in android_manifest
-          assert "android.media.action.IMAGE_CAPTURE" not in android_manifest
-          assert "android.media.action.VIDEO_CAPTURE" not in android_manifest
-          assert "runOnUiThread" in main
-          assert "Looper.getMainLooper()" in main
-          assert "queryIntentActivities" not in main
-          assert "SAMSUNG_CAMERA_PACKAGE" not in main
-          assert "androidx.camera" not in Path("android/app/build.gradle.kts").read_text()
-          assert "showPermissionSettingsDialog" in main
-          assert "androidCameraBusy" in camera
-          assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
-          assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          print("Secure-origin Android WebView, JavaScript getUserMedia/MediaRecorder, runtime camera/microphone permissions and chunked private-file transfer checks passed.")
           PY
 
       - name: Set up Gradle
