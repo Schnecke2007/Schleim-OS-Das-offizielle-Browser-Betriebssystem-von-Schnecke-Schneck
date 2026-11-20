@@ -604,12 +604,12 @@
       let completed = 0;
       try {
         for (const file of files) {
-          setStatus(target,t('uploading')+' ('+(completed+1)+'/'+files.length+')');
+          setStatus(androidStatusTarget,t('uploading')+' ('+(completed+1)+'/'+files.length+')');
           await uploadOne(file,description);
           completed += 1;
         }
         await refreshMediaApp();
-        setStatus(target,t('uploaded'));
+        setStatus(androidStatusTarget,t('uploaded'));
       } catch (error) {
         if (completed > 0) await refreshMediaApp().catch(() => {});
         throw error;
