@@ -104,3 +104,14 @@ Auf dem Desktop eine Kachel mit der Maus ziehen. Auf Touchgeräten eine Kachel k
 Die Erweiterungsoberfläche enthält keine Werbe-IFrames und keine Werbe-Startprüfung. Externe Apps und Websites können Netzwerkverbindungen herstellen, wenn du sie öffnest.
 
 **Hinweis zu den Rechtstexten:** Die App zeigt lokale Auszüge der Rechtstexte der offiziellen Fan-Webseite. Aussagen über Werbung in diesen Rechtstexten beziehen sich auf die Fan-Webseite, nicht auf Werbeeinbindungen in der Erweiterung.
+
+
+## Android-App
+
+Das Projekt veröffentlicht zusätzlich die eigenständige Android-App **Schleim Browser** auf Basis von Mozilla GeckoView. Die Android-App bündelt die Original-Extension, verwendet aber eine eigene native Browseroberfläche und wird als APK separat aktualisiert.
+
+- [Android-APK aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk)
+- [Android-Installation, Updates und Fehlerbehebung](../docs/Deutsch/ANDROID-BROWSER.md)
+- [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+
+Die Browser-Extension bleibt ein eigenständiges ZIP-Paket. Android-Kamera- und Mikrofonaufnahme sind in der App deaktiviert.
