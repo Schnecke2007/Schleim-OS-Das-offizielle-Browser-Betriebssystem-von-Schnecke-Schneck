@@ -127,6 +127,9 @@ jobs:
           assert "CameraCaptureActivity" not in main
           assert '"camera.capture"' not in main
           assert "callback.reject()" in main
+          assert main.count("callback.reject()") >= 2
+          assert "onAndroidPermissionsRequest" in main
+          assert "onMediaPermissionRequest" in main
           assert "callback.grant(videoSource, audioSource)" not in main
           assert "requestAndroidPermissions(" not in main
 
@@ -138,8 +141,8 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 13" in gradle
-          assert 'versionName = "0.1.0-alpha13"' in gradle
+          assert "versionCode = 14" in gradle
+          assert 'versionName = "0.1.0-alpha14"' in gradle
 
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           assert "navigator.mediaDevices.getUserMedia" in camera
@@ -154,10 +157,19 @@ jobs:
           assert "data-camera-photo" in camera
           assert "data-camera-record" in camera
           assert "data-android-camera-notice" in camera
+          camera_mount = camera[camera.index("function mountCamera()"):camera.index("async function startBrowserCamera()")]
+          assert "androidNotice.hidden = !isAndroidApplication" in camera_mount
+          assert "browserPanel.hidden = isAndroidApplication" in camera_mount
+          assert "if (isAndroidApplication)" in camera_mount
+          assert "stopBrowserCamera()" in camera_mount
 
           markup = Path("extension/scripts/app.js").read_text()
           assert "data-android-camera-notice" in markup
           assert "Android-Anwendung – Kamera" in markup
+          assert "Original-Extension – Webkamera" in markup
+          assert 'aria-labelledby="ssos-camera-android-heading"' in markup
+          assert 'aria-labelledby="ssos-camera-browser-heading"' in markup
+          assert "Foto- und Videoaufnahmen werden in der Schleim-OS-Android-App nicht unterstützt" in markup
           assert "data-browser-camera-panel" in markup
           assert "Kamera starten" in markup
           assert "Kamera deaktivieren" in markup
@@ -195,14 +207,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha13-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha14-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha13-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha14-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -231,14 +243,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha13-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha14-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha13-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha14-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -276,7 +288,10 @@ jobs:
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha12-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
 
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha13-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha13-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha14-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber

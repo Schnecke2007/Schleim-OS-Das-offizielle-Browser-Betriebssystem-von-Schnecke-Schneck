@@ -1,4 +1,4 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha13)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha14)
 
 The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
@@ -29,7 +29,7 @@ Android may stop foreground data-sync work after its platform time limits or if 
 
 The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
 
-## Alpha 0.1.0-alpha13 camera separation
+## Alpha 0.1.0-alpha14 camera separation
 
 - Removes the Android camera Activity and its local WebView camera page.
 - Removes Android camera and microphone permissions and the WebView camera dependency.
@@ -37,3 +37,12 @@ The Android workflow builds an ARM64 debug APK and uploads it to the latest GitH
 - Adds a separate Android-application notice: photo and video capture are not supported in the Android app.
 - Restores the normal JavaScript webcam panel exclusively for the original browser extension, including preview and all camera controls.
 - Keeps the existing private photo/video cloud library, manual uploads and background upload queue.
+
+
+## Alpha 0.1.0-alpha14 – getrennte Kamera-Bereiche
+
+- Die Kamera-Seite enthält zwei ausdrücklich getrennte Bereiche: einen Android-Hinweis und die Webkamera der Original-Extension.
+- In der Android-Anwendung wird ausschließlich der Hinweis angezeigt, dass Foto- und Videoaufnahmen nicht unterstützt werden.
+- Die Android-App fordert keine Kamera- oder Mikrofonberechtigungen an und startet keine Kamera.
+- Die Original-Extension behält ihre JavaScript-Webkamera mit Live-Vorschau, Kamera starten/deaktivieren, Front-/Rückkamera wechseln, Foto aufnehmen und Video aufnehmen.
+- Die GitHub-Actions-Prüfung kontrolliert jetzt ausdrücklich, dass die Android-App den Hinweisbereich und die Browser-Extension den Webkamera-Bereich einblendet.

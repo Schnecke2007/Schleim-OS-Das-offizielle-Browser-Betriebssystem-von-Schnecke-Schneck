@@ -52,7 +52,7 @@
     {id:'email',name:'E-Mail',icon:'📨',hint:'Kontakt per E-Mail',keys:'email gmail mail'},
     {id:'google',name:'Google-Profil',icon:'⭐',hint:'Creator Studio bewerten',keys:'google bewertung rezension maps'},
     {id:'images',name:'Fotos',icon:'📸',hint:'Private Foto- und Video-Mediathek',keys:'fotos bilder galerie mediathek videos cloud hochladen suche'},
-    {id:'camera',name:'Kamera',icon:'📷',hint:'Fotos und Videos mit Front- und Rückkamera aufnehmen',keys:'kamera camera foto video selfie frontkamera rückkamera aufnehmen'},
+    {id:'camera',name:'Kamera',icon:'📷',hint:'JavaScript-Webkamera der Original-Extension; Android-App mit eigenem Hinweisbereich',keys:'kamera camera foto video selfie frontkamera rückkamera aufnehmen'},
     {id:'legal',name:'Rechtliches',icon:'⚖️',hint:'Impressum, Datenschutz und AGBs',keys:'rechtliches impressum datenschutz agb agbs bedingungen'},
     {id:'settings',name:'Einstellungen',icon:'⚙️',hint:'Darstellung und Kontrollzentrum',keys:'einstellungen wallpaper design helligkeit'}
   ];
@@ -101,7 +101,7 @@
     nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
-    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Take photos and videos with the front or rear camera',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
+    en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Original browser extension webcam; Android app shows a separate support notice',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
     nl:{websitehome:'Welkom en pagina-overzicht',about:'Profiel en achtergrond',social:'Instagram en TikTok',projects:'Gepubliceerde projecten',studio:'Merk en diensten',website:'Alle onderdelen van de fanwebsite',shop:'Merchandise en print on demand',slimestore:'Ontdek apps in de Schleim-Store, installeer en stel websites voor',fanapp:'Informatie over de community-app',websiteinfo:'Functies en community',chatgpt:'AI en ontwikkeling',parentsettings:'Project uit het projectenoverzicht',schildi:'Smartphoneproject',voiceassistant:'AI-spraakassistentproject',scratch:'Creatief programmeerproject',schleimcloud:'Persoonlijk cloudproject',iptv:'Streaming en media-opstellingen',tech:'Technologie en experimenten',contact:'Berichten en samenwerkingen',whatsapp:'Een schriftelijk bericht sturen',email:'Contact via e-mail',google:'Beoordeel het Creator Studio',images:'Fotogalerij van de fanwebsite',legal:'Colofon, privacy en voorwaarden',settings:'Weergave en taal'}
   };
   // Phrase-level offline localization. Original German legal clauses remain available verbatim.
@@ -492,17 +492,19 @@
       </section>`;
   }
   function renderCamera(){
-    return `${appHero('KAMERA','Deine Schleim-OS-Webkamera.','Die Original-Extension verwendet eine normale JavaScript-Webkamera mit Live-Vorschau, Fotoaufnahme und Videoaufzeichnung.','📷')}
+    return `${appHero('KAMERA','Kamera-Funktionen nach Plattform getrennt.','Die Original-Extension bietet eine normale JavaScript-Webkamera. In der Android-Anwendung sind Foto- und Videoaufnahmen deaktiviert.','📷')}
       <section class="ssos-camera-app" data-camera-app>
-        <section class="ssos-camera-android-panel" data-android-camera-notice hidden>
+        <section class="ssos-camera-android-panel" data-android-camera-notice aria-labelledby="ssos-camera-android-heading" hidden>
           <div class="ssos-camera-android-card">
-            <span class="ssos-camera-android-icon">📱</span>
-            <b>Android-Anwendung – Kamera</b>
-            <p><strong>Hinweis:</strong> Foto- und Videoaufnahmen werden in der Schleim-OS-Android-App nicht unterstützt. Die Kamerafunktion ist in der Android-Anwendung deaktiviert.</p>
-            <p>Dieser Bereich gehört ausschließlich zur Android-Anwendung. Die Original-Extension behält ihre separate JavaScript-Webkamera mit Live-Vorschau und den gewohnten Buttons „Kamera starten“, „Kamera deaktivieren“, „Foto aufnehmen“ und „Video aufnehmen“.</p>
+            <span class="ssos-camera-android-icon" aria-hidden="true">📱</span>
+            <h3 id="ssos-camera-android-heading">Android-Anwendung – Kamera</h3>
+            <p><strong>Hinweis:</strong> Foto- und Videoaufnahmen werden in der Schleim-OS-Android-App nicht unterstützt. Die Kamerafunktion ist in der Android-Anwendung vollständig deaktiviert.</p>
+            <p>Dieser Bereich gehört ausschließlich zur Android-Anwendung. Es wird keine native Kamera geöffnet und es werden keine Kamera- oder Mikrofonberechtigungen angefordert.</p>
           </div>
         </section>
-        <div class="ssos-camera-browser-panel" data-browser-camera-panel hidden>
+        <section class="ssos-camera-browser-panel" data-browser-camera-panel aria-labelledby="ssos-camera-browser-heading" hidden>
+          <h3 id="ssos-camera-browser-heading">Original-Extension – Webkamera</h3>
+          <p class="ssos-camera-platform-note">Dieser Bereich gehört ausschließlich zur normalen Browser-Extension. Die Kamera wird direkt über JavaScript und die Web Camera API gesteuert.</p>
           <div class="ssos-camera-preview-wrap"><video data-camera-preview autoplay muted playsinline></video><span class="ssos-camera-live">LIVE</span></div>
           <div class="ssos-camera-actions">
             <button class="app-button secondary" type="button" data-camera-start>▶ Kamera starten</button>
@@ -512,7 +514,7 @@
             <button class="app-button secondary" type="button" data-camera-stop>■ Kamera deaktivieren</button>
           </div>
           <p class="ssos-camera-note">Die Kamera benötigt deine ausdrückliche Browserfreigabe. Fotos und Videos werden nach der Aufnahme in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
-        </div>
+        </section>
         <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
       </section>`;
   }
