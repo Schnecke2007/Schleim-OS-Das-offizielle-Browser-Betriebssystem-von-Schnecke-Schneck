@@ -1,5 +1,5 @@
 Schleim OS 3.16.0 Android release retry
 
-The Android APK Alpha 22 build passed. The neutral Android Studio template must replace project identity values case-insensitively, verify that no personal names or contact details remain, build successfully, and be included in the final release archive.
+The Alpha 22 APK build passed. The neutral Android Studio template now applies identity placeholders case-insensitively and removes the production launcher icon Gradle task with a multiline Kotlin-comment-safe rule.
 
-Publish the current Android APK Alpha 22, Android Studio template ZIP, original Extension ZIP, browser-extension template ZIP, and SHA-256 checksums to release v3.16.0. Remove the superseded Alpha 21 APK asset.
+Validate the generated Android Studio project, publish Alpha 22 plus the Android Studio template ZIP, the browser Extension ZIPs, and SHA-256 checksums to release v3.16.0. Remove the superseded Alpha 21 APK.
