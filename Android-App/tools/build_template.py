@@ -201,11 +201,22 @@ def main() -> None:
     settings_file = project / "settings.gradle.kts"
     settings_text = settings_file.read_text(encoding="utf-8")
     settings_file.write_text(
-        settings_text.replace('rootProject.name = "SchleimOSAndroid"', 'rootProject.name = "YourBrowser"'),
+        re.sub(r'(?m)^\\s*rootProject\\.name\\s*=\\s*"[^"]+"', 'rootProject.name = "YourBrowser"', settings_text),
         encoding="utf-8"
     )
     for name in ("README.md", "README.en.md", "README.nl.md"):
         shutil.copy2(args.docs / name, project / name)
+        readme = project / name
+        readme_text = readme.read_text(encoding="utf-8")
+        # These repository guides are outside the exported project ZIP.
+        # Keep the template README self-contained by turning those links into
+        # an explicit URL placeholder the template owner can configure.
+        readme_text = re.sub(
+            r'\\]\\(\\.\\./docs/(?:Deutsch|Englisch|Niederländisch)/ANDROID-BROWSER\\.md\\)',
+            '](https://example.com/docs/android-browser)',
+            readme_text
+        )
+        readme.write_text(readme_text, encoding="utf-8")
     patch_text_files(project)
 
     # Keep a valid, neutral display name after replacing the production label.
@@ -234,6 +245,10 @@ def main() -> None:
     assert (project / "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml").is_file()
     assert "com.example.yourbrowser" in build_file.read_text(encoding="utf-8")
     assert "prepareLauncherIcon" not in build_file.read_text(encoding="utf-8")
+    assert 'rootProject.name = "YourBrowser"' in settings_file.read_text(encoding="utf-8")
+    for name in ("README.md", "README.en.md", "README.nl.md"):
+        readme_text = (project / name).read_text(encoding="utf-8")
+        assert "../docs/" not in readme_text, f"Broken repository-only documentation link in {name}"
     print(f"Android Studio template prepared at {project}")
 
 if __name__ == "__main__":
