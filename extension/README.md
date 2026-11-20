@@ -59,7 +59,7 @@ Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Ka
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.15.4](docs/RELEASE-NOTES-3.15.5.md) – stärkere Foto-/Videokomprimierung und Upload-Grenzen
+- [Release Notes 3.16.0](docs/RELEASE-NOTES-3.16.0.md) – Android-Browser, Verbesserungen der Extension und aktuelle Funktionen
 - [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
