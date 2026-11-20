@@ -1,6 +1,17 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.15.7
+# Schleim OS – Erweiterungsdokumentation · Version 3.16.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
+
+## Separate Android-App
+
+Das Projekt veröffentlicht zusätzlich **Schleim Browser** als eigenständige Android-App mit Mozilla GeckoView. Diese App ist nicht Teil der Chromium-Extension und wird separat als APK aktualisiert.
+
+- [Android-Dokumentation (Deutsch)](../../docs/Deutsch/ANDROID-BROWSER.md)
+- [Android documentation (English)](../../docs/Englisch/ANDROID-BROWSER.md)
+- [Android-documentatie (Nederlands)](../../docs/Niederländisch/ANDROID-BROWSER.md)
+- [Android Studio template guide](../../Android-App/README.md)
+
+
 
 ## Funktionen
 
