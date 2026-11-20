@@ -5,6 +5,14 @@ const NOTIFICATION_PREFIX = 'ssos-media-upload-';
 let creatingOffscreen = null;
 let activeUploadJob = null;
 
+const hasGeckoNativeBridge = typeof browser !== 'undefined' &&
+  typeof browser.runtime?.sendNativeMessage === 'function';
+
+async function sendAndroidMessage(payload) {
+  if (!hasGeckoNativeBridge) return null;
+  return browser.runtime.sendNativeMessage('browser', payload);
+}
+
 function notificationsGetAll() {
   return new Promise(resolve => chrome.notifications.getAll(result => {
     const error = chrome.runtime.lastError;
@@ -39,6 +47,11 @@ async function storeStatus(status) {
   await chrome.storage.local.set({[STATUS_KEY]:Object.assign({updatedAt:Date.now()},status)});
 }
 async function ensureOffscreen() {
+  if (hasGeckoNativeBridge) {
+    const response = await sendAndroidMessage({action:'media.ensure'});
+    if (!response?.ok) throw new Error(response?.error || 'Android-Medienprozess konnte nicht gestartet werden.');
+    return;
+  }
   const url=chrome.runtime.getURL(OFFSCREEN_PATH);
   if (chrome.runtime.getContexts) {
     const contexts=await chrome.runtime.getContexts({contextTypes:['OFFSCREEN_DOCUMENT'],documentUrls:[url]});
@@ -56,6 +69,15 @@ async function ensureOffscreen() {
   try { await creatingOffscreen; } finally { creatingOffscreen=null; }
 }
 async function showProgress(jobId,progress,message) {
+  if (hasGeckoNativeBridge) {
+    await sendAndroidMessage({
+      action:'notification.progress',
+      jobId:jobId,
+      progress:Math.max(0,Math.min(100,Math.round(progress||0))),
+      message:message || 'Medien werden komprimiert und hochgeladen …'
+    });
+    return;
+  }
   const id=notificationId(jobId);
   const options={
     type:'progress',
@@ -74,6 +96,14 @@ async function showProgress(jobId,progress,message) {
   }
 }
 async function showFinished(jobId,total) {
+  if (hasGeckoNativeBridge) {
+    await sendAndroidMessage({
+      action:'notification.complete',
+      message:(total||0)+' Datei(en) wurden erfolgreich in deine private Medien-Cloud hochgeladen.'
+    });
+    await sendAndroidMessage({action:'media.stop'});
+    return;
+  }
   const id=notificationId(jobId);
   try { await notificationClear(id); } catch {}
   try {
@@ -90,6 +120,14 @@ async function showFinished(jobId,total) {
   }
 }
 async function showFailed(jobId,error) {
+  if (hasGeckoNativeBridge) {
+    await sendAndroidMessage({
+      action:'notification.failed',
+      message:String(error||'Beim Medien-Upload ist ein Fehler aufgetreten.').slice(0,180)
+    });
+    await sendAndroidMessage({action:'media.stop'});
+    return;
+  }
   const id=notificationId(jobId);
   try { await notificationClear(id); } catch {}
   try {
@@ -188,12 +226,14 @@ chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
   if (message?.target==='offscreen') return false;
   return false;
 });
-chrome.notifications.onClicked.addListener(notificationIdValue=>{
-  if (!notificationIdValue.startsWith(NOTIFICATION_PREFIX)) return;
-  chrome.tabs.create({url:chrome.runtime.getURL('pages/newtab.html?openApp=images')});
-  notificationClear(notificationIdValue);
-});
-chrome.runtime.onStartup.addListener(async()=>{
+if (chrome.notifications?.onClicked) {
+  chrome.notifications.onClicked.addListener(notificationIdValue=>{
+    if (!notificationIdValue.startsWith(NOTIFICATION_PREFIX)) return;
+    chrome.tabs.create({url:chrome.runtime.getURL('pages/newtab.html?openApp=images')});
+    notificationClear(notificationIdValue);
+  });
+}
+if (chrome.runtime?.onStartup) chrome.runtime.onStartup.addListener(async()=>{
   const stored=await chrome.storage.local.get(STATUS_KEY);
   const status=stored?.[STATUS_KEY];
   if (status?.phase==='progress') {

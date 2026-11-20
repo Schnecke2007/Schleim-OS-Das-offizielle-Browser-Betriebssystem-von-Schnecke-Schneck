@@ -288,7 +288,7 @@
   const external = (url,label,secondary=false) => `<a class="app-button${secondary?' secondary':''}" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label} <span>↗</span></a>`;
   const internalAppButton = (id,label) => `<button class="app-button secondary" type="button" data-app="${id}">${label} <span>→</span></button>`;
 
-  const iframeSnippet = (title,url) => `<iframe title="${title}" src="${url}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>`;
+  const iframeSnippet = (title,url) => `<iframe title="${title}" src="${url}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; clipboard-read; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>`;
   function embedPanel(kind,title,url,description){
     const snippet=iframeSnippet(title,url);
     return `<div class="embed-shell" id="${kind}Embed"><div class="embed-placeholder"><span>🧩</span><b>${title} – ${description}</b><small>Die Originalseite wird nach Auswahl direkt in diesem App-Fenster geladen. Falls Wix das Einbetten blockiert, bleibt der externe Aufruf verfügbar.</small><button class="app-button" type="button" data-load-frame="${kind}">Originaleinbettung laden</button></div></div><details class="embed-code-details"><summary>Verwendeten HTML-IFrame-Code anzeigen</summary><pre><code>${esc(snippet)}</code></pre><button class="app-button secondary" type="button" data-copy-code="${esc(snippet)}">HTML-Code kopieren</button><p class="embed-provenance">Dies ist der IFrame-Wrapper dieser Webapp, nicht der interne Wix-Editor-Code. Wix stellt den ursprünglichen HTML-Embed-Quelltext über die öffentliche Seitenansicht nicht bereit.</p></details>`;
@@ -727,7 +727,7 @@
     const container=$(config.selector);if(!container)return;
     const lang=currentLanguage();const translateUrl=`https://translate.google.com/translate?sl=auto&tl=${encodeURIComponent(lang)}&u=${encodeURIComponent(target)}`;
     const translateLabel=lang==='de'?'Seite übersetzen':lang==='en'?'Translate page':'Pagina vertalen';
-    container.innerHTML=`<div class="embedded-frame-wrap"><div class="embedded-frame-head"><b>${localize(config.title)}</b><button type="button" class="text-button" data-close-frame="${kind}">${lang==='de'?'Schließen':lang==='en'?'Close':'Sluiten'}</button></div><iframe title="${esc(config.title)}" src="${esc(target)}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe><p class="body-copy">${localize('Falls der Anbieter das Einbetten blockiert, kannst du die Seite direkt beim Anbieter öffnen.')}</p><div class="ssos-form-actions"><a class="app-button secondary" href="${esc(target)}" target="_blank" rel="noopener noreferrer">${lang==='de'?'Extern öffnen':lang==='en'?'Open externally':'Extern openen'} ↗</a><a class="app-button secondary" href="${esc(translateUrl)}" target="_blank" rel="noopener noreferrer">🌐 ${translateLabel}</a></div></div>`;
+    container.innerHTML=`<div class="embedded-frame-wrap"><div class="embedded-frame-head"><b>${localize(config.title)}</b><button type="button" class="text-button" data-close-frame="${kind}">${lang==='de'?'Schließen':lang==='en'?'Close':'Sluiten'}</button></div><iframe title="${esc(config.title)}" src="${esc(target)}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; clipboard-read; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe><p class="body-copy">${localize('Falls der Anbieter das Einbetten blockiert, kannst du die Seite direkt beim Anbieter öffnen.')}</p><div class="ssos-form-actions"><a class="app-button secondary" href="${esc(target)}" target="_blank" rel="noopener noreferrer">${lang==='de'?'Extern öffnen':lang==='en'?'Open externally':'Extern openen'} ↗</a><a class="app-button secondary" href="${esc(translateUrl)}" target="_blank" rel="noopener noreferrer">🌐 ${translateLabel}</a></div></div>`;
   }
   function toggleThemeAction(){toggleTheme();}
 
@@ -868,4 +868,8 @@
   window.addEventListener('pointercancel',()=>{gestureStart=null;},{passive:true});
 
   applySettings();updateClock();setInterval(updateClock,15000);
+  const requestedApp = new URLSearchParams(window.location.search).get('openApp');
+  if (requestedApp && APPS.some(app => app.id === requestedApp)) {
+    setTimeout(() => openApp(requestedApp), 450);
+  }
 })();

@@ -71,6 +71,9 @@ jobs:
                   "id": "schleim-os-android@schneckeschneck.de"
               }
           }
+          manifest["permissions"] = list(dict.fromkeys(
+              manifest.get("permissions", []) + ["geckoViewAddons"]
+          ))
 
           background = manifest.get("background") or {}
           service_worker = background.pop("service_worker", None)
@@ -122,14 +125,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha02-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha03-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha02-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha03-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -158,14 +161,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha02-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha03-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha02-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha03-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -173,8 +176,10 @@ jobs:
           # Android build remains available in the release.
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha01-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha02-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha03-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber

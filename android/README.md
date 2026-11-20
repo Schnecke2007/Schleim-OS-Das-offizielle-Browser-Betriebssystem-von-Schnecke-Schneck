@@ -1,46 +1,24 @@
-# Schleim OS Android Browser (Alpha)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha03)
 
-This is a separate Android browser built with Mozilla GeckoView. It now packages the **original Schleim OS extension source from `extension/`**, not the Standalone Demo. The Chromium source files under `extension/` remain unchanged.
+The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
-## Current scope
+## Integrated Android adapters
 
-- GeckoView-based Android browser with address/search field.
-- Bundles the full original extension directory, including `pages/newtab.html`, its styles, scripts, icons and data.
-- Installs the bundled extension through GeckoView's built-in WebExtension controller.
-- Opens the extension's `moz-extension://` page as the browser home page.
-- Handles incoming HTTP(S) links and declares Android's browser intent filters.
-- Requests Android's `ROLE_BROWSER` so the user can choose Schleim OS as default browser.
-- Creates a native notification channel and requests Android 13+ notification permission.
+- **GitHub account and settings backup:** Uses the original Schleim OS GitHub Device Flow, private backup repository, token refresh and settings export/import. GeckoView's WebExtension storage and native popup/window handling are used.
+- **Photo/video cloud:** Uses the original private GitHub media repository and metadata index. The original IndexedDB upload queue and compression page are loaded in a hidden GeckoView session.
+- **Background upload:** The Android app starts a foreground `dataSync` service while the hidden media page is processing the queued files. Native Android notifications receive upload progress, completion and failure events. The service is stopped after the queue finishes.
+- **Camera:** GeckoView camera/microphone requests are forwarded to Android runtime permissions. The original camera UI uses `getUserMedia` and `MediaRecorder`; file selection is handled by Android's document picker.
+- **New tabs and popups:** GeckoView's `onNewSession` creates a new browser tab for `target="_blank"`, `window.open()`, GitHub verification windows and links that request a new browsing context.
+- **IFrames:** HTTP(S) subframes are allowed by the browser navigation delegate and the Schleim OS app frames request autoplay/fullscreen/clipboard capabilities where relevant.
 
-## Android compatibility layer
+## Compatibility boundaries
 
-The Chrome extension source is not rewritten. During the Android build, GitHub Actions copies `extension/` into the APK and prepares only that copy's manifest for GeckoView:
+This is a GeckoView port, not Chromium running inside Android. GitHub sign-in and private repositories depend on the existing GitHub App configuration and the user approving device authorization. The photo/video background processor is the original extension page hosted in a native foreground service context; it is not Chrome's Offscreen Documents API.
 
-- Adds a Gecko extension ID required for a bundled WebExtension.
-- Adds Firefox's Manifest V3 `background.scripts` fallback, because Firefox/GeckoView does not run Chrome's `background.service_worker` implementation.
-- Removes Chrome's `offscreen` permission because GeckoView does not provide the Chrome Offscreen Documents API.
-- Removes the Chrome-only minimum-version field.
+External sites can still prohibit embedding with their own `X-Frame-Options` or Content-Security-Policy `frame-ancestors` headers. The browser cannot override those server policies; the app's external-open links remain available.
 
-The original `extension/manifest.json` in the repository is never changed by this process.
+Android may stop foreground data-sync work after its platform time limits or if the user force-stops the app. An upload interrupted by process termination may need to be restarted from the persisted queue when Schleim OS is reopened. Test GitHub authorization, camera capture, file picking, and longer uploads on a physical Android device before relying on them for important data.
 
-## Compatibility status — important
+## Build and signing
 
-This is the original Schleim OS interface running as a bundled GeckoView WebExtension, but it is **not yet a fully verified port of every Chrome-specific feature**. In particular, the media-upload background worker still depends on Chrome's Offscreen Documents API. That specific background upload path is not available in GeckoView yet. Camera permissions, native background upload persistence, and every GitHub cloud flow still require device-level validation and potentially native Android adapters.
-
-Native Android notification testing and the Android browser-role selector are provided by the app shell. They do not automatically replace all extension notification behavior.
-
-## Build (0.1.0-alpha02)
-
-The GitHub Actions workflow copies the complete `extension/` directory into `android/app/src/main/assets/extension/`, generates the GeckoView-compatible manifest in that build copy, and runs Gradle to assemble an ARM64 debug APK. The Android shell installs the bundled extension and opens `pages/newtab.html` from its `moz-extension://` base URL. It does not use `file:///android_asset/start.html` or the Standalone Demo.
-
-The debug APK is installable. Its debug signing key is generated by the build environment, so future builds may require uninstalling the previous debug APK before installing an update unless a persistent private keystore is configured as GitHub Actions secrets. Never commit a keystore or its passwords to the repository.
-
-## Next porting phases
-
-1. Replace the Chrome Offscreen Documents media pipeline with native Android processing and WorkManager.
-2. Connect extension notifications and upload status to Android's NotificationManager.
-3. Verify GitHub device authorization, private cloud backup, and photo/video repository operations in GeckoView.
-4. Add GeckoView camera/media permission delegates and validate capture on physical devices.
-5. Configure a private signing key before stable distribution.
-
-The generated APK is uploaded to the current GitHub Release only after the APK build and package validation steps pass.
+The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
