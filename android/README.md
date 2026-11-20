@@ -1,4 +1,4 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha14)
+# Schleim OS Android Browser (Alpha 0.1.0-alpha15)
 
 The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
 
@@ -29,7 +29,7 @@ Android may stop foreground data-sync work after its platform time limits or if 
 
 The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
 
-## Alpha 0.1.0-alpha14 camera separation
+## Alpha 0.1.0-alpha15 camera separation
 
 - Removes the Android camera Activity and its local WebView camera page.
 - Removes Android camera and microphone permissions and the WebView camera dependency.
@@ -39,10 +39,18 @@ The Android workflow builds an ARM64 debug APK and uploads it to the latest GitH
 - Keeps the existing private photo/video cloud library, manual uploads and background upload queue.
 
 
-## Alpha 0.1.0-alpha14 – getrennte Kamera-Bereiche
+## Alpha 0.1.0-alpha15 – getrennte Kamera-Bereiche
 
 - Die Kamera-Seite enthält zwei ausdrücklich getrennte Bereiche: einen Android-Hinweis und die Webkamera der Original-Extension.
 - In der Android-Anwendung wird ausschließlich der Hinweis angezeigt, dass Foto- und Videoaufnahmen nicht unterstützt werden.
 - Die Android-App fordert keine Kamera- oder Mikrofonberechtigungen an und startet keine Kamera.
 - Die Original-Extension behält ihre JavaScript-Webkamera mit Live-Vorschau, Kamera starten/deaktivieren, Front-/Rückkamera wechseln, Foto aufnehmen und Video aufnehmen.
 - Die GitHub-Actions-Prüfung kontrolliert jetzt ausdrücklich, dass die Android-App den Hinweisbereich und die Browser-Extension den Webkamera-Bereich einblendet.
+
+
+## Alpha 0.1.0-alpha15 – Installationskompatibilität
+
+- Die Android-Paket-ID wird von der bisherigen CI-Debug-ID `de.schneckeschneck.schleimos.debug` auf `de.schneckeschneck.schleimos` umgestellt.
+- Dadurch kann Alpha 15 als eigenständige Anwendung neben einer älteren Debug-Installation installiert werden. Eine Deinstallation der bisherigen App vor dem ersten Start ist nicht erforderlich.
+- Die bisherige App und ihre lokalen Daten bleiben zunächst unangetastet. Einstellungen oder lokale Sitzungsdaten werden nicht automatisch zwischen den beiden Android-Paket-IDs übertragen; Cloud-Inhalte bleiben im privaten GitHub-Medien-Repository.
+- Die Android-Kamera bleibt deaktiviert; die Trennung zur Webkamera der Original-Extension bleibt unverändert.

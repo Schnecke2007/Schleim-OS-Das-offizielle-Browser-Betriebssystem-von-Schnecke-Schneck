@@ -141,8 +141,8 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 14" in gradle
-          assert 'versionName = "0.1.0-alpha14"' in gradle
+          assert "versionCode = 15" in gradle
+          assert 'versionName = "0.1.0-alpha15"' in gradle
 
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           assert "navigator.mediaDevices.getUserMedia" in camera
@@ -204,17 +204,17 @@ jobs:
           APK="android/app/build/outputs/apk/debug/app-debug.apk"
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha14-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha15-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha14-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha15-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -243,14 +243,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha14-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha15-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha14-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha15-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -291,7 +291,10 @@ jobs:
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha13-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
 
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha14-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha14-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha15-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
