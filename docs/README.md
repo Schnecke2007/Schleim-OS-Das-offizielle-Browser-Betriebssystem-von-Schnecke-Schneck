@@ -43,9 +43,9 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 
 ## 📖 Leichte Sprache / Plain language / Eenvoudige taal
 
-- [🇩🇪 Deutsch – Leichte Sprache](Leichte-Sprache/Deutsch/README.md) · [Konto und Cloud-Sicherung](Leichte-Sprache/Deutsch/KONTO-CLOUD.md) · [Updates](Leichte-Sprache/Deutsch/UPDATES.md)
-- [🇬🇧 English – plain language](Leichte-Sprache/Englisch/README.md) · [Account and cloud backup](Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md) · [Updates](Leichte-Sprache/Englisch/UPDATES.md)
-- [🇳🇱 Nederlands – eenvoudige taal](Leichte-Sprache/Niederländisch/README.md) · [Account en cloudback-up](Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md) · [Updates](Leichte-Sprache/Niederländisch/UPDATES.md)
+- [🇩🇪 Deutsch – Leichte Sprache](Leichte-Sprache/Deutsch/README.md) · [Android-App](Leichte-Sprache/Deutsch/ANDROID-BROWSER.md) · [Konto und Cloud-Sicherung](Leichte-Sprache/Deutsch/KONTO-CLOUD.md) · [Updates](Leichte-Sprache/Deutsch/UPDATES.md)
+- [🇬🇧 English – plain language](Leichte-Sprache/Englisch/README.md) · [Android app](Leichte-Sprache/Englisch/ANDROID-BROWSER.md) · [Account and cloud backup](Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md) · [Updates](Leichte-Sprache/Englisch/UPDATES.md)
+- [🇳🇱 Nederlands – eenvoudige taal](Leichte-Sprache/Niederländisch/README.md) · [Android-app](Leichte-Sprache/Niederländisch/ANDROID-BROWSER.md) · [Account en cloudback-up](Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md) · [Updates](Leichte-Sprache/Niederländisch/UPDATES.md)
 
 In jedem Sprachordner gibt es eine eigene Anleitung für den Schleim-Store:
 - [Deutsch](Leichte-Sprache/Deutsch/SCHLEIM-STORE.md)
