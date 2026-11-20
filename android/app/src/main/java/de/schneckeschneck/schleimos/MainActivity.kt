@@ -42,6 +42,7 @@ class MainActivity : Activity() {
     private var extensionHomeUrl: String? = null
     private val tabs = mutableListOf<GeckoSession>()
     private var activeTabIndex = 0
+    private var displayedSession: GeckoSession? = null
 
     private var mediaSession: GeckoSession? = null
     private var mediaView: GeckoView? = null
@@ -50,7 +51,7 @@ class MainActivity : Activity() {
 
     private var pendingFilePrompt: GeckoSession.PromptDelegate.FilePrompt? = null
     private var pendingFileResult: GeckoResult<GeckoSession.PromptDelegate.PromptResponse>? = null
-    private val pendingPermissionCallbacks = mutableMapOf<Int, GeckoSession.PermissionDelegate.Callback>()
+    private val pendingPermissionCallbacks = mutableMapOf<Int, (Boolean) -> Unit>()
     private var permissionRequestCounter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -267,8 +268,14 @@ class MainActivity : Activity() {
     }
 
     private fun showSessionInBrowser(session: GeckoSession) {
-        geckoView.releaseSession()
-        geckoView.setSession(session)
+        if (displayedSession !== session) {
+            displayedSession?.let { previous ->
+                runCatching { previous.setFocused(false) }
+                runCatching { geckoView.releaseSession() }
+            }
+            geckoView.setSession(session)
+            displayedSession = session
+        }
         session.setFocused(true)
         updateTabsButton()
     }
@@ -278,32 +285,13 @@ class MainActivity : Activity() {
     }
 
     private fun cycleTabs() {
-        if (tabs.isEmpty() || tabs.size == 1) {
+        if (tabs.isEmpty()) {
             createUserTab()
             return
         }
+        if (tabs.size == 1) return
         activeTabIndex = (activeTabIndex + 1) % tabs.size
         showSessionInBrowser(tabs[activeTabIndex])
-    }
-
-    private fun focusNewTabWhenReady(session: GeckoSession, attemptsLeft: Int = 20) {
-        geckoView.post {
-            if (isFinishing || isDestroyed || !tabs.contains(session)) return@post
-            if (session.isOpen) {
-                activeTabIndex = tabs.indexOf(session)
-                runCatching { showSessionInBrowser(session) }
-                    .onFailure {
-                        showNotification("Schleim OS", "Der neue Tab konnte nicht angezeigt werden.")
-                    }
-            } else if (attemptsLeft > 0) {
-                geckoView.postDelayed(
-                    { focusNewTabWhenReady(session, attemptsLeft - 1) },
-                    25L
-                )
-            } else {
-                showNotification("Schleim OS", "GeckoView hat den neuen Tab nicht rechtzeitig geöffnet.")
-            }
-        }
     }
 
     private fun updateTabsButton() {
@@ -314,17 +302,6 @@ class MainActivity : Activity() {
 
     private fun attachSessionDelegates(session: GeckoSession) {
         session.setNavigationDelegate(object : GeckoSession.NavigationDelegate {
-            override fun onNewSession(session: GeckoSession, uri: String): GeckoResult<GeckoSession>? {
-                // GeckoView opens the returned session itself; it must still be unopened here.
-                val newSession = GeckoSession()
-                attachSessionDelegates(newSession)
-                tabs.add(newSession)
-                activeTabIndex = tabs.lastIndex
-                updateTabsButton()
-                focusNewTabWhenReady(newSession)
-                return GeckoResult.fromValue(newSession)
-            }
-
             override fun onLoadRequest(
                 session: GeckoSession,
                 request: GeckoSession.NavigationDelegate.LoadRequest
@@ -336,6 +313,22 @@ class MainActivity : Activity() {
                 }
                 if (uri.startsWith("tel:")) {
                     runCatching { startActivity(Intent(Intent.ACTION_DIAL, Uri.parse(uri))) }
+                    return GeckoResult.deny()
+                }
+                if (request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
+                    // Handle target="_blank" and window.open() ourselves. Defer the View
+                    // switch until after GeckoView has completed this navigation callback.
+                    when {
+                        uri == "about:blank" ||
+                            uri.startsWith("moz-extension://") ||
+                            uri.startsWith("https://") ||
+                            uri.startsWith("http://") -> geckoView.post {
+                                if (!isFinishing && !isDestroyed) createTab(uri)
+                            }
+                        else -> runCatching {
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
+                        }
+                    }
                     return GeckoResult.deny()
                 }
                 return null
@@ -365,22 +358,8 @@ class MainActivity : Activity() {
                 permissions: Array<out String>?,
                 callback: GeckoSession.PermissionDelegate.Callback
             ) {
-                val requested = permissions?.distinct().orEmpty()
-                val missing = requested.filter {
-                    checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED
-                }
-                if (missing.isEmpty()) {
-                    callback.grant()
-                    return
-                }
-                val requestCode = REQUEST_PERMISSION_BASE + (++permissionRequestCounter % 100000)
-                pendingPermissionCallbacks[requestCode] = callback
-                try {
-                    requestPermissions(missing.toTypedArray(), requestCode)
-                } catch (_: Exception) {
-                    pendingPermissionCallbacks.remove(requestCode)
-                    callback.reject()
-                    showNotification("Schleim OS", "Android-Berechtigung konnte nicht angefordert werden.")
+                requestAndroidPermissions(permissions) { granted ->
+                    if (granted) callback.grant() else callback.reject()
                 }
             }
 
@@ -391,24 +370,30 @@ class MainActivity : Activity() {
                 audio: Array<out GeckoSession.PermissionDelegate.MediaSource>?,
                 callback: GeckoSession.PermissionDelegate.MediaCallback
             ) {
-                val cameraGranted = video == null ||
-                    checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                val micGranted = audio == null ||
-                    checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-                if (!cameraGranted || !micGranted) {
+                val videoSource = video?.firstOrNull {
+                    it.source == GeckoSession.PermissionDelegate.MediaSource.SOURCE_CAMERA &&
+                        it.type == GeckoSession.PermissionDelegate.MediaSource.TYPE_VIDEO
+                } ?: video?.firstOrNull {
+                    it.type == GeckoSession.PermissionDelegate.MediaSource.TYPE_VIDEO
+                }
+                val audioSource = audio?.firstOrNull {
+                    it.source == GeckoSession.PermissionDelegate.MediaSource.SOURCE_MICROPHONE &&
+                        it.type == GeckoSession.PermissionDelegate.MediaSource.TYPE_AUDIO
+                } ?: audio?.firstOrNull {
+                    it.type == GeckoSession.PermissionDelegate.MediaSource.TYPE_AUDIO
+                }
+
+                if ((video != null && videoSource == null) || (audio != null && audioSource == null)) {
                     callback.reject()
                     return
                 }
-                val videoSource = video?.firstOrNull {
-                    it.source == GeckoSession.PermissionDelegate.MediaSource.SOURCE_CAMERA
+
+                val requiredPermissions = buildList {
+                    if (videoSource != null) add(Manifest.permission.CAMERA)
+                    if (audioSource != null) add(Manifest.permission.RECORD_AUDIO)
                 }
-                val audioSource = audio?.firstOrNull {
-                    it.source == GeckoSession.PermissionDelegate.MediaSource.SOURCE_MICROPHONE
-                }
-                if ((video != null && videoSource == null) || (audio != null && audioSource == null)) {
-                    callback.reject()
-                } else {
-                    callback.grant(videoSource, audioSource)
+                requestAndroidPermissions(requiredPermissions.toTypedArray()) { granted ->
+                    if (granted) callback.grant(videoSource, audioSource) else callback.reject()
                 }
             }
         })
@@ -447,9 +432,33 @@ class MainActivity : Activity() {
     }
 
     private fun normalizeUrlOrExtension(value: String): String = when {
+        value == "about:blank" -> value
         value.startsWith("moz-extension://") -> value
         value.startsWith("https://") || value.startsWith("http://") -> value
         else -> normalizeUrl(value)
+    }
+
+    private fun requestAndroidPermissions(
+        requestedPermissions: Array<out String>?,
+        onResult: (Boolean) -> Unit
+    ) {
+        val missing = requestedPermissions?.distinct().orEmpty().filter {
+            checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED
+        }
+        if (missing.isEmpty()) {
+            onResult(true)
+            return
+        }
+
+        val requestCode = REQUEST_PERMISSION_BASE + (++permissionRequestCounter % 100000)
+        pendingPermissionCallbacks[requestCode] = onResult
+        try {
+            requestPermissions(missing.toTypedArray(), requestCode)
+        } catch (_: Exception) {
+            pendingPermissionCallbacks.remove(requestCode)
+            onResult(false)
+            showNotification("Schleim OS", "Android-Berechtigung konnte nicht angefordert werden.")
+        }
     }
 
     private fun load(url: String) {
@@ -571,20 +580,20 @@ class MainActivity : Activity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val callback = pendingPermissionCallbacks.remove(requestCode) ?: return
-        if (
-            permissions.isNotEmpty() &&
+        val granted = permissions.isNotEmpty() &&
             permissions.size == grantResults.size &&
             grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-        ) callback.grant() else callback.reject()
+        callback(granted)
     }
 
     override fun onDestroy() {
         pendingFileResult?.complete(pendingFilePrompt?.dismiss())
         pendingFileResult = null
         pendingFilePrompt = null
-        pendingPermissionCallbacks.values.forEach { callback -> runCatching { callback.reject() } }
+        pendingPermissionCallbacks.values.forEach { callback -> runCatching { callback(false) } }
         pendingPermissionCallbacks.clear()
-        runCatching { geckoView.releaseSession() }
+        if (displayedSession != null) runCatching { geckoView.releaseSession() }
+        displayedSession = null
         tabs.forEach { runCatching { it.close() } }
         tabs.clear()
         mediaView?.let { runCatching { it.releaseSession() } }

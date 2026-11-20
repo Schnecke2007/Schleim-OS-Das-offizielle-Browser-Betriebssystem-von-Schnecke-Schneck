@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="153.0.20260810162159"
+          VERSION="160.0.20261116130455"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using pinned GeckoView $VERSION (API 36.1 compatible dependency set)."
       - name: Bundle the original Schleim OS extension for GeckoView
@@ -110,18 +110,22 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           main = Path("android/app/src/main/java/de/schneckeschneck/schleimos/MainActivity.kt").read_text()
-          callback = main.split("override fun onNewSession", 1)[1].split("override fun onLoadRequest", 1)[0]
-          assert "GeckoResult.fromValue(newSession)" in callback
-          assert "newSession.open(" not in callback
-          assert "createTab(null)" not in callback
-          assert "geckoView.releaseSession()" in main
+          assert "onNewSession" not in main
+          assert "request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW" in main
+          assert "createTab(uri)" in main
+          assert "displayedSession" in main
+          assert "private fun requestAndroidPermissions(" in main
+          assert "callback.grant(videoSource, audioSource)" in main
+          assert "MediaSource.TYPE_VIDEO" in main
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           mount = camera.split("function mountCamera()", 1)[1].split("async function handleClick", 1)[0]
           assert "startCamera()" not in mount
           assert "cameraStartHint" in mount
+          assert "object not found" in camera
+          assert "{audio:false,video:true}" in camera
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          print("Android tab, camera and multi-MIME file-picker regression checks passed.")
+          print("Android new-window routing, session ownership, runtime camera permissions, camera fallback and multi-MIME file-picker checks passed.")
           PY
 
       - name: Set up Gradle
@@ -143,14 +147,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha04-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha05-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha04-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha05-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -179,14 +183,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha04-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha05-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha04-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha05-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -198,8 +202,10 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha03-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha04-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha04-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha05-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber

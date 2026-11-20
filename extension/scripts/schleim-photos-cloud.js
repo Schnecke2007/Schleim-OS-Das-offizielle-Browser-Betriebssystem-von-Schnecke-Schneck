@@ -60,7 +60,7 @@
       cameraUnavailable: 'Kamera wird von diesem Browser oder Gerät nicht unterstützt.',
       cameraDenied: 'Kamerazugriff wurde verweigert. Erlaube den Zugriff in den Android-App-Berechtigungen.',
       cameraStartHint: 'Tippe auf „Kamera starten“, um den Kamerazugriff freizugeben.',
-      cameraMissing: 'Keine Kamera gefunden. Prüfe, ob eine Kamera verfügbar und die Android-Berechtigung für Schleim OS aktiviert ist.',
+      cameraMissing: 'Keine Kamera erkannt. Prüfe unter Android → Einstellungen → Apps → Schleim OS → Berechtigungen, ob Kamera erlaubt ist. Schließe andere Kamera-Apps und starte Schleim OS erneut.',
       cameraBusy: 'Die Kamera ist gerade nicht verfügbar. Schließe andere Apps, die die Kamera verwenden, und versuche es erneut.',
       cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Öffne Schleim OS direkt in der Android-App.',
       cameraReady: 'Kamera ist bereit.',
@@ -123,7 +123,7 @@
       cameraUnavailable: 'Camera access is not supported by this browser or device.',
       cameraDenied: 'Camera access was denied. Allow it in Android app permissions.',
       cameraStartHint: 'Tap “Start camera” to request camera access.',
-      cameraMissing: 'No camera was detected. Check that a camera is available and Schleim OS has Android camera permission.',
+      cameraMissing: 'No camera was detected. Check Android Settings → Apps → Schleim OS → Permissions, allow Camera, close other camera apps and restart Schleim OS.',
       cameraBusy: 'The camera is currently unavailable. Close other apps using the camera and try again.',
       cameraSecureContext: 'Camera access is unavailable in this browser context. Open Schleim OS directly in the Android app.',
       cameraReady: 'Camera is ready.',
@@ -186,7 +186,7 @@
       cameraUnavailable: 'Cameratoegang wordt niet ondersteund door deze browser of dit apparaat.',
       cameraDenied: 'Cameratoegang is geweigerd. Sta toegang toe bij de Android-appmachtigingen.',
       cameraStartHint: 'Tik op “Camera starten” om cameratoegang aan te vragen.',
-      cameraMissing: 'Geen camera gevonden. Controleer of er een camera beschikbaar is en Schleim OS Android-cameratoegang heeft.',
+      cameraMissing: 'Geen camera gevonden. Controleer Android-instellingen → Apps → Schleim OS → Machtigingen, sta Camera toe, sluit andere camera-apps en start Schleim OS opnieuw.',
       cameraBusy: 'De camera is momenteel niet beschikbaar. Sluit andere apps die de camera gebruiken en probeer het opnieuw.',
       cameraSecureContext: 'Cameratoegang is niet beschikbaar in deze browsercontext. Open Schleim OS rechtstreeks in de Android-app.',
       cameraReady: 'Camera is klaar.',
@@ -864,11 +864,15 @@
   }
   function cameraError(error) {
     const name = String(error?.name || '');
+    const message = String(error?.message || '');
     if (name === 'NotAllowedError' || name === 'PermissionDeniedError') return new Error(t('cameraDenied'));
-    if (name === 'NotFoundError' || name === 'DevicesNotFoundError') return new Error(t('cameraMissing'));
+    if (
+      name === 'NotFoundError' || name === 'DevicesNotFoundError' ||
+      /object not found|requested device not found|no device found/i.test(message)
+    ) return new Error(t('cameraMissing'));
     if (name === 'NotReadableError' || name === 'TrackStartError') return new Error(t('cameraBusy'));
     if (name === 'SecurityError' || name === 'TypeError') return new Error(t('cameraSecureContext'));
-    return new Error(error?.message || t('cameraUnavailable'));
+    return new Error(message || t('cameraUnavailable'));
   }
 
   async function startCamera() {
@@ -876,26 +880,34 @@
     if (!window.isSecureContext) throw new Error(t('cameraSecureContext'));
     stopCamera();
     const preview = $('[data-camera-preview]');
-    const preferred = {
-      audio:false,
-      video:{
-        facingMode:{ideal:state.facingMode},
-        width:{ideal:1920},
-        height:{ideal:1080}
-      }
-    };
+    const attempts = [
+      {
+        audio:false,
+        video:{
+          facingMode:{ideal:state.facingMode},
+          width:{ideal:1920},
+          height:{ideal:1080}
+        }
+      },
+      {audio:false,video:{facingMode:{ideal:state.facingMode}}},
+      {audio:false,video:true}
+    ];
     try {
-      try {
-        state.cameraStream = await navigator.mediaDevices.getUserMedia(preferred);
-      } catch (error) {
-        // Retry with the browser's default camera if an Android device does not
-        // expose the requested front/rear facing mode.
-        if (['NotFoundError','OverconstrainedError'].includes(error?.name)) {
-          state.cameraStream = await navigator.mediaDevices.getUserMedia({audio:false,video:true});
-        } else {
-          throw error;
+      let lastError = null;
+      for (let index = 0; index < attempts.length; index++) {
+        try {
+          state.cameraStream = await navigator.mediaDevices.getUserMedia(attempts[index]);
+          break;
+        } catch (error) {
+          lastError = error;
+          const retryable = [
+            'NotFoundError','DevicesNotFoundError','OverconstrainedError',
+            'ConstraintNotSatisfiedError','TypeError'
+          ].includes(error?.name);
+          if (!retryable || index === attempts.length - 1) throw error;
         }
       }
+      if (!state.cameraStream) throw lastError || new Error(t('cameraUnavailable'));
     } catch (error) {
       throw cameraError(error);
     }
