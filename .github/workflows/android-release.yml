@@ -180,7 +180,7 @@ jobs:
           assert "Looper.getMainLooper()" in main
           assert "queryIntentActivities" not in main
           assert "SAMSUNG_CAMERA_PACKAGE" not in main
-          assert "androidx.camera" in Path("android/app/build.gradle.kts").read_text()
+          assert "androidx.camera" not in Path("android/app/build.gradle.kts").read_text()
           assert "showPermissionSettingsDialog" in main
           assert "androidCameraBusy" in camera
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
