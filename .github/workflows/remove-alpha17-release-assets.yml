@@ -1,0 +1,36 @@
+name: Remove obsolete Alpha 17 APK release assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/remove-alpha17-release-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  remove-obsolete-apks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove the two obsolete Alpha 17 APKs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v3.15.7"
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha17-debug.apk" --repo "$GITHUB_REPOSITORY" --yes
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha17-neu.apk" --repo "$GITHUB_REPOSITORY" --yes
+
+          ASSETS="$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
+          if grep -Fxq "Schleim-OS-Android-0.1.0-alpha17-debug.apk" <<< "$ASSETS"; then
+            echo "Alpha 17 debug APK is still present."
+            exit 1
+          fi
+          if grep -Fxq "Schleim-OS-Android-0.1.0-alpha17-neu.apk" <<< "$ASSETS"; then
+            echo "Alpha 17 neu APK is still present."
+            exit 1
+          fi
+          echo "Both obsolete Alpha 17 APK assets are gone."
