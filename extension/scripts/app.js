@@ -492,13 +492,13 @@
       </section>`;
   }
   function renderCamera(){
-    return `${appHero('KAMERA','Deine Schleim-OS-Kamera.','Nimm Fotos und Videos mit der Android-Kamera-App auf und lade sie direkt in deine private Foto- und Video-Cloud.','📷')}
+    return `${appHero('KAMERA','Deine Schleim-OS-Webkamera.','Öffne die integrierte Webkamera mit Live-Vorschau, JavaScript-Fotoaufnahme und Videoaufzeichnung. Deine Aufnahmen werden direkt in deine private Foto- und Video-Cloud übernommen.','📷')}
       <section class="ssos-camera-app" data-camera-app>
         <div class="ssos-camera-native-panel" data-native-camera-panel hidden>
           <div class="ssos-camera-native-card">
             <span class="ssos-camera-native-icon">📷</span>
-            <b>Android-Kamera verwenden</b>
-            <p>Schleim OS öffnet die auf deinem Smartphone installierte Kamera-App. Nach der Aufnahme wird das Foto oder Video automatisch für den Cloud-Upload übernommen.</p>
+            <b>Integrierte Schleim-OS-Webkamera</b>
+            <p>Schleim OS öffnet eine eigene HTTPS-Webkamera in einer geschützten Android-WebView. Die Live-Vorschau und Aufnahme laufen über JavaScript und die Web Media API – ohne externe Kamera-App.</p>
           </div>
           <div class="ssos-camera-actions">
             <button class="app-button" type="button" data-camera-native-photo>📷 Foto aufnehmen</button>
@@ -516,7 +516,7 @@
           </div>
         </div>
         <p class="ssos-camera-status" data-camera-status role="status" aria-live="polite">Kamera wird vorbereitet …</p>
-        <p class="ssos-camera-note">Unter Android werden Kamera und Mikrofon vor der Aufnahme über die Android-Systemberechtigungen freigegeben. Die fertige Aufnahme wird in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
+        <p class="ssos-camera-note">Unter Android verwendet Schleim OS eine lokale HTTPS-Webkamera mit JavaScript. Kamera- und Mikrofonzugriff werden über die Android-Systemberechtigungen freigegeben. Die fertige Aufnahme wird in deine private Cloud hochgeladen. Maximal 50 MiB je Datei.</p>
       </section>`;
   }
   function renderWebsiteInfo(){return `${appHero('ÜBER DIE WEBSITE','Mehr als eine Fan-Seite.','Die Website stellt Projekte, Hobbys und Social-Media-Aktivitäten vor und beschreibt interaktive Community-Funktionen.','ℹ️')}

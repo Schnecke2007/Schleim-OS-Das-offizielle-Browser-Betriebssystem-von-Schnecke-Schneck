@@ -271,9 +271,13 @@ class MainActivity : Activity() {
             }
 
             val mimeType = data.getStringExtra(CameraCaptureActivity.EXTRA_MIME_TYPE)
-                ?.takeIf { it == "image/jpeg" || it == "video/mp4" }
+                ?.takeIf { it == "image/jpeg" || it == "video/mp4" || it == "video/webm" }
                 ?: "application/octet-stream"
-            val suffix = if (mimeType.startsWith("video/")) "mp4" else "jpg"
+            val suffix = when (mimeType) {
+                "video/mp4" -> "mp4"
+                "video/webm" -> "webm"
+                else -> "jpg"
+            }
             val bytes = candidate.readBytes()
             completeCameraCapture(
                 JSONObject()
@@ -283,7 +287,7 @@ class MainActivity : Activity() {
                     .put("base64", Base64.encodeToString(bytes, Base64.NO_WRAP))
             )
         } catch (error: Exception) {
-            Log.e(TAG, "Could not read CameraX capture", error)
+            Log.e(TAG, "Could not read WebView camera capture", error)
             completeCameraCapture(
                 JSONObject().put(
                     "ok",

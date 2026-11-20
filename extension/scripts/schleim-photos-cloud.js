@@ -65,8 +65,8 @@
       cameraMissing: 'Keine Kamera erkannt. Prüfe unter Android → Einstellungen → Apps → Schleim OS → Berechtigungen, ob Kamera erlaubt ist. Schließe andere Kamera-Apps und starte Schleim OS erneut.',
       cameraBusy: 'Die Kamera ist gerade nicht verfügbar. Schließe andere Apps, die die Kamera verwenden, und versuche es erneut.',
       cameraSecureContext: 'Der Kamerazugriff ist in diesem Browser-Kontext nicht verfügbar. Öffne Schleim OS direkt in der Android-App.',
-      cameraReady: 'Android-Kamera bereit. Wähle Foto oder Video.',
-      cameraOpening: 'Android-Kamera wird geöffnet …',
+      cameraReady: 'Schleim-OS-Webkamera bereit. Wähle Foto oder Video.',
+      cameraOpening: 'JavaScript-Webkamera wird geöffnet …',
       cameraCancelled: 'Aufnahme abgebrochen.',
       recording: 'Videoaufnahme läuft …',
       recordingDone: 'Videoaufnahme beendet. Upload wird vorbereitet …',
@@ -870,7 +870,7 @@
     await refreshMediaApp();
     await mountSettings();
   }
-  async function captureWithAndroidCamera(mediaType) {
+  async function captureWithAndroidWebCamera(mediaType) {
     const runtime = globalThis.browser?.runtime;
     if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
     if (state.androidCameraBusy) return;
@@ -1005,12 +1005,12 @@
       return;
     }
     if (event.target.closest('[data-camera-native-photo]')) {
-      try { await captureWithAndroidCamera('photo'); }
+      try { await captureWithAndroidWebCamera('photo'); }
       catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
       return;
     }
     if (event.target.closest('[data-camera-native-video]')) {
-      try { await captureWithAndroidCamera('video'); }
+      try { await captureWithAndroidWebCamera('video'); }
       catch (error) { setStatus('[data-camera-status]',error.message || t('cameraUnavailable'),true); }
       return;
     }
