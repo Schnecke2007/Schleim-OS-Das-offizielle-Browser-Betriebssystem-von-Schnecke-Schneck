@@ -24,3 +24,7 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 ---
 
 [🇩🇪 Deutsche Fehlerbehebung](../Deutsch/FEHLERBEHEBUNG.md) · [🇬🇧 English troubleshooting](../Englisch/TROUBLESHOOTING.md)
+
+## Android-app
+
+Problemen met de native Android-app (installatie, updates, niet-reagerende pagina's of GeckoView) worden behandeld in de aparte [Android-probleemoplossingshandleiding](ANDROID-BROWSER.md#problemen-oplossen). De Android-app is iets anders dan de Chrome-Extension.
