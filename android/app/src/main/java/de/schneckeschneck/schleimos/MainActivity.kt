@@ -591,12 +591,18 @@ class MainActivity : Activity() {
     private fun showSessionInBrowser(session: GeckoSession) {
         if (displayedSession !== session) {
             displayedSession?.let { previous ->
+                // A background tab must not keep running scripts or retain an
+                // active compositor after its surface is detached.
                 runCatching { previous.setFocused(false) }
+                runCatching { previous.setActive(false) }
                 runCatching { geckoView.releaseSession() }
             }
             geckoView.setSession(session)
             displayedSession = session
         }
+        // Only the visible tab stays active. GeckoView releases memory and
+        // pauses page scripts for all tabs that are no longer on screen.
+        session.setActive(true)
         session.setFocused(true)
         updateTabsButton()
         refreshAddressFromActiveTab()
@@ -676,6 +682,8 @@ class MainActivity : Activity() {
         }
         val removed = tabs.removeAt(index)
         if (removed === displayedSession) {
+            runCatching { removed.setFocused(false) }
+            runCatching { removed.setActive(false) }
             runCatching { geckoView.releaseSession() }
             displayedSession = null
         }
@@ -1503,6 +1511,26 @@ class MainActivity : Activity() {
         intent.data?.toString()?.let {
             if (activeSession() == null) createTab(it) else load(it)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Re-activate the current visible tab after returning from another app
+        // or an Android system surface such as the document picker.
+        activeSession()?.let { session ->
+            runCatching { session.setActive(true) }
+            runCatching { session.setFocused(true) }
+        }
+    }
+
+    override fun onPause() {
+        // Keep the visible browser page inactive while the app is backgrounded.
+        // The separate mediaSession is intentionally left running for active uploads.
+        activeSession()?.let { session ->
+            runCatching { session.setFocused(false) }
+            runCatching { session.setActive(false) }
+        }
+        super.onPause()
     }
 
     @Deprecated("Deprecated in Android")
