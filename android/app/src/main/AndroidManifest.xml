@@ -33,6 +33,7 @@
         </activity>
         <activity
             android:name=".CameraCaptureActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
             android:theme="@android:style/Theme.Material.NoActionBar" />
         <service

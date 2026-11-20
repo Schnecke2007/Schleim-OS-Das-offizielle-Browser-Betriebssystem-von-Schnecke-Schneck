@@ -458,6 +458,7 @@ class CameraCaptureActivity : Activity() {
                                 completeCapture(file, MIME_VIDEO)
                             }
                         }
+                        else -> Unit
                     }
                 }
             captureButton.isEnabled = false
@@ -534,10 +535,17 @@ class CameraCaptureActivity : Activity() {
         super.onStop()
     }
 
+    @Suppress("DEPRECATION")
+    override fun onBackPressed() {
+        finishCancelled()
+    }
+
     override fun onDestroy() {
         cameraProvider?.unbindAll()
         recording?.stop()
         recording = null
+        if (!captureFinishing) recordingFile?.delete()
+        recordingFile = null
         super.onDestroy()
     }
 
