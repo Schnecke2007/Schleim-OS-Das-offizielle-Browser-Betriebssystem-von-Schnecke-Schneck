@@ -1,10 +1,5 @@
-Schleim OS 3.16.0 Android release completion
+Schleim OS 3.16.0 Android release retry
 
-Build and validate:
-- Schleim Browser Android APK 0.1.0-alpha22
-- Android Studio template ZIP with neutral placeholders
-- Original browser Extension ZIP
-- Browser Extension template ZIP
-- SHA-256 checksum file
+The Android APK Alpha 22 build passed. The neutral Android Studio template must replace project identity values case-insensitively, verify that no personal names or contact details remain, build successfully, and be included in the final release archive.
 
-The Android release workflow must validate both the production APK and the generated Android Studio template before replacing the assets in release v3.16.0.
+Publish the current Android APK Alpha 22, Android Studio template ZIP, original Extension ZIP, browser-extension template ZIP, and SHA-256 checksums to release v3.16.0. Remove the superseded Alpha 21 APK asset.
