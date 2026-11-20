@@ -1183,14 +1183,24 @@ class MainActivity : Activity() {
                         orientation = LinearLayout.HORIZONTAL
                         gravity = Gravity.CENTER_VERTICAL
                     }
-                    if (file.extension.equals("xpi", true)) {
-                        actions.addView(makeTextButton("Installieren") {
-                            parts.dialog.dismiss()
-                            installExtensionFile(file)
-                        }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
+                    val isXpi = file.extension.equals("xpi", true)
+                    val isCrx = file.extension.equals("crx", true)
+                    val actionLabel = when {
+                        isXpi -> "Öffnen / installieren"
+                        isCrx -> "CRX nicht kompatibel"
+                        else -> "Öffnen"
                     }
-                    actions.addView(makeTextButton("Öffnen") {
-                        openDownloadedFile(file)
+                    actions.addView(makeTextButton(actionLabel) {
+                        when {
+                            isXpi -> {
+                                parts.dialog.dismiss()
+                                installExtensionFile(file)
+                            }
+                            isCrx -> showToast(
+                                "Chrome-CRX-Erweiterungen können in Schleim Browser nicht installiert werden. GeckoView benötigt eine Mozilla-signierte XPI-Datei."
+                            )
+                            else -> openDownloadedFile(file)
+                        }
                     }, LinearLayout.LayoutParams(0, dp(34), 1f))
                     actions.addView(makeTextButton("Teilen") {
                         shareDownloadedFile(file)
@@ -1291,6 +1301,14 @@ class MainActivity : Activity() {
     }
 
     private fun openDownloadedFile(file: File) {
+        if (file.extension.equals("xpi", true)) {
+            installExtensionFile(file)
+            return
+        }
+        if (file.extension.equals("crx", true)) {
+            showToast("Chrome-CRX-Erweiterungen sind mit der GeckoView-Engine nicht kompatibel. Verwende eine Mozilla-signierte XPI-Datei.")
+            return
+        }
         try {
             val uri = FileProvider.getUriForFile(this, packageName + ".fileprovider", file)
             val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.extension.lowercase(Locale.ROOT)) ?: "*/*"
@@ -1316,20 +1334,20 @@ class MainActivity : Activity() {
     }
 
     private fun showExtensionsDialog() {
-        val parts = createDialogShell("Erweiterungen", "Mozilla-signierte Firefox-/GeckoView-XPI-Erweiterungen.")
+        val parts = createDialogShell("Erweiterungen", "Installierte GeckoView-Add-ons verwalten und kompatible Erweiterungen hinzufügen.")
         parts.body.addView(makeWideActionButton("＋  XPI-Datei installieren") {
             pickExtensionFile()
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
             bottomMargin = dp(7)
         })
-        parts.body.addView(makeWideActionButton("Add-ons finden") {
+        parts.body.addView(makeWideActionButton("Google Chrome Web Store öffnen") {
             parts.dialog.dismiss()
-            load("https://addons.mozilla.org/android/")
+            load("https://chromewebstore.google.com/")
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
             bottomMargin = dp(9)
         })
         parts.body.addView(dialogMessage(
-            "Hinweis: GeckoView installiert signierte .xpi-Dateien. Chrome-Erweiterungen (.crx) und normale ZIP-Projektordner sind nicht direkt installierbar. Vor dem Installieren werden die angeforderten Berechtigungen angezeigt."
+            "Chrome Web Store: Du kannst den Katalog durchsuchen. Chrome-Erweiterungen im CRX-Format lassen sich in diesem GeckoView-Browser jedoch nicht installieren. Für die Installation werden Mozilla-signierte XPI-Dateien benötigt. Beim Installieren einer XPI-Datei erscheint ein Dialog mit den angeforderten Berechtigungen."
         ))
         val listHost = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         parts.body.addView(listHost)
