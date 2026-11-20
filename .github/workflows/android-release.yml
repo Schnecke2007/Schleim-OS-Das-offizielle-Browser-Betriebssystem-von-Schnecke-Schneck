@@ -62,53 +62,74 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
+          import json
 
-          manifest_path = Path("android/app/src/main/assets/extension/manifest.json")
-          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+          bundle_manifest = json.loads(Path("android/app/src/main/assets/extension/manifest.json").read_text())
+          assert "geckoViewAddons" in bundle_manifest.get("permissions", [])
+          assert "nativeMessaging" in bundle_manifest.get("permissions", [])
 
-          manifest["browser_specific_settings"] = {
-              "gecko": {
-                  "id": "schleim-os-android@schneckeschneck.de"
-              }
-          }
-          manifest["permissions"] = list(dict.fromkeys(
-              manifest.get("permissions", []) + ["geckoViewAddons", "nativeMessaging"]
-          ))
+          main = Path("android/app/src/main/java/de/schneckeschneck/schleimos/MainActivity.kt").read_text()
+          assert "onNewSession" not in main
+          assert "request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW" in main
+          assert "createTab(uri)" in main
+          assert "displayedSession" in main
+          assert "CameraCaptureActivity" not in main
+          assert '"camera.capture"' not in main
+          assert "callback.reject()" in main
+          assert "callback.grant(videoSource, audioSource)" not in main
+          assert "requestAndroidPermissions(" not in main
 
-          background = manifest.get("background") or {}
-          service_worker = background.pop("service_worker", None)
-          if service_worker:
-              background["scripts"] = [service_worker]
-          if background:
-              manifest["background"] = background
+          android_manifest = Path("android/app/src/main/AndroidManifest.xml").read_text()
+          assert ".CameraCaptureActivity" not in android_manifest
+          assert "android.permission.CAMERA" not in android_manifest
+          assert "android.permission.RECORD_AUDIO" not in android_manifest
+          assert "android.hardware.camera" not in android_manifest
 
-          # GeckoView/Firefox has no Chrome offscreen-document API.
-          manifest["permissions"] = [
-              permission for permission in manifest.get("permissions", [])
-              if permission != "offscreen"
-          ]
-          manifest.pop("minimum_chrome_version", None)
+          gradle = Path("android/app/build.gradle.kts").read_text()
+          assert "androidx.webkit" not in gradle
+          assert "versionCode = 13" in gradle
+          assert 'versionName = "0.1.0-alpha13"' in gradle
 
-          manifest_path.write_text(
-              json.dumps(manifest, ensure_ascii=False, indent=2) + chr(10),
-              encoding="utf-8"
-          )
+          camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
+          assert "navigator.mediaDevices.getUserMedia" in camera
+          assert "new MediaRecorder" in camera
+          assert "captureWithAndroidWebCamera" not in camera
+          assert "camera.capture" not in camera
+          assert "data-camera-native-photo" not in camera
+          assert "data-camera-native-video" not in camera
+          assert "data-camera-start" in camera
+          assert "data-camera-stop" in camera
+          assert "data-camera-switch" in camera
+          assert "data-camera-photo" in camera
+          assert "data-camera-record" in camera
+          assert "data-android-camera-notice" in camera
 
-          assert manifest["manifest_version"] == 3
-          assert "pages/newtab.html" == manifest["chrome_url_overrides"]["newtab"]
-          assert "scripts/media-upload-worker.js" in manifest["background"]["scripts"]
-          assert "offscreen" not in manifest.get("permissions", [])
-          assert "nativeMessaging" in manifest.get("permissions", [])
-          assert Path("android/app/src/main/assets/extension/pages/newtab.html").is_file()
-          print("Original Schleim OS extension bundled; Android-specific Gecko manifest prepared.")
+          markup = Path("extension/scripts/app.js").read_text()
+          assert "data-android-camera-notice" in markup
+          assert "Android-Anwendung – Kamera" in markup
+          assert "data-browser-camera-panel" in markup
+          assert "Kamera starten" in markup
+          assert "Kamera deaktivieren" in markup
+          assert "Foto aufnehmen" in markup
+          assert "Video aufnehmen" in markup
+          assert "data-native-camera-panel" not in markup
+
+          css = Path("extension/styles/personalization.css").read_text()
+          assert ".ssos-camera-android-card" in css
+          assert ".ssos-camera-native-card" not in css
+
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt").exists()
+          assert not Path("android/app/src/main/assets/camera/camera.html").exists()
+          assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
+          assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
+          print("Android camera removed; original extension JavaScript webcam and its controls retained. Android media capture is explicitly rejected.")
           PY
 
           test -s "$ASSET_DIR/manifest.json"
           test -s "$ASSET_DIR/pages/newtab.html"
           test -s "$ASSET_DIR/scripts/media-upload-worker.js"
-          test ! -e "android/app/src/main/assets/camera/camera-host.html"
-          test -s "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
-          test -s "android/app/src/main/assets/camera/camera.html"
+          test ! -e "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
+          test ! -e "android/app/src/main/assets/camera/camera.html"
           node --check "$ASSET_DIR/scripts/app.js"
           node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
           python3 - <<'PY'
@@ -207,14 +228,14 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.debug'"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha12-debug.apk"
+          cp "$APK" "Schleim-OS-Android-0.1.0-alpha13-debug.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha12-debug.apk
+          path: Schleim-OS-Android-0.1.0-alpha13-debug.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -243,14 +264,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha12-debug.apk" dist/release/
+          cp "Schleim-OS-Android-0.1.0-alpha13-debug.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha12-debug.apk \
+              Schleim-OS-Android-0.1.0-alpha13-debug.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -285,7 +306,10 @@ jobs:
           gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha11-debug.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
 
+          gh release delete-asset "$TAG" "Schleim-OS-Android-0.1.0-alpha12-debug.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha12-debug.apk" \
+            "dist/release/Schleim-OS-Android-0.1.0-alpha13-debug.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
