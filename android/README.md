@@ -1,77 +1,54 @@
-# Schleim OS Android Browser (Alpha 0.1.0-alpha17)
+# Schleim Browser – Android-App (0.1.0-alpha22)
 
-The Android APK bundles the original Schleim OS WebExtension from `extension/` and runs it with Mozilla GeckoView. The Chrome extension source manifest and its files remain unchanged in the repository; GitHub Actions adapts only the packaged copy for GeckoView.
+Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
-## Integrated Android adapters
+## Technische Architektur
 
-- **GitHub account and settings backup:** Uses the original Schleim OS GitHub Device Flow, private backup repository, token refresh and settings export/import. GeckoView's WebExtension storage and native popup/window handling are used.
-- **Photo/video cloud:** Uses the original private GitHub media repository and metadata index. The original IndexedDB upload queue and compression page are loaded in a hidden GeckoView session.
-- **Background upload:** The Android app starts a foreground `dataSync` service while the hidden media page is processing the queued files. Native Android notifications receive upload progress, completion and failure events. The service is stopped after the queue finishes.
-- **Camera:** Camera and microphone capture are deliberately not supported in the Android application. The Android APK contains no camera capture Activity, no camera asset, and requests neither Android `CAMERA` nor `RECORD_AUDIO` permission. GeckoView's media-permission callbacks explicitly reject capture requests, so the app does not display camera or microphone permission prompts. The Android-specific camera section explains this limitation. The original browser extension remains separate and retains its normal JavaScript webcam, live preview, front/rear switch, photo button, video recording button and camera-off control in browsers that support `getUserMedia()` and `MediaRecorder`.
-- **New tabs and popups:** `TARGET_WINDOW_NEW` is intercepted in `onLoadRequest`. Schleim OS creates and displays the tab itself, rather than switching sessions during GeckoView's popup-session lifecycle. `about:blank` popups are supported so scripts can navigate them after opening.
-- **IFrames:** HTTP(S) subframes are allowed by the browser navigation delegate and the Schleim OS app frames request autoplay/fullscreen/clipboard capabilities where relevant.
+- Native Android-Oberfläche mit Adressleiste, Suche, Tab-Verwaltung und Browser-Menü.
+- Mozilla GeckoView als Browser-Engine.
+- Originale Schleim-OS-Extension als Android-Asset unter app/src/main/assets/extension (wird vom Release-Workflow aus extension/ gebündelt).
+- Native Android-Brücken für Dokument-Speicherung, XPI-Dateiauswahl, Downloads und Benachrichtigungen.
+- App-ID: de.schneckeschneck.schleimbrowser.
+- Mindestversion: Android 8.0 / API 26.
+- Ziel-SDK: API 35; Build-SDK: API 36.
+- Zielarchitektur: arm64-v8a.
+- JDK 17, Gradle 8.13, Android Gradle Plugin 8.13.2 und Kotlin Gradle Plugin 2.3.0.
 
-## Camera separation
+## Browserfunktionen
 
-The Android application intentionally has no camera or microphone capture capability. It does not request camera/microphone permissions and explicitly rejects GeckoView media-capture permission requests. In the Android-specific camera section, the user sees a clear notice that photo and video capture are not supported in the app.
+- Adressleiste mit URL-Navigation und Google-Suche für Suchbegriffe.
+- Zurück, Vorwärts, Neu laden und Startseite.
+- Tab-Verwaltung mit maximal sechs gleichzeitig gehaltenen GeckoView-Sessions.
+- Downloads in einem app-eigenen Downloadbereich.
+- Android-Dateiauswahl und Speicherdialoge.
+- Mozilla-signierte XPI-Erweiterungen installieren, aktivieren, deaktivieren und entfernen.
+- Desktop-Ansicht und Android-Standardbrowser-Auswahl.
+- Die originale Extension stellt Startseite, Schleim-Store, Konto, Personalisierung und Cloud-Funktionen bereit.
 
-The original browser extension continues to use the normal JavaScript Web Camera API. It keeps the live preview, camera start/deactivate controls, front/rear camera switching, photo capture and video recording. This browser functionality is not replaced by or bundled with an Android-native camera implementation.
+## Android-Grenzen
 
-## Compatibility boundaries
+- Kamera- und Mikrofonaufnahme sind absichtlich nicht aktiviert. Android-Capture-Berechtigungen werden nicht angefordert und Media-Permission-Requests abgelehnt.
+- Externe Seiten können Einbettungen durch eigene Content-Security-Policy- oder X-Frame-Options-Regeln blockieren.
+- Nicht alle Chromium-Erweiterungen funktionieren mit GeckoView.
+- Die App wird aktuell als Debug-APK veröffentlicht. Ohne dauerhaftes privates Signatur-Schlüsselpaar kann Android ein Update ablehnen und eine Neuinstallation erfordern.
 
-This is a GeckoView port, not Chromium running inside Android. GitHub sign-in and private repositories depend on the existing GitHub App configuration and the user approving device authorization. The photo/video background processor is the original extension page hosted in a native foreground service context; it is not Chrome's Offscreen Documents API.
+## Lokal bauen
 
-External sites can still prohibit embedding with their own `X-Frame-Options` or Content-Security-Policy `frame-ancestors` headers. The browser cannot override those server policies; the app's external-open links remain available.
+1. Java 17 und Android SDK Platform 36 installieren.
+2. Repository im Android Studio öffnen und den Ordner android/ als Projekt auswählen.
+3. Die Original-Extension nach app/src/main/assets/extension kopieren und das Android-Gecko-Manifest vorbereiten. Der GitHub-Workflow übernimmt diese Schritte automatisch.
+4. In der Projektwurzel den Build mit Gradle ausführen:
 
-Android may stop foreground data-sync work after its platform time limits or if the user force-stops the app. An upload interrupted by process termination may need to be restarted from the persisted queue.
+   gradle --no-daemon -PgeckoviewVersion=153.0.20260810162159 :app:assembleDebug
 
-## Build and signing
+5. Die APK liegt unter app/build/outputs/apk/debug/app-debug.apk.
 
-The Android workflow builds an ARM64 debug APK and uploads it to the latest GitHub Release only after Gradle and APK-content checks pass. Debug signing is not a durable update key; until a private persistent keystore is configured as GitHub Actions secrets, an update may require uninstalling the previous debug build first.
+## Release und Dokumentation
 
-## Alpha 0.1.0-alpha15 camera separation
+Die Android-App wird zusammen mit der Extension im großen Release veröffentlicht. Die vollständige Installations-, Update- und Fehlerbehebungsanleitung steht in den drei Sprachen:
 
-- Removes the Android camera Activity and its local WebView camera page.
-- Removes Android camera and microphone permissions and the WebView camera dependency.
-- Explicitly rejects media-capture permission requests inside the Android app.
-- Adds a separate Android-application notice: photo and video capture are not supported in the Android app.
-- Restores the normal JavaScript webcam panel exclusively for the original browser extension, including preview and all camera controls.
-- Keeps the existing private photo/video cloud library, manual uploads and background upload queue.
+- Deutsch: ../docs/Deutsch/ANDROID-BROWSER.md
+- English: ../docs/Englisch/ANDROID-BROWSER.md
+- Nederlands: ../docs/Niederländisch/ANDROID-BROWSER.md
 
-
-## Alpha 0.1.0-alpha15 – getrennte Kamera-Bereiche
-
-- Die Kamera-Seite enthält zwei ausdrücklich getrennte Bereiche: einen Android-Hinweis und die Webkamera der Original-Extension.
-- In der Android-Anwendung wird ausschließlich der Hinweis angezeigt, dass Foto- und Videoaufnahmen nicht unterstützt werden.
-- Die Android-App fordert keine Kamera- oder Mikrofonberechtigungen an und startet keine Kamera.
-- Die Original-Extension behält ihre JavaScript-Webkamera mit Live-Vorschau, Kamera starten/deaktivieren, Front-/Rückkamera wechseln, Foto aufnehmen und Video aufnehmen.
-- Die GitHub-Actions-Prüfung kontrolliert jetzt ausdrücklich, dass die Android-App den Hinweisbereich und die Browser-Extension den Webkamera-Bereich einblendet.
-
-
-## Alpha 0.1.0-alpha15 – Installationskompatibilität
-
-- Die Android-Paket-ID wird von der bisherigen CI-Debug-ID `de.schneckeschneck.schleimos.debug` auf `de.schneckeschneck.schleimos` umgestellt.
-- Dadurch kann Alpha 15 als eigenständige Anwendung neben einer älteren Debug-Installation installiert werden. Eine Deinstallation der bisherigen App vor dem ersten Start ist nicht erforderlich.
-- Die bisherige App und ihre lokalen Daten bleiben zunächst unangetastet. Einstellungen oder lokale Sitzungsdaten werden nicht automatisch zwischen den beiden Android-Paket-IDs übertragen; Cloud-Inhalte bleiben im privaten GitHub-Medien-Repository.
-- Die Android-Kamera bleibt deaktiviert; die Trennung zur Webkamera der Original-Extension bleibt unverändert.
-
-
-## Alpha 0.1.0-alpha16 – Browser-Oberfläche
-
-- Die native Browser-Oberfläche wurde zu einer kompakten Browserleiste mit Zurück, Vorwärts, Adresse/Suche, Startseite, Reload, Tabs und Menü umgebaut.
-- Die Adresszeile öffnet erkannte URLs direkt; reine Suchbegriffe werden über Google gesucht.
-- Die Schleim-OS-Extension bleibt die Startseite. Die Browserleisten verwenden den dunklen Schleim-OS-Hintergrund (#251205).
-- Das Menü enthält Desktop-Ansicht, Downloads, Erweiterungen und Einstellungen.
-- Downloads werden im app-eigenen Downloadbereich gespeichert und können geöffnet oder geteilt werden.
-- Mozilla-signierte XPI-WebExtensions können importiert, installiert, aktiviert, deaktiviert und entfernt werden. Integrierte Schleim-OS-Extension bleibt geschützt.
-- Einstellungen enthalten den Benachrichtigungstest und die Auswahl des Android-Standardbrowsers.
-- Alpha 16 nutzt die Paket-ID `de.schneckeschneck.schleimos.browser` und wird separat neben der Alpha-15-App installiert. Lokale Einstellungen werden nicht automatisch zwischen den Installationen übertragen.
-
-
-## Alpha 0.1.0-alpha17 – Installationskompatibilität
-
-- Verwendet die neue, eigenständige Paket-ID `de.schneckeschneck.schleimos.androidbrowser`, um Konflikte mit früheren Schleim-OS-Installationen auszuschließen.
-- Die Versionsnummer ist 0.1.0-alpha17 (versionCode 17).
-- Der Android-Build prüft vor der Veröffentlichung zusätzlich die APK-Signatur mit `apksigner verify`.
-- Diese Prüfung bestätigt die technische Signatur der APK, ersetzt aber keinen Test auf einem realen Samsung-Gerät.
-- Die APK wird weiterhin als Debug-Build mit einer automatisch erzeugten Debug-Signatur erstellt. Für dauerhaft nahtlose Updates bleibt ein privater, beständiger Signaturschlüssel erforderlich.
+Die neutrale Android-Studio-Projektvorlage befindet sich im Repository unter Android-App/ und wird als Schleim-Browser-Android-Studio-Template.zip veröffentlicht.
