@@ -135,8 +135,10 @@ jobs:
           assert not Path("android/app/src/main/assets/camera/camera-host.html").exists()
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           assert "action:'camera.capture'" in camera
-          assert "const buttons = $('[data-camera-native-photo],[data-camera-native-video]');" in camera
-          assert "const buttons = $('[data-camera-native-photo],[data-camera-native-video]');" not in camera
+          assert "const buttons = Array.from(document.querySelectorAll('[data-camera-native-photo],[data-camera-native-video]'));" in camera
+          assert "for (const button of buttons) button.disabled = true;" in camera
+          assert "buttons.forEach" not in camera
+          assert "if (button.isConnected) button.disabled = false;" in camera
           assert "captureWithAndroidCamera('photo')" in camera
           assert "captureWithAndroidCamera('video')" in camera
           assert "data-camera-native-photo" in camera

@@ -875,8 +875,8 @@
     if (typeof runtime?.sendNativeMessage !== 'function') throw new Error('Die native Android-Kamera ist in diesem Browser nicht verfügbar.');
     if (state.androidCameraBusy) return;
     state.androidCameraBusy = true;
-    const buttons = $$('[data-camera-native-photo],[data-camera-native-video]');
-    buttons.forEach(button=>{button.disabled=true;});
+    const buttons = Array.from(document.querySelectorAll('[data-camera-native-photo],[data-camera-native-video]'));
+    for (const button of buttons) button.disabled = true;
     setStatus('[data-camera-status]', t('cameraOpening'));
     try {
       const response = await runtime.sendNativeMessage('browser',{action:'camera.capture',mediaType:mediaType});
@@ -894,7 +894,9 @@
       await uploadFiles([file],mediaType === 'video' ? 'Android-Kamera-Video' : 'Android-Kamera-Foto','[data-camera-status]');
     } finally {
       state.androidCameraBusy = false;
-      buttons.forEach(button=>{if(button.isConnected)button.disabled=false;});
+      for (const button of buttons) {
+        if (button.isConnected) button.disabled = false;
+      }
     }
   }
 
