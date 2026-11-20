@@ -52,6 +52,15 @@ In jedem Sprachordner gibt es eine eigene Anleitung für den Schleim-Store:
 - [English](Leichte-Sprache/Englisch/SCHLEIM-STORE.md)
 - [Nederlands](Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md)
 
+## Android-Entwicklerdokumentation
+
+- [Deutsch – Android-Projekt](../android/README.md)
+- [English – Android project](../android/README.en.md)
+- [Nederlands – Android-project](../android/README.nl.md)
+- [Android Studio template – Deutsch](../Android-App/README.md)
+- [Android Studio template – English](../Android-App/README.en.md)
+- [Android Studio template – Nederlands](../Android-App/README.nl.md)
+
 ## 🧪 Live-Demo
 
 [Schleim OS als Standalone-Demo in einem neuen Tab ausprobieren](https://raw.githack.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/extension/standalone/schleim-os-standalone.html)
