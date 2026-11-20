@@ -160,6 +160,9 @@ jobs:
           photos_script = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           assert "function isAndroidGeckoView()" in photos_script
           assert "await uploadOne(file,description)" in photos_script
+          assert photos_script.count("const target = statusSelector || '[data-photos-status]'") == 1
+          assert "androidStatusTarget" not in photos_script
+          assert "setStatus(target,t('uploading')" in photos_script
           admin_script = Path("extension/scripts/slime-store-admin.js").read_text()
           assert "SSOS_SAVE_FILE" in admin_script
           worker = Path("extension/scripts/media-upload-worker.js").read_text()
