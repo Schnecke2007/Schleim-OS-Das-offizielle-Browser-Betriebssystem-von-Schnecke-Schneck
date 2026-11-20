@@ -64,3 +64,15 @@ De korte uitleg vervangt de officiële juridische documenten niet.
 
 ---
 [Normale Nederlandse documentatie](../../Niederländisch/INSTALLATIE.md) · [Overzicht van alle documentatie](../../README.md)
+
+## De Android-app
+
+Er is nu ook **Schleim Browser** voor Android.
+Dit is een aparte browserapp.
+De app werkt vanaf Android 8.0 op 64-bits ARM-apparaten.
+
+Je installeert het APK-bestand uit de GitHub-release.
+De Android-app is niet hetzelfde als de browser-Extension.
+De app krijgt afzonderlijke updates.
+
+[De Android-app in eenvoudige taal](ANDROID-BROWSER.md)
