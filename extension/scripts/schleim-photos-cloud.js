@@ -239,6 +239,12 @@
   function accountReady() {
     return !!account()?.getState?.().authenticated;
   }
+  function isAndroidGeckoView() {
+    try {
+      const runtime=globalThis.browser?.runtime||globalThis.chrome?.runtime;
+      return runtime?.getManifest?.()?.browser_specific_settings?.gecko?.id==='schleim-os-android@schneckeschneck.de';
+    } catch { return false; }
+  }
   function setStatus(selector, message, isError = false) {
     $$(selector).forEach(node => {
       node.textContent = message || '';
@@ -592,6 +598,26 @@
     if (!accountReady()) throw new Error(t('notSignedIn'));
     if (!state.repository) state.repository = await account().getPhotosRepository();
     if (!state.repository?.private) throw new Error(t('noRepo'));
+    const target = statusSelector || '[data-photos-status]';
+    if (isAndroidGeckoView()) {
+      state.busy = true;
+      let completed = 0;
+      try {
+        for (const file of files) {
+          setStatus(target,t('uploading')+' ('+(completed+1)+'/'+files.length+')');
+          await uploadOne(file,description);
+          completed += 1;
+        }
+        await refreshMediaApp();
+        setStatus(target,t('uploaded'));
+      } catch (error) {
+        if (completed > 0) await refreshMediaApp().catch(() => {});
+        throw error;
+      } finally {
+        state.busy = false;
+      }
+      return;
+    }
     const currentUpload = await chrome.storage.local.get('ssos-media-upload-status');
     if (currentUpload?.['ssos-media-upload-status']?.phase === 'progress') {
       state.backgroundBusy = true;
@@ -1050,7 +1076,7 @@
     document.addEventListener('change',handleChange);
     window.addEventListener('ssos-app-opened',handleAppOpen);
     window.addEventListener('ssos-photos-updated',refreshOpenViews);
-    if (globalThis.chrome?.storage?.onChanged) {
+    if (!isAndroidGeckoView() && globalThis.chrome?.storage?.onChanged) {
       chrome.storage.onChanged.addListener((changes,area) => {
         if (area === 'local' && changes['ssos-media-upload-status']?.newValue) {
           displayBackgroundUploadStatus(changes['ssos-media-upload-status'].newValue);

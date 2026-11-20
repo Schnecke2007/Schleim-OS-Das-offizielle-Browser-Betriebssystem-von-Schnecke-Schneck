@@ -20,6 +20,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -88,6 +89,10 @@ class MainActivity : Activity() {
 
     private var pendingFilePrompt: GeckoSession.PromptDelegate.FilePrompt? = null
     private var pendingFileResult: GeckoResult<GeckoSession.PromptDelegate.PromptResponse>? = null
+    private var pendingSaveResult: GeckoResult<Any>? = null
+    private var pendingSaveFileName = ""
+    private var pendingSaveMimeType = "application/octet-stream"
+    private var pendingSaveBase64 = ""
 
     private data class DialogParts(val dialog: Dialog, val body: LinearLayout)
     private data class BrowserAction(
@@ -146,7 +151,7 @@ class MainActivity : Activity() {
             textSize = 21f
             gravity = Gravity.CENTER
             background = roundedBackground(surfaceRaised, border, 10)
-            contentDescription = "Schleim OS"
+            contentDescription = "Schleim Browser"
         }
         brandRow.addView(snailMark, LinearLayout.LayoutParams(dp(38), dp(38)))
         val brandCopy = LinearLayout(this).apply {
@@ -154,7 +159,7 @@ class MainActivity : Activity() {
             setPadding(dp(9), 0, 0, 0)
         }
         brandCopy.addView(TextView(this).apply {
-            text = "SCHLEIM OS"
+            text = "SCHLEIM BROWSER"
             textSize = 12f
             setTextColor(textPrimary)
             typeface = Typeface.create("sans-serif", Typeface.BOLD)
@@ -241,7 +246,7 @@ class MainActivity : Activity() {
         browserColumn.addView(progressBar, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(2)))
 
         titleLabel = TextView(this).apply {
-            text = "Schleim OS – Startseite"
+            text = "Schleim Browser – Startseite"
             textSize = 8f
             setTextColor(textMuted)
             maxLines = 1
@@ -397,6 +402,7 @@ class MainActivity : Activity() {
                 else -> JSONObject()
             }
             return when (payload.optString("action")) {
+                "file.save" -> saveFileFromExtension(payload)
                 "media.ensure" -> ensureMediaUploadPage()
                 "media.stop" -> {
                     stopMediaUploadPage()
@@ -426,6 +432,69 @@ class MainActivity : Activity() {
                 }
                 else -> GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Unbekannte Android-Aktion."))
             }
+        }
+    }
+
+    private fun saveFileFromExtension(payload: JSONObject): GeckoResult<Any> {
+        val encoded = payload.optString("contentBase64", "")
+        if (encoded.isBlank() || encoded.length > 2_000_000) {
+            return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Die Datei ist leer oder zu groß."))
+        }
+        val fileName = payload.optString("fileName", "schleim-browser-datei.json")
+            .replace(Regex("[^A-Za-z0-9._-]"), "_")
+            .take(100)
+            .ifBlank { "schleim-browser-datei.json" }
+        val requestedMime = payload.optString("mimeType", "application/octet-stream")
+        val mimeType = if (Regex("^[A-Za-z0-9.+-]+/[A-Za-z0-9.+-]+$").matches(requestedMime)) requestedMime else "application/octet-stream"
+        val result = GeckoResult<Any>()
+        runOnUiThread {
+            if (pendingSaveResult != null) {
+                result.complete(JSONObject().put("ok", false).put("error", "Ein Speicherdialog ist bereits geöffnet."))
+                return@runOnUiThread
+            }
+            pendingSaveResult = result
+            pendingSaveFileName = fileName
+            pendingSaveMimeType = mimeType
+            pendingSaveBase64 = encoded
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = mimeType
+                putExtra(Intent.EXTRA_TITLE, fileName)
+            }
+            try {
+                startActivityForResult(intent, REQUEST_SAVE_FILE)
+            } catch (error: Exception) {
+                pendingSaveResult = null
+                pendingSaveBase64 = ""
+                result.complete(JSONObject().put("ok", false).put("error", error.message ?: "Speicherdialog konnte nicht geöffnet werden."))
+            }
+        }
+        return result
+    }
+
+    private fun completeSaveFile(resultCode: Int, data: Intent?) {
+        val result = pendingSaveResult ?: return
+        val fileName = pendingSaveFileName
+        val encoded = pendingSaveBase64
+        pendingSaveResult = null
+        pendingSaveBase64 = ""
+        pendingSaveFileName = ""
+        pendingSaveMimeType = "application/octet-stream"
+        if (resultCode != RESULT_OK || data?.data == null) {
+            result.complete(JSONObject().put("ok", false).put("error", "Speichern abgebrochen."))
+            return
+        }
+        try {
+            val bytes = Base64.decode(encoded, Base64.DEFAULT)
+            contentResolver.openOutputStream(data.data!!, "w")?.use { output ->
+                output.write(bytes)
+                output.flush()
+            } ?: throw IllegalStateException("Die Zieldatei konnte nicht geöffnet werden.")
+            result.complete(JSONObject().put("ok", true).put("fileName", fileName))
+            showToast("Datei gespeichert: " + fileName)
+        } catch (error: Exception) {
+            result.complete(JSONObject().put("ok", false).put("error", error.message ?: "Datei konnte nicht gespeichert werden."))
+            showToast("Datei konnte nicht gespeichert werden.")
         }
     }
 
@@ -639,7 +708,7 @@ class MainActivity : Activity() {
 
     private fun refreshTitleFromActiveTab() {
         val current = activeSession()
-        titleLabel.text = current?.let { sessionTitles[it] ?: "Schleim OS" } ?: "Schleim OS"
+        titleLabel.text = current?.let { sessionTitles[it] ?: "Schleim Browser" } ?: "Schleim Browser"
     }
 
     private fun attachSessionDelegates(session: GeckoSession) {
@@ -1451,6 +1520,10 @@ class MainActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BROWSER_ROLE) return
+        if (requestCode == REQUEST_SAVE_FILE) {
+            completeSaveFile(resultCode, data)
+            return
+        }
         if (requestCode == REQUEST_EXTENSION_PICKER) {
             if (resultCode == RESULT_OK && data?.data != null) importExtensionUri(data.data!!)
             return
@@ -1486,6 +1559,9 @@ class MainActivity : Activity() {
         pendingFileResult?.complete(pendingFilePrompt?.dismiss())
         pendingFileResult = null
         pendingFilePrompt = null
+        pendingSaveResult?.complete(JSONObject().put("ok", false).put("error", "Browser wurde geschlossen."))
+        pendingSaveResult = null
+        pendingSaveBase64 = ""
         if (::geckoView.isInitialized && displayedSession != null) runCatching { geckoView.releaseSession() }
         displayedSession = null
         tabs.forEach { runCatching { it.close() } }
@@ -1509,6 +1585,7 @@ class MainActivity : Activity() {
         private const val REQUEST_BROWSER_ROLE = 1503
         private const val REQUEST_FILE_PICKER = 1504
         private const val REQUEST_EXTENSION_PICKER = 1505
+        private const val REQUEST_SAVE_FILE = 1506
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"

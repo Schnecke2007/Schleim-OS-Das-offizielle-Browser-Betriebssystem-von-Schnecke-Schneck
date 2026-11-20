@@ -140,8 +140,22 @@
     event.preventDefault();const token=$('#ssosAdminToken').value.trim(),pass=$('#ssosAdminPass').value,repeat=$('#ssosAdminRepeat').value;
     if(!token||pass.length<12||pass!==repeat){status('Token prüfen; Passphrase mindestens 12 Zeichen und beide Eingaben gleich.',true);return;}
     try{
-      const file=await encryptFile(token,pass),blob=new Blob([JSON.stringify(file,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
-      const a=document.createElement('a');a.href=url;a.download='schleim-store-admin-key.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+      const file=await encryptFile(token,pass);
+      const json=JSON.stringify(file,null,2)+'\n';
+      const runtime=globalThis.browser?.runtime||globalThis.chrome?.runtime;
+      const manifest=runtime?.getManifest?.();
+      const androidGecko=manifest?.browser_specific_settings?.gecko?.id==='schleim-os-android@schneckeschneck.de';
+      if(androidGecko){
+        const result=await runtime.sendMessage({
+          type:'SSOS_SAVE_FILE',fileName:'schleim-store-admin-key.json',
+          mimeType:'application/json',
+          contentBase64:toB64(new TextEncoder().encode(json))
+        });
+        if(!result?.ok)throw new Error(result?.error||'Die Admin-Datei konnte nicht gespeichert werden.');
+      }else{
+        const blob=new Blob([json],{type:'application/json'}),url=URL.createObjectURL(blob);
+        const a=document.createElement('a');a.href=url;a.download='schleim-store-admin-key.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+      }
       $('#ssosAdminToken').value='';$('#ssosAdminPass').value='';$('#ssosAdminRepeat').value='';status(t('ok'));
     }catch(e){status(t('bad')+' '+e.message,true);}
   }

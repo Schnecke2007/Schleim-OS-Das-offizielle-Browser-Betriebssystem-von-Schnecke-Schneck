@@ -127,36 +127,66 @@
   }
 
   function storageGet() {
+    const browserArea = globalThis.browser?.storage?.local;
+    if (browserArea) return browserArea.get(STORAGE_KEY).then(result => result?.[STORAGE_KEY] || null);
     return new Promise((resolve, reject) => {
       const area = globalThis.chrome?.storage?.local;
-      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      if (!area) return reject(new Error('Erweiterungsspeicher ist in diesem Browser nicht verfügbar.'));
       area.get(STORAGE_KEY, result => {
-        const error = chrome.runtime?.lastError;
+        const error = globalThis.chrome?.runtime?.lastError;
         if (error) reject(new Error(error.message));
         else resolve(result?.[STORAGE_KEY] || null);
       });
     });
   }
   function storageSet(value) {
+    const browserArea = globalThis.browser?.storage?.local;
+    if (browserArea) return browserArea.set({[STORAGE_KEY]:value});
     return new Promise((resolve, reject) => {
       const area = globalThis.chrome?.storage?.local;
-      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      if (!area) return reject(new Error('Erweiterungsspeicher ist in diesem Browser nicht verfügbar.'));
       area.set({[STORAGE_KEY]:value}, () => {
-        const error = chrome.runtime?.lastError;
+        const error = globalThis.chrome?.runtime?.lastError;
         if (error) reject(new Error(error.message));
         else resolve();
       });
     });
   }
   function storageRemove() {
+    const browserArea = globalThis.browser?.storage?.local;
+    if (browserArea) return browserArea.remove(STORAGE_KEY);
     return new Promise((resolve, reject) => {
       const area = globalThis.chrome?.storage?.local;
-      if (!area) return reject(new Error('Extension storage is unavailable.'));
+      if (!area) return reject(new Error('Erweiterungsspeicher ist in diesem Browser nicht verfügbar.'));
       area.remove(STORAGE_KEY, () => {
-        const error = chrome.runtime?.lastError;
+        const error = globalThis.chrome?.runtime?.lastError;
         if (error) reject(new Error(error.message));
         else resolve();
       });
+    });
+  }
+  function confirmAction(message, title='Aktion bestätigen') {
+    return new Promise(resolve => {
+      const dialog = document.createElement('dialog');
+      dialog.className = 'ssos-rating-dialog';
+      dialog.innerHTML = '<form method="dialog"><p class="eyebrow">SCHLEIM BROWSER</p><h3 data-confirm-title></h3><p data-confirm-message></p><div class="ssos-rating-dialog-actions"><button class="app-button secondary" type="button" data-confirm-cancel>Abbrechen</button><button class="app-button" type="button" data-confirm-accept>Bestätigen</button></div></form>';
+      dialog.querySelector('[data-confirm-title]').textContent = title;
+      dialog.querySelector('[data-confirm-message]').textContent = message;
+      dialog.addEventListener('close', () => {
+        const accepted = dialog.returnValue === 'confirm';
+        dialog.remove();
+        resolve(accepted);
+      }, {once:true});
+      dialog.querySelector('[data-confirm-cancel]').addEventListener('click', () => dialog.close('cancel'));
+      dialog.querySelector('[data-confirm-accept]').addEventListener('click', () => dialog.close('confirm'));
+      document.body.appendChild(dialog);
+      if (typeof dialog.showModal === 'function') {
+        try { dialog.showModal(); }
+        catch { dialog.remove(); resolve(window.confirm(message)); }
+      } else {
+        dialog.remove();
+        resolve(window.confirm(message));
+      }
     });
   }
 
@@ -570,7 +600,7 @@
   }
   async function restoreCloudBackup() {
     if(!session?.user||!session?.repo)throw new Error(t('authError'));
-    if(!confirm(t('confirmRestore')))return;
+    if(!await confirmAction(t('confirmRestore'),'Cloud-Sicherung wiederherstellen?'))return;
     const path='/repos/'+session.repo.full_name+'/contents/'+BACKUP_PATH+'?ref='+encodeURIComponent(session.repo.default_branch);
     let file;
     try{file=await githubApi(path);}
@@ -607,7 +637,7 @@
     setTimeout(()=>window.location.reload(),900);
   }
   async function signOut() {
-    if(!confirm(t('signOutConfirm')))return;
+    if(!await confirmAction(t('signOutConfirm'),'Vom Schleim-Konto abmelden?'))return;
     deviceFlow=null;installationStage=false;installationPending=false;session=null;
     try{verificationWindow?.close();}catch{} verificationWindow=null;
     await storageRemove();

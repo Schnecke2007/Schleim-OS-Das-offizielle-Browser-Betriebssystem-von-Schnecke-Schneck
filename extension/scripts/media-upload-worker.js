@@ -172,6 +172,20 @@ async function startUpload(jobId) {
   }
 }
 chrome.runtime.onMessage.addListener((message,sender,sendResponse)=>{
+  if (message?.type==='SSOS_SAVE_FILE') {
+    if (!hasGeckoNativeBridge) {
+      sendResponse({ok:false,error:'Der native Android-Speicherdialog ist hier nicht verfügbar.'});
+      return false;
+    }
+    sendAndroidMessage({
+      action:'file.save',
+      fileName:String(message.fileName||'schleim-browser-datei.json'),
+      mimeType:String(message.mimeType||'application/octet-stream'),
+      contentBase64:String(message.contentBase64||'')
+    }).then(response=>sendResponse(response||{ok:false,error:'Android hat keine Speicherbestätigung zurückgegeben.'}))
+      .catch(error=>sendResponse({ok:false,error:String(error?.message||error)}));
+    return true;
+  }
   if (message?.type==='SSOS_MEDIA_UPLOAD_START') {
     startUpload(message.jobId).then(()=>sendResponse({ok:true})).catch(async error=>{
       const existing=(await chrome.storage.local.get(STATUS_KEY))?.[STATUS_KEY];

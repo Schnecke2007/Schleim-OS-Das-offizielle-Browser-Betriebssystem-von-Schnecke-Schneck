@@ -1,4 +1,4 @@
-name: Build Schleim OS Android APK
+name: Build Schleim Browser Android APK
 
 on:
   push:
@@ -110,6 +110,10 @@ jobs:
           test ! -e "android/app/src/main/java/de/schneckeschneck/schleimos/CameraCaptureActivity.kt"
           test ! -e "android/app/src/main/assets/camera/camera.html"
           node --check "$ASSET_DIR/scripts/app.js"
+          node --check "$ASSET_DIR/scripts/schleim-account.js"
+          node --check "$ASSET_DIR/scripts/personalization.js"
+          node --check "$ASSET_DIR/scripts/slime-store-admin.js"
+          node --check "$ASSET_DIR/scripts/media-upload-worker.js"
           node --check "$ASSET_DIR/scripts/schleim-photos-cloud.js"
           python3 - <<'PY'
           from pathlib import Path
@@ -141,8 +145,28 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 17" in gradle
-          assert 'versionName = "0.1.0-alpha17"' in gradle
+          assert "versionCode = 18" in gradle
+          assert 'versionName = "0.1.0-alpha18"' in gradle
+          assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
+          assert 'android:label="Schleim Browser"' in android_manifest
+          assert 'android:icon="@mipmap/ic_launcher"' in android_manifest
+          assert Path("android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp").is_file()
+          assert '"file.save" -> saveFileFromExtension(payload)' in main
+          assert "ACTION_CREATE_DOCUMENT" in main
+          assert "REQUEST_SAVE_FILE" in main
+          account_script = Path("extension/scripts/schleim-account.js").read_text()
+          assert "globalThis.browser?.storage?.local" in account_script
+          assert "confirmAction(t('confirmRestore')" in account_script
+          photos_script = Path("extension/scripts/schleim-photos-cloud.js").read_text()
+          assert "function isAndroidGeckoView()" in photos_script
+          assert "await uploadOne(file,description)" in photos_script
+          admin_script = Path("extension/scripts/slime-store-admin.js").read_text()
+          assert "SSOS_SAVE_FILE" in admin_script
+          worker = Path("extension/scripts/media-upload-worker.js").read_text()
+          assert "SSOS_SAVE_FILE" in worker
+          personalization = Path("extension/scripts/personalization.js").read_text()
+          assert "await confirmAction(st('confirmUninstall')" in personalization
+          assert "globalThis.browser?.runtime?.id" in personalization
 
           camera = Path("extension/scripts/schleim-photos-cloud.js").read_text()
           assert "navigator.mediaDevices.getUserMedia" in camera
@@ -185,7 +209,7 @@ jobs:
           assert not Path("android/app/src/main/assets/camera/camera.html").exists()
           assert 'type = if (allowedMimeTypes.size > 1) "*/*"' in main
           assert "putExtra(Intent.EXTRA_MIME_TYPES, allowedMimeTypes)" in main
-          assert 'applicationId = "de.schneckeschneck.schleimos.androidbrowser"' in gradle
+          assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert "private fun navigate(input: String)" in main
           assert "https://www.google.com/search?q=" in main
           assert "private fun toggleDesktopMode()" in main
@@ -222,18 +246,18 @@ jobs:
           APK="android/app/build/outputs/apk/debug/app-debug.apk"
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimos.androidbrowser'"
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          cp "$APK" "Schleim-OS-Android-0.1.0-alpha17-neu.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha18.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Schleim-OS-Android-APK
-          path: Schleim-OS-Android-0.1.0-alpha17-neu.apk
+          name: Schleim-Browser-Android-APK
+          path: Schleim-Browser-Android-0.1.0-alpha18.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -262,14 +286,14 @@ jobs:
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
             --dir dist/release
-          cp "Schleim-OS-Android-0.1.0-alpha17-neu.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha18.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-OS-Android-0.1.0-alpha17-neu.apk \
+              Schleim-Browser-Android-0.1.0-alpha18.apk \
               > Schleim-OS-SHA256SUMS.txt
           )
 
@@ -320,7 +344,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
 
           gh release upload "$TAG" \
-            "dist/release/Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha18.apk" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
 
@@ -335,7 +359,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha18.apk" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
 
@@ -345,10 +369,10 @@ jobs:
           )
 
           cmp -s \
-            "Schleim-OS-Android-0.1.0-alpha17-neu.apk" \
-            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-neu.apk"
+            "Schleim-Browser-Android-0.1.0-alpha18.apk" \
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha18.apk"
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-OS-Android-0.1.0-alpha17-neu.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha18.apk"
           echo "Published release files match the local build; checksums and APK signature verified."

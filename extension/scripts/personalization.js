@@ -44,6 +44,30 @@
   };
   const t = key => DICT[LANG()]?.[key] || DICT.de[key] || key;
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function confirmAction(message, title='Aktion bestätigen') {
+    return new Promise(resolve => {
+      const dialog = document.createElement('dialog');
+      dialog.className = 'ssos-rating-dialog';
+      dialog.innerHTML = '<form method="dialog"><p class="eyebrow">SCHLEIM BROWSER</p><h3 data-confirm-title></h3><p data-confirm-message></p><div class="ssos-rating-dialog-actions"><button class="app-button secondary" type="button" data-confirm-cancel>Abbrechen</button><button class="app-button" type="button" data-confirm-accept>Bestätigen</button></div></form>';
+      dialog.querySelector('[data-confirm-title]').textContent = title;
+      dialog.querySelector('[data-confirm-message]').textContent = message;
+      dialog.addEventListener('close', () => {
+        const accepted = dialog.returnValue === 'confirm';
+        dialog.remove();
+        resolve(accepted);
+      }, {once:true});
+      dialog.querySelector('[data-confirm-cancel]').addEventListener('click', () => dialog.close('cancel'));
+      dialog.querySelector('[data-confirm-accept]').addEventListener('click', () => dialog.close('confirm'));
+      document.body.appendChild(dialog);
+      if (typeof dialog.showModal === 'function') {
+        try { dialog.showModal(); }
+        catch { dialog.remove(); resolve(window.confirm(message)); }
+      } else {
+        dialog.remove();
+        resolve(window.confirm(message));
+      }
+    });
+  }
   const safeUrl = raw => {
     try { const u = new URL(String(raw).trim()); return ['https:','http:'].includes(u.protocol) ? u.href : ''; } catch { return ''; }
   };
@@ -490,7 +514,7 @@
           '<div class="ssos-form-actions"><button class="app-button" type="submit" id="ssosSubmitApp">'+esc(st('submit'))+' ↗</button></div>'+
           '<a id="ssosIssueFallback" class="ssos-store-issue-fallback" href="#" target="_blank" rel="noopener noreferrer" hidden>GitHub Issue öffnen ↗</a>'+
         '</form></section>'+
-      (globalThis.chrome?.runtime?.id?'<section class="ssos-store-admin-entry"><button class="app-button secondary ssos-admin-open" id="ssosOpenAdmin" type="button">🔐 '+(LANG()==='en'?'Admin portal':LANG()==='nl'?'Adminportaal':'Admin-Portal')+'</button><div id="ssosAdminPortal" class="ssos-admin-portal" hidden></div></section>':'');
+      ((globalThis.browser?.runtime?.id || globalThis.chrome?.runtime?.id)?'<section class="ssos-store-admin-entry"><button class="app-button secondary ssos-admin-open" id="ssosOpenAdmin" type="button">🔐 '+(LANG()==='en'?'Admin portal':LANG()==='nl'?'Adminportaal':'Admin-Portal')+'</button><div id="ssosAdminPortal" class="ssos-admin-portal" hidden></div></section>':'');
     setTimeout(renderStoreSections,0);
     return markup+'</div>';
   }
@@ -706,7 +730,7 @@
       const storeOpen=e.target.closest('[data-ssos-store-open]');
       if(storeOpen){openStoreApp(storeOpen.dataset.ssosStoreOpen);return;}
       const uninstall=e.target.closest('[data-ssos-store-uninstall]');
-      if(uninstall){const id=uninstall.dataset.ssosStoreUninstall;if(confirm(st('confirmUninstall'))){storeState.installed=storeState.installed.filter(item=>item!==id);saveStoreState();toast(st('uninstall')+' ✓');}return;}
+      if(uninstall){const id=uninstall.dataset.ssosStoreUninstall;if(await confirmAction(st('confirmUninstall'),'App deinstallieren?')){storeState.installed=storeState.installed.filter(item=>item!==id);saveStoreState();toast(st('uninstall')+' ✓');}return;}
       const rate=e.target.closest('[data-ssos-rate-app]');
       if(rate){showStoreRatingDialog(rate.dataset.ssosRateApp,Number(rate.dataset.rating));return;}
       if(e.target.closest('[data-rating-cancel]')){const dialog=$('#ssosRatingDialog');if(dialog?.open)dialog.close();pendingStoreRating=null;return;}
@@ -715,7 +739,7 @@
       const legacyOpen=e.target.closest('[data-ssos-legacy-open]');
       if(legacyOpen){openCustomApp(legacyOpen.dataset.ssosLegacyOpen);return;}
       const legacyRemove=e.target.closest('[data-ssos-legacy-uninstall]');
-      if(legacyRemove){const id=legacyRemove.dataset.ssosLegacyUninstall;if(confirm(st('legacyConfirm'))){config.apps=config.apps.filter(app=>app.id!==id);saveConfig();renderStoreSections();toast(st('uninstall')+' ✓');}return;}
+      if(legacyRemove){const id=legacyRemove.dataset.ssosLegacyUninstall;if(await confirmAction(st('legacyConfirm'),'Webseite entfernen?')){config.apps=config.apps.filter(app=>app.id!==id);saveConfig();renderStoreSections();toast(st('uninstall')+' ✓');}return;}
       if(e.target.closest('#ssosDetectMetadata')){await detectMetadata();return;}
       if(e.target.closest('#ssosSaveDesign')){saveDesign();return;}
       if(e.target.closest('#ssosClearWallpaper')){config.wallpaperUrl='';config.wallpaperData='';saveConfig();toast(t('designSaved'));return;}
