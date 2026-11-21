@@ -1518,14 +1518,14 @@ class MainActivity : Activity() {
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
             bottomMargin = dp(7)
         })
-        parts.body.addView(makeWideActionButton("Google Chrome Web Store öffnen") {
+        parts.body.addView(makeWideActionButton("Mozilla Firefox Add-ons öffnen") {
             parts.dialog.dismiss()
-            load("https://chromewebstore.google.com/")
+            load("https://addons.mozilla.org/firefox/")
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
             bottomMargin = dp(9)
         })
         parts.body.addView(dialogMessage(
-            "Chrome Web Store: Du kannst den Katalog durchsuchen. Chrome-Erweiterungen im CRX-Format lassen sich in diesem GeckoView-Browser jedoch nicht installieren. Für die Installation werden Mozilla-signierte XPI-Dateien benötigt. Beim Installieren einer XPI-Datei erscheint ein Dialog mit den angeforderten Berechtigungen."
+            "Mozilla Add-ons (AMO) ist der offizielle Katalog für Firefox-Erweiterungen. Suche nach kompatiblen Add-ons und lade bei Bedarf eine von Mozilla signierte XPI-Datei herunter. Installiere sie anschließend über „XPI-Datei installieren“. Nicht jede Firefox-Erweiterung ist mit GeckoView kompatibel."
         ))
         val listHost = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         parts.body.addView(listHost)
