@@ -34,7 +34,7 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 
 ## Lokal bauen
 
-1. Java 17 und Android SDK Platform 36 installieren.
+1. Java 17, Android SDK Platform 36 und Gradle 8.13 installieren. Der Quellordner `android/` enthält keinen Gradle-Wrapper; das herunterladbare **Android-App Template** erhält beim ZIP-Build automatisch einen Wrapper.
 2. Repository im Android Studio öffnen und den Ordner android/ als Projekt auswählen.
 3. Die Original-Extension nach app/src/main/assets/extension kopieren und das Android-Gecko-Manifest vorbereiten. Der GitHub-Workflow übernimmt diese Schritte automatisch.
 4. In der Projektwurzel den Build mit Gradle ausführen:
