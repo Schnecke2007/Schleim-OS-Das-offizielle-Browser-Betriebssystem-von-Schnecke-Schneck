@@ -28,17 +28,6 @@ Schleim OS is a browser extension that replaces the browser's regular new-tab pa
 
 Schleim OS now has two variants: a browser Extension for compatible Chromium browsers and the standalone Android app **Schleim Browser**, based on Mozilla GeckoView. The Android app does not replace Android; it is a browser with the Schleim OS interface built in.
 
-## 📱 Schleim Browser for Android
-
-**Schleim Browser** is now available as a standalone Android app. It bundles the original Schleim OS Extension in Mozilla GeckoView and adds a browser toolbar, tabs, downloads, XPI extension management and Android file dialogs.
-
-- Minimum requirement: Android 8.0 or newer, 64-bit ARM (arm64-v8a).
-- Camera and microphone capture are intentionally disabled in the Android app.
-- The Android app is updated separately from the browser Extension.
-- The app is currently labelled as an alpha release.
-
-[**Download Android APK**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) · [Android guide](docs/Englisch/ANDROID-BROWSER.md) · [Android Studio template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
-
 ## ⭐ Features
 
 - Custom new-tab page for Chrome and compatible Chromium browsers
@@ -98,6 +87,17 @@ Each release describes new features, improvements, known limitations and bug fix
 **Updates from Schleim OS:** You do not need to open the Releases page manually. Go to **Settings → Update Schleim OS**, check for a newer version and select the download button. Only the subsequent file import and confirmation in the browser must be started manually.
 
 **Browser compatibility:** ZIP import is not available in every Chromium browser. Standard Google Chrome for Android does not support extensions. Desktop Chrome's developer mode loads unpacked folders and does not provide direct ZIP import. To install without extracting, use a browser whose extension manager explicitly supports local ZIP import.
+
+## 📱 Schleim Browser for Android
+
+**Schleim Browser** is now available as a standalone Android app. It bundles the original Schleim OS Extension in Mozilla GeckoView and adds a browser toolbar, tabs, downloads, XPI extension management and Android file dialogs.
+
+- Minimum requirement: Android 8.0 or newer, 64-bit ARM (arm64-v8a).
+- Camera and microphone capture are intentionally disabled in the Android app.
+- The Android app is updated separately from the browser Extension.
+- The app is currently labelled as an alpha release.
+
+[**Download Android APK**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) · [Android guide](docs/Englisch/ANDROID-BROWSER.md) · [Android Studio template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## Using Schleim OS and its settings
 
