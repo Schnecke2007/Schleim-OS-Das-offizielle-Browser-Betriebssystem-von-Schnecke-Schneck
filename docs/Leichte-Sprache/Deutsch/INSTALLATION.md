@@ -55,7 +55,7 @@ Folge den Schritten mit dem Gerätecode.
 Du kannst auch die Android-App **Schleim Browser** benutzen.
 
 1. Öffne das [neueste GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-2. Lade die Datei **Schleim-Browser-Android-0.1.0-alpha22.apk** herunter.
+2. Lade die Datei **Schleim-Browser-Android-0.1.0-alpha23.apk** herunter.
 3. Öffne die Datei auf deinem Android-Gerät.
 4. Erlaube die Installation aus dieser Quelle, wenn Android dich fragt.
 5. Tippe auf **Installieren**.
