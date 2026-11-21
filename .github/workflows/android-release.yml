@@ -309,25 +309,26 @@ jobs:
             --docs Android-App \
             --output dist/android-template
 
+          TEMPLATE_PROJECT="dist/android-template/Android-App Template"
           gradle --no-daemon --stacktrace \
-            -p dist/android-template/Android-App \
+            -p "$TEMPLATE_PROJECT" \
             wrapper --gradle-version 8.13 --distribution-type bin
 
           # Build the generated, placeholder-only project once as a release check.
           gradle --no-daemon --stacktrace \
-            -p dist/android-template/Android-App \
+            -p "$TEMPLATE_PROJECT" \
             -PgeckoviewVersion="$GECKOVIEW_VERSION" \
             :app:assembleDebug
 
           # The build above verifies that the template compiles. Do not ship its
           # generated APKs, Gradle caches or build intermediates in the source ZIP.
-          find dist/android-template/Android-App -type d \
+          find "$TEMPLATE_PROJECT" -type d \
             \( -name build -o -name .gradle -o -name .kotlin \) -prune -exec rm -rf {} +
-          find dist/android-template/Android-App -type f \
+          find "$TEMPLATE_PROJECT" -type f \
             \( -name '*.apk' -o -name '*.aab' -o -name '*.hprof' \) -delete
-          rm -f dist/android-template/Android-App/local.properties
+          rm -f "$TEMPLATE_PROJECT/local.properties"
 
-          (cd dist/android-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-Browser-Android-Studio-Template.zip" Android-App)
+          (cd dist/android-template && zip -qr "$GITHUB_WORKSPACE/dist/release/Schleim-Browser-Android-Studio-Template.zip" "Android-App Template")
           TEMPLATE_SIZE="$(stat -c%s dist/release/Schleim-Browser-Android-Studio-Template.zip)"
           if (( TEMPLATE_SIZE > 30000000 )); then
             echo "Android Studio source template is unexpectedly large: $TEMPLATE_SIZE bytes" >&2
@@ -354,7 +355,12 @@ jobs:
           unzip -t dist/release/Schleim-OS-Extension.zip >/dev/null
           unzip -t dist/release/Browser-OS-Extension-Template.zip >/dev/null
           unzip -t dist/release/Schleim-Browser-Android-Studio-Template.zip >/dev/null
-          echo "All three project archives and the Alpha 22 APK are ready."
+          unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Fq "Android-App Template/app/build.gradle.kts"
+          if unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Eq '^Android-App/'; then
+            echo "Unexpected old Android-App ZIP root folder found." >&2
+            exit 1
+          fi
+          echo "All project archives and the Alpha 22 APK are ready; the Android Studio ZIP root is Android-App Template."
 
       - name: Publish the complete 3.16.0 release
         env:
