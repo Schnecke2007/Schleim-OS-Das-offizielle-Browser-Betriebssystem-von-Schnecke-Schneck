@@ -29,7 +29,9 @@ Download **Schleim-Browser-Android-0.1.0-alpha23.apk**.
 - Enter a website address or a search term.
 - Use Back, Forward and Reload.
 - Use the tab icon to open tabs and switch between them.
-- The menu contains Downloads, Extensions and Settings.
+- The menu contains Downloads, Extensions, Settings and **Print page**.
+- Press and hold a link, image or video. A menu appears. You can open it, download it or copy its address.
+- Printing opens the Android print window. You can also save the page as a PDF.
 - Up to six tabs can stay open at once. Older background tabs are closed when needed.
 
 ## Important notes
