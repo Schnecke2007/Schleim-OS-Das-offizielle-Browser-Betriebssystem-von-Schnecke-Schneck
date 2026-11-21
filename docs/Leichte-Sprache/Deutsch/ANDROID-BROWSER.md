@@ -12,9 +12,9 @@
 
 Öffne die [GitHub-Release-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
 
-Lade dort **Schleim-Browser-Android-0.1.0-alpha24.apk** herunter.
+Lade dort **Schleim-Browser-Android-0.1.0-alpha25.apk** herunter.
 
-[**Android-App direkt herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
+[**Android-App direkt herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
 
 ## App installieren
 
@@ -30,6 +30,7 @@ Lade dort **Schleim-Browser-Android-0.1.0-alpha24.apk** herunter.
 - Nutze Zurück, Vorwärts und Neu laden.
 - Über das Tab-Symbol öffnest und wechselst du Tabs.
 - Im Menü findest du Downloads, Erweiterungen, Einstellungen und **Seite drucken**.
+- **Firefox Add-ons:** Im Erweiterungsmenü öffnet ein Button den offiziellen [Mozilla-Katalog](https://addons.mozilla.org/firefox/). Installiert werden können nur passende, von Mozilla signierte XPI-Dateien.
 - Halte einen Link, ein Bild oder ein Video gedrückt. Dann erscheint ein Menü. Dort kannst du zum Beispiel öffnen, herunterladen oder die Adresse kopieren.
 - Beim Drucken öffnet sich das Android-Druckfenster. Du kannst auch als PDF speichern.
 - Es können höchstens sechs Tabs gleichzeitig offen bleiben. Ältere Hintergrund-Tabs werden bei Bedarf geschlossen.
