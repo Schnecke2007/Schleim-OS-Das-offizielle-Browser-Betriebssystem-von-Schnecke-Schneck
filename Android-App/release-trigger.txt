@@ -32,3 +32,4 @@ Validation retry: remove early-exit grep pipelines from APK checks and template 
 Rebuild retry: fix shell syntax in Android Studio ZIP root validation after replacing pipe-based checks.
 
 Rebuild retry: restore the last known-valid workflow and disable pipefail only in steps that intentionally use grep early-exit pipelines.
+Android alpha 28: restore standard debug signing and manual reinstall update flow; retain update dialog and settings check.
