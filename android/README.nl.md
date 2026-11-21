@@ -22,6 +22,9 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Terug, Vooruit, Opnieuw laden en Startpagina.
 - Tabbladbeheer met maximaal zes behouden GeckoView-sessies.
 - Downloads in een eigen downloadgedeelte van de app.
+- Houd links, afbeeldingen, video's en audio lang ingedrukt om een contextmenu met openen-, downloaden- en kopieeracties te tonen wanneer een direct HTTP(S)-adres beschikbaar is.
+- Stuur webpagina's vanuit het browsermenu of contextmenu naar het Android-afdrukvenster om af te drukken of als PDF op te slaan.
+- Open geïnstalleerde extensies via de knop **Openen** wanneer ze een optiespagina aanbieden; de ingebouwde Schleim OS-Extension opent de startpagina.
 - Android-bestandskiezer en opslagvensters.
 - Mozilla-ondertekende XPI-extensies installeren, activeren, uitschakelen en verwijderen.
 - Desktopmodus en selectie als standaardbrowser van Android.
