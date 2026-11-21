@@ -22,6 +22,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
+import android.provider.Settings
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -57,6 +58,9 @@ import org.mozilla.geckoview.WebRequest
 import org.mozilla.geckoview.WebResponse
 import java.io.File
 import java.io.FileOutputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.security.MessageDigest
 import java.net.URLDecoder
 import java.util.Date
 import java.text.SimpleDateFormat
@@ -102,6 +106,8 @@ class MainActivity : Activity() {
     private var pendingSaveBase64 = ""
 
     private data class DialogParts(val dialog: Dialog, val body: LinearLayout)
+    private data class AppUpdate(val versionCode: Int, val versionName: String, val apkUrl: String, val sha256: String)
+    private var pendingUpdateApk: File? = null
     private data class BrowserAction(
         val icon: String,
         val title: String,
@@ -126,6 +132,7 @@ class MainActivity : Activity() {
         createNotificationChannel()
         buildBrowserUi()
         requestNotificationPermissionIfNeeded()
+        checkForAppUpdates()
 
         // Let Android draw the browser shell before GeckoView performs its
         // comparatively expensive native runtime initialization.
@@ -884,6 +891,33 @@ class MainActivity : Activity() {
         // The Android app deliberately does not expose camera or microphone capture.
         // Reject media and Android runtime permission requests so no capture prompt appears.
         session.setPermissionDelegate(object : GeckoSession.PermissionDelegate {
+            override fun onContentPermissionRequest(
+                session: GeckoSession,
+                permission: GeckoSession.PermissionDelegate.ContentPermission
+            ): GeckoResult<Int>? {
+                if (permission.permission != GeckoSession.PermissionDelegate.PERMISSION_MEDIA_KEY_SYSTEM_ACCESS) {
+                    return null
+                }
+                val result = GeckoResult<Int>()
+                val host = Uri.parse(permission.uri).host ?: permission.uri
+                val prompt = AlertDialog.Builder(this@MainActivity)
+                    .setTitle("Geschützte Medien / Widevine")
+                    .setMessage("$host möchte geschützte Medien mit dem DRM-System dieses Android-Geräts wiedergeben. Soll Schleim Browser den Zugriff erlauben?")
+                    .setNegativeButton("Nicht erlauben") { _, _ ->
+                        result.complete(GeckoSession.PermissionDelegate.ContentPermission.VALUE_DENY)
+                    }
+                    .setPositiveButton("Erlauben") { _, _ ->
+                        result.complete(GeckoSession.PermissionDelegate.ContentPermission.VALUE_ALLOW)
+                    }
+                    .setOnCancelListener {
+                        result.complete(GeckoSession.PermissionDelegate.ContentPermission.VALUE_DENY)
+                    }
+                    .create()
+                prompt.setOnShowListener { permission.notifyShown() }
+                prompt.show()
+                return result
+            }
+
             override fun onAndroidPermissionsRequest(
                 session: GeckoSession,
                 permissions: Array<out String>?,
@@ -1178,6 +1212,10 @@ class MainActivity : Activity() {
         parts.body.addView(createMenuTile("▣", if (desktopMode) "Desktop-Ansicht aktiv" else "Mobile Ansicht aktiv", "Ansicht auch für neue Tabs übernehmen") {
             parts.dialog.dismiss()
             toggleDesktopMode()
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(78)).apply { bottomMargin = dp(7) })
+        parts.body.addView(createMenuTile("⬆", "Nach Updates suchen", "GitHub-Release auf eine neuere App-Version prüfen") {
+            parts.dialog.dismiss()
+            checkForAppUpdates(showNoUpdate = true)
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(78)))
         showDialog(parts.dialog)
     }
@@ -1731,6 +1769,156 @@ class MainActivity : Activity() {
             })
     }
 
+
+    private fun checkForAppUpdates(showNoUpdate: Boolean = false) {
+        ioExecutor.execute {
+            try {
+                val api = URL("https://api.github.com/repos/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest")
+                val connection = (api.openConnection() as HttpURLConnection).apply {
+                    connectTimeout = 12000
+                    readTimeout = 12000
+                    requestMethod = "GET"
+                    setRequestProperty("Accept", "application/vnd.github+json")
+                    setRequestProperty("User-Agent", "Schleim-Browser-Android")
+                }
+                val release = try {
+                    if (connection.responseCode !in 200..299) throw IllegalStateException("GitHub HTTP ${connection.responseCode}")
+                    connection.inputStream.bufferedReader(Charsets.UTF_8).use { JSONObject(it.readText()) }
+                } finally {
+                    connection.disconnect()
+                }
+                val assets = release.optJSONArray("assets") ?: throw IllegalStateException("Release enthält keine Dateien.")
+                var metadataUrl: String? = null
+                for (index in 0 until assets.length()) {
+                    val asset = assets.optJSONObject(index) ?: continue
+                    if (asset.optString("name") == UPDATE_METADATA_ASSET) {
+                        metadataUrl = asset.optString("browser_download_url").takeIf { it.startsWith("https://") }
+                        break
+                    }
+                }
+                if (metadataUrl == null) throw IllegalStateException("Update-Informationen fehlen im GitHub-Release.")
+                val metadataConnection = (URL(metadataUrl).openConnection() as HttpURLConnection).apply {
+                    connectTimeout = 12000
+                    readTimeout = 12000
+                    setRequestProperty("User-Agent", "Schleim-Browser-Android")
+                }
+                val metadata = try {
+                    if (metadataConnection.responseCode !in 200..299) throw IllegalStateException("Update-Metadaten konnten nicht geladen werden.")
+                    metadataConnection.inputStream.bufferedReader(Charsets.UTF_8).use { JSONObject(it.readText()) }
+                } finally {
+                    metadataConnection.disconnect()
+                }
+                if (metadata.optString("packageName") != packageName) {
+                    throw IllegalStateException("Das GitHub-Update gehört zu einer anderen App.")
+                }
+                val update = AppUpdate(
+                    metadata.optInt("versionCode", 0),
+                    metadata.optString("versionName"),
+                    metadata.optString("apkUrl"),
+                    metadata.optString("sha256")
+                )
+                if (update.versionCode <= packageManager.getPackageInfo(packageName, 0).versionCode) {
+                    if (showNoUpdate) runOnUiThread { if (!isFinishing && !isDestroyed) showToast("Schleim Browser ist bereits auf dem neuesten Stand.") }
+                    return@execute
+                }
+                if (!update.apkUrl.startsWith("https://") || !update.sha256.matches(Regex("^[a-fA-F0-9]{64}$"))) {
+                    throw IllegalStateException("Die Update-Datei ist unvollständig oder ungültig.")
+                }
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showUpdateDialog(update)
+                }
+            } catch (error: Exception) {
+                Log.w(TAG, "App update check failed", error)
+                if (showNoUpdate) runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("Update-Prüfung fehlgeschlagen: ${error.message ?: "Netzwerkfehler"}")
+                }
+            }
+        }
+    }
+
+    private fun showUpdateDialog(update: AppUpdate) {
+        if (isFinishing || isDestroyed) return
+        AlertDialog.Builder(this)
+            .setTitle("Schleim Browser – Update verfügbar")
+            .setMessage("Version ${update.versionName} ist verfügbar. Die neue APK wird heruntergeladen und anschließend vom Android-Installationsdialog aktualisiert. Deine App-Daten bleiben bei übereinstimmender Signatur erhalten.")
+            .setNegativeButton("Später", null)
+            .setPositiveButton("Herunterladen & installieren") { _, _ -> downloadAndInstallUpdate(update) }
+            .show()
+    }
+
+    private fun downloadAndInstallUpdate(update: AppUpdate) {
+        showToast("Schleim Browser-Update wird heruntergeladen …")
+        ioExecutor.execute {
+            var connection: HttpURLConnection? = null
+            try {
+                connection = (URL(update.apkUrl).openConnection() as HttpURLConnection).apply {
+                    connectTimeout = 20000
+                    readTimeout = 30000
+                    instanceFollowRedirects = true
+                    setRequestProperty("User-Agent", "Schleim-Browser-Android")
+                }
+                if (connection.responseCode !in 200..299) throw IllegalStateException("Download fehlgeschlagen (HTTP ${connection.responseCode}).")
+                val file = File(downloadsDirectory(), "Schleim-Browser-${update.versionName}.apk")
+                val digest = MessageDigest.getInstance("SHA-256")
+                connection.inputStream.use { input ->
+                    FileOutputStream(file).use { output ->
+                        val buffer = ByteArray(32 * 1024)
+                        while (true) {
+                            val count = input.read(buffer)
+                            if (count < 0) break
+                            digest.update(buffer, 0, count)
+                            output.write(buffer, 0, count)
+                        }
+                        output.flush()
+                    }
+                }
+                val actualHash = digest.digest().joinToString("") { "%02x".format(it) }
+                if (!actualHash.equals(update.sha256, ignoreCase = true)) {
+                    file.delete()
+                    throw SecurityException("Die SHA-256-Prüfung der APK ist fehlgeschlagen.")
+                }
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) {
+                        pendingUpdateApk = file
+                        installDownloadedUpdate(file)
+                    }
+                }
+            } catch (error: Exception) {
+                Log.e(TAG, "App update download failed", error)
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("Update konnte nicht installiert werden: ${error.message ?: "Unbekannter Fehler"}")
+                }
+            } finally {
+                connection?.disconnect()
+            }
+        }
+    }
+
+    private fun installDownloadedUpdate(file: File) {
+        if (!file.isFile || !file.name.endsWith(".apk", true)) {
+            pendingUpdateApk = null
+            showToast("Die heruntergeladene Update-Datei wurde nicht gefunden.")
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !packageManager.canRequestPackageInstalls()) {
+            try {
+                startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")))
+                showToast("Erlaube Schleim Browser die Installation aus dieser Quelle. Danach wird der Installer geöffnet.")
+            } catch (error: Exception) {
+                showToast("Android-Einstellung konnte nicht geöffnet werden: ${error.message ?: "Fehler"}")
+            }
+            return
+        }
+        try {
+            val apkUri = FileProvider.getUriForFile(this, packageName + ".fileprovider", file)
+            val installIntent = Intent(Intent.ACTION_VIEW).setDataAndType(apkUri, "application/vnd.android.package-archive")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(installIntent)
+        } catch (error: Exception) {
+            showToast("Android-Installer konnte nicht geöffnet werden: ${error.message ?: "Fehler"}")
+        }
+    }
+
     private fun requestDefaultBrowserRole() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val manager = getSystemService(RoleManager::class.java)
@@ -1805,6 +1993,11 @@ class MainActivity : Activity() {
         activeSession()?.let { session ->
             runCatching { session.setActive(true) }
             runCatching { session.setFocused(true) }
+        }
+        pendingUpdateApk?.takeIf { it.isFile }?.let { file ->
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O || packageManager.canRequestPackageInstalls()) {
+                installDownloadedUpdate(file)
+            }
         }
     }
 
@@ -1905,5 +2098,6 @@ class MainActivity : Activity() {
         private const val KEY_DESKTOP_MODE = "desktop_mode"
         private const val MAX_OPEN_TABS = 4
         private const val MAX_DOWNLOAD_ROWS = 100
+        private const val UPDATE_METADATA_ASSET = "Schleim-Browser-Android-update.json"
     }
 }
