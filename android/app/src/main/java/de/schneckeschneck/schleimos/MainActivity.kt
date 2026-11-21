@@ -1076,6 +1076,9 @@ class MainActivity : Activity() {
             }
         }
 
+        // Always offer page printing alongside link/media actions in the native long-press menu.
+        addAction("Seite drucken") { printPage(session) }
+
         popup.setOnDismissListener { rootFrame.removeView(anchor) }
         popup.show()
     }
