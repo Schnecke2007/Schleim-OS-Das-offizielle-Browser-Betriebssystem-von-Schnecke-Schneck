@@ -80,7 +80,6 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
 - [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
-
 - [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk) – de zelfstandige Android-browser.
 - [**Android Studio-projecttemplate downloaden (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – het ZIP-bestand bevat de projectmap **Android-App Template**.
 
