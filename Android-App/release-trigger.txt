@@ -7,3 +7,5 @@ Rebuild requested: 2026-11-21 — publish the checked Alpha 24 Android APK and v
 Rebuild retry: extension manifest and its bundled SHA-256 entry are now aligned with release 3.18.0.
 
 Rebuild retry: handle nullable GeckoView WebResponse in direct file downloads.
+
+Verification retry: the generated Android Studio ZIP root is Android-App Template; validate MainActivity.kt at that exact archive path.
