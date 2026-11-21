@@ -228,13 +228,13 @@ jobs:
           set -euo pipefail
           mkdir -p dist/release
           {
-            printf '## 🇩🇪 Deutsch\\n\\n'
+            printf '## 🇩🇪 Deutsch\n\n'
             cat "$NOTES_DE"
-            printf '\\n\\n---\\n\\n## 🇬🇧 English\\n\\n'
+            printf '\n\n---\n\n## 🇬🇧 English\n\n'
             cat "$NOTES_EN"
-            printf '\\n\\n---\\n\\n## 🇳🇱 Nederlands\\n\\n'
+            printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
             cat "$NOTES_NL"
-            printf '\\n'
+            printf '\n'
           } > dist/release/ReleaseNotes.md
           test -s dist/release/ReleaseNotes.md
           echo "Combined trilingual release description prepared."
