@@ -4,7 +4,7 @@ This folder contains the instructions and generator for the neutral Android Stud
 
 ## Download
 
-The latest GitHub Release provides **Schleim-Browser-Android-Studio-Template.zip**. Extract the archive and open the contained **Android-App** folder in Android Studio.
+The latest GitHub Release provides **Schleim-Browser-Android-Studio-Template.zip**. Extract the archive and open the contained project folder **Android-App Template** in Android Studio.
 
 ## Placeholders and customization
 
@@ -31,7 +31,7 @@ Before building your own version, customize at least:
 ## Build the project
 
 1. Open Android Studio and select **Open**.
-2. Select the extracted Android-App folder.
+2. Select the extracted **Android-App Template** folder.
 3. Run Gradle Sync.
 4. Build a test APK through **Build → Build Bundle(s) / APK(s) → Build APK(s)**.
 5. Configure your own persistent signing key before publishing.
