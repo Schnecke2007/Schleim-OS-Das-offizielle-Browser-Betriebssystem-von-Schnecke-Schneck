@@ -13,10 +13,11 @@
 - Downloads geschützter, blob-basierter, dynamisch generierter oder DRM-geschützter Inhalte können von der Quelle verhindert werden.
 - Für den Druck wird die Android-Druckfunktion verwendet. Ob ein physischer Drucker verfügbar ist, hängt vom Android-Gerät und den installierten Druckdiensten ab.
 - Die Android-App bleibt eine GeckoView-App. Chrome-CRX-Dateien werden nicht unterstützt; kompatible, Mozilla-signierte XPI-Dateien können installiert werden.
+- Der Erweiterungsmanager öffnet wieder den offiziellen [Mozilla Firefox Add-ons-Katalog](https://addons.mozilla.org/firefox/). Installiert werden weiterhin nur kompatible, Mozilla-signierte XPI-Dateien.
 - Kamera- und Mikrofonaufnahmen sind in der Android-App deaktiviert. Die ursprüngliche Chromium-Extension behält ihre separate JavaScript-Webkamera.
 
 ## Versionen
 
 - Chromium-Extension: **3.18.0**
-- Schleim Browser für Android: **0.1.0-alpha24**
+- Schleim Browser für Android: **0.1.0-alpha25**
 - Mozilla GeckoView · Android 8.0+ · ARM64
