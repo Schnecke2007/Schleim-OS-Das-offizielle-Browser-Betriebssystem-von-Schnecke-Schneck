@@ -24,3 +24,5 @@ Rebuild requested: 2026-11-21 — investigate recurring Android ANR reports and 
 
 
 Release rebuild: 2026-11-21 — build and validate Android Alpha 27 using the persistent release keystore; publish the signed APK and regenerate the update metadata and release checksums.
+
+Retry after fixing APK certificate validation pipeline: 2026-11-21.
