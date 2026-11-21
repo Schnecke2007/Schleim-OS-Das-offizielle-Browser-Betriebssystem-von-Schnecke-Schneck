@@ -9,3 +9,5 @@ Rebuild retry: extension manifest and its bundled SHA-256 entry are now aligned 
 Rebuild retry: handle nullable GeckoView WebResponse in direct file downloads.
 
 Verification retry: the generated Android Studio ZIP root is Android-App Template; validate MainActivity.kt at that exact archive path.
+
+Final rebuild: quote the Android Studio template archive path so the published ZIP verification succeeds; rebuild and replace all v3.18.0 assets.
