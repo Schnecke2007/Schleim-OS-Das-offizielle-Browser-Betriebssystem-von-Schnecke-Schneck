@@ -157,7 +157,7 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 
 Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md). Er is ook een eenvoudige uitleg over [aanmelden en cloudback-ups](docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md) en [Schleim OS bijwerken](docs/Leichte-Sprache/Niederländisch/UPDATES.md).
 
-## 📱 Android-App-Dokumentation
+## 📱 Android-appdocumentatie
 
 [Schleim Browser – Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android-Studio-Vorlage](Android-App/README.nl.md)
 
