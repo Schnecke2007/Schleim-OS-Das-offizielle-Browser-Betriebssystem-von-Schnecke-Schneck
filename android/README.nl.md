@@ -55,6 +55,6 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 - [English](../docs/Englisch/ANDROID-BROWSER.md)
 - [Nederlands](../docs/Niederländisch/ANDROID-BROWSER.md)
 
-De neutrale Android Studio-projecttemplate wordt uit deze bron gegenereerd en gepubliceerd als `Schleim-Browser-Android-Studio-Template.zip`.
+De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
 [Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
