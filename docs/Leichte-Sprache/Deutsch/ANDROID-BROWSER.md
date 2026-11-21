@@ -12,9 +12,9 @@
 
 Öffne die [GitHub-Release-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
 
-Lade dort **Schleim-Browser-Android-0.1.0-alpha23.apk** herunter.
+Lade dort **Schleim-Browser-Android-0.1.0-alpha24.apk** herunter.
 
-[**Android-App direkt herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk)
+[**Android-App direkt herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
 
 ## App installieren
 
