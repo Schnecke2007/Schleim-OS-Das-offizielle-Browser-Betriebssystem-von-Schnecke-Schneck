@@ -207,6 +207,19 @@ Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsc
 └── README.nl.md
 ```
 
+## 📱 Schleim Browser für Android
+
+Mit **Schleim Browser** gibt es eine eigenständige Android-App. Sie bündelt die originale Schleim-OS-Extension in Mozilla GeckoView und ergänzt sie um Browserleiste, Tabs, Downloads, XPI-Erweiterungsverwaltung und Android-Dateidialoge.
+
+- Mindestanforderung: Android 8.0 oder neuer, 64-Bit-ARM (arm64-v8a).
+- **Kontextmenü:** Halte Links, Bilder, Videos oder Audiodateien gedrückt, um sie zu öffnen, in einem neuen Tab zu öffnen, herunterzuladen oder ihre Adresse zu kopieren.
+- **Drucken:** Die aktuelle Seite lässt sich über das Browser-Menü oder **Seite drucken** im Kontextmenü an Androids Druckfenster senden.
+- **Erweiterungen:** Im Erweiterungsmanager erscheint **Öffnen**, wenn eine Optionsseite oder geeignete Homepage verfügbar ist. Aktivieren, Deaktivieren und Entfernen bleiben verfügbar.
+- Kamera- und Mikrofonaufnahme sind in der Android-App bewusst deaktiviert.
+- Die Android-App wird unabhängig von der Browser-Extension aktualisiert und als Alpha-Version angeboten.
+
+[**Android-APK herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md) · [Android-Studio-Template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+
 ## 🧩 Eigenes Browser OS erstellen
 
 Du möchtest eine eigene Variante entwickeln? Das vollständige, neutrale Template mit Demo-Seiten, Beispielgrafiken und Platzhaltern liegt separat im Ordner [extension-template/](extension-template/).
@@ -247,18 +260,6 @@ Deine Meinung ist mir wichtig! Ich freue mich über Bewertungen, Verbesserungsvo
 
 Vielen Dank, dass du dir die Zeit nimmst, Schleim OS und meine Arbeit zu unterstützen! ❤️
 
-## 📱 Schleim Browser für Android
-
-Mit **Schleim Browser** gibt es eine eigenständige Android-App. Sie bündelt die originale Schleim-OS-Extension in Mozilla GeckoView und ergänzt sie um Browserleiste, Tabs, Downloads, XPI-Erweiterungsverwaltung und Android-Dateidialoge.
-
-- Mindestanforderung: Android 8.0 oder neuer, 64-Bit-ARM (arm64-v8a).
-- **Kontextmenü:** Halte Links, Bilder, Videos oder Audiodateien gedrückt, um sie zu öffnen, in einem neuen Tab zu öffnen, herunterzuladen oder ihre Adresse zu kopieren.
-- **Drucken:** Die aktuelle Seite lässt sich über das Browser-Menü oder **Seite drucken** im Kontextmenü an Androids Druckfenster senden.
-- **Erweiterungen:** Im Erweiterungsmanager erscheint **Öffnen**, wenn eine Optionsseite oder geeignete Homepage verfügbar ist. Aktivieren, Deaktivieren und Entfernen bleiben verfügbar.
-- Kamera- und Mikrofonaufnahme sind in der Android-App bewusst deaktiviert.
-- Die Android-App wird unabhängig von der Browser-Extension aktualisiert und als Alpha-Version angeboten.
-
-[**Android-APK herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md) · [Android-Studio-Template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## 📱 Folge mir auf Social Media
 
