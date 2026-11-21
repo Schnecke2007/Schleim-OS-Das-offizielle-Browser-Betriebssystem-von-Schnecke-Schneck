@@ -64,7 +64,7 @@ Android apps are not updated through the Extension update center. Download the l
 The release also provides **Schleim-Browser-Android-Studio-Template.zip**. The archive contains a complete Android Studio project with Android source code and a bundled example Extension. Personal details, application ID, GitHub repository, website and contact details are replaced with neutral placeholders inside the template only. The production app in the repository is not changed.
 
 1. Download and extract the template ZIP.
-2. Open the contained **Android-App** folder in Android Studio.
+2. Open the contained project folder **Android-App Template** in Android Studio.
 3. Customize the application ID, app name, Extension, links and placeholders.
 4. Sync Gradle and build your own test APK.
 5. Configure your own persistent signing key before publishing.
