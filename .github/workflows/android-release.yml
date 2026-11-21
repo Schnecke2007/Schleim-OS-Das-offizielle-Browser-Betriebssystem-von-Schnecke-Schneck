@@ -419,7 +419,7 @@ jobs:
               "versionName": "0.1.0-alpha27",
               "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.18.0/${APK_NAME}",
               "sha256": "${APK_SHA256}"
-          }, indent=2) + "\\n", encoding="utf-8")
+          }, indent=2) + "\n", encoding="utf-8")
           PY
 
           (
