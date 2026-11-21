@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.16.0
+# Schleim OS – Erweiterungsdokumentation · Version 3.17.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
