@@ -38,6 +38,8 @@ Before building your own version, customize at least:
 
 The template contains no private keys, tokens or credentials. Never put secrets directly in source code or a public repository.
 
+The ZIP includes the Gradle 8.13 wrapper, so no system-wide Gradle installation is required for the template. The Android launcher icon and Extension icons are neutral placeholders and should be replaced before publishing your own app.
+
 ## Technical note
 
 The template is based on a GeckoView browser with a bundled WebExtension. Customize the example Extension before first use. Android camera and microphone capture are not enabled by default in the included Android browser logic.
