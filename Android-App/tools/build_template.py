@@ -208,7 +208,7 @@ def main() -> None:
         )
         html.write_text(content, encoding="utf-8")
 
-    # Apply all identity replacements only to this generated Android-App directory.
+    # Apply identity replacements only inside the generated Android-App Template directory.
     patch_text_files(project)
     settings_file = project / "settings.gradle.kts"
     settings_text = settings_file.read_text(encoding="utf-8")
