@@ -21,3 +21,6 @@ Release cleanup retry: remove obsolete Alpha 24 APK before publishing Alpha 26, 
 Stability update: draw the native browser shell before GeckoView runtime initialization, move document-provider metadata queries to the IO executor, limit retained tabs to four, and stop background executors immediately when the activity is destroyed. Publish and verify Android Alpha 26.
 
 Rebuild requested: 2026-11-21 — investigate recurring Android ANR reports and publish the stability build.
+
+
+Release rebuild: 2026-11-21 — build and validate Android Alpha 27 using the persistent release keystore; publish the signed APK and regenerate the update metadata and release checksums.
