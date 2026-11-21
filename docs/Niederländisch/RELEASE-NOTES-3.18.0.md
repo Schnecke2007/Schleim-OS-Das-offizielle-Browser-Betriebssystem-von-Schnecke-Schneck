@@ -7,7 +7,7 @@ Schleim Browser verbetert de bediening van de Android-browser. De oorspronkelijk
 - **Contextmenu door lang indrukken:** Houd een link, afbeelding, video of audio-item lang ingedrukt. Schleim Browser opent een native Android-contextmenu met passende acties.
 - **Links en bestanden downloaden:** Links kunnen worden geopend, in een nieuw tabblad worden geopend, gedownload of als adres worden gekopieerd.
 - **Media downloaden:** Afbeeldingen, video's en audiobestanden kunnen worden geopend, gedownload of als adres worden gekopieerd wanneer de pagina een directe HTTP(S)-bron aanbiedt.
-- **Pagina afdrukken:** Het contextmenu bevat nu ook **Pagina afdrukken**. Je kunt ook **Browsermenu → Afdrukken** gebruiken om de huidige webpagina naar het native Android-afdruksysteem te sturen. Kies een printer of sla de pagina op als PDF.
+- **Pagina afdrukken:** Het contextmenu biedt ook **Pagina afdrukken** wanneer je gewone pagina-inhoud lang indrukt, dus niet alleen links of media. Je kunt ook **Browsermenu → Afdrukken** gebruiken om de huidige webpagina naar het native Android-afdruksysteem te sturen. Kies een printer of sla de pagina op als PDF.
 - **Extensies openen:** De extensiebeheerder toont **Openen** wanneer een add-on een optiespagina of een geschikte homepage aanbiedt. De ingebouwde Schleim OS-Extension opent de Schleim OS-startpagina.
 - **Extensies beheren:** Activeren, deactiveren en verwijderen blijven beschikbaar in dezelfde extensiebeheerder.
 
