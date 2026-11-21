@@ -14,3 +14,5 @@ Final rebuild: quote the Android Studio template archive path so the published Z
 
 
 Store update: replace the Chrome Web Store link with the official Mozilla Firefox Add-ons catalog (addons.mozilla.org/firefox/), document Mozilla-signed XPI installation, and publish Android Alpha 25.
+
+Release cleanup retry: remove obsolete Alpha 24 APK before publishing Alpha 25, keeping only the current Android APK in v3.18.0.
