@@ -64,7 +64,7 @@ Android-Apps werden nicht über das Extension-Update-Center aktualisiert. Lade d
 Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. Das Archiv enthält ein vollständiges Android-Studio-Projekt mit Android-Quellcode und eingebundener Beispiel-Extension. Persönliche Angaben, Paket-ID, GitHub-Repository, Website- und Kontaktdaten sind innerhalb der Vorlage durch neutrale Platzhalter ersetzt. Die produktive App im Repository bleibt davon unberührt.
 
 1. Lade das Template-ZIP herunter und entpacke es.
-2. Öffne den enthaltenen Ordner **Android-App** in Android Studio.
+2. Öffne den enthaltenen Projektordner **Android-App Template** in Android Studio.
 3. Passe Paket-ID, App-Name, Extension, Links und Platzhalter an.
 4. Synchronisiere Gradle und baue eine eigene Test-APK.
 5. Richte für eine Veröffentlichung einen eigenen, dauerhaft gesicherten Signaturschlüssel ein.
