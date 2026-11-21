@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha24.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha25.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
 
 ## Systemanforderungen
 
@@ -49,6 +49,7 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - Es können bis zu sechs Browser-Tabs gleichzeitig geöffnet gehalten werden. Beim Öffnen weiterer Tabs wird ein älterer Hintergrund-Tab entfernt, um Speicher und Ressourcen zu begrenzen.
 - Die Android-App unterstützt Datei-Upload und den Speicherdialog für exportierte Dateien.
 - Mozilla-signierte XPI-Erweiterungen können über das Browser-Menü installiert werden.
+- **Mozilla Firefox Add-ons:** Der Button im Erweiterungsmanager öffnet wieder den offiziellen [Firefox-Add-ons-Katalog](https://addons.mozilla.org/firefox/). Kompatible, von Mozilla signierte XPI-Dateien können heruntergeladen und anschließend über „XPI-Datei installieren“ installiert werden.
 - **Kontextmenü:** Halte einen Link, ein Bild, Video oder Audio-Element gedrückt. Das Menü bietet passende Aktionen zum Öffnen, Herunterladen und Kopieren der Adresse. Downloads funktionieren, wenn eine direkte HTTP(S)-Adresse bereitsteht.
 - **Drucken:** Über das Browser-Menü oder Kontextmenü kannst du die aktuelle Webseite an Androids Druckdialog senden. Dort lassen sich ein Drucker oder „Als PDF speichern“ auswählen.
 - **Erweiterungen öffnen:** Für Add-ons mit einer hinterlegten Optionsseite erscheint im Erweiterungsmanager ein Button „Öffnen“. Die integrierte Schleim-OS-Erweiterung öffnet ihre Startseite.
