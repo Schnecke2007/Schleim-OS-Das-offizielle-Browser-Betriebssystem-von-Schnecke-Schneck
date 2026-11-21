@@ -7,7 +7,7 @@ Schleim Browser erweitert die Android-Browserbedienung. Die ursprüngliche Chrom
 - **Kontextmenü per langem Drücken:** Halte einen Link, ein Bild, ein Video oder eine Audiodatei gedrückt. Schleim Browser zeigt ein natives Android-Kontextmenü mit passenden Aktionen.
 - **Links und Dateien herunterladen:** Links können geöffnet, in einem neuen Tab geöffnet, heruntergeladen oder als Adresse kopiert werden.
 - **Medien herunterladen:** Bilder, Videos und Audiodateien können geöffnet, heruntergeladen oder als Adresse kopiert werden, wenn die Seite eine direkte HTTP(S)-Quelle bereitstellt.
-- **Seite drucken:** Das Kontextmenü enthält jetzt zusätzlich **„Seite drucken“**. Die aktuelle Webseite kann außerdem über **Browser-Menü → Drucken** an das Android-Drucksystem übergeben werden. Dort lässt sich ein Drucker auswählen oder die Seite als PDF speichern.
+- **Seite drucken:** Das Kontextmenü bietet **„Seite drucken“** auch dann an, wenn du normalen Seiteninhalt lange gedrückt hältst. Die aktuelle Webseite kann außerdem über **Browser-Menü → Drucken** an das Android-Drucksystem übergeben werden. Dort lässt sich ein Drucker auswählen oder die Seite als PDF speichern.
 - **Erweiterungen öffnen:** Im Erweiterungsmanager erscheint **„Öffnen“**, wenn ein Add-on eine Optionsseite oder geeignete Homepage bereitstellt. Die integrierte Schleim-OS-Extension öffnet die Schleim-OS-Startseite.
 - **Erweiterungen verwalten:** Aktivieren, Deaktivieren und Entfernen bleiben im selben Erweiterungsbereich verfügbar.
 
