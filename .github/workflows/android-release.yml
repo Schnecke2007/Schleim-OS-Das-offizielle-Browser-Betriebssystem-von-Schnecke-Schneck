@@ -303,19 +303,52 @@ jobs:
           gradle --no-daemon --stacktrace -PgeckoviewVersion=${{ steps.geckoview.outputs.version }} :app:assembleRelease
 
       - name: Validate APK output
+        shell: bash
         run: |
           set -euo pipefail
           APK="android/app/build/outputs/apk/release/app-release.apk"
-          test -s "$APK"
+          test -s "$APK" || { echo "Release APK missing or empty: $APK" >&2; exit 1; }
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
-          unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
-          unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          unzip -l "$APK" | grep -Fq "ic_launcher.png"
-          cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          CERT="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK" | awk -F': ' '/certificate SHA-256 digest:/ {print $NF; found=1} END {if (!found) exit 1}')"
-          test "$CERT" = "9f06dbb31fd2fdaca50e75e72bb55076433882265aa31136c3434f9e633f53b2"
+          AAPT="$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt"
+          APKSIGNER="$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner"
+
+          # Do not pipe aapt/unzip/apksigner into grep -q under pipefail:
+          # grep may exit early and make the producer fail with SIGPIPE (141).
+          APK_BADGING="$("$AAPT" dump badging "$APK")"
+          if [[ "$APK_BADGING" != *"package: name='de.schneckeschneck.schleimbrowser'"* ]]; then
+            echo "Unexpected APK applicationId. Expected de.schneckeschneck.schleimbrowser." >&2
+            printf '%s\n' "$APK_BADGING" | head -n 5 >&2
+            exit 1
+          fi
+
+          APK_CONTENTS="$(unzip -Z1 "$APK")"
+          for required in \
+            "assets/extension/manifest.json" \
+            "assets/extension/pages/newtab.html" \
+            "ic_launcher.png"; do
+            if [[ "$APK_CONTENTS" != *"$required"* ]]; then
+              echo "Required file is missing from APK: $required" >&2
+              exit 1
+            fi
+          done
+
+          cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" || {
+            echo "Launcher icon differs from the repository source image." >&2
+            exit 1
+          }
+
+          SIGNATURE_INFO="$("$APKSIGNER" verify --verbose --print-certs "$APK")"
+          printf '%s\n' "$SIGNATURE_INFO"
+          CERT="$(sed -n 's/^.*certificate SHA-256 digest: //p' <<< "$SIGNATURE_INFO")"
+          if [[ -z "$CERT" ]]; then
+            echo "Could not read the APK signing certificate SHA-256 digest." >&2
+            exit 1
+          fi
+          if [[ "$CERT" != "9f06dbb31fd2fdaca50e75e72bb55076433882265aa31136c3434f9e633f53b2" ]]; then
+            echo "APK was signed with an unexpected certificate: $CERT" >&2
+            exit 1
+          fi
+
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha27.apk"
           echo "Signed release APK built, package metadata and persistent signing certificate validated."
 
@@ -400,7 +433,8 @@ jobs:
             echo "Android Studio source template is unexpectedly large: $TEMPLATE_SIZE bytes" >&2
             exit 1
           fi
-          if unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Eq '(^|/)(build|[.]gradle|[.]kotlin)/|[.](apk|aab|hprof)$'; then
+          TEMPLATE_CONTENTS="$(unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip)"
+          if [[ "$TEMPLATE_CONTENTS" =~ (^|/)(build|[.]gradle|[.]kotlin)/|[.](apk|aab|hprof)$ ]]; then
             echo "Generated build output or cache was found in the Android Studio template ZIP." >&2
             exit 1
           fi
@@ -436,8 +470,89 @@ jobs:
           unzip -t dist/release/Schleim-OS-Extension.zip >/dev/null
           unzip -t dist/release/Browser-OS-Extension-Template.zip >/dev/null
           unzip -t dist/release/Schleim-Browser-Android-Studio-Template.zip >/dev/null
-          unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Fq "Android-App Template/app/build.gradle.kts"
-          if unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip | grep -Eq '^Android-App/'; then
+          TEMPLATE_CONTENTS="$(unzip -Z1 dist/release/Schleim-Browser-Android-Studio-Template.zip)"
+          [[ "$TEMPLATE_CONTENTS" == *"Android-App Template/app/build.gradle.kts"* ]] || {
+            echo "Android Studio template is missing its app/build.gradle.kts file." >&2
+            exit 1
+          }
+          if [[ "$TEMPLATE_CONTENTS" == *
+            echo "Unexpected old Android-App ZIP root folder found." >&2
+            exit 1
+          fi
+          echo "All project archives and the Alpha 24 APK are ready; the Android Studio ZIP root is Android-App Template."
+
+      - name: Publish the complete 3.18.0 release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.target.outputs.tag }}
+        run: |
+          set -euo pipefail
+          # Keep only the current Android APK in this consolidated release.
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha24.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha25.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha26.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha27.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release upload "$TAG" \
+            "dist/release/Schleim-OS-Extension.zip" \
+            "dist/release/Browser-OS-Extension-Template.zip" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha27.apk" \
+            "dist/release/Schleim-Browser-Android-update.json" \
+            "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
+            "dist/release/Schleim-OS-SHA256SUMS.txt" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Schleim OS 3.18.0" \
+            --notes-file dist/release-notes.md
+
+      - name: Verify the exact files published to the GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.target.outputs.tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist/verify
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "Schleim-OS-Extension.zip" \
+            --pattern "Browser-OS-Extension-Template.zip" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha27.apk" \
+            --pattern "Schleim-Browser-Android-update.json" \
+            --pattern "Schleim-Browser-Android-Studio-Template.zip" \
+            --pattern "Schleim-OS-SHA256SUMS.txt" \
+            --dir dist/verify
+
+          (
+            cd dist/verify
+            sha256sum -c Schleim-OS-SHA256SUMS.txt
+          )
+
+          for asset in \
+            Schleim-OS-Extension.zip \
+            Browser-OS-Extension-Template.zip \
+            Schleim-Browser-Android-0.1.0-alpha27.apk \
+            Schleim-Browser-Android-update.json \
+            Schleim-Browser-Android-Studio-Template.zip; do
+            cmp -s "dist/release/$asset" "dist/verify/$asset"
+          done
+
+          unzip -p dist/verify/Schleim-Browser-Android-Studio-Template.zip \
+            "Android-App Template/app/src/main/java/com/example/yourbrowser/MainActivity.kt" >/dev/null
+
+          BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha27.apk"
+
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          echo "Release v3.18.0 published; every archive, checksum and APK signature verified."
+\n'Android-App/* ]]; then
             echo "Unexpected old Android-App ZIP root folder found." >&2
             exit 1
           fi
