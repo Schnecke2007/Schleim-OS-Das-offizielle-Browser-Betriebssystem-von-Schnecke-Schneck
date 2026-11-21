@@ -4,7 +4,7 @@ Dieser Ordner enthält die Anleitung und den Generator für das neutrale Android
 
 ## Download
 
-Im neuesten GitHub-Release findest du **Schleim-Browser-Android-Studio-Template.zip**. Entpacke das Archiv und öffne den enthaltenen Ordner **Android-App** in Android Studio.
+Im neuesten GitHub-Release findest du **Schleim-Browser-Android-Studio-Template.zip**. Entpacke das Archiv und öffne den enthaltenen Projektordner **Android-App Template** in Android Studio.
 
 ## Platzhalter und Anpassung
 
@@ -31,7 +31,7 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 ## Projekt bauen
 
 1. Android Studio öffnen und **Open** wählen.
-2. Den Ordner Android-App aus dem entpackten ZIP auswählen.
+2. Den Ordner **Android-App Template** aus dem entpackten ZIP auswählen.
 3. Gradle-Synchronisierung durchführen.
 4. Eine Test-APK über **Build → Build Bundle(s) / APK(s) → Build APK(s)** erstellen.
 5. Für eine eigene Veröffentlichung eine eigene, dauerhaft gesicherte Signatur konfigurieren.
