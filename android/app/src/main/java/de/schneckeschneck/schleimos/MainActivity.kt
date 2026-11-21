@@ -1110,7 +1110,11 @@ class MainActivity : Activity() {
 
         try {
             GeckoWebExecutor(runtime).fetch(request.build()).accept({ response ->
-                if (response.statusCode !in 200..299) {
+                if (response == null) {
+                    runOnUiThread {
+                        showToast("Download fehlgeschlagen: Keine Serverantwort.")
+                    }
+                } else if (response.statusCode !in 200..299) {
                     runCatching { response.body?.close() }
                     runOnUiThread {
                         showToast("Download fehlgeschlagen (HTTP ${response.statusCode}).")
