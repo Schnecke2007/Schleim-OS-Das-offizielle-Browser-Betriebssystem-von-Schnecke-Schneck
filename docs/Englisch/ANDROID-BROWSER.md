@@ -49,6 +49,9 @@ The Android app bundles the Schleim OS Extension inside GeckoView. It includes t
 - Up to six browser tabs are kept open at once. When more tabs are opened, an older background tab is removed to limit memory and resource use.
 - The Android app supports file uploads and the Android save-file dialog for exported files.
 - Mozilla-signed XPI extensions can be installed from the browser menu.
+- **Context menu:** Long-press a link, image, video or audio element. The menu offers relevant actions to open, download or copy its address. Downloads work when a direct HTTP(S) address is available.
+- **Print:** Send the current webpage to Android's print dialog from the browser menu or context menu. Choose a printer or select **Save as PDF**.
+- **Open extensions:** The extension manager shows an **Open** button for add-ons with a declared options page. The built-in Schleim OS Extension opens its home page.
 - Camera and microphone capture are intentionally disabled in the Android app. The Camera tile explains this limitation. The JavaScript webcam in the original browser Extension remains separate.
 - Some websites block embedding in other pages. Such content may appear blank or need to be opened directly.
 - Not every desktop Chrome extension is compatible with GeckoView.
