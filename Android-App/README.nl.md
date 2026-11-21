@@ -38,6 +38,8 @@ Pas vóór je eigen build ten minste het volgende aan:
 
 De sjabloon bevat geen privésleutels, tokens of inloggegevens. Zet geheimen nooit rechtstreeks in broncode of in een openbare repository.
 
+Het ZIP-bestand bevat de Gradle 8.13-wrapper; een systeembrede Gradle-installatie is voor de sjabloon niet nodig. Het Android-startpictogram en de Extension-pictogrammen zijn neutrale tijdelijke afbeeldingen en moeten vóór publicatie van je eigen app worden vervangen.
+
 ## Technische opmerking
 
 De sjabloon is gebaseerd op een GeckoView-browser met een ingebouwde WebExtension. Pas de voorbeeld-Extension aan voordat je deze voor het eerst start. Camera- en microfoonopnamen zijn in de meegeleverde Android-browserlogica standaard niet ingeschakeld.
