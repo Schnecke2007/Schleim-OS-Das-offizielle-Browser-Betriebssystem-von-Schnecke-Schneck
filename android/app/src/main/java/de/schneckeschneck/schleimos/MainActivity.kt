@@ -125,10 +125,21 @@ class MainActivity : Activity() {
         window.decorView.systemUiVisibility = 0
         createNotificationChannel()
         buildBrowserUi()
-        runtime = GeckoRuntime.create(this)
-        configureExtensionPrompts()
-        openBrowser(intent?.data?.toString())
         requestNotificationPermissionIfNeeded()
+
+        // Let Android draw the browser shell before GeckoView performs its
+        // comparatively expensive native runtime initialization.
+        geckoView.post {
+            if (isFinishing || isDestroyed) return@post
+            try {
+                runtime = GeckoRuntime.create(this)
+                configureExtensionPrompts()
+                openBrowser(intent?.data?.toString())
+            } catch (error: Exception) {
+                Log.e(TAG, "GeckoView startup failed", error)
+                showToast("Schleim Browser konnte nicht gestartet werden: " + (error.message ?: "GeckoView-Fehler"))
+            }
+        }
     }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
@@ -1657,16 +1668,22 @@ class MainActivity : Activity() {
     }
 
     private fun importExtensionUri(uri: Uri) {
-        val name = displayNameForUri(uri) ?: "extension.xpi"
-        if (!name.endsWith(".xpi", true)) {
-            showToast("Bitte eine Mozilla-signierte .xpi-Datei auswählen. ZIP- und CRX-Dateien werden nicht unterstützt.")
-            return
-        }
         showToast("XPI-Datei wird vorbereitet …")
-        val safeName = name.replace(Regex("[^A-Za-z0-9._-]"), "_")
-        val destination = File(File(cacheDir, "extension-import"), safeName)
+        // Content providers (cloud drives, file managers, USB storage) may take
+        // seconds to answer metadata queries. Never query them on the UI thread.
         ioExecutor.execute {
             try {
+                val name = displayNameForUri(uri) ?: "extension.xpi"
+                if (!name.endsWith(".xpi", true)) {
+                    runOnUiThread {
+                        if (!isFinishing && !isDestroyed) {
+                            showToast("Bitte eine Mozilla-signierte .xpi-Datei auswählen. ZIP- und CRX-Dateien werden nicht unterstützt.")
+                        }
+                    }
+                    return@execute
+                }
+                val safeName = name.replace(Regex("[^A-Za-z0-9._-]"), "_")
+                val destination = File(File(cacheDir, "extension-import"), safeName)
                 destination.parentFile?.mkdirs()
                 contentResolver.openInputStream(uri)?.use { input ->
                     FileOutputStream(destination).use { output -> input.copyTo(output) }
@@ -1866,8 +1883,8 @@ class MainActivity : Activity() {
         mediaSession?.let { runCatching { it.close() } }
         mediaSession = null
         mediaView = null
-        downloadExecutor.shutdown()
-        ioExecutor.shutdown()
+        downloadExecutor.shutdownNow()
+        ioExecutor.shutdownNow()
         super.onDestroy()
     }
 
@@ -1886,7 +1903,7 @@ class MainActivity : Activity() {
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"
-        private const val MAX_OPEN_TABS = 6
+        private const val MAX_OPEN_TABS = 4
         private const val MAX_DOWNLOAD_ROWS = 100
     }
 }
