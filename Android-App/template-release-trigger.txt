@@ -1,0 +1,3 @@
+Schleim OS 3.16.0 — Android Studio template folder naming correction
+
+Rebuild and compile the privacy-scrubbed Android Studio project; publish only the corrected Schleim-Browser-Android-Studio-Template.zip and refreshed SHA-256SUMS.txt to v3.16.0. The production Alpha 22 APK must not be rebuilt or replaced.
