@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.17.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium%20%2B%20Android-green)
+![Version](https://img.shields.io/badge/version-3.18.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium%20%2B%20Android-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Nur Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -72,7 +72,7 @@ Auf der [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-o
 - [**Schleim Browser für Android herunterladen (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) – native Android-App.
 - [**Android-Studio-Projektvorlage herunterladen (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – neutrales, anpassbares Android-Projekt; das ZIP enthält den Ordner **Android-App Template**.
 
-Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.17.0.md).
+Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](extension/docs/RELEASE-NOTES-3.18.0.md).
 
 ## 📥 Download und Installation
 
@@ -87,17 +87,6 @@ Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen u
 **Updates über Schleim OS:** Du musst die Release-Seite nicht manuell aufrufen. Öffne **Einstellungen → Schleim OS aktualisieren**, suche nach einer neuen Version und wähle den Download-Button. Nur der anschließende Import und die Bestätigung im Browser müssen manuell angestoßen werden.
 
 **Wichtig zur Browser-Unterstützung:** Die ZIP-Import-Funktion ist nicht Bestandteil jedes Chromium-Browsers. Das normale Google Chrome für Android unterstützt keine Erweiterungen. Desktop-Chrome lädt im Entwicklermodus entpackte Ordner und bietet keinen direkten ZIP-Import. Für die Installation ohne Entpacken benötigst du einen Browser, dessen Erweiterungsverwaltung den lokalen ZIP-Import ausdrücklich anbietet.
-
-## 📱 Schleim Browser für Android
-
-Mit **Schleim Browser** gibt es jetzt eine eigenständige Android-App. Sie bündelt die originale Schleim-OS-Extension in Mozilla GeckoView und ergänzt sie um Browserleiste, Tabs, Downloads, XPI-Erweiterungsverwaltung und Android-Dateidialoge.
-
-- Mindestanforderung: Android 8.0 oder neuer, 64-Bit-ARM (arm64-v8a).
-- Die Kamera- und Mikrofonaufnahme ist in der Android-App bewusst deaktiviert.
-- Die Android-App wird unabhängig von der Browser-Extension aktualisiert.
-- Die App ist derzeit als Alpha-Version gekennzeichnet.
-
-[**Android-APK herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) · [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md) · [Android-Studio-Template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## Bedienung und Einstellungen
 
@@ -147,7 +136,7 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 - [Nederlands – documentatie](README.nl.md)
 - [Installationsanleitung](docs/Deutsch/INSTALLATION.md)
 - [Schleim Browser für Android](docs/Deutsch/ANDROID-BROWSER.md)
-- [Release Notes 3.17.0](docs/Deutsch/RELEASE-NOTES-3.17.0.md)
+- [Release Notes 3.17.0](docs/Deutsch/RELEASE-NOTES-3.18.0.md)
 - [Fehlerbehebung](docs/Deutsch/FEHLERBEHEBUNG.md)
 - [Technische Hinweise](docs/Deutsch/TECHNISCHE-HINWEISE.md)
 - [Schleim-Konto und Cloud-Sicherung](extension/docs/SCHLEIM-KONTO.md)
@@ -159,9 +148,18 @@ Wenn das Problem weiterhin besteht, melde es bitte über [GitHub Issues](https:/
 
 Du möchtest kurze Sätze und einfache Erklärungen? Hier findest du die [deutsche Dokumentation in Leichter Sprache](docs/Leichte-Sprache/Deutsch/README.md). Es gibt dort auch eine einfache Installationsanleitung, Hilfe und Erklärungen zu rechtlichen Themen. Für den Store gibt es eine eigene [Anleitung in Leichter Sprache](docs/Leichte-Sprache/Deutsch/SCHLEIM-STORE.md). Eine leicht verständliche Erklärung zur [Anmeldung und Cloud-Sicherung](docs/Leichte-Sprache/Deutsch/KONTO-CLOUD.md) sowie zum [Aktualisieren](docs/Leichte-Sprache/Deutsch/UPDATES.md) gibt es ebenfalls.
 
-## 📱 Android-App-Dokumentation
+## 📱 Schleim Browser für Android
 
-[Schleim Browser – Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md) · [Android-Studio-Vorlage](Android-App/README.md)
+Mit **Schleim Browser** gibt es eine eigenständige Android-App. Sie bündelt die originale Schleim-OS-Extension in Mozilla GeckoView und ergänzt sie um Browserleiste, Tabs, Downloads, XPI-Erweiterungsverwaltung und Android-Dateidialoge.
+
+- Mindestanforderung: Android 8.0 oder neuer, 64-Bit-ARM (arm64-v8a).
+- **Kontextmenü:** Halte Links, Bilder, Videos oder Audiodateien gedrückt, um sie zu öffnen, in einem neuen Tab zu öffnen, herunterzuladen oder ihre Adresse zu kopieren.
+- **Drucken:** Die aktuelle Seite lässt sich über das Browser-Menü oder **Seite drucken** im Kontextmenü an Androids Druckfenster senden.
+- **Erweiterungen:** Im Erweiterungsmanager erscheint **Öffnen**, wenn eine Optionsseite oder geeignete Homepage verfügbar ist. Aktivieren, Deaktivieren und Entfernen bleiben verfügbar.
+- Kamera- und Mikrofonaufnahme sind in der Android-App bewusst deaktiviert.
+- Die Android-App wird unabhängig von der Browser-Extension aktualisiert und als Alpha-Version angeboten.
+
+[**Android-APK herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) · [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md) · [Android-Studio-Template](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## 📁 Projektstruktur
 
