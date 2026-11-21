@@ -264,7 +264,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
           VERSION: ${{ steps.version.outputs.version }}
-          NOTES: ${{ steps.version.outputs.notes }}
+          NOTES: ${{ github.workspace }}/dist/release/ReleaseNotes.md
         shell: bash
         run: |
           set -euo pipefail
