@@ -36,7 +36,7 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 
 ## Lokaal bouwen
 
-1. Installeer JDK 17 en Android SDK Platform 36.
+1. Installeer JDK 17, Android SDK Platform 36 en Gradle 8.13. De bronmap `android/` in de repository bevat geen Gradle-wrapper; de downloadbare **Android-App Template**-ZIP krijgt tijdens het verpakken automatisch een wrapper.
 2. Open de repository in Android Studio en selecteer de map `android/` als project.
 3. Kopieer de oorspronkelijke Extension naar `app/src/main/assets/extension` en bereid het Android-GeckoView-manifest voor. GitHub Actions voert deze stappen automatisch uit.
 4. Voer de build uit vanuit de projectmap:
