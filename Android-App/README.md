@@ -38,6 +38,8 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 
 Die Vorlage enthält keine privaten Schlüssel, Tokens oder Zugangsdaten. Lege Geheimnisse niemals direkt in den Quellcode oder in ein öffentliches Repository.
 
+Das ZIP enthält den Gradle-Wrapper 8.13; eine systemweite Gradle-Installation ist für das Template nicht erforderlich. App-Launcher und Extension-Symbole sind neutrale Platzhalter und sollten vor einer eigenen Veröffentlichung ersetzt werden.
+
 ## Technischer Hinweis
 
 Die Vorlage basiert auf einem GeckoView-Browser mit einer eingebundenen WebExtension. Die Demo-Extension muss vor dem ersten Start angepasst werden. Android-Kamera- und Mikrofonaufnahme sind in der übernommenen Android-Browserlogik standardmäßig nicht freigeschaltet.
