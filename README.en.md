@@ -69,7 +69,7 @@ The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizi
 
 - [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
 - [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – a starter template for your own browser OS.
-- [**Download Schleim Browser for Android (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) – the standalone Android browser.
+- [**Download Schleim Browser for Android (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) – the standalone Android browser.
 - [**Download the Android Studio project template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – the ZIP contains the **Android-App Template** project folder.
 
 Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.18.0.md) for the version history.
@@ -136,7 +136,7 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 - [Nederlands – documentatie](README.nl.md)
 - [Installation guide](docs/Englisch/INSTALLATION.md)
 - [Schleim Browser for Android](docs/Englisch/ANDROID-BROWSER.md)
-- [Release notes 3.17.0](docs/Englisch/RELEASE-NOTES-3.18.0.md)
+- [Release notes 3.18.0](docs/Englisch/RELEASE-NOTES-3.18.0.md)
 - [Troubleshooting](docs/Englisch/TROUBLESHOOTING.md)
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
 - [Schleim account and cloud backup](docs/Englisch/SCHLEIM-ACCOUNT.md)
