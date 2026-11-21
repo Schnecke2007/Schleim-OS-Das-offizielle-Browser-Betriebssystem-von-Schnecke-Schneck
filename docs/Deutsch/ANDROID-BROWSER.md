@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha25.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha28.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha28.apk)
 
 ## Systemanforderungen
 
@@ -61,7 +61,7 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 
 Android-Apps werden nicht über das Extension-Update-Center aktualisiert. Lade die neue APK aus dem neuesten GitHub-Release herunter und installiere sie.
 
-**Wichtiger Hinweis zur aktuellen Debug-Signierung:** Die Release-APK wird derzeit als Debug-Build erstellt. Solange kein dauerhaftes privates Signatur-Schlüsselpaar eingerichtet ist, kann Android ein direktes Update ablehnen. In diesem Fall musst du die vorherige App-Version deinstallieren und die neue APK installieren. Sichere vorher wichtige lokale Einstellungen und prüfe, ob deine private Cloud-Sicherung aktuell ist. Eine Deinstallation kann lokale App-Daten löschen.
+**Wichtiger Hinweis zur Signierung:** Die Release-APK wird absichtlich mit dem normalen Android-Debug-Schlüssel signiert. GitHub Actions kann bei jedem Build einen neuen Schlüssel erzeugen. Deshalb ist kein direktes Aktualisieren über die vorherige Installation möglich: Lade die neue APK herunter, deinstalliere die bisherige App und installiere anschließend die APK aus deinem Download-Ordner. Das Update-Fenster bietet dafür eine Download- und eine Deinstallationsaktion. Die Deinstallation muss in Android bestätigt werden und kann lokale App-Daten löschen. Sichere vorher wichtige lokale Einstellungen und prüfe, ob deine private Cloud-Sicherung aktuell ist.
 
 ## Android-Studio-Vorlage
 
@@ -80,7 +80,7 @@ Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. 
 | Problem | Lösung |
 |---|---|
 | Android blockiert die Installation. | Erlaube die Installation unbekannter Apps nur für den verwendeten Dateimanager oder Browser und starte die APK erneut. |
-| „App nicht installiert“ beim Update. | Eine Debug-Signatur kann sich zwischen Builds unterscheiden. Sichere Daten, deinstalliere die alte App und installiere die neue APK. |
+| Update verfügbar. | Lade die APK über das Update-Fenster herunter, bestätige anschließend die Deinstallation der alten App und installiere die APK aus dem Download-Ordner. |
 | Webseiten reagieren langsam oder die App meldet „reagiert nicht“. | Schließe nicht benötigte Tabs, lade die Seite neu und starte die App erneut. Bei wiederholten ANR-Meldungen melde Android-Version, Gerätemodell und Schritte über GitHub Issues. |
 | Eine Erweiterung lässt sich nicht installieren. | Es werden Mozilla-signierte XPI-Dateien unterstützt. ZIP-, CRX- oder entpackte Projektordner sind kein XPI-Ersatz. |
 | Kamera oder Mikrofon funktionieren nicht. | Aufnahmefunktionen sind in der Android-App bewusst deaktiviert. |
