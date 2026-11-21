@@ -9,9 +9,9 @@ De Android-app vervangt Android niet. Het is een browser die op Android draait.
 
 ## Download
 
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha24.apk**.
+Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
 
-Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
+Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
 
 ## Systeemvereisten
 
@@ -49,6 +49,7 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - Er worden maximaal zes browsertabbladen tegelijk opengehouden. Bij meer tabbladen wordt een ouder achtergrondtabblad verwijderd om geheugen en bronnen te beperken.
 - De Android-app ondersteunt bestandsuploads en het Android-venster om geëxporteerde bestanden op te slaan.
 - Mozilla-ondertekende XPI-extensies kunnen via het browsermenu worden geïnstalleerd.
+- **Mozilla Firefox Add-ons:** De knop in de extensiebeheerder opent opnieuw de officiële [Firefox Add-ons-catalogus](https://addons.mozilla.org/firefox/). Compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden gedownload en daarna via **XPI-bestand installeren** worden geïnstalleerd.
 - **Contextmenu:** Houd een link, afbeelding, video of audio-element lang ingedrukt. Het menu biedt passende acties om te openen, te downloaden of het adres te kopiëren. Downloads werken wanneer een direct HTTP(S)-adres beschikbaar is.
 - **Afdrukken:** Stuur de huidige webpagina vanuit het browsermenu of contextmenu naar het Android-afdrukvenster. Kies een printer of selecteer **Opslaan als PDF**.
 - **Extensies openen:** De extensiebeheerder toont een knop **Openen** voor add-ons met een ingestelde optiespagina. De ingebouwde Schleim OS-Extension opent de startpagina.
