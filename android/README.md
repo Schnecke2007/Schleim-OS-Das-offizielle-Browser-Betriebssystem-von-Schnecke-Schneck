@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha24)
+# Schleim Browser – Android-App (0.1.0-alpha25)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -25,6 +25,7 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - Erweiterungen über „Öffnen“ starten, wenn sie eine Optionsseite bereitstellen; die integrierte Schleim-OS-Extension öffnet die Schleim-OS-Startseite.
 - Android-Dateiauswahl und Speicherdialoge.
 - Mozilla-signierte XPI-Erweiterungen installieren, aktivieren, deaktivieren und entfernen.
+- Den offiziellen Mozilla Firefox Add-ons-Katalog direkt über den Erweiterungsmanager öffnen.
 - Desktop-Ansicht und Android-Standardbrowser-Auswahl.
 - Die originale Extension stellt Startseite, Schleim-Store, Konto, Personalisierung und Cloud-Funktionen bereit.
 
