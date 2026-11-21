@@ -1027,7 +1027,8 @@ class MainActivity : Activity() {
 
         val linkUri = element.linkUri?.takeIf { it.isNotBlank() }
         val sourceUri = element.srcUri?.takeIf { it.isNotBlank() }
-        if (linkUri == null && sourceUri == null) return
+        // Keep the native menu available on ordinary page content as well as links and media.
+        // This makes the page-level print action reachable with a long press anywhere.
 
         val location = IntArray(2)
         rootFrame.getLocationOnScreen(location)
