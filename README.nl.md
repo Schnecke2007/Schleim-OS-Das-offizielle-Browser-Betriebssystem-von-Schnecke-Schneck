@@ -148,19 +148,6 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 
 Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/README.md). Je vindt daar ook eenvoudige installatie-instructies, hulp en uitleg over juridische onderwerpen. Voor de Store is er een aparte [uitleg in eenvoudige taal](docs/Leichte-Sprache/Niederländisch/SCHLEIM-STORE.md). Er is ook een eenvoudige uitleg over [aanmelden en cloudback-ups](docs/Leichte-Sprache/Niederländisch/ACCOUNT-CLOUD.md) en [Schleim OS bijwerken](docs/Leichte-Sprache/Niederländisch/UPDATES.md).
 
-## 📱 Schleim Browser voor Android
-
-**Schleim Browser** is een zelfstandige Android-app. De app bevat de oorspronkelijke Schleim OS-Extension in Mozilla GeckoView en voegt een browserbalk, tabbladen, downloads, XPI-extensiebeheer en Android-bestandsvensters toe.
-
-- Minimale vereiste: Android 8.0 of nieuwer, 64-bits ARM (arm64-v8a).
-- **Contextmenu:** Houd links, afbeeldingen, video's of audiobestanden lang ingedrukt om ze te openen, in een nieuw tabblad te openen, te downloaden of het adres te kopiëren.
-- **Afdrukken:** Stuur de huidige pagina vanuit het browsermenu of via **Pagina afdrukken** in het contextmenu naar het Android-afdrukvenster.
-- **Extensies:** De extensiebeheerder toont **Openen** wanneer een optiespagina of geschikte homepage beschikbaar is. Activeren, deactiveren en verwijderen blijven beschikbaar.
-- Camera- en microfoonopnamen zijn bewust uitgeschakeld in de Android-app.
-- De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension en is momenteel een alpha-versie.
-
-[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
-
 ## 📁 Projectstructuur
 
 ```text
@@ -254,6 +241,19 @@ Jouw feedback is belangrijk voor mij! Ik ontvang graag beoordelingen, verbetersu
 - **WhatsApp:** [Rechtstreeks feedback sturen via WhatsApp](https://wa.me/491773988636).
 
 Bedankt dat je de tijd neemt om Schleim OS en mijn werk te ondersteunen! ❤️
+
+## 📱 Schleim Browser voor Android
+
+**Schleim Browser** is een zelfstandige Android-app. De app bevat de oorspronkelijke Schleim OS-Extension in Mozilla GeckoView en voegt een browserbalk, tabbladen, downloads, XPI-extensiebeheer en Android-bestandsvensters toe.
+
+- Minimale vereiste: Android 8.0 of nieuwer, 64-bits ARM (arm64-v8a).
+- **Contextmenu:** Houd links, afbeeldingen, video's of audiobestanden lang ingedrukt om ze te openen, in een nieuw tabblad te openen, te downloaden of het adres te kopiëren.
+- **Afdrukken:** Stuur de huidige pagina vanuit het browsermenu of via **Pagina afdrukken** in het contextmenu naar het Android-afdrukvenster.
+- **Extensies:** De extensiebeheerder toont **Openen** wanneer een optiespagina of geschikte homepage beschikbaar is. Activeren, deactiveren en verwijderen blijven beschikbaar.
+- Camera- en microfoonopnamen zijn bewust uitgeschakeld in de Android-app.
+- De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension en is momenteel een alpha-versie.
+
+[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## 📱 Volg mij op social media
 
