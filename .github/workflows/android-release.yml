@@ -449,7 +449,7 @@ jobs:
           done
 
           unzip -p dist/verify/Schleim-Browser-Android-Studio-Template.zip \
-            Android-App Template/app/src/main/java/com/example/yourbrowser/MainActivity.kt >/dev/null
+            "Android-App Template/app/src/main/java/com/example/yourbrowser/MainActivity.kt" >/dev/null
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
