@@ -7,7 +7,7 @@ Schleim Browser improves Android browser controls. The original Chromium Extensi
 - **Long-press context menu:** Long-press a link, image, video or audio item. Schleim Browser opens a native Android context menu with relevant actions.
 - **Download links and files:** Links can be opened, opened in a new tab, downloaded or copied as an address.
 - **Download media:** Images, videos and audio files can be opened, downloaded or copied as an address when the page exposes a direct HTTP(S) source.
-- **Print page:** The context menu now also includes **Print page**. You can also use **Browser menu → Print** to send the current webpage to Android's native print system. Choose a printer or save the page as a PDF.
+- **Print page:** The context menu also offers **Print page** when you long-press ordinary page content, not just links or media. You can also use **Browser menu → Print** to send the current webpage to Android's native print system. Choose a printer or save the page as a PDF.
 - **Open extensions:** The extension manager shows **Open** when an add-on provides an options page or a suitable homepage. The built-in Schleim OS Extension opens the Schleim OS home page.
 - **Manage extensions:** Enable, disable and remove actions remain available in the same extension manager.
 
