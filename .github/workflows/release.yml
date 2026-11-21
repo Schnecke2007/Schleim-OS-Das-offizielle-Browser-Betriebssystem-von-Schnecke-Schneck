@@ -107,7 +107,9 @@ jobs:
 
           VERSION="$(python3 -c 'import json; print(json.load(open("extension/manifest.json", encoding="utf-8"))["version"])')"
           TEMPLATE_VERSION="$(python3 -c 'import json; print(json.load(open("extension-template/manifest.json", encoding="utf-8"))["version"])')"
-          NOTES="extension/docs/RELEASE-NOTES-${VERSION}.md"
+          NOTES_DE="extension/docs/RELEASE-NOTES-${VERSION}.md"
+          NOTES_EN="docs/Englisch/RELEASE-NOTES-${VERSION}.md"
+          NOTES_NL="docs/Niederländisch/RELEASE-NOTES-${VERSION}.md"
 
           if [[ ! "$VERSION" =~ ^[0-9]+[.][0-9]+[.][0-9]+$ ]]; then
             echo "Invalid extension version: $VERSION" >&2
@@ -117,15 +119,19 @@ jobs:
             echo "Invalid template version: $TEMPLATE_VERSION" >&2
             exit 1
           fi
-          if [[ ! -f "$NOTES" ]]; then
-            echo "Missing release notes: $NOTES" >&2
-            exit 1
-          fi
+          for notes in "$NOTES_DE" "$NOTES_EN" "$NOTES_NL"; do
+            if [[ ! -s "$notes" ]]; then
+              echo "Missing or empty translated release notes: $notes" >&2
+              exit 1
+            fi
+          done
 
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "template_version=$TEMPLATE_VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
-          echo "notes=$NOTES" >> "$GITHUB_OUTPUT"
+          echo "notes_de=$NOTES_DE" >> "$GITHUB_OUTPUT"
+          echo "notes_en=$NOTES_EN" >> "$GITHUB_OUTPUT"
+          echo "notes_nl=$NOTES_NL" >> "$GITHUB_OUTPUT"
 
       - name: Check whether release assets need publishing
         id: release_check
@@ -211,13 +217,35 @@ jobs:
             sha256sum Schleim-OS-Extension.zip Browser-OS-Extension-Template.zip > Schleim-OS-SHA256SUMS.txt
           )
 
+      - name: Assemble German, English and Dutch release description
+        if: steps.release_check.outputs.mode == 'create' || steps.release_check.outputs.mode == 'repair'
+        env:
+          NOTES_DE: ${{ steps.version.outputs.notes_de }}
+          NOTES_EN: ${{ steps.version.outputs.notes_en }}
+          NOTES_NL: ${{ steps.version.outputs.notes_nl }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/release
+          {
+            printf '## 🇩🇪 Deutsch\\n\\n'
+            cat "$NOTES_DE"
+            printf '\\n\\n---\\n\\n## 🇬🇧 English\\n\\n'
+            cat "$NOTES_EN"
+            printf '\\n\\n---\\n\\n## 🇳🇱 Nederlands\\n\\n'
+            cat "$NOTES_NL"
+            printf '\\n'
+          } > dist/release/ReleaseNotes.md
+          test -s dist/release/ReleaseNotes.md
+          echo "Combined trilingual release description prepared."
+
       - name: Create new GitHub Release
         if: steps.release_check.outputs.mode == 'create'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
           VERSION: ${{ steps.version.outputs.version }}
-          NOTES: ${{ steps.version.outputs.notes }}
+          NOTES: ${{ github.workspace }}/dist/release/ReleaseNotes.md
         shell: bash
         run: |
           set -euo pipefail
