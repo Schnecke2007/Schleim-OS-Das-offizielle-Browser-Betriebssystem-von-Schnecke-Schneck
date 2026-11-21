@@ -157,7 +157,7 @@ If the problem continues, report it through [GitHub Issues](https://github.com/S
 
 Would you prefer short sentences and simple explanations? Read the [English plain-language documentation](docs/Leichte-Sprache/Englisch/README.md). It also includes simple installation steps, help and explanations of legal topics. The Store has its own [plain-language guide](docs/Leichte-Sprache/Englisch/SCHLEIM-STORE.md). There is also a plain-language guide to [sign-in and cloud backup](docs/Leichte-Sprache/Englisch/ACCOUNT-CLOUD.md) and [updating Schleim OS](docs/Leichte-Sprache/Englisch/UPDATES.md).
 
-## 📱 Android-App-Dokumentation
+## 📱 Android app documentation
 
 [Schleim Browser – Android guide](docs/Englisch/ANDROID-BROWSER.md) · [Android-Studio-Vorlage](Android-App/README.en.md)
 
