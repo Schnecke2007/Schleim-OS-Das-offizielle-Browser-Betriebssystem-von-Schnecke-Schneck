@@ -143,8 +143,8 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 27" in gradle
-          assert 'versionName = "0.1.0-alpha27"' in gradle
+          assert "versionCode = 28" in gradle
+          assert 'versionName = "0.1.0-alpha28"' in gradle
           assert '"version": "3.18.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -299,14 +299,14 @@ jobs:
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
           # Any valid Android debug certificate is accepted. GitHub-hosted runners
           # may generate a fresh debug key, intentionally requiring reinstall.
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha27.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha28.apk"
           echo "Release APK built and verified with the standard Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha27.apk
+          path: Schleim-Browser-Android-0.1.0-alpha28.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -390,17 +390,17 @@ jobs:
           fi
 
           # Copy the separately validated production APK into the release package.
-          cp "Schleim-Browser-Android-0.1.0-alpha27.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha28.apk" dist/release/
 
-          APK_NAME="Schleim-Browser-Android-0.1.0-alpha27.apk"
+          APK_NAME="Schleim-Browser-Android-0.1.0-alpha28.apk"
           APK_SHA256="$(sha256sum "dist/release/$APK_NAME" | awk '{print $1}')"
           python3 - <<PY
           import json
           from pathlib import Path
           Path("dist/release/Schleim-Browser-Android-update.json").write_text(json.dumps({
               "packageName": "de.schneckeschneck.schleimbrowser",
-              "versionCode": 27,
-              "versionName": "0.1.0-alpha27",
+              "versionCode": 28,
+              "versionName": "0.1.0-alpha28",
               "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.18.0/${APK_NAME}",
               "sha256": "${APK_SHA256}"
           }, indent=2) + "\n", encoding="utf-8")
@@ -411,7 +411,7 @@ jobs:
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha27.apk \
+              Schleim-Browser-Android-0.1.0-alpha28.apk \
               Schleim-Browser-Android-update.json \
               Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
@@ -442,12 +442,12 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha26.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha27.apk" \
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha28.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha27.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha28.apk" \
             "dist/release/Schleim-Browser-Android-update.json" \
             "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
@@ -469,7 +469,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha27.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha28.apk" \
             --pattern "Schleim-Browser-Android-update.json" \
             --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
@@ -483,7 +483,7 @@ jobs:
           for asset in \
             Schleim-OS-Extension.zip \
             Browser-OS-Extension-Template.zip \
-            Schleim-Browser-Android-0.1.0-alpha27.apk \
+            Schleim-Browser-Android-0.1.0-alpha28.apk \
             Schleim-Browser-Android-update.json \
             Schleim-Browser-Android-Studio-Template.zip; do
             cmp -s "dist/release/$asset" "dist/verify/$asset"
@@ -494,7 +494,7 @@ jobs:
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha27.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha28.apk"
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
           echo "Release v3.18.0 published; every archive, checksum and APK signature verified."
