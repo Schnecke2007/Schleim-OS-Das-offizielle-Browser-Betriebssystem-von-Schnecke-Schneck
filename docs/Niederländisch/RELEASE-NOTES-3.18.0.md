@@ -10,12 +10,13 @@ Schleim Browser verbetert de bediening van de Android-browser. De oorspronkelijk
 - **Pagina afdrukken:** Het contextmenu biedt ook **Pagina afdrukken** wanneer je gewone pagina-inhoud lang indrukt, dus niet alleen links of media. Je kunt ook **Browsermenu → Afdrukken** gebruiken om de huidige webpagina naar het native Android-afdruksysteem te sturen. Kies een printer of sla de pagina op als PDF.
 - **Extensies openen:** De extensiebeheerder toont **Openen** wanneer een add-on een optiespagina of een geschikte homepage aanbiedt. De ingebouwde Schleim OS-Extension opent de Schleim OS-startpagina.
 - **Extensies beheren:** Activeren, deactiveren en verwijderen blijven beschikbaar in dezelfde extensiebeheerder.
+- **Mozilla Firefox Add-ons:** De extensiebeheerder opent opnieuw de officiële [Firefox Add-ons-catalogus](https://addons.mozilla.org/firefox/). Compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden gedownload en in Schleim Browser worden geïnstalleerd.
 
 ## Downloads in de release
 
 - **Schleim-OS-Extension.zip** – de oorspronkelijke browser-Extension.
 - **Browser-OS-Extension-Template.zip** – een neutrale Extension-sjabloon.
-- **Schleim-Browser-Android-0.1.0-alpha24.apk** – de zelfstandige Android-app.
+- **Schleim-Browser-Android-0.1.0-alpha25.apk** – de zelfstandige Android-app.
 - **Schleim-Browser-Android-Studio-Template.zip** – het neutrale Android Studio-project.
 - **Schleim-OS-SHA256SUMS.txt** – SHA-256-controlesommen van de releasebestanden.
 
@@ -31,7 +32,7 @@ Schleim Browser verbetert de bediening van de Android-browser. De oorspronkelijk
 ## Versie-informatie
 
 - Schleim OS Extension: **3.18.0**
-- Schleim Browser: **0.1.0-alpha24**
+- Schleim Browser: **0.1.0-alpha25**
 - Mozilla GeckoView · Android 8.0+ · ARM64
 
 [Android-browserhandleiding](ANDROID-BROWSER.md) · [GitHub Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
