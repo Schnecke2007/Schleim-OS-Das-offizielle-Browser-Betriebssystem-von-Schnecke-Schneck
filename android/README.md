@@ -51,4 +51,4 @@ Die Android-App wird zusammen mit der Extension im großen Release veröffentlic
 - English: ../docs/Englisch/ANDROID-BROWSER.md
 - Nederlands: ../docs/Niederländisch/ANDROID-BROWSER.md
 
-Die neutrale Android-Studio-Projektvorlage befindet sich im Repository unter Android-App/ und wird als Schleim-Browser-Android-Studio-Template.zip veröffentlicht.
+Die Anleitung und der Generator liegen im Repository unter Android-App/. Im heruntergeladenen ZIP heißt der vollständige Android-Studio-Projektordner **Android-App Template**.
