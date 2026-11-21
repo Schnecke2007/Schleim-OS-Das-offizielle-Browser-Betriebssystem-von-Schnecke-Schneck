@@ -1840,10 +1840,31 @@ class MainActivity : Activity() {
         if (isFinishing || isDestroyed) return
         AlertDialog.Builder(this)
             .setTitle("Schleim Browser – Update verfügbar")
-            .setMessage("Version ${update.versionName} ist verfügbar. Die neue APK wird heruntergeladen und anschließend vom Android-Installationsdialog aktualisiert. Deine App-Daten bleiben bei übereinstimmender Signatur erhalten.")
+            .setMessage(
+                "Version ${update.versionName} ist verfügbar. Diese Ausgabe wird mit dem normalen Android-Debug-Schlüssel signiert. " +
+                    "Ein direktes Aktualisieren ist deshalb nicht möglich. Lade zuerst die APK herunter, deinstalliere danach die bisherige App " +
+                    "und installiere die neue APK aus deinem Download-Ordner. Bei der Deinstallation können lokale App-Daten verloren gehen."
+            )
             .setNegativeButton("Später", null)
-            .setPositiveButton("Herunterladen & installieren") { _, _ -> downloadAndInstallUpdate(update) }
+            .setNeutralButton("Alte App deinstallieren") { _, _ -> requestAppUninstall() }
+            .setPositiveButton("APK herunterladen") { _, _ -> openUpdateDownload(update) }
             .show()
+    }
+
+    private fun openUpdateDownload(update: AppUpdate) {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update.apkUrl)))
+        } catch (error: Exception) {
+            showToast("Der APK-Download konnte nicht geöffnet werden: ${error.message ?: "Fehler"}")
+        }
+    }
+
+    private fun requestAppUninstall() {
+        try {
+            startActivity(Intent(Intent.ACTION_DELETE, Uri.parse("package:$packageName")))
+        } catch (error: Exception) {
+            showToast("Die Android-Deinstallation konnte nicht geöffnet werden: ${error.message ?: "Fehler"}")
+        }
     }
 
     private fun downloadAndInstallUpdate(update: AppUpdate) {
