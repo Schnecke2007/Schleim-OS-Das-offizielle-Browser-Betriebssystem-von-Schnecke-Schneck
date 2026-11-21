@@ -69,7 +69,7 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
 - [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
-- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk) – de zelfstandige Android-browser.
+- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) – de zelfstandige Android-browser.
 - [**Android Studio-projecttemplate downloaden (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – het ZIP-bestand bevat de projectmap **Android-App Template**.
 
 Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](extension/docs/RELEASE-NOTES-3.18.0.md) voor de versiegeschiedenis.
@@ -136,7 +136,7 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 - [Nederlands – hoofddocumentatie](README.nl.md)
 - [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
 - [Schleim Browser voor Android](docs/Niederländisch/ANDROID-BROWSER.md)
-- [Release-opmerkingen 3.17.0](docs/Niederländisch/RELEASE-NOTES-3.18.0.md)
+- [Release-opmerkingen 3.18.0](docs/Niederländisch/RELEASE-NOTES-3.18.0.md)
 - [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 - [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
 - [Schleim-account en cloudback-up](docs/Niederländisch/SCHLEIM-ACCOUNT.md)
