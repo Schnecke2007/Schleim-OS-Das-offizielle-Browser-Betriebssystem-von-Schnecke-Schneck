@@ -15,8 +15,8 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 26
-        versionName = "0.1.0-alpha26"
+        versionCode = 27
+        versionName = "0.1.0-alpha27"
         // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -33,11 +33,24 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")
+                ?: error("ANDROID_KEYSTORE_PATH is required for reproducible release signing.")
+            storeFile = file(keystorePath)
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                ?: error("ANDROID_KEYSTORE_PASSWORD is missing.")
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS")
+                ?: error("ANDROID_KEY_ALIAS is missing.")
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+                ?: error("ANDROID_KEY_PASSWORD is missing.")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
-            // Release signing is intentionally not configured until a private,
-            // persistent keystore is supplied through GitHub Actions secrets.
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }
