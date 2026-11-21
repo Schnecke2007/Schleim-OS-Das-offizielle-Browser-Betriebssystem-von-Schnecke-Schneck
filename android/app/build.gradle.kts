@@ -33,32 +33,15 @@ android {
         }
     }
 
-    val releaseSigningReady =
-        !System.getenv("ANDROID_KEYSTORE_PATH").isNullOrBlank() &&
-        !System.getenv("ANDROID_KEYSTORE_PASSWORD").isNullOrBlank() &&
-        !System.getenv("ANDROID_KEY_ALIAS").isNullOrBlank() &&
-        !System.getenv("ANDROID_KEY_PASSWORD").isNullOrBlank()
-
-    signingConfigs {
-        if (releaseSigningReady) {
-            create("release") {
-                storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH")!!)
-                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")!!
-                keyAlias = System.getenv("ANDROID_KEY_ALIAS")!!
-                keyPassword = System.getenv("ANDROID_KEY_PASSWORD")!!
-            }
-        }
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
-            if (releaseSigningReady) {
-                signingConfig = signingConfigs.getByName("release")
-            }
+            // Deliberately use Gradle's standard debug key for release APKs.
+            // GitHub-hosted runners may generate a new key per build, so users
+            // must uninstall the previous app before installing a new APK.
+            signingConfig = signingConfigs.getByName("debug")
         }
-    }
-}
+    }}
 
 /*
  * Use the repository's supplied Schleim Browser PNG as the actual Android
