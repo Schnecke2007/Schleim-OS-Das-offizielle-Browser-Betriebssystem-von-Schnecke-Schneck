@@ -64,7 +64,7 @@ Android-apps worden niet bijgewerkt via het Extension-updatecentrum. Download de
 De release bevat ook **Schleim-Browser-Android-Studio-Template.zip**. Het archief bevat een volledig Android Studio-project met Android-broncode en een ingebouwde voorbeeld-Extension. Persoonlijke gegevens, application-ID, GitHub-repository, website en contactgegevens zijn alleen binnen de sjabloon vervangen door neutrale plaatsaanduidingen. De productie-app in de repository wordt niet gewijzigd.
 
 1. Download en pak het sjabloon-ZIP-bestand uit.
-2. Open de map **Android-App** in Android Studio.
+2. Open de projectmap **Android-App Template** in Android Studio.
 3. Pas application-ID, appnaam, Extension, links en plaatsaanduidingen aan.
 4. Synchroniseer Gradle en bouw je eigen test-APK.
 5. Configureer voor publicatie je eigen blijvende ondertekeningssleutel.
