@@ -15,8 +15,8 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 27
-        versionName = "0.1.0-alpha27"
+        versionCode = 28
+        versionName = "0.1.0-alpha28"
         // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -41,7 +41,8 @@ android {
             // must uninstall the previous app before installing a new APK.
             signingConfig = signingConfigs.getByName("debug")
         }
-    }}
+    }
+}
 
 /*
  * Use the repository's supplied Schleim Browser PNG as the actual Android
