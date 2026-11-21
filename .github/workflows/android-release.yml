@@ -406,6 +406,8 @@ jobs:
           # Keep only the current Android APK in this consolidated release.
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha22.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha24.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha25.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
