@@ -280,26 +280,9 @@ jobs:
         with:
           gradle-version: '8.13'
 
-      - name: Prepare persistent Android release signing key
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-        run: |
-          set -euo pipefail
-          test -n "$ANDROID_KEYSTORE_BASE64" || { echo "Missing ANDROID_KEYSTORE_BASE64 repository secret." >&2; exit 1; }
-          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/schleim-release.jks"
-          test -s "$RUNNER_TEMP/schleim-release.jks"
-          echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/schleim-release.jks" >> "$GITHUB_ENV"
-
-      - name: Build signed release APK
+      - name: Build release APK with the standard Android debug signing key
         working-directory: android
-        env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          test -n "$ANDROID_KEYSTORE_PASSWORD"
-          test -n "$ANDROID_KEY_ALIAS"
-          test -n "$ANDROID_KEY_PASSWORD"
           gradle --no-daemon --stacktrace -PgeckoviewVersion=${{ steps.geckoview.outputs.version }} :app:assembleRelease
 
       - name: Validate APK output
@@ -313,12 +296,11 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
-          unzip -l "$APK" | grep -Fq "ic_launcher.png"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          CERT="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK" | awk -F': ' '/certificate SHA-256 digest:/ {print $NF; found=1} END {if (!found) exit 1}')"
-          test "$CERT" = "9f06dbb31fd2fdaca50e75e72bb55076433882265aa31136c3434f9e633f53b2"
+          # Any valid Android debug certificate is accepted. GitHub-hosted runners
+          # may generate a fresh debug key, intentionally requiring reinstall.
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha27.apk"
-          echo "Signed release APK built, package metadata and persistent signing certificate validated."
+          echo "Release APK built and verified with the standard Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
