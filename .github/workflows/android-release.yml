@@ -475,8 +475,11 @@ jobs:
             echo "Android Studio template is missing its app/build.gradle.kts file." >&2
             exit 1
           }
-          if [[ "$TEMPLATE_CONTENTS" == Android-App/* || "$TEMPLATE_CONTENTS" == *
-          echo "All project archives and the Alpha 24 APK are ready; the Android Studio ZIP root is Android-App Template."
+          if [[ "$TEMPLATE_CONTENTS" == Android-App/* ]]; then
+            echo "Unexpected old Android-App ZIP root folder found." >&2
+            exit 1
+          fi
+          echo "All project archives and the Alpha 27 APK are ready; the Android Studio ZIP root is Android-App Template."
 
       - name: Publish the complete 3.18.0 release
         env:
