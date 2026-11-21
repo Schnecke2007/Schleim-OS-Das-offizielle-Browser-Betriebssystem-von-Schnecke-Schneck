@@ -69,7 +69,7 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
 - [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
-- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) – de zelfstandige Android-browser.
+- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) – de zelfstandige Android-browser.
 - [**Android Studio-projecttemplate downloaden (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – het ZIP-bestand bevat de projectmap **Android-App Template**.
 
 Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](extension/docs/RELEASE-NOTES-3.18.0.md) voor de versiegeschiedenis.
@@ -251,9 +251,10 @@ Bedankt dat je de tijd neemt om Schleim OS en mijn werk te ondersteunen! ❤️
 - **Afdrukken:** Stuur de huidige pagina vanuit het browsermenu of via **Pagina afdrukken** in het contextmenu naar het Android-afdrukvenster.
 - **Extensies:** De extensiebeheerder toont **Openen** wanneer een optiespagina of geschikte homepage beschikbaar is. Activeren, deactiveren en verwijderen blijven beschikbaar.
 - Camera- en microfoonopnamen zijn bewust uitgeschakeld in de Android-app.
+- **Firefox-add-ons:** De extensiebeheerder linkt ook naar de officiële [Mozilla Firefox Add-ons-catalogus](https://addons.mozilla.org/firefox/). Compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden geïnstalleerd.
 - De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension en is momenteel een alpha-versie.
 
-[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## 📱 Volg mij op social media
 
