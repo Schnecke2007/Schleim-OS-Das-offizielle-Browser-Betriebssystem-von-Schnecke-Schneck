@@ -10,12 +10,13 @@ Schleim Browser improves Android browser controls. The original Chromium Extensi
 - **Print page:** The context menu also offers **Print page** when you long-press ordinary page content, not just links or media. You can also use **Browser menu → Print** to send the current webpage to Android's native print system. Choose a printer or save the page as a PDF.
 - **Open extensions:** The extension manager shows **Open** when an add-on provides an options page or a suitable homepage. The built-in Schleim OS Extension opens the Schleim OS home page.
 - **Manage extensions:** Enable, disable and remove actions remain available in the same extension manager.
+- **Mozilla Firefox Add-ons:** The extension manager now opens the official [Firefox Add-ons catalog](https://addons.mozilla.org/firefox/) again. Compatible Mozilla-signed XPI files can be downloaded and installed in Schleim Browser.
 
 ## Release downloads
 
 - **Schleim-OS-Extension.zip** – the original browser Extension.
 - **Browser-OS-Extension-Template.zip** – a neutral Extension template.
-- **Schleim-Browser-Android-0.1.0-alpha24.apk** – the standalone Android app.
+- **Schleim-Browser-Android-0.1.0-alpha25.apk** – the standalone Android app.
 - **Schleim-Browser-Android-Studio-Template.zip** – the neutral Android Studio project.
 - **Schleim-OS-SHA256SUMS.txt** – SHA-256 checksums for release files.
 
@@ -31,7 +32,7 @@ Schleim Browser improves Android browser controls. The original Chromium Extensi
 ## Version information
 
 - Schleim OS Extension: **3.18.0**
-- Schleim Browser: **0.1.0-alpha24**
+- Schleim Browser: **0.1.0-alpha25**
 - Mozilla GeckoView · Android 8.0+ · ARM64
 
 [Android browser guide](ANDROID-BROWSER.md) · [GitHub Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
