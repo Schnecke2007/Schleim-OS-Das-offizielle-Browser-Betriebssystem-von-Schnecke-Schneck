@@ -12,9 +12,9 @@
 
 Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
 
-Download **Schleim-Browser-Android-0.1.0-alpha24.apk**.
+Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
 
-[**Download the Android app directly**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
+[**Download the Android app directly**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
 
 ## Install the app
 
@@ -30,6 +30,7 @@ Download **Schleim-Browser-Android-0.1.0-alpha24.apk**.
 - Use Back, Forward and Reload.
 - Use the tab icon to open tabs and switch between them.
 - The menu contains Downloads, Extensions, Settings and **Print page**.
+- **Firefox add-ons:** A button in the Extensions menu opens the official [Mozilla catalog](https://addons.mozilla.org/firefox/). Only compatible XPI files signed by Mozilla can be installed.
 - Press and hold a link, image or video. A menu appears. You can open it, download it or copy its address.
 - Printing opens the Android print window. You can also save the page as a PDF.
 - Up to six tabs can stay open at once. Older background tabs are closed when needed.
