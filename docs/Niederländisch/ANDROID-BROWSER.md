@@ -49,6 +49,9 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - Er worden maximaal zes browsertabbladen tegelijk opengehouden. Bij meer tabbladen wordt een ouder achtergrondtabblad verwijderd om geheugen en bronnen te beperken.
 - De Android-app ondersteunt bestandsuploads en het Android-venster om geëxporteerde bestanden op te slaan.
 - Mozilla-ondertekende XPI-extensies kunnen via het browsermenu worden geïnstalleerd.
+- **Contextmenu:** Houd een link, afbeelding, video of audio-element lang ingedrukt. Het menu biedt passende acties om te openen, te downloaden of het adres te kopiëren. Downloads werken wanneer een direct HTTP(S)-adres beschikbaar is.
+- **Afdrukken:** Stuur de huidige webpagina vanuit het browsermenu of contextmenu naar het Android-afdrukvenster. Kies een printer of selecteer **Opslaan als PDF**.
+- **Extensies openen:** De extensiebeheerder toont een knop **Openen** voor add-ons met een ingestelde optiespagina. De ingebouwde Schleim OS-Extension opent de startpagina.
 - Camera- en microfoonopnamen zijn in de Android-app bewust uitgeschakeld. De Camera-tegel legt deze beperking uit. De JavaScript-webcam van de oorspronkelijke browser-Extension blijft hiervan gescheiden.
 - Sommige websites blokkeren insluiting in andere pagina's. De inhoud kan leeg blijven of moet rechtstreeks worden geopend.
 - Niet elke Chrome-desktopextensie is compatibel met GeckoView.
