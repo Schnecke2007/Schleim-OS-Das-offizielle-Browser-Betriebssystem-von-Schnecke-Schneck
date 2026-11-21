@@ -49,6 +49,9 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - Es können bis zu sechs Browser-Tabs gleichzeitig geöffnet gehalten werden. Beim Öffnen weiterer Tabs wird ein älterer Hintergrund-Tab entfernt, um Speicher und Ressourcen zu begrenzen.
 - Die Android-App unterstützt Datei-Upload und den Speicherdialog für exportierte Dateien.
 - Mozilla-signierte XPI-Erweiterungen können über das Browser-Menü installiert werden.
+- **Kontextmenü:** Halte einen Link, ein Bild, Video oder Audio-Element gedrückt. Das Menü bietet passende Aktionen zum Öffnen, Herunterladen und Kopieren der Adresse. Downloads funktionieren, wenn eine direkte HTTP(S)-Adresse bereitsteht.
+- **Drucken:** Über das Browser-Menü oder Kontextmenü kannst du die aktuelle Webseite an Androids Druckdialog senden. Dort lassen sich ein Drucker oder „Als PDF speichern“ auswählen.
+- **Erweiterungen öffnen:** Für Add-ons mit einer hinterlegten Optionsseite erscheint im Erweiterungsmanager ein Button „Öffnen“. Die integrierte Schleim-OS-Erweiterung öffnet ihre Startseite.
 - Kamera- und Mikrofonaufnahme sind in der Android-App absichtlich deaktiviert. Die Kamera-Kachel erklärt diese Einschränkung. Die JavaScript-Webkamera der originalen Browser-Extension bleibt davon getrennt.
 - Manche Webseiten blockieren das Einbetten in andere Seiten. Solche Inhalte können leer bleiben oder müssen direkt geöffnet werden.
 - Nicht jede Chrome-Desktop-Erweiterung ist mit GeckoView kompatibel.
