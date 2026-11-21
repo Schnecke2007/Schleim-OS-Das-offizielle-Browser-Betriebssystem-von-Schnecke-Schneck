@@ -107,7 +107,7 @@ jobs:
 
           VERSION="$(python3 -c 'import json; print(json.load(open("extension/manifest.json", encoding="utf-8"))["version"])')"
           TEMPLATE_VERSION="$(python3 -c 'import json; print(json.load(open("extension-template/manifest.json", encoding="utf-8"))["version"])')"
-          NOTES_DE="extension/docs/RELEASE-NOTES-${VERSION}.md"
+          NOTES_DE="docs/Deutsch/RELEASE-NOTES-${VERSION}.md"
           NOTES_EN="docs/Englisch/RELEASE-NOTES-${VERSION}.md"
           NOTES_NL="docs/Niederländisch/RELEASE-NOTES-${VERSION}.md"
 
@@ -133,12 +133,32 @@ jobs:
           echo "notes_en=$NOTES_EN" >> "$GITHUB_OUTPUT"
           echo "notes_nl=$NOTES_NL" >> "$GITHUB_OUTPUT"
 
+      - name: Detect whether translated release notes changed
+        id: notes_changes
+        env:
+          BEFORE: ${{ github.event.before }}
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHANGED=false
+          if [[ "$GITHUB_EVENT_NAME" == "push" && "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+            if ! git diff --quiet "$BEFORE" "$GITHUB_SHA" -- \
+              "docs/Deutsch/RELEASE-NOTES-${VERSION}.md" \
+              "docs/Englisch/RELEASE-NOTES-${VERSION}.md" \
+              "docs/Niederländisch/RELEASE-NOTES-${VERSION}.md"; then
+              CHANGED=true
+            fi
+          fi
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Translated release notes changed: $CHANGED"
       - name: Check whether release assets need publishing
         id: release_check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
           TEMPLATE_CHANGED: ${{ steps.template_changes.outputs.changed }}
+          NOTES_CHANGED: ${{ steps.notes_changes.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
@@ -163,10 +183,13 @@ jobs:
 
           if [[ "$RELEASE_EXISTS" == "true" && "$MISSING" == "false" && "$TEMPLATE_CHANGED" == "true" ]]; then
             MODE=template
-            echo "The template changed. Only its release ZIP and the checksum file will be replaced."
+            echo "The template changed. Refreshing its archive, checksum and translated release notes."
+          elif [[ "$RELEASE_EXISTS" == "true" && "$MISSING" == "false" && "$NOTES_CHANGED" == "true" ]]; then
+            MODE=notes
+            echo "Only translated release notes changed. Existing release assets will remain untouched."
           elif [[ "$RELEASE_EXISTS" == "true" && "$MISSING" == "false" ]]; then
             MODE=none
-            echo "This version already has all assets and the template has not changed."
+            echo "This version already has all assets and no translated notes changed."
           elif [[ "$RELEASE_EXISTS" == "true" ]]; then
             MODE=repair
             echo "An existing release is missing assets and will be repaired."
@@ -179,7 +202,7 @@ jobs:
           echo "release_exists=$RELEASE_EXISTS" >> "$GITHUB_OUTPUT"
 
       - name: Build release ZIP packages
-        if: steps.release_check.outputs.mode != 'none'
+        if: steps.release_check.outputs.mode == 'create' || steps.release_check.outputs.mode == 'repair' || steps.release_check.outputs.mode == 'template'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
@@ -218,7 +241,7 @@ jobs:
           )
 
       - name: Assemble German, English and Dutch release description
-        if: steps.release_check.outputs.mode == 'create' || steps.release_check.outputs.mode == 'repair'
+        if: steps.release_check.outputs.mode == 'create' || steps.release_check.outputs.mode == 'repair' || steps.release_check.outputs.mode == 'template' || steps.release_check.outputs.mode == 'notes'
         env:
           NOTES_DE: ${{ steps.version.outputs.notes_de }}
           NOTES_EN: ${{ steps.version.outputs.notes_en }}
@@ -286,6 +309,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          NOTES: ${{ github.workspace }}/dist/release/ReleaseNotes.md
         shell: bash
         run: |
           set -euo pipefail
@@ -295,7 +320,25 @@ jobs:
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" \
             --clobber
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Schleim OS $VERSION" \
+            --notes-file "$NOTES"
 
+      - name: Publish translated release notes without changing assets
+        if: steps.release_check.outputs.mode == 'notes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          NOTES: ${{ github.workspace }}/dist/release/ReleaseNotes.md
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Schleim OS $VERSION" \
+            --notes-file "$NOTES"
       - name: Report that no release update is needed
         if: steps.release_check.outputs.mode == 'none'
         shell: bash
