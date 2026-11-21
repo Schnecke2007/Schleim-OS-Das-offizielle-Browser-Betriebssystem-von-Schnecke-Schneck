@@ -456,6 +456,8 @@ jobs:
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha25.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha26.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha27.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
