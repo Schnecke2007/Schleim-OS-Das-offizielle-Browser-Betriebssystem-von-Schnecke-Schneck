@@ -20,6 +20,9 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - Zurück, Vorwärts, Neu laden und Startseite.
 - Tab-Verwaltung mit maximal sechs gleichzeitig gehaltenen GeckoView-Sessions.
 - Downloads in einem app-eigenen Downloadbereich.
+- Langes Drücken auf Links, Bilder, Videos und Audio öffnet ein Kontextmenü mit Öffnen-, Download- und Kopieraktionen (sofern eine direkte HTTP(S)-Adresse verfügbar ist).
+- Webseiten über das Browser-Menü oder Kontextmenü an Androids Druckdialog senden und drucken oder als PDF speichern.
+- Erweiterungen über „Öffnen“ starten, wenn sie eine Optionsseite bereitstellen; die integrierte Schleim-OS-Extension öffnet die Schleim-OS-Startseite.
 - Android-Dateiauswahl und Speicherdialoge.
 - Mozilla-signierte XPI-Erweiterungen installieren, aktivieren, deaktivieren und entfernen.
 - Desktop-Ansicht und Android-Standardbrowser-Auswahl.
