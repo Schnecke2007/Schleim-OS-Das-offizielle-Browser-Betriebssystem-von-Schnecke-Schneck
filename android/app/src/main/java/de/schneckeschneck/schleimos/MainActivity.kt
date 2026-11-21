@@ -1551,22 +1551,6 @@ class MainActivity : Activity() {
                                     }
                                     .show()
                             }, LinearLayout.LayoutParams(0, dp(34), 1f))
-                            actions.addView(makeTextButton("Entfernen") {
-                                AlertDialog.Builder(this@MainActivity)
-                                    .setTitle("Erweiterung entfernen?")
-                                    .setMessage(name + " wird mitsamt ihren gespeicherten Erweiterungsdaten entfernt.")
-                                    .setNegativeButton("Abbrechen", null)
-                                    .setPositiveButton("Entfernen") { _, _ ->
-                                        runtime.getWebExtensionController().uninstall(item).accept({
-                                            showToast("Erweiterung entfernt.")
-                                            showExtensionsDialog()
-                                        }, { error ->
-                                            showToast("Entfernen fehlgeschlagen: " + (error?.message ?: "Fehler"))
-                                        })
-                                        parts.dialog.dismiss()
-                                    }
-                                    .show()
-                            }, LinearLayout.LayoutParams(0, dp(34), 1f))
                             row.addView(actions)
                         } else {
                             if (openPage.isNullOrBlank()) {
