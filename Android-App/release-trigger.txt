@@ -1,3 +1,3 @@
-Schleim OS 3.16.0 Android final packaging
+Schleim OS 3.18.0 Android browser release
 
-Build and validate the production Alpha 22 APK and Android Studio template. Exclude generated build directories, caches, local.properties and APKs from the template source ZIP, ensure its size is below 30 MB, copy the validated production APK into dist/release, regenerate SHA-256 sums, publish all assets to v3.16.0, then download and verify the exact release files and signature.
+Build and validate the Alpha 24 Android browser with long-press context menus available on links, media and ordinary page content; provide page printing from the context menu and browser menu; retain link and direct-media downloads plus extension open, enable, disable and remove actions. Compose the GitHub release notes in German, English and Dutch, package the original Extension, neutral Extension template, Android APK and Android Studio template, regenerate SHA-256 sums, publish all assets to v3.18.0, then download and verify the exact release files and APK signature.
