@@ -98,7 +98,7 @@ def main() -> None:
         shutil.rmtree(args.output)
     args.output.mkdir(parents=True)
 
-    project = args.output / "Android-App"
+    project = args.output / "Android-App Template"
     shutil.copytree(
         args.android,
         project,
