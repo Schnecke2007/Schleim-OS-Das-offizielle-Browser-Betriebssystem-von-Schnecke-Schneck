@@ -76,12 +76,12 @@ Schleim OS includes a private photo/video library, front/rear camera, date-based
 
 ## 📦 Releases and downloads
 
-The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) contains the current version, release notes and two separate packages:
+The [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) contains the current version, release notes and four downloads:
 
 - [**Download Schleim OS – Browser Extension (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – the ready-to-load original extension only.
 - [**Download Schleim OS – neutral Extension Template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – a starter template for your own browser OS.
 
-Each release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.16.0.md) for the version history.
+- [**Download Schleim Browser for Android (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha22.apk) – the standalone Android browser.\n- [**Download the Android Studio project template (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – the ZIP contains the **Android-App Template** project folder.\n\nEach release describes new features, improvements, known limitations and bug fixes where applicable. See the [release notes](extension/docs/RELEASE-NOTES-3.16.0.md) for the version history.
 
 ## 📥 Download and installation
 
