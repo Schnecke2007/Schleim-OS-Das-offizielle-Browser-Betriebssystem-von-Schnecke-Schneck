@@ -1,7 +1,7 @@
 name: Build Schleim Browser Android APK
 
 on:
-  # Publish the consolidated 3.16.0 release only when all documentation,
+  # Publish the consolidated 3.17.0 release only when all documentation,
   # project files and template tooling have been committed.
   push:
     branches: [main]
@@ -145,7 +145,7 @@ jobs:
           assert "androidx.webkit" not in gradle
           assert "versionCode = 23" in gradle
           assert 'versionName = "0.1.0-alpha23"' in gradle
-          assert '"version": "3.16.0"' in Path("extension/manifest.json").read_text()
+          assert '"version": "3.17.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert 'android:label="Schleim Browser"' in android_manifest
@@ -229,6 +229,14 @@ jobs:
           assert "private fun showDownloadsDialog()" in main
           assert "private fun showExtensionsDialog()" in main
           assert "private fun showSettingsDialog()" in main
+          assert "override fun onContextMenu(" in main
+          assert "GeckoWebExecutor(runtime).fetch(request.build())" in main
+          assert "private fun printCurrentPage()" in main
+          assert "session.printPageContent()" in main
+          assert "optionsPageUrl" in main
+          assert "private fun showPageElementContextMenu(" in main
+          assert "setActivityContextDelegate" in main
+          assert main.count('makeTextButton("Entfernen")') == 1
           assert main.count("override fun onContextMenu(") == 1
           assert main.count("private fun printCurrentPage()") == 1
           assert "session.printPageContent()" in main
@@ -291,26 +299,26 @@ jobs:
           mkdir -p dist
           {
             printf '## 🇩🇪 Deutsch\n\n'
-            cat docs/Deutsch/RELEASE-NOTES-3.16.0.md
+            cat docs/Deutsch/RELEASE-NOTES-3.17.0.md
             printf '\n\n---\n\n## 🇬🇧 English\n\n'
-            cat docs/Englisch/RELEASE-NOTES-3.16.0.md
+            cat docs/Englisch/RELEASE-NOTES-3.17.0.md
             printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
-            cat docs/Niederländisch/RELEASE-NOTES-3.16.0.md
+            cat docs/Niederländisch/RELEASE-NOTES-3.17.0.md
           } > dist/release-notes.md
           test -s dist/release-notes.md
 
-      - name: Prepare Schleim OS 3.16.0 release
+      - name: Prepare Schleim OS 3.17.0 release
         id: target
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          TAG="v3.16.0"
+          TAG="v3.17.0"
           if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release create "$TAG" \
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
-              --title "Schleim OS 3.16.0 – Android-Browser" \
+              --title "Schleim OS 3.17.0 – Android-Browser" \
               --notes-file dist/release-notes.md
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
@@ -385,16 +393,16 @@ jobs:
           fi
           echo "All project archives and the Alpha 22 APK are ready; the Android Studio ZIP root is Android-App Template."
 
-      - name: Publish the complete 3.16.0 release
+      - name: Publish the complete 3.17.0 release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
           # Keep only the current Android APK in this consolidated release.
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha21.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha23.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
@@ -406,7 +414,7 @@ jobs:
 
           gh release edit "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Schleim OS 3.16.0" \
+            --title "Schleim OS 3.17.0" \
             --notes-file dist/release-notes.md
 
       - name: Verify the exact files published to the GitHub Release
@@ -446,4 +454,4 @@ jobs:
             "dist/verify/Schleim-Browser-Android-0.1.0-alpha23.apk"
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
-          echo "Release v3.16.0 published; every archive, checksum and APK signature verified."
+          echo "Release v3.17.0 published; every archive, checksum and APK signature verified."
