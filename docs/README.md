@@ -54,6 +54,8 @@ In jedem Sprachordner gibt es eine eigene Anleitung für den Schleim-Store:
 
 ## Android-Entwicklerdokumentation
 
+Das herunterladbare Android-Studio-ZIP enthält den Projektordner **Android-App Template**. Die Anleitungen und das Generator-Skript im Repository liegen getrennt unter `Android-App/`.
+
 - [Deutsch – Android-Projekt](../android/README.md)
 - [English – Android project](../android/README.en.md)
 - [Nederlands – Android-project](../android/README.nl.md)
