@@ -198,6 +198,8 @@ def main() -> None:
         '<path d="M120 168h272v28H120zm0 64h272v28H120zm0 64h180v28H120z" fill="#705235"/>'
         '</svg>'
     )
+    # Replace the standalone Extension logo too; it is separate from the PNG and HTML icons.
+    (icons / "icon.svg").write_text(neutral_svg + "\n", encoding="utf-8")
     neutral_b64 = base64.b64encode(neutral_svg.encode("utf-8")).decode("ascii")
     for html in extension_target.rglob("*.html"):
         content = html.read_text(encoding="utf-8")
@@ -237,6 +239,9 @@ def main() -> None:
         'android:label="YOUR_BROWSER_NAME"', 'android:label="Your Browser"'
     )
     app_manifest.write_text(manifest_text, encoding="utf-8")
+
+    # Guard against accidentally shipping the original snail logo in the SVG asset.
+    assert (icons / "icon.svg").read_text(encoding="utf-8") == neutral_svg + "\n"
 
     leftovers = []
     for file in project.rglob("*"):
