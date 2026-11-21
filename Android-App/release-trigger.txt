@@ -1,8 +1,8 @@
 Schleim OS 3.18.0 Android browser release
 
-Build and validate the Alpha 25 Android browser with long-press context menus available on links, media and ordinary page content; provide page printing from the context menu and browser menu; retain link and direct-media downloads plus extension open, enable, disable and remove actions. Compose the GitHub release notes in German, English and Dutch, package the original Extension, neutral Extension template, Android APK and Android Studio template, regenerate SHA-256 sums, publish all assets to v3.18.0, then download and verify the exact release files and APK signature.
+Build and validate the Alpha 26 Android browser with long-press context menus available on links, media and ordinary page content; provide page printing from the context menu and browser menu; retain link and direct-media downloads plus extension open, enable, disable and remove actions. Compose the GitHub release notes in German, English and Dutch, package the original Extension, neutral Extension template, Android APK and Android Studio template, regenerate SHA-256 sums, publish all assets to v3.18.0, then download and verify the exact release files and APK signature.
 
-Rebuild requested: 2026-11-21 — publish the checked Alpha 25 Android APK and verify every release asset.
+Rebuild requested: 2026-11-21 — publish the checked Alpha 26 Android APK and verify every release asset.
 
 Rebuild retry: extension manifest and its bundled SHA-256 entry are now aligned with release 3.18.0.
 
@@ -13,6 +13,11 @@ Verification retry: the generated Android Studio ZIP root is Android-App Templat
 Final rebuild: quote the Android Studio template archive path so the published ZIP verification succeeds; rebuild and replace all v3.18.0 assets.
 
 
-Store update: replace the Chrome Web Store link with the official Mozilla Firefox Add-ons catalog (addons.mozilla.org/firefox/), document Mozilla-signed XPI installation, and publish Android Alpha 25.
+Store update: replace the Chrome Web Store link with the official Mozilla Firefox Add-ons catalog (addons.mozilla.org/firefox/), document Mozilla-signed XPI installation, and publish Android Alpha 26.
 
-Release cleanup retry: remove obsolete Alpha 24 APK before publishing Alpha 25, keeping only the current Android APK in v3.18.0.
+Release cleanup retry: remove obsolete Alpha 24 APK before publishing Alpha 26, keeping only the current Android APK in v3.18.0.
+
+
+Stability update: draw the native browser shell before GeckoView runtime initialization, move document-provider metadata queries to the IO executor, limit retained tabs to four, and stop background executors immediately when the activity is destroyed. Publish and verify Android Alpha 26.
+
+Rebuild requested: 2026-11-21 — investigate recurring Android ANR reports and publish the stability build.
