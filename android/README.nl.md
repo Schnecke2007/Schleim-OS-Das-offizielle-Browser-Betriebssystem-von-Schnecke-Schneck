@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha24 · GeckoView · ARM64**
+**Versie 0.1.0-alpha25 · GeckoView · ARM64**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -27,6 +27,7 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Open geïnstalleerde extensies via de knop **Openen** wanneer ze een optiespagina aanbieden; de ingebouwde Schleim OS-Extension opent de startpagina.
 - Android-bestandskiezer en opslagvensters.
 - Mozilla-ondertekende XPI-extensies installeren, activeren, uitschakelen en verwijderen.
+- De officiële Mozilla Firefox Add-ons-catalogus rechtstreeks vanuit de extensiebeheerder openen.
 - Desktopmodus en selectie als standaardbrowser van Android.
 - De oorspronkelijke Extension levert het Schleim OS-startscherm, de Store, account-, personalisatie- en cloudfuncties.
 
@@ -60,4 +61,4 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 
 De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
-[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
+[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
