@@ -143,8 +143,8 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 22" in gradle
-          assert 'versionName = "0.1.0-alpha22"' in gradle
+          assert "versionCode = 23" in gradle
+          assert 'versionName = "0.1.0-alpha23"' in gradle
           assert '"version": "3.16.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -229,6 +229,14 @@ jobs:
           assert "private fun showDownloadsDialog()" in main
           assert "private fun showExtensionsDialog()" in main
           assert "private fun showSettingsDialog()" in main
+          assert main.count("override fun onContextMenu(") == 1
+          assert main.count("private fun printCurrentPage()") == 1
+          assert "session.printPageContent()" in main
+          assert "PopupMenu(this, anchor, Gravity.START)" in main
+          assert "downloadContextResource(session, linkUri)" in main
+          assert "WebExtensionController" in main
+          assert "optionsPageUrl" in main
+          assert "homepageUrl" in main
           assert "onExternalResponse(session: GeckoSession, response: WebResponse)" in main
           assert "WebExtensionController.INSTALLATION_METHOD_FROM_FILE" in main
           assert "GeckoSessionSettings.USER_AGENT_MODE_DESKTOP" in main
@@ -265,16 +273,31 @@ jobs:
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           unzip -l "$APK" | grep -Fq "ic_launcher.png"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha22.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha23.apk"
           echo "APK built, package metadata validated and original extension resources found."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha22.apk
+          path: Schleim-Browser-Android-0.1.0-alpha23.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Compose release notes in German, English and Dutch
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          {
+            printf '## 🇩🇪 Deutsch\n\n'
+            cat docs/Deutsch/RELEASE-NOTES-3.16.0.md
+            printf '\n\n---\n\n## 🇬🇧 English\n\n'
+            cat docs/Englisch/RELEASE-NOTES-3.16.0.md
+            printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
+            cat docs/Niederländisch/RELEASE-NOTES-3.16.0.md
+          } > dist/release-notes.md
+          test -s dist/release-notes.md
 
       - name: Prepare Schleim OS 3.16.0 release
         id: target
@@ -288,7 +311,7 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" \
               --title "Schleim OS 3.16.0 – Android-Browser" \
-              --notes-file docs/Englisch/RELEASE-NOTES-3.16.0.md
+              --notes-file dist/release-notes.md
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
@@ -340,14 +363,14 @@ jobs:
           fi
 
           # Copy the separately validated production APK into the release package.
-          cp "Schleim-Browser-Android-0.1.0-alpha22.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha23.apk" dist/release/
 
           (
             cd dist/release
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha22.apk \
+              Schleim-Browser-Android-0.1.0-alpha23.apk \
               Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
           )
@@ -371,13 +394,20 @@ jobs:
           # Keep only the current Android APK in this consolidated release.
           gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha21.apk" \
             --repo "$GITHUB_REPOSITORY" --yes || true
+          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --repo "$GITHUB_REPOSITORY" --yes || true
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha23.apk" \
             "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
+
+          gh release edit "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Schleim OS 3.16.0" \
+            --notes-file dist/release-notes.md
 
       - name: Verify the exact files published to the GitHub Release
         env:
@@ -390,7 +420,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha23.apk" \
             --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
             --dir dist/verify
@@ -403,7 +433,7 @@ jobs:
           for asset in \
             Schleim-OS-Extension.zip \
             Browser-OS-Extension-Template.zip \
-            Schleim-Browser-Android-0.1.0-alpha22.apk \
+            Schleim-Browser-Android-0.1.0-alpha23.apk \
             Schleim-Browser-Android-Studio-Template.zip; do
             cmp -s "dist/release/$asset" "dist/verify/$asset"
           done
@@ -413,7 +443,7 @@ jobs:
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha22.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha23.apk"
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
           echo "Release v3.16.0 published; every archive, checksum and APK signature verified."
