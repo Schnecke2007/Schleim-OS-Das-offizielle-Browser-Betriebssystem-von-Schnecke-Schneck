@@ -28,3 +28,5 @@ Release rebuild: 2026-11-21 — build and validate Android Alpha 27 using the pe
 Retry after fixing APK certificate validation pipeline: 2026-11-21.
 
 Validation retry: remove early-exit grep pipelines from APK checks and template ZIP checks; validate captured command output to avoid SIGPIPE with pipefail.
+
+Rebuild retry: fix shell syntax in Android Studio ZIP root validation after replacing pipe-based checks.
