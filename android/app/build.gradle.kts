@@ -33,24 +33,29 @@ android {
         }
     }
 
+    val releaseSigningReady =
+        !System.getenv("ANDROID_KEYSTORE_PATH").isNullOrBlank() &&
+        !System.getenv("ANDROID_KEYSTORE_PASSWORD").isNullOrBlank() &&
+        !System.getenv("ANDROID_KEY_ALIAS").isNullOrBlank() &&
+        !System.getenv("ANDROID_KEY_PASSWORD").isNullOrBlank()
+
     signingConfigs {
-        create("release") {
-            val keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")
-                ?: error("ANDROID_KEYSTORE_PATH is required for reproducible release signing.")
-            storeFile = file(keystorePath)
-            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
-                ?: error("ANDROID_KEYSTORE_PASSWORD is missing.")
-            keyAlias = System.getenv("ANDROID_KEY_ALIAS")
-                ?: error("ANDROID_KEY_ALIAS is missing.")
-            keyPassword = System.getenv("ANDROID_KEY_PASSWORD")
-                ?: error("ANDROID_KEY_PASSWORD is missing.")
+        if (releaseSigningReady) {
+            create("release") {
+                storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH")!!)
+                storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")!!
+                keyAlias = System.getenv("ANDROID_KEY_ALIAS")!!
+                keyPassword = System.getenv("ANDROID_KEY_PASSWORD")!!
+            }
         }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("release")
+            if (releaseSigningReady) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 }
