@@ -4,7 +4,7 @@ Deze map bevat de handleiding en generator voor het neutrale Android Studio-proj
 
 ## Download
 
-In de nieuwste GitHub-release staat **Schleim-Browser-Android-Studio-Template.zip**. Pak het archief uit en open de map **Android-App** in Android Studio.
+In de nieuwste GitHub-release staat **Schleim-Browser-Android-Studio-Template.zip**. Pak het archief uit en open de projectmap **Android-App Template** in Android Studio.
 
 ## Plaatsaanduidingen en aanpassing
 
@@ -31,7 +31,7 @@ Pas vóór je eigen build ten minste het volgende aan:
 ## Het project bouwen
 
 1. Open Android Studio en kies **Open**.
-2. Selecteer de uitgepakte map Android-App.
+2. Selecteer de uitgepakte map **Android-App Template**.
 3. Voer Gradle Sync uit.
 4. Maak een test-APK via **Build → Build Bundle(s) / APK(s) → Build APK(s)**.
 5. Stel voor publicatie je eigen blijvende ondertekeningssleutel in.
