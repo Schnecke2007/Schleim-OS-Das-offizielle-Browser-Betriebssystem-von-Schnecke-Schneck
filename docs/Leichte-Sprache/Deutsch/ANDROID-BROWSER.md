@@ -29,7 +29,9 @@ Lade dort **Schleim-Browser-Android-0.1.0-alpha23.apk** herunter.
 - Gib eine Internetadresse oder einen Suchbegriff ein.
 - Nutze Zurück, Vorwärts und Neu laden.
 - Über das Tab-Symbol öffnest und wechselst du Tabs.
-- Im Menü findest du Downloads, Erweiterungen und Einstellungen.
+- Im Menü findest du Downloads, Erweiterungen, Einstellungen und **Seite drucken**.
+- Halte einen Link, ein Bild oder ein Video gedrückt. Dann erscheint ein Menü. Dort kannst du zum Beispiel öffnen, herunterladen oder die Adresse kopieren.
+- Beim Drucken öffnet sich das Android-Druckfenster. Du kannst auch als PDF speichern.
 - Es können höchstens sechs Tabs gleichzeitig offen bleiben. Ältere Hintergrund-Tabs werden bei Bedarf geschlossen.
 
 ## Wichtige Hinweise
