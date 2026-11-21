@@ -12,9 +12,9 @@
 
 Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
 
-Download **Schleim-Browser-Android-0.1.0-alpha24.apk**.
+Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
 
-[**Android-app rechtstreeks downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha24.apk)
+[**Android-app rechtstreeks downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
 
 ## De app installeren
 
@@ -30,6 +30,7 @@ Download **Schleim-Browser-Android-0.1.0-alpha24.apk**.
 - Gebruik Terug, Vooruit en Opnieuw laden.
 - Met het tabbladpictogram open je tabbladen en wissel je ertussen.
 - In het menu vind je Downloads, Extensies, Instellingen en **Pagina afdrukken**.
+- **Firefox-add-ons:** Een knop in het menu Extensies opent de officiële [Mozilla-catalogus](https://addons.mozilla.org/firefox/). Alleen compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden geïnstalleerd.
 - Houd een link, afbeelding of video lang ingedrukt. Er verschijnt een menu. Je kunt het item openen, downloaden of het adres kopiëren.
 - Bij afdrukken opent het Android-afdrukvenster. Je kunt de pagina ook als PDF opslaan.
 - Er kunnen maximaal zes tabbladen tegelijk open blijven. Oudere achtergrondtabbladen worden zo nodig gesloten.
