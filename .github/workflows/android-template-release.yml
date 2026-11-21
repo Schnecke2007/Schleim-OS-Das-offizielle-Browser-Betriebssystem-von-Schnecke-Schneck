@@ -73,8 +73,7 @@ jobs:
             \( -name '*.apk' -o -name '*.aab' -o -name '*.hprof' \) -delete
           rm -f "$TEMPLATE_PROJECT/local.properties"
 
-          zip -qr "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
-            -j /dev/null 2>/dev/null || true
+          rm -f "dist/release/Schleim-Browser-Android-Studio-Template.zip"
           (cd dist/android-template && zip -qr \
             "$GITHUB_WORKSPACE/dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "Android-App Template")
