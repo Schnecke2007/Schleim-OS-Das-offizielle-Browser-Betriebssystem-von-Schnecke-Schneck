@@ -1913,8 +1913,10 @@ class MainActivity : Activity() {
             val apkUri = FileProvider.getUriForFile(this, packageName + ".fileprovider", file)
             val installIntent = Intent(Intent.ACTION_VIEW).setDataAndType(apkUri, "application/vnd.android.package-archive")
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            pendingUpdateApk = null
             startActivity(installIntent)
         } catch (error: Exception) {
+            pendingUpdateApk = file
             showToast("Android-Installer konnte nicht geöffnet werden: ${error.message ?: "Fehler"}")
         }
     }
