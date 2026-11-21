@@ -1,0 +1,153 @@
+name: Build Android Studio template ZIP
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Android-App/template-release-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: schleim-os-android-template
+  cancel-in-progress: false
+
+jobs:
+  build-template:
+    name: Build, scrub and publish Android Studio template
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      - name: Generate and compile placeholder-only project
+        shell: bash
+        run: |
+          set -euo pipefail
+          GECKOVIEW_VERSION="153.0.20260810162159"
+          rm -rf dist/android-template dist/release dist/verify
+          mkdir -p dist/release
+
+          python3 Android-App/tools/build_template.py \
+            --android android \
+            --extension extension \
+            --docs Android-App \
+            --output dist/android-template
+
+          TEMPLATE_PROJECT="dist/android-template/Android-App Template"
+          test -f "$TEMPLATE_PROJECT/settings.gradle.kts"
+          test -f "$TEMPLATE_PROJECT/app/src/main/java/com/example/yourbrowser/MainActivity.kt"
+          test -f "$TEMPLATE_PROJECT/app/src/main/assets/extension/manifest.json"
+
+          gradle --no-daemon --stacktrace \
+            -p "$TEMPLATE_PROJECT" \
+            wrapper --gradle-version 8.13 --distribution-type bin
+
+          gradle --no-daemon --stacktrace \
+            -p "$TEMPLATE_PROJECT" \
+            -PgeckoviewVersion="$GECKOVIEW_VERSION" \
+            :app:assembleDebug
+
+          # Keep source and wrapper files; remove only generated build output and local state.
+          find "$TEMPLATE_PROJECT" -type d \
+            \( -name build -o -name .gradle -o -name .kotlin \) -prune -exec rm -rf {} +
+          find "$TEMPLATE_PROJECT" -type f \
+            \( -name '*.apk' -o -name '*.aab' -o -name '*.hprof' \) -delete
+          rm -f "$TEMPLATE_PROJECT/local.properties"
+
+          zip -qr "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
+            -j /dev/null 2>/dev/null || true
+          (cd dist/android-template && zip -qr \
+            "$GITHUB_WORKSPACE/dist/release/Schleim-Browser-Android-Studio-Template.zip" \
+            "Android-App Template")
+
+          TEMPLATE_ZIP="dist/release/Schleim-Browser-Android-Studio-Template.zip"
+          unzip -t "$TEMPLATE_ZIP" >/dev/null
+          unzip -Z1 "$TEMPLATE_ZIP" | grep -Fq "Android-App Template/settings.gradle.kts"
+          unzip -Z1 "$TEMPLATE_ZIP" | grep -Fq "Android-App Template/app/build.gradle.kts"
+          if unzip -Z1 "$TEMPLATE_ZIP" | grep -Eq '(^|/)(build|[.]gradle|[.]kotlin)/|[.](apk|aab|hprof)$'; then
+            echo "Generated build output or cache found in the template ZIP." >&2
+            exit 1
+          fi
+          if unzip -Z1 "$TEMPLATE_ZIP" | grep -Eq '^Android-App/'; then
+            echo "Unexpected old Android-App root folder found." >&2
+            exit 1
+          fi
+          TEMPLATE_SIZE="$(stat -c%s "$TEMPLATE_ZIP")"
+          if (( TEMPLATE_SIZE > 30000000 )); then
+            echo "Android Studio template is unexpectedly large: $TEMPLATE_SIZE bytes" >&2
+            exit 1
+          fi
+          echo "Android Studio template compiles and uses the requested Android-App Template folder."
+
+      - name: Update only the template asset and release checksums
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v3.16.0"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+
+          gh release download "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "Schleim-OS-Extension.zip" \
+            --pattern "Browser-OS-Extension-Template.zip" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --dir dist/release
+
+          (
+            cd dist/release
+            sha256sum \
+              Schleim-OS-Extension.zip \
+              Browser-OS-Extension-Template.zip \
+              Schleim-Browser-Android-0.1.0-alpha22.apk \
+              Schleim-Browser-Android-Studio-Template.zip \
+              > Schleim-OS-SHA256SUMS.txt
+          )
+
+          gh release upload "$TAG" \
+            "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
+            "dist/release/Schleim-OS-SHA256SUMS.txt" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Verify published template and checksum
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/verify
+          gh release download "v3.16.0" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "Schleim-Browser-Android-Studio-Template.zip" \
+            --pattern "Schleim-OS-SHA256SUMS.txt" \
+            --dir dist/verify
+
+          grep -F "  Schleim-Browser-Android-Studio-Template.zip" \
+            dist/verify/Schleim-OS-SHA256SUMS.txt | \
+            (cd dist/verify && sha256sum --check -)
+
+          unzip -t dist/verify/Schleim-Browser-Android-Studio-Template.zip >/dev/null
+          unzip -Z1 dist/verify/Schleim-Browser-Android-Studio-Template.zip | \
+            grep -Fq "Android-App Template/settings.gradle.kts"
+
+          echo "The template ZIP was uploaded, downloaded and checksum-verified."
