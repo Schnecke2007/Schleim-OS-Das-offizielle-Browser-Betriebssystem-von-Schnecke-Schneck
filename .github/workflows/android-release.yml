@@ -314,7 +314,7 @@ jobs:
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           unzip -l "$APK" | grep -Fq "ic_launcher.png"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          CERT="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK" | awk -F': ' '/certificate SHA-256 digest:/ {print $NF; exit}')"
+          CERT="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK" | awk -F': ' '/certificate SHA-256 digest:/ {print $NF; found=1} END {if (!found) exit 1}')"
           test "$CERT" = "9f06dbb31fd2fdaca50e75e72bb55076433882265aa31136c3434f9e633f53b2"
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha27.apk"
           echo "Signed release APK built, package metadata and persistent signing certificate validated."
