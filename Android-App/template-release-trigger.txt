@@ -1,5 +1,5 @@
-Schleim OS 3.16.0 — Android Studio template folder naming correction
+Schleim OS 3.16.0 — Android Studio template privacy correction
 
-Rebuild and compile the privacy-scrubbed Android Studio project; publish only the corrected Schleim-Browser-Android-Studio-Template.zip and refreshed SHA-256SUMS.txt to v3.16.0. The production Alpha 22 APK must not be rebuilt or replaced.
+Rebuild and compile the privacy-scrubbed Android Studio project; replace only the Android Studio template ZIP and refresh the SHA-256SUMS.txt asset in v3.16.0. The standalone Extension SVG icon is now replaced with the same neutral browser placeholder as the PNG icons. Verify that the generated ZIP contains no original branded icon assets and that the Android Studio project still builds.
 
-Clean ZIP rebuild requested after removing the empty archive seed from the template packaging workflow.
+Do not rebuild or replace the production Alpha 22 APK or the original Schleim OS Extension ZIP.
