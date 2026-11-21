@@ -103,14 +103,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="v3.16.0"
+          TAG="v3.17.0"
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
 
           gh release download "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha22.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha23.apk" \
             --dir dist/release
 
           (
@@ -118,7 +118,7 @@ jobs:
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha22.apk \
+              Schleim-Browser-Android-0.1.0-alpha23.apk \
               Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
           )
@@ -135,7 +135,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist/verify
-          gh release download "v3.16.0" \
+          gh release download "v3.17.0" \
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
