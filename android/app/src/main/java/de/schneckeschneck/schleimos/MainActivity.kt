@@ -4,10 +4,13 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.DownloadManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.role.RoleManager
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -36,6 +39,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.ScrollView
 import android.widget.TextView
@@ -262,6 +266,7 @@ class MainActivity : Activity() {
         browserColumn.addView(titleLabel)
 
         geckoView = GeckoView(this)
+        geckoView.setActivityContextDelegate { this@MainActivity }
         geckoView.setActivityContextDelegate(object : GeckoView.ActivityContextDelegate {
             override fun getActivityContext(): Context = this@MainActivity
         })
@@ -756,6 +761,8 @@ class MainActivity : Activity() {
     }
 
     private fun attachSessionDelegates(session: GeckoSession) {
+        // Reuse GeckoView's built-in print adapter so Android's system print dialog is used.
+        session.setPrintDelegate(geckoView.getPrintDelegate())
         session.setNavigationDelegate(object : GeckoSession.NavigationDelegate {
             override fun onLoadRequest(
                 session: GeckoSession,
@@ -850,6 +857,15 @@ class MainActivity : Activity() {
 
             override fun onExternalResponse(session: GeckoSession, response: WebResponse) {
                 saveDownload(response)
+            }
+
+            override fun onContextMenu(
+                session: GeckoSession,
+                screenX: Int,
+                screenY: Int,
+                element: GeckoSession.ContentDelegate.ContextElement
+            ) {
+                showPageContextMenu(session, screenX, screenY, element)
             }
 
             override fun onContextMenu(
@@ -983,11 +999,164 @@ class MainActivity : Activity() {
         showToast(if (desktopMode) "Desktop-Ansicht aktiviert." else "Mobile Ansicht aktiviert.")
     }
 
+    private fun printCurrentPage() {
+        val session = activeSession()
+        if (session == null) {
+            showToast("Es gibt keine geöffnete Seite zum Drucken.")
+            return
+        }
+        runCatching {
+            session.printPageContent()
+            showToast("Der Android-Druckdialog wird geöffnet …")
+        }.onFailure { error ->
+            Log.e(TAG, "Printing current page failed", error)
+            showToast("Die Seite konnte nicht zum Drucken vorbereitet werden: " + (error.message ?: "Fehler"))
+        }
+    }
+
+    private fun extensionOpenUrl(item: WebExtension): String? {
+        val metadata = item.metaData
+        val optionsPage = metadata.optionsPageUrl?.trim().orEmpty()
+        if (optionsPage.isNotBlank()) {
+            val scheme = runCatching { Uri.parse(optionsPage).scheme }.getOrNull()
+            return if (scheme.isNullOrBlank()) {
+                metadata.baseUrl.trimEnd('/') + "/" + optionsPage.trimStart('/')
+            } else {
+                optionsPage
+            }
+        }
+        if (item.isBuiltIn) {
+            return extensionHomeUrl ?: metadata.baseUrl.trimEnd('/') + "/pages/newtab.html"
+        }
+        return metadata.homepageUrl?.takeIf {
+            it.startsWith("https://", true) || it.startsWith("http://", true)
+        }
+    }
+
+    private fun showPageContextMenu(
+        session: GeckoSession,
+        screenX: Int,
+        screenY: Int,
+        element: GeckoSession.ContentDelegate.ContextElement
+    ) {
+        if (isFinishing || isDestroyed || session !== activeSession()) return
+
+        val linkUrl = element.linkUri?.takeIf { it.isNotBlank() }
+        val mediaUrl = element.srcUri?.takeIf { it.isNotBlank() }
+        if (linkUrl == null && mediaUrl == null) return
+
+        // Anchor the native popup at the long-press position inside the browser view.
+        val location = IntArray(2)
+        rootFrame.getLocationOnScreen(location)
+        val anchor = View(this).apply { alpha = 0f; isClickable = false; isFocusable = false }
+        val anchorX = (screenX - location[0]).coerceIn(0, (rootFrame.width - dp(2)).coerceAtLeast(0))
+        val anchorY = (screenY - location[1]).coerceIn(0, (rootFrame.height - dp(2)).coerceAtLeast(0))
+        rootFrame.addView(anchor, FrameLayout.LayoutParams(dp(2), dp(2)).apply {
+            leftMargin = anchorX
+            topMargin = anchorY
+        })
+
+        val popup = PopupMenu(this, anchor, Gravity.START)
+        val actions = mutableMapOf<Int, () -> Unit>()
+        var nextId = 1
+        fun addAction(label: String, action: () -> Unit) {
+            val id = nextId++
+            popup.menu.add(0, id, id, label)
+            actions[id] = action
+        }
+
+        if (linkUrl != null) {
+            addAction("Link in neuem Tab öffnen") { createTab(linkUrl) }
+            addAction("Link hier öffnen") { load(linkUrl) }
+            addAction("Link herunterladen") {
+                downloadFromContext(linkUrl, sessionUrls[session])
+            }
+            addAction("Link-Adresse kopieren") { copyToClipboard(linkUrl, "Link-Adresse") }
+        }
+
+        if (mediaUrl != null) {
+            val mediaLabel = when (element.type) {
+                GeckoSession.ContentDelegate.ContextElement.TYPE_IMAGE -> "Bild"
+                GeckoSession.ContentDelegate.ContextElement.TYPE_VIDEO -> "Video"
+                GeckoSession.ContentDelegate.ContextElement.TYPE_AUDIO -> "Audio"
+                else -> "Datei"
+            }
+            addAction("$mediaLabel in neuem Tab öffnen") { createTab(mediaUrl) }
+            addAction("$mediaLabel herunterladen") {
+                downloadFromContext(mediaUrl, sessionUrls[session])
+            }
+            addAction("$mediaLabel-Adresse kopieren") { copyToClipboard(mediaUrl, "$mediaLabel-Adresse") }
+        }
+
+        popup.setOnDismissListener { rootFrame.removeView(anchor) }
+        popup.setOnMenuItemClickListener { selected ->
+            actions[selected.itemId]?.invoke()
+            true
+        }
+        popup.show()
+    }
+
+    private fun copyToClipboard(value: String, label: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText(label, value))
+        showToast("Adresse wurde kopiert.")
+    }
+
+    private fun downloadFromContext(url: String, referrer: String?) {
+        val uri = runCatching { Uri.parse(url) }.getOrNull()
+        val scheme = uri?.scheme?.lowercase(Locale.ROOT)
+        if (uri == null || (scheme != "http" && scheme != "https")) {
+            showToast("Direkte Downloads sind für HTTP- und HTTPS-Dateilinks verfügbar.")
+            return
+        }
+
+        val proposedName = buildDownloadName(url, null, null)
+        showToast("Download wird vorbereitet: " + proposedName)
+        ioExecutor.execute {
+            val destination = runCatching {
+                uniqueDownloadFile(downloadsDirectory(), proposedName)
+            }.getOrNull()
+
+            runOnUiThread {
+                if (isFinishing || isDestroyed) return@runOnUiThread
+                if (destination == null) {
+                    showToast("Der Download-Ordner ist nicht verfügbar.")
+                    return@runOnUiThread
+                }
+                try {
+                    val request = DownloadManager.Request(uri)
+                        .setTitle(destination.name)
+                        .setDescription("Download mit Schleim Browser")
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                        .setDestinationInExternalFilesDir(
+                            this@MainActivity,
+                            Environment.DIRECTORY_DOWNLOADS,
+                            destination.name
+                        )
+                    if (!referrer.isNullOrBlank()) {
+                        val referrerScheme = runCatching { Uri.parse(referrer).scheme }.getOrNull()
+                        if (referrerScheme == "http" || referrerScheme == "https") {
+                            request.addRequestHeader("Referer", referrer)
+                        }
+                    }
+                    val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    val downloadId = manager.enqueue(request)
+                    showToast("Download gestartet: " + destination.name)
+                    Log.i(TAG, "Context-menu download queued: id=$downloadId, url=$url")
+                } catch (error: Exception) {
+                    Log.e(TAG, "Context-menu download failed", error)
+                    showToast("Download konnte nicht gestartet werden: " + (error.message ?: "Fehler"))
+                }
+            }
+        }
+    }
+
     private fun showBrowserMenu() {
         val actions = listOf(
             BrowserAction("⌂", "Startseite", "Zur Schleim-OS-Startseite", ::openHomePage),
             BrowserAction("▣", if (desktopMode) "Mobile Seite" else "Desktop-Seite", "Ansicht der aktuellen Website umschalten", ::toggleDesktopMode),
             BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
+            BrowserAction("⎙", "Drucken", "Aktuelle Webseite mit dem Android-Druckdialog drucken", ::printCurrentPage),
             BrowserAction("⎙", "Seite drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
             BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons installieren und verwalten", ::showExtensionsDialog),
             BrowserAction("⚙", "Einstellungen", "Benachrichtigungen und Standardbrowser", ::showSettingsDialog),
@@ -1521,48 +1690,66 @@ class MainActivity : Activity() {
                                 createTab(openPage)
                             }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
                         }
-                        if (!item.isBuiltIn) {
-                            actions.addView(makeTextButton(if (item.metaData.enabled) "Deaktivieren" else "Aktivieren") {
-                                val operation = if (item.metaData.enabled) {
-                                    runtime.getWebExtensionController().disable(item, WebExtensionController.EnableSource.USER)
-                                } else {
-                                    runtime.getWebExtensionController().enable(item, WebExtensionController.EnableSource.USER)
-                                }
-                                operation.accept({
-                                    showExtensionsDialog()
-                                }, { error ->
-                                    showToast("Erweiterung konnte nicht geändert werden: " + (error?.message ?: "Fehler"))
-                                })
-                                parts.dialog.dismiss()
-                            }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
-                            actions.addView(makeTextButton("Entfernen") {
-                                AlertDialog.Builder(this@MainActivity)
-                                    .setTitle("Erweiterung entfernen?")
-                                    .setMessage(name + " wird mitsamt ihren gespeicherten Erweiterungsdaten entfernt.")
-                                    .setNegativeButton("Abbrechen", null)
-                                    .setPositiveButton("Entfernen") { _, _ ->
-                                        runtime.getWebExtensionController().uninstall(item).accept({
-                                            showToast("Erweiterung entfernt.")
-                                            showExtensionsDialog()
-                                        }, { error ->
-                                            showToast("Entfernen fehlgeschlagen: " + (error?.message ?: "Fehler"))
-                                        })
-                                        parts.dialog.dismiss()
-                                    }
-                                    .show()
-                            }, LinearLayout.LayoutParams(0, dp(34), 1f))
-                            row.addView(actions)
-                        } else {
-                            if (openPage.isNullOrBlank()) {
-                                row.addView(TextView(this).apply {
-                                    text = "Diese integrierte Erweiterung stellt keine eigene Öffnungsseite bereit."
-                                    textSize = 8f
-                                    setTextColor(textMuted)
-                                })
-                            } else {
-                                row.addView(dialogMessage("Diese Erweiterung gehört zum Browser und kann hier nicht entfernt werden."))
-                                row.addView(actions)
+                        val openUrl = if (item.metaData.enabled) extensionOpenUrl(item) else null
+                        if (!item.isBuiltIn || openUrl != null) {
+                            val actions = LinearLayout(this).apply {
+                                orientation = LinearLayout.HORIZONTAL
                             }
+                            if (openUrl != null) {
+                                actions.addView(makeTextButton("Öffnen") {
+                                    parts.dialog.dismiss()
+                                    createTab(openUrl)
+                                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
+                            }
+                            if (!item.isBuiltIn) {
+                                actions.addView(makeTextButton(if (item.metaData.enabled) "Deaktivieren" else "Aktivieren") {
+                                    val operation = if (item.metaData.enabled) {
+                                        runtime.getWebExtensionController().disable(item, WebExtensionController.EnableSource.USER)
+                                    } else {
+                                        runtime.getWebExtensionController().enable(item, WebExtensionController.EnableSource.USER)
+                                    }
+                                    operation.accept({
+                                        showExtensionsDialog()
+                                    }, { error ->
+                                        showToast("Erweiterung konnte nicht geändert werden: " + (error?.message ?: "Fehler"))
+                                    })
+                                    parts.dialog.dismiss()
+                                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(6) })
+                                actions.addView(makeTextButton("Entfernen") {
+                                    AlertDialog.Builder(this@MainActivity)
+                                        .setTitle("Erweiterung entfernen?")
+                                        .setMessage(name + " wird mitsamt ihren gespeicherten Erweiterungsdaten entfernt.")
+                                        .setNegativeButton("Abbrechen", null)
+                                        .setPositiveButton("Entfernen") { _, _ ->
+                                            runtime.getWebExtensionController().uninstall(item).accept({
+                                                showToast("Erweiterung entfernt.")
+                                                showExtensionsDialog()
+                                            }, { error ->
+                                                showToast("Entfernen fehlgeschlagen: " + (error?.message ?: "Fehler"))
+                                            })
+                                            parts.dialog.dismiss()
+                                        }
+                                        .show()
+                                }, LinearLayout.LayoutParams(0, dp(34), 1f))
+                            }
+                            row.addView(actions)
+                        }
+                        if (item.isBuiltIn) {
+                            row.addView(TextView(this).apply {
+                                text = if (openUrl != null) {
+                                    "Integrierte Erweiterung des Browsers."
+                                } else {
+                                    "Diese integrierte Erweiterung stellt keine eigene Öffnungsseite bereit."
+                                }
+                                textSize = 8f
+                                setTextColor(textMuted)
+                            })
+                        } else if (!item.metaData.enabled) {
+                            row.addView(TextView(this).apply {
+                                text = "Aktiviere die Erweiterung, um ihre Optionsseite zu öffnen."
+                                textSize = 8f
+                                setTextColor(textMuted)
+                            })
                         }
                         listHost.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
                             bottomMargin = dp(7)
