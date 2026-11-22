@@ -9,9 +9,9 @@ De Android-app vervangt Android niet. Het is een browser die op Android draait.
 
 ## Download
 
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
+Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha29.apk**.
 
-Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
 
 ## Systeemvereisten
 
@@ -46,7 +46,7 @@ Android kan een waarschuwing tonen omdat de APK buiten Google Play wordt verspre
 
 De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, apps, personalisatie, Schleim-Store, Schleim-account en cloudfuncties zijn inbegrepen.
 
-- Er worden maximaal zes browsertabbladen tegelijk opengehouden. Bij meer tabbladen wordt een ouder achtergrondtabblad verwijderd om geheugen en bronnen te beperken.
+- Er worden maximaal vier browsertabbladen tegelijk opengehouden. Bij meer tabbladen wordt een ouder achtergrondtabblad verwijderd om geheugen en bronnen te beperken.
 - De Android-app ondersteunt bestandsuploads en het Android-venster om geëxporteerde bestanden op te slaan.
 - Mozilla-ondertekende XPI-extensies kunnen via het browsermenu worden geïnstalleerd.
 - **Mozilla Firefox Add-ons:** De knop in de extensiebeheerder opent opnieuw de officiële [Firefox Add-ons-catalogus](https://addons.mozilla.org/firefox/). Compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden gedownload en daarna via **XPI-bestand installeren** worden geïnstalleerd.
@@ -57,11 +57,18 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - Sommige websites blokkeren insluiting in andere pagina's. De inhoud kan leeg blijven of moet rechtstreeks worden geopend.
 - Niet elke Chrome-desktopextensie is compatibel met GeckoView.
 
+## Geschiedenis, DNS en automatisch opgeslagen tabbladen
+
+- **Geschiedenis:** Open **Geschiedenis** via het browsermenu. Je ziet succesvol bezochte HTTP- en HTTPS-pagina's met titel, adres en bezoektijd. De geschiedenis wordt lokaal opgeslagen, bevat maximaal 250 items en kan worden gewist met **Geschiedenis wissen**.
+- **Veilige DNS-verbinding:** Schleim Browser gebruikt voor normale DNS-aanvragen een vaste DNS-over-HTTPS-resolver. De verbinding is versleuteld via HTTPS. Deze configuratie kan niet worden gewijzigd. In Instellingen staat alleen **Veilige DNS-verbinding**; het serveradres en de naam van de aanbieder worden daar niet getoond.
+- **Tabbladen automatisch opslaan:** Maximaal vier geopende tabbladen en het actieve tabblad worden automatisch opgeslagen. Bij de volgende start worden de tabbladen hersteld met hun laatst geopende adres. De volledige terug-/vooruitnavigatie van een pagina wordt niet opgeslagen.
+- Geschiedenis en tabbladen staan in de lokale appgegevens. Als je de app verwijdert, kunnen deze gegevens verloren gaan.
+
 ## Updates
 
-Android-apps worden niet bijgewerkt via het Extension-updatecentrum. Download de nieuwste APK uit de nieuwste GitHub-release en installeer deze.
+De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension. Open **Browsermenu → Instellingen → Controleren op updates**. Als er een update beschikbaar is, download je eerst de APK via het updatevenster. Kies daarna **Oude app verwijderen**. Android toont hiervoor een eigen bevestigingsvenster. Installeer vervolgens de gedownloade APK vanuit de map Downloads.
 
-**Opmerking over de huidige debug-ondertekening:** De release-APK wordt momenteel als debug-build gemaakt. Zolang er geen blijvende privésleutel voor ondertekening is ingesteld, kan Android een update over de bestaande app weigeren. Maak in dat geval een back-up van belangrijke lokale instellingen, controleer of je privécloudback-up actueel is, verwijder de vorige appversie en installeer de nieuwe APK. Verwijderen kan lokale appgegevens wissen.
+De release-APK gebruikt de standaard Android-debugondertekening. Deze sleutel kan per build veranderen. Een directe update over de bestaande app is daarom niet gegarandeerd. Verwijder de oude app voordat je de nieuwe APK installeert. Maak vooraf een back-up van belangrijke gegevens. Verwijderen kan de geschiedenis, opgeslagen tabbladen en andere lokale appgegevens wissen.
 
 ## Android Studio-sjabloon
 
