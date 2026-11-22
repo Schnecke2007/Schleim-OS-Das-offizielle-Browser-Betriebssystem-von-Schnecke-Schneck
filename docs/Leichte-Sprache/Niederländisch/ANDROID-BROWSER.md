@@ -1,26 +1,18 @@
-# Schleim Browser voor Android – eenvoudige taal
+# Schleim Browser – Android-app
 
-**Schleim Browser** is een aparte browserapp voor Android. Schleim OS is in de app opgenomen. Het is geen Chrome-extensie.
+Schleim Browser is een app voor Android.
+De app gebruikt Mozilla GeckoView.
+De Schleim OS-startpagina is inbegrepen.
 
-## Wat heb je nodig?
+## Download
 
-- Android 8.0 of nieuwer.
-- Een Android-apparaat met een 64-bits ARM-processor.
-- Een internetverbinding.
-
-## De app downloaden
-
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-
-Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
-
-[**Android-app rechtstreeks downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+[Download Schleim Browser Alpha 29](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
 
 ## De app installeren
 
 1. Open het gedownloade APK-bestand.
 2. Android kan vragen of deze bron apps mag installeren.
-3. Sta dit alleen toe als je de bron vertrouwt. Gebruik de officiële GitHub-link hierboven.
+3. Sta dit alleen toe als je de bron vertrouwt.
 4. Tik op **Installeren**.
 5. Open daarna **Schleim Browser**.
 
@@ -28,19 +20,38 @@ Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
 
 - Voer een websiteadres of zoekterm in.
 - Gebruik Terug, Vooruit en Opnieuw laden.
-- Met het tabbladpictogram open je tabbladen en wissel je ertussen.
-- In het menu vind je Downloads, Extensies, Instellingen en **Pagina afdrukken**.
-- **Firefox-add-ons:** Een knop in het menu Extensies opent de officiële [Mozilla-catalogus](https://addons.mozilla.org/firefox/). Alleen compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden geïnstalleerd.
-- Houd een link, afbeelding of video lang ingedrukt. Er verschijnt een menu. Je kunt het item openen, downloaden of het adres kopiëren.
-- Bij afdrukken opent het Android-afdrukvenster. Je kunt de pagina ook als PDF opslaan.
-- Er kunnen maximaal zes tabbladen tegelijk open blijven. Oudere achtergrondtabbladen worden zo nodig gesloten.
+- Met het tabbladpictogram wissel je tussen tabbladen.
+- Het browsermenu bevat Downloads, Geschiedenis, Extensies en Instellingen.
+- Je kunt maximaal vier tabbladen tegelijk openen.
+- Houd een link of afbeelding lang ingedrukt voor meer acties.
+- Je kunt een webpagina afdrukken of als PDF opslaan.
 
-## Belangrijke opmerkingen
+## Nieuwe functies
 
-- De app is een alpha-versie. Er kunnen nog fouten voorkomen.
+- **Geschiedenis:** Open **Geschiedenis** in het menu. Je ziet welke websites je hebt bezocht. Je kunt een pagina opnieuw openen. Je kunt de geschiedenis ook wissen.
+- **Veilige DNS:** De browser gebruikt één vaste DNS-server. De verbinding is versleuteld. Je kunt de DNS-server niet veranderen. In Instellingen staat alleen dat een veilige DNS-verbinding wordt gebruikt.
+- **Tabbladen opslaan:** De browser bewaart je laatste vier tabbladen. Ook wordt opgeslagen welk tabblad actief was. Bij de volgende start worden de tabbladen opnieuw geopend.
+
+## Updates
+
+De Android-app heeft eigen updates.
+
+1. Open het browsermenu.
+2. Open **Instellingen**.
+3. Tik op **Controleren op updates**.
+4. Download eerst de APK als er een update klaarstaat.
+5. Ga terug naar het updatevenster.
+6. Tik op **Oude app verwijderen**.
+7. Bevestig de verwijdering in Android.
+8. Open het gedownloade APK-bestand en installeer het.
+
+## Belangrijk
+
+- De geschiedenis en tabbladen worden op je apparaat opgeslagen.
+- Als je de app verwijdert, kunnen deze gegevens verloren gaan.
+- Maak een back-up van belangrijke gegevens voordat je de app verwijdert.
 - Camera- en microfoonopnamen zijn uitgeschakeld in de Android-app.
 - De Android-app en de browser-Extension krijgen afzonderlijke updates.
-- Een nieuwe update kan een nieuwe installatie vereisen. Maak eerst een back-up van belangrijke gegevens. Verwijderen kan lokale appgegevens wissen.
 
 ## Hulp
 
