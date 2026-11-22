@@ -239,7 +239,7 @@ jobs:
           assert "android.permission.REQUEST_INSTALL_PACKAGES" in Path("android/app/src/main/AndroidManifest.xml").read_text()
           assert "Content providers (cloud drives, file managers, USB storage) may take" in main
           assert "geckoView.post {" in main
-          assert "runtime = GeckoRuntime.create(this)" in main
+          assert "runtime = GeckoRuntime.create(applicationContext, runtimeSettings)" in main
           assert "ioExecutor.execute {" in main
           assert "displayNameForUri(uri)" in main
           assert "private const val MAX_DOWNLOAD_ROWS = 100" in main
