@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha25 · GeckoView · ARM64**
+**Versie 0.1.0-alpha29 · GeckoView · ARM64**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -20,8 +20,10 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 
 - Adresbalk met URL-navigatie en Google-zoekopdrachten voor zoektermen.
 - Terug, Vooruit, Opnieuw laden en Startpagina.
-- Tabbladbeheer met maximaal zes behouden GeckoView-sessies.
+- Tabbladbeheer met maximaal vier behouden GeckoView-sessies; tabbladen en het actieve tabblad worden lokaal opgeslagen en bij de volgende start hersteld.
 - Downloads in een eigen downloadgedeelte van de app.
+- Lokale browsegeschiedenis met maximaal 250 items en een functie om de geschiedenis te wissen.
+- Een vaste DNS-over-HTTPS-resolver zonder normale terugval naar onversleutelde DNS; Instellingen toont alleen de status van de veilige DNS-verbinding.
 - Houd links, afbeeldingen, video's en audio lang ingedrukt om een contextmenu met openen-, downloaden- en kopieeracties te tonen wanneer een direct HTTP(S)-adres beschikbaar is.
 - Stuur webpagina's vanuit het browsermenu of contextmenu naar het Android-afdrukvenster om af te drukken of als PDF op te slaan.
 - Open geïnstalleerde extensies via de knop **Openen** wanneer ze een optiespagina aanbieden; de ingebouwde Schleim OS-Extension opent de startpagina.
@@ -36,7 +38,7 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Camera- en microfoonopnamen zijn bewust uitgeschakeld. Android-capturemachtigingen worden niet aangevraagd en GeckoView-mediaverzoeken worden geweigerd.
 - Externe websites kunnen insluiting blokkeren met hun eigen Content Security Policy of X-Frame-Options.
 - Niet elke Chromium-extensie is compatibel met GeckoView.
-- De app wordt momenteel als debug-APK gepubliceerd. Zonder een blijvende privésleutel voor ondertekening kan Android een update weigeren en opnieuw installeren vereisen.
+- De release-APK gebruikt bewust de standaard Android-debugondertekening. De sleutel kan tussen GitHub-builds veranderen. Het updatevenster biedt de APK-download en een aparte bevestiging om de oude app te verwijderen; maak vóór herinstallatie een back-up van belangrijke lokale gegevens.
 
 ## Lokaal bouwen
 
