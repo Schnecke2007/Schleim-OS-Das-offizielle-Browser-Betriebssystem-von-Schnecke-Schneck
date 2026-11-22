@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha28.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha29.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha28.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
 
 ## Systemanforderungen
 
@@ -46,7 +46,7 @@ Android kann eine Warnung anzeigen, weil die APK außerhalb des Play Stores vert
 
 Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören die Startseite, Apps, Personalisierung, Schleim-Store, Schleim-Konto und die Cloud-Funktionen.
 
-- Es können bis zu sechs Browser-Tabs gleichzeitig geöffnet gehalten werden. Beim Öffnen weiterer Tabs wird ein älterer Hintergrund-Tab entfernt, um Speicher und Ressourcen zu begrenzen.
+- Es können bis zu vier Browser-Tabs gleichzeitig geöffnet gehalten werden. Beim Öffnen weiterer Tabs wird ein älterer Hintergrund-Tab entfernt, um Speicher und Ressourcen zu begrenzen.
 - Die Android-App unterstützt Datei-Upload und den Speicherdialog für exportierte Dateien.
 - Mozilla-signierte XPI-Erweiterungen können über das Browser-Menü installiert werden.
 - **Mozilla Firefox Add-ons:** Der Button im Erweiterungsmanager öffnet wieder den offiziellen [Firefox-Add-ons-Katalog](https://addons.mozilla.org/firefox/). Kompatible, von Mozilla signierte XPI-Dateien können heruntergeladen und anschließend über „XPI-Datei installieren“ installiert werden.
@@ -57,11 +57,18 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - Manche Webseiten blockieren das Einbetten in andere Seiten. Solche Inhalte können leer bleiben oder müssen direkt geöffnet werden.
 - Nicht jede Chrome-Desktop-Erweiterung ist mit GeckoView kompatibel.
 
+## Verlauf, DNS und automatische Tab-Sicherung
+
+- **Verlauf:** Öffne im Browser-Menü den Punkt **Verlauf**. Dort findest du erfolgreich besuchte HTTP- und HTTPS-Seiten mit Titel, Adresse und Uhrzeit. Der Verlauf wird lokal gespeichert, umfasst bis zu 250 Einträge und kann über **Verlauf löschen** entfernt werden.
+- **Sichere DNS-Verbindung:** Schleim Browser nutzt für normale DNS-Abfragen einen fest eingestellten DNS-over-HTTPS-Server. Die Verbindung läuft verschlüsselt über HTTPS. Die Konfiguration ist nicht änderbar. In den Einstellungen wird nur der Hinweis **Sichere DNS-Verbindung** angezeigt; Serveradresse und Anbietername werden dort nicht angezeigt.
+- **Automatisch gespeicherte Tabs:** Bis zu vier geöffnete Tabs und der aktive Tab werden automatisch gespeichert. Beim nächsten Start werden die Tabs mit ihrer jeweils zuletzt geöffneten Adresse wiederhergestellt. Der vollständige Zurück-/Vorwärts-Verlauf einer einzelnen Seite wird dabei nicht gespeichert.
+- Verlauf und Tabs liegen in den lokalen App-Daten. Durch eine Deinstallation können diese Daten gelöscht werden.
+
 ## Updates
 
-Android-Apps werden nicht über das Extension-Update-Center aktualisiert. Lade die neue APK aus dem neuesten GitHub-Release herunter und installiere sie.
+Die Android-App wird getrennt von der Browser-Extension aktualisiert. Öffne **Browser-Menü → Einstellungen → Nach Updates suchen**. Wenn ein Update verfügbar ist, kannst du im Update-Fenster zuerst die APK herunterladen. Danach kannst du die alte App über **Alte App deinstallieren** entfernen. Android zeigt dafür eine eigene Bestätigungsabfrage. Installiere anschließend die heruntergeladene APK aus deinem Download-Ordner.
 
-**Wichtiger Hinweis zur Signierung:** Die Release-APK wird absichtlich mit dem normalen Android-Debug-Schlüssel signiert. GitHub Actions kann bei jedem Build einen neuen Schlüssel erzeugen. Deshalb ist kein direktes Aktualisieren über die vorherige Installation möglich: Lade die neue APK herunter, deinstalliere die bisherige App und installiere anschließend die APK aus deinem Download-Ordner. Das Update-Fenster bietet dafür eine Download- und eine Deinstallationsaktion. Die Deinstallation muss in Android bestätigt werden und kann lokale App-Daten löschen. Sichere vorher wichtige lokale Einstellungen und prüfe, ob deine private Cloud-Sicherung aktuell ist.
+Die Release-APK nutzt den normalen Android-Debug-Schlüssel. Dieser Schlüssel kann sich zwischen Builds ändern. Deshalb ist eine direkte Aktualisierung nicht garantiert und die alte App muss vor der neuen Installation entfernt werden. Sichere vorher wichtige Daten. Eine Deinstallation kann Verlauf, gespeicherte Tabs und andere lokale App-Daten löschen.
 
 ## Android-Studio-Vorlage
 
