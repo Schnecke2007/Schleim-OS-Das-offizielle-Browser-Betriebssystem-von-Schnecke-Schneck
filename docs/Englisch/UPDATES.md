@@ -36,6 +36,7 @@ This no-extraction guide applies to browsers whose extension manager offers loca
 
 ## Update the Android app
 
-The **Schleim Browser** Android app is updated separately from the browser Extension. Download the current APK from the [GitHub release](ANDROID-BROWSER.md) and open it on your Android device.
+Schleim Browser has its own update check. Open **Browser menu → Settings → Check for updates**. When an update is available, download the APK in the update dialog first. Then choose **Uninstall old app** and confirm Android's prompt. Finally, install the downloaded APK from your Downloads folder.
 
-**Debug-signing note:** Android may reject an in-place update. Back up important local data and check your cloud backup first. Then uninstall the old app and install the new APK. Uninstalling can remove local app data.
+The release APK uses Android's standard debug key. The key can change between builds, so an in-place update is not guaranteed. Uninstalling can delete history, saved tabs and other local app data. Back up important data first.
+
