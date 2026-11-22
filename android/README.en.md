@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha25 · GeckoView · ARM64**
+**Version 0.1.0-alpha29 · GeckoView · ARM64**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -20,8 +20,10 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 
 - Address bar with URL navigation and Google search for search terms.
 - Back, Forward, Reload and Home.
-- Tab management with a maximum of six retained GeckoView sessions.
+- Tab management with a maximum of four retained GeckoView sessions; tabs and the selected tab are saved locally and restored on the next app start.
 - Downloads in an app-specific download area.
+- Local browsing history with up to 250 entries and a clear-history action.
+- A fixed DNS-over-HTTPS resolver in a mode without normal plaintext DNS fallback; Settings only show the secure DNS connection status.
 - Long-press links, images, videos and audio to open a context menu with open, download and copy actions when a direct HTTP(S) address is available.
 - Send webpages to Android's print dialog from the browser menu or context menu, then print or save as PDF.
 - Open installed extensions through an **Open** action when they provide an options page; the built-in Schleim OS Extension opens its home page.
@@ -36,7 +38,7 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 - Camera and microphone capture are intentionally disabled. Android capture permissions are not requested and GeckoView media permission requests are rejected.
 - External websites can block embedding through their own Content Security Policy or X-Frame-Options rules.
 - Not every Chromium extension is compatible with GeckoView.
-- The app is currently published as a debug APK. Without a persistent private signing key, Android may reject an in-place update and require reinstalling the app.
+- The release APK deliberately uses Android's standard debug signing. The key can change between GitHub builds. The update dialog offers the APK download and a separate uninstall confirmation; back up important local data before reinstalling.
 
 ## Build locally
 
