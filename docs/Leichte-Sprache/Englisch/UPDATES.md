@@ -31,11 +31,17 @@ You need a browser with an import option for ZIP extensions. Keep the ZIP file u
 
 ## Update the Android app
 
-The Android app has its own updates.
-Download the new APK from the [GitHub release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and install it.
+The Android app has its own update check.
 
-The Android app is not updated through the Extension update center.
-You may need to remove the old app first if Android rejects the update.
-Back up important local data first.
+1. Open the browser menu.
+2. Open **Settings**.
+3. Tap **Check for updates**.
+4. Download the new APK first.
+5. Return to the update window.
+6. Choose **Uninstall old app**.
+7. Confirm the Android prompt.
+8. Install the downloaded APK.
+
+Important: Removing the old app can delete history and saved tabs. Back up important data first.
 
 [Android updates in plain language](ANDROID-BROWSER.md)
