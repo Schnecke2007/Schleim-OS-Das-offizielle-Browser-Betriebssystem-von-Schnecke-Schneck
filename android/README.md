@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha25)
+# Schleim Browser – Android-App (0.1.0-alpha29)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -18,8 +18,10 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 
 - Adressleiste mit URL-Navigation und Google-Suche für Suchbegriffe.
 - Zurück, Vorwärts, Neu laden und Startseite.
-- Tab-Verwaltung mit maximal sechs gleichzeitig gehaltenen GeckoView-Sessions.
+- Tab-Verwaltung mit maximal vier gleichzeitig gehaltenen GeckoView-Sessions; Tabs und der aktive Tab werden lokal gespeichert und beim nächsten App-Start wiederhergestellt.
 - Downloads in einem app-eigenen Downloadbereich.
+- Lokaler Browserverlauf mit bis zu 250 Einträgen und einer Funktion zum Löschen des Verlaufs.
+- Fester DNS-over-HTTPS-Resolver im Modus ohne normalen Klartext-DNS-Fallback; die Einstellungen zeigen nur den Status einer sicheren DNS-Verbindung.
 - Langes Drücken auf Links, Bilder, Videos und Audio öffnet ein Kontextmenü mit Öffnen-, Download- und Kopieraktionen (sofern eine direkte HTTP(S)-Adresse verfügbar ist).
 - Webseiten über das Browser-Menü oder Kontextmenü an Androids Druckdialog senden und drucken oder als PDF speichern.
 - Erweiterungen über „Öffnen“ starten, wenn sie eine Optionsseite bereitstellen; die integrierte Schleim-OS-Extension öffnet die Schleim-OS-Startseite.
@@ -34,7 +36,7 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - Kamera- und Mikrofonaufnahme sind absichtlich nicht aktiviert. Android-Capture-Berechtigungen werden nicht angefordert und Media-Permission-Requests abgelehnt.
 - Externe Seiten können Einbettungen durch eigene Content-Security-Policy- oder X-Frame-Options-Regeln blockieren.
 - Nicht alle Chromium-Erweiterungen funktionieren mit GeckoView.
-- Die App wird aktuell als Debug-APK veröffentlicht. Ohne dauerhaftes privates Signatur-Schlüsselpaar kann Android ein Update ablehnen und eine Neuinstallation erfordern.
+- Die Release-APK nutzt absichtlich die normale Android-Debug-Signierung. Der Schlüssel kann sich zwischen GitHub-Builds ändern. Das Update-Fenster bietet den APK-Download und eine separate Deinstallationsabfrage; vor der Neuinstallation müssen wichtige lokale Daten gesichert werden.
 
 ## Lokal bauen
 
