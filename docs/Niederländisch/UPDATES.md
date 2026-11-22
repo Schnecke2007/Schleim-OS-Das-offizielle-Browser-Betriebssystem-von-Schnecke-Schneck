@@ -36,6 +36,7 @@ Deze handleiding zonder uitpakken geldt voor browsers waarvan het extensiebeheer
 
 ## De Android-app bijwerken
 
-De Android-app **Schleim Browser** wordt afzonderlijk bijgewerkt van de browser-Extension. Download de actuele APK uit de [GitHub-release](ANDROID-BROWSER.md) en open deze op je Android-apparaat.
+Schleim Browser heeft een eigen updatecontrole. Open **Browsermenu → Instellingen → Controleren op updates**. Als er een update beschikbaar is, download je eerst de APK via het updatevenster. Kies daarna **Oude app verwijderen** en bevestig de melding van Android. Installeer vervolgens de gedownloade APK vanuit de map Downloads.
 
-**Opmerking over debug-ondertekening:** Android kan een update over de bestaande app weigeren. Maak eerst een back-up van belangrijke lokale gegevens en controleer je cloudback-up. Verwijder daarna de oude app en installeer de nieuwe APK. Verwijderen kan lokale appgegevens wissen.
+De release-APK gebruikt de standaard Android-debugondertekening. De sleutel kan per build veranderen. Een directe update is daarom niet gegarandeerd. Door de oude app te verwijderen, kunnen de geschiedenis, opgeslagen tabbladen en andere lokale appgegevens verloren gaan. Maak vooraf een back-up van belangrijke gegevens.
+
