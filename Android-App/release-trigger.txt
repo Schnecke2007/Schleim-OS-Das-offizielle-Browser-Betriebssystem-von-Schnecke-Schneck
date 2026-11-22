@@ -1,35 +1,7 @@
-Schleim OS 3.18.0 Android browser release
+Schleim OS 3.19.0 Android browser release
 
-Build and validate the Alpha 26 Android browser with long-press context menus available on links, media and ordinary page content; provide page printing from the context menu and browser menu; retain link and direct-media downloads plus extension open, enable, disable and remove actions. Compose the GitHub release notes in German, English and Dutch, package the original Extension, neutral Extension template, Android APK and Android Studio template, regenerate SHA-256 sums, publish all assets to v3.18.0, then download and verify the exact release files and APK signature.
+Build and validate Schleim Browser 0.1.0-alpha29 (versionCode 29) with a local browsing history, a fixed DNS-over-HTTPS resolver in TRR-only mode, and automatic persistence/restoration of up to four open tabs including the active tab. Keep the DNS resolver fixed in code and show only a generic, non-editable secure DNS status in Settings without exposing the resolver hostname or provider name. Retain the browser update check and the explicit APK download plus Android uninstall-confirmation reinstall flow. Preserve all existing browser and Extension features.
 
-Rebuild requested: 2026-11-21 — publish the checked Alpha 26 Android APK and verify every release asset.
+Compose release notes in German, English and Dutch, plus plain-language release notes in all three languages. Update normal and plain-language Android guides and update instructions. Package the original Extension, neutral Extension template, Android APK, generated Android Studio template, update metadata JSON and SHA-256 sums. Publish the complete release to v3.19.0, then download and verify the exact published assets, metadata, checksums and APK signature.
 
-Rebuild retry: extension manifest and its bundled SHA-256 entry are now aligned with release 3.18.0.
-
-Rebuild retry: handle nullable GeckoView WebResponse in direct file downloads.
-
-Verification retry: the generated Android Studio ZIP root is Android-App Template; validate MainActivity.kt at that exact archive path.
-
-Final rebuild: quote the Android Studio template archive path so the published ZIP verification succeeds; rebuild and replace all v3.18.0 assets.
-
-
-Store update: replace the Chrome Web Store link with the official Mozilla Firefox Add-ons catalog (addons.mozilla.org/firefox/), document Mozilla-signed XPI installation, and publish Android Alpha 26.
-
-Release cleanup retry: remove obsolete Alpha 24 APK before publishing Alpha 26, keeping only the current Android APK in v3.18.0.
-
-
-Stability update: draw the native browser shell before GeckoView runtime initialization, move document-provider metadata queries to the IO executor, limit retained tabs to four, and stop background executors immediately when the activity is destroyed. Publish and verify Android Alpha 26.
-
-Rebuild requested: 2026-11-21 — investigate recurring Android ANR reports and publish the stability build.
-
-
-Release rebuild: 2026-11-21 — build and validate Android Alpha 27 using the persistent release keystore; publish the signed APK and regenerate the update metadata and release checksums.
-
-Retry after fixing APK certificate validation pipeline: 2026-11-21.
-
-Validation retry: remove early-exit grep pipelines from APK checks and template ZIP checks; validate captured command output to avoid SIGPIPE with pipefail.
-
-Rebuild retry: fix shell syntax in Android Studio ZIP root validation after replacing pipe-based checks.
-
-Rebuild retry: restore the last known-valid workflow and disable pipefail only in steps that intentionally use grep early-exit pipelines.
-Android alpha 28: restore standard debug signing and manual reinstall update flow; retain update dialog and settings check.
+Requested rebuild: 2026-11-22 — Schleim Browser Alpha 29 with history, fixed secure DNS and automatic tab restoration.
