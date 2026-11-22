@@ -5,3 +5,5 @@ Build and validate Schleim Browser 0.1.0-alpha29 (versionCode 29) with a local b
 Compose release notes in German, English and Dutch, plus plain-language release notes in all three languages. Update normal and plain-language Android guides and update instructions. Package the original Extension, neutral Extension template, Android APK, generated Android Studio template, update metadata JSON and SHA-256 sums. Publish the complete release to v3.19.0, then download and verify the exact published assets, metadata, checksums and APK signature.
 
 Requested rebuild: 2026-11-22 — Schleim Browser Alpha 29 with history, fixed secure DNS and automatic tab restoration.
+
+Build retry: corrected the existing runtime-construction assertion to validate the configured GeckoRuntimeSettings and applicationContext; no browser feature was removed.
