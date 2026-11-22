@@ -9,9 +9,9 @@ The Android app does not replace Android. It is a browser that runs on Android.
 
 ## Download
 
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
+Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha29.apk**.
 
-Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
 
 ## System requirements
 
@@ -46,7 +46,7 @@ Android may display a warning because the APK is distributed outside Google Play
 
 The Android app bundles the Schleim OS Extension inside GeckoView. It includes the home screen, apps, personalization, Schleim-Store, Schleim account and cloud features.
 
-- Up to six browser tabs are kept open at once. When more tabs are opened, an older background tab is removed to limit memory and resource use.
+- Up to four browser tabs are kept open at once. When more tabs are opened, an older background tab is removed to limit memory and resource use.
 - The Android app supports file uploads and the Android save-file dialog for exported files.
 - Mozilla-signed XPI extensions can be installed from the browser menu.
 - **Mozilla Firefox Add-ons:** The button in the extension manager opens the official [Firefox Add-ons catalog](https://addons.mozilla.org/firefox/) again. Compatible Mozilla-signed XPI files can be downloaded and then installed with **Install XPI file**.
@@ -57,11 +57,18 @@ The Android app bundles the Schleim OS Extension inside GeckoView. It includes t
 - Some websites block embedding in other pages. Such content may appear blank or need to be opened directly.
 - Not every desktop Chrome extension is compatible with GeckoView.
 
+## History, DNS and automatic tab saving
+
+- **History:** Open **History** from the browser menu. It lists successfully visited HTTP and HTTPS pages with their title, address and visit time. History is stored locally, keeps up to 250 entries and can be removed with **Clear history**.
+- **Secure DNS connection:** Schleim Browser uses a fixed DNS-over-HTTPS resolver for normal DNS lookups. The connection is encrypted over HTTPS. This configuration cannot be changed. Settings only show **Secure DNS connection**; the server address and provider name are not displayed there.
+- **Automatically saved tabs:** Up to four open tabs and the selected tab are saved automatically. The tabs are restored with their last opened address the next time the app starts. The full Back/Forward page-navigation state is not saved.
+- History and tabs are stored in local app data. Uninstalling the app can delete this data.
+
 ## Updates
 
-Android apps are not updated through the Extension update center. Download the latest APK from the newest GitHub Release and install it.
+The Android app is updated separately from the browser Extension. Open **Browser menu → Settings → Check for updates**. When an update is available, use the update dialog to download the APK first. Then choose **Uninstall old app**. Android will show its own confirmation prompt. Finally, install the downloaded APK from your Downloads folder.
 
-**Current debug-signing note:** The release APK is currently built as a debug build. Until a persistent private signing key is configured, Android may reject an in-place update. In that case, back up important local settings, check that your private cloud backup is current, uninstall the previous app version and install the new APK. Uninstalling can remove local app data.
+The release APK uses Android's standard debug key. This key can change between builds. A direct in-place update is therefore not guaranteed, and the old app must be removed before installing the new APK. Back up important data first. Uninstalling can delete history, saved tabs and other local app data.
 
 ## Android Studio template
 
