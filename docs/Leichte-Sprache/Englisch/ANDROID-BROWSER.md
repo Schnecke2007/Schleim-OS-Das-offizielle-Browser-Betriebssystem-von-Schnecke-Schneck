@@ -1,26 +1,18 @@
-# Schleim Browser for Android – plain language
+# Schleim Browser – Android app
 
-**Schleim Browser** is a separate browser app for Android. Schleim OS is included in the app. It is not a Chrome extension.
+Schleim Browser is an app for Android.
+The app uses Mozilla GeckoView.
+It includes the Schleim OS home page.
 
-## What you need
+## Download
 
-- Android 8.0 or newer.
-- An Android device with a 64-bit ARM processor.
-- An internet connection.
-
-## Download the app
-
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-
-Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
-
-[**Download the Android app directly**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+[Download Schleim Browser Alpha 29](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
 
 ## Install the app
 
 1. Open the downloaded APK file.
 2. Android may ask whether this source can install apps.
-3. Allow this only when you trust the source. Use the official GitHub link above.
+3. Allow this only when you trust the source.
 4. Tap **Install**.
 5. Open **Schleim Browser**.
 
@@ -28,19 +20,38 @@ Download **Schleim-Browser-Android-0.1.0-alpha25.apk**.
 
 - Enter a website address or a search term.
 - Use Back, Forward and Reload.
-- Use the tab icon to open tabs and switch between them.
-- The menu contains Downloads, Extensions, Settings and **Print page**.
-- **Firefox add-ons:** A button in the Extensions menu opens the official [Mozilla catalog](https://addons.mozilla.org/firefox/). Only compatible XPI files signed by Mozilla can be installed.
-- Press and hold a link, image or video. A menu appears. You can open it, download it or copy its address.
-- Printing opens the Android print window. You can also save the page as a PDF.
-- Up to six tabs can stay open at once. Older background tabs are closed when needed.
+- Use the tab icon to switch between tabs.
+- The browser menu has Downloads, History, Extensions and Settings.
+- You can open up to four tabs at once.
+- Press and hold a link or image to see more actions.
+- You can print a webpage or save it as a PDF.
 
-## Important notes
+## New features
 
-- The app is an alpha release. Some errors may still occur.
+- **History:** Open **History** in the menu. You can see websites you visited. You can open a page again. You can also clear the history.
+- **Secure DNS:** The browser uses one fixed DNS server. The connection is encrypted. You cannot change the DNS server. Settings only say that a secure DNS connection is used.
+- **Save tabs:** The browser saves your last four tabs. It also saves which tab was active. The tabs open again when you start the app.
+
+## Updates
+
+The Android app has its own updates.
+
+1. Open the browser menu.
+2. Open **Settings**.
+3. Tap **Check for updates**.
+4. When an update is ready, download the APK first.
+5. Return to the update window.
+6. Tap **Uninstall old app**.
+7. Confirm the uninstall request in Android.
+8. Open the downloaded APK and install it.
+
+## Important
+
+- History and tabs are saved on your device.
+- Uninstalling the app can delete this data.
+- Back up important data before uninstalling.
 - Camera and microphone capture are turned off in the Android app.
-- The Android app and browser Extension have separate updates.
-- A new update may require a fresh installation. Back up important data first. Uninstalling the app can remove local app data.
+- The Android app and the browser Extension have separate updates.
 
 ## Help
 
