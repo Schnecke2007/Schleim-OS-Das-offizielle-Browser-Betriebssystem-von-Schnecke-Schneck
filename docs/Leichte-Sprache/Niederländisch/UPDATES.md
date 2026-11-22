@@ -31,11 +31,17 @@ Je hebt een browser nodig met een importoptie voor ZIP-extensies. Laat het ZIP-b
 
 ## De Android-app bijwerken
 
-De Android-app heeft eigen updates.
-Download de nieuwe APK uit de [GitHub-release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en installeer deze.
+De Android-app heeft een eigen updatecontrole.
 
-De Android-app wordt niet bijgewerkt via het Extension-updatecentrum.
-Soms moet je de oude app eerst verwijderen als Android de update weigert.
-Maak eerst een back-up van belangrijke lokale gegevens.
+1. Open het browsermenu.
+2. Open **Instellingen**.
+3. Tik op **Controleren op updates**.
+4. Download eerst de nieuwe APK.
+5. Ga terug naar het updatevenster.
+6. Kies **Oude app verwijderen**.
+7. Bevestig de melding van Android.
+8. Installeer de gedownloade APK.
+
+Belangrijk: Als je de oude app verwijdert, kunnen de geschiedenis en opgeslagen tabbladen verloren gaan. Maak eerst een back-up van belangrijke gegevens.
 
 [Android-updates in eenvoudige taal](ANDROID-BROWSER.md)
