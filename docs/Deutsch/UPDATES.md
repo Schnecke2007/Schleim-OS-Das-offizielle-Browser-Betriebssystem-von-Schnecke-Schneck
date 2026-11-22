@@ -36,6 +36,7 @@ Diese Anleitung ohne Entpacken gilt für Browser, deren Erweiterungsverwaltung e
 
 ## Android-App aktualisieren
 
-Die Android-App **Schleim Browser** wird getrennt von der Browser-Extension aktualisiert. Lade die aktuelle APK aus dem [GitHub-Release](ANDROID-BROWSER.md) herunter und öffne sie auf deinem Android-Gerät.
+Schleim Browser hat eine eigene Update-Prüfung. Öffne **Browser-Menü → Einstellungen → Nach Updates suchen**. Wenn ein Update verfügbar ist, lade zuerst die APK im Update-Fenster herunter. Wähle danach **Alte App deinstallieren** und bestätige die Abfrage von Android. Installiere anschließend die heruntergeladene APK aus deinem Download-Ordner.
 
-**Hinweis zur Debug-Signierung:** Android kann ein direktes Update ablehnen. Sichere in diesem Fall zuerst wichtige lokale Daten und prüfe deine Cloud-Sicherung. Deinstalliere danach die alte App und installiere die neue APK. Eine Deinstallation kann lokale App-Daten löschen.
+Die Release-APK nutzt den normalen Android-Debug-Schlüssel. Der Schlüssel kann sich zwischen Builds ändern. Eine direkte Aktualisierung ist deshalb nicht garantiert. Durch die Deinstallation können Verlauf, gespeicherte Tabs und andere lokale App-Daten verloren gehen. Sichere wichtige Daten vorher.
+
