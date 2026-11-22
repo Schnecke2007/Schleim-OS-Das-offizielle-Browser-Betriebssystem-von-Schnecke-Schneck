@@ -31,11 +31,17 @@ Du brauchst einen Browser mit einer Import-Funktion für ZIP-Erweiterungen. Die 
 
 ## Die Android-App aktualisieren
 
-Die Android-App hat eigene Updates.
-Lade die neue APK aus dem [GitHub-Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) herunter und installiere sie.
+Die Android-App hat eine eigene Update-Prüfung.
 
-Die Android-App wird nicht über das Extension-Update-Center aktualisiert.
-Bei Problemen kann es nötig sein, die alte App vorher zu entfernen.
-Sichere vorher wichtige lokale Daten.
+1. Öffne das Browser-Menü.
+2. Öffne **Einstellungen**.
+3. Tippe auf **Nach Updates suchen**.
+4. Lade zuerst die neue APK herunter.
+5. Gehe zurück zum Update-Fenster.
+6. Wähle **Alte App deinstallieren**.
+7. Bestätige die Frage von Android.
+8. Installiere danach die heruntergeladene APK.
+
+Wichtig: Durch das Löschen der alten App können Verlauf und gespeicherte Tabs verloren gehen. Sichere wichtige Daten vorher.
 
 [Android-Updates einfach erklärt](ANDROID-BROWSER.md)
