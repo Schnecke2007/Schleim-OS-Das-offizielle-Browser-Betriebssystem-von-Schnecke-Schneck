@@ -44,10 +44,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
+import org.json.JSONArray
 import org.json.JSONObject
 import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
+import org.mozilla.geckoview.GeckoRuntimeSettings
 import org.mozilla.geckoview.GeckoWebExecutor
 import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSessionSettings
@@ -139,7 +141,11 @@ class MainActivity : Activity() {
         geckoView.post {
             if (isFinishing || isDestroyed) return@post
             try {
-                runtime = GeckoRuntime.create(this)
+                val runtimeSettings = GeckoRuntimeSettings.Builder()
+                    .trustedRecursiveResolverMode(GeckoRuntimeSettings.TRR_MODE_ONLY)
+                    .trustedRecursiveResolverUri(PRIMARY_DNS_URL)
+                    .build()
+                runtime = GeckoRuntime.create(applicationContext, runtimeSettings)
                 configureExtensionPrompts()
                 openBrowser(intent?.data?.toString())
             } catch (error: Exception) {
@@ -341,8 +347,7 @@ class MainActivity : Activity() {
                 extension = installed
                 extensionHomeUrl = installed.metaData.baseUrl + "pages/newtab.html"
                 installed.setMessageDelegate(nativeMessageDelegate(), NATIVE_APP_ID)
-                val destination = initialUrl ?: extensionHomeUrl!!
-                createTab(destination)
+                restoreOpenTabs(initialUrl)
             }, { error ->
                 showNotification(
                     "Schleim OS konnte nicht starten",
@@ -621,6 +626,7 @@ class MainActivity : Activity() {
             session.loadUri(target)
         }
         updateTabsButton()
+        saveOpenTabs()
         return session
     }
 
@@ -663,6 +669,7 @@ class MainActivity : Activity() {
         refreshAddressFromActiveTab()
         refreshTitleFromActiveTab()
         updateNavigationButtons()
+        saveOpenTabs()
     }
 
     private fun createUserTab() {
@@ -820,7 +827,10 @@ class MainActivity : Activity() {
                 perms: MutableList<GeckoSession.PermissionDelegate.ContentPermission>,
                 hasUserGesture: Boolean
             ) {
-                if (url != null) sessionUrls[session] = url
+                if (url != null) {
+                    sessionUrls[session] = url
+                    saveOpenTabs()
+                }
                 if (session === activeSession() && url != null && !address.hasFocus()) address.setText(url)
             }
 
@@ -860,6 +870,8 @@ class MainActivity : Activity() {
                     progressBar.visibility = View.GONE
                     refreshAddressFromActiveTab()
                 }
+                if (success) recordVisitedPage(session)
+                saveOpenTabs()
             }
         })
 
@@ -867,6 +879,7 @@ class MainActivity : Activity() {
             override fun onTitleChange(session: GeckoSession, title: String?) {
                 if (!title.isNullOrBlank()) sessionTitles[session] = title
                 if (session === activeSession()) refreshTitleFromActiveTab()
+                saveOpenTabs()
             }
 
             override fun onExternalResponse(session: GeckoSession, response: WebResponse) {
@@ -984,6 +997,7 @@ class MainActivity : Activity() {
         if (current == null) createTab(target) else {
             sessionUrls[current] = target
             current.loadUri(target)
+            saveOpenTabs()
         }
     }
 
@@ -1036,6 +1050,7 @@ class MainActivity : Activity() {
             BrowserAction("⌂", "Startseite", "Zur Schleim-OS-Startseite", ::openHomePage),
             BrowserAction("▣", if (desktopMode) "Mobile Seite" else "Desktop-Seite", "Ansicht der aktuellen Website umschalten", ::toggleDesktopMode),
             BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
+            BrowserAction("◷", "Verlauf", "Zuletzt besuchte Webseiten anzeigen", ::showHistoryDialog),
             BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
             BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons installieren und verwalten", ::showExtensionsDialog),
             BrowserAction("⚙", "Einstellungen", "Benachrichtigungen und Standardbrowser", ::showSettingsDialog),
@@ -1198,8 +1213,156 @@ class MainActivity : Activity() {
         }
     }
 
+    /**
+     * Restore the last open tabs after the built-in extension is ready.
+     * The most recently saved four tabs are retained, matching the browser's
+     * memory limit. An incoming external URL takes priority as a new active tab.
+     */
+    private fun restoreOpenTabs(initialUrl: String?) {
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        val saved = runCatching { JSONArray(prefs.getString(KEY_SAVED_TABS, "[]")) }.getOrElse { JSONArray() }
+        val entries = mutableListOf<JSONObject>()
+        for (index in 0 until saved.length()) {
+            saved.optJSONObject(index)?.let { item ->
+                if (item.optString("url").isNotBlank()) entries.add(item)
+            }
+        }
+        val startIndex = (entries.size - MAX_OPEN_TABS).coerceAtLeast(0)
+        val retained = entries.drop(startIndex)
+        retained.forEach { item ->
+            val session = createTab(item.optString("url"))
+            item.optString("title").takeIf { it.isNotBlank() }?.let { sessionTitles[session] = it }
+        }
+
+        if (!initialUrl.isNullOrBlank()) {
+            createTab(initialUrl)
+        } else if (tabs.isNotEmpty()) {
+            val savedActive = prefs.getInt(KEY_ACTIVE_TAB, entries.lastIndex.coerceAtLeast(0))
+            activeTabIndex = (savedActive - startIndex).coerceIn(0, tabs.lastIndex)
+            showSessionInBrowser(tabs[activeTabIndex])
+        } else {
+            createTab(extensionHomeUrl ?: "https://www.google.com")
+        }
+        saveOpenTabs()
+    }
+
+    /** Save the current page of each tab and the selected tab index. */
+    private fun saveOpenTabs() {
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        if (tabs.isEmpty()) {
+            prefs.edit().remove(KEY_SAVED_TABS).remove(KEY_ACTIVE_TAB).apply()
+            return
+        }
+        val saved = JSONArray()
+        tabs.forEach { session ->
+            val url = sessionUrls[session]?.takeIf { it.isNotBlank() } ?: return@forEach
+            saved.put(JSONObject()
+                .put("url", url)
+                .put("title", sessionTitles[session] ?: ""))
+        }
+        prefs.edit()
+            .putString(KEY_SAVED_TABS, saved.toString())
+            .putInt(KEY_ACTIVE_TAB, activeTabIndex.coerceIn(0, (tabs.size - 1).coerceAtLeast(0)))
+            .apply()
+    }
+
+    /** Store completed top-level web visits locally; internal extension pages are excluded. */
+    private fun recordVisitedPage(session: GeckoSession) {
+        val url = sessionUrls[session]?.takeIf {
+            it.startsWith("https://", true) || it.startsWith("http://", true)
+        } ?: return
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        val history = runCatching { JSONArray(prefs.getString(KEY_HISTORY, "[]")) }.getOrElse { JSONArray() }
+        val now = System.currentTimeMillis()
+        val last = history.optJSONObject(history.length() - 1)
+        if (last?.optString("url") == url && now - last.optLong("visitedAt") < 3000L) return
+
+        history.put(JSONObject()
+            .put("url", url)
+            .put("title", sessionTitles[session] ?: Uri.parse(url).host ?: url)
+            .put("visitedAt", now))
+        while (history.length() > MAX_HISTORY_ROWS) history.remove(0)
+        prefs.edit().putString(KEY_HISTORY, history.toString()).apply()
+    }
+
+    private fun showHistoryDialog() {
+        val parts = createDialogShell("Verlauf", "Zuletzt besuchte Webseiten auf diesem Gerät.")
+        val clearButton = makeWideActionButton("Verlauf löschen") {
+            AlertDialog.Builder(this)
+                .setTitle("Browserverlauf löschen?")
+                .setMessage("Alle lokal gespeicherten Einträge im Verlauf werden entfernt.")
+                .setNegativeButton("Abbrechen", null)
+                .setPositiveButton("Löschen") { _, _ ->
+                    getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().remove(KEY_HISTORY).apply()
+                    parts.dialog.dismiss()
+                    showHistoryDialog()
+                }
+                .show()
+        }
+        parts.body.addView(clearButton, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
+            bottomMargin = dp(9)
+        })
+        val history = runCatching {
+            JSONArray(getSharedPreferences(PREFERENCES, MODE_PRIVATE).getString(KEY_HISTORY, "[]"))
+        }.getOrElse { JSONArray() }
+        if (history.length() == 0) {
+            parts.body.addView(dialogMessage("Der Verlauf ist noch leer. Erfolgreich geöffnete HTTP- und HTTPS-Seiten erscheinen hier."))
+        } else {
+            for (index in history.length() - 1 downTo 0) {
+                val item = history.optJSONObject(index) ?: continue
+                val url = item.optString("url")
+                if (url.isBlank()) continue
+                val title = item.optString("title").ifBlank { Uri.parse(url).host ?: url }
+                val time = SimpleDateFormat("dd.MM.yyyy · HH:mm", Locale.getDefault())
+                    .format(Date(item.optLong("visitedAt")))
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    setPadding(dp(10), dp(9), dp(10), dp(9))
+                    background = roundedBackground(surface, border, 10)
+                    isClickable = true
+                    isFocusable = true
+                    addView(TextView(this@MainActivity).apply {
+                        text = title
+                        textSize = 11f
+                        typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+                        setTextColor(textPrimary)
+                        maxLines = 1
+                        ellipsize = android.text.TextUtils.TruncateAt.END
+                    })
+                    addView(TextView(this@MainActivity).apply {
+                        text = url
+                        textSize = 8f
+                        setTextColor(textMuted)
+                        maxLines = 2
+                        ellipsize = android.text.TextUtils.TruncateAt.MIDDLE
+                        setPadding(0, dp(3), 0, dp(2))
+                    })
+                    addView(TextView(this@MainActivity).apply {
+                        text = time
+                        textSize = 8f
+                        setTextColor(accent)
+                    })
+                    setOnClickListener {
+                        parts.dialog.dismiss()
+                        load(url)
+                    }
+                }
+                parts.body.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = dp(7)
+                })
+            }
+        }
+        showDialog(parts.dialog)
+    }
+
     private fun showSettingsDialog() {
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
+        parts.body.addView(createInfoRow(
+            "Sichere DNS-Verbindung",
+            "Der Browser verwendet einen fest eingestellten DNS-Server über HTTPS. Diese Einstellung kann nicht geändert werden."
+        ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(7)
+        })
         parts.body.addView(createMenuTile("🔔", "Benachrichtigung testen", "Eine Testbenachrichtigung senden") {
             parts.dialog.dismiss()
             showNotification("Schleim OS", "Android-Benachrichtigungen sind eingerichtet.")
@@ -2025,6 +2188,7 @@ class MainActivity : Activity() {
     }
 
     override fun onPause() {
+        saveOpenTabs()
         // Keep the visible browser page inactive while the app is backgrounded.
         // The separate mediaSession is intentionally left running for active uploads.
         activeSession()?.let { session ->
@@ -2085,6 +2249,7 @@ class MainActivity : Activity() {
     }
 
     override fun onDestroy() {
+        saveOpenTabs()
         pendingFileResult?.complete(pendingFilePrompt?.dismiss())
         pendingFileResult = null
         pendingFilePrompt = null
@@ -2119,7 +2284,12 @@ class MainActivity : Activity() {
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"
+        private const val KEY_SAVED_TABS = "saved_open_tabs"
+        private const val KEY_ACTIVE_TAB = "saved_active_tab"
+        private const val KEY_HISTORY = "browser_history"
+        private const val MAX_HISTORY_ROWS = 250
         private const val MAX_OPEN_TABS = 4
+        private const val PRIMARY_DNS_URL = "https://dns.nextdns.io/36e7f3/Schleim-Browser"
         private const val MAX_DOWNLOAD_ROWS = 100
         private const val UPDATE_METADATA_ASSET = "Schleim-Browser-Android-update.json"
     }
