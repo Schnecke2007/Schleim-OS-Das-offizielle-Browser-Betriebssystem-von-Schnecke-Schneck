@@ -1,26 +1,18 @@
-# Schleim Browser für Android – einfach erklärt
+# Schleim Browser – Android-App
 
-**Schleim Browser** ist eine eigene Browser-App für Android. Die App enthält Schleim OS. Sie ist keine Erweiterung für Chrome.
+Schleim Browser ist eine App für Android.
+Die App nutzt GeckoView von Mozilla.
+Sie enthält die Schleim-OS-Startseite.
 
-## Das brauchst du
+## Download
 
-- Android 8.0 oder neuer.
-- Ein Android-Gerät mit 64-Bit-ARM-Prozessor.
-- Eine Internetverbindung.
-
-## App herunterladen
-
-Öffne die [GitHub-Release-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest).
-
-Lade dort **Schleim-Browser-Android-0.1.0-alpha25.apk** herunter.
-
-[**Android-App direkt herunterladen**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk)
+[Lade Schleim Browser Alpha 29 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
 
 ## App installieren
 
 1. Öffne die heruntergeladene APK-Datei.
-2. Android fragt vielleicht, ob du Apps aus dieser Quelle installieren möchtest.
-3. Erlaube das nur, wenn du der Quelle vertraust. Nutze den offiziellen GitHub-Link oben.
+2. Android fragt vielleicht, ob diese Quelle Apps installieren darf.
+3. Erlaube das nur, wenn du der Quelle vertraust.
 4. Tippe auf **Installieren**.
 5. Öffne danach **Schleim Browser**.
 
@@ -28,19 +20,38 @@ Lade dort **Schleim-Browser-Android-0.1.0-alpha25.apk** herunter.
 
 - Gib eine Internetadresse oder einen Suchbegriff ein.
 - Nutze Zurück, Vorwärts und Neu laden.
-- Über das Tab-Symbol öffnest und wechselst du Tabs.
-- Im Menü findest du Downloads, Erweiterungen, Einstellungen und **Seite drucken**.
-- **Firefox Add-ons:** Im Erweiterungsmenü öffnet ein Button den offiziellen [Mozilla-Katalog](https://addons.mozilla.org/firefox/). Installiert werden können nur passende, von Mozilla signierte XPI-Dateien.
-- Halte einen Link, ein Bild oder ein Video gedrückt. Dann erscheint ein Menü. Dort kannst du zum Beispiel öffnen, herunterladen oder die Adresse kopieren.
-- Beim Drucken öffnet sich das Android-Druckfenster. Du kannst auch als PDF speichern.
-- Es können höchstens sechs Tabs gleichzeitig offen bleiben. Ältere Hintergrund-Tabs werden bei Bedarf geschlossen.
+- Mit dem Tab-Symbol wechselst du zwischen Tabs.
+- Im Browser-Menü findest du Downloads, Verlauf, Erweiterungen und Einstellungen.
+- Du kannst bis zu vier Tabs gleichzeitig öffnen.
+- Halte einen Link oder ein Bild gedrückt. Dann erscheint ein Menü mit weiteren Aktionen.
+- Du kannst Webseiten über das Druckmenü drucken oder als PDF speichern.
 
-## Wichtige Hinweise
+## Neue Funktionen
 
-- Die App ist eine Alpha-Version. Es können noch Fehler auftreten.
+- **Verlauf:** Öffne im Menü den Punkt **Verlauf**. Dort siehst du besuchte Internetseiten. Du kannst eine Seite wieder öffnen. Du kannst den Verlauf auch löschen.
+- **Sicheres DNS:** Der Browser nutzt einen festen DNS-Server. Die Verbindung ist verschlüsselt. Du kannst den DNS-Server nicht ändern. In den Einstellungen steht nur, dass eine sichere DNS-Verbindung genutzt wird.
+- **Tabs speichern:** Der Browser speichert deine letzten vier Tabs. Er speichert auch, welcher Tab aktiv war. Beim nächsten Start öffnet er die Tabs wieder.
+
+## Updates
+
+Die Android-App hat eigene Updates.
+
+1. Öffne das Browser-Menü.
+2. Öffne **Einstellungen**.
+3. Tippe auf **Nach Updates suchen**.
+4. Wenn ein Update da ist, lade zuerst die APK herunter.
+5. Gehe zurück zum Update-Fenster.
+6. Tippe auf **Alte App deinstallieren**.
+7. Bestätige die Deinstallation bei Android.
+8. Öffne die heruntergeladene APK und installiere sie.
+
+## Wichtig
+
+- Verlauf und Tabs werden auf deinem Gerät gespeichert.
+- Wenn du die App deinstallierst, können diese Daten verloren gehen.
+- Sichere wichtige Daten vor der Deinstallation.
 - Kamera und Mikrofon sind in der Android-App ausgeschaltet.
-- Android-App und Browser-Extension werden getrennt aktualisiert.
-- Ein neues Update kann eine Neuinstallation verlangen. Sichere vorher wichtige Daten. Eine Deinstallation kann lokale App-Daten löschen.
+- Die Android-App und die Browser-Extension werden getrennt aktualisiert.
 
 ## Hilfe
 
