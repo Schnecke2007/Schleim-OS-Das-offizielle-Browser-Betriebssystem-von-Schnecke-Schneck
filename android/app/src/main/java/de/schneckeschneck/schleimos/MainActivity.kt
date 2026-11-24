@@ -74,6 +74,7 @@ import java.util.Locale
 import java.util.concurrent.Executors
 import java.util.UUID
 import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import java.io.ByteArrayInputStream
@@ -96,6 +97,7 @@ class MainActivity : Activity() {
     private lateinit var secureProfileStore: SecureProfileStore
     private lateinit var cloudSync: BrowserCloudSync
     private lateinit var guestBanner: TextView
+    private lateinit var deviceCodeBanner: LinearLayout
 
     private var extension: WebExtension? = null
     private var extensionHomeUrl: String? = null
@@ -113,6 +115,7 @@ class MainActivity : Activity() {
     private var passwordManagerDialog: Dialog? = null
     private val cloudBackupHandler = Handler(Looper.getMainLooper())
     private var cloudBackupQueued = false
+    @Volatile private var deviceLoginCancelled = false
     private var cloudBackupRunning = false
     private val downloadExecutor = Executors.newSingleThreadExecutor()
     // Keep file listing, document writes and XPI copying away from Android's UI thread.
@@ -330,6 +333,16 @@ class MainActivity : Activity() {
             setPadding(dp(2), dp(3), dp(2), dp(4))
         }
         browserColumn.addView(titleLabel)
+
+        deviceCodeBanner = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(10), dp(7), dp(10), dp(7))
+            background = roundedBackground(surfaceRaised, accent, 10)
+            visibility = View.GONE
+        }
+        browserColumn.addView(deviceCodeBanner, LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply { bottomMargin = dp(6) })
 
         geckoView = GeckoView(this)
         geckoView.setActivityContextDelegate(object : GeckoView.ActivityContextDelegate {
@@ -1257,7 +1270,6 @@ class MainActivity : Activity() {
                 BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
                 BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
                 BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons verwalten", ::showExtensionsDialog),
-                BrowserAction("☁️", "Konto", "GitHub-Anmeldung und verschlüsselte Cloud-Sicherung", ::showAccountDialog),
                 BrowserAction("🕶️", "Gastmodus starten", "Privat surfen ohne dauerhafte Speicherung", ::enterGuestMode),
                 BrowserAction("⚙", "Einstellungen", "Browser- und Android-Funktionen", ::showSettingsDialog),
                 BrowserAction("+", "Neuer Tab", "Eine neue Schleim-OS-Startseite öffnen", ::createUserTab),
@@ -1519,6 +1531,7 @@ class MainActivity : Activity() {
                 .setNegativeButton("Abbrechen", null)
                 .setPositiveButton("Löschen") { _, _ ->
                     getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().remove(KEY_HISTORY).apply()
+                    scheduleAutomaticBackup()
                     parts.dialog.dismiss()
                     showHistoryDialog()
                 }
@@ -1920,6 +1933,7 @@ class MainActivity : Activity() {
             setOnCheckedChangeListener { _, checked ->
                 if (!isGuestMode) {
                     prefs.edit().putBoolean(KEY_PASSWORD_AUTOFILL, checked).apply()
+                    scheduleAutomaticBackup()
                     showToast(if (checked) "Passwortvorschläge aktiviert." else "Passwortvorschläge deaktiviert.")
                 }
             }
@@ -2073,13 +2087,34 @@ class MainActivity : Activity() {
         })
         if (account == null) {
             parts.body.addView(dialogMessage("Du bist nicht angemeldet. Ohne erfolgreiche GitHub-Anmeldung sind Sicherung und Wiederherstellung gesperrt."))
-            parts.body.addView(makeWideActionButton("Mit GitHub verbinden") {
+            val installStarted = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+                .getBoolean(KEY_ACCOUNT_INSTALL_STARTED, false)
+            parts.body.addView(makeWideActionButton(
+                if (installStarted) "Weiter – Gerätecode anzeigen" else "Schleim OS Account öffnen"
+            ) {
                 parts.dialog.dismiss()
-                startGitHubDeviceLogin()
+                if (installStarted) {
+                    startGitHubDeviceLogin()
+                } else {
+                    getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit()
+                        .putBoolean(KEY_ACCOUNT_INSTALL_STARTED, true).apply()
+                    createTab(GITHUB_APP_INSTALL_URL)
+                    showToast("Schleim OS Account wurde in einem neuen Tab geöffnet. Installiere die GitHub-App und kehre danach zu Einstellungen → Schleim-Konto zurück.")
+                }
             }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(44)).apply {
                 topMargin = dp(7)
             })
-            parts.body.addView(dialogMessage("Die Anmeldung läuft über den GitHub-Gerätecode der Schleim-OS-Account-App. Dein GitHub-Passwort gibst du nur direkt bei GitHub ein – nicht in Schleim Browser."))
+            if (installStarted) {
+                parts.body.addView(makeTextButton("GitHub-App erneut öffnen") {
+                    parts.dialog.dismiss()
+                    createTab(GITHUB_APP_INSTALL_URL)
+                }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply {
+                    topMargin = dp(6)
+                })
+                parts.body.addView(dialogMessage("Nach der Installation tippe auf „Weiter – Gerätecode anzeigen“. Der Code wird angezeigt und kopiert; die GitHub-Gerätefreigabe öffnet sich in einem weiteren Tab. Die Anmeldung wird automatisch geprüft."))
+            } else {
+                parts.body.addView(dialogMessage("Zuerst öffnet sich die GitHub-App „Schleim OS Account“ in einem neuen Tab. Installiere sie dort. Du kannst den Tab anschließend schließen und hier mit „Weiter“ fortfahren. Dein GitHub-Passwort gibst du nur direkt bei GitHub ein – nicht in Schleim Browser."))
+            }
         } else {
             parts.body.addView(createInfoRow(
                 "Angemeldet als " + account.name,
@@ -2142,17 +2177,106 @@ class MainActivity : Activity() {
 
     private fun startGitHubDeviceLogin() {
         if (isGuestMode) return
-        showToast("GitHub-Geräteanmeldung wird vorbereitet …")
+        deviceLoginCancelled = false
+        val verificationTab = createTab("about:blank")
+        showToast("GitHub-Gerätecode wird angefordert …")
         ioExecutor.execute {
             try {
                 val code = cloudSync.beginDeviceFlow()
                 runOnUiThread {
-                    if (!isFinishing && !isDestroyed && !isGuestMode) showGitHubDeviceCode(code)
+                    if (!isFinishing && !isDestroyed && !isGuestMode) {
+                        showGitHubDeviceCode(code, verificationTab)
+                    }
                 }
             } catch (error: Exception) {
-                runOnUiThread { showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}") }
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) {
+                        val index = tabs.indexOf(verificationTab)
+                        if (index >= 0 && tabs.size > 1) closeTab(index)
+                        showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}")
+                    }
+                }
             }
         }
+    }
+
+    private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode, verificationTab: GeckoSession) {
+        if (isGuestMode || !::deviceCodeBanner.isInitialized) return
+        deviceCodeBanner.removeAllViews()
+
+        val header = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        header.addView(TextView(this).apply {
+            text = "GitHub-Gerätecode"
+            textSize = 10f
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setTextColor(textPrimary)
+        }, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
+        header.addView(makeIconButton("×", "Gerätecode ausblenden") {
+            deviceCodeBanner.visibility = View.GONE
+        }, LinearLayout.LayoutParams(dp(30), dp(30)))
+        deviceCodeBanner.addView(header)
+
+        deviceCodeBanner.addView(TextView(this).apply {
+            text = code.userCode
+            textSize = 21f
+            letterSpacing = 0.16f
+            gravity = Gravity.CENTER
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setTextColor(accent)
+            isTextSelectable = true
+            setPadding(0, dp(4), 0, dp(4))
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        deviceCodeBanner.addView(TextView(this).apply {
+            text = "Diesen Code auf der GitHub-Gerätefreigabe eingeben. Der Code wurde automatisch in die Zwischenablage kopiert."
+            textSize = 8f
+            setTextColor(textMuted)
+            gravity = Gravity.CENTER
+        })
+
+        val actions = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+            setPadding(0, dp(5), 0, 0)
+        }
+        actions.addView(makeTextButton("Code kopieren") {
+            copyGitHubDeviceCode(code.userCode)
+            showToast("GitHub-Gerätecode kopiert.")
+        }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+        actions.addView(makeTextButton("Zurück") {
+            val index = tabs.indexOf(verificationTab)
+            if (index >= 0 && tabs.size > 1) closeTab(index)
+        }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+        actions.addView(makeTextButton("GitHub öffnen") {
+            if (tabs.contains(verificationTab)) {
+                sessionUrls[verificationTab] = code.verificationUri
+                verificationTab.loadUri(code.verificationUri)
+                showSessionInBrowser(verificationTab)
+            } else {
+                createTab(code.verificationUri)
+            }
+        }, LinearLayout.LayoutParams(0, dp(34), 1f))
+        deviceCodeBanner.addView(actions)
+        deviceCodeBanner.visibility = View.VISIBLE
+
+        runCatching { copyGitHubDeviceCode(code.userCode) }
+            .onFailure { Log.w(TAG, "Could not copy GitHub device code automatically", it) }
+
+        if (tabs.contains(verificationTab)) {
+            sessionUrls[verificationTab] = code.verificationUri
+            verificationTab.loadUri(code.verificationUri)
+            showSessionInBrowser(verificationTab)
+        } else {
+            createTab(code.verificationUri)
+        }
+        pollGitHubDeviceLogin(code)
+    }
+
+    private fun copyGitHubDeviceCode(value: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("GitHub-Gerätecode", value))
     }
 
     private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode) {
@@ -2189,7 +2313,7 @@ class MainActivity : Activity() {
                 var interval = code.intervalSeconds
                 var loggedIn: BrowserCloudSync.Account? = null
                 var failure: String? = null
-                while (System.currentTimeMillis() < code.expiresAtMillis && loggedIn == null && failure == null) {
+                while (!deviceLoginCancelled && System.currentTimeMillis() < code.expiresAtMillis && loggedIn == null && failure == null) {
                     if (isFinishing || isDestroyed) break
                     val response = cloudSync.pollDeviceFlow(code)
                     val tokenError = response.optString("error")
@@ -2206,19 +2330,29 @@ class MainActivity : Activity() {
                         else -> Thread.sleep(interval * 1000L)
                     }
                 }
+                if (deviceLoginCancelled && failure == null) failure = "Die Anmeldung wurde abgebrochen."
                 if (loggedIn == null && failure == null) failure = "Die Anmeldung wurde nicht rechtzeitig bestätigt."
                 runOnUiThread {
                     if (isFinishing || isDestroyed) return@runOnUiThread
                     if (loggedIn != null) {
+                        deviceCodeBanner.visibility = View.GONE
+                        getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit()
+                            .putBoolean(KEY_ACCOUNT_INSTALL_STARTED, false).apply()
                         showToast("Schleim-Konto verbunden: " + loggedIn!!.login)
                         showAccountDialog()
                     } else {
+                        if (deviceLoginCancelled || failure?.contains("abgelaufen") == true) {
+                            deviceCodeBanner.visibility = View.GONE
+                        }
                         showToast(failure ?: "GitHub-Anmeldung fehlgeschlagen.")
                     }
                 }
             } catch (error: Exception) {
                 runOnUiThread {
-                    if (!isFinishing && !isDestroyed) showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}")
+                    if (!isFinishing && !isDestroyed) {
+                        deviceCodeBanner.visibility = View.GONE
+                        showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}")
+                    }
                 }
             }
         }
@@ -2311,6 +2445,18 @@ class MainActivity : Activity() {
         }, 90_000L)
     }
 
+    private fun readExtensionIdFromXpi(file: File): String? = runCatching {
+        ZipFile(file).use { archive ->
+            val entry = archive.getEntry("manifest.json") ?: return@use null
+            val manifest = archive.getInputStream(entry).bufferedReader(Charsets.UTF_8).use {
+                JSONObject(it.readText())
+            }
+            val gecko = manifest.optJSONObject("browser_specific_settings")?.optJSONObject("gecko")
+                ?: manifest.optJSONObject("applications")?.optJSONObject("gecko")
+            gecko?.optString("id")?.takeIf { it.isNotBlank() }
+        }
+    }.getOrNull()
+
     private fun startProfileBackup(passphrase: String, automatic: Boolean) {
         if (isGuestMode || !cloudSync.hasSession()) {
             if (!automatic) showToast("Bitte melde dich zuerst unter Konto an.")
@@ -2324,15 +2470,6 @@ class MainActivity : Activity() {
         if (!automatic) showToast("Browser-Profil wird verschlüsselt und gesichert …")
         runtime.getWebExtensionController().list().accept({ installed ->
             val addOns = installed ?: emptyList()
-            val addonMetadata = JSONArray()
-            addOns.forEach { item ->
-                addonMetadata.put(JSONObject()
-                    .put("id", item.id)
-                    .put("name", item.metaData.name ?: item.id)
-                    .put("version", item.metaData.version)
-                    .put("enabled", item.metaData.enabled)
-                    .put("builtIn", item.isBuiltIn))
-            }
             ioExecutor.execute {
                 try {
                     if (isGuestMode) throw IllegalStateException("Im Gastmodus ist keine Sicherung erlaubt.")
@@ -2344,6 +2481,40 @@ class MainActivity : Activity() {
                             is String, is Boolean, is Int, is Long, is Double -> preferences.put(key, value)
                         }
                     }
+                    val files = mutableListOf<Pair<File, String>>()
+                    val packageDirs = listOf(
+                        File(filesDir, "extension-packages"),
+                        File(cacheDir, "extension-import")
+                    )
+                    packageDirs.forEachIndexed { dirIndex, dir ->
+                        dir.listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
+                            if (files.none { it.first.canonicalPath == file.canonicalPath }) {
+                                files.add(file to ("extensions/installed/" + dirIndex + "-" + files.size + "-" + file.name))
+                            }
+                        }
+                    }
+                    downloadsDirectory().listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
+                        if (files.none { it.first.canonicalPath == file.canonicalPath }) {
+                            files.add(file to ("extensions/downloads/" + files.size + "-" + file.name))
+                        }
+                    }
+                    val packageEntriesById = files.mapNotNull { (file, entryName) ->
+                        readExtensionIdFromXpi(file)?.let { it to entryName }
+                    }.toMap()
+                    val addonMetadata = JSONArray()
+                    addOns.forEach { item ->
+                        addonMetadata.put(JSONObject()
+                            .put("id", item.id)
+                            .put("name", item.metaData.name ?: item.id)
+                            .put("version", item.metaData.version)
+                            .put("enabled", item.metaData.enabled)
+                            .put("builtIn", item.isBuiltIn)
+                            .put("packageEntry", packageEntriesById[item.id] ?: ""))
+                    }
+                    val total = files.sumOf { it.first.length() }
+                    require(total <= MAX_CLOUD_BACKUP_BYTES) {
+                        "Die XPI-Dateien sind zusammen größer als 45 MB. Entferne nicht benötigte Downloads und versuche es erneut."
+                    }
                     val profile = JSONObject()
                         .put("format", "schleim-browser-profile")
                         .put("schemaVersion", 1)
@@ -2352,23 +2523,6 @@ class MainActivity : Activity() {
                         .put("preferences", preferences)
                         .put("passwords", passwords)
                         .put("addons", addonMetadata)
-                    val files = mutableListOf<Pair<File, String>>()
-                    val packageDirs = listOf(
-                        File(filesDir, "extension-packages"),
-                        File(cacheDir, "extension-import")
-                    )
-                    packageDirs.forEachIndexed { dirIndex, dir ->
-                        dir.listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
-                            files.add(file to ("extensions/installed/" + dirIndex + "-" + files.size + "-" + file.name))
-                        }
-                    }
-                    downloadsDirectory().listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
-                        files.add(file to ("extensions/downloads/" + files.size + "-" + file.name))
-                    }
-                    val total = files.sumOf { it.first.length() }
-                    require(total <= MAX_CLOUD_BACKUP_BYTES) {
-                        "Die XPI-Dateien sind zusammen größer als 45 MB. Entferne nicht benötigte Downloads und versuche es erneut."
-                    }
                     val buffer = ByteArrayOutputStream()
                     ZipOutputStream(buffer).use { zip ->
                         zip.putNextEntry(ZipEntry("profile.json"))
@@ -2385,7 +2539,7 @@ class MainActivity : Activity() {
                         "Das komprimierte Browser-Profil überschreitet die maximale Größe für GitHub-Backups."
                     }
                     val encrypted = SecureProfileStore.encryptBackup(buffer.toByteArray(), passphrase)
-                    val savedAt = cloudSync.uploadEncryptedBackup(encrypted)
+                    cloudSync.uploadEncryptedBackup(encrypted)
                     runOnUiThread {
                         cloudBackupRunning = false
                         if (!isFinishing && !isDestroyed && !isGuestMode && !automatic) {
@@ -2483,15 +2637,19 @@ class MainActivity : Activity() {
                     secureProfileStore.putString(KEY_CLOUD_PASSPHRASE, passphrase)
                     val extensionDirectory = File(filesDir, "extension-packages").apply { mkdirs() }
                     val downloadDirectory = downloadsDirectory()
+                    val restoredPackageFiles = mutableMapOf<String, File>()
                     restoredFiles.forEach { (name, bytes) ->
                         val fileName = name.substringAfterLast('/').replace(Regex("[^A-Za-z0-9._-]"), "_")
                         val folder = if (name.startsWith("extensions/downloads/")) downloadDirectory else extensionDirectory
-                        FileOutputStream(File(folder, fileName)).use { it.write(bytes) }
+                        val destination = File(folder, fileName)
+                        FileOutputStream(destination).use { it.write(bytes) }
+                        restoredPackageFiles[name] = destination
                     }
-                    desktopMode = snapshot.optBoolean("desktopMode", false)
+                    desktopMode = prefs.getBoolean(KEY_DESKTOP_MODE, false)
                     closeAllBrowserTabs()
                     restoreOpenTabs(null)
-                    showToast("Browser-Profil wiederhergestellt. Gespeicherte XPI-Dateien findest du unter Erweiterungen bzw. Downloads. Bitte prüfe die Add-ons.")
+                    restoreBrowserAddons(snapshot.optJSONArray("addons") ?: JSONArray(), restoredPackageFiles)
+                    showToast("Browser-Profil wiederhergestellt. Einstellungen, Verlauf, Tabs, Lesezeichen und Passwörter wurden übernommen; gespeicherte Add-ons werden jetzt wiederhergestellt.")
                 }
             } catch (error: Exception) {
                 runOnUiThread {
@@ -2501,6 +2659,76 @@ class MainActivity : Activity() {
         }
     }
 
+    private fun restoreBrowserAddons(addons: JSONArray, packageFiles: Map<String, File>) {
+        val desired = mutableListOf<JSONObject>()
+        for (index in 0 until addons.length()) {
+            val item = addons.optJSONObject(index) ?: continue
+            if (!item.optBoolean("builtIn", false)) desired.add(item)
+        }
+        if (desired.isEmpty()) return
+
+        val controller = runtime.getWebExtensionController()
+        controller.list().accept({ current ->
+            val byId = (current ?: emptyList()).associateBy { it.id }.toMutableMap()
+            runOnUiThread {
+                fun next(index: Int) {
+                    if (index >= desired.size || isFinishing || isDestroyed || isGuestMode) return
+                    val target = desired[index]
+                    val id = target.optString("id")
+                    val wantedEnabled = target.optBoolean("enabled", true)
+                    val existing = byId[id]
+                    fun applyEnabledState(extension: WebExtension) {
+                        val operation = when {
+                            wantedEnabled && !extension.metaData.enabled ->
+                                controller.enable(extension, WebExtensionController.EnableSource.USER)
+                            !wantedEnabled && extension.metaData.enabled ->
+                                controller.disable(extension, WebExtensionController.EnableSource.USER)
+                            else -> null
+                        }
+                        if (operation == null) {
+                            next(index + 1)
+                        } else {
+                            operation.accept({ next(index + 1) }, { error ->
+                                Log.w(TAG, "Could not restore add-on state for $id", error)
+                                next(index + 1)
+                            })
+                        }
+                    }
+
+                    if (existing != null) {
+                        applyEnabledState(existing)
+                    } else {
+                        val packageFile = packageFiles[target.optString("packageEntry")]
+                        if (packageFile == null || !packageFile.isFile) {
+                            Log.w(TAG, "No backed-up XPI package available for add-on $id")
+                            next(index + 1)
+                        } else {
+                            controller.install(
+                                Uri.fromFile(packageFile).toString(),
+                                WebExtensionController.INSTALLATION_METHOD_FROM_FILE
+                            ).accept({ installed ->
+                                if (installed != null) {
+                                    byId[installed.id] = installed
+                                    applyEnabledState(installed)
+                                } else {
+                                    Log.w(TAG, "Add-on restore returned no extension for $id")
+                                    next(index + 1)
+                                }
+                            }, { error ->
+                                Log.w(TAG, "Could not reinstall add-on $id", error)
+                                next(index + 1)
+                            })
+                        }
+                    }
+                }
+                next(0)
+            }
+        }, { error ->
+            Log.w(TAG, "Could not list add-ons before profile restore", error)
+            showToast("Die Browser-Daten wurden wiederhergestellt; Add-ons konnten nicht automatisch abgeglichen werden.")
+        })
+    }
+
     private fun showSettingsDialog() {
         if (isGuestMode) { showToast("Einstellungen sind im Gastmodus nicht verfügbar."); return }
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
@@ -2508,6 +2736,12 @@ class MainActivity : Activity() {
             "Sichere DNS-Verbindung",
             "Der Browser verwendet einen fest eingestellten DNS-Server über HTTPS. Diese Einstellung kann nicht geändert werden."
         ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(7)
+        })
+        parts.body.addView(createMenuTile("☁️", "Schleim-Konto", "GitHub-Anmeldung, Profil-Backup und Synchronisierung") {
+            parts.dialog.dismiss()
+            showAccountDialog()
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(78)).apply {
             bottomMargin = dp(7)
         })
         parts.body.addView(createMenuTile("🔔", "Benachrichtigung testen", "Eine Testbenachrichtigung senden") {
@@ -3474,12 +3708,16 @@ class MainActivity : Activity() {
         private const val KEY_PASSWORD_AUTOFILL = "password_autofill_enabled"
         private const val KEY_AUTO_BACKUP = "profile_auto_backup"
         private const val KEY_ONBOARDING_DONE = "onboarding_done_v1"
+        private const val KEY_ACCOUNT_INSTALL_STARTED = "account_install_started_v1"
+        private const val KEY_ACCOUNT_INSTALL_STARTED = "account_install_started_v1"
         private const val KEY_CLOUD_PASSPHRASE = "profile_backup_passphrase_v1"
         private const val KEY_PASSWORDS = "password_vault_entries_v1"
         private const val MAX_HISTORY_ROWS = 250
         private const val MAX_OPEN_TABS = 4
         private const val MAX_CLOUD_BACKUP_BYTES = 45L * 1024L * 1024L
         private const val PRIMARY_DNS_URL = "https://dns.nextdns.io/36e7f3/Schleim-Browser"
+        private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"
+        private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"
         private const val MAX_DOWNLOAD_ROWS = 100
         private const val UPDATE_METADATA_ASSET = "Schleim-Browser-Android-update.json"
     }
