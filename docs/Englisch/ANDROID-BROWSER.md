@@ -9,9 +9,9 @@ The Android app does not replace Android. It is a browser that runs on Android.
 
 ## Download
 
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha29.apk**.
+Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha30.apk**.
 
-Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
+Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
 
 ## System requirements
 
@@ -64,7 +64,22 @@ The Android app bundles the Schleim OS Extension inside GeckoView. It includes t
 - **Automatically saved tabs:** Up to four open tabs and the selected tab are saved automatically. The tabs are restored with their last opened address the next time the app starts. The full Back/Forward page-navigation state is not saved.
 - History and tabs are stored in local app data. Uninstalling the app can delete this data.
 
+## Welcome screen, Guest Mode and Schleim account
+
+On the first launch, Schleim Browser displays a short introduction. Use **Next** and **Back** to move between the main features. You can skip the introduction or start browsing immediately.
+
+- **Bookmarks:** Save a webpage, open it later, and edit or delete saved entries.
+- **Password manager:** New credentials are saved only after you confirm. Passwords are encrypted and protected by the Android Keystore. The device's secure screen lock is required to open the password manager. You can enable login suggestions and autofill in its settings.
+- **Guest Mode:** Start a private session from the introduction or browser menu. Guest tabs use private GeckoView sessions. History, tabs, bookmarks, passwords, form data and website data are not copied into the regular profile or synchronized to the cloud. Account sign-in and add-on management are also disabled. Your normal browser profile remains unchanged. Guest tabs are not saved for the next app launch.
+- **Open your account:** Schleim account is under **Browser menu → Settings → Schleim account**. Cloud backup and restore remain locked until sign-in succeeds.
+- **First sign-in:** Select **Open Schleim OS Account**. The GitHub App page opens in a new browser tab. Install the GitHub app named **Schleim OS Account** there. You may close that tab and return to **Settings → Schleim account**. Then select **Continue – show device code**.
+- **Approve the device code:** The one-time code appears in the browser and is copied to the clipboard automatically. GitHub's device authorization page opens in another tab. You can copy the code again or use **Back** to return to the previous tab. The app checks the authorization automatically. Enter your GitHub password only on GitHub itself.
+- **Private cloud backup:** After sign-in, the app uses the private repository schleim-os-cloud and creates it during the first sign-in when needed. Browser backups are encrypted with AES-256-GCM before upload. To restore on another device, use the same GitHub account and your backup password. Automatic backup is optional and can be enabled in the account screen.
+
+The browser profile backup includes local settings, history, saved tabs, bookmarks, the encrypted password vault and add-on metadata. XPI installer packages are included when they are present in the app storage and can be reinstalled during restore. Website cookies and active website sessions, form entries, private data belonging to individual add-ons and ordinary downloads are not included. Full per-page Back/Forward navigation state is not transferred either.
+
 ## Updates
+
 
 The Android app is updated separately from the browser Extension. Open **Browser menu → Settings → Check for updates**. When an update is available, use the update dialog to download the APK first. Then choose **Uninstall old app**. Android will show its own confirmation prompt. Finally, install the downloaded APK from your Downloads folder.
 
