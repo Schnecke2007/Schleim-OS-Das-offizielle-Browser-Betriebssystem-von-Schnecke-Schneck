@@ -11,3 +11,5 @@ Document all changes and limitations in German, English and Dutch and in Easy La
 Package the original Extension, neutral Extension template, Android APK, generated Android Studio template, update metadata JSON and SHA-256 sums. Publish the complete release to v3.20.0, then download and verify the exact published assets, metadata, checksums and APK signature.
 
 Requested rebuild: 2026-11-24 — Schleim Browser Alpha 30 with onboarding, Guest Mode, bookmarks, encrypted passwords, Schleim account integration and encrypted profile synchronization.
+
+Build retry: run the consolidated v3.20.0 workflow from the current main branch after the final Guest Mode, add-on restore, documentation, and validation assertions were committed. Verify and replace every asset on the existing v3.20.0 release with the complete Alpha 30 build; include all six localized release-note sections.
