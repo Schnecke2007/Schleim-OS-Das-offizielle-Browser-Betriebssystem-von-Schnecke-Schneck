@@ -45,3 +45,8 @@ De Android-app heeft een eigen updatecontrole.
 Belangrijk: Als je de oude app verwijdert, kunnen de geschiedenis en opgeslagen tabbladen verloren gaan. Maak eerst een back-up van belangrijke gegevens.
 
 [Android-updates in eenvoudige taal](ANDROID-BROWSER.md)
+
+
+Ben je aangemeld? Maak dan vóór het verwijderen een back-up via **Instellingen → Schleim-account**. Na de installatie kun je deze daar herstellen. Je hebt je GitHub-account en back-upwachtwoord nodig. Zonder accountback-up kunnen lokale gegevens verloren gaan.
+
+[Release Notes 3.20.0](./docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.20.0.md)
