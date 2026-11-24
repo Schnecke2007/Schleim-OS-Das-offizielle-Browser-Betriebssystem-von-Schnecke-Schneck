@@ -1694,6 +1694,9 @@ class MainActivity : Activity() {
         parts.body.addView(indicator)
         parts.body.addView(navigation)
         parts.body.addView(skip, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(8) })
+        parts.body.addView(makeWideActionButton("Direkt zum Browser starten") {
+            finishOnboarding(parts.dialog)
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
         parts.body.addView(guest, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
         renderSlide = {
             val slide = slides[current]
@@ -2942,6 +2945,7 @@ class MainActivity : Activity() {
                                     runtime.getWebExtensionController().enable(item, WebExtensionController.EnableSource.USER)
                                 }
                                 operation.accept({
+                                    scheduleAutomaticBackup()
                                     showExtensionsDialog()
                                 }, { error ->
                                     showToast("Erweiterung konnte nicht geändert werden: " + (error?.message ?: "Fehler"))
@@ -2955,6 +2959,7 @@ class MainActivity : Activity() {
                                     .setNegativeButton("Abbrechen", null)
                                     .setPositiveButton("Entfernen") { _, _ ->
                                         runtime.getWebExtensionController().uninstall(item).accept({
+                                            scheduleAutomaticBackup()
                                             showToast("Erweiterung entfernt.")
                                             showExtensionsDialog()
                                         }, { error ->
