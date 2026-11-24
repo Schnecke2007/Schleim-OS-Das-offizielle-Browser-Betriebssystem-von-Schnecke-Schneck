@@ -5,7 +5,7 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 ## 🇩🇪 Deutsch
 
 - [Android-App – Schleim Browser](Deutsch/ANDROID-BROWSER.md)
-- [Release Notes 3.19.0](Deutsch/RELEASE-NOTES-3.19.0.md) · [Leichte Sprache](Leichte-Sprache/Deutsch/RELEASE-NOTES-3.19.0.md)
+- [Release Notes 3.20.0](Deutsch/RELEASE-NOTES-3.20.0.md) · [Leichte Sprache](Leichte-Sprache/Deutsch/RELEASE-NOTES-3.20.0.md)
 
 - [Installationsanleitung](Deutsch/INSTALLATION.md)
 - [Fehlerbehebung](Deutsch/FEHLERBEHEBUNG.md)
@@ -18,7 +18,7 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 ## 🇬🇧 English
 
 - [Android app – Schleim Browser](Englisch/ANDROID-BROWSER.md)
-- [Release notes 3.19.0](Englisch/RELEASE-NOTES-3.19.0.md) · [Plain language](Leichte-Sprache/Englisch/RELEASE-NOTES-3.19.0.md)
+- [Release notes 3.20.0](Englisch/RELEASE-NOTES-3.20.0.md) · [Plain language](Leichte-Sprache/Englisch/RELEASE-NOTES-3.20.0.md)
 
 - [Installation guide](Englisch/INSTALLATION.md)
 - [Troubleshooting](Englisch/TROUBLESHOOTING.md)
@@ -31,7 +31,7 @@ Die Dokumentation ist nach Sprache geordnet. Sie enthält Installationsanleitung
 ## 🇳🇱 Nederlands
 
 - [Android-app – Schleim Browser](Niederländisch/ANDROID-BROWSER.md)
-- [Release-opmerkingen 3.19.0](Niederländisch/RELEASE-NOTES-3.19.0.md) · [Eenvoudige taal](Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.19.0.md)
+- [Release-opmerkingen 3.20.0](Niederländisch/RELEASE-NOTES-3.20.0.md) · [Eenvoudige taal](Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.20.0.md)
 
 - [Installatiehandleiding](Niederländisch/INSTALLATIE.md)
 - [Problemen oplossen](Niederländisch/PROBLEMEN-OPLOSSEN.md)
