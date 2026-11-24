@@ -1811,6 +1811,196 @@ class MainActivity : Activity() {
         saveBookmarks(filtered)
     }
 
+    private fun ensureVaultUnlocked(onUnlocked: () -> Unit) {
+        if (isGuestMode) {
+            showToast("Der Passwort-Manager ist im Gastmodus deaktiviert.")
+            return
+        }
+        if (passwordVaultUnlocked) {
+            onUnlocked()
+            return
+        }
+        val keyguard = getSystemService(KeyguardManager::class.java)
+        if (keyguard?.isDeviceSecure != true) {
+            AlertDialog.Builder(this)
+                .setTitle("Displaysperre erforderlich")
+                .setMessage("Richte zuerst eine sichere Displaysperre mit PIN, Muster oder Passwort in Android ein. Danach kann der Passwort-Manager geschützt geöffnet werden.")
+                .setNegativeButton("Abbrechen", null)
+                .setPositiveButton("Android-Einstellungen") { _, _ ->
+                    runCatching { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) }
+                }
+                .show()
+            return
+        }
+        val intent = keyguard.createConfirmDeviceCredentialIntent(
+            "Passwort-Manager entsperren",
+            "Bestätige deine Displaysperre, um gespeicherte Anmeldedaten zu öffnen."
+        )
+        if (intent == null) {
+            showToast("Android kann die sichere Geräteentsperrung auf diesem Gerät nicht starten.")
+            return
+        }
+        pendingVaultUnlock = onUnlocked
+        try {
+            startActivityForResult(intent, REQUEST_VAULT_UNLOCK)
+        } catch (error: Exception) {
+            pendingVaultUnlock = null
+            showToast("Entsperrung konnte nicht gestartet werden: ${error.message ?: "Fehler"}")
+        }
+    }
+
+    private fun showPasswordManager() {
+        if (isGuestMode) {
+            showToast("Der Passwort-Manager ist im Gastmodus deaktiviert.")
+            return
+        }
+        ensureVaultUnlocked { showPasswordManagerUnlocked() }
+    }
+
+    private fun showPasswordManagerUnlocked() {
+        if (isGuestMode || !passwordVaultUnlocked) return
+        val parts = createDialogShell("Passwort-Manager", "Anmeldedaten werden verschlüsselt mit dem Android-Keystore geschützt.")
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        val autofill = CheckBox(this).apply {
+            text = "Gespeicherte Anmeldungen auf passenden Webseiten vorschlagen"
+            textSize = 10f
+            setTextColor(textPrimary)
+            buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+            isChecked = prefs.getBoolean(KEY_PASSWORD_AUTOFILL, false)
+            setOnCheckedChangeListener { _, checked ->
+                if (!isGuestMode) {
+                    prefs.edit().putBoolean(KEY_PASSWORD_AUTOFILL, checked).apply()
+                    showToast(if (checked) "Passwortvorschläge aktiviert." else "Passwortvorschläge deaktiviert.")
+                }
+            }
+        }
+        parts.body.addView(autofill, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        parts.body.addView(dialogMessage("Neue Logins werden erst nach deiner Bestätigung gespeichert. Die Zugangsdaten werden nicht im normalen Browser-Verlauf abgelegt."))
+        parts.body.addView(makeWideActionButton("Passwort-Manager jetzt sperren") {
+            passwordVaultUnlocked = false
+            parts.dialog.dismiss()
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply {
+            topMargin = dp(8)
+            bottomMargin = dp(8)
+        })
+        val entries = readPasswordEntries()
+        if (entries.length() == 0) {
+            parts.body.addView(dialogMessage("Noch keine Anmeldedaten gespeichert. Melde dich auf einer Webseite an und bestätige anschließend das Speichern."))
+        } else {
+            for (index in 0 until entries.length()) {
+                val item = entries.optJSONObject(index) ?: continue
+                val guid = item.optString("guid")
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = roundedBackground(surface, border, 10)
+                    setPadding(dp(10), dp(9), dp(10), dp(9))
+                }
+                row.addView(TextView(this).apply {
+                    text = item.optString("origin")
+                    textSize = 10f
+                    setTextColor(textPrimary)
+                    typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+                    maxLines = 1
+                    ellipsize = android.text.TextUtils.TruncateAt.END
+                })
+                row.addView(TextView(this).apply {
+                    text = "Benutzername: " + item.optString("username")
+                    textSize = 9f
+                    setTextColor(textMuted)
+                    setPadding(0, dp(3), 0, dp(4))
+                })
+                val passwordView = TextView(this).apply {
+                    text = "Passwort: ••••••••••"
+                    textSize = 9f
+                    setTextColor(textMuted)
+                    setPadding(0, 0, 0, dp(6))
+                }
+                row.addView(passwordView)
+                val buttons = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+                var revealed = false
+                buttons.addView(makeTextButton("Anzeigen") {
+                    revealed = !revealed
+                    passwordView.text = if (revealed) "Passwort: " + item.optString("password") else "Passwort: ••••••••••"
+                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+                buttons.addView(makeTextButton("Bearbeiten") {
+                    parts.dialog.dismiss()
+                    editPasswordEntry(guid)
+                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+                buttons.addView(makeTextButton("Löschen") {
+                    deletePasswordEntry(guid)
+                    parts.dialog.dismiss()
+                    showPasswordManagerUnlocked()
+                }, LinearLayout.LayoutParams(0, dp(34), 1f))
+                row.addView(buttons)
+                parts.body.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = dp(7)
+                })
+            }
+        }
+        showDialog(parts.dialog)
+    }
+
+    private fun editPasswordEntry(guid: String) {
+        if (!passwordVaultUnlocked || isGuestMode) return
+        val entries = readPasswordEntries()
+        val index = (0 until entries.length()).firstOrNull { entries.optJSONObject(it)?.optString("guid") == guid } ?: return
+        val item = entries.getJSONObject(index)
+        val content = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(8), dp(20), 0)
+        }
+        val origin = EditText(this).apply {
+            hint = "Webseite / Origin"
+            setSingleLine(true)
+            setText(item.optString("origin"))
+        }
+        val username = EditText(this).apply {
+            hint = "Benutzername"
+            setSingleLine(true)
+            setText(item.optString("username"))
+        }
+        val password = EditText(this).apply {
+            hint = "Passwort"
+            setSingleLine(true)
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setText(item.optString("password"))
+        }
+        content.addView(origin)
+        content.addView(username)
+        content.addView(password)
+        AlertDialog.Builder(this)
+            .setTitle("Anmeldedaten bearbeiten")
+            .setView(content)
+            .setNegativeButton("Abbrechen", null)
+            .setPositiveButton("Speichern") { _, _ ->
+                val url = origin.text.toString().trim()
+                if (!url.startsWith("https://") && !url.startsWith("http://")) {
+                    showToast("Bitte eine gültige HTTP- oder HTTPS-Adresse eingeben.")
+                    return@setPositiveButton
+                }
+                item.put("origin", url)
+                    .put("username", username.text.toString())
+                    .put("password", password.text.toString())
+                    .put("updatedAt", System.currentTimeMillis())
+                writePasswordEntries(entries)
+                showPasswordManagerUnlocked()
+            }
+            .show()
+    }
+
+    private fun deletePasswordEntry(guid: String) {
+        if (!passwordVaultUnlocked || isGuestMode) return
+        val entries = readPasswordEntries()
+        val filtered = JSONArray()
+        for (index in 0 until entries.length()) {
+            val item = entries.optJSONObject(index) ?: continue
+            if (item.optString("guid") != guid) filtered.put(item)
+        }
+        writePasswordEntries(filtered)
+    }
+
     private fun showSettingsDialog() {
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
         parts.body.addView(createInfoRow(
@@ -2677,6 +2867,18 @@ class MainActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BROWSER_ROLE) return
+        if (requestCode == REQUEST_VAULT_UNLOCK) {
+            val callback = pendingVaultUnlock
+            pendingVaultUnlock = null
+            if (resultCode == RESULT_OK) {
+                passwordVaultUnlocked = true
+                callback?.invoke()
+            } else {
+                passwordVaultUnlocked = false
+                showToast("Passwort-Manager wurde nicht entsperrt.")
+            }
+            return
+        }
         if (requestCode == REQUEST_SAVE_FILE) {
             completeSaveFile(resultCode, data)
             return
