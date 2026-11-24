@@ -38,5 +38,5 @@ Diese Anleitung ohne Entpacken gilt für Browser, deren Erweiterungsverwaltung e
 
 Schleim Browser hat eine eigene Update-Prüfung. Öffne **Browser-Menü → Einstellungen → Nach Updates suchen**. Wenn ein Update verfügbar ist, lade zuerst die APK im Update-Fenster herunter. Wähle danach **Alte App deinstallieren** und bestätige die Abfrage von Android. Installiere anschließend die heruntergeladene APK aus deinem Download-Ordner.
 
-Die Release-APK nutzt den normalen Android-Debug-Schlüssel. Der Schlüssel kann sich zwischen Builds ändern. Eine direkte Aktualisierung ist deshalb nicht garantiert. Durch die Deinstallation können Verlauf, gespeicherte Tabs und andere lokale App-Daten verloren gehen. Sichere wichtige Daten vorher.
+Die Release-APK nutzt den normalen Android-Debug-Schlüssel. Der Schlüssel kann sich zwischen Builds ändern. Eine direkte Aktualisierung ist deshalb nicht garantiert. Erstelle vor der Deinstallation nach Möglichkeit unter **Browser-Menü → Einstellungen → Schleim-Konto** eine verschlüsselte Profil-Sicherung. Nach der Neuinstallation kannst du sie mit demselben GitHub-Konto und deinem Backup-Passwort wiederherstellen. Ohne vorherige Sicherung können Verlauf, gespeicherte Tabs und andere lokale App-Daten verloren gehen.
 
