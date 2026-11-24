@@ -45,3 +45,8 @@ The Android app has its own update check.
 Important: Removing the old app can delete history and saved tabs. Back up important data first.
 
 [Android updates in plain language](ANDROID-BROWSER.md)
+
+
+If you are signed in, create a backup before uninstalling. Open **Settings → Schleim account**. After installing the new app, you can restore it there. You need your GitHub account and backup password. Without an account backup, local data can be lost.
+
+[Release Notes 3.20.0](./docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.20.0.md)
