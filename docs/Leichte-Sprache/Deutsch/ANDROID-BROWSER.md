@@ -6,7 +6,7 @@ Sie enthält die Schleim-OS-Startseite.
 
 ## Download
 
-[Lade Schleim Browser Alpha 29 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
+[Lade Schleim Browser Alpha 30 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk).
 
 ## App installieren
 
@@ -31,6 +31,14 @@ Sie enthält die Schleim-OS-Startseite.
 - **Verlauf:** Öffne im Menü den Punkt **Verlauf**. Dort siehst du besuchte Internetseiten. Du kannst eine Seite wieder öffnen. Du kannst den Verlauf auch löschen.
 - **Sicheres DNS:** Der Browser nutzt einen festen DNS-Server. Die Verbindung ist verschlüsselt. Du kannst den DNS-Server nicht ändern. In den Einstellungen steht nur, dass eine sichere DNS-Verbindung genutzt wird.
 - **Tabs speichern:** Der Browser speichert deine letzten vier Tabs. Er speichert auch, welcher Tab aktiv war. Beim nächsten Start öffnet er die Tabs wieder.
+
+- **Willkommen:** Beim ersten Start gibt es eine kurze Erklärung. Du kannst vor und zurück gehen. Du kannst die Erklärung auch überspringen.
+- **Lesezeichen:** Du kannst Webseiten speichern. Du kannst sie später öffnen, ändern oder löschen.
+- **Passwort-Manager:** Ein neues Passwort wird nur gespeichert, wenn du zustimmst. Die Passwörter werden verschlüsselt. Zum Öffnen brauchst du die sichere Bildschirmsperre deines Android-Geräts.
+- **Gastmodus:** Du kannst privat surfen. Deine besuchten Seiten, Formulare, Tabs, Lesezeichen und Passwörter werden nicht im normalen Profil gespeichert. Es gibt keine Cloud-Sicherung. Dein normales Profil bleibt getrennt.
+- **Schleim-Konto:** Das Konto steht in den Einstellungen. Für eine Sicherung musst du dich zuerst bei GitHub anmelden.
+- **Anmeldung:** Zuerst öffnet sich die GitHub-App-Seite in einem neuen Tab. Installiere dort „Schleim OS Account“. Gehe danach zurück zu Einstellungen → Schleim-Konto und tippe auf Weiter. Der Gerätecode wird angezeigt und kopiert. Die GitHub-Bestätigung öffnet sich in einem weiteren Tab.
+- **Cloud-Sicherung:** Die Sicherung wird verschlüsselt in einem privaten GitHub-Repository gespeichert. Du brauchst dein GitHub-Konto und dein Backup-Passwort, um sie auf einem anderen Gerät zu öffnen.
 
 ## Updates
 
