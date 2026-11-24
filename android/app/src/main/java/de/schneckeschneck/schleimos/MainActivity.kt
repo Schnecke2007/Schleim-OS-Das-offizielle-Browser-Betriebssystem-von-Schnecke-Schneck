@@ -1522,7 +1522,6 @@ class MainActivity : Activity() {
 
     private fun showHistoryDialog() {
         if (isGuestMode) { showToast("Der Verlauf ist im Gastmodus nicht verfügbar."); return }
-        if (isGuestMode) { showToast("Im Gastmodus ist der Verlauf nicht verfügbar."); return }
         val parts = createDialogShell("Verlauf", "Zuletzt besuchte Webseiten auf diesem Gerät.")
         val clearButton = makeWideActionButton("Verlauf löschen") {
             AlertDialog.Builder(this)
@@ -2660,6 +2659,20 @@ class MainActivity : Activity() {
         controller.list().accept({ current ->
             val byId = (current ?: emptyList()).associateBy { it.id }.toMutableMap()
             runOnUiThread {
+                val wantedIds = desired.map { it.optString("id") }.toSet()
+                val extras = (current ?: emptyList()).filter { !it.isBuiltIn && it.id !in wantedIds }
+                fun removeExtras(index: Int, afterRemoval: () -> Unit) {
+                    if (index >= extras.size || isFinishing || isDestroyed || isGuestMode) {
+                        afterRemoval()
+                        return
+                    }
+                    controller.uninstall(extras[index]).accept({
+                        removeExtras(index + 1, afterRemoval)
+                    }, { error ->
+                        Log.w(TAG, "Could not remove add-on not present in backup: ${extras[index].id}", error)
+                        removeExtras(index + 1, afterRemoval)
+                    })
+                }
                 fun next(index: Int) {
                     if (index >= desired.size || isFinishing || isDestroyed || isGuestMode) return
                     val target = desired[index]
@@ -2710,7 +2723,7 @@ class MainActivity : Activity() {
                         }
                     }
                 }
-                next(0)
+                removeExtras(0) { next(0) }
             }
         }, { error ->
             Log.w(TAG, "Could not list add-ons before profile restore", error)
