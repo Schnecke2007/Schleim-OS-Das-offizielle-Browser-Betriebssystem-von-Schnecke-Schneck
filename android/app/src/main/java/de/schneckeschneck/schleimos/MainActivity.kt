@@ -1921,7 +1921,7 @@ class MainActivity : Activity() {
             showToast("Der Passwort-Manager ist im Gastmodus deaktiviert.")
             return
         }
-        ensureVaultUnlocked { showPasswordManagerUnlocked() }
+        ensureVaultUnlocked(onUnlocked = { showPasswordManagerUnlocked() })
     }
 
     private fun showPasswordManagerUnlocked() {
@@ -2232,7 +2232,7 @@ class MainActivity : Activity() {
             gravity = Gravity.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
             setTextColor(accent)
-            isTextSelectable = true
+            setTextIsSelectable(true)
             setPadding(0, dp(4), 0, dp(4))
         }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         deviceCodeBanner.addView(TextView(this).apply {
@@ -2406,7 +2406,7 @@ class MainActivity : Activity() {
                     showToast("Das Backup-Passwort ist zu kurz.")
                     return@setPositiveButton
                 }
-                ensureVaultUnlocked { startProfileRestore(passphrase) }
+                ensureVaultUnlocked(onUnlocked = { startProfileRestore(passphrase) })
             }
             .show()
     }
@@ -3715,14 +3715,12 @@ class MainActivity : Activity() {
         private const val KEY_AUTO_BACKUP = "profile_auto_backup"
         private const val KEY_ONBOARDING_DONE = "onboarding_done_v1"
         private const val KEY_ACCOUNT_INSTALL_STARTED = "account_install_started_v1"
-        private const val KEY_ACCOUNT_INSTALL_STARTED = "account_install_started_v1"
         private const val KEY_CLOUD_PASSPHRASE = "profile_backup_passphrase_v1"
         private const val KEY_PASSWORDS = "password_vault_entries_v1"
         private const val MAX_HISTORY_ROWS = 250
         private const val MAX_OPEN_TABS = 4
         private const val MAX_CLOUD_BACKUP_BYTES = 45L * 1024L * 1024L
         private const val PRIMARY_DNS_URL = "https://dns.nextdns.io/36e7f3/Schleim-Browser"
-        private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"
         private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"
         private const val MAX_DOWNLOAD_ROWS = 100
         private const val UPDATE_METADATA_ASSET = "Schleim-Browser-Android-update.json"
