@@ -1227,19 +1227,35 @@ class MainActivity : Activity() {
     }
 
     private fun showBrowserMenu() {
-        val actions = listOf(
-            BrowserAction("⌂", "Startseite", "Zur Schleim-OS-Startseite", ::openHomePage),
-            BrowserAction("▣", if (desktopMode) "Mobile Seite" else "Desktop-Seite", "Ansicht der aktuellen Website umschalten", ::toggleDesktopMode),
-            BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
-            BrowserAction("◷", "Verlauf", "Zuletzt besuchte Webseiten anzeigen", ::showHistoryDialog),
-            BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
-            BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons installieren und verwalten", ::showExtensionsDialog),
-            BrowserAction("⚙", "Einstellungen", "Benachrichtigungen und Standardbrowser", ::showSettingsDialog),
-            BrowserAction("+", "Neuer Tab", "Eine neue Schleim-OS-Startseite öffnen", ::createUserTab),
-            BrowserAction("▢", "Tabs", "Geöffnete Registerkarten verwalten", ::showTabsDialog),
-            BrowserAction("↻", "Aktualisieren", "Aktuelle Seite neu laden") { activeSession()?.reload() }
+        val actions = if (isGuestMode) {
+            listOf(
+                BrowserAction("＋", "Neuer privater Tab", "Eine neue temporäre Sitzung öffnen", ::createUserTab),
+                BrowserAction("▢", "Private Tabs", "Zwischen deinen privaten Tabs wechseln", ::showTabsDialog),
+                BrowserAction("↩", "Gastmodus beenden", "Zurück zum regulären Browser-Profil", ::leaveGuestMode),
+                BrowserAction("↻", "Aktualisieren", "Aktuelle private Seite neu laden") { activeSession()?.reload() }
+            )
+        } else {
+            listOf(
+                BrowserAction("⌂", "Startseite", "Zur Schleim-OS-Startseite", ::openHomePage),
+                BrowserAction("☆", "Lesezeichen", "Gespeicherte Webseiten verwalten", ::showBookmarksDialog),
+                BrowserAction("🔐", "Passwort-Manager", "Verschlüsselte Anmeldedaten verwalten", ::showPasswordManager),
+                BrowserAction("◷", "Verlauf", "Zuletzt besuchte Webseiten anzeigen", ::showHistoryDialog),
+                BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
+                BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
+                BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons verwalten", ::showExtensionsDialog),
+                BrowserAction("☁️", "Konto", "GitHub-Anmeldung und verschlüsselte Cloud-Sicherung", ::showAccountDialog),
+                BrowserAction("🕶️", "Gastmodus starten", "Privat surfen ohne dauerhafte Speicherung", ::enterGuestMode),
+                BrowserAction("⚙", "Einstellungen", "Browser- und Android-Funktionen", ::showSettingsDialog),
+                BrowserAction("+", "Neuer Tab", "Eine neue Schleim-OS-Startseite öffnen", ::createUserTab),
+                BrowserAction("▢", "Tabs", "Geöffnete Registerkarten verwalten", ::showTabsDialog),
+                BrowserAction("↻", "Aktualisieren", "Aktuelle Seite neu laden") { activeSession()?.reload() }
+            )
+        }
+        val parts = createDialogShell(
+            if (isGuestMode) "Gastmodus" else "Browser-Menü",
+            if (isGuestMode) "Private Sitzung – keine dauerhafte Speicherung oder Konto-Synchronisierung."
+            else "Alles Wichtige an einem Ort."
         )
-        val parts = createDialogShell("Browser-Menü", "Alles Wichtige an einem Ort.")
         val grid = GridLayout(this).apply { columnCount = 2 }
         actions.forEach { item ->
             val tile = createMenuTile(item.icon, item.title, item.subtitle) {
@@ -1469,6 +1485,7 @@ class MainActivity : Activity() {
     }
 
     private fun showHistoryDialog() {
+        if (isGuestMode) { showToast("Der Verlauf ist im Gastmodus nicht verfügbar."); return }
         if (isGuestMode) { showToast("Im Gastmodus ist der Verlauf nicht verfügbar."); return }
         val parts = createDialogShell("Verlauf", "Zuletzt besuchte Webseiten auf diesem Gerät.")
         val clearButton = makeWideActionButton("Verlauf löschen") {
@@ -2002,6 +2019,7 @@ class MainActivity : Activity() {
     }
 
     private fun showSettingsDialog() {
+        if (isGuestMode) { showToast("Einstellungen sind im Gastmodus nicht verfügbar."); return }
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
         parts.body.addView(createInfoRow(
             "Sichere DNS-Verbindung",
@@ -2149,6 +2167,7 @@ class MainActivity : Activity() {
         }
 
     private fun showDownloadsDialog() {
+        if (isGuestMode) { showToast("Downloads sind im Gastmodus deaktiviert."); return }
         val parts = createDialogShell("Downloads", "Dateien, die du mit Schleim OS heruntergeladen hast.")
         val loading = dialogMessage("Downloads werden geladen …")
         parts.body.addView(loading)
