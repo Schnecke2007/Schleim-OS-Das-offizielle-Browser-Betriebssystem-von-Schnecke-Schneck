@@ -1616,6 +1616,10 @@ class MainActivity : Activity() {
 
     private fun enterGuestMode() {
         if (isGuestMode) return
+        if (cloudBackupRunning) {
+            showToast("Eine Browser-Sicherung läuft noch. Bitte warte, bis sie abgeschlossen ist, bevor du den Gastmodus startest.")
+            return
+        }
         saveOpenTabs()
         stopMediaUploadPage()
         closeAllBrowserTabs()
@@ -2526,7 +2530,9 @@ class MainActivity : Activity() {
                     require(buffer.size() <= MAX_CLOUD_BACKUP_BYTES) {
                         "Das komprimierte Browser-Profil überschreitet die maximale Größe für GitHub-Backups."
                     }
+                    require(!isGuestMode) { "Gastmodus wurde vor dem Cloud-Upload aktiviert." }
                     val encrypted = SecureProfileStore.encryptBackup(buffer.toByteArray(), passphrase)
+                    require(!isGuestMode) { "Gastmodus wurde vor dem Cloud-Upload aktiviert." }
                     cloudSync.uploadEncryptedBackup(encrypted)
                     runOnUiThread {
                         finishCloudBackup()
@@ -2653,8 +2659,6 @@ class MainActivity : Activity() {
             val item = addons.optJSONObject(index) ?: continue
             if (!item.optBoolean("builtIn", false)) desired.add(item)
         }
-        if (desired.isEmpty()) return
-
         val controller = runtime.getWebExtensionController()
         controller.list().accept({ current ->
             val byId = (current ?: emptyList()).associateBy { it.id }.toMutableMap()
@@ -2723,7 +2727,7 @@ class MainActivity : Activity() {
                         }
                     }
                 }
-                removeExtras(0) { next(0) }
+                removeExtras(0) { if (desired.isNotEmpty()) next(0) }
             }
         }, { error ->
             Log.w(TAG, "Could not list add-ons before profile restore", error)
