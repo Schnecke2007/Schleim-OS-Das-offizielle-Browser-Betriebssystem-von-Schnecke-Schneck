@@ -1,9 +1,13 @@
-Schleim OS 3.19.0 Android browser release
+Schleim OS 3.20.0 Android browser release
 
-Build and validate Schleim Browser 0.1.0-alpha29 (versionCode 29) with a local browsing history, a fixed DNS-over-HTTPS resolver in TRR-only mode, and automatic persistence/restoration of up to four open tabs including the active tab. Keep the DNS resolver fixed in code and show only a generic, non-editable secure DNS status in Settings without exposing the resolver hostname or provider name. Retain the browser update check and the explicit APK download plus Android uninstall-confirmation reinstall flow. Preserve all existing browser and Extension features.
+Build and validate Schleim Browser 0.1.0-alpha30 (versionCode 30). Preserve all existing browser functions, including the #251205 dark brown UI, GeckoView, tabs, local history, bookmarks, encrypted password manager, add-on support and fixed NextDNS DNS-over-HTTPS resolver. The resolver must remain exactly https://dns.nextdns.io/36e7f3/Schleim-Browser in TRR-only mode; do not expose its hostname in Settings.
 
-Compose release notes in German, English and Dutch, plus plain-language release notes in all three languages. Update normal and plain-language Android guides and update instructions. Package the original Extension, neutral Extension template, Android APK, generated Android Studio template, update metadata JSON and SHA-256 sums. Publish the complete release to v3.19.0, then download and verify the exact published assets, metadata, checksums and APK signature.
+Validate the first-run skippable onboarding, Guest Mode isolation, account area under Browser menu > Settings > Schleim account, GitHub App install step in a new browser tab, return/continue device authorization, visible and manually copyable device code, GitHub verification in a separate tab, and account verification. Ensure Guest Mode does not write browsing data to the regular profile or synchronize it. Prevent entering Guest Mode while a profile upload is already running.
 
-Requested rebuild: 2026-11-22 — Schleim Browser Alpha 29 with history, fixed secure DNS and automatic tab restoration.
+Validate bookmarks, Android-Keystore-protected password storage with user confirmation, encrypted private-repository profile backup/restore, add-on package restoration and enabled/disabled states, desktop-mode restoration, and queued automatic backups when profile changes occur during an upload. Continue using the existing Schleim OS Account GitHub App and the private schleim-os-cloud repository. Encrypt browser profile backups with AES-256-GCM before upload.
 
-Build retry: corrected the existing runtime-construction assertion to validate the configured GeckoRuntimeSettings and applicationContext; no browser feature was removed.
+Document all changes and limitations in German, English and Dutch and in Easy Language in all three languages. Release notes must accurately state that website cookies, active website sessions, form entries, private storage of individual add-ons, ordinary downloads, and complete per-page Back/Forward state are not transferred; XPI add-ons can be reinstalled only when their package is present in the backup.
+
+Package the original Extension, neutral Extension template, Android APK, generated Android Studio template, update metadata JSON and SHA-256 sums. Publish the complete release to v3.20.0, then download and verify the exact published assets, metadata, checksums and APK signature.
+
+Requested rebuild: 2026-11-24 — Schleim Browser Alpha 30 with onboarding, Guest Mode, bookmarks, encrypted passwords, Schleim account integration and encrypted profile synchronization.
