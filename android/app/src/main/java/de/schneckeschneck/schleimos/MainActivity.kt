@@ -109,6 +109,7 @@ class MainActivity : Activity() {
     private var isGuestMode = false
     private var passwordVaultUnlocked = false
     private var pendingVaultUnlock: (() -> Unit)? = null
+    private var pendingVaultCancelled: (() -> Unit)? = null
     private val cloudBackupHandler = Handler(Looper.getMainLooper())
     private var cloudBackupQueued = false
     private var cloudBackupRunning = false
@@ -438,6 +439,7 @@ class MainActivity : Activity() {
     private fun writePasswordEntries(entries: JSONArray) {
         if (isGuestMode) return
         secureProfileStore.putString(KEY_PASSWORDS, entries.toString())
+        scheduleAutomaticBackup()
     }
 
     private fun toLoginEntry(item: JSONObject): Autocomplete.LoginEntry =
@@ -1105,9 +1107,10 @@ class MainActivity : Activity() {
                     .setMessage("${login.origin}\\n\\nBenutzername: ${login.username}\\nDas Passwort wird verschlüsselt im Android-Keystore-geschützten Passwortspeicher abgelegt.")
                     .setNegativeButton("Nicht speichern") { _, _ -> result.complete(request.dismiss()) }
                     .setPositiveButton("Sicher speichern") { _, _ ->
-                        ensureVaultUnlocked {
-                            result.complete(request.confirm(option))
-                        }
+                        ensureVaultUnlocked(
+                            onUnlocked = { result.complete(request.confirm(option)) },
+                            onCancelled = { result.complete(request.dismiss()) }
+                        )
                     }
                     .setOnCancelListener { result.complete(request.dismiss()) }
                     .show()
@@ -1606,6 +1609,7 @@ class MainActivity : Activity() {
         isGuestMode = true
         passwordVaultUnlocked = false
         pendingVaultUnlock = null
+        pendingVaultCancelled = null
         cloudBackupHandler.removeCallbacksAndMessages(null)
         updateGuestModeUi()
         createTab("about:blank")
@@ -1662,6 +1666,7 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER
         }
+        lateinit var renderSlide: () -> Unit
         val previous = makeTextButton("‹ Zurück") {
             current = (current - 1).coerceAtLeast(0)
             renderSlide()
@@ -1689,7 +1694,6 @@ class MainActivity : Activity() {
         parts.body.addView(navigation)
         parts.body.addView(skip, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(8) })
         parts.body.addView(guest, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
-        fun unused() = Unit
         renderSlide = {
             val slide = slides[current]
             hero.text = slide.first
@@ -1703,8 +1707,6 @@ class MainActivity : Activity() {
         renderSlide()
         showDialog(parts.dialog)
     }
-
-    private var renderSlide: () -> Unit = {}
 
     private fun finishOnboarding(dialog: Dialog) {
         getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
@@ -1849,9 +1851,10 @@ class MainActivity : Activity() {
         saveBookmarks(filtered)
     }
 
-    private fun ensureVaultUnlocked(onUnlocked: () -> Unit) {
+    private fun ensureVaultUnlocked(onUnlocked: () -> Unit, onCancelled: () -> Unit = {}) {
         if (isGuestMode) {
             showToast("Der Passwort-Manager ist im Gastmodus deaktiviert.")
+            onCancelled()
             return
         }
         if (passwordVaultUnlocked) {
@@ -1868,6 +1871,7 @@ class MainActivity : Activity() {
                     runCatching { startActivity(Intent(Settings.ACTION_SECURITY_SETTINGS)) }
                 }
                 .show()
+            onCancelled()
             return
         }
         val intent = keyguard.createConfirmDeviceCredentialIntent(
@@ -1879,10 +1883,13 @@ class MainActivity : Activity() {
             return
         }
         pendingVaultUnlock = onUnlocked
+        pendingVaultCancelled = onCancelled
         try {
             startActivityForResult(intent, REQUEST_VAULT_UNLOCK)
         } catch (error: Exception) {
             pendingVaultUnlock = null
+            pendingVaultCancelled = null
+            onCancelled()
             showToast("Entsperrung konnte nicht gestartet werden: ${error.message ?: "Fehler"}")
         }
     }
@@ -3345,12 +3352,15 @@ class MainActivity : Activity() {
         if (requestCode == REQUEST_BROWSER_ROLE) return
         if (requestCode == REQUEST_VAULT_UNLOCK) {
             val callback = pendingVaultUnlock
+            val cancelled = pendingVaultCancelled
             pendingVaultUnlock = null
+            pendingVaultCancelled = null
             if (resultCode == RESULT_OK) {
                 passwordVaultUnlocked = true
                 callback?.invoke()
             } else {
                 passwordVaultUnlocked = false
+                cancelled?.invoke()
                 showToast("Passwort-Manager wurde nicht entsperrt.")
             }
             return
