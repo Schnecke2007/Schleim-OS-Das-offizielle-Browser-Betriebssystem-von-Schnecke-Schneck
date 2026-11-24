@@ -1625,6 +1625,7 @@ class MainActivity : Activity() {
         pendingVaultUnlock = null
         pendingVaultCancelled = null
         cloudBackupHandler.removeCallbacksAndMessages(null)
+        cloudBackupQueued = false
         updateGuestModeUi()
         createTab("about:blank")
         showToast("Gastmodus ist aktiv. Verlauf, Tabs, Downloads, Konten und Passwörter werden nicht dauerhaft gespeichert.")
@@ -2214,8 +2215,10 @@ class MainActivity : Activity() {
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
             setTextColor(textPrimary)
         }, LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f))
-        header.addView(makeIconButton("×", "Gerätecode ausblenden") {
+        header.addView(makeIconButton("×", "GitHub-Anmeldung abbrechen") {
+            deviceLoginCancelled = true
             deviceCodeBanner.visibility = View.GONE
+            showToast("GitHub-Anmeldung wird abgebrochen.")
         }, LinearLayout.LayoutParams(dp(30), dp(30)))
         deviceCodeBanner.addView(header)
 
@@ -2277,32 +2280,6 @@ class MainActivity : Activity() {
     private fun copyGitHubDeviceCode(value: String) {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText("GitHub-Gerätecode", value))
-    }
-
-    private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode) {
-        val parts = createDialogShell("Mit GitHub verbinden", "Schleim OS Account – sichere Geräteanmeldung")
-        parts.body.addView(dialogMessage("Öffne GitHub und gib dort diesen einmaligen Gerätecode ein:"))
-        parts.body.addView(TextView(this).apply {
-            text = code.userCode
-            textSize = 27f
-            gravity = Gravity.CENTER
-            letterSpacing = 0.16f
-            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
-            setTextColor(accent)
-            setPadding(0, dp(15), 0, dp(15))
-        })
-        parts.body.addView(makeWideActionButton("GitHub-Gerätefreigabe öffnen") {
-            runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(code.verificationUri))) }
-                .onFailure { showToast("GitHub konnte nicht geöffnet werden.") }
-        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply { bottomMargin = dp(7) })
-        parts.body.addView(dialogMessage("Nach der Bestätigung bei GitHub kehre hierher zurück und tippe auf „Anmeldung prüfen“."))
-        parts.body.addView(makeWideActionButton("Anmeldung prüfen") {
-            parts.dialog.dismiss()
-            pollGitHubDeviceLogin(code)
-        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply { topMargin = dp(7) })
-        parts.body.addView(makeTextButton("Abbrechen") { parts.dialog.dismiss() },
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
-        showDialog(parts.dialog)
     }
 
     private fun pollGitHubDeviceLogin(code: BrowserCloudSync.DeviceCode) {
@@ -2432,7 +2409,11 @@ class MainActivity : Activity() {
     }
 
     private fun scheduleAutomaticBackup() {
-        if (isGuestMode || cloudBackupRunning) return
+        if (isGuestMode) return
+        if (cloudBackupRunning) {
+            cloudBackupQueued = true
+            return
+        }
         val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
         if (!prefs.getBoolean(KEY_AUTO_BACKUP, false) || !cloudSync.hasSession()) return
         val passphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
@@ -2456,6 +2437,14 @@ class MainActivity : Activity() {
             gecko?.optString("id")?.takeIf { it.isNotBlank() }
         }
     }.getOrNull()
+
+    private fun finishCloudBackup() {
+        cloudBackupRunning = false
+        if (cloudBackupQueued && !isGuestMode) {
+            cloudBackupQueued = false
+            scheduleAutomaticBackup()
+        }
+    }
 
     private fun startProfileBackup(passphrase: String, automatic: Boolean) {
         if (isGuestMode || !cloudSync.hasSession()) {
@@ -2541,14 +2530,14 @@ class MainActivity : Activity() {
                     val encrypted = SecureProfileStore.encryptBackup(buffer.toByteArray(), passphrase)
                     cloudSync.uploadEncryptedBackup(encrypted)
                     runOnUiThread {
-                        cloudBackupRunning = false
+                        finishCloudBackup()
                         if (!isFinishing && !isDestroyed && !isGuestMode && !automatic) {
                             showToast("Verschlüsseltes Browser-Profil erfolgreich in das private Repository gesichert.")
                         }
                     }
                 } catch (error: Exception) {
                     runOnUiThread {
-                        cloudBackupRunning = false
+                        finishCloudBackup()
                         if (!isFinishing && !isDestroyed && !automatic) {
                             showToast("Browser-Backup fehlgeschlagen: ${error.message ?: "Fehler"}")
                         } else if (automatic) {
@@ -2558,7 +2547,7 @@ class MainActivity : Activity() {
                 }
             }
         }, { error ->
-            cloudBackupRunning = false
+            finishCloudBackup()
             if (!automatic) showToast("Add-ons konnten für das Backup nicht gelesen werden: ${error?.message ?: "Fehler"}")
         })
     }
