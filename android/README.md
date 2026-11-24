@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha29)
+# Schleim Browser – Android-App (0.1.0-alpha30)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -30,6 +30,18 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - Den offiziellen Mozilla Firefox Add-ons-Katalog direkt über den Erweiterungsmanager öffnen.
 - Desktop-Ansicht und Android-Standardbrowser-Auswahl.
 - Die originale Extension stellt Startseite, Schleim-Store, Konto, Personalisierung und Cloud-Funktionen bereit.
+
+
+
+## Browserprofil, Gastmodus und Kontosynchronisierung
+
+- Beim ersten Start erklärt ein überspringbarer Willkommensbildschirm die wichtigsten Browserfunktionen.
+- Lesezeichen können gespeichert, geöffnet, bearbeitet und gelöscht werden.
+- Der Passwort-Manager verwendet GeckoViews Login-Speicher-API. Neue Logins werden nur nach Bestätigung gespeichert; der Vault wird mit dem Android-Keystore verschlüsselt und durch die Gerätesperre geschützt.
+- Der Gastmodus verwendet private GeckoSession-Sitzungen. Verlaufs-, Tab-, Website- und Formulardaten werden nicht dauerhaft im normalen Profil gespeichert. Konto, Cloud und Add-on-Verwaltung sind dort deaktiviert.
+- Das Schleim-Konto befindet sich in den Einstellungen. Die Anmeldung öffnet zuerst die GitHub-App-Seite in einem neuen Tab, danach startet der Gerätecode-Flow. Der Code wird angezeigt/kopiert und die Gerätefreigabe in einem weiteren Tab geöffnet.
+- Cloud-Backups werden mit AES-256-GCM verschlüsselt und nur im privaten Repository schleim-os-cloud gespeichert. Gesichert werden lokale Einstellungen, Verlauf, Tabs, Lesezeichen, verschlüsselte Logins sowie Add-on-Metadaten und vorhandene XPI-Pakete inklusive Aktivierungsstatus.
+- Website-Cookies, aktive Website-Sitzungen, Formulareingaben, private Add-on-Daten und gewöhnliche Downloads werden nicht übertragen. Add-ons ohne lokal verfügbares XPI-Installationspaket können auf einem anderen Gerät nicht automatisch neu installiert werden.
 
 ## Android-Grenzen
 
