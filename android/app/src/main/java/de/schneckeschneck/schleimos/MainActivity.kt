@@ -1539,6 +1539,278 @@ class MainActivity : Activity() {
         showDialog(parts.dialog)
     }
 
+    private fun updateGuestModeUi() {
+        if (::guestBanner.isInitialized) guestBanner.visibility = if (isGuestMode) View.VISIBLE else View.GONE
+        if (::titleLabel.isInitialized && isGuestMode) titleLabel.text = "Schleim Browser · Gastmodus"
+        updateTabsButton()
+    }
+
+    private fun closeAllBrowserTabs() {
+        if (::geckoView.isInitialized && displayedSession != null) {
+            runCatching { displayedSession?.setFocused(false) }
+            runCatching { displayedSession?.setActive(false) }
+            runCatching { geckoView.releaseSession() }
+        }
+        displayedSession = null
+        tabs.toList().forEach { session -> runCatching { session.close() } }
+        tabs.clear()
+        activeTabIndex = 0
+        navigationStates.clear()
+        sessionUrls.clear()
+        sessionTitles.clear()
+        updateTabsButton()
+    }
+
+    private fun enterGuestMode() {
+        if (isGuestMode) return
+        saveOpenTabs()
+        closeAllBrowserTabs()
+        isGuestMode = true
+        passwordVaultUnlocked = false
+        pendingVaultUnlock = null
+        cloudBackupHandler.removeCallbacksAndMessages(null)
+        updateGuestModeUi()
+        createTab("about:blank")
+        showToast("Gastmodus ist aktiv. Verlauf, Tabs, Downloads, Konten und Passwörter werden nicht dauerhaft gespeichert.")
+    }
+
+    private fun leaveGuestMode() {
+        if (!isGuestMode) return
+        closeAllBrowserTabs()
+        isGuestMode = false
+        updateGuestModeUi()
+        restoreOpenTabs(null)
+        showToast("Gastmodus beendet. Dein reguläres Browser-Profil wurde wieder geöffnet.")
+    }
+
+    private fun showOnboarding() {
+        if (isGuestMode || isFinishing || isDestroyed) return
+        val parts = createDialogShell("Willkommen bei Schleim Browser", "Kurze Einführung – du kannst sie jederzeit überspringen.")
+        val slides = listOf(
+            Triple("🏠", "Startseite & Schleim OS", "Öffne die Schleim-OS-Startseite und nutze deine Apps, deine persönliche Oberfläche und die integrierten Cloud-Funktionen."),
+            Triple("▢", "Tabs & Verlauf", "Öffne mehrere Tabs. Der reguläre Browserverlauf wird lokal gespeichert und kann jederzeit gelöscht werden."),
+            Triple("☆", "Lesezeichen & Passwörter", "Speichere Webseiten als Lesezeichen. Der Passwort-Manager kann Anmeldedaten nach deiner Bestätigung verschlüsselt speichern."),
+            Triple("🧩", "Add-ons", "Verwalte kompatible GeckoView-Erweiterungen und installiere unterstützte, von Mozilla signierte XPI-Dateien."),
+            Triple("☁️", "Konto & Cloud-Sicherung", "Verbinde dein GitHub-Konto, um ein verschlüsseltes Browser-Profil in deinem privaten Repository zu sichern und auf einem weiteren Gerät wiederherzustellen."),
+            Triple("🕶️", "Gastmodus", "Nutze private Tabs ohne dauerhafte Speicherung oder Cloud-Synchronisierung. Dein reguläres Profil bleibt davon getrennt.")
+        )
+        var current = 0
+        val hero = TextView(this).apply {
+            textSize = 46f
+            gravity = Gravity.CENTER
+            setTextColor(accent)
+            setPadding(0, dp(18), 0, dp(10))
+        }
+        val heading = TextView(this).apply {
+            textSize = 17f
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setTextColor(textPrimary)
+            gravity = Gravity.CENTER
+            setPadding(dp(8), dp(4), dp(8), dp(6))
+        }
+        val description = TextView(this).apply {
+            textSize = 12f
+            setTextColor(textMuted)
+            gravity = Gravity.CENTER
+            setPadding(dp(10), dp(4), dp(10), dp(16))
+        }
+        val indicator = TextView(this).apply {
+            textSize = 10f
+            setTextColor(accent)
+            gravity = Gravity.CENTER
+            setPadding(0, dp(2), 0, dp(12))
+        }
+        val navigation = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+        }
+        val previous = makeTextButton("‹ Zurück") {
+            current = (current - 1).coerceAtLeast(0)
+            renderSlide()
+        }
+        val next = makeTextButton("Weiter ›") {
+            if (current < slides.lastIndex) {
+                current++
+                renderSlide()
+            } else {
+                finishOnboarding(parts.dialog)
+            }
+        }
+        navigation.addView(previous, LinearLayout.LayoutParams(0, dp(42), 1f).apply { marginEnd = dp(7) })
+        navigation.addView(next, LinearLayout.LayoutParams(0, dp(42), 1f))
+        val skip = makeWideActionButton("Überspringen") { finishOnboarding(parts.dialog) }
+        val guest = makeWideActionButton("Als Gast starten") {
+            getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
+            parts.dialog.dismiss()
+            enterGuestMode()
+        }
+        parts.body.addView(hero)
+        parts.body.addView(heading)
+        parts.body.addView(description)
+        parts.body.addView(indicator)
+        parts.body.addView(navigation)
+        parts.body.addView(skip, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(8) })
+        parts.body.addView(guest, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
+        fun unused() = Unit
+        renderSlide = {
+            val slide = slides[current]
+            hero.text = slide.first
+            heading.text = slide.second
+            description.text = slide.third
+            indicator.text = "Schritt " + (current + 1) + " von " + slides.size
+            previous.isEnabled = current > 0
+            previous.alpha = if (current > 0) 1f else 0.35f
+            next.text = if (current == slides.lastIndex) "Browser starten" else "Weiter ›"
+        }
+        renderSlide()
+        showDialog(parts.dialog)
+    }
+
+    private var renderSlide: () -> Unit = {}
+
+    private fun finishOnboarding(dialog: Dialog) {
+        getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
+        dialog.dismiss()
+    }
+
+    private fun addCurrentBookmark() {
+        if (isGuestMode) {
+            showToast("Lesezeichen sind im Gastmodus deaktiviert.")
+            return
+        }
+        val session = activeSession() ?: return
+        val url = sessionUrls[session]?.takeIf { it.startsWith("https://") || it.startsWith("http://") }
+        if (url == null) {
+            showToast("Für diese interne Seite kann kein Lesezeichen gespeichert werden.")
+            return
+        }
+        val bookmarks = readBookmarks()
+        if ((0 until bookmarks.length()).any { bookmarks.optJSONObject(it)?.optString("url") == url }) {
+            showToast("Diese Seite ist bereits als Lesezeichen gespeichert.")
+            return
+        }
+        bookmarks.put(JSONObject()
+            .put("id", UUID.randomUUID().toString())
+            .put("title", sessionTitles[session] ?: Uri.parse(url).host ?: url)
+            .put("url", url)
+            .put("createdAt", System.currentTimeMillis()))
+        saveBookmarks(bookmarks)
+        showToast("Lesezeichen gespeichert.")
+    }
+
+    private fun readBookmarks(): JSONArray = runCatching {
+        JSONArray(getSharedPreferences(PREFERENCES, MODE_PRIVATE).getString(KEY_BOOKMARKS, "[]"))
+    }.getOrElse { JSONArray() }
+
+    private fun saveBookmarks(bookmarks: JSONArray) {
+        if (isGuestMode) return
+        getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putString(KEY_BOOKMARKS, bookmarks.toString()).apply()
+        scheduleAutomaticBackup()
+    }
+
+    private fun showBookmarksDialog() {
+        if (isGuestMode) { showToast("Lesezeichen sind im Gastmodus nicht verfügbar."); return }
+        val parts = createDialogShell("Lesezeichen", "Deine gespeicherten Webseiten.")
+        parts.body.addView(makeWideActionButton("＋ Aktuelle Seite speichern") { addCurrentBookmark() },
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply { bottomMargin = dp(8) })
+        val bookmarks = readBookmarks()
+        if (bookmarks.length() == 0) {
+            parts.body.addView(dialogMessage("Noch keine Lesezeichen gespeichert. Tippe auf ☆ neben der Adressleiste, um eine Seite hinzuzufügen."))
+        } else {
+            for (index in 0 until bookmarks.length()) {
+                val item = bookmarks.optJSONObject(index) ?: continue
+                val id = item.optString("id")
+                val row = LinearLayout(this).apply {
+                    orientation = LinearLayout.VERTICAL
+                    background = roundedBackground(surface, border, 10)
+                    setPadding(dp(10), dp(9), dp(10), dp(9))
+                }
+                row.addView(TextView(this).apply {
+                    text = item.optString("title", item.optString("url"))
+                    textSize = 11f
+                    typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+                    setTextColor(textPrimary)
+                    maxLines = 1
+                    ellipsize = android.text.TextUtils.TruncateAt.END
+                })
+                row.addView(TextView(this).apply {
+                    text = item.optString("url")
+                    textSize = 8f
+                    setTextColor(textMuted)
+                    maxLines = 2
+                    ellipsize = android.text.TextUtils.TruncateAt.MIDDLE
+                    setPadding(0, dp(3), 0, dp(7))
+                })
+                val buttons = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+                buttons.addView(makeTextButton("Öffnen") {
+                    parts.dialog.dismiss()
+                    load(item.optString("url"))
+                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+                buttons.addView(makeTextButton("Bearbeiten") {
+                    parts.dialog.dismiss()
+                    editBookmark(id)
+                }, LinearLayout.LayoutParams(0, dp(34), 1f).apply { marginEnd = dp(5) })
+                buttons.addView(makeTextButton("Löschen") {
+                    deleteBookmark(id)
+                    parts.dialog.dismiss()
+                    showBookmarksDialog()
+                }, LinearLayout.LayoutParams(0, dp(34), 1f))
+                row.addView(buttons)
+                parts.body.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = dp(7)
+                })
+            }
+        }
+        showDialog(parts.dialog)
+    }
+
+    private fun editBookmark(id: String) {
+        val bookmarks = readBookmarks()
+        val index = (0 until bookmarks.length()).firstOrNull { bookmarks.optJSONObject(it)?.optString("id") == id } ?: return
+        val item = bookmarks.getJSONObject(index)
+        val content = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(10), dp(20), 0)
+        }
+        val title = EditText(this).apply {
+            hint = "Name des Lesezeichens"
+            setSingleLine(true)
+            setText(item.optString("title"))
+        }
+        val url = EditText(this).apply {
+            hint = "https://example.com"
+            setSingleLine(true)
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
+            setText(item.optString("url"))
+        }
+        content.addView(title)
+        content.addView(url)
+        AlertDialog.Builder(this)
+            .setTitle("Lesezeichen bearbeiten")
+            .setView(content)
+            .setNegativeButton("Abbrechen", null)
+            .setPositiveButton("Speichern") { _, _ ->
+                val newUrl = url.text.toString().trim()
+                if (newUrl.startsWith("https://") || newUrl.startsWith("http://")) {
+                    item.put("title", title.text.toString().trim().ifBlank { newUrl })
+                    item.put("url", newUrl)
+                    saveBookmarks(bookmarks)
+                    showBookmarksDialog()
+                } else showToast("Bitte eine gültige HTTP- oder HTTPS-Adresse eingeben.")
+            }
+            .show()
+    }
+
+    private fun deleteBookmark(id: String) {
+        val bookmarks = readBookmarks()
+        val filtered = JSONArray()
+        for (index in 0 until bookmarks.length()) {
+            val item = bookmarks.optJSONObject(index) ?: continue
+            if (item.optString("id") != id) filtered.put(item)
+        }
+        saveBookmarks(filtered)
+    }
+
     private fun showSettingsDialog() {
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
         parts.body.addView(createInfoRow(
