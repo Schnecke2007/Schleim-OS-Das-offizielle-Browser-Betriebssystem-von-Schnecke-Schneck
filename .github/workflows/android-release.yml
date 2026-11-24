@@ -259,6 +259,23 @@ jobs:
           assert "private fun showDownloadsDialog()" in main
           assert "private fun showExtensionsDialog()" in main
           assert "private fun showSettingsDialog()" in main
+          assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
+          assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
+          assert "private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode, verificationTab: GeckoSession)" in main
+          assert "copyGitHubDeviceCode(code.userCode)" in main
+          assert "deviceLoginCancelled = true" in main
+          assert "private fun restoreBrowserAddons(" in main
+          assert "private fun readExtensionIdFromXpi(" in main
+          assert '.put("packageEntry"' in main
+          assert "controller.uninstall(extras[index])" in main
+          assert "finishCloudBackup()" in main
+          assert "cloudBackupQueued = true" in main
+          assert "Eine Browser-Sicherung läuft noch." in main
+          assert "Color.rgb(37, 18, 5)" in main
+          for language in ("Deutsch", "Englisch", "Niederländisch"):
+              assert Path(f"docs/{language}/RELEASE-NOTES-3.20.0.md").is_file()
+              assert Path(f"docs/Leichte-Sprache/{language}/RELEASE-NOTES-3.20.0.md").is_file()
+          assert Path("extension/docs/RELEASE-NOTES-3.20.0.md").is_file()
           assert "override fun onContextMenu(" in main
           assert "GeckoWebExecutor(runtime).fetch(request.build())" in main
           assert "private fun printCurrentPage()" in main
