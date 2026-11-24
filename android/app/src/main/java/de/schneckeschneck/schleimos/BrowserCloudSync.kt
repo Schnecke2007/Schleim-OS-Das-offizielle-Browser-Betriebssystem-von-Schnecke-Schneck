@@ -149,7 +149,9 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
 
     fun uploadEncryptedBackup(envelope: JSONObject): String {
         val session = requireSession()
-        val path = CONTENTS_BASE + BACKUP_PATH
+        val repository = session.optString("repository")
+        require(repository.startsWith(session.optString("login") + "/")) { "Das Backup-Repository gehört nicht zum angemeldeten Konto." }
+        val path = "/repos/$repository/contents/$BACKUP_PATH"
         val existing = runCatching {
             githubApi(session, "$path?ref=" + encode(session.optString("defaultBranch")))
         }.getOrNull()
@@ -167,7 +169,9 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
 
     fun downloadEncryptedBackup(): JSONObject {
         val session = requireSession()
-        val path = CONTENTS_BASE + BACKUP_PATH + "?ref=" + encode(session.optString("defaultBranch"))
+        val repository = session.optString("repository")
+        require(repository.startsWith(session.optString("login") + "/")) { "Das Backup-Repository gehört nicht zum angemeldeten Konto." }
+        val path = "/repos/$repository/contents/$BACKUP_PATH?ref=" + encode(session.optString("defaultBranch"))
         val file = githubApi(session, path)
         require(file.optString("encoding") == "base64") { "GitHub hat die Backup-Datei in einem nicht unterstützten Format geliefert." }
         val raw = Base64.decode(file.optString("content").replace("\n", ""), Base64.DEFAULT)
@@ -232,7 +236,7 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
             val text = stream?.bufferedReader(StandardCharsets.UTF_8)?.use { it.readText() }.orEmpty()
             val result = runCatching { JSONObject(text) }.getOrElse { JSONObject() }
             if (code !in 200..299) {
-                throw IllegalStateException(result.optString("message").ifBlank { "GitHub API HTTP $code" })
+                throw IllegalStateException("GitHub API HTTP $code: " + result.optString("message").ifBlank { "Request failed." })
             }
             return result
         } finally {
