@@ -261,6 +261,10 @@ jobs:
           assert "private fun showSettingsDialog()" in main
           assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
           assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
+          assert main.count("private const val KEY_ACCOUNT_INSTALL_STARTED =") == 1
+          assert main.count("private const val GITHUB_APP_INSTALL_URL =") == 1
+          assert "ensureVaultUnlocked(onUnlocked = { showPasswordManagerUnlocked() })" in main
+          assert "setTextIsSelectable(true)" in main
           assert "private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode, verificationTab: GeckoSession)" in main
           assert "copyGitHubDeviceCode(code.userCode)" in main
           assert "deviceLoginCancelled = true" in main
