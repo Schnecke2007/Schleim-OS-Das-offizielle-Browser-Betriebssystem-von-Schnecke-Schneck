@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha29 · GeckoView · ARM64**
+**Version 0.1.0-alpha30 · GeckoView · ARM64**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -33,6 +33,18 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 - Desktop mode and Android default-browser selection.
 - The original Extension provides the Schleim OS home screen, Store, account, personalization and cloud features.
 
+
+
+## Browser profile, Guest Mode and account sync
+
+- A skippable welcome screen explains the main browser features on first launch.
+- Bookmarks can be saved, opened, edited and deleted.
+- The password manager uses GeckoView's login storage API. New credentials are stored only after confirmation; the vault is encrypted with Android Keystore and protected by the device lock.
+- Guest Mode uses private GeckoSession instances. History, tab, website and form data are not persistently stored in the regular profile. Account, cloud and add-on management are disabled in Guest Mode.
+- The Schleim account is in Settings. Sign-in first opens the GitHub App page in a new tab, then starts the device-code flow. The code is displayed/copied and the GitHub device authorization page opens in another tab.
+- Cloud backups are encrypted with AES-256-GCM and stored only in the private schleim-os-cloud repository. Backups include local settings, history, tabs, bookmarks, encrypted logins, add-on metadata and available XPI packages with enabled/disabled state.
+- Website cookies, active website sessions, form entries, private add-on data and ordinary downloads are not transferred. Add-ons without a locally available XPI installer cannot be automatically reinstalled on another device.
+
 ## Android limitations
 
 - Camera and microphone capture are intentionally disabled. Android capture permissions are not requested and GeckoView media permission requests are rejected.
@@ -63,4 +75,4 @@ The Android app is published alongside the Extension in the consolidated release
 
 The guide and generator are kept in the repository under `Android-App/`. Inside the downloaded ZIP, the complete Android Studio project folder is named **Android-App Template**.
 
-[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk) · [Android Studio template instructions](../Android-App/README.en.md)
