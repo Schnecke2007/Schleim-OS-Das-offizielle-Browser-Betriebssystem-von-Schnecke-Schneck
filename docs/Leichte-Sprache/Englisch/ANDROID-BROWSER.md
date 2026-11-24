@@ -6,7 +6,7 @@ It includes the Schleim OS home page.
 
 ## Download
 
-[Download Schleim Browser Alpha 29](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
+[Download Schleim Browser Alpha 30](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk).
 
 ## Install the app
 
@@ -31,6 +31,14 @@ It includes the Schleim OS home page.
 - **History:** Open **History** in the menu. You can see websites you visited. You can open a page again. You can also clear the history.
 - **Secure DNS:** The browser uses one fixed DNS server. The connection is encrypted. You cannot change the DNS server. Settings only say that a secure DNS connection is used.
 - **Save tabs:** The browser saves your last four tabs. It also saves which tab was active. The tabs open again when you start the app.
+
+- **Welcome:** The app shows a short guide when you start it for the first time. You can go forward or back. You can also skip it.
+- **Bookmarks:** You can save websites. You can open them later, edit them or delete them.
+- **Password manager:** A new password is saved only after you agree. Passwords are encrypted. You need your Android device's secure screen lock to open the manager.
+- **Guest Mode:** You can browse privately. Your visited pages, forms, tabs, bookmarks and passwords are not saved in the normal profile. There is no cloud backup. Your normal profile stays separate.
+- **Schleim account:** The account is in Settings. You must sign in to GitHub before you can use backup.
+- **Sign-in:** First, the GitHub App page opens in a new tab. Install **Schleim OS Account** there. Then return to Settings → Schleim account and tap Continue. The device code is shown and copied. GitHub's approval page opens in another tab.
+- **Cloud backup:** The backup is encrypted and saved in a private GitHub repository. You need your GitHub account and backup password to restore it on another device.
 
 ## Updates
 
