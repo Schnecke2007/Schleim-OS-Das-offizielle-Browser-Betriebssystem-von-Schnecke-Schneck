@@ -405,6 +405,81 @@ class MainActivity : Activity() {
             })
     }
 
+    private fun configureAutocompleteStorage() {
+        runtime.setAutocompleteStorageDelegate(object : Autocomplete.StorageDelegate {
+            override fun onLoginFetch(domain: String): GeckoResult<Array<Autocomplete.LoginEntry>> {
+                if (isGuestMode || !passwordVaultUnlocked ||
+                    !getSharedPreferences(PREFERENCES, MODE_PRIVATE).getBoolean(KEY_PASSWORD_AUTOFILL, false)
+                ) return GeckoResult.fromValue(emptyArray())
+                val entries = runCatching { readPasswordEntries() }.getOrElse { JSONArray() }
+                val matches = mutableListOf<Autocomplete.LoginEntry>()
+                for (index in 0 until entries.length()) {
+                    val item = entries.optJSONObject(index) ?: continue
+                    val origin = item.optString("origin")
+                    if (origin != domain && Uri.parse(origin).host != domain) continue
+                    matches.add(toLoginEntry(item))
+                }
+                return GeckoResult.fromValue(matches.toTypedArray())
+            }
+
+            override fun onLoginSave(login: Autocomplete.LoginEntry) {
+                if (isGuestMode) return
+                runCatching { savePasswordEntry(login) }
+                    .onFailure { Log.e(TAG, "Could not save browser login securely", it) }
+            }
+        })
+    }
+
+    private fun readPasswordEntries(): JSONArray {
+        if (!secureProfileStore.has(KEY_PASSWORDS)) return JSONArray()
+        return JSONArray(secureProfileStore.getString(KEY_PASSWORDS) ?: "[]")
+    }
+
+    private fun writePasswordEntries(entries: JSONArray) {
+        if (isGuestMode) return
+        secureProfileStore.putString(KEY_PASSWORDS, entries.toString())
+    }
+
+    private fun toLoginEntry(item: JSONObject): Autocomplete.LoginEntry =
+        Autocomplete.LoginEntry.Builder()
+            .guid(item.optString("guid").ifBlank { UUID.randomUUID().toString() })
+            .origin(item.optString("origin"))
+            .formActionOrigin(item.optString("formActionOrigin").takeIf { it.isNotBlank() })
+            .httpRealm(item.optString("httpRealm").takeIf { it.isNotBlank() })
+            .username(item.optString("username"))
+            .password(item.optString("password"))
+            .build()
+
+    private fun savePasswordEntry(login: Autocomplete.LoginEntry) {
+        if (isGuestMode) return
+        val entries = readPasswordEntries()
+        val guid = login.guid?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString()
+        val replacement = JSONObject()
+            .put("guid", guid)
+            .put("origin", login.origin)
+            .put("formActionOrigin", login.formActionOrigin ?: "")
+            .put("httpRealm", login.httpRealm ?: "")
+            .put("username", login.username)
+            .put("password", login.password)
+            .put("updatedAt", System.currentTimeMillis())
+        var replaced = false
+        for (index in 0 until entries.length()) {
+            val item = entries.optJSONObject(index) ?: continue
+            val sameGuid = item.optString("guid") == guid
+            val sameLogin = item.optString("origin") == login.origin &&
+                item.optString("username") == login.username &&
+                item.optString("httpRealm") == (login.httpRealm ?: "")
+            if (sameGuid || sameLogin) {
+                entries.put(index, replacement)
+                replaced = true
+                break
+            }
+        }
+        if (!replaced) entries.put(replacement)
+        writePasswordEntries(entries)
+        scheduleAutomaticBackup()
+    }
+
     private fun configureExtensionPrompts() {
         runtime.getWebExtensionController().setPromptDelegate(object : WebExtensionController.PromptDelegate {
             override fun onInstallPromptRequest(
@@ -1005,6 +1080,58 @@ class MainActivity : Activity() {
         })
 
         session.setPromptDelegate(object : GeckoSession.PromptDelegate {
+            override fun onLoginSave(
+                session: GeckoSession,
+                request: GeckoSession.PromptDelegate.AutocompleteRequest<Autocomplete.LoginSaveOption>
+            ): GeckoResult<GeckoSession.PromptDelegate.PromptResponse> {
+                val result = GeckoResult<GeckoSession.PromptDelegate.PromptResponse>()
+                val option = request.options.firstOrNull()
+                if (isGuestMode || option == null) {
+                    result.complete(request.dismiss())
+                    return result
+                }
+                val login = option.value
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("Anmeldung speichern?")
+                    .setMessage("${login.origin}\\n\\nBenutzername: ${login.username}\\nDas Passwort wird verschlüsselt im Android-Keystore-geschützten Passwortspeicher abgelegt.")
+                    .setNegativeButton("Nicht speichern") { _, _ -> result.complete(request.dismiss()) }
+                    .setPositiveButton("Sicher speichern") { _, _ ->
+                        ensureVaultUnlocked {
+                            result.complete(request.confirm(option))
+                        }
+                    }
+                    .setOnCancelListener { result.complete(request.dismiss()) }
+                    .show()
+                return result
+            }
+
+            override fun onLoginSelect(
+                session: GeckoSession,
+                request: GeckoSession.PromptDelegate.AutocompleteRequest<Autocomplete.LoginSelectOption>
+            ): GeckoResult<GeckoSession.PromptDelegate.PromptResponse> {
+                val result = GeckoResult<GeckoSession.PromptDelegate.PromptResponse>()
+                if (isGuestMode || !passwordVaultUnlocked ||
+                    !getSharedPreferences(PREFERENCES, MODE_PRIVATE).getBoolean(KEY_PASSWORD_AUTOFILL, false)
+                ) {
+                    result.complete(request.dismiss())
+                    return result
+                }
+                val options = request.options
+                if (options.isEmpty()) {
+                    result.complete(request.dismiss())
+                    return result
+                }
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("Gespeicherte Anmeldung auswählen")
+                    .setItems(options.map { it.value.username }.toTypedArray()) { _, index ->
+                        result.complete(request.confirm(options[index]))
+                    }
+                    .setNegativeButton("Abbrechen") { _, _ -> result.complete(request.dismiss()) }
+                    .setOnCancelListener { result.complete(request.dismiss()) }
+                    .show()
+                return result
+            }
+
             override fun onFilePrompt(
                 session: GeckoSession,
                 prompt: GeckoSession.PromptDelegate.FilePrompt
