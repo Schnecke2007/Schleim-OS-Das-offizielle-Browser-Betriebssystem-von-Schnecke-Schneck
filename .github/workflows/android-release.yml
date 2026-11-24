@@ -361,14 +361,17 @@ jobs:
             cat docs/Englisch/RELEASE-NOTES-3.20.0.md
             printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
             cat docs/Niederländisch/RELEASE-NOTES-3.20.0.md
-          } > dist/release-notes.md
-            printf '\\n\\n---\\n\\n## 🇩🇪 Leichte Sprache – Deutsch\\n\\n'
+            printf '\n\n---\n\n## 🇩🇪 Leichte Sprache – Deutsch\n\n'
             cat docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.20.0.md
-            printf '\\n\\n---\\n\\n## 🇬🇧 Plain language – English\\n\\n'
+            printf '\n\n---\n\n## 🇬🇧 Plain language – English\n\n'
             cat docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.20.0.md
-            printf '\\n\\n---\\n\\n## 🇳🇱 Eenvoudige taal – Nederlands\\n\\n'
+            printf '\n\n---\n\n## 🇳🇱 Eenvoudige taal – Nederlands\n\n'
             cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.20.0.md
+          } > dist/release-notes.md
           test -s dist/release-notes.md
+          grep -q 'Neue Browser-Funktionen' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.20.0.md
+          grep -q 'New browser features' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.20.0.md
+          grep -q 'Nieuwe browserfuncties' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.20.0.md
 
       - name: Prepare Schleim OS 3.20.0 release
         id: target
@@ -377,13 +380,7 @@ jobs:
         run: |
           set -euo pipefail
           TAG="v3.20.0"
-          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release create "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --target "$GITHUB_SHA" \
-              --title "Schleim OS 3.20.0 – Android-Browser" \
-              --notes-file dist/release-notes.md
-          fi
+          # Publication recreates this release only after every artifact is built.
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Package Extension and Android Studio template
@@ -470,7 +467,7 @@ jobs:
             echo "Unexpected old Android-App ZIP root folder found." >&2
             exit 1
           fi
-          echo "All project archives and the Alpha 29 APK are ready; the Android Studio ZIP root is Android-App Template."
+          echo "All project archives and the Alpha 30 APK are ready; the Android Studio ZIP root is Android-App Template."
 
       - name: Publish the complete 3.20.0 release
         env:
@@ -478,19 +475,16 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          # Keep only the current Android APK in this consolidated release.
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha22.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha24.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha25.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha26.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha28.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
-          gh release delete-asset "$TAG" "Schleim-Browser-Android-0.1.0-alpha30.apk" \
-            --repo "$GITHUB_REPOSITORY" --yes || true
+          # The pre-existing v3.20.0 tag may point to an earlier, incomplete build.
+          # Recreate it at the exact commit whose APK and templates were just validated.
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release delete "$TAG" --cleanup-tag --yes --repo "$GITHUB_REPOSITORY"
+          fi
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Schleim OS 3.20.0" \
+            --notes-file dist/release-notes.md
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
