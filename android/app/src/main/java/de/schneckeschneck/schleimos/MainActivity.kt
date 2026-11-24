@@ -2018,6 +2018,434 @@ class MainActivity : Activity() {
         writePasswordEntries(filtered)
     }
 
+    private fun showAccountDialog() {
+        if (isGuestMode) {
+            showToast("Im Gastmodus ist keine Konto-Anmeldung oder Synchronisierung möglich.")
+            return
+        }
+        val account = cloudSync.currentAccount()
+        val parts = createDialogShell("Konto", "Schleim Browser – Konto und private Cloud-Sicherung")
+        parts.body.addView(createInfoRow(
+            "Privates Repository erforderlich",
+            "Für die Synchronisierung wird ausschließlich das private GitHub-Repository schleim-os-cloud verwendet. Die Sicherungsdatei wird vor dem Upload mit AES-256-GCM verschlüsselt. Das Backup-Passwort brauchst du auch auf jedem weiteren Gerät."
+        ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        parts.body.addView(createInfoRow(
+            "Datenschutz im Gastmodus",
+            "Im Gastmodus gibt es keine Konto-Anmeldung, keine dauerhafte Speicherung und keine Cloud-Synchronisierung. Das reguläre Profil bleibt getrennt."
+        ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        if (account == null) {
+            parts.body.addView(dialogMessage("Du bist nicht angemeldet. Ohne erfolgreiche GitHub-Anmeldung sind Sicherung und Wiederherstellung gesperrt."))
+            parts.body.addView(makeWideActionButton("Mit GitHub verbinden") {
+                parts.dialog.dismiss()
+                startGitHubDeviceLogin()
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(44)).apply {
+                topMargin = dp(7)
+            })
+            parts.body.addView(dialogMessage("Die Anmeldung läuft über den GitHub-Gerätecode der Schleim-OS-Account-App. Dein GitHub-Passwort gibst du nur direkt bei GitHub ein – nicht in Schleim Browser."))
+        } else {
+            parts.body.addView(createInfoRow(
+                "Angemeldet als " + account.name,
+                account.login + " · " + account.email + "\\nPrivates Repository: " + account.repository
+            ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = dp(8)
+            })
+            parts.body.addView(makeWideActionButton("Jetzt vollständiges Browser-Profil sichern") {
+                parts.dialog.dismiss()
+                ensureBackupPassphrase { passphrase -> startProfileBackup(passphrase, false) }
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(44)).apply {
+                bottomMargin = dp(7)
+            })
+            parts.body.addView(makeWideActionButton("Browser-Profil wiederherstellen") {
+                parts.dialog.dismiss()
+                requestRestorePassphrase()
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(44)).apply {
+                bottomMargin = dp(7)
+            })
+            val automatic = CheckBox(this).apply {
+                text = "Automatische Sicherung aktivieren"
+                textSize = 10f
+                setTextColor(textPrimary)
+                buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+                isChecked = getSharedPreferences(PREFERENCES, MODE_PRIVATE).getBoolean(KEY_AUTO_BACKUP, false)
+                setOnCheckedChangeListener { _, checked ->
+                    if (checked) {
+                        ensureBackupPassphrase { _ ->
+                            getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_AUTO_BACKUP, true).apply()
+                            scheduleAutomaticBackup()
+                            showToast("Automatische Profil-Sicherung wurde aktiviert.")
+                        }
+                    } else {
+                        getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_AUTO_BACKUP, false).apply()
+                        cloudBackupHandler.removeCallbacksAndMessages(null)
+                        showToast("Automatische Profil-Sicherung wurde deaktiviert.")
+                    }
+                }
+            }
+            parts.body.addView(automatic, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                topMargin = dp(4)
+                bottomMargin = dp(7)
+            })
+            parts.body.addView(dialogMessage(
+                if (account.lastBackupAt.isBlank()) "Es wurde noch kein Browser-Backup hochgeladen."
+                else "Letzte Sicherung: " + account.lastBackupAt
+            ))
+            parts.body.addView(makeTextButton("Vom Konto abmelden") {
+                cloudSync.signOut()
+                getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_AUTO_BACKUP, false).apply()
+                cloudBackupHandler.removeCallbacksAndMessages(null)
+                parts.dialog.dismiss()
+                showToast("Vom Schleim-Konto abgemeldet. Das private GitHub-Backup bleibt bestehen.")
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply {
+                topMargin = dp(8)
+            })
+        }
+        showDialog(parts.dialog)
+    }
+
+    private fun startGitHubDeviceLogin() {
+        if (isGuestMode) return
+        showToast("GitHub-Geräteanmeldung wird vorbereitet …")
+        ioExecutor.execute {
+            try {
+                val code = cloudSync.beginDeviceFlow()
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed && !isGuestMode) showGitHubDeviceCode(code)
+                }
+            } catch (error: Exception) {
+                runOnUiThread { showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}") }
+            }
+        }
+    }
+
+    private fun showGitHubDeviceCode(code: BrowserCloudSync.DeviceCode) {
+        val parts = createDialogShell("Mit GitHub verbinden", "Schleim OS Account – sichere Geräteanmeldung")
+        parts.body.addView(dialogMessage("Öffne GitHub und gib dort diesen einmaligen Gerätecode ein:"))
+        parts.body.addView(TextView(this).apply {
+            text = code.userCode
+            textSize = 27f
+            gravity = Gravity.CENTER
+            letterSpacing = 0.16f
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setTextColor(accent)
+            setPadding(0, dp(15), 0, dp(15))
+        })
+        parts.body.addView(makeWideActionButton("GitHub-Gerätefreigabe öffnen") {
+            runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(code.verificationUri))) }
+                .onFailure { showToast("GitHub konnte nicht geöffnet werden.") }
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply { bottomMargin = dp(7) })
+        parts.body.addView(dialogMessage("Nach der Bestätigung bei GitHub kehre hierher zurück und tippe auf „Anmeldung prüfen“."))
+        parts.body.addView(makeWideActionButton("Anmeldung prüfen") {
+            parts.dialog.dismiss()
+            pollGitHubDeviceLogin(code)
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42)).apply { topMargin = dp(7) })
+        parts.body.addView(makeTextButton("Abbrechen") { parts.dialog.dismiss() },
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply { topMargin = dp(7) })
+        showDialog(parts.dialog)
+    }
+
+    private fun pollGitHubDeviceLogin(code: BrowserCloudSync.DeviceCode) {
+        if (isGuestMode) return
+        showToast("Warte auf die Bestätigung von GitHub …")
+        ioExecutor.execute {
+            try {
+                var interval = code.intervalSeconds
+                var loggedIn: BrowserCloudSync.Account? = null
+                var failure: String? = null
+                while (System.currentTimeMillis() < code.expiresAtMillis && loggedIn == null && failure == null) {
+                    if (isFinishing || isDestroyed) break
+                    val response = cloudSync.pollDeviceFlow(code)
+                    val tokenError = response.optString("error")
+                    when {
+                        response.optString("access_token").isNotBlank() -> loggedIn = cloudSync.completeLogin(response)
+                        tokenError == "authorization_pending" -> Thread.sleep(interval * 1000L)
+                        tokenError == "slow_down" -> {
+                            interval += 5
+                            Thread.sleep(interval * 1000L)
+                        }
+                        tokenError == "expired_token" -> failure = "Der GitHub-Gerätecode ist abgelaufen. Bitte starte die Anmeldung erneut."
+                        tokenError == "access_denied" -> failure = "Die Anmeldung wurde bei GitHub abgelehnt."
+                        tokenError.isNotBlank() -> failure = response.optString("error_description", tokenError)
+                        else -> Thread.sleep(interval * 1000L)
+                    }
+                }
+                if (loggedIn == null && failure == null) failure = "Die Anmeldung wurde nicht rechtzeitig bestätigt."
+                runOnUiThread {
+                    if (isFinishing || isDestroyed) return@runOnUiThread
+                    if (loggedIn != null) {
+                        showToast("Schleim-Konto verbunden: " + loggedIn!!.login)
+                        showAccountDialog()
+                    } else {
+                        showToast(failure ?: "GitHub-Anmeldung fehlgeschlagen.")
+                    }
+                }
+            } catch (error: Exception) {
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("GitHub-Anmeldung fehlgeschlagen: ${error.message ?: "Fehler"}")
+                }
+            }
+        }
+    }
+
+    private fun ensureBackupPassphrase(onReady: (String) -> Unit) {
+        if (isGuestMode || !cloudSync.hasSession()) {
+            showToast("Bitte melde dich zuerst unter Konto an.")
+            return
+        }
+        val existing = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
+        if (!existing.isNullOrBlank()) {
+            onReady(existing)
+            return
+        }
+        val content = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(8), dp(20), 0)
+        }
+        val password = EditText(this).apply {
+            hint = "Backup-Passwort (mindestens 12 Zeichen)"
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setSingleLine(true)
+        }
+        val confirm = EditText(this).apply {
+            hint = "Backup-Passwort wiederholen"
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setSingleLine(true)
+        }
+        content.addView(password)
+        content.addView(confirm)
+        AlertDialog.Builder(this)
+            .setTitle("Backup-Passwort festlegen")
+            .setMessage("Dieses Passwort verschlüsselt dein Browser-Profil vor dem Upload. Du brauchst es auch auf jedem weiteren Gerät. Es kann nicht von GitHub zurückgesetzt werden.")
+            .setView(content)
+            .setNegativeButton("Abbrechen", null)
+            .setPositiveButton("Sicher speichern") { _, _ ->
+                val first = password.text.toString()
+                if (first.length < 12 || first != confirm.text.toString()) {
+                    showToast("Die Passwörter müssen übereinstimmen und mindestens 12 Zeichen lang sein.")
+                    return@setPositiveButton
+                }
+                try {
+                    secureProfileStore.putString(KEY_CLOUD_PASSPHRASE, first)
+                    onReady(first)
+                } catch (error: Exception) {
+                    showToast("Backup-Passwort konnte nicht sicher gespeichert werden: ${error.message ?: "Fehler"}")
+                }
+            }
+            .show()
+    }
+
+    private fun requestRestorePassphrase() {
+        if (isGuestMode || !cloudSync.hasSession()) {
+            showToast("Bitte melde dich zuerst unter Konto an.")
+            return
+        }
+        val input = EditText(this).apply {
+            hint = "Backup-Passwort"
+            setSingleLine(true)
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Browser-Profil wiederherstellen")
+            .setMessage("Gib das Passwort ein, mit dem das private Browser-Backup verschlüsselt wurde.")
+            .setView(input)
+            .setNegativeButton("Abbrechen", null)
+            .setPositiveButton("Entschlüsseln und prüfen") { _, _ ->
+                val passphrase = input.text.toString()
+                if (passphrase.length < 12) {
+                    showToast("Das Backup-Passwort ist zu kurz.")
+                    return@setPositiveButton
+                }
+                ensureVaultUnlocked { startProfileRestore(passphrase) }
+            }
+            .show()
+    }
+
+    private fun scheduleAutomaticBackup() {
+        if (isGuestMode || cloudBackupRunning) return
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        if (!prefs.getBoolean(KEY_AUTO_BACKUP, false) || !cloudSync.hasSession()) return
+        val passphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
+        if (passphrase.isNullOrBlank()) return
+        cloudBackupHandler.removeCallbacksAndMessages(null)
+        cloudBackupQueued = true
+        cloudBackupHandler.postDelayed({
+            cloudBackupQueued = false
+            if (!isGuestMode && cloudSync.hasSession()) startProfileBackup(passphrase, true)
+        }, 90_000L)
+    }
+
+    private fun startProfileBackup(passphrase: String, automatic: Boolean) {
+        if (isGuestMode || !cloudSync.hasSession()) {
+            if (!automatic) showToast("Bitte melde dich zuerst unter Konto an.")
+            return
+        }
+        if (cloudBackupRunning) {
+            if (!automatic) showToast("Eine Profil-Sicherung läuft bereits.")
+            return
+        }
+        cloudBackupRunning = true
+        if (!automatic) showToast("Browser-Profil wird verschlüsselt und gesichert …")
+        runtime.getWebExtensionController().list().accept({ installed ->
+            val addOns = installed ?: emptyList()
+            val addonMetadata = JSONArray()
+            addOns.forEach { item ->
+                addonMetadata.put(JSONObject()
+                    .put("id", item.id)
+                    .put("name", item.metaData.name ?: item.id)
+                    .put("version", item.metaData.version)
+                    .put("enabled", item.metaData.enabled)
+                    .put("builtIn", item.isBuiltIn))
+            }
+            ioExecutor.execute {
+                try {
+                    if (isGuestMode) throw IllegalStateException("Im Gastmodus ist keine Sicherung erlaubt.")
+                    val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+                    val passwords = runCatching { readPasswordEntries() }.getOrElse { JSONArray() }
+                    val profile = JSONObject()
+                        .put("format", "schleim-browser-profile")
+                        .put("schemaVersion", 1)
+                        .put("exportedAt", java.time.Instant.now().toString())
+                        .put("ownerLogin", cloudSync.currentAccount()?.login ?: "")
+                        .put("desktopMode", desktopMode)
+                        .put("history", prefs.getString(KEY_HISTORY, "[]"))
+                        .put("openTabs", prefs.getString(KEY_SAVED_TABS, "[]"))
+                        .put("activeTabIndex", prefs.getInt(KEY_ACTIVE_TAB, 0))
+                        .put("bookmarks", prefs.getString(KEY_BOOKMARKS, "[]"))
+                        .put("passwords", passwords)
+                        .put("passwordAutofill", prefs.getBoolean(KEY_PASSWORD_AUTOFILL, false))
+                        .put("addons", addonMetadata)
+                        .put("autoBackup", false)
+                    val files = mutableListOf<Pair<File, String>>()
+                    val packageDirs = listOf(
+                        File(filesDir, "extension-packages"),
+                        File(cacheDir, "extension-import")
+                    )
+                    packageDirs.forEach { dir ->
+                        dir.listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
+                            files.add(file to ("extensions/installed/" + file.name))
+                        }
+                    }
+                    downloadsDirectory().listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
+                        files.add(file to ("extensions/downloads/" + file.name))
+                    }
+                    val total = files.sumOf { it.first.length() }
+                    require(total <= MAX_CLOUD_BACKUP_BYTES) {
+                        "Die XPI-Dateien sind zusammen größer als 45 MB. Entferne nicht benötigte Downloads und versuche es erneut."
+                    }
+                    val buffer = ByteArrayOutputStream()
+                    ZipOutputStream(buffer).use { zip ->
+                        zip.putNextEntry(ZipEntry("profile.json"))
+                        zip.write((profile.toString(2) + "\\n").toByteArray(Charsets.UTF_8))
+                        zip.closeEntry()
+                        files.forEach { (file, entryName) ->
+                            if (isGuestMode) throw IllegalStateException("Gastmodus wurde während der Sicherung aktiviert.")
+                            zip.putNextEntry(ZipEntry(entryName))
+                            file.inputStream().use { input -> input.copyTo(zip) }
+                            zip.closeEntry()
+                        }
+                    }
+                    require(buffer.size() <= MAX_CLOUD_BACKUP_BYTES) {
+                        "Das komprimierte Browser-Profil überschreitet die maximale Größe für GitHub-Backups."
+                    }
+                    val encrypted = SecureProfileStore.encryptBackup(buffer.toByteArray(), passphrase)
+                    val savedAt = cloudSync.uploadEncryptedBackup(encrypted)
+                    runOnUiThread {
+                        cloudBackupRunning = false
+                        if (!isFinishing && !isDestroyed && !isGuestMode && !automatic) {
+                            showToast("Verschlüsseltes Browser-Profil erfolgreich in das private Repository gesichert.")
+                        }
+                    }
+                } catch (error: Exception) {
+                    runOnUiThread {
+                        cloudBackupRunning = false
+                        if (!isFinishing && !isDestroyed && !automatic) {
+                            showToast("Browser-Backup fehlgeschlagen: ${error.message ?: "Fehler"}")
+                        } else if (automatic) {
+                            Log.w(TAG, "Automatic browser profile backup failed", error)
+                        }
+                    }
+                }
+            }
+        }, { error ->
+            cloudBackupRunning = false
+            if (!automatic) showToast("Add-ons konnten für das Backup nicht gelesen werden: ${error?.message ?: "Fehler"}")
+        })
+    }
+
+    private fun startProfileRestore(passphrase: String) {
+        if (isGuestMode || !cloudSync.hasSession()) return
+        showToast("Verschlüsselte Browser-Sicherung wird geladen …")
+        ioExecutor.execute {
+            try {
+                val envelope = cloudSync.downloadEncryptedBackup()
+                val zipBytes = SecureProfileStore.decryptBackup(envelope, passphrase)
+                require(zipBytes.size <= MAX_CLOUD_BACKUP_BYTES) { "Die Sicherung ist größer als erlaubt." }
+                var profile: JSONObject? = null
+                val restoredFiles = mutableListOf<Pair<String, ByteArray>>()
+                ZipInputStream(ByteArrayInputStream(zipBytes)).use { zip ->
+                    var entry = zip.nextEntry
+                    while (entry != null) {
+                        val name = entry.name
+                        require(!name.startsWith("/") && !name.contains("..") && !name.contains("\\\\")) {
+                            "Die Sicherungsdatei enthält einen ungültigen Dateipfad."
+                        }
+                        val data = zip.readBytes()
+                        if (name == "profile.json") {
+                            profile = JSONObject(String(data, Charsets.UTF_8))
+                        } else if (name.startsWith("extensions/") && name.endsWith(".xpi", true)) {
+                            restoredFiles.add(name to data)
+                        }
+                        zip.closeEntry()
+                        entry = zip.nextEntry
+                    }
+                }
+                val snapshot = profile ?: throw IllegalStateException("Die Sicherung enthält keine Profildaten.")
+                require(snapshot.optString("format") == "schleim-browser-profile" && snapshot.optInt("schemaVersion") == 1) {
+                    "Das Browser-Backup hat ein unbekanntes Format."
+                }
+                val loggedIn = cloudSync.currentAccount()?.login.orEmpty()
+                require(loggedIn.isNotBlank() && snapshot.optString("ownerLogin") == loggedIn) {
+                    "Die Sicherung gehört nicht zum aktuell angemeldeten GitHub-Konto."
+                }
+                runOnUiThread {
+                    if (isFinishing || isDestroyed || isGuestMode) return@runOnUiThread
+                    val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+                    val editor = prefs.edit()
+                        .putString(KEY_HISTORY, snapshot.optString("history", "[]"))
+                        .putString(KEY_SAVED_TABS, snapshot.optString("openTabs", "[]"))
+                        .putInt(KEY_ACTIVE_TAB, snapshot.optInt("activeTabIndex", 0))
+                        .putString(KEY_BOOKMARKS, snapshot.optString("bookmarks", "[]"))
+                        .putBoolean(KEY_DESKTOP_MODE, snapshot.optBoolean("desktopMode", false))
+                        .putBoolean(KEY_PASSWORD_AUTOFILL, snapshot.optBoolean("passwordAutofill", false))
+                        .putBoolean(KEY_AUTO_BACKUP, false)
+                    editor.apply()
+                    if (snapshot.has("passwords")) {
+                        secureProfileStore.putString(KEY_PASSWORDS, snapshot.optJSONArray("passwords")?.toString() ?: "[]")
+                    }
+                    secureProfileStore.putString(KEY_CLOUD_PASSPHRASE, passphrase)
+                    val extensionDirectory = File(filesDir, "extension-packages").apply { mkdirs() }
+                    val downloadDirectory = downloadsDirectory()
+                    restoredFiles.forEach { (name, bytes) ->
+                        val fileName = name.substringAfterLast('/').replace(Regex("[^A-Za-z0-9._-]"), "_")
+                        val folder = if (name.startsWith("extensions/downloads/")) downloadDirectory else extensionDirectory
+                        FileOutputStream(File(folder, fileName)).use { it.write(bytes) }
+                    }
+                    desktopMode = snapshot.optBoolean("desktopMode", false)
+                    closeAllBrowserTabs()
+                    restoreOpenTabs(null)
+                    showToast("Browser-Profil wiederhergestellt. Gespeicherte XPI-Dateien findest du unter Erweiterungen bzw. Downloads. Bitte prüfe die Add-ons.")
+                }
+            } catch (error: Exception) {
+                runOnUiThread {
+                    if (!isFinishing && !isDestroyed) showToast("Wiederherstellung fehlgeschlagen: ${error.message ?: "Fehler"}")
+                }
+            }
+        }
+    }
+
     private fun showSettingsDialog() {
         if (isGuestMode) { showToast("Einstellungen sind im Gastmodus nicht verfügbar."); return }
         val parts = createDialogShell("Einstellungen", "Browser- und Android-Funktionen.")
