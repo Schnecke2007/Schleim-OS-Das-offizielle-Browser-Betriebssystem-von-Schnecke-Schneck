@@ -2,6 +2,7 @@ package de.schneckeschneck.schleimos
 
 import android.Manifest
 import android.app.Activity
+import android.app.KeyguardManager
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.NotificationChannel
@@ -23,6 +24,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
 import android.provider.Settings
+import android.text.InputType
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -40,6 +42,7 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.ProgressBar
 import android.widget.ScrollView
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -47,6 +50,7 @@ import androidx.core.content.FileProvider
 import org.json.JSONArray
 import org.json.JSONObject
 import org.mozilla.geckoview.AllowOrDeny
+import org.mozilla.geckoview.Autocomplete
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
@@ -68,6 +72,14 @@ import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executors
+import java.util.UUID
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import android.os.Handler
+import android.os.Looper
 
 class MainActivity : Activity() {
     private lateinit var rootFrame: FrameLayout
@@ -81,6 +93,9 @@ class MainActivity : Activity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var titleLabel: TextView
     private lateinit var runtime: GeckoRuntime
+    private lateinit var secureProfileStore: SecureProfileStore
+    private lateinit var cloudSync: BrowserCloudSync
+    private lateinit var guestBanner: TextView
 
     private var extension: WebExtension? = null
     private var extensionHomeUrl: String? = null
@@ -91,6 +106,12 @@ class MainActivity : Activity() {
     private val sessionUrls = mutableMapOf<GeckoSession, String>()
     private val sessionTitles = mutableMapOf<GeckoSession, String>()
     private var desktopMode = false
+    private var isGuestMode = false
+    private var passwordVaultUnlocked = false
+    private var pendingVaultUnlock: (() -> Unit)? = null
+    private val cloudBackupHandler = Handler(Looper.getMainLooper())
+    private var cloudBackupQueued = false
+    private var cloudBackupRunning = false
     private val downloadExecutor = Executors.newSingleThreadExecutor()
     // Keep file listing, document writes and XPI copying away from Android's UI thread.
     private val ioExecutor = Executors.newFixedThreadPool(2)
@@ -128,6 +149,8 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         desktopMode = getSharedPreferences(PREFERENCES, MODE_PRIVATE).getBoolean(KEY_DESKTOP_MODE, false)
+        secureProfileStore = SecureProfileStore(this)
+        cloudSync = BrowserCloudSync(secureProfileStore)
         window.statusBarColor = pageBackground
         window.navigationBarColor = pageBackground
         window.decorView.systemUiVisibility = 0
@@ -144,8 +167,10 @@ class MainActivity : Activity() {
                 val runtimeSettings = GeckoRuntimeSettings.Builder()
                     .trustedRecursiveResolverMode(GeckoRuntimeSettings.TRR_MODE_ONLY)
                     .trustedRecursiveResolverUri(PRIMARY_DNS_URL)
+                    .loginAutofillEnabled(true)
                     .build()
                 runtime = GeckoRuntime.create(applicationContext, runtimeSettings)
+                configureAutocompleteStorage()
                 configureExtensionPrompts()
                 openBrowser(intent?.data?.toString())
             } catch (error: Exception) {
@@ -213,6 +238,21 @@ class MainActivity : Activity() {
             LinearLayout.LayoutParams(dp(36), dp(36)))
         browserColumn.addView(brandRow)
 
+        guestBanner = TextView(this).apply {
+            text = "GASTMODUS – keine dauerhafte Speicherung oder Cloud-Synchronisierung"
+            textSize = 9f
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setTextColor(Color.rgb(255, 224, 183))
+            gravity = Gravity.CENTER
+            setPadding(dp(8), dp(7), dp(8), dp(7))
+            background = roundedBackground(Color.rgb(91, 46, 18), accent, 9)
+            visibility = View.GONE
+            setOnClickListener { leaveGuestMode() }
+        }
+        browserColumn.addView(guestBanner, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(6)
+        })
+
         val navigationRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
@@ -261,8 +301,11 @@ class MainActivity : Activity() {
             navigate(address.text.toString())
         }, LinearLayout.LayoutParams(dp(32), dp(32)))
         navigationRow.addView(addressBox, LinearLayout.LayoutParams(0, dp(38), 1f).apply {
-            marginEnd = dp(5)
+            marginEnd = dp(4)
         })
+        navigationRow.addView(makeIconButton("☆", "Aktuelle Seite als Lesezeichen speichern") {
+            addCurrentBookmark()
+        }, LinearLayout.LayoutParams(dp(32), dp(38)).apply { marginEnd = dp(4) })
         reloadButton = makeIconButton("↻", "Seite neu laden") { activeSession()?.reload() }
         navigationRow.addView(reloadButton, LinearLayout.LayoutParams(dp(36), dp(38)))
         browserColumn.addView(navigationRow)
@@ -301,6 +344,7 @@ class MainActivity : Activity() {
         setContentView(rootFrame)
         updateNavigationButtons()
         updateTabsButton()
+        updateGuestModeUi()
     }
 
     private fun makeIconButton(symbol: String, description: String, action: () -> Unit): TextView =
@@ -348,6 +392,11 @@ class MainActivity : Activity() {
                 extensionHomeUrl = installed.metaData.baseUrl + "pages/newtab.html"
                 installed.setMessageDelegate(nativeMessageDelegate(), NATIVE_APP_ID)
                 restoreOpenTabs(initialUrl)
+                rootFrame.postDelayed({
+                    if (!isFinishing && !isDestroyed && !isGuestMode &&
+                        !getSharedPreferences(PREFERENCES, MODE_PRIVATE).getBoolean(KEY_ONBOARDING_DONE, false)
+                    ) showOnboarding()
+                }, 500)
             }, { error ->
                 showNotification(
                     "Schleim OS konnte nicht starten",
@@ -601,16 +650,17 @@ class MainActivity : Activity() {
     }
 
     private fun sessionSettings(): GeckoSessionSettings =
-        GeckoSessionSettings().apply {
-            setUserAgentMode(
+        GeckoSessionSettings.Builder()
+            .usePrivateMode(isGuestMode)
+            .userAgentMode(
                 if (desktopMode) GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
                 else GeckoSessionSettings.USER_AGENT_MODE_MOBILE
             )
-            setViewportMode(
+            .viewportMode(
                 if (desktopMode) GeckoSessionSettings.VIEWPORT_MODE_DESKTOP
                 else GeckoSessionSettings.VIEWPORT_MODE_MOBILE
             )
-        }
+            .build()
 
     private fun createTab(url: String?): GeckoSession {
         pruneBackgroundTabsForNewTab()
@@ -673,10 +723,14 @@ class MainActivity : Activity() {
     }
 
     private fun createUserTab() {
-        createTab(extensionHomeUrl ?: "https://www.google.com")
+        createTab(if (isGuestMode) "about:blank" else (extensionHomeUrl ?: "https://www.google.com"))
     }
 
     private fun openHomePage() {
+        if (isGuestMode) {
+            load("about:blank")
+            return
+        }
         val home = extensionHomeUrl
         if (home == null) {
             showToast("Die Schleim-OS-Startseite wird noch vorbereitet.")
@@ -739,7 +793,7 @@ class MainActivity : Activity() {
     private fun closeTab(index: Int) {
         if (index !in tabs.indices) return
         if (tabs.size == 1) {
-            load(extensionHomeUrl ?: "https://www.google.com")
+            load(if (isGuestMode) "about:blank" else (extensionHomeUrl ?: "https://www.google.com"))
             return
         }
         val removed = tabs.removeAt(index)
@@ -1030,7 +1084,7 @@ class MainActivity : Activity() {
 
     private fun toggleDesktopMode() {
         desktopMode = !desktopMode
-        getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_DESKTOP_MODE, desktopMode).apply()
+        if (!isGuestMode) getSharedPreferences(PREFERENCES, MODE_PRIVATE).edit().putBoolean(KEY_DESKTOP_MODE, desktopMode).apply()
         tabs.forEach { session ->
             session.settings.setUserAgentMode(
                 if (desktopMode) GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
@@ -1248,6 +1302,7 @@ class MainActivity : Activity() {
 
     /** Save the current page of each tab and the selected tab index. */
     private fun saveOpenTabs() {
+        if (isGuestMode) return
         val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
         if (tabs.isEmpty()) {
             prefs.edit().remove(KEY_SAVED_TABS).remove(KEY_ACTIVE_TAB).apply()
@@ -1268,6 +1323,7 @@ class MainActivity : Activity() {
 
     /** Store completed top-level web visits locally; internal extension pages are excluded. */
     private fun recordVisitedPage(session: GeckoSession) {
+        if (isGuestMode) return
         val url = sessionUrls[session]?.takeIf {
             it.startsWith("https://", true) || it.startsWith("http://", true)
         } ?: return
@@ -1286,6 +1342,7 @@ class MainActivity : Activity() {
     }
 
     private fun showHistoryDialog() {
+        if (isGuestMode) { showToast("Im Gastmodus ist der Verlauf nicht verfügbar."); return }
         val parts = createDialogShell("Verlauf", "Zuletzt besuchte Webseiten auf diesem Gerät.")
         val clearButton = makeWideActionButton("Verlauf löschen") {
             AlertDialog.Builder(this)
@@ -1589,6 +1646,11 @@ class MainActivity : Activity() {
     }
 
     private fun saveDownload(response: WebResponse) {
+        if (isGuestMode) {
+            response.body?.close()
+            runOnUiThread { showToast("Downloads sind im Gastmodus deaktiviert.") }
+            return
+        }
         val body = response.body
         if (body == null) {
             runOnUiThread { showToast("Diese Datei konnte nicht heruntergeladen werden.") }
@@ -1724,6 +1786,7 @@ class MainActivity : Activity() {
     }
 
     private fun showExtensionsDialog() {
+        if (isGuestMode) { showToast("Add-ons können im Gastmodus nicht verwaltet werden."); return }
         val parts = createDialogShell("Erweiterungen", "Installierte GeckoView-Add-ons verwalten und kompatible Erweiterungen hinzufügen.")
         parts.body.addView(makeWideActionButton("＋  XPI-Datei installieren") {
             pickExtensionFile()
@@ -1869,6 +1932,7 @@ class MainActivity : Activity() {
     }
 
     private fun importExtensionUri(uri: Uri) {
+        if (isGuestMode) { showToast("Add-ons können im Gastmodus nicht installiert werden."); return }
         showToast("XPI-Datei wird vorbereitet …")
         // Content providers (cloud drives, file managers, USB storage) may take
         // seconds to answer metadata queries. Never query them on the UI thread.
@@ -1884,7 +1948,7 @@ class MainActivity : Activity() {
                     return@execute
                 }
                 val safeName = name.replace(Regex("[^A-Za-z0-9._-]"), "_")
-                val destination = File(File(cacheDir, "extension-import"), safeName)
+                val destination = File(File(filesDir, "extension-packages"), safeName)
                 destination.parentFile?.mkdirs()
                 contentResolver.openInputStream(uri)?.use { input ->
                     FileOutputStream(destination).use { output -> input.copyTo(output) }
@@ -1903,6 +1967,7 @@ class MainActivity : Activity() {
     }
 
     private fun installExtensionFile(file: File) {
+        if (isGuestMode) { showToast("Add-ons können im Gastmodus nicht installiert werden."); return }
         if (!file.exists() || !file.name.endsWith(".xpi", true)) {
             showToast("Bitte eine gültige .xpi-Datei auswählen.")
             return
@@ -2188,7 +2253,7 @@ class MainActivity : Activity() {
     }
 
     override fun onPause() {
-        saveOpenTabs()
+        if (!isGuestMode) saveOpenTabs()
         // Keep the visible browser page inactive while the app is backgrounded.
         // The separate mediaSession is intentionally left running for active uploads.
         activeSession()?.let { session ->
@@ -2249,7 +2314,7 @@ class MainActivity : Activity() {
     }
 
     override fun onDestroy() {
-        saveOpenTabs()
+        if (!isGuestMode) saveOpenTabs()
         pendingFileResult?.complete(pendingFilePrompt?.dismiss())
         pendingFileResult = null
         pendingFilePrompt = null
@@ -2281,12 +2346,19 @@ class MainActivity : Activity() {
         private const val REQUEST_FILE_PICKER = 1504
         private const val REQUEST_EXTENSION_PICKER = 1505
         private const val REQUEST_SAVE_FILE = 1506
+        private const val REQUEST_VAULT_UNLOCK = 1507
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"
         private const val KEY_SAVED_TABS = "saved_open_tabs"
         private const val KEY_ACTIVE_TAB = "saved_active_tab"
         private const val KEY_HISTORY = "browser_history"
+        private const val KEY_BOOKMARKS = "browser_bookmarks"
+        private const val KEY_PASSWORD_AUTOFILL = "password_autofill_enabled"
+        private const val KEY_AUTO_BACKUP = "profile_auto_backup"
+        private const val KEY_ONBOARDING_DONE = "onboarding_done_v1"
+        private const val KEY_CLOUD_PASSPHRASE = "profile_backup_passphrase_v1"
+        private const val KEY_PASSWORDS = "password_vault_entries_v1"
         private const val MAX_HISTORY_ROWS = 250
         private const val MAX_OPEN_TABS = 4
         private const val PRIMARY_DNS_URL = "https://dns.nextdns.io/36e7f3/Schleim-Browser"
