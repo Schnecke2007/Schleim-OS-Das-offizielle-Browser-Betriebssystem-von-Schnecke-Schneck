@@ -110,6 +110,7 @@ class MainActivity : Activity() {
     private var passwordVaultUnlocked = false
     private var pendingVaultUnlock: (() -> Unit)? = null
     private var pendingVaultCancelled: (() -> Unit)? = null
+    private var passwordManagerDialog: Dialog? = null
     private val cloudBackupHandler = Handler(Looper.getMainLooper())
     private var cloudBackupQueued = false
     private var cloudBackupRunning = false
@@ -1880,6 +1881,7 @@ class MainActivity : Activity() {
         )
         if (intent == null) {
             showToast("Android kann die sichere Geräteentsperrung auf diesem Gerät nicht starten.")
+            onCancelled()
             return
         }
         pendingVaultUnlock = onUnlocked
@@ -1985,6 +1987,7 @@ class MainActivity : Activity() {
             }
         }
         showDialog(parts.dialog)
+        passwordManagerDialog = parts.dialog
     }
 
     private fun editPasswordEntry(guid: String) {
@@ -2077,11 +2080,11 @@ class MainActivity : Activity() {
         } else {
             parts.body.addView(createInfoRow(
                 "Angemeldet als " + account.name,
-                account.login + " · " + account.email + "\\nPrivates Repository: " + account.repository
+                account.login + " · " + account.email + "\nPrivates Repository: " + account.repository
             ), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
                 bottomMargin = dp(8)
             })
-            parts.body.addView(makeWideActionButton("Jetzt vollständiges Browser-Profil sichern") {
+            parts.body.addView(makeWideActionButton("Browser-App-Daten verschlüsselt sichern") {
                 parts.dialog.dismiss()
                 ensureBackupPassphrase { passphrase -> startProfileBackup(passphrase, false) }
             }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(44)).apply {
@@ -2366,7 +2369,7 @@ class MainActivity : Activity() {
                     val buffer = ByteArrayOutputStream()
                     ZipOutputStream(buffer).use { zip ->
                         zip.putNextEntry(ZipEntry("profile.json"))
-                        zip.write((profile.toString(2) + "\\n").toByteArray(Charsets.UTF_8))
+                        zip.write((profile.toString(2) + "\n").toByteArray(Charsets.UTF_8))
                         zip.closeEntry()
                         files.forEach { (file, entryName) ->
                             if (isGuestMode) throw IllegalStateException("Gastmodus wurde während der Sicherung aktiviert.")
@@ -2403,6 +2406,21 @@ class MainActivity : Activity() {
         })
     }
 
+    private fun readZipEntryBounded(input: ZipInputStream, remainingBytes: Long): ByteArray {
+        require(remainingBytes >= 0) { "Die Sicherung überschreitet die maximale entpackte Größe." }
+        val output = ByteArrayOutputStream()
+        val chunk = ByteArray(16 * 1024)
+        while (true) {
+            val count = input.read(chunk)
+            if (count < 0) break
+            require(output.size().toLong() + count <= remainingBytes) {
+                "Die Sicherung überschreitet die maximale entpackte Größe."
+            }
+            output.write(chunk, 0, count)
+        }
+        return output.toByteArray()
+    }
+
     private fun startProfileRestore(passphrase: String) {
         if (isGuestMode || !cloudSync.hasSession()) return
         showToast("Verschlüsselte Browser-Sicherung wird geladen …")
@@ -2413,14 +2431,16 @@ class MainActivity : Activity() {
                 require(zipBytes.size <= MAX_CLOUD_BACKUP_BYTES) { "Die Sicherung ist größer als erlaubt." }
                 var profile: JSONObject? = null
                 val restoredFiles = mutableListOf<Pair<String, ByteArray>>()
+                var expandedBytes = 0L
                 ZipInputStream(ByteArrayInputStream(zipBytes)).use { zip ->
                     var entry = zip.nextEntry
                     while (entry != null) {
                         val name = entry.name
-                        require(!name.startsWith("/") && !name.contains("..") && !name.contains("\\\\")) {
+                        require(!name.startsWith("/") && !name.contains("..") && !name.contains("\\")) {
                             "Die Sicherungsdatei enthält einen ungültigen Dateipfad."
                         }
-                        val data = zip.readBytes()
+                        val data = readZipEntryBounded(zip, MAX_CLOUD_BACKUP_BYTES - expandedBytes)
+                        expandedBytes += data.size
                         if (name == "profile.json") {
                             profile = JSONObject(String(data, Charsets.UTF_8))
                         } else if (name.startsWith("extensions/") && name.endsWith(".xpi", true)) {
@@ -3326,6 +3346,11 @@ class MainActivity : Activity() {
 
     override fun onPause() {
         if (!isGuestMode) saveOpenTabs()
+        if (pendingVaultUnlock == null) {
+            passwordVaultUnlocked = false
+            passwordManagerDialog?.dismiss()
+            passwordManagerDialog = null
+        }
         // Keep the visible browser page inactive while the app is backgrounded.
         // The separate mediaSession is intentionally left running for active uploads.
         activeSession()?.let { session ->
