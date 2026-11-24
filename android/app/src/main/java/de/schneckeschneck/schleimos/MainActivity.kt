@@ -558,6 +558,9 @@ class MainActivity : Activity() {
                 is Map<*, *> -> JSONObject(message.entries.associate { it.key.toString() to it.value })
                 else -> JSONObject()
             }
+            if (isGuestMode) {
+                return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Native Speicherung und Cloud-Funktionen sind im Gastmodus deaktiviert."))
+            }
             return when (payload.optString("action")) {
                 "file.save" -> saveFileFromExtension(payload)
                 "media.ensure" -> ensureMediaUploadPage()
@@ -666,6 +669,7 @@ class MainActivity : Activity() {
     }
 
     private fun ensureMediaUploadPage(): GeckoResult<Any> {
+        if (isGuestMode) return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Cloud-Uploads sind im Gastmodus deaktiviert."))
         if (mediaPageReady && mediaSession != null) {
             MediaUploadService.start(this)
             return GeckoResult.fromValue(JSONObject().put("ok", true))
@@ -749,7 +753,8 @@ class MainActivity : Activity() {
         activeTabIndex = tabs.lastIndex
         showSessionInBrowser(session)
         if (!url.isNullOrBlank()) {
-            val target = normalizeUrlOrExtension(url)
+            val normalized = normalizeUrlOrExtension(url)
+            val target = if (isGuestMode && normalized.startsWith("moz-extension://")) "about:blank" else normalized
             sessionUrls[session] = target
             session.loadUri(target)
         }
@@ -922,6 +927,7 @@ class MainActivity : Activity() {
                 request: GeckoSession.NavigationDelegate.LoadRequest
             ): GeckoResult<AllowOrDeny>? {
                 val uri = request.uri ?: return null
+                if (isGuestMode && uri.startsWith("moz-extension://")) return GeckoResult.deny()
                 if (uri.startsWith("mailto:")) {
                     runCatching { startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(uri))) }
                     return GeckoResult.deny()
@@ -1316,7 +1322,7 @@ class MainActivity : Activity() {
         if (linkUri != null) {
             addAction("Link öffnen") { load(linkUri) }
             addAction("Link in neuem Tab öffnen") { createTab(linkUri) }
-            if (isHttpUrl(linkUri)) {
+            if (!isGuestMode && isHttpUrl(linkUri)) {
                 addAction("Link herunterladen") { downloadContextResource(session, linkUri) }
             }
             addAction("Link-Adresse kopieren") { copyAddressToClipboard("Link-Adresse", linkUri) }
@@ -1330,7 +1336,7 @@ class MainActivity : Activity() {
                 else -> "Datei"
             }
             addAction("$sourceLabel öffnen") { createTab(sourceUri) }
-            if (isHttpUrl(sourceUri)) {
+            if (!isGuestMode && isHttpUrl(sourceUri)) {
                 addAction("$sourceLabel herunterladen") { downloadContextResource(session, sourceUri) }
             }
             addAction("$sourceLabel-Adresse kopieren") {
@@ -1338,8 +1344,10 @@ class MainActivity : Activity() {
             }
         }
 
-        // Always offer page printing alongside link/media actions in the native long-press menu.
-        addAction("Seite drucken") { printPage(session) }
+        if (!isGuestMode) {
+            // Normal profile retains page printing from the context menu.
+            addAction("Seite drucken") { printPage(session) }
+        }
 
         popup.setOnDismissListener { rootFrame.removeView(anchor) }
         popup.show()
@@ -1357,6 +1365,10 @@ class MainActivity : Activity() {
     }
 
     private fun downloadContextResource(session: GeckoSession, url: String) {
+        if (isGuestMode) {
+            showToast("Downloads sind im Gastmodus deaktiviert.")
+            return
+        }
         if (!isHttpUrl(url)) {
             showToast("Direkte Downloads werden nur für HTTP- und HTTPS-Adressen unterstützt.")
             return
@@ -1394,6 +1406,7 @@ class MainActivity : Activity() {
     }
 
     private fun printCurrentPage() {
+        if (isGuestMode) { showToast("Drucken ist im Gastmodus deaktiviert."); return }
         val session = activeSession()
         if (session == null) {
             showToast("Keine Webseite zum Drucken geöffnet.")
@@ -1403,6 +1416,7 @@ class MainActivity : Activity() {
     }
 
     private fun printPage(session: GeckoSession) {
+        if (isGuestMode) return
         if (session.printDelegate == null) {
             showToast("Die Druckfunktion ist in dieser Ansicht nicht verfügbar.")
             return
@@ -1587,6 +1601,7 @@ class MainActivity : Activity() {
     private fun enterGuestMode() {
         if (isGuestMode) return
         saveOpenTabs()
+        stopMediaUploadPage()
         closeAllBrowserTabs()
         isGuestMode = true
         passwordVaultUnlocked = false
