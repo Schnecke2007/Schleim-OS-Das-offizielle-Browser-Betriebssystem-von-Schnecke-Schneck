@@ -9,9 +9,9 @@ De Android-app vervangt Android niet. Het is een browser die op Android draait.
 
 ## Download
 
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha29.apk**.
+Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha30.apk**.
 
-Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
+Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
 
 ## Systeemvereisten
 
@@ -64,7 +64,22 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - **Tabbladen automatisch opslaan:** Maximaal vier geopende tabbladen en het actieve tabblad worden automatisch opgeslagen. Bij de volgende start worden de tabbladen hersteld met hun laatst geopende adres. De volledige terug-/vooruitnavigatie van een pagina wordt niet opgeslagen.
 - Geschiedenis en tabbladen staan in de lokale appgegevens. Als je de app verwijdert, kunnen deze gegevens verloren gaan.
 
+## Welkomstscherm, Gastmodus en Schleim-account
+
+Bij de eerste start toont Schleim Browser een korte uitleg. Gebruik **Volgende** en **Terug** om door de belangrijkste functies te gaan. Je kunt de uitleg overslaan of direct beginnen met browsen.
+
+- **Bladwijzers:** Bewaar een webpagina, open deze later opnieuw en wijzig of verwijder opgeslagen items.
+- **Wachtwoordbeheer:** Nieuwe inloggegevens worden pas opgeslagen nadat je dit bevestigt. Wachtwoorden worden versleuteld en beschermd met Android Keystore. Je hebt de veilige schermvergrendeling van het apparaat nodig om de wachtwoordbeheerder te openen. Je kunt in de wachtwoordbeheerder suggesties en automatisch invullen inschakelen.
+- **Gastmodus:** Start een privésessie vanuit de uitleg of het browsermenu. Gasttabbladen gebruiken privé GeckoView-sessies. Geschiedenis, tabbladen, bladwijzers, wachtwoorden, formuliergegevens en websitegegevens worden niet naar het normale profiel gekopieerd of met de cloud gesynchroniseerd. Aanmelden bij een account en add-onbeheer zijn ook uitgeschakeld. Je gewone browserprofiel blijft ongewijzigd. Gasttabbladen worden niet voor de volgende start opgeslagen.
+- **Account openen:** Het Schleim-account staat onder **Browsermenu → Instellingen → Schleim-account**. Back-up en herstel via de cloud zijn geblokkeerd totdat het aanmelden is gelukt.
+- **Eerste keer aanmelden:** Kies **Schleim OS Account openen**. De GitHub App-pagina opent in een nieuw browsertabblad. Installeer daar de GitHub-app **Schleim OS Account**. Je kunt dat tabblad sluiten en teruggaan naar **Instellingen → Schleim-account**. Kies daarna **Verder – apparaatcode tonen**.
+- **Apparaatcode bevestigen:** De eenmalige code verschijnt in de browser en wordt automatisch naar het klembord gekopieerd. De GitHub-pagina voor apparaatmachtiging opent in een tweede tabblad. Je kunt de code opnieuw kopiëren of met **Terug** naar het vorige tabblad gaan. De app controleert de toestemming automatisch. Voer je GitHub-wachtwoord alleen rechtstreeks bij GitHub in.
+- **Privécloudback-up:** Na het aanmelden gebruikt de app de privérepository schleim-os-cloud. Deze wordt indien nodig bij de eerste aanmelding aangemaakt. Browserback-ups worden vóór het uploaden versleuteld met AES-256-GCM. Voor herstel op een ander apparaat heb je hetzelfde GitHub-account en je back-upwachtwoord nodig. Automatische back-up is optioneel en kan in het account worden ingeschakeld.
+
+De browserprofielback-up bevat lokale instellingen, geschiedenis, opgeslagen tabbladen, bladwijzers, de versleutelde wachtwoordkluis en add-oninformatie. XPI-installatiepakketten worden meegenomen wanneer ze in de appopslag aanwezig zijn en kunnen bij het herstellen opnieuw worden geïnstalleerd. Websitecookies en actieve websitesessies, formulierinvoer, privégegevens van afzonderlijke add-ons en gewone downloads worden niet meegenomen. De volledige terug-/vooruitnavigatiestatus per webpagina wordt ook niet overgedragen.
+
 ## Updates
+
 
 De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension. Open **Browsermenu → Instellingen → Controleren op updates**. Als er een update beschikbaar is, download je eerst de APK via het updatevenster. Kies daarna **Oude app verwijderen**. Android toont hiervoor een eigen bevestigingsvenster. Installeer vervolgens de gedownloade APK vanuit de map Downloads.
 
