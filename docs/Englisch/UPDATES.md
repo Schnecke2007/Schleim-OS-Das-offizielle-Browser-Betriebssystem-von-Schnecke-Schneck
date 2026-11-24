@@ -38,5 +38,5 @@ This no-extraction guide applies to browsers whose extension manager offers loca
 
 Schleim Browser has its own update check. Open **Browser menu → Settings → Check for updates**. When an update is available, download the APK in the update dialog first. Then choose **Uninstall old app** and confirm Android's prompt. Finally, install the downloaded APK from your Downloads folder.
 
-The release APK uses Android's standard debug key. The key can change between builds, so an in-place update is not guaranteed. Uninstalling can delete history, saved tabs and other local app data. Back up important data first.
+The release APK uses Android's standard debug key. The key can change between builds, so an in-place update is not guaranteed. Before uninstalling, create an encrypted profile backup under **Browser menu → Settings → Schleim account** when possible. After reinstalling, restore it with the same GitHub account and backup password. Without a backup, history, saved tabs and other local app data can be lost.
 
