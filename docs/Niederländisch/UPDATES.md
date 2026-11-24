@@ -38,5 +38,5 @@ Deze handleiding zonder uitpakken geldt voor browsers waarvan het extensiebeheer
 
 Schleim Browser heeft een eigen updatecontrole. Open **Browsermenu → Instellingen → Controleren op updates**. Als er een update beschikbaar is, download je eerst de APK via het updatevenster. Kies daarna **Oude app verwijderen** en bevestig de melding van Android. Installeer vervolgens de gedownloade APK vanuit de map Downloads.
 
-De release-APK gebruikt de standaard Android-debugondertekening. De sleutel kan per build veranderen. Een directe update is daarom niet gegarandeerd. Door de oude app te verwijderen, kunnen de geschiedenis, opgeslagen tabbladen en andere lokale appgegevens verloren gaan. Maak vooraf een back-up van belangrijke gegevens.
+De release-APK gebruikt de standaard Android-debugondertekening. De sleutel kan per build veranderen. Een directe update is daarom niet gegarandeerd. Maak vóór het verwijderen indien mogelijk een versleutelde profielback-up via **Browsermenu → Instellingen → Schleim-account**. Na de herinstallatie kun je deze herstellen met hetzelfde GitHub-account en je back-upwachtwoord. Zonder back-up kunnen de geschiedenis, opgeslagen tabbladen en andere lokale appgegevens verloren gaan.
 
