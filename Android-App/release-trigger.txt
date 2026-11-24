@@ -15,3 +15,5 @@ Requested rebuild: 2026-11-24 — Schleim Browser Alpha 30 with onboarding, Gues
 Build retry: run the consolidated v3.20.0 workflow from the current main branch after the final Guest Mode, add-on restore, documentation, and validation assertions were committed. Verify and replace every asset on the existing v3.20.0 release with the complete Alpha 30 build; include all six localized release-note sections.
 
 Build retry 2: fixed Kotlin compiler errors from Alpha 30 run 45457046554: removed duplicate GitHub account constants, passed the required onUnlocked callbacks explicitly, and used TextView.setTextIsSelectable(true). Verify the new Android release build and replace incomplete v3.20.0 assets only after APK build and checks succeed.
+
+Final release pass: run the corrected workflow that writes all six full/easy-language release notes into one file and recreates v3.20.0 at the current validated main-branch commit. Keep the six verified assets, refresh the update JSON and SHA-256 checksums, and confirm the final release target commit and all localized notes.
