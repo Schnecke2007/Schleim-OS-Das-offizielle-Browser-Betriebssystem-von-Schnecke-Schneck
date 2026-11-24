@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha29 · GeckoView · ARM64**
+**Versie 0.1.0-alpha30 · GeckoView · ARM64**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -33,6 +33,18 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Desktopmodus en selectie als standaardbrowser van Android.
 - De oorspronkelijke Extension levert het Schleim OS-startscherm, de Store, account-, personalisatie- en cloudfuncties.
 
+
+
+## Browserprofiel, Gastmodus en accountsynchronisatie
+
+- Bij de eerste start legt een welkomstscherm dat je kunt overslaan de belangrijkste browserfuncties uit.
+- Bladwijzers kunnen worden opgeslagen, geopend, bewerkt en verwijderd.
+- De wachtwoordbeheerder gebruikt de loginopslag-API van GeckoView. Nieuwe inloggegevens worden alleen na bevestiging opgeslagen; de kluis wordt versleuteld met Android Keystore en beschermd door de apparaatvergrendeling.
+- Gastmodus gebruikt privé-GeckoSession-sessies. Geschiedenis, tabbladen, website- en formuliergegevens worden niet blijvend in het normale profiel opgeslagen. Account, cloud en add-onbeheer zijn in Gastmodus uitgeschakeld.
+- Het Schleim-account staat in Instellingen. Aanmelden opent eerst de GitHub App-pagina in een nieuw tabblad en start daarna de apparaatcodeprocedure. De code wordt getoond/gekopieerd en de GitHub-apparaatmachtiging opent in een ander tabblad.
+- Cloudback-ups worden versleuteld met AES-256-GCM en alleen opgeslagen in de privérepository schleim-os-cloud. Back-ups bevatten lokale instellingen, geschiedenis, tabbladen, bladwijzers, versleutelde aanmeldingen, add-onmetadata en beschikbare XPI-pakketten met hun in-/uitgeschakelde status.
+- Websitecookies, actieve websitesessies, formulierinvoer, privégegevens van add-ons en gewone downloads worden niet overgedragen. Add-ons zonder lokaal beschikbaar XPI-installatiebestand kunnen niet automatisch op een ander apparaat worden geïnstalleerd.
+
 ## Grenzen van Android
 
 - Camera- en microfoonopnamen zijn bewust uitgeschakeld. Android-capturemachtigingen worden niet aangevraagd en GeckoView-mediaverzoeken worden geweigerd.
@@ -63,4 +75,4 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 
 De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
-[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha25.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
+[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
