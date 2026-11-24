@@ -69,16 +69,13 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
             .put("refreshExpiresAt", System.currentTimeMillis() + tokenResponse.optLong("refresh_token_expires_in", 0) * 1000L)
 
         val user = githubApi(session, "/user")
-        val emails = githubApi(session, "/user/emails?per_page=100")
-        val emailArray = emails.optJSONArray("items")
+        val emailArray = githubApiArray(session, "/user/emails?per_page=100")
         var verifiedEmail = ""
-        if (emailArray != null) {
-            for (i in 0 until emailArray.length()) {
-                val item = emailArray.optJSONObject(i) ?: continue
-                if (item.optBoolean("primary") && item.optBoolean("verified")) {
-                    verifiedEmail = item.optString("email")
-                    break
-                }
+        for (i in 0 until emailArray.length()) {
+            val item = emailArray.optJSONObject(i) ?: continue
+            if (item.optBoolean("primary") && item.optBoolean("verified")) {
+                verifiedEmail = item.optString("email")
+                break
             }
         }
         val login = user.optString("login")
@@ -266,6 +263,31 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
                 throw IllegalStateException("GitHub API HTTP $code: " + result.optString("message").ifBlank { "Request failed." })
             }
             return result
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    private fun githubApiArray(session: JSONObject, path: String): org.json.JSONArray {
+        refreshIfNeeded(session)
+        val connection = (URL(API_BASE + path).openConnection() as HttpURLConnection).apply {
+            connectTimeout = 15_000
+            readTimeout = 30_000
+            requestMethod = "GET"
+            setRequestProperty("Accept", "application/vnd.github+json")
+            setRequestProperty("Authorization", "Bearer " + session.getString("accessToken"))
+            setRequestProperty("X-GitHub-Api-Version", API_VERSION)
+            setRequestProperty("User-Agent", USER_AGENT)
+        }
+        try {
+            val code = connection.responseCode
+            val stream = if (code in 200..299) connection.inputStream else connection.errorStream
+            val text = stream?.bufferedReader(StandardCharsets.UTF_8)?.use { it.readText() }.orEmpty()
+            if (code !in 200..299) {
+                val error = runCatching { JSONObject(text).optString("message") }.getOrDefault(text)
+                throw IllegalStateException("GitHub API HTTP $code: " + error)
+            }
+            return org.json.JSONArray(text)
         } finally {
             connection.disconnect()
         }
