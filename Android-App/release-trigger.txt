@@ -13,3 +13,5 @@ Package the original Extension, neutral Extension template, Android APK, generat
 Requested rebuild: 2026-11-24 — Schleim Browser Alpha 30 with onboarding, Guest Mode, bookmarks, encrypted passwords, Schleim account integration and encrypted profile synchronization.
 
 Build retry: run the consolidated v3.20.0 workflow from the current main branch after the final Guest Mode, add-on restore, documentation, and validation assertions were committed. Verify and replace every asset on the existing v3.20.0 release with the complete Alpha 30 build; include all six localized release-note sections.
+
+Build retry 2: fixed Kotlin compiler errors from Alpha 30 run 45457046554: removed duplicate GitHub account constants, passed the required onUnlocked callbacks explicitly, and used TextView.setTextIsSelectable(true). Verify the new Android release build and replace incomplete v3.20.0 assets only after APK build and checks succeed.
