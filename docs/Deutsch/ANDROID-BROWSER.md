@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha29.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha30.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
 
 ## Systemanforderungen
 
@@ -64,7 +64,22 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - **Automatisch gespeicherte Tabs:** Bis zu vier geöffnete Tabs und der aktive Tab werden automatisch gespeichert. Beim nächsten Start werden die Tabs mit ihrer jeweils zuletzt geöffneten Adresse wiederhergestellt. Der vollständige Zurück-/Vorwärts-Verlauf einer einzelnen Seite wird dabei nicht gespeichert.
 - Verlauf und Tabs liegen in den lokalen App-Daten. Durch eine Deinstallation können diese Daten gelöscht werden.
 
+## Willkommensbildschirm, Gastmodus und Schleim-Konto
+
+Beim ersten Start zeigt Schleim Browser eine kurze Einführung. Mit **Weiter** und **Zurück** wechselst du zwischen den wichtigsten Funktionen. Du kannst die Einführung überspringen oder direkt den Browser öffnen.
+
+- **Lesezeichen:** Speichere eine Webseite, öffne sie später erneut und bearbeite oder lösche gespeicherte Einträge.
+- **Passwort-Manager:** Neue Anmeldedaten werden erst nach deiner Bestätigung gespeichert. Die Zugangsdaten werden verschlüsselt und mit dem Android-Keystore geschützt. Zum Öffnen der Passwortverwaltung ist die sichere Displaysperre des Geräts erforderlich. Passwortvorschläge und das Ausfüllen kannst du im Passwort-Manager aktivieren.
+- **Gastmodus:** Starte über die Einführung oder das Browser-Menü eine private Sitzung. Gast-Tabs verwenden private GeckoView-Sitzungen. Verlauf, Tabs, Lesezeichen, Passwörter, Formular- und Websitedaten werden nicht in das reguläre Profil übernommen oder mit der Cloud synchronisiert. Auch Konto-Anmeldung und Add-on-Verwaltung sind gesperrt. Dein normales Browser-Profil bleibt unverändert. Der Gastmodus speichert keine privaten Tabs für den nächsten App-Start.
+- **Konto öffnen:** Das Schleim-Konto befindet sich unter **Browser-Menü → Einstellungen → Schleim-Konto**. Ohne erfolgreiche Anmeldung sind Cloud-Backup und Wiederherstellung gesperrt.
+- **Erste Anmeldung:** Tippe auf **Schleim OS Account öffnen**. Die GitHub-App-Seite öffnet sich in einem neuen Browser-Tab. Installiere dort die GitHub-App „Schleim OS Account“. Schließe den Tab bei Bedarf und kehre zu **Einstellungen → Schleim-Konto** zurück. Tippe dann auf **Weiter – Gerätecode anzeigen**.
+- **Gerätecode bestätigen:** Der einmalige Code erscheint im Browser und wird automatisch in die Zwischenablage kopiert. Die GitHub-Gerätefreigabe öffnet sich in einem weiteren Tab. Du kannst den Code erneut kopieren oder mit **Zurück** zum vorherigen Tab wechseln. Die App prüft die Freigabe automatisch. Dein GitHub-Passwort gibst du ausschließlich direkt bei GitHub ein.
+- **Private Cloud-Sicherung:** Nach der Anmeldung wird das private Repository schleim-os-cloud verwendet bzw. bei der ersten Anmeldung angelegt. Browser-Backups werden vor dem Upload mit AES-256-GCM verschlüsselt. Für die Wiederherstellung auf einem anderen Gerät brauchst du dasselbe GitHub-Konto und dein Backup-Passwort. Die automatische Sicherung ist optional und kann im Konto aktiviert werden.
+
+Das Browser-Profil-Backup umfasst lokale Einstellungen, Verlauf, gespeicherte Tabs, Lesezeichen, den verschlüsselten Passwortspeicher und Add-on-Informationen. Vorhandene XPI-Installationspakete werden, soweit im App-Speicher vorhanden, mit gesichert und können beim Wiederherstellen erneut installiert werden. Nicht enthalten sind Website-Cookies und aktive Website-Anmeldesitzungen, Formulareingaben, private Daten einzelner Add-ons oder gewöhnliche Downloads. Der vollständige Zurück-/Vorwärts-Verlauf einzelner Webseiten wird ebenfalls nicht übertragen.
+
 ## Updates
+
 
 Die Android-App wird getrennt von der Browser-Extension aktualisiert. Öffne **Browser-Menü → Einstellungen → Nach Updates suchen**. Wenn ein Update verfügbar ist, kannst du im Update-Fenster zuerst die APK herunterladen. Danach kannst du die alte App über **Alte App deinstallieren** entfernen. Android zeigt dafür eine eigene Bestätigungsabfrage. Installiere anschließend die heruntergeladene APK aus deinem Download-Ordner.
 
