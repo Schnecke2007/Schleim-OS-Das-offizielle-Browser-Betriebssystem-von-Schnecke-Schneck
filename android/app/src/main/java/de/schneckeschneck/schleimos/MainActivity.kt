@@ -2325,32 +2325,32 @@ class MainActivity : Activity() {
                     if (isGuestMode) throw IllegalStateException("Im Gastmodus ist keine Sicherung erlaubt.")
                     val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
                     val passwords = runCatching { readPasswordEntries() }.getOrElse { JSONArray() }
+                    val preferences = JSONObject()
+                    prefs.all.forEach { (key, value) ->
+                        when (value) {
+                            is String, is Boolean, is Int, is Long, is Double -> preferences.put(key, value)
+                        }
+                    }
                     val profile = JSONObject()
                         .put("format", "schleim-browser-profile")
                         .put("schemaVersion", 1)
                         .put("exportedAt", java.time.Instant.now().toString())
                         .put("ownerLogin", cloudSync.currentAccount()?.login ?: "")
-                        .put("desktopMode", desktopMode)
-                        .put("history", prefs.getString(KEY_HISTORY, "[]"))
-                        .put("openTabs", prefs.getString(KEY_SAVED_TABS, "[]"))
-                        .put("activeTabIndex", prefs.getInt(KEY_ACTIVE_TAB, 0))
-                        .put("bookmarks", prefs.getString(KEY_BOOKMARKS, "[]"))
+                        .put("preferences", preferences)
                         .put("passwords", passwords)
-                        .put("passwordAutofill", prefs.getBoolean(KEY_PASSWORD_AUTOFILL, false))
                         .put("addons", addonMetadata)
-                        .put("autoBackup", false)
                     val files = mutableListOf<Pair<File, String>>()
                     val packageDirs = listOf(
                         File(filesDir, "extension-packages"),
                         File(cacheDir, "extension-import")
                     )
-                    packageDirs.forEach { dir ->
+                    packageDirs.forEachIndexed { dirIndex, dir ->
                         dir.listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
-                            files.add(file to ("extensions/installed/" + file.name))
+                            files.add(file to ("extensions/installed/" + dirIndex + "-" + files.size + "-" + file.name))
                         }
                     }
                     downloadsDirectory().listFiles()?.filter { it.isFile && it.extension.equals("xpi", true) }?.forEach { file ->
-                        files.add(file to ("extensions/downloads/" + file.name))
+                        files.add(file to ("extensions/downloads/" + files.size + "-" + file.name))
                     }
                     val total = files.sumOf { it.first.length() }
                     require(total <= MAX_CLOUD_BACKUP_BYTES) {
@@ -2435,17 +2435,21 @@ class MainActivity : Activity() {
                     if (isFinishing || isDestroyed || isGuestMode) return@runOnUiThread
                     val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
                     val editor = prefs.edit()
-                        .putString(KEY_HISTORY, snapshot.optString("history", "[]"))
-                        .putString(KEY_SAVED_TABS, snapshot.optString("openTabs", "[]"))
-                        .putInt(KEY_ACTIVE_TAB, snapshot.optInt("activeTabIndex", 0))
-                        .putString(KEY_BOOKMARKS, snapshot.optString("bookmarks", "[]"))
-                        .putBoolean(KEY_DESKTOP_MODE, snapshot.optBoolean("desktopMode", false))
-                        .putBoolean(KEY_PASSWORD_AUTOFILL, snapshot.optBoolean("passwordAutofill", false))
-                        .putBoolean(KEY_AUTO_BACKUP, false)
-                    editor.apply()
-                    if (snapshot.has("passwords")) {
-                        secureProfileStore.putString(KEY_PASSWORDS, snapshot.optJSONArray("passwords")?.toString() ?: "[]")
+                    val storedPreferences = snapshot.optJSONObject("preferences") ?: JSONObject()
+                    val keys = storedPreferences.keys()
+                    while (keys.hasNext()) {
+                        val key = keys.next()
+                        if (key == KEY_AUTO_BACKUP) continue
+                        when (val value = storedPreferences.opt(key)) {
+                            is String -> editor.putString(key, value)
+                            is Boolean -> editor.putBoolean(key, value)
+                            is Int -> editor.putInt(key, value)
+                            is Long -> editor.putLong(key, value)
+                            is Double -> editor.putFloat(key, value.toFloat())
+                        }
                     }
+                    editor.putBoolean(KEY_AUTO_BACKUP, false).apply()
+                    secureProfileStore.putString(KEY_PASSWORDS, snapshot.optJSONArray("passwords")?.toString() ?: "[]")
                     secureProfileStore.putString(KEY_CLOUD_PASSPHRASE, passphrase)
                     val extensionDirectory = File(filesDir, "extension-packages").apply { mkdirs() }
                     val downloadDirectory = downloadsDirectory()
