@@ -147,10 +147,24 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
         secureStore.remove(SESSION_KEY)
     }
 
+    private fun verifyPrivateRepository(session: JSONObject) {
+        val repository = session.optString("repository")
+        require(repository.startsWith(session.optString("login") + "/")) {
+            "Das Backup-Repository gehört nicht zum angemeldeten Konto."
+        }
+        val details = githubApi(session, "/repos/$repository")
+        require(details.optBoolean("private")) {
+            "Das Backup-Repository ist nicht mehr privat. Die Synchronisierung wurde aus Sicherheitsgründen gestoppt."
+        }
+        require(details.optJSONObject("owner")?.optLong("id") == session.optLong("userId")) {
+            "Das Backup-Repository gehört nicht mehr zum angemeldeten Konto."
+        }
+    }
+
     fun uploadEncryptedBackup(envelope: JSONObject): String {
         val session = requireSession()
+        verifyPrivateRepository(session)
         val repository = session.optString("repository")
-        require(repository.startsWith(session.optString("login") + "/")) { "Das Backup-Repository gehört nicht zum angemeldeten Konto." }
         val path = "/repos/$repository/contents/$BACKUP_PATH"
         val existing = runCatching {
             githubApi(session, "$path?ref=" + encode(session.optString("defaultBranch")))
@@ -169,13 +183,26 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
 
     fun downloadEncryptedBackup(): JSONObject {
         val session = requireSession()
+        verifyPrivateRepository(session)
         val repository = session.optString("repository")
-        require(repository.startsWith(session.optString("login") + "/")) { "Das Backup-Repository gehört nicht zum angemeldeten Konto." }
         val path = "/repos/$repository/contents/$BACKUP_PATH?ref=" + encode(session.optString("defaultBranch"))
-        val file = githubApi(session, path)
-        require(file.optString("encoding") == "base64") { "GitHub hat die Backup-Datei in einem nicht unterstützten Format geliefert." }
-        val raw = Base64.decode(file.optString("content").replace("\n", ""), Base64.DEFAULT)
-        return JSONObject(String(raw, StandardCharsets.UTF_8))
+        val connection = (URL(API_BASE + path).openConnection() as HttpURLConnection).apply {
+            connectTimeout = 15_000
+            readTimeout = 60_000
+            setRequestProperty("Accept", "application/vnd.github.raw+json")
+            setRequestProperty("Authorization", "Bearer " + session.getString("accessToken"))
+            setRequestProperty("X-GitHub-Api-Version", API_VERSION)
+            setRequestProperty("User-Agent", USER_AGENT)
+        }
+        try {
+            val code = connection.responseCode
+            val stream = if (code in 200..299) connection.inputStream else connection.errorStream
+            val text = stream?.bufferedReader(StandardCharsets.UTF_8)?.use { it.readText() }.orEmpty()
+            if (code !in 200..299) throw IllegalStateException("GitHub API HTTP $code: " + text.take(300))
+            return JSONObject(text)
+        } finally {
+            connection.disconnect()
+        }
     }
 
     private fun requireSession(): JSONObject {
