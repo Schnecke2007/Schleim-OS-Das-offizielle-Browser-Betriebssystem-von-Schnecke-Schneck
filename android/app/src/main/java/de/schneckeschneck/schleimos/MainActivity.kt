@@ -593,6 +593,9 @@ class MainActivity : Activity() {
     }
 
     private fun saveFileFromExtension(payload: JSONObject): GeckoResult<Any> {
+        if (isGuestMode) {
+            return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Datei-Speicherung ist im Gastmodus deaktiviert."))
+        }
         val encoded = payload.optString("contentBase64", "")
         if (encoded.isBlank() || encoded.length > 2_000_000) {
             return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Die Datei ist leer oder zu groß."))
@@ -1223,6 +1226,7 @@ class MainActivity : Activity() {
             )
         }
         activeSession()?.reload()
+        scheduleAutomaticBackup()
         showToast(if (desktopMode) "Desktop-Ansicht aktiviert." else "Mobile Ansicht aktiviert.")
     }
 
@@ -1462,6 +1466,7 @@ class MainActivity : Activity() {
             .putString(KEY_SAVED_TABS, saved.toString())
             .putInt(KEY_ACTIVE_TAB, activeTabIndex.coerceIn(0, (tabs.size - 1).coerceAtLeast(0)))
             .apply()
+        scheduleAutomaticBackup()
     }
 
     /** Store completed top-level web visits locally; internal extension pages are excluded. */
@@ -1482,6 +1487,7 @@ class MainActivity : Activity() {
             .put("visitedAt", now))
         while (history.length() > MAX_HISTORY_ROWS) history.remove(0)
         prefs.edit().putString(KEY_HISTORY, history.toString()).apply()
+        scheduleAutomaticBackup()
     }
 
     private fun showHistoryDialog() {
@@ -2710,7 +2716,10 @@ class MainActivity : Activity() {
                         output.flush()
                     }
                 }
-                runOnUiThread { showToast("Download abgeschlossen: " + file.name) }
+                runOnUiThread {
+                    showToast("Download abgeschlossen: " + file.name)
+                    if (file.extension.equals("xpi", true)) scheduleAutomaticBackup()
+                }
             } catch (error: Exception) {
                 runCatching { body.close() }
                 Log.e(TAG, "Download failed", error)
@@ -3019,6 +3028,7 @@ class MainActivity : Activity() {
                         return@runOnUiThread
                     }
                     showToast((newExtension.metaData.name ?: newExtension.id) + " wurde installiert.")
+                    scheduleAutomaticBackup()
                     showExtensionsDialog()
                 }
             }, { error ->
@@ -3409,6 +3419,7 @@ class MainActivity : Activity() {
         private const val KEY_PASSWORDS = "password_vault_entries_v1"
         private const val MAX_HISTORY_ROWS = 250
         private const val MAX_OPEN_TABS = 4
+        private const val MAX_CLOUD_BACKUP_BYTES = 45L * 1024L * 1024L
         private const val PRIMARY_DNS_URL = "https://dns.nextdns.io/36e7f3/Schleim-Browser"
         private const val MAX_DOWNLOAD_ROWS = 100
         private const val UPDATE_METADATA_ASSET = "Schleim-Browser-Android-update.json"
