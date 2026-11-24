@@ -6,7 +6,7 @@ De Schleim OS-startpagina is inbegrepen.
 
 ## Download
 
-[Download Schleim Browser Alpha 29](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha29.apk).
+[Download Schleim Browser Alpha 30](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk).
 
 ## De app installeren
 
@@ -31,6 +31,14 @@ De Schleim OS-startpagina is inbegrepen.
 - **Geschiedenis:** Open **Geschiedenis** in het menu. Je ziet welke websites je hebt bezocht. Je kunt een pagina opnieuw openen. Je kunt de geschiedenis ook wissen.
 - **Veilige DNS:** De browser gebruikt één vaste DNS-server. De verbinding is versleuteld. Je kunt de DNS-server niet veranderen. In Instellingen staat alleen dat een veilige DNS-verbinding wordt gebruikt.
 - **Tabbladen opslaan:** De browser bewaart je laatste vier tabbladen. Ook wordt opgeslagen welk tabblad actief was. Bij de volgende start worden de tabbladen opnieuw geopend.
+
+- **Welkom:** Bij de eerste start toont de app een korte uitleg. Je kunt vooruit of terug gaan. Je kunt de uitleg ook overslaan.
+- **Bladwijzers:** Je kunt websites opslaan. Je kunt ze later openen, wijzigen of verwijderen.
+- **Wachtwoordbeheer:** Een nieuw wachtwoord wordt alleen opgeslagen als je toestemming geeft. Wachtwoorden worden versleuteld. Om de beheerder te openen heb je de veilige schermvergrendeling van je Android-apparaat nodig.
+- **Gastmodus:** Je kunt privé browsen. Bezochte pagina's, formulieren, tabbladen, bladwijzers en wachtwoorden worden niet opgeslagen in het normale profiel. Er is geen cloudback-up. Je normale profiel blijft gescheiden.
+- **Schleim-account:** Het account staat in Instellingen. Je moet je eerst aanmelden bij GitHub voordat je een back-up kunt gebruiken.
+- **Aanmelden:** Eerst opent de GitHub App-pagina in een nieuw tabblad. Installeer daar **Schleim OS Account**. Ga daarna terug naar Instellingen → Schleim-account en tik op Verder. De apparaatcode wordt getoond en gekopieerd. De GitHub-goedkeuringspagina opent in een ander tabblad.
+- **Cloudback-up:** De back-up wordt versleuteld opgeslagen in een privérepository op GitHub. Je hebt je GitHub-account en je back-upwachtwoord nodig om deze op een ander apparaat te herstellen.
 
 ## Updates
 
