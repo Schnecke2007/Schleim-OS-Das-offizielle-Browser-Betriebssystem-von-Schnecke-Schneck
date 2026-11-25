@@ -2500,6 +2500,7 @@ class MainActivity : Activity() {
                             .put("name", item.metaData.name ?: item.id)
                             .put("version", item.metaData.version)
                             .put("enabled", item.metaData.enabled)
+                            .put("allowedInPrivateBrowsing", item.metaData.allowedInPrivateBrowsing)
                             .put("builtIn", item.isBuiltIn)
                             .put("packageEntry", packageEntriesById[item.id] ?: ""))
                     }
@@ -2682,21 +2683,38 @@ class MainActivity : Activity() {
                     val target = desired[index]
                     val id = target.optString("id")
                     val wantedEnabled = target.optBoolean("enabled", true)
+                    val wantedPrivateAccess = target.optBoolean("allowedInPrivateBrowsing", false)
                     val existing = byId[id]
                     fun applyEnabledState(extension: WebExtension) {
-                        val operation = when {
-                            wantedEnabled && !extension.metaData.enabled ->
-                                controller.enable(extension, WebExtensionController.EnableSource.USER)
-                            !wantedEnabled && extension.metaData.enabled ->
-                                controller.disable(extension, WebExtensionController.EnableSource.USER)
-                            else -> null
-                        }
-                        if (operation == null) {
-                            next(index + 1)
-                        } else {
-                            operation.accept({ next(index + 1) }, { error ->
-                                Log.w(TAG, "Could not restore add-on state for $id", error)
+                        fun applyFinalState(current: WebExtension) {
+                            val operation = when {
+                                wantedEnabled && !current.metaData.enabled ->
+                                    controller.enable(current, WebExtensionController.EnableSource.USER)
+                                !wantedEnabled && current.metaData.enabled ->
+                                    controller.disable(current, WebExtensionController.EnableSource.USER)
+                                else -> null
+                            }
+                            if (operation == null) {
                                 next(index + 1)
+                            } else {
+                                operation.accept({ updated ->
+                                    byId[id] = updated
+                                    next(index + 1)
+                                }, { error ->
+                                    Log.w(TAG, "Could not restore add-on state for $id", error)
+                                    next(index + 1)
+                                })
+                            }
+                        }
+                        if (extension.metaData.allowedInPrivateBrowsing == wantedPrivateAccess) {
+                            applyFinalState(extension)
+                        } else {
+                            controller.setAllowedInPrivateBrowsing(extension, wantedPrivateAccess).accept({ updated ->
+                                byId[id] = updated
+                                applyFinalState(updated)
+                            }, { error ->
+                                Log.w(TAG, "Could not restore private-session access for $id", error)
+                                applyFinalState(extension)
                             })
                         }
                     }
@@ -3119,6 +3137,296 @@ class MainActivity : Activity() {
         return if (item.id == EXTENSION_ID) extensionHomeUrl else null
     }
 
+    private fun createExtensionDetailBlock(title: String, value: String): LinearLayout =
+        LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(10), dp(9), dp(10), dp(9))
+            background = roundedBackground(surface, border, 10)
+            addView(TextView(this@MainActivity).apply {
+                text = title
+                textSize = 9f
+                typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+                setTextColor(textPrimary)
+            })
+            addView(TextView(this@MainActivity).apply {
+                text = value
+                textSize = 8f
+                setTextColor(textMuted)
+                setTextIsSelectable(true)
+                setPadding(0, dp(4), 0, 0)
+            })
+        }
+
+    private fun extensionPermissionLabel(permission: String): String = when (permission) {
+        "activeTab" -> "Zugriff auf den aktuell aktiven Tab"
+        "alarms" -> "Zeitgesteuerte Aufgaben ausführen"
+        "bookmarks" -> "Lesezeichen lesen und ändern"
+        "cookies" -> "Cookies lesen und ändern"
+        "downloads" -> "Downloads verwalten"
+        "history" -> "Browser-Verlauf lesen und ändern"
+        "nativeMessaging" -> "Mit einer nativen Begleit-App kommunizieren"
+        "notifications" -> "Benachrichtigungen anzeigen"
+        "proxy" -> "Proxy-Einstellungen steuern (wird auch von VPN-/Proxy-Erweiterungen verwendet)"
+        "scripting" -> "Skripte in Webseiten ausführen"
+        "storage" -> "Eigene Erweiterungsdaten speichern"
+        "tabs" -> "Browser-Tabs lesen und verwalten"
+        "webNavigation" -> "Webseiten-Navigation beobachten"
+        "webRequest" -> "Netzwerkanfragen beobachten"
+        "webRequestBlocking" -> "Netzwerkanfragen blockieren oder verändern"
+        "unlimitedStorage" -> "Erweiterten lokalen Speicher verwenden"
+        else -> permission
+    }
+
+    private fun extensionOptionsUrl(item: WebExtension): String? {
+        if (!item.metaData.enabled && !item.isBuiltIn) return null
+        val options = item.metaData.optionsPageUrl?.trim().orEmpty()
+        if (options.isBlank()) return null
+        return if (Uri.parse(options).scheme.isNullOrBlank()) {
+            item.metaData.baseUrl.trimEnd('/') + "/" + options.trimStart('/')
+        } else {
+            options
+        }
+    }
+
+    private fun showExtensionDetails(item: WebExtension) {
+        if (isGuestMode) {
+            showToast("Erweiterungsdetails und -einstellungen sind im Gastmodus nicht verfügbar.")
+            return
+        }
+        val metadata = item.metaData
+        val name = metadata.name?.takeIf { it.isNotBlank() } ?: item.id
+        val parts = createDialogShell("Details: $name", "Angaben und Einstellungen genau dieses Add-ons.")
+        val state = when {
+            item.isBuiltIn -> "Integrierte Browser-Erweiterung"
+            metadata.enabled -> "Aktiviert"
+            else -> "Deaktiviert"
+        }
+        val general = buildList {
+            add("Name: $name")
+            add("Version: " + metadata.version?.takeIf { it.isNotBlank() }.orEmpty().ifBlank { "Nicht angegeben" })
+            add("Status: $state")
+            add("Add-on-ID: " + item.id)
+            if (metadata.temporary) add("Installationsart: Temporär (wird beim Beenden entfernt)")
+            if (metadata.isRecommended) add("Mozilla-Empfehlung: Ja")
+            metadata.updateDate?.takeIf { it.isNotBlank() }?.let { add("Letzte Aktualisierung laut Add-on-Daten: $it") }
+            if (metadata.averageRating > 0.0) {
+                add("Bewertung: " + String.format(Locale.getDefault(), "%.1f / 5", metadata.averageRating) +
+                    if (metadata.reviewCount > 0) " (${metadata.reviewCount} Bewertungen)" else "")
+            }
+        }.joinToString("\n")
+        parts.body.addView(createExtensionDetailBlock("Allgemeine Angaben", general),
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = dp(7)
+            })
+
+        val description = metadata.fullDescription?.takeIf { it.isNotBlank() }
+            ?: metadata.description?.takeIf { it.isNotBlank() }
+        if (description != null) {
+            parts.body.addView(createExtensionDetailBlock("Beschreibung", description), LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { bottomMargin = dp(7) })
+        }
+
+        val developerDetails = buildList {
+            metadata.creatorName?.takeIf { it.isNotBlank() }?.let { add("Entwickler: $it") }
+            metadata.creatorUrl?.takeIf { it.startsWith("https://") || it.startsWith("http://") }?.let { add("Entwicklerseite: $it") }
+            metadata.homepageUrl?.takeIf { it.isNotBlank() }?.let { add("Homepage: $it") }
+            metadata.amoListingUrl?.takeIf { it.isNotBlank() }?.let { add("Mozilla-Add-ons-Seite: $it") }
+        }
+        if (developerDetails.isNotEmpty()) {
+            parts.body.addView(createExtensionDetailBlock("Entwickler und Weblinks", developerDetails.joinToString("\n")),
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = dp(7)
+                })
+        }
+
+        fun addPermissionBlock(title: String, entries: Array<out String>?) {
+            val values = entries?.filter { it.isNotBlank() }.orEmpty()
+            if (values.isEmpty()) return
+            val isWebsites = title.contains("Webseiten")
+            val rendered = values.distinct().joinToString("\n") { value ->
+                if (isWebsites) value else "• " + extensionPermissionLabel(value)
+            }
+            parts.body.addView(createExtensionDetailBlock(title, rendered), LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { bottomMargin = dp(7) })
+        }
+
+        addPermissionBlock("Erforderliche Berechtigungen", metadata.requiredPermissions)
+        addPermissionBlock("Erforderlicher Webseitenzugriff", metadata.requiredOrigins)
+        addPermissionBlock("Erforderliche Datennutzung", metadata.requiredDataCollectionPermissions)
+
+        val optionalPermissions = metadata.optionalPermissions?.filter { it.isNotBlank() }?.distinct().orEmpty()
+        val grantedPermissions = metadata.grantedOptionalPermissions?.toSet().orEmpty()
+        val optionalOrigins = metadata.optionalOrigins?.filter { it.isNotBlank() }?.distinct().orEmpty()
+        val grantedOrigins = metadata.grantedOptionalOrigins?.toSet().orEmpty()
+        val optionalData = metadata.optionalDataCollectionPermissions?.filter { it.isNotBlank() }?.distinct().orEmpty()
+        val grantedData = metadata.grantedOptionalDataCollectionPermissions?.toSet().orEmpty()
+
+        if (optionalPermissions.isNotEmpty() || optionalOrigins.isNotEmpty() || optionalData.isNotEmpty()) {
+            parts.body.addView(dialogMessage("Optionale Berechtigungen können hier einzeln freigegeben oder entzogen werden. Jede Änderung gilt nur für dieses Add-on."))
+            fun addOptionalSwitch(title: String, value: String, checked: Boolean, permission: Boolean, dataCollection: Boolean = false) {
+                val checkbox = CheckBox(this).apply {
+                    text = title
+                    textSize = 8f
+                    setTextColor(textPrimary)
+                    buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+                    isChecked = checked
+                    setPadding(dp(6), dp(3), dp(6), dp(3))
+                }
+                checkbox.setOnCheckedChangeListener { button, enabled ->
+                    button.isEnabled = false
+                    val controller = runtime.getWebExtensionController()
+                    val operation = if (enabled) {
+                        controller.addOptionalPermissions(
+                            item.id,
+                            if (permission) arrayOf(value) else emptyArray(),
+                            if (!permission && !dataCollection) arrayOf(value) else emptyArray(),
+                            if (dataCollection) arrayOf(value) else emptyArray()
+                        )
+                    } else {
+                        controller.removeOptionalPermissions(
+                            item.id,
+                            if (permission) arrayOf(value) else emptyArray(),
+                            if (!permission && !dataCollection) arrayOf(value) else emptyArray(),
+                            if (dataCollection) arrayOf(value) else emptyArray()
+                        )
+                    }
+                    operation.accept({ updated ->
+                        runOnUiThread {
+                            scheduleAutomaticBackup()
+                            parts.dialog.dismiss()
+                            showExtensionDetails(updated)
+                        }
+                    }, { error ->
+                        runOnUiThread {
+                            parts.dialog.dismiss()
+                            showToast("Berechtigung konnte nicht geändert werden: ${error?.message ?: "Fehler"}")
+                            showExtensionDetails(item)
+                        }
+                    })
+                }
+                parts.body.addView(checkbox, LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply { bottomMargin = dp(3) })
+            }
+            optionalPermissions.forEach { permission ->
+                addOptionalSwitch(
+                    extensionPermissionLabel(permission),
+                    permission,
+                    permission in grantedPermissions,
+                    permission = true
+                )
+            }
+            optionalOrigins.forEach { origin ->
+                addOptionalSwitch(
+                    "Webseitenzugriff: $origin",
+                    origin,
+                    origin in grantedOrigins,
+                    permission = false
+                )
+            }
+            optionalData.forEach { value ->
+                addOptionalSwitch(
+                    "Datennutzung: $value",
+                    value,
+                    value in grantedData,
+                    permission = false,
+                    dataCollection = true
+                )
+            }
+            parts.body.addView(View(this).apply { setBackgroundColor(border) }, LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(1)
+            ).apply { topMargin = dp(6); bottomMargin = dp(8) })
+        }
+
+        val incognito = metadata.incognito?.lowercase(Locale.ROOT)
+        val privateModeDescription = when (incognito) {
+            "spanning" -> "Manifest-Modus: Spanning. Das Add-on verwendet grundsätzlich denselben Erweiterungskontext."
+            "split" -> "Manifest-Modus: Split. Das Add-on kann getrennte Kontexte für normale und private Sitzungen verwenden."
+            "not_allowed" -> "Das Manifest dieses Add-ons schließt die Verwendung in privaten Fenstern ausdrücklich aus."
+            null, "" -> "Das Add-on nennt keinen eigenen privaten Modus im Manifest."
+            else -> "Manifest-Angabe für private Fenster: " + metadata.incognito
+        }
+        parts.body.addView(createExtensionDetailBlock("Private Fenster", privateModeDescription),
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                bottomMargin = dp(5)
+            })
+
+        if (!item.isBuiltIn && incognito != "not_allowed") {
+            val privateAccess = CheckBox(this).apply {
+                text = "In privaten Fenstern ausführen"
+                textSize = 9f
+                setTextColor(textPrimary)
+                buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+                isChecked = metadata.allowedInPrivateBrowsing
+                setPadding(dp(6), dp(4), dp(6), dp(4))
+            }
+            privateAccess.setOnCheckedChangeListener { button, allowed ->
+                button.isEnabled = false
+                runtime.getWebExtensionController().setAllowedInPrivateBrowsing(item, allowed).accept({ updated ->
+                    runOnUiThread {
+                        scheduleAutomaticBackup()
+                        parts.dialog.dismiss()
+                        showExtensionDetails(updated)
+                    }
+                }, { error ->
+                    runOnUiThread {
+                        parts.dialog.dismiss()
+                        showToast("Private Freigabe konnte nicht geändert werden: ${error?.message ?: "Fehler"}")
+                        showExtensionDetails(item)
+                    }
+                })
+            }
+            parts.body.addView(privateAccess, LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            ))
+            parts.body.addView(dialogMessage(
+                "Diese Freigabe erlaubt dem Add-on, auch in privaten Browser-Sitzungen zu laufen. Sie startet oder ersetzt keinen systemweiten VPN-Tunnel. Ob ein VPN-Add-on dort tatsächlich Datenverkehr schützt, hängt zusätzlich von seiner eigenen Unterstützung und Konfiguration ab."
+            ))
+        } else if (incognito == "not_allowed") {
+            parts.body.addView(dialogMessage("Die private Ausführung kann hier nicht aktiviert werden, weil das Add-on sie im Manifest ausdrücklich ausschließt."))
+        } else {
+            parts.body.addView(dialogMessage("Die private Ausführung wird für integrierte Browser-Erweiterungen vom Browser verwaltet."))
+        }
+
+        val optionsUrl = extensionOptionsUrl(item)
+        if (optionsUrl != null) {
+            parts.body.addView(makeWideActionButton("⚙  Einstellungen dieser Erweiterung öffnen") {
+                parts.dialog.dismiss()
+                createTab(optionsUrl)
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40)).apply {
+                topMargin = dp(7)
+            })
+        } else {
+            parts.body.addView(dialogMessage(
+                if (item.metaData.enabled || item.isBuiltIn) "GeckoView meldet für dieses Add-on keine eigene Optionsseite."
+                else "Aktiviere dieses Add-on, bevor seine Optionsseite geöffnet werden kann."
+            ))
+        }
+
+        val homepage = metadata.homepageUrl?.trim().orEmpty()
+        if (homepage.startsWith("https://") || homepage.startsWith("http://")) {
+            parts.body.addView(makeTextButton("Website des Entwicklers öffnen") {
+                parts.dialog.dismiss()
+                createTab(homepage)
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(36)).apply { topMargin = dp(5) })
+        }
+        val amo = metadata.amoListingUrl?.trim().orEmpty()
+        if (amo.startsWith("https://")) {
+            parts.body.addView(makeTextButton("Mozilla-Add-ons-Seite öffnen") {
+                parts.dialog.dismiss()
+                createTab(amo)
+            }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(36)).apply { topMargin = dp(5) })
+        }
+
+        parts.body.addView(makeTextButton("Zurück zu Erweiterungen") {
+            parts.dialog.dismiss()
+            showExtensionsDialog()
+        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(36)).apply { topMargin = dp(7) })
+        showDialog(parts.dialog)
+    }
+
     private fun showExtensionsDialog() {
         if (isGuestMode) { showToast("Add-ons können im Gastmodus nicht verwaltet werden."); return }
         val parts = createDialogShell("Erweiterungen", "Installierte GeckoView-Add-ons verwalten und kompatible Erweiterungen hinzufügen.")
@@ -3167,6 +3475,13 @@ class MainActivity : Activity() {
                             setTextColor(textMuted)
                             setPadding(0, dp(3), 0, dp(7))
                         })
+                        row.addView(makeWideActionButton("ⓘ  Details") {
+                            parts.dialog.dismiss()
+                            showExtensionDetails(item)
+                        }, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(34)).apply {
+                            bottomMargin = dp(6)
+                        })
+
                         val openPage = extensionOpenUrl(item)
                         val actions = LinearLayout(this).apply {
                             orientation = LinearLayout.HORIZONTAL
@@ -3211,23 +3526,6 @@ class MainActivity : Activity() {
                             }, LinearLayout.LayoutParams(0, dp(34), 1f))
                         }
                         if (actions.childCount > 0) row.addView(actions)
-                        if (item.isBuiltIn) {
-                            row.addView(TextView(this).apply {
-                                text = if (openPage != null) {
-                                    "Integrierte Erweiterung des Browsers."
-                                } else {
-                                    "Diese integrierte Erweiterung stellt keine eigene Öffnungsseite bereit."
-                                }
-                                textSize = 8f
-                                setTextColor(textMuted)
-                            })
-                        } else if (!item.metaData.enabled) {
-                            row.addView(TextView(this).apply {
-                                text = "Aktiviere die Erweiterung, um ihre Optionsseite zu öffnen."
-                                textSize = 8f
-                                setTextColor(textMuted)
-                            })
-                        }
                         listHost.addView(row, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
                             bottomMargin = dp(7)
                         })
