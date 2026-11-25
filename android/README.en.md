@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha30 · GeckoView · ARM64**
+**Version 0.1.0-alpha31 · GeckoView · ARM64**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -27,6 +27,10 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 - Long-press links, images, videos and audio to open a context menu with open, download and copy actions when a direct HTTP(S) address is available.
 - Send webpages to Android's print dialog from the browser menu or context menu, then print or save as PDF.
 - Open installed extensions through an **Open** action when they provide an options page; the built-in Schleim OS Extension opens its home page.
+- Each installed extension has its own **Details** action. The view reads GeckoView metadata such as description, version, developer, options page, required/optional permissions, host access and data collection.
+- Optional add-on permissions can be changed individually through GeckoView APIs addOptionalPermissions and removeOptionalPermissions.
+- Compatible add-ons can use **Run in private windows**, backed by WebExtensionController.setAllowedInPrivateBrowsing. Manifest declarations that explicitly forbid private use are respected. This permission is stored and restored with the browser profile backup.
+- This permission is not a system-wide VPN feature. VPN/proxy add-ons must implement private-session support themselves; the proxy permission is shown when the add-on declares it.
 - Android file picker and save dialogs.
 - Install, enable, disable and remove Mozilla-signed XPI extensions.
 - Open the official Mozilla Firefox Add-ons catalog directly from the extension manager.
@@ -75,4 +79,4 @@ The Android app is published alongside the Extension in the consolidated release
 
 The guide and generator are kept in the repository under `Android-App/`. Inside the downloaded ZIP, the complete Android Studio project folder is named **Android-App Template**.
 
-[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Android Studio template instructions](../Android-App/README.en.md)
