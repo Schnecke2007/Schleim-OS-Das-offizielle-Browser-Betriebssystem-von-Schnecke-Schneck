@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha30 · GeckoView · ARM64**
+**Versie 0.1.0-alpha31 · GeckoView · ARM64**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -27,6 +27,10 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Houd links, afbeeldingen, video's en audio lang ingedrukt om een contextmenu met openen-, downloaden- en kopieeracties te tonen wanneer een direct HTTP(S)-adres beschikbaar is.
 - Stuur webpagina's vanuit het browsermenu of contextmenu naar het Android-afdrukvenster om af te drukken of als PDF op te slaan.
 - Open geïnstalleerde extensies via de knop **Openen** wanneer ze een optiespagina aanbieden; de ingebouwde Schleim OS-Extension opent de startpagina.
+- Elke geïnstalleerde extensie heeft een eigen knop **Details**. De weergave leest GeckoView-metadata zoals beschrijving, versie, ontwikkelaar, optiespagina, vereiste/optionele machtigingen, website-toegang en gegevensverzameling.
+- Optionele add-onmachtigingen kunnen afzonderlijk worden gewijzigd met GeckoView-API's addOptionalPermissions en removeOptionalPermissions.
+- Compatibele add-ons kunnen **Uitvoeren in privévensters** gebruiken via WebExtensionController.setAllowedInPrivateBrowsing. Manifestinstellingen die privégebruik uitdrukkelijk verbieden, blijven gerespecteerd. Deze machtiging wordt opgeslagen en hersteld met de browserprofielback-up.
+- Deze machtiging is geen systeembrede VPN-functie. VPN-/proxy-add-ons moeten zelf privésessies ondersteunen; de proxy-machtiging wordt getoond wanneer de add-on deze aanvraagt.
 - Android-bestandskiezer en opslagvensters.
 - Mozilla-ondertekende XPI-extensies installeren, activeren, uitschakelen en verwijderen.
 - De officiële Mozilla Firefox Add-ons-catalogus rechtstreeks vanuit de extensiebeheerder openen.
@@ -75,4 +79,4 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 
 De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
-[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
+[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
