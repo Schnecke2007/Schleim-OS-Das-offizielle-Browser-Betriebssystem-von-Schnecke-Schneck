@@ -2710,8 +2710,13 @@ class MainActivity : Activity() {
                             applyFinalState(extension)
                         } else {
                             controller.setAllowedInPrivateBrowsing(extension, wantedPrivateAccess).accept({ updated ->
-                                byId[id] = updated
-                                applyFinalState(updated)
+                                if (updated == null) {
+                                    Log.w(TAG, "Private-session restore returned no extension for $id")
+                                    applyFinalState(extension)
+                                } else {
+                                    byId[id] = updated
+                                    applyFinalState(updated)
+                                }
                             }, { error ->
                                 Log.w(TAG, "Could not restore private-session access for $id", error)
                                 applyFinalState(extension)
@@ -3296,7 +3301,12 @@ class MainActivity : Activity() {
                         runOnUiThread {
                             scheduleAutomaticBackup()
                             parts.dialog.dismiss()
-                            showExtensionDetails(updated)
+                            if (updated != null) {
+                                showExtensionDetails(updated)
+                            } else {
+                                showToast("GeckoView hat keine aktualisierten Erweiterungsdaten zurückgegeben.")
+                                showExtensionsDialog()
+                            }
                         }
                     }, { error ->
                         runOnUiThread {
@@ -3366,9 +3376,18 @@ class MainActivity : Activity() {
                 button.isEnabled = false
                 runtime.getWebExtensionController().setAllowedInPrivateBrowsing(item, allowed).accept({ updated ->
                     runOnUiThread {
-                        scheduleAutomaticBackup()
-                        parts.dialog.dismiss()
-                        showExtensionDetails(updated)
+                        if (updated != null) {
+                            scheduleAutomaticBackup()
+                            parts.dialog.dismiss()
+                            showExtensionDetails(updated)
+                        } else {
+                            button.setOnCheckedChangeListener(null)
+                            button.isChecked = !allowed
+                            button.isEnabled = true
+                            parts.dialog.dismiss()
+                            showToast("GeckoView hat keine aktualisierten Erweiterungsdaten zurückgegeben.")
+                            showExtensionDetails(item)
+                        }
                     }
                 }, { error ->
                     runOnUiThread {
