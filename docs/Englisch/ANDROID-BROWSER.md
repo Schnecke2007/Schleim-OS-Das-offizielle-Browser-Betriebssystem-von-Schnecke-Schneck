@@ -9,9 +9,9 @@ The Android app does not replace Android. It is a browser that runs on Android.
 
 ## Download
 
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha30.apk**.
+Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha31.apk**.
 
-Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
+Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk)
 
 ## System requirements
 
@@ -53,6 +53,8 @@ The Android app bundles the Schleim OS Extension inside GeckoView. It includes t
 - **Context menu:** Long-press a link, image, video or audio element. The menu offers relevant actions to open, download or copy its address. Downloads work when a direct HTTP(S) address is available.
 - **Print:** Send the current webpage to Android's print dialog from the browser menu or context menu. Choose a printer or select **Save as PDF**.
 - **Open extensions:** The extension manager shows an **Open** button for add-ons with a declared options page. The built-in Schleim OS Extension opens its home page.
+- **Per-extension details:** Every installed extension has its own **Details** button. The detail view displays only information GeckoView reports for that add-on: description, version, developer, homepage, options page, required and optional permissions, and host access. Optional permissions can be granted or revoked individually. An available options page can be opened directly.
+- **Private windows:** When an extension's manifest does not explicitly forbid private use, its details include **Run in private windows**. This uses GeckoView's setAllowedInPrivateBrowsing API and is included in browser profile backup/restore. It is not a system-wide VPN feature: a VPN/proxy extension must itself support private sessions and be configured correctly. The proxy permission is identified when the add-on requests it.
 - Camera and microphone capture are intentionally disabled in the Android app. The Camera tile explains this limitation. The JavaScript webcam in the original browser Extension remains separate.
 - Some websites block embedding in other pages. Such content may appear blank or need to be opened directly.
 - Not every desktop Chrome extension is compatible with GeckoView.
