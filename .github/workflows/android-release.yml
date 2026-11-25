@@ -143,7 +143,7 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 30" in gradle
+          assert "versionCode = 31" in gradle
           assert 'versionName = "0.1.0-alpha30"' in gradle
           assert '"version": "3.20.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
