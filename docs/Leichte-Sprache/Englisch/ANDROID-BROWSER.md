@@ -6,7 +6,7 @@ It includes the Schleim OS home page.
 
 ## Download
 
-[Download Schleim Browser Alpha 30](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk).
+[Download Schleim Browser Alpha 31](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk).
 
 ## Install the app
 
@@ -39,14 +39,9 @@ It includes the Schleim OS home page.
 - **Schleim account:** The account is in Settings. You must sign in to GitHub before you can use backup.
 - **Sign-in:** First, the GitHub App page opens in a new tab. Install **Schleim OS Account** there. Then return to Settings → Schleim account and tap Continue. The device code is shown and copied. GitHub's approval page opens in another tab.
 - **Cloud backup:** The backup is encrypted and saved in a private GitHub repository. You need your GitHub account and backup password to restore it on another device.
+- **Extension details:** Every extension has a **Details** button. You can see the information the browser has for that extension. For example, its name, version and permissions. You can open its own settings page when it has one.
+- **Private tabs:** For supported extensions, you can turn on **Run in private windows**. The extension must support private tabs. This setting alone does not create a VPN. It is saved in the browser backup.
 
-- **Welcome:** The app shows a short guide when you start it for the first time. You can go forward or back. You can also skip it.
-- **Bookmarks:** You can save websites. You can open them later, edit them or delete them.
-- **Password manager:** A new password is saved only after you agree. Passwords are encrypted. You need your Android device's secure screen lock to open the manager.
-- **Guest Mode:** You can browse privately. Your visited pages, forms, tabs, bookmarks and passwords are not saved in the normal profile. There is no cloud backup. Your normal profile stays separate.
-- **Schleim account:** The account is in Settings. You must sign in to GitHub before you can use backup.
-- **Sign-in:** First, the GitHub App page opens in a new tab. Install **Schleim OS Account** there. Then return to Settings → Schleim account and tap Continue. The device code is shown and copied. GitHub's approval page opens in another tab.
-- **Cloud backup:** The backup is encrypted and saved in a private GitHub repository. You need your GitHub account and backup password to restore it on another device.
 
 ## Updates
 
