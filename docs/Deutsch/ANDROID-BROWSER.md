@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha30.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha31.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk)
 
 ## Systemanforderungen
 
@@ -53,6 +53,8 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - **Kontextmenü:** Halte einen Link, ein Bild, Video oder Audio-Element gedrückt. Das Menü bietet passende Aktionen zum Öffnen, Herunterladen und Kopieren der Adresse. Downloads funktionieren, wenn eine direkte HTTP(S)-Adresse bereitsteht.
 - **Drucken:** Über das Browser-Menü oder Kontextmenü kannst du die aktuelle Webseite an Androids Druckdialog senden. Dort lassen sich ein Drucker oder „Als PDF speichern“ auswählen.
 - **Erweiterungen öffnen:** Für Add-ons mit einer hinterlegten Optionsseite erscheint im Erweiterungsmanager ein Button „Öffnen“. Die integrierte Schleim-OS-Erweiterung öffnet ihre Startseite.
+- **Details je Erweiterung:** Jede installierte Erweiterung hat einen eigenen Button **Details**. Dort zeigt Schleim Browser nur Angaben, die GeckoView für genau dieses Add-on meldet: Beschreibung, Version, Entwickler, Homepage, Optionsseite, erforderliche und optionale Berechtigungen sowie Webseitenzugriffe. Optionale Berechtigungen lassen sich einzeln freigeben oder entziehen. Eine vorhandene Optionsseite kann direkt geöffnet werden.
+- **Private Fenster:** In den Details gibt es – sofern das Manifest private Nutzung nicht ausdrücklich ausschließt – die Option **In privaten Fenstern ausführen**. Diese Einstellung verwendet GeckoViews `setAllowedInPrivateBrowsing`-Funktion und wird mit dem Browserprofil synchronisiert. Das ist keine systemweite VPN-Funktion: Bei VPN-/Proxy-Add-ons muss die Erweiterung selbst private Sitzungen unterstützen und korrekt eingerichtet sein. Die Berechtigung `proxy` wird als solche angezeigt, falls das Add-on sie anfordert.
 - Kamera- und Mikrofonaufnahme sind in der Android-App absichtlich deaktiviert. Die Kamera-Kachel erklärt diese Einschränkung. Die JavaScript-Webkamera der originalen Browser-Extension bleibt davon getrennt.
 - Manche Webseiten blockieren das Einbetten in andere Seiten. Solche Inhalte können leer bleiben oder müssen direkt geöffnet werden.
 - Nicht jede Chrome-Desktop-Erweiterung ist mit GeckoView kompatibel.
