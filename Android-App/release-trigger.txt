@@ -13,3 +13,5 @@ Package the Extension, neutral Extension template, Android APK alpha31, Android 
 Requested release: 2026-11-25 — Schleim Browser alpha31 with per-extension detail screens, optional-permission management, private-window support and profile backup/restore integration.
 
 Final workflow trigger: validate Schleim Browser 3.21.0 / Android alpha31 and publish the complete v3.21.0 release only when the Android APK, generated Android Studio template, all localized release notes, asset checksums and APK signature validations succeed.
+
+Build retry: fix nullable GeckoView WebExtension results from setAllowedInPrivateBrowsing and optional-permission updates. Continue to build alpha31, validate the APK signature and all six localized release-note sections, then publish v3.21.0 only when every validation step succeeds.
