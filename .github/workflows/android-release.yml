@@ -267,7 +267,7 @@ jobs:
           assert '.put("allowedInPrivateBrowsing", item.metaData.allowedInPrivateBrowsing)' in main
           assert 'optBoolean("allowedInPrivateBrowsing", false)' in main
           assert "In privaten Fenstern ausführen" in main
-          assert "Die private Freigabe" in Path("docs/Deutsch/ANDROID-BROWSER.md").read_text()
+          assert "keine systemweite VPN-Funktion" in Path("docs/Deutsch/ANDROID-BROWSER.md").read_text()
           assert "private fun showSettingsDialog()" in main
           assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
           assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
@@ -379,9 +379,9 @@ jobs:
             cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.21.0.md
           } > dist/release-notes.md
           test -s dist/release-notes.md
-          grep -q 'Neue Browser-Funktionen' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.21.0.md
-          grep -q 'New browser features' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.21.0.md
-          grep -q 'Nieuwe browserfuncties' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.21.0.md
+          grep -q 'Neue Erweiterungs-Details' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.21.0.md
+          grep -q 'New extension details' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.21.0.md
+          grep -q 'Nieuwe extensiedetails' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.21.0.md
 
       - name: Prepare Schleim OS 3.21.0 release
         id: target
