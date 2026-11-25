@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha30)
+# Schleim Browser – Android-App (0.1.0-alpha31)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -25,6 +25,10 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - Langes Drücken auf Links, Bilder, Videos und Audio öffnet ein Kontextmenü mit Öffnen-, Download- und Kopieraktionen (sofern eine direkte HTTP(S)-Adresse verfügbar ist).
 - Webseiten über das Browser-Menü oder Kontextmenü an Androids Druckdialog senden und drucken oder als PDF speichern.
 - Erweiterungen über „Öffnen“ starten, wenn sie eine Optionsseite bereitstellen; die integrierte Schleim-OS-Extension öffnet die Schleim-OS-Startseite.
+- Jede installierte Erweiterung erhält einen eigenen **Details**-Button. Die Ansicht liest GeckoView-Metadaten wie Beschreibung, Version, Entwickler, Optionsseite, erforderliche/optionale Berechtigungen, Webseitenzugriffe und Datennutzung aus.
+- Optionale Add-on-Berechtigungen können einzeln über GeckoView-APIs addOptionalPermissions und removeOptionalPermissions geändert werden.
+- Für kompatible Add-ons kann **In privaten Fenstern ausführen** über WebExtensionController.setAllowedInPrivateBrowsing gesetzt werden. Manifest-Angaben, die private Nutzung ausdrücklich verbieten, werden respektiert. Die Freigabe wird im Browser-Profil-Backup gespeichert und wiederhergestellt.
+- Die private Freigabe ist keine systemweite VPN-Funktion. VPN-/Proxy-Erweiterungen müssen private Sitzungen selbst unterstützen; die proxy-Berechtigung wird in den Details angezeigt, wenn das Add-on sie deklariert.
 - Android-Dateiauswahl und Speicherdialoge.
 - Mozilla-signierte XPI-Erweiterungen installieren, aktivieren, deaktivieren und entfernen.
 - Den offiziellen Mozilla Firefox Add-ons-Katalog direkt über den Erweiterungsmanager öffnen.
