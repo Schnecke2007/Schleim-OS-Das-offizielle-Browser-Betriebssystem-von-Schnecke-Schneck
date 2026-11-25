@@ -6,7 +6,7 @@ Sie enthält die Schleim-OS-Startseite.
 
 ## Download
 
-[Lade Schleim Browser Alpha 30 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk).
+[Lade Schleim Browser Alpha 31 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk).
 
 ## App installieren
 
@@ -39,14 +39,9 @@ Sie enthält die Schleim-OS-Startseite.
 - **Schleim-Konto:** Das Konto steht in den Einstellungen. Für eine Sicherung musst du dich zuerst bei GitHub anmelden.
 - **Anmeldung:** Zuerst öffnet sich die GitHub-App-Seite in einem neuen Tab. Installiere dort „Schleim OS Account“. Gehe danach zurück zu Einstellungen → Schleim-Konto und tippe auf Weiter. Der Gerätecode wird angezeigt und kopiert. Die GitHub-Bestätigung öffnet sich in einem weiteren Tab.
 - **Cloud-Sicherung:** Die Sicherung wird verschlüsselt in einem privaten GitHub-Repository gespeichert. Du brauchst dein GitHub-Konto und dein Backup-Passwort, um sie auf einem anderen Gerät zu öffnen.
+- **Erweiterungs-Details:** Jede Erweiterung hat einen Button **Details**. Dort siehst du die Daten, die der Browser für diese Erweiterung kennt. Zum Beispiel Name, Version und Berechtigungen. Wenn die Erweiterung eine eigene Einstellungsseite hat, kannst du sie öffnen.
+- **Private Tabs:** Bei passenden Erweiterungen kannst du **In privaten Fenstern ausführen** einschalten. Die Erweiterung muss private Tabs unterstützen. Das allein macht noch kein VPN. Die Einstellung wird mit der Browser-Sicherung gespeichert.
 
-- **Willkommen:** Beim ersten Start gibt es eine kurze Erklärung. Du kannst vor und zurück gehen. Du kannst die Erklärung auch überspringen.
-- **Lesezeichen:** Du kannst Webseiten speichern. Du kannst sie später öffnen, ändern oder löschen.
-- **Passwort-Manager:** Ein neues Passwort wird nur gespeichert, wenn du zustimmst. Die Passwörter werden verschlüsselt. Zum Öffnen brauchst du die sichere Bildschirmsperre deines Android-Geräts.
-- **Gastmodus:** Du kannst privat surfen. Deine besuchten Seiten, Formulare, Tabs, Lesezeichen und Passwörter werden nicht im normalen Profil gespeichert. Es gibt keine Cloud-Sicherung. Dein normales Profil bleibt getrennt.
-- **Schleim-Konto:** Das Konto steht in den Einstellungen. Für eine Sicherung musst du dich zuerst bei GitHub anmelden.
-- **Anmeldung:** Zuerst öffnet sich die GitHub-App-Seite in einem neuen Tab. Installiere dort „Schleim OS Account“. Gehe danach zurück zu Einstellungen → Schleim-Konto und tippe auf Weiter. Der Gerätecode wird angezeigt und kopiert. Die GitHub-Bestätigung öffnet sich in einem weiteren Tab.
-- **Cloud-Sicherung:** Die Sicherung wird verschlüsselt in einem privaten GitHub-Repository gespeichert. Du brauchst dein GitHub-Konto und dein Backup-Passwort, um sie auf einem anderen Gerät zu öffnen.
 
 ## Updates
 
