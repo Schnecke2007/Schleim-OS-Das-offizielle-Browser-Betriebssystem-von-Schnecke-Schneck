@@ -9,9 +9,9 @@ De Android-app vervangt Android niet. Het is een browser die op Android draait.
 
 ## Download
 
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha30.apk**.
+Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha31.apk**.
 
-Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha30.apk)
+Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk)
 
 ## Systeemvereisten
 
@@ -53,6 +53,8 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - **Contextmenu:** Houd een link, afbeelding, video of audio-element lang ingedrukt. Het menu biedt passende acties om te openen, te downloaden of het adres te kopiëren. Downloads werken wanneer een direct HTTP(S)-adres beschikbaar is.
 - **Afdrukken:** Stuur de huidige webpagina vanuit het browsermenu of contextmenu naar het Android-afdrukvenster. Kies een printer of selecteer **Opslaan als PDF**.
 - **Extensies openen:** De extensiebeheerder toont een knop **Openen** voor add-ons met een ingestelde optiespagina. De ingebouwde Schleim OS-Extension opent de startpagina.
+- **Details per extensie:** Elke geïnstalleerde extensie heeft een eigen knop **Details**. De detailweergave toont alleen gegevens die GeckoView voor die add-on doorgeeft: beschrijving, versie, ontwikkelaar, homepage, optiespagina, vereiste en optionele machtigingen en website-toegang. Optionele machtigingen kunnen afzonderlijk worden gegeven of ingetrokken. Een beschikbare optiespagina kan direct worden geopend.
+- **Privévensters:** Als het manifest privégebruik niet uitdrukkelijk verbiedt, bevat de detailweergave de optie **Uitvoeren in privévensters**. Dit gebruikt GeckoView's setAllowedInPrivateBrowsing-API en wordt meegenomen in de back-up en het herstel van het browserprofiel. Dit is geen systeembrede VPN-functie: een VPN-/proxy-extensie moet zelf privésessies ondersteunen en juist zijn ingesteld. De machtiging proxy wordt weergegeven wanneer de add-on deze aanvraagt.
 - Camera- en microfoonopnamen zijn in de Android-app bewust uitgeschakeld. De Camera-tegel legt deze beperking uit. De JavaScript-webcam van de oorspronkelijke browser-Extension blijft hiervan gescheiden.
 - Sommige websites blokkeren insluiting in andere pagina's. De inhoud kan leeg blijven of moet rechtstreeks worden geopend.
 - Niet elke Chrome-desktopextensie is compatibel met GeckoView.
