@@ -11,3 +11,5 @@ Update German, English and Dutch Android documentation and Easy Language guides.
 Package the Extension, neutral Extension template, Android APK alpha31, Android Studio template, update JSON and SHA-256 sums. Publish the complete release v3.21.0 only after the APK and templates pass build validation, then verify the published assets, metadata, checksums and APK signature.
 
 Requested release: 2026-11-25 — Schleim Browser alpha31 with per-extension detail screens, optional-permission management, private-window support and profile backup/restore integration.
+
+Final workflow trigger: validate Schleim Browser 3.21.0 / Android alpha31 and publish the complete v3.21.0 release only when the Android APK, generated Android Studio template, all localized release notes, asset checksums and APK signature validations succeed.
