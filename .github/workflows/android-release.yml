@@ -406,7 +406,7 @@ jobs:
       - name: Prepare Schleim OS 3.22.0 release
         id: target
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           TAG="v3.22.0"
@@ -505,15 +505,20 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          # The v3.22.0 release already exists. Update it in place because
-          # this repository's Actions integration cannot create a new release.
-          # Move the tag to the exact commit whose APK and templates were validated.
-          git tag -f "$TAG" "$GITHUB_SHA"
-          git push origin "$TAG" --force
-          gh release edit "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "Schleim OS 3.22.0" \
-            --notes-file dist/release-notes.md
+          # Reuse the existing release when present; otherwise create it on the
+          # existing v3.22.0 tag. Never delete or force-move the release tag.
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Schleim OS 3.22.0" \
+              --notes-file dist/release-notes.md
+          else
+            gh release create "$TAG" \
+              --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" \
+              --title "Schleim OS 3.22.0" \
+              --notes-file dist/release-notes.md
+          fi
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
