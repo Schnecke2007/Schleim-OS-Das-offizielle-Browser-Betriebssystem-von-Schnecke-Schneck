@@ -1,0 +1,33 @@
+name: Remove superseded Android alpha31 APK
+
+on:
+  workflow_run:
+    workflows: ["Build Schleim Browser Android APK"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  remove-old-apk:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove alpha31 APK after a successful newer Android release build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -eu
+          ASSET="Schleim-Browser-Android-0.1.0-alpha31.apk"
+          if ! gh release view v3.21.0 --json assets --jq '.assets[].name' > /tmp/release-assets.txt; then
+            echo "Release v3.21.0 is unavailable; nothing to remove."
+            exit 0
+          fi
+          if grep -Fxq "$ASSET" /tmp/release-assets.txt; then
+            gh release delete-asset v3.21.0 "$ASSET" --yes
+            echo "Removed superseded alpha31 APK. Other release assets were preserved."
+          else
+            echo "The old alpha31 APK is already absent."
+          fi
