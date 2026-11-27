@@ -28,7 +28,7 @@ Mogelijk moet je de oude app verwijderen voordat je een nieuwe installeert. Maak
 
 ## Android – Alpha 32
 
-- De nieuwe APK werkt met vier processortypen: ARMv7, ARM64, x86 en x86_64.
+- De nieuwe APK werkt met drie processortypen: ARMv7, ARM64 en x86_64.
 - Android 8.0 of nieuwer blijft nodig.
 - Schleim Browser heeft nu een VPN-menu.
 - De Extension heeft een VPN-tegel.
