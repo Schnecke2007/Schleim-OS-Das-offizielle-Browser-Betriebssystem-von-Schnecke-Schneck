@@ -45,3 +45,14 @@ The ZIP includes the Gradle 8.13 wrapper, so no system-wide Gradle installation 
 The template is based on a GeckoView browser with a bundled WebExtension. Customize the example Extension before first use. Android camera and microphone capture are not enabled by default in the included Android browser logic.
 
 [Deutsche Anleitung](README.md) · [Nederlandse handleiding](README.nl.md) · [Android browser documentation](../docs/Englisch/ANDROID-BROWSER.md)
+
+
+## VPN integration and universal APK
+
+Schleim Browser integrates WireGuard directly into the Android browser menu. No separate VPN app is created. The original extension has a VPN entry that opens the native VPN panel through GeckoView native messaging.
+
+Import your current personal WireGuard configuration (.conf) from your Proton account. Profiles are encrypted with Android Keystore (AES-GCM). The tunnel is restricted to Schleim Browser. The location list is fetched from the public repository catalog when the panel opens; Proton no longer reliably exposes its former public server-list endpoint. The catalog is therefore maintained in the repository, not live-discovered from Proton.
+
+Public server files contain no private keys. Previously exposed keys should be regenerated with Proton. Old OpenVPN files have been removed.
+
+The APK bundles the ABI variants supplied by GeckoView and WireGuard. Minimum Android version remains Android 8.0 / API 26.
