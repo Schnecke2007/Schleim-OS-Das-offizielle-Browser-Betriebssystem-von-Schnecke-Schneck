@@ -28,7 +28,7 @@ Vor einer Neuinstallation kann es nötig sein, die alte App zu löschen. Sichere
 
 ## Android – Alpha 32
 
-- Die neue APK passt zu vier Prozessoren: ARMv7, ARM64, x86 und x86_64.
+- Die neue APK passt zu drei Prozessoren: ARMv7, ARM64 und x86_64. 32-Bit-x86 wird von der aktuellen GeckoView-Version nicht unterstützt.
 - Android 8.0 oder neuer wird weiter gebraucht.
 - Schleim Browser hat jetzt ein VPN-Menü.
 - Die Extension hat eine VPN-Kachel.
