@@ -26,7 +26,7 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 - Gradle 8.13 / Android Gradle Plugin 8.13.2
 - Kotlin Gradle Plugin 2.3.0
 - Internetzugang zum Laden von GeckoView und Android-Abhängigkeiten
-- Eine universelle APK mit ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), x86 und x86_64; Android 8.0/API 26 bleibt Mindestversion
+- Eine universelle APK mit ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), x86_64 (32-Bit-x86 wird von dieser GeckoView-Version nicht unterstützt); Android 8.0/API 26 bleibt Mindestversion
 
 ## VPN-Vorlage
 
