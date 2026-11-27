@@ -15,9 +15,12 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 31
-        versionName = "0.1.0-alpha31"
-        // No ABI filter: produce one universal APK containing every ABI supplied by GeckoView.
+        versionCode = 32
+        versionName = "0.1.0-alpha32"
+        // One universal APK: bundle all four supported Android CPU ABIs.
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
     }
 
     compileOptions {
