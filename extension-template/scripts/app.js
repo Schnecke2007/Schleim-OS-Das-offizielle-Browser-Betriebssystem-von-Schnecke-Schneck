@@ -54,11 +54,12 @@
     {id:'images',name:'Fotos',icon:'📸',hint:'Private Foto- und Video-Mediathek',keys:'fotos bilder galerie mediathek videos cloud hochladen suche'},
     {id:'camera',name:'Kamera',icon:'📷',hint:'Fotos und Videos mit Front- und Rückkamera aufnehmen',keys:'kamera camera foto video selfie frontkamera rückkamera aufnehmen'},
     {id:'legal',name:'Rechtliches',icon:'⚖️',hint:'Impressum, Datenschutz und AGBs',keys:'rechtliches impressum datenschutz agb agbs bedingungen'},
-    {id:'settings',name:'Einstellungen',icon:'⚙️',hint:'Darstellung und Kontrollzentrum',keys:'einstellungen wallpaper design helligkeit'}
+    {id:'settings',name:'Einstellungen',icon:'⚙️',hint:'Darstellung und Kontrollzentrum',keys:'einstellungen wallpaper design helligkeit'},
+    {id:'vpn',name:'VPN-Bridge',icon:'🛡️',hint:'Beispiel für eine native Android-VPN-Anbindung',keys:'vpn tunnel android native vpnservice'}
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','browserstore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','browserstore','social','projects','studio','website','shop','images','camera','contact','legal','settings','vpn'];
   // The old static your website provider gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const DEMO_WEBSITE_GALLERY_IMAGES = [];
