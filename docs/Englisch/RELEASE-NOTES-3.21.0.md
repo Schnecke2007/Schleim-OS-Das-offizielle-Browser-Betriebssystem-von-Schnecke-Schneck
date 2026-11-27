@@ -33,7 +33,7 @@ The Android APK uses the standard Android debug signing key. Depending on the bu
 
 ## Android – Alpha 32
 
-- Universal APK for ARMv7, ARM64, x86 and x86_64; Android 8.0 (API 26) remains the minimum.
+- Universal APK for ARMv7, ARM64 and x86_64; Android 8.0 (API 26) remains the minimum.
 - Schleim VPN adds a browser-menu control and an Extension tile.
 - Connections are requested through OpenVPN for Android as an external client. Schleim Browser does not bundle an OpenVPN engine.
 - The server list and profiles are loaded from the repository. Repository changes are picked up without an APK update.
