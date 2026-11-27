@@ -26,7 +26,7 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 - Gradle 8.13 / Android Gradle Plugin 8.13.2
 - Kotlin Gradle Plugin 2.3.0
 - Internetzugang zum Laden von GeckoView und Android-Abhängigkeiten
-- ARMv7-, ARM64- oder x86_64-Gerät; 32-Bit-x86 wird nicht unterstützt
+- ARM64-Gerät für die vorkonfigurierte ABI-Ausgabe
 
 ## Projekt bauen
 
@@ -45,14 +45,3 @@ Das ZIP enthält den Gradle-Wrapper 8.13; eine systemweite Gradle-Installation i
 Die Vorlage basiert auf einem GeckoView-Browser mit einer eingebundenen WebExtension. Die Demo-Extension muss vor dem ersten Start angepasst werden. Android-Kamera- und Mikrofonaufnahme sind in der übernommenen Android-Browserlogik standardmäßig nicht freigeschaltet.
 
 [English instructions](README.en.md) · [Nederlandse handleiding](README.nl.md) · [Android-Browser-Dokumentation](../docs/Deutsch/ANDROID-BROWSER.md)
-
-
-## VPN-Integration und universelle APK
-
-Schleim Browser integriert WireGuard direkt in das Android-Browsermenü. Es wird keine separate VPN-App erstellt. Die Original-Extension enthält einen VPN-Eintrag, der in GeckoView über Native Messaging den nativen VPN-Bereich öffnet.
-
-Importiere deine aktuelle persönliche WireGuard-Konfiguration (.conf) aus deinem Proton-Konto. Profile werden mit Android Keystore (AES-GCM) verschlüsselt gespeichert. Der Tunnel wird auf Schleim Browser beschränkt. Die Standortliste wird beim Öffnen aus dem öffentlichen Repository-Katalog geladen; Proton stellt den früher öffentlich verwendeten Serverlisten-Endpunkt nicht mehr zuverlässig bereit. Der Katalog ist daher repository-gepflegt, keine Live-Abfrage von Proton.
-
-Die öffentlichen Serverdateien enthalten keine privaten Schlüssel. Frühere veröffentlichte Schlüssel sollten bei Proton erneuert werden. Alte OpenVPN-Dateien wurden entfernt.
-
-Die APK bündelt ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64. 32-Bit-x86 wird von der gepinnten GeckoView-Version nicht unterstützt. Mindestversion bleibt Android 8.0 / API 26.

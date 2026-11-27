@@ -15,19 +15,17 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 32
-        versionName = "0.1.0-alpha32"
-        // One universal APK bundles the ABIs available in the pinned GeckoView AAR.
-        // GeckoView 153 provides ARMv7, ARM64 and x86_64; 32-bit x86 is absent.
+        versionCode = 31
+        versionName = "0.1.0-alpha31"
+        // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+            abiFilters += listOf("arm64-v8a")
         }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        isCoreLibraryDesugaringEnabled = true
     }
     kotlin {
         compilerOptions {
@@ -86,6 +84,4 @@ tasks.named("preBuild").configure {
 dependencies {
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("org.mozilla.geckoview:geckoview:${providers.gradleProperty("geckoviewVersion").get()}")
-    implementation("com.wireguard.android:tunnel:1.0.20260102")
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }

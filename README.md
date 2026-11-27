@@ -2,7 +2,7 @@
 
 **Das offizielle Browser-Betriebssystem von Schnecke Schneck** – deine persönliche, anpassbare Browser-Startseite mit App-Kacheln, Personalisierung und responsivem Design für Desktop, Tablet und Smartphone. 🌐✨
 
-![Version](https://img.shields.io/badge/version-3.22.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium%20%2B%20Android-green)
+![Version](https://img.shields.io/badge/version-3.21.0-806040) ![Manifest](https://img.shields.io/badge/Manifest-V3-blue) ![Browser](https://img.shields.io/badge/Browser-Chromium%20%2B%20Android-green)
 
 [🌍 Offizielle Webseite](https://schnecke1.wixsite.com/schnecke-schneck) · [📦 Releases & Downloads](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) · [⬇️ Nur Extension herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip)
 
@@ -284,7 +284,3 @@ Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mic
 **Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
 
 © 2026 Schnecke Schneck.
-
-## Schleim VPN für Android
-
-Schleim Browser enthält eine native WireGuard-Integration im Android-Browsermenü. Du importierst deine persönliche aktuelle Proton-WireGuard-Konfiguration; sie wird lokal verschlüsselt gespeichert. Der Tunnel gilt nur für Schleim Browser, nicht für andere Android-Apps. Die Standortliste wird aus dem Repository-Katalog aktualisiert; sie ist keine Live-Abfrage von Proton. Private Schlüssel gehören nicht in öffentliche Dateien.

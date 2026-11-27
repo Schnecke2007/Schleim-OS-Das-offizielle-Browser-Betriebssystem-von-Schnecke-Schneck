@@ -6,7 +6,7 @@ De Schleim OS-startpagina is inbegrepen.
 
 ## Download
 
-[Download Schleim Browser Alpha 32](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk).
+[Download Schleim Browser Alpha 31](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk).
 
 ## De app installeren
 
@@ -69,12 +69,3 @@ De Android-app heeft eigen updates.
 Lees de [uitgebreide Android-browserhandleiding](../../Niederländisch/ANDROID-BROWSER.md).
 
 [Terug naar de Nederlandse handleiding in eenvoudige taal](README.md)
-
-## Schleim VPN en apparaten
-
-- Schleim Browser heeft WireGuard-VPN in de browser.
-- Je hebt je eigen volledige .conf-bestand uit je Proton-account nodig.
-- De serverlijst komt uit de Schleim OS-repository. De lijst toont geen live Proton-gegevens.
-- Alleen Schleim Browser gebruikt de tunnel. De Extension kan het VPN-scherm openen, maar maakt de tunnel niet zelf.
-- De APK ondersteunt ARMv7, ARM64 en x86_64. 32-bit x86 werkt niet.
-- Android 8 of nieuwer is nodig. Android 7 werkt niet.

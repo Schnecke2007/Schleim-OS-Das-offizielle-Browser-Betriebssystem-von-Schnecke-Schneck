@@ -1,6 +1,6 @@
 # Browser OS – Erweiterungs-Vorlage
 
-**Vorlagen-Version: 3.22.0**
+**Vorlagen-Version: 3.14.9**
 
 Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-basierte Browser. Sie enthält Demo-Texte, Beispielgrafiken und Platzhalter statt persönlicher Originaldaten.
 
@@ -41,10 +41,3 @@ Der Update-Center-Platzhalter lädt ausschließlich **Browser-OS-Extension-Templ
 - [Technische Hinweise](docs/Deutsch/TECHNIK.md)
 
 Alle Profile, Bilder, Konten, Repositories und rechtlichen Texte sind Beispiele. Ersetze sie vor einer Veröffentlichung.
-
-
-## Android-VPN-Brücke (optional)
-
-Die Vorlage enthält eine Schleim-VPN-Kachel auf der neuen Tab-Seite. In einer Android-App mit GeckoView und der nativen Nachrichtenbrücke `browser` öffnet die Kachel das VPN-Menü der App. Desktop-Browser zeigen einen Hinweis. Eine Extension kann Android `VpnService` nicht direkt starten.
-
-Die Android-Vorlage enthält WireGuard und verschlüsselte lokale Profil-Speicherung. Importiere in der App deine aktuelle persönliche `.conf`-Datei. Private WireGuard-Schlüssel gehören nicht in die Extension oder das öffentliche Repository. Der Tunnel soll nur Schleim Browser verwenden. Die Alpha-32-APK enthält ARMv7, ARM64 und x86_64. 32-Bit-x86 wird von GeckoView nicht unterstützt. Android 8.0 (API 26) oder neuer ist nötig.
