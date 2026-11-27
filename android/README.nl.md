@@ -80,3 +80,19 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
 [Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
+
+
+## Schleim VPN (WireGuard)
+
+Schleim Browser heeft een geïntegreerd VPN-gedeelte in het browsermenu. Het gebruikt de ingebouwde WireGuard-tunnelbibliotheek; er wordt geen aparte VPN-app gebouwd. De extensie opent het native VPN-scherm via de GeckoView-native-messagingbrug.
+
+- Importeer een actuele persoonlijke WireGuard-configuratie (.conf) uit je Proton VPN-account. De app versleutelt het profiel met Android Keystore (AES-GCM).
+- De tunnel is beperkt tot Schleim Browser. Andere Android-apps gebruiken deze browser-VPN-tunnel niet.
+- De locatielijst wordt bij het openen van het VPN-scherm opgehaald uit servers.json in de repository en toont wijzigingen aan de repositorycatalogus.
+- Proton heeft het eerder openbare serverlijst-eindpunt uitgeschakeld. Betrouwbare live-serverdetectie rechtstreeks bij Proton is daarom niet beschikbaar. Importeer actuele persoonlijke .conf-bestanden uit je eigen Proton-account.
+- Free verwijst naar locaties die Proton in het Free-abonnement aanbiedt. Schleim Browser beheert zelf geen VPN-servers en garandeert de beschikbaarheid niet.
+- De openbare .conf-bestanden in deze repository zijn opgeschoond en bevatten geen privésleutels. Eerder blootgestelde sleutels moeten bij Proton worden vernieuwd.
+
+### Universele APK
+
+Het ABI-filter is verwijderd. Eén APK bundelt de native ABI-varianten die de GeckoView- en WireGuard-bibliotheken leveren (bijvoorbeeld ARMv7, ARM64, x86 en x86_64). De app vereist nog steeds Android 8.0 (API 26) of hoger; een universeel ABI-pakket betekent niet dat elke Android-versie wordt ondersteund.
