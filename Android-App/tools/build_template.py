@@ -129,6 +129,30 @@ def main() -> None:
     manifest.pop("minimum_chrome_version", None)
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    # Replace the branded VPN tile with a provider-neutral native bridge example.
+    app_script_path = extension_target / "scripts/app.js"
+    if app_script_path.is_file():
+        app_script = app_script_path.read_text(encoding="utf-8")
+        app_script = app_script.replace(
+            "name:'Schleim VPN',icon:'🛡️',hint:'VPN-Steuerung in Schleim Browser Android',keys:'vpn schleim vpn proton openvpn standort ip sicherheit'",
+            "name:'VPN-Bridge',icon:'🛡️',hint:'Native Android VPN bridge',keys:'vpn openvpn android tunnel'"
+        )
+        app_script = app_script.replace("vpn:'Schleim VPN'", "vpn:'VPN bridge'")
+        app_script = app_script.replace("vpn:'OpenVPN companion controls on Android'", "vpn:'Native Android VPN bridge example'")
+        app_script = app_script.replace("vpn:'VPN-bediening via OpenVPN op Android'", "vpn:'Native Android VPN-bridge'")
+        start = app_script.index("  function renderVpn(){")
+        end = app_script.index("  function renderSettings(){", start)
+        generic_renderer = """  function renderVpn(){
+    const lang=currentLanguage();
+    const copy=lang==='en'?{eyebrow:'ANDROID VPN BRIDGE',title:'VPN integration.',desc:'A template screen for a native Android VPN service.',note:'The extension cannot create a system VPN tunnel by itself. Configure the native bridge and an external VPN client, add your server manifest and current profiles, and handle consent and connection status in Android.',button:'Open native VPN controls',desktop:'This sample bridge is available only in your Android app.'}:lang==='nl'?{eyebrow:'ANDROID VPN-BRIDGE',title:'VPN-integratie.',desc:'Een voorbeeldscherm voor een native Android-VPN-service.',note:'De Extension kan zelf geen systeembrede VPN-tunnel maken. Configureer de native bridge en een externe VPN-client, voeg je servermanifest en actuele profielen toe en beheer toestemming en verbindingsstatus in Android.',button:'Native VPN-bediening openen',desktop:'Deze voorbeeldbridge is alleen beschikbaar in je Android-app.'}:{eyebrow:'ANDROID-VPN-BRIDGE',title:'VPN-Integration.',desc:'Eine Vorlage für die Anbindung eines nativen Android-VPN-Dienstes.',note:'Die Extension allein kann keinen systemweiten VPN-Tunnel erstellen. Konfiguriere die native Bridge und einen externen VPN-Client, ergänze Servermanifest und aktuelle Profile und verwalte Berechtigungen sowie Verbindungsstatus in Android.',button:'Native VPN-Steuerung öffnen',desktop:'Diese Beispiel-Bridge ist nur in deiner Android-App verfügbar.'};
+    const android=/Android/i.test(navigator.userAgent||'');
+    return appHero(copy.eyebrow,copy.title,copy.desc,'🛡️')+'<div class="notice warning-notice">'+copy.note+'</div><div class="ssos-form-actions"><button class="app-button" type="button" data-vpn-open '+(android?'':'disabled')+'>'+copy.button+' ↗</button></div>'+(android?'':'<p class="body-copy">'+copy.desktop+'</p>');
+  }
+
+  """
+        app_script = app_script[:start] + generic_renderer + app_script[end:]
+        app_script_path.write_text(app_script, encoding="utf-8")
+
     # Generalize Gradle coordinates and pin a usable GeckoView default.
     build_file = project / "app/build.gradle.kts"
     build_text = build_file.read_text(encoding="utf-8")
@@ -202,6 +226,15 @@ def main() -> None:
         "credentials in public repositories. The generic template does not ship provider profiles.\n",
         encoding="utf-8"
     )
+
+    # Generalize provider-specific labels in the native VPN dialog.
+    main_file = new_package / "MainActivity.kt"
+    if main_file.is_file():
+        main_text = main_file.read_text(encoding="utf-8")
+        main_text = main_text.replace("deines Proton-Kontos", "deines VPN-Anbieters")
+        main_text = main_text.replace("Schleim VPN-Profilverwaltung", "VPN-Profilverwaltung")
+        main_text = main_text.replace("Schleim VPN verwendet", "Diese VPN-Integration verwendet")
+        main_file.write_text(main_text, encoding="utf-8")
 
     # Remove the original branded image and use a neutral adaptive placeholder icon.
     for candidate in project.glob("app/src/main/file_*.png"):
