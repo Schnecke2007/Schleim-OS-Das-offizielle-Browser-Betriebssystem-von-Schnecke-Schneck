@@ -122,6 +122,7 @@ class MainActivity : Activity() {
     @Volatile private var vpnManagerInstance: BrowserVpnManager? = null
     private val vpnManagerLock = Any()
     private var pendingVpnProfile: String? = null
+    private var vpnDialog: Dialog? = null
     // Keep file listing, document writes and XPI copying away from Android's UI thread.
     private val ioExecutor = Executors.newFixedThreadPool(2)
 
@@ -1343,6 +1344,7 @@ class MainActivity : Activity() {
             setPadding(dp(4), dp(10), dp(4), 0)
         })
         showDialog(parts.dialog)
+        vpnDialog = parts.dialog
         ioExecutor.execute {
             val manager = runCatching { getBrowserVpnManager() }.getOrNull()
             val profiles = manager?.profileNames().orEmpty()
@@ -1357,7 +1359,8 @@ class MainActivity : Activity() {
                     else -> "Nicht verbunden · ${profiles.size} gespeicherte Standortprofile"
                 }
                 if (connected) {
-                    // Replace the connection tile with a clearly labelled disconnect action.
+                    (connectionTile.getChildAt(1) as? TextView)?.text = "VPN trennen"
+                    (connectionTile.getChildAt(2) as? TextView)?.text = "Aktive WireGuard-Verbindung beenden"
                     connectionTile.setOnClickListener {
                         status.text = "VPN wird getrennt …"
                         ioExecutor.execute {
@@ -1365,6 +1368,11 @@ class MainActivity : Activity() {
                             runOnUiThread {
                                 status.text = if (result.isSuccess) "VPN getrennt" else "Trennen fehlgeschlagen: ${result.exceptionOrNull()?.message}"
                                 showToast(if (result.isSuccess) "Schleim VPN wurde getrennt." else "VPN konnte nicht getrennt werden.")
+                                if (result.isSuccess) {
+                                    vpnDialog?.dismiss()
+                                    vpnDialog = null
+                                    showVpnDialog()
+                                }
                             }
                         }
                     }
@@ -1404,6 +1412,11 @@ class MainActivity : Activity() {
                     "Verbindung fehlgeschlagen: ${result.exceptionOrNull()?.message}"
                 }
                 showToast(if (result.isSuccess) "Schleim VPN ist verbunden." else "VPN-Verbindung fehlgeschlagen.")
+                if (result.isSuccess) {
+                    vpnDialog?.dismiss()
+                    vpnDialog = null
+                    showVpnDialog()
+                }
             }
         }
     }
