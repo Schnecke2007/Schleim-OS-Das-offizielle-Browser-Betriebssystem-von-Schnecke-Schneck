@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.17.0 · Chromium-Erweiterung · Manifest V3**
+**Version 3.22.0 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -21,7 +21,7 @@ Die ZIP-Datei ist das fertige Original-Extension-Paket und wird direkt aus GitHu
 
 Neben der Chromium-Extension gibt es **Schleim Browser** als eigenständige Android-App auf Basis von Mozilla GeckoView. Sie enthält die Schleim-OS-Oberfläche und wird unabhängig von der Extension installiert und aktualisiert. Die Android-App ist nicht Bestandteil dieses Extension-ZIP-Pakets.
 
-- [Android-APK herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk)
+- [Android-APK herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
 - [Android-Anleitung auf Deutsch](../docs/Deutsch/ANDROID-BROWSER.md)
 - [Android guide in English](../docs/Englisch/ANDROID-BROWSER.md)
 - [Android-handleiding in het Nederlands](../docs/Niederländisch/ANDROID-BROWSER.md)
@@ -59,7 +59,7 @@ Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Ka
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.17.0](docs/RELEASE-NOTES-3.17.0.md) – Android-Browser, Verbesserungen der Extension und aktuelle Funktionen
+- [Release Notes 3.17.0](docs/RELEASE-NOTES-3.22.0.md) – Android-Browser, Verbesserungen der Extension und aktuelle Funktionen
 - [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
@@ -124,7 +124,7 @@ Die Erweiterungsoberfläche enthält keine Werbe-IFrames und keine Werbe-Startpr
 
 Das Projekt veröffentlicht zusätzlich die eigenständige Android-App **Schleim Browser** auf Basis von Mozilla GeckoView. Die Android-App bündelt die Original-Extension, verwendet aber eine eigene native Browseroberfläche und wird als APK separat aktualisiert.
 
-- [Android-APK aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk)
+- [Android-APK aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
 - [Android-Installation, Updates und Fehlerbehebung](../docs/Deutsch/ANDROID-BROWSER.md)
 - [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
