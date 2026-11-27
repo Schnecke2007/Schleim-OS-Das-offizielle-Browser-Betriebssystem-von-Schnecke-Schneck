@@ -17,9 +17,10 @@ android {
         targetSdk = 35
         versionCode = 32
         versionName = "0.1.0-alpha32"
-        // One universal APK: bundle all four supported Android CPU ABIs.
+        // One universal APK bundles the ABIs available in the pinned GeckoView AAR.
+        // GeckoView 153 provides ARMv7, ARM64 and x86_64; 32-bit x86 is absent.
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
         }
     }
 
