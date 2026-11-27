@@ -54,8 +54,7 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - **Drucken:** Über das Browser-Menü oder Kontextmenü kannst du die aktuelle Webseite an Androids Druckdialog senden. Dort lassen sich ein Drucker oder „Als PDF speichern“ auswählen.
 - **Erweiterungen öffnen:** Für Add-ons mit einer hinterlegten Optionsseite erscheint im Erweiterungsmanager ein Button „Öffnen“. Die integrierte Schleim-OS-Erweiterung öffnet ihre Startseite.
 - **Details je Erweiterung:** Jede installierte Erweiterung hat einen eigenen Button **Details**. Dort zeigt Schleim Browser nur Angaben, die GeckoView für genau dieses Add-on meldet: Beschreibung, Version, Entwickler, Homepage, Optionsseite, erforderliche und optionale Berechtigungen sowie Webseitenzugriffe. Optionale Berechtigungen lassen sich einzeln freigeben oder entziehen. Eine vorhandene Optionsseite kann direkt geöffnet werden.
-- **Private Fenster:** In den Details gibt es – sofern das Manifest private Nutzung nicht ausdrücklich ausschließt – die Option **In privaten Fenstern ausführen**. Diese Einstellung verwendet GeckoViews `setAllowedInPrivateBrowsing`-Funktion und wird mit dem Browserprofil synchronisiert. Das ist keine systemweite VPN-Funktion: Bei VPN-/Proxy-Add-ons muss die Erweiterung selbst private Sitzungen unterstützen und korrekt eingerichtet sein. Die Berechtigung `proxy` wird als solche angezeigt, falls das Add-on sie anfordert.
-- **Schleim VPN:** Der native WireGuard-Tunnel ist direkt in Schleim Browser integriert und wird über Androids VPN-Berechtigung gestartet. Er leitet nur den Schleim Browser durch den Tunnel; andere Android-Apps bleiben auf ihrer normalen Verbindung. Importiere eine persönliche WireGuard-`.conf`-Datei, die du in deinem VPN-Konto erzeugt hast. Das Profil wird mit Android-Keystore verschlüsselt gespeichert. Öffentliche Servervorlagen enthalten absichtlich keinen privaten Schlüssel und können allein keine Verbindung herstellen. Die Browser-Extension kann den nativen Android-Tunnel nicht starten oder steuern.
+- **Private Fenster:** In den Details gibt es – sofern das Manifest private Nutzung nicht ausdrücklich ausschließt – die Option **In privaten Fenstern ausführen**. Diese Einstellung verwendet GeckoViews `setAllowedInPrivateBrowsing`-Funktion und wird mit dem Browserprofil synchronisiert. Die Erweiterung muss private Sitzungen selbst unterstützen und korrekt eingerichtet sein. Die Berechtigung `proxy` wird als solche angezeigt, falls das Add-on sie anfordert.
 - Kamera- und Mikrofonaufnahme sind in der Android-App absichtlich deaktiviert. Die Kamera-Kachel erklärt diese Einschränkung. Die JavaScript-Webkamera der originalen Browser-Extension bleibt davon getrennt.
 - Manche Webseiten blockieren das Einbetten in andere Seiten. Solche Inhalte können leer bleiben oder müssen direkt geöffnet werden.
 - Nicht jede Chrome-Desktop-Erweiterung ist mit GeckoView kompatibel.
@@ -122,11 +121,3 @@ Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. 
 
 [Zur Hauptdokumentation](../../README.md) · [Installation der Browser-Extension](INSTALLATION.md) · [Fehlerbehebung](FEHLERBEHEBUNG.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
 
-
-## Schleim VPN (WireGuard)
-
-Öffne im Browser-Menü den Bereich **Schleim VPN**. Die Extension kann auf Android über die native GeckoView-Brücke den VPN-Bereich öffnen; sie führt selbst keinen VPN-Tunnel aus. Das ist keine systemweite VPN-Funktion: Nur Schleim Browser wird durch den Tunnel geleitet.
-
-Importiere eine aktuelle persönliche WireGuard-.conf-Datei aus deinem Proton-Konto. Die App verschlüsselt das Profil lokal mit Android Keystore und AES-GCM. Wähle anschließend das importierte Profil und erteile Android die VPN-Berechtigung.
-
-Die öffentliche Serverliste wird beim Öffnen aus dem Repository-Katalog geladen. Sie ist kein Live-Status von Proton. Proton hat den früher öffentlich verwendeten Serverlisten-Endpunkt abgeschaltet. Für eine Verbindung benötigst du deine eigene vollständige Konfiguration; die öffentlichen Repository-Dateien enthalten keine privaten Schlüssel. Frühere veröffentlichte Schlüssel sollten erneuert werden.

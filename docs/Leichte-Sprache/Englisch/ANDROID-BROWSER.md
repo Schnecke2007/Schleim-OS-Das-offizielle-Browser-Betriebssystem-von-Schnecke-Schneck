@@ -40,7 +40,7 @@ It includes the Schleim OS home page.
 - **Sign-in:** First, the GitHub App page opens in a new tab. Install **Schleim OS Account** there. Then return to Settings → Schleim account and tap Continue. The device code is shown and copied. GitHub's approval page opens in another tab.
 - **Cloud backup:** The backup is encrypted and saved in a private GitHub repository. You need your GitHub account and backup password to restore it on another device.
 - **Extension details:** Every extension has a **Details** button. You can see the information the browser has for that extension. For example, its name, version and permissions. You can open its own settings page when it has one.
-- **Private tabs:** For supported extensions, you can turn on **Run in private windows**. The extension must support private tabs. This setting alone does not create a VPN. It is saved in the browser backup.
+- **Private tabs:** For supported extensions, you can turn on **Run in private windows**. The extension must support private tabs. The extension must support private tabs itself. It is saved in the browser backup.
 
 
 ## Updates
@@ -69,12 +69,3 @@ The Android app has its own updates.
 Read the [full Android browser guide](../../Englisch/ANDROID-BROWSER.md).
 
 [Back to the plain-language English guide](README.md)
-
-## Schleim VPN and devices
-
-- Schleim Browser has WireGuard VPN inside the browser.
-- You need your own complete .conf file from your Proton account.
-- The server list is loaded from the Schleim OS repository. It does not show live Proton data.
-- Only Schleim Browser uses the tunnel. The Extension can open the VPN panel, but it does not create the tunnel.
-- The APK supports ARMv7, ARM64 and x86_64. 32-bit x86 does not work.
-- Android 8 or newer is required. Android 7 does not work.

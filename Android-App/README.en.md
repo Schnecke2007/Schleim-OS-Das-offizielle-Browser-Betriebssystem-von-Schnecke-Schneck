@@ -47,12 +47,6 @@ The template is based on a GeckoView browser with a bundled WebExtension. Custom
 [Deutsche Anleitung](README.md) · [Nederlandse handleiding](README.nl.md) · [Android browser documentation](../docs/Englisch/ANDROID-BROWSER.md)
 
 
-## VPN integration and universal APK
+## Universal Android APK
 
-Schleim Browser integrates WireGuard directly into the Android browser menu. No separate VPN app is created. The original extension has a VPN entry that opens the native VPN panel through GeckoView native messaging.
-
-Import your current personal WireGuard configuration (.conf) from your Proton account. Profiles are encrypted with Android Keystore (AES-GCM). The tunnel is restricted to Schleim Browser. The location list is fetched from the public repository catalog when the panel opens; Proton no longer reliably exposes its former public server-list endpoint. The catalog is therefore maintained in the repository, not live-discovered from Proton.
-
-Public server files contain no private keys. Previously exposed keys should be regenerated with Proton. Old OpenVPN files have been removed.
-
-The APK bundles ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView version. Minimum Android version remains Android 8.0 / API 26.
+The Android build bundles the GeckoView native libraries for ARMv7 (`armeabi-v7a`), ARM64 (`arm64-v8a`) and x86_64 (`x86_64`) in one APK. 32-bit x86 is not supported by the pinned GeckoView release. Android 8.0 (API 26) or newer is required.
