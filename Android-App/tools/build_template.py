@@ -18,6 +18,7 @@ TEXT_SUFFIXES = {
 
 REPLACEMENTS = [
     ("Schleim-Browser-Android-Studio-Template.zip", "Android-Studio-Template.zip"),
+    ("schleimbrowser://vpn", "yourbrowser://vpn"),
     ("Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck",
      "YOUR_GITHUB_REPOSITORY"),
     ("schleim-os-android@schneckeschneck.de", "your-browser@example.com"),
@@ -57,6 +58,7 @@ FORBIDDEN_MARKERS = (
     "schnecke1.wixsite.com",
     "0177 3988636",
     "01773988636",
+    "schleimbrowser://vpn",
 )
 
 def png_rgba(width: int, height: int, color=(112, 82, 53, 255)) -> bytes:
@@ -102,7 +104,7 @@ def main() -> None:
     shutil.copytree(
         args.android,
         project,
-        ignore=shutil.ignore_patterns(".gradle", "build", "*.jks", "*.keystore", "local.properties")
+        ignore=shutil.ignore_patterns(".gradle", "build", "*.jks", "*.keystore", "local.properties", "*.ovpn")
     )
 
     # Bundle the actual GeckoView-compatible Extension source.
@@ -149,6 +151,57 @@ def main() -> None:
     if old_package.exists():
         shutil.move(str(old_package), str(new_package))
         shutil.rmtree(project / "app/src/main/java/de", ignore_errors=True)
+
+    # Replace provider-specific VPN profiles with a neutral template example.
+    # Never ship the production Proton .ovpn files in the generic Android template.
+    vpn_file = new_package / "VpnIntegration.kt"
+    if vpn_file.is_file():
+        vpn_text = vpn_file.read_text(encoding="utf-8")
+        vpn_text = vpn_text.replace(
+            "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/",
+            "app/src/main/java/com/example/yourbrowser/VPN/Server/"
+        )
+        start = vpn_text.index("    val fallbackServers = listOf(")
+        end = vpn_text.index("\\n    )", start) + len("\\n    )")
+        generic_fallback = """    val fallbackServers = listOf(
+        Server(
+            "example", "XX", "Example location", "example.ovpn", "example",
+            "app/src/main/java/com/example/yourbrowser/VPN/Server/example.ovpn"
+        )
+    )"""
+        vpn_text = vpn_text[:start] + generic_fallback + vpn_text[end:]
+        vpn_file.write_text(vpn_text, encoding="utf-8")
+
+    # The manifest is a repository-root file for the user's new project.
+    template_vpn = project / "vpn"
+    template_vpn.mkdir(parents=True, exist_ok=True)
+    (template_vpn / "servers.json").write_text(
+        json.dumps({
+            "schemaVersion": 1,
+            "provider": "YOUR_VPN_PROVIDER",
+            "generatedAt": "YYYY-MM-DD",
+            "updatePolicy": "Replace this example with current provider profiles you are authorized to use. Do not commit credentials.",
+            "servers": [{
+                "id": "example",
+                "countryCode": "XX",
+                "country": "Example location",
+                "fileName": "example.ovpn",
+                "profileName": "example",
+                "configPath": "app/src/main/java/com/example/yourbrowser/VPN/Server/example.ovpn",
+                "status": "placeholder"
+            }]
+        }, ensure_ascii=False, indent=2) + "\\n",
+        encoding="utf-8"
+    )
+    server_readme = new_package / "VPN/Server/README.md"
+    server_readme.parent.mkdir(parents=True, exist_ok=True)
+    server_readme.write_text(
+        "# VPN server profiles\\n\\n"
+        "Place your own current OpenVPN profile files in this folder and update the repository-root "
+        "vpn/servers.json manifest. Do not include usernames, passwords, private keys or personal "
+        "credentials in public repositories. The generic template does not ship provider profiles.\\n",
+        encoding="utf-8"
+    )
 
     # Remove the original branded image and use a neutral adaptive placeholder icon.
     for candidate in project.glob("app/src/main/file_*.png"):
