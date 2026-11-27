@@ -19,3 +19,15 @@
 De APK ondersteunt ARMv7, ARM64 en x86_64. 32-bit x86 wordt niet ondersteund. GeckoView levert de benodigde bibliotheek niet.
 
 De browser heeft Android 8 of nieuwer nodig. Android 7 werkt niet. De NextDNS-server en bestaande browserfuncties blijven hetzelfde.
+
+
+## Nieuwe extensiedetails
+- Elke extensie heeft nu een detailpagina.
+- De pagina toont informatie en machtigingen van de extensie.
+- Sommige extra machtigingen kun je afzonderlijk aan- of uitzetten.
+- De VPN-tegel in de extensie opent het VPN-menu in de Android-app.
+- De extensie maakt zelf geen VPN-tunnel.
+- Een extensie mag alleen in privévensters werken als de extensie dit toestaat.
+
+## Belangrijk over VPN-sleutels
+Privé-VPN-sleutels waren eerder openbaar. Ze zijn uit de bestanden verwijderd. Maak bij Proton nieuwe sleutels en nieuwe configuratiebestanden.
