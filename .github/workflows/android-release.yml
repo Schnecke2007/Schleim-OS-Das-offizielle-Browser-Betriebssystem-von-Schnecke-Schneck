@@ -143,7 +143,7 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert 'abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")' in gradle
+          assert 'abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")' in gradle
           vpn_integration = Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnIntegration.kt").read_text()
           assert "VpnIntegration.fetchServerList()" in main
           assert "private fun showVpnDialog()" in main
@@ -357,14 +357,14 @@ jobs:
           echo "$BADGING" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
           APK_FILES="$(unzip -Z1 "$APK")"
-          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+          for abi in armeabi-v7a arm64-v8a x86_64; do
             echo "$APK_FILES" | grep -Fq "lib/$abi/" || { echo "Missing native libraries for $abi" >&2; exit 1; }
           done
           echo "$APK_FILES" | grep -Fq "assets/extension/manifest.json"
           echo "$APK_FILES" | grep -Fq "assets/extension/pages/newtab.html"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha32.apk"
-          echo "Universal APK built and verified for ARMv7, ARM64, x86 and x86_64 with a valid Android debug signature."
+          echo "Universal APK built and verified for ARMv7, ARM64 and x86_64 with a valid Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
