@@ -16,3 +16,11 @@
 Proton VPN Free kann Serverwechsel zufällig zuweisen und mit Wartezeiten begrenzen. Der öffentliche Proton-Serverlisten-Endpunkt ist nicht offiziell unterstützt und wurde abgeschaltet. Die Standortliste kann nur dann automatisch aktuell sein, wenn der Repository-Katalog gepflegt wird.
 
 Der NextDNS-Resolver, das dunkelbraune UI, Tabs, Verlauf, Lesezeichen, Passwort-Manager und Add-on-Funktionen bleiben erhalten.
+
+
+## Erweiterungs-Details
+- Jede Erweiterung hat eine Detailansicht mit den verfügbaren Metadaten und Berechtigungen.
+- Optionale Berechtigungen können einzeln verwaltet werden, sofern GeckoView sie unterstützt.
+- Die private-Fenster-Freigabe wird nur angezeigt, wenn Erweiterung und GeckoView sie erlauben.
+
+**Sicherheit:** Private WireGuard-Schlüssel wurden aus den öffentlichen Serverdateien entfernt. Da sie zuvor veröffentlicht waren, solltest du die betroffenen Schlüssel bei Proton erneuern.
