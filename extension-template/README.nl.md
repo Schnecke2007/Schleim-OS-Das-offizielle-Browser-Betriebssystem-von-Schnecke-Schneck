@@ -1,6 +1,6 @@
 # Browser OS – Extensie-template
 
-**Templateversie: 3.14.9**
+**Templateversie: 3.22.0**
 
 Browser OS is een neutraal, meertalig Manifest V3-template voor Chromium-browsers. Het bevat demoteksten, voorbeeldafbeeldingen en tijdelijke invulvelden in plaats van persoonlijke gegevens uit het oorspronkelijke project.
 
