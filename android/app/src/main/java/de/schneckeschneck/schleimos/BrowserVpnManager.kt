@@ -10,8 +10,6 @@ import com.wireguard.config.Config
 import java.io.BufferedReader
 import java.io.StringReader
 import java.security.KeyStore
-import java.net.HttpURLConnection
-import java.net.URL
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -40,25 +38,6 @@ class BrowserVpnManager(context: Context) {
         .filter { it.startsWith(PROFILE_PREFIX) }
         .map { it.removePrefix(PROFILE_PREFIX) }
         .sortedWith(String.CASE_INSENSITIVE_ORDER)
-
-    /** Fetches the repository-maintained public location catalog (no credentials). */
-    fun fetchServerLocations(): List<String> {
-        val connection = URL(CATALOG_URL).openConnection() as HttpURLConnection
-        connection.connectTimeout = 5000
-        connection.readTimeout = 5000
-        connection.requestMethod = "GET"
-        connection.setRequestProperty("Cache-Control", "no-cache")
-        try {
-            val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-            val servers = org.json.JSONObject(body).getJSONArray("servers")
-            return (0 until servers.length()).map { index ->
-                val item = servers.getJSONObject(index)
-                "${item.getString("country")} · ${item.getString("id")}"
-            }
-        } finally {
-            connection.disconnect()
-        }
-    }
 
     fun saveProfile(displayName: String, configText: String): String {
         val name = displayName.trim().replace(Regex("[\\\\/:*?\"<>|]"), "_")
