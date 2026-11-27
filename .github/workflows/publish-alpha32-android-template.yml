@@ -1,0 +1,59 @@
+name: Publish Schleim Browser alpha32 Android Studio template
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Android-App/publish-android-template.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout VPN integration source branch
+        uses: actions/checkout@v4
+        with:
+          ref: vpn-integration-alpha32
+          path: source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build privacy-scrubbed Android Studio project template
+        run: |
+          set -euo pipefail
+          mkdir -p dist/template
+          python3 source/Android-App/tools/build_template.py \
+            --android source/android \
+            --extension source/extension \
+            --docs source/docs \
+            --output dist/template
+          cd dist/template
+          zip -q -r ../../dist/Schleim-Browser-Android-Studio-Template.zip "Android-App Template"
+
+      - name: Verify template archive
+        run: |
+          set -euo pipefail
+          test -s dist/Schleim-Browser-Android-Studio-Template.zip
+          unzip -t dist/Schleim-Browser-Android-Studio-Template.zip
+          if unzip -p dist/Schleim-Browser-Android-Studio-Template.zip '*.conf' | grep -Eiq '^[[:space:]]*(PrivateKey|PresharedKey)[[:space:]]*=[[:space:]]*[^#[:space:]]'; then
+            echo "Private WireGuard key found in template archive" >&2
+            exit 1
+          fi
+
+      - name: Upload Android Studio template to existing v3.22.0 release
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$TAG" \
+            "dist/Schleim-Browser-Android-Studio-Template.zip" \
+            --repo "$GITHUB_REPOSITORY" --clobber
