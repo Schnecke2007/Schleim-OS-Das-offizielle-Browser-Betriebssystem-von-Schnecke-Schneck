@@ -26,7 +26,13 @@ Pas vóór je eigen build ten minste het volgende aan:
 - Gradle 8.13 / Android Gradle Plugin 8.13.2
 - Kotlin Gradle Plugin 2.3.0
 - Internetverbinding voor GeckoView en Android-afhankelijkheden
-- Een ARM64-apparaat voor de vooraf ingestelde ABI-uitvoer
+- Een universele APK voor ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), x86 en x86_64; Android 8.0/API 26 blijft de minimumversie
+
+## VPN-sjabloon
+
+De Android-sjabloon bevat de native **VPN-bridge** en een voorbeeldmanifest in `vpn/servers.json`. Deze bestuurt OpenVPN for Android als externe client; er is geen OpenVPN-engine ingebouwd. Om veiligheids- en licentieredenen bevat de gegenereerde ZIP geen productie-`.ovpn`-profielen. Stel je repository in `VpnIntegration.kt` in, voeg actuele providerprofielen toe aan de servermap en werk het manifest bij. Zet nooit inloggegevens of privésleutels in een openbare repository.
+
+De universele APK wordt pas gepubliceerd nadat CI alle vier ABI's succesvol heeft gecontroleerd.
 
 ## Het project bouwen
 
