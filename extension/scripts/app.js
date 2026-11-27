@@ -842,16 +842,6 @@
   $('#openProfile').addEventListener('click',()=>openApp('about'));
   $('#showAllApps').addEventListener('click',openSearch);
   $('#openCloud').addEventListener('click',()=>openApp('projects'));
-  $('#openVpn')?.addEventListener('click',async()=>{
-    try{
-      if(!globalThis.browser?.runtime?.sendNativeMessage) throw new Error('native messaging unavailable');
-      const response=await browser.runtime.sendNativeMessage('browser',{action:'vpn.open'});
-      if(!response?.ok) throw new Error(response?.error||'native action failed');
-    }catch(_){
-      alert('Schleim VPN kann direkt in der Android-App im Browser-Menü geöffnet werden. Diese Extension kann den Android-VPN-Dienst nicht selbst starten.');
-    }
-  });
-
   document.addEventListener('keydown',e=>{
     if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch();}
     if(e.key==='Escape'){if(!els.lock.classList.contains('hidden'))els.lock.classList.add('hidden');else if(!els.search.classList.contains('hidden'))els.search.classList.add('hidden');else if(!els.panel.classList.contains('hidden'))els.panel.classList.add('hidden');else if(!els.app.classList.contains('hidden'))goHome();}

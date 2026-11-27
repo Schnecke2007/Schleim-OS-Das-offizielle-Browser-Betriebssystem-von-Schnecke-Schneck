@@ -149,20 +149,11 @@ jobs:
           for abi in ("armeabi-v7a", "arm64-v8a", "x86_64"):
               assert abi in gradle, f"Universal APK ABI missing from Gradle config: {abi}"
           assert "abiFilters" in gradle
-          assert Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").is_file()
-          assert "VpnServerCatalog.load(this)" in main
-          assert "Free-Serverliste aktualisieren" in main
-          assert '"vpn.open" ->' in main
-          assert "GoBackend$VpnService" in android_manifest
-          vpn_manager = Path("android/app/src/main/java/de/schneckeschneck/schleimos/BrowserVpnManager.kt").read_text()
-          assert "IncludedApplications" in vpn_manager
-          assert "AndroidKeyStore" in vpn_manager
-          assert "AES/GCM/NoPadding" in vpn_manager
-          vpn_server_dir = Path("android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server")
-          assert not list(vpn_server_dir.glob("*.ovpn")), "Obsolete OpenVPN profiles must be removed."
-          for profile in vpn_server_dir.glob("*.conf"):
-              profile_text = profile.read_text(encoding="utf-8")
-              assert not re.search(r"(?im)^\s*(?:PrivateKey|PresharedKey)\s*=\s*\S+", profile_text), f"Private WireGuard key found in public file: {profile.name}"
+          assert "com.wireguard.android:tunnel" not in gradle
+          assert "VpnService" not in android_manifest
+          assert "vpn" not in main.lower()
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/BrowserVpnManager.kt").exists()
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").exists()
           assert '"version": "3.22.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -285,7 +276,6 @@ jobs:
           assert '.put("allowedInPrivateBrowsing", item.metaData.allowedInPrivateBrowsing)' in main
           assert 'optBoolean("allowedInPrivateBrowsing", false)' in main
           assert "In privaten Fenstern ausführen" in main
-          assert "keine systemweite VPN-Funktion" in Path("docs/Deutsch/ANDROID-BROWSER.md").read_text()
           assert "private fun showSettingsDialog()" in main
           assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
           assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
