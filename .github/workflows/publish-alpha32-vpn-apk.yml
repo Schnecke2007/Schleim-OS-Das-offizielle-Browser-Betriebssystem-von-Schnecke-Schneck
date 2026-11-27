@@ -47,6 +47,51 @@ jobs:
             "dist/Schleim-Browser-Android-0.1.0-alpha32.apk.sha256" \
             --repo "$GITHUB_REPOSITORY" --clobber
 
+      - name: Refresh Android update JSON and complete checksum manifest
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+          EXPECTED_SHA256: 962d9f9d8e469722f3464cbd56332974ad17f2769a6fc82c415d482ded500ecf
+          APK_NAME: Schleim-Browser-Android-0.1.0-alpha32.apk
+        run: |
+          set -euo pipefail
+          mkdir -p dist/release
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir dist/release
+          cp "dist/$APK_NAME" "dist/release/$APK_NAME"
+          cp "dist/$APK_NAME.sha256" "dist/release/$APK_NAME.sha256"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          repo = os.environ["GITHUB_REPOSITORY"]
+          apk_name = os.environ["APK_NAME"]
+          sha = os.environ["EXPECTED_SHA256"]
+          Path("dist/release/Schleim-Browser-Android-update.json").write_text(
+              json.dumps({
+                  "packageName": "de.schneckeschneck.schleimbrowser",
+                  "versionCode": 32,
+                  "versionName": "0.1.0-alpha32",
+                  "apkUrl": f"https://github.com/{repo}/releases/download/v3.22.0/{apk_name}",
+                  "sha256": sha
+              }, indent=2) + "\n",
+              encoding="utf-8"
+          )
+          PY
+          (
+            cd dist/release
+            sha256sum \
+              Schleim-OS-Extension.zip \
+              Browser-OS-Extension-Template.zip \
+              Schleim-Browser-Android-0.1.0-alpha32.apk \
+              Schleim-Browser-Android-update.json \
+              Schleim-Browser-Android-Studio-Template.zip \
+              > Schleim-OS-SHA256SUMS.txt
+          )
+          gh release upload "$TAG" \
+            "dist/release/Schleim-Browser-Android-update.json" \
+            "dist/release/Schleim-OS-SHA256SUMS.txt" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
       - name: Correct localized native VPN bridge notes
         env:
           GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
