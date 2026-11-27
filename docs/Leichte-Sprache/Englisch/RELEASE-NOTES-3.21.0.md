@@ -28,7 +28,7 @@ You may need to uninstall the old app before installing a new one. Back up impor
 
 ## Android – Alpha 32
 
-- The new APK supports four processor types: ARMv7, ARM64, x86 and x86_64.
+- The new APK supports three processor types: ARMv7, ARM64 and x86_64.
 - Android 8.0 or newer is still required.
 - Schleim Browser now has a VPN menu.
 - The Extension has a VPN tile.
