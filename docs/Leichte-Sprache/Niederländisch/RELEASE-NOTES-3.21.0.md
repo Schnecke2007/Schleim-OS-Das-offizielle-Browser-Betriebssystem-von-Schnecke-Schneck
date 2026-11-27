@@ -24,3 +24,13 @@ Niet elke extensie heeft een eigen instellingenpagina. Niet elke extensie werkt 
 - Schleim Browser: **0.1.0-alpha32**
 
 Mogelijk moet je de oude app verwijderen voordat je een nieuwe installeert. Maak eerst een back-up van belangrijke gegevens.
+
+
+## Android – Alpha 32
+
+- De nieuwe APK werkt met vier processortypen: ARMv7, ARM64, x86 en x86_64.
+- Android 8.0 of nieuwer blijft nodig.
+- Schleim Browser heeft nu een VPN-menu.
+- De Extension heeft een VPN-tegel.
+- OpenVPN for Android is ook nodig voor de VPN-verbinding.
+- De oude Proton-bestanden komen uit 2023. Ze zijn niet gecontroleerd. Gebruik nieuwe VPN-bestanden en je eigen OpenVPN-inloggegevens.
