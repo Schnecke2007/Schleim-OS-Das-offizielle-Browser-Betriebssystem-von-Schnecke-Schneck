@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    name: Build and verify four Android ABIs
+    name: Build and verify three GeckoView-supported ABIs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
