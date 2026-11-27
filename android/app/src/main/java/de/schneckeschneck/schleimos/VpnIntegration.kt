@@ -124,7 +124,7 @@ internal object VpnIntegration {
                 output.toByteArray()
             }
             val text = String(bytes, Charsets.UTF_8)
-            if (!text.contains("\\nclient") && !text.trimStart().startsWith("client") ||
+            if (!Regex("(?m)^client\\\\s*$").containsMatchIn(text) ||
                 !text.contains("<ca>") || !text.contains("auth-user-pass")
             ) throw IllegalStateException("Die heruntergeladene Datei ist kein gültiges OpenVPN-Profil.")
             val directory = File(context.filesDir, "vpn-profiles").apply { mkdirs() }
