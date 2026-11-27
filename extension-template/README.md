@@ -14,6 +14,7 @@ Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-ba
 - Browser Store mit Beispielen, Bewertungen und Vorschlagsfunktion
 - Optionale lokale Bildanalyse über die Prompt API
 - Eigenständige HTML-Demo für Webhosting
+- VPN-Bridge-Beispiel in der Extension-Vorlage; die native Android-Seite steuert OpenVPN for Android. Anbieterprofile und Zugangsdaten müssen selbst konfiguriert werden.
 
 ## Download und Installation
 
@@ -39,5 +40,6 @@ Der Update-Center-Platzhalter lädt ausschließlich **Browser-OS-Extension-Templ
 - [Konfiguration](docs/Deutsch/KONFIGURATION.md)
 - [Konto und private Cloud](docs/Deutsch/KONTO-UND-CLOUD.md)
 - [Technische Hinweise](docs/Deutsch/TECHNIK.md)
+- [Android-VPN-Bridge – Deutsch](docs/Deutsch/ANDROID-VPN-BRIDGE.md) · [English](docs/Englisch/ANDROID-VPN-BRIDGE.md) · [Nederlands](docs/Niederländisch/ANDROID-VPN-BRIDGE.md)
 
 Alle Profile, Bilder, Konten, Repositories und rechtlichen Texte sind Beispiele. Ersetze sie vor einer Veröffentlichung.
