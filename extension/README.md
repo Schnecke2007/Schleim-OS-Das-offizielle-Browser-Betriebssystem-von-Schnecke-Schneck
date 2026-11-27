@@ -131,8 +131,8 @@ Das Projekt veröffentlicht zusätzlich die eigenständige Android-App **Schleim
 Die Browser-Extension bleibt ein eigenständiges ZIP-Paket. Android-Kamera- und Mikrofonaufnahme sind in der App deaktiviert.
 
 
-## Schleim VPN on Android
+## Schleim VPN für Android
 
-The new-tab page includes a Schleim VPN entry. In the Android GeckoView build, it sends a native message to the browser app and opens the built-in WireGuard panel. The extension does not implement a VPN tunnel itself and cannot start Android's VPN service on desktop browsers.
+Die neue Tab-Seite enthält einen Eintrag für Schleim VPN. In der Android-Version mit GeckoView sendet er eine native Nachricht an die Browser-App und öffnet das integrierte WireGuard-Menü. Die Extension selbst baut keinen VPN-Tunnel. Auf Desktop-Browsern wird ein Hinweis angezeigt.
 
-VPN profiles are imported by the user in the Android app and stored encrypted with Android Keystore (AES-GCM). The tunnel is restricted to the Schleim Browser package. Do not place private WireGuard keys in extension files, the public server catalog, or the APK. The public catalog contains location labels only and is fetched from the repository when the VPN panel opens.
+VPN-Profile werden in der Android-App importiert und mit Android Keystore (AES-GCM) verschlüsselt gespeichert. Der Tunnel ist auf das Paket von Schleim Browser beschränkt. Private WireGuard-Schlüssel dürfen nicht in Extension-Dateien, den öffentlichen Serverkatalog oder die APK gelangen. Der öffentliche Katalog enthält nur Standortnamen und wird beim Öffnen des VPN-Menüs aus dem Repository geladen.
