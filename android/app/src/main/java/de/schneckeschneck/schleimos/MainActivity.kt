@@ -1276,7 +1276,7 @@ class MainActivity : Activity() {
         }
         val parts = createDialogShell(
             "Schleim VPN",
-            "WireGuard · Free-Serverstandorte · nur Schleim Browser wird über den Tunnel geleitet"
+            "WireGuard · Free-Serverliste · nur Schleim Browser wird über den Tunnel geleitet"
         )
         val status = TextView(this).apply {
             text = "VPN-Status wird geladen …"
@@ -1311,13 +1311,24 @@ class MainActivity : Activity() {
                 }
             }
         }
-        val importTile = createMenuTile("＋", "WireGuard-Konfiguration importieren", "Eigene .conf-Datei verschlüsselt auf diesem Gerät speichern") {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-                putExtra(Intent.EXTRA_TITLE, "WireGuard-Konfiguration auswählen")
+        val catalogTile = createMenuTile("🌐", "Free-Serverliste aktualisieren", "Aktuelle Standortliste aus dem Schleim-OS-Repository laden") {
+            ioExecutor.execute {
+                val catalog = runCatching { VpnServerCatalog.load(this) }
+                val profiles = runCatching { getBrowserVpnManager().profileNames() }.getOrDefault(emptyList())
+                runOnUiThread {
+                    if (catalog.isFailure) {
+                        showToast("Serverliste konnte nicht geladen werden: ${catalog.exceptionOrNull()?.message}")
+                    } else {
+                        showVpnServerCatalogDialog(catalog.getOrThrow(), profiles) { profile ->
+                            selectedProfile = profile
+                            status.text = "Standort ausgewählt · $profile"
+                        }
+                    }
+                }
             }
-            startActivityForResult(intent, REQUEST_VPN_IMPORT)
+        }
+        val importTile = createMenuTile("＋", "WireGuard-Konfiguration importieren", "Eigene vollständige .conf-Datei verschlüsselt auf diesem Gerät speichern") {
+            launchVpnConfigImport()
         }
         val connectionTile = createMenuTile("⏻", "VPN verbinden", "Verbindung mit dem ausgewählten Standort starten") {
             val profile = selectedProfile
@@ -1340,12 +1351,15 @@ class MainActivity : Activity() {
         parts.body.addView(locationTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             bottomMargin = dp(8)
         })
+        parts.body.addView(catalogTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
         parts.body.addView(importTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             bottomMargin = dp(8)
         })
         parts.body.addView(connectionTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         parts.body.addView(TextView(this).apply {
-            text = "Hinweis: Der VPN-Tunnel ist browserbezogen. Andere Android-Apps verwenden weiterhin ihre normale Verbindung. Für jeden Standort wird eine eigene, gültige WireGuard-Konfiguration benötigt."
+            text = "Hinweis: Die Standortliste wird aus dem Schleim-OS-Repository aktualisiert; sie ist keine Live-Verfügbarkeitsabfrage von Proton. Zum Verbinden brauchst du eine vollständige, persönlich erzeugte WireGuard-.conf mit PrivateKey. Importiere sie über „WireGuard-Konfiguration importieren“. Der Tunnel gilt nur für Schleim Browser."
             textSize = 11f
             setTextColor(textMuted)
             setPadding(dp(4), dp(10), dp(4), 0)
@@ -1392,6 +1406,51 @@ class MainActivity : Activity() {
                 }
             }
         }
+    }
+
+    private fun launchVpnConfigImport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_TITLE, "WireGuard-Konfiguration auswählen")
+        }
+        startActivityForResult(intent, REQUEST_VPN_IMPORT)
+    }
+
+    private fun showVpnServerCatalogDialog(
+        catalog: VpnServerCatalogData,
+        importedProfiles: List<String>,
+        onProfileSelected: (String) -> Unit
+    ) {
+        val labels = catalog.servers.map { "${it.country} · ${it.id}" }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("Proton VPN · Free-Standorte")
+            .setMessage("Katalogstand: ${catalog.updated}\n${if (catalog.fromRemote) "Online aktualisiert" else "Offline-Kopie"}\n\nDie Liste zeigt Referenzstandorte. Die tatsächliche Verfügbarkeit wird nicht live geprüft.")
+            .setItems(labels) { _, which ->
+                val server = catalog.servers[which]
+                val idCompact = server.id.uppercase().filter { it.isLetterOrDigit() }
+                val matching = importedProfiles.firstOrNull { profile ->
+                    profile.uppercase().filter { it.isLetterOrDigit() }.contains(idCompact)
+                }
+                if (matching != null) {
+                    onProfileSelected(matching)
+                    showToast("Standort ausgewählt: ${server.country}")
+                } else {
+                    AlertDialog.Builder(this)
+                        .setTitle("${server.country} · ${server.id}")
+                        .setMessage("Für diesen Standort ist noch kein passendes vollständiges VPN-Profil importiert. Erstelle die WireGuard-Konfiguration in deinem Proton-Konto und importiere die .conf-Datei. Die öffentliche Vorlage enthält keinen privaten Schlüssel.")
+                        .setPositiveButton("Proton-Konfiguration öffnen") { _, _ ->
+                            createTab("https://account.protonvpn.com/downloads")
+                        }
+                        .setNegativeButton("Konfiguration importieren") { _, _ ->
+                            launchVpnConfigImport()
+                        }
+                        .setNeutralButton("Abbrechen", null)
+                        .show()
+                }
+            }
+            .setNegativeButton("Schließen", null)
+            .show()
     }
 
     private fun importBrowserVpnProfile(uri: Uri) {
