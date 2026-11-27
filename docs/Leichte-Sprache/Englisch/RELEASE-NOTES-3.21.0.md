@@ -24,3 +24,13 @@ Not every extension has its own settings page. Not every extension works with Ge
 - Schleim Browser: **0.1.0-alpha32**
 
 You may need to uninstall the old app before installing a new one. Back up important data first.
+
+
+## Android – Alpha 32
+
+- The new APK supports four processor types: ARMv7, ARM64, x86 and x86_64.
+- Android 8.0 or newer is still required.
+- Schleim Browser now has a VPN menu.
+- The Extension has a VPN tile.
+- OpenVPN for Android is also needed for the VPN connection.
+- The old Proton files are from 2023. They are not checked. Use new VPN files and your own OpenVPN login details.
