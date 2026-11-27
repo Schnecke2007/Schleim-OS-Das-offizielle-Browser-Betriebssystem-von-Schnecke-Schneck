@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "provider": "Proton VPN",
+  "plan": "Free",
+  "protocol": "WireGuard",
+  "source": "https://account.protonvpn.com/downloads",
+  "note": "Reference locations only. Server availability is not live. A complete, account-generated .conf with the user's own PrivateKey is required to connect.",
+  "locations": [
+    {
+      "code": "CA",
+      "country": "Canada",
+      "server": "CA-FREE-4"
+    },
+    {
+      "code": "CH",
+      "country": "Switzerland",
+      "server": "CH-FREE-2"
+    },
+    {
+      "code": "JP",
+      "country": "Japan",
+      "server": "JP-FREE-9"
+    },
+    {
+      "code": "MX",
+      "country": "Mexico",
+      "server": "MX-FREE-6"
+    },
+    {
+      "code": "NL",
+      "country": "Netherlands",
+      "server": "NL-FREE-15"
+    },
+    {
+      "code": "NO",
+      "country": "Norway",
+      "server": "NO-FREE-3"
+    },
+    {
+      "code": "PL",
+      "country": "Poland",
+      "server": "PL-FREE-5"
+    },
+    {
+      "code": "RO",
+      "country": "Romania",
+      "server": "RO-FREE-17"
+    },
+    {
+      "code": "SG",
+      "country": "Singapore",
+      "server": "SG-FREE-2"
+    },
+    {
+      "code": "US",
+      "country": "United States",
+      "server": "US-FREE-20"
+    }
+  ]
+}
