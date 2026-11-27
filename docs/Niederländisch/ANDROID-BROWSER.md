@@ -54,8 +54,7 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - **Afdrukken:** Stuur de huidige webpagina vanuit het browsermenu of contextmenu naar het Android-afdrukvenster. Kies een printer of selecteer **Opslaan als PDF**.
 - **Extensies openen:** De extensiebeheerder toont een knop **Openen** voor add-ons met een ingestelde optiespagina. De ingebouwde Schleim OS-Extension opent de startpagina.
 - **Details per extensie:** Elke geïnstalleerde extensie heeft een eigen knop **Details**. De detailweergave toont alleen gegevens die GeckoView voor die add-on doorgeeft: beschrijving, versie, ontwikkelaar, homepage, optiespagina, vereiste en optionele machtigingen en website-toegang. Optionele machtigingen kunnen afzonderlijk worden gegeven of ingetrokken. Een beschikbare optiespagina kan direct worden geopend.
-- **Privévensters:** Als het manifest privégebruik niet uitdrukkelijk verbiedt, bevat de detailweergave de optie **Uitvoeren in privévensters**. Dit gebruikt GeckoView's setAllowedInPrivateBrowsing-API en wordt meegenomen in de back-up en het herstel van het browserprofiel. Dit is geen systeembrede VPN-functie: een VPN-/proxy-extensie moet zelf privésessies ondersteunen en juist zijn ingesteld. De machtiging proxy wordt weergegeven wanneer de add-on deze aanvraagt.
-- **Schleim VPN:** De native WireGuard-tunnel is geïntegreerd in Schleim Browser en start via de VPN-toestemming van Android. Alleen Schleim Browser gaat door de tunnel; andere Android-apps gebruiken hun normale verbinding. Importeer een persoonlijke WireGuard-`.conf` die je in je VPN-account hebt gemaakt. Het profiel wordt versleuteld opgeslagen met Android Keystore. Openbare servervoorbeelden bevatten bewust geen privésleutel en kunnen niet zelfstandig verbinden. De browserextensie kan de native Android-tunnel niet starten of bedienen.
+- **Privévensters:** Als het manifest privégebruik niet uitdrukkelijk verbiedt, bevat de detailweergave de optie **Uitvoeren in privévensters**. Dit gebruikt GeckoView's setAllowedInPrivateBrowsing-API en wordt meegenomen in de back-up en het herstel van het browserprofiel. De instelling wordt per extensie opgeslagen. De machtiging proxy wordt weergegeven wanneer de add-on deze aanvraagt.
 - Camera- en microfoonopnamen zijn in de Android-app bewust uitgeschakeld. De Camera-tegel legt deze beperking uit. De JavaScript-webcam van de oorspronkelijke browser-Extension blijft hiervan gescheiden.
 - Sommige websites blokkeren insluiting in andere pagina's. De inhoud kan leeg blijven of moet rechtstreeks worden geopend.
 - Niet elke Chrome-desktopextensie is compatibel met GeckoView.
@@ -121,12 +120,3 @@ De release bevat ook **Schleim-Browser-Android-Studio-Template.zip**. Het archie
 - Gebundelde ABI's: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) en x86_64; 32-bit x86 wordt niet geleverd door de vastgezette GeckoView-versie
 
 [Hoofddocumentatie](../../README.nl.md) · [Installatie van de browser-Extension](INSTALLATIE.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
-
-
-## Schleim VPN (WireGuard)
-
-Open **Schleim VPN** in het browsermenu. Op Android kan de extensie via de GeckoView-brug het native VPN-scherm openen; de extensie voert zelf geen VPN-tunnel uit. Dit is geen systeembrede VPN-functie: alleen Schleim Browser gaat door de tunnel.
-
-Importeer een actuele persoonlijke WireGuard-.conf uit je Proton-account. De app versleutelt het profiel lokaal met Android Keystore en AES-GCM. Selecteer het geïmporteerde profiel en geef Android toestemming voor VPN.
-
-De openbare locatielijst wordt bij het openen uit de repositorycatalogus geladen. Dit is geen live Proton-status. Proton heeft het vroegere openbare serverlijst-eindpunt uitgeschakeld. Voor een verbinding is je eigen volledige configuratie nodig; openbare repositorybestanden bevatten geen privésleutels. Eerder blootgestelde sleutels moeten worden vernieuwd.

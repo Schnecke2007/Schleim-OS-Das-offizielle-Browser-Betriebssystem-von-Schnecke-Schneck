@@ -69,12 +69,12 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 - [**Download Schleim OS – browserextensie (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-OS-Extension.zip) – alleen de kant-en-klare oorspronkelijke extensie.
 - [**Download Schleim OS – neutrale extensietemplate (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Browser-OS-Extension-Template.zip) – een starttemplate voor je eigen browserbesturingssysteem.
-- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) – de zelfstandige Android-browser.
+- [**Schleim Browser voor Android downloaden (APK)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk) – de zelfstandige Android-browser.
 - [**Android Studio-projecttemplate downloaden (ZIP)**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip) – het ZIP-bestand bevat de projectmap **Android-App Template**.
 
-Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](docs/Niederländisch/RELEASE-NOTES-3.21.0.md) voor de versiegeschiedenis.
+Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](docs/Niederländisch/RELEASE-NOTES-3.22.0.md) voor de versiegeschiedenis.
 
-**Schleim Browser 3.21.0 voor Android:** De extensiebeheerder heeft nu een eigen detailweergave voor elke add-on, gebaseerd op metadata en machtigingen die GeckoView echt doorgeeft. Compatibele extensies kunnen in privévensters worden toegestaan; deze instelling wordt meegenomen in de versleutelde profielback-up en het herstel. Lees de [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) voor details en VPN-beperkingen.
+**Schleim Browser 3.22.0 voor Android:** De extensiebeheerder heeft nu een eigen detailweergave voor elke add-on, gebaseerd op metadata en machtigingen die GeckoView echt doorgeeft. Compatibele extensies kunnen in privévensters worden toegestaan; deze instelling wordt meegenomen in de versleutelde profielback-up en het herstel. Lees de [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) voor details en VPN-beperkingen.
 
 ## 📥 Downloaden en installeren
 
@@ -138,7 +138,7 @@ Blijft het probleem bestaan, meld het dan via [GitHub Issues](https://github.com
 - [Nederlands – hoofddocumentatie](README.nl.md)
 - [Installatiehandleiding](docs/Niederländisch/INSTALLATIE.md)
 - [Schleim Browser voor Android](docs/Niederländisch/ANDROID-BROWSER.md)
-- [Release-opmerkingen 3.21.0](docs/Niederländisch/RELEASE-NOTES-3.21.0.md)
+- [Release-opmerkingen 3.22.0](docs/Niederländisch/RELEASE-NOTES-3.22.0.md)
 - [Problemen oplossen](docs/Niederländisch/PROBLEMEN-OPLOSSEN.md)
 - [Technische opmerkingen](docs/Niederländisch/TECHNISCHE-OPMERKINGEN.md)
 - [Schleim-account en cloudback-up](docs/Niederländisch/SCHLEIM-ACCOUNT.md)
@@ -216,7 +216,7 @@ Wil je korte zinnen en eenvoudige uitleg? Bekijk de [Nederlandse documentatie in
 - **Firefox-add-ons:** De extensiebeheerder linkt ook naar de officiële [Mozilla Firefox Add-ons-catalogus](https://addons.mozilla.org/firefox/). Compatibele, door Mozilla ondertekende XPI-bestanden kunnen worden geïnstalleerd.
 - De Android-app wordt afzonderlijk bijgewerkt van de browser-Extension en is momenteel een alpha-versie.
 
-[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+[**Android-APK downloaden**](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk) · [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [Android Studio-sjabloon](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 ## 🧩 Bouw je eigen Browser OS
 
@@ -280,7 +280,3 @@ Wil je meer zien van mijn projecten en updates? Ik vind het leuk als je mij volg
 **Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
-
-## Schleim VPN voor Android
-
-Schleim Browser bevat native WireGuard-integratie in het Android-browsermenu. Importeer je eigen actuele Proton-WireGuard-profiel; het wordt lokaal versleuteld opgeslagen. De tunnel geldt alleen voor Schleim Browser en niet voor andere Android-apps. De locatielijst wordt vernieuwd vanuit de repositorycatalogus, niet via een live Proton-API. Publiceer nooit privésleutels.

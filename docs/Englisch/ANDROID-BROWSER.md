@@ -54,8 +54,7 @@ The Android app bundles the Schleim OS Extension inside GeckoView. It includes t
 - **Print:** Send the current webpage to Android's print dialog from the browser menu or context menu. Choose a printer or select **Save as PDF**.
 - **Open extensions:** The extension manager shows an **Open** button for add-ons with a declared options page. The built-in Schleim OS Extension opens its home page.
 - **Per-extension details:** Every installed extension has its own **Details** button. The detail view displays only information GeckoView reports for that add-on: description, version, developer, homepage, options page, required and optional permissions, and host access. Optional permissions can be granted or revoked individually. An available options page can be opened directly.
-- **Private windows:** When an extension's manifest does not explicitly forbid private use, its details include **Run in private windows**. This uses GeckoView's setAllowedInPrivateBrowsing API and is included in browser profile backup/restore. It is not a system-wide VPN feature: a VPN/proxy extension must itself support private sessions and be configured correctly. The proxy permission is identified when the add-on requests it.
-- **Schleim VPN:** The native WireGuard tunnel is integrated into Schleim Browser and starts through Android's VPN consent. It routes only Schleim Browser through the tunnel; other Android apps use their normal connection. Import a personal WireGuard `.conf` file generated in your VPN account. The profile is encrypted with Android Keystore. Public server templates intentionally omit private keys and cannot connect on their own. The browser extension cannot start or control the native Android tunnel.
+- **Private windows:** When an extension's manifest does not explicitly forbid private use, its details include **Run in private windows**. This uses GeckoView's setAllowedInPrivateBrowsing API and is included in browser profile backup/restore. The setting is stored per extension. The proxy permission is identified when the add-on requests it.
 - Camera and microphone capture are intentionally disabled in the Android app. The Camera tile explains this limitation. The JavaScript webcam in the original browser Extension remains separate.
 - Some websites block embedding in other pages. Such content may appear blank or need to be opened directly.
 - Not every desktop Chrome extension is compatible with GeckoView.
@@ -121,12 +120,3 @@ The release also provides **Schleim-Browser-Android-Studio-Template.zip**. The a
 - Bundled ABIs: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64; 32-bit x86 is not supplied by the pinned GeckoView version
 
 [Main documentation](../../README.en.md) · [Browser Extension installation](INSTALLATION.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
-
-
-## Schleim VPN (WireGuard)
-
-Open **Schleim VPN** from the browser menu. On Android, the extension can open the native VPN panel through the GeckoView bridge; it does not run a VPN tunnel itself. This is not a system-wide VPN feature: only Schleim Browser is routed through the tunnel.
-
-Import a current personal WireGuard .conf file from your Proton account. The app encrypts the profile locally with Android Keystore and AES-GCM. Select the imported profile and grant Android's VPN permission.
-
-The public location list is fetched from the repository catalog when opened. It is not live Proton status. Proton disabled its former public server-list endpoint. A connection requires your own complete configuration; public repository files contain no private keys. Previously exposed keys should be regenerated.

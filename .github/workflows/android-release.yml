@@ -116,7 +116,6 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import json
-          import re
 
           bundle_manifest = json.loads(Path("android/app/src/main/assets/extension/manifest.json").read_text())
           assert "geckoViewAddons" in bundle_manifest.get("permissions", [])
@@ -149,20 +148,19 @@ jobs:
           for abi in ("armeabi-v7a", "arm64-v8a", "x86_64"):
               assert abi in gradle, f"Universal APK ABI missing from Gradle config: {abi}"
           assert "abiFilters" in gradle
-          assert Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").is_file()
-          assert "VpnServerCatalog.load(this)" in main
-          assert "Free-Serverliste aktualisieren" in main
-          assert '"vpn.open" ->' in main
-          assert "GoBackend$VpnService" in android_manifest
-          vpn_manager = Path("android/app/src/main/java/de/schneckeschneck/schleimos/BrowserVpnManager.kt").read_text()
-          assert "IncludedApplications" in vpn_manager
-          assert "AndroidKeyStore" in vpn_manager
-          assert "AES/GCM/NoPadding" in vpn_manager
-          vpn_server_dir = Path("android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server")
-          assert not list(vpn_server_dir.glob("*.ovpn")), "Obsolete OpenVPN profiles must be removed."
-          for profile in vpn_server_dir.glob("*.conf"):
-              profile_text = profile.read_text(encoding="utf-8")
-              assert not re.search(r"(?im)^\s*(?:PrivateKey|PresharedKey)\s*=\s*\S+", profile_text), f"Private WireGuard key found in public file: {profile.name}"
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").exists()
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/BrowserVpnManager.kt").exists()
+          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/VPN").exists()
+          assert "vpn.open" not in main.lower()
+          assert "wireguard" not in main.lower()
+          assert "com.wireguard" not in gradle.lower()
+          assert "GoBackend" not in android_manifest
+          assert "BIND_VPN_SERVICE" not in android_manifest
+          for extension_root in ("extension", "extension-template"):
+              newtab = Path(extension_root, "pages/newtab.html").read_text(encoding="utf-8").lower()
+              app_script = Path(extension_root, "scripts/app.js").read_text(encoding="utf-8").lower()
+              assert "openvpn" not in newtab and "wireguard" not in newtab
+              assert "openvpn" not in app_script and "wireguard" not in app_script
           assert '"version": "3.22.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -285,7 +283,8 @@ jobs:
           assert '.put("allowedInPrivateBrowsing", item.metaData.allowedInPrivateBrowsing)' in main
           assert 'optBoolean("allowedInPrivateBrowsing", false)' in main
           assert "In privaten Fenstern ausführen" in main
-          assert "keine systemweite VPN-Funktion" in Path("docs/Deutsch/ANDROID-BROWSER.md").read_text()
+          android_guide = Path("docs/Deutsch/ANDROID-BROWSER.md").read_text().lower()
+          assert "schleim vpn" not in android_guide and "wireguard" not in android_guide
           assert "private fun showSettingsDialog()" in main
           assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
           assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
