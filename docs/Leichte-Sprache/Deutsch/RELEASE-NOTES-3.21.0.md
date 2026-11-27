@@ -21,6 +21,6 @@ Nicht jede Erweiterung hat eine eigene Einstellungsseite. Nicht jede Erweiterung
 ## Versionen
 
 - Browser-Extension: **3.21.0**
-- Schleim Browser: **0.1.0-alpha31**
+- Schleim Browser: **0.1.0-alpha32**
 
 Vor einer Neuinstallation kann es nötig sein, die alte App zu löschen. Sichere wichtige Daten vorher.
