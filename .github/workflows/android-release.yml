@@ -515,14 +515,13 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          # The pre-existing v3.22.0 tag may point to an earlier, incomplete build.
-          # Recreate it at the exact commit whose APK and templates were just validated.
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release delete "$TAG" --cleanup-tag --yes --repo "$GITHUB_REPOSITORY"
-          fi
-          gh release create "$TAG" \
+          # The v3.22.0 release already exists. Update it in place because
+          # this repository's Actions integration cannot create a new release.
+          # Move the tag to the exact commit whose APK and templates were validated.
+          git tag -f "$TAG" "$GITHUB_SHA"
+          git push origin "$TAG" --force
+          gh release edit "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
             --title "Schleim OS 3.22.0" \
             --notes-file dist/release-notes.md
           gh release upload "$TAG" \
