@@ -1,4 +1,4 @@
-# Schleim OS – Erweiterungsdokumentation · Version 3.17.0
+# Schleim OS – Erweiterungsdokumentation · Version 3.21.0
 
 Schleim OS ist eine Manifest-V3-Erweiterung für kompatible Chromium-Browser. Sie ersetzt den neuen Tab durch einen personalisierbaren Homescreen.
 
@@ -10,6 +10,7 @@ Das Projekt veröffentlicht zusätzlich **Schleim Browser** als eigenständige A
 - [Android documentation (English)](../../docs/Englisch/ANDROID-BROWSER.md)
 - [Android-documentatie (Nederlands)](../../docs/Niederländisch/ANDROID-BROWSER.md)
 - [Android Studio template guide](../../Android-App/README.md)
+- [Schleim VPN – Deutsch](VPN-ANDROID-DE.md) · [English](VPN-ANDROID-EN.md) · [Nederlands](VPN-ANDROID-NL.md)
 
 
 
@@ -30,6 +31,7 @@ Das Projekt veröffentlicht zusätzlich **Schleim Browser** als eigenständige A
 - Metadatensuche mit Synonymen sowie optionale lokale KI-Bildbeschreibung und semantische Suche (Chrome Prompt API, kein API-Schlüssel)
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich in den Einstellungen
 - Update-Center zum Prüfen der Original-Extension-Version und direkten Herunterladen des Release-ZIP; der anschließende ZIP-Import wird manuell bestätigt
+- Schleim-VPN-Kachel: öffnet in Schleim Browser Android die native VPN-Steuerung; OpenVPN for Android ist als externer Tunnel-Client erforderlich
 - Deutsch, Englisch und Niederländisch
 - Werbefreie Extension-Oberfläche
 
