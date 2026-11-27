@@ -116,7 +116,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import json
-import re
+          import re
 
           bundle_manifest = json.loads(Path("android/app/src/main/assets/extension/manifest.json").read_text())
           assert "geckoViewAddons" in bundle_manifest.get("permissions", [])
