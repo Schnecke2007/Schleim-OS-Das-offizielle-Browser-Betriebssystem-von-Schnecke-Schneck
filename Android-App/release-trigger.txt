@@ -16,3 +16,5 @@ Universal APK:
 - Validate the three supported native ABI folders, APK signature, package ID and bundled extension.
 
 Update German, English and Dutch Android docs, Extension/template docs, all six localized release notes and project README version links. The Android Studio template must build. Update JSON must have versionCode 32 and versionName 0.1.0-alpha32. Package Extension ZIP, Extension template, APK, update JSON, Android Studio template and SHA-256 sums. Publish v3.22.0 only after all checks pass, then download and compare published assets and verify signatures/checksums.
+
+Run one final alpha32 release validation from the complete current main branch; supersede older queued retries.
