@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha32 · GeckoView · ARM64**
+**Version 0.1.0-alpha32 · GeckoView · Universal APK**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -13,7 +13,7 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 - Application ID: `de.schneckeschneck.schleimbrowser`.
 - Minimum version: Android 8.0 / API 26.
 - Target SDK: API 35; build SDK: API 36.
-- Target architecture: `arm64-v8a`.
+- Bundled ABIs: `armeabi-v7a`, `arm64-v8a` and `x86_64`; 32-bit `x86` is not provided by the pinned GeckoView build.
 - JDK 17, Gradle 8.13, Android Gradle Plugin 8.13.2 and Kotlin Gradle Plugin 2.3.0.
 
 ## Browser features
@@ -95,4 +95,4 @@ Schleim Browser includes a native VPN section in the browser menu. It uses the e
 
 ### Universal APK
 
-The ABI filter was removed. One APK bundles the native ABI variants supplied by the GeckoView and WireGuard libraries (for example ARMv7, ARM64, x86 and x86_64). The app still requires Android 8.0 (API 26) or later; a universal ABI package does not mean support for every Android release.
+The ABI filter was removed. One APK bundles the native ABI variants supplied by the GeckoView and WireGuard libraries (ARMv7, ARM64 and x86_64; 32-bit x86 is not supported by the pinned GeckoView AAR). The app still requires Android 8.0 (API 26) or later; a universal ABI package does not mean support for every Android release.
