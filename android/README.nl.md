@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha32 · GeckoView · ARM64**
+**Versie 0.1.0-alpha32 · GeckoView · Universele APK**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -13,7 +13,7 @@ Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. D
 - Application-ID: `de.schneckeschneck.schleimbrowser`.
 - Minimale versie: Android 8.0 / API 26.
 - Target-SDK: API 35; build-SDK: API 36.
-- Doelarchitectuur: `arm64-v8a`.
+- Ingebouwde ABI's: `armeabi-v7a`, `arm64-v8a` en `x86_64`; 32-bit `x86` wordt niet geleverd door de vastgezette GeckoView-build.
 - JDK 17, Gradle 8.13, Android Gradle Plugin 8.13.2 en Kotlin Gradle Plugin 2.3.0.
 
 ## Browserfuncties
