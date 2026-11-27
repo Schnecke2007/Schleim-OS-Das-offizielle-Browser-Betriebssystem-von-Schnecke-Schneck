@@ -1,0 +1,101 @@
+name: Validate Schleim Browser universal APK and VPN integration
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'android/**'
+      - 'vpn/**'
+      - 'extension/**'
+      - 'extension-template/**'
+      - '.github/workflows/android-universal-vpn-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and verify four Android ABIs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+
+      - name: Prepare original extension for GeckoView
+        shell: bash
+        run: |
+          set -euo pipefail
+          ASSET_DIR="android/app/src/main/assets/extension"
+          rm -rf "$ASSET_DIR"
+          mkdir -p "$ASSET_DIR"
+          cp -a extension/. "$ASSET_DIR/"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("android/app/src/main/assets/extension/manifest.json")
+          manifest = json.loads(path.read_text(encoding="utf-8"))
+          manifest["browser_specific_settings"] = {"gecko": {"id": "schleim-os-android@schneckeschneck.de"}}
+          manifest["permissions"] = list(dict.fromkeys(manifest.get("permissions", []) + ["geckoViewAddons", "nativeMessaging"]))
+          background = manifest.get("background") or {}
+          worker = background.pop("service_worker", None)
+          if worker:
+              background["scripts"] = [worker]
+          if background:
+              manifest["background"] = background
+          manifest["permissions"] = [p for p in manifest.get("permissions", []) if p != "offscreen"]
+          manifest.pop("minimum_chrome_version", None)
+          path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + chr(10), encoding="utf-8")
+          assert manifest["manifest_version"] == 3
+          assert "nativeMessaging" in manifest["permissions"]
+          PY
+          node --check "$ASSET_DIR/scripts/app.js"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      - name: Build universal release APK
+        working-directory: android
+        run: |
+          gradle --no-daemon --stacktrace \
+            -PgeckoviewVersion=153.0.20260810162159 \
+            :app:assembleRelease
+
+      - name: Verify package, signature and all ABI libraries
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK="android/app/build/outputs/apk/release/app-release.apk"
+          test -s "$APK"
+          BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
+          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose "$APK"
+          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+            if ! unzip -Z1 "$APK" | grep -q "^lib/$abi/"; then
+              echo "Missing native GeckoView libraries for ABI: $abi" >&2
+              exit 1
+            fi
+          done
+          unzip -Z1 "$APK" | grep -Fq "assets/extension/manifest.json"
+          echo "Universal APK contains ARMv7, ARM64, x86 and x86_64 and has a valid APK signature."
+
+      - name: Upload universal APK test artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Schleim-Browser-Universal-APK-PR
+          path: android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          retention-days: 14
