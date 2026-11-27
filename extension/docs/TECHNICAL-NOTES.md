@@ -77,10 +77,3 @@ Die frühere experimentelle Worker-Bridge ist nicht Bestandteil dieser Version. 
 ## Werbung und externe Verbindungen
 
 Die Erweiterungsoberfläche enthält keine Werbe-IFrames, Werbe-URL-Aufrufe oder werbebedingte Start-Sperre. Externe Apps und Websites können Netzwerkverbindungen herstellen, wenn sie geöffnet werden.
-
-
-## Android VPN bridge
-
-The new-tab VPN tile sends the native message `{ action: "vpn.open" }` to the GeckoView native app ID `browser`. Android's `MainActivity` opens the native WireGuard VPN panel. This is an Android-only bridge; a desktop browser extension cannot invoke Android `VpnService`.
-
-User WireGuard profiles are encrypted locally with Android Keystore AES-GCM. The public `VPN/Server/servers.json` file contains only location metadata. A public Proton server-list endpoint is no longer available for reliable live discovery, so the repository catalog is maintained separately and actual connection profiles must be imported from the user's Proton account.
