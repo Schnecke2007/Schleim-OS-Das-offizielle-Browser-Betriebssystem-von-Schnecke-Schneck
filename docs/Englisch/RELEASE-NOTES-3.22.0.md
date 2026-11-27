@@ -16,3 +16,11 @@
 Proton VPN Free may assign server changes randomly and apply cooldowns. Proton's public server-list endpoint is not officially supported and has been shut down. The location catalog can only stay current when the repository catalog is maintained.
 
 The fixed NextDNS resolver, brown UI, tabs, history, bookmarks, password manager and add-on features remain unchanged.
+
+
+## Extension details
+- Each add-on has a details view with the metadata and permissions GeckoView provides.
+- Optional permissions can be managed individually where GeckoView supports them.
+- The run-in-private-windows control appears only when the add-on and GeckoView allow it.
+
+**Security:** Private WireGuard keys were removed from public server files. Because they were previously published, regenerate the affected keys with Proton.
