@@ -118,6 +118,15 @@ De release bevat ook **Schleim-Browser-Android-Studio-Template.zip**. Het archie
 - Minimale Android-versie: API 26
 - Target SDK: API 35
 - Build SDK: API 36
-- Doelarchitectuur: ARM64
+- Gebundelde ABI's: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) en x86_64; 32-bit x86 wordt niet geleverd door de vastgezette GeckoView-versie
 
 [Hoofddocumentatie](../../README.nl.md) · [Installatie van de browser-Extension](INSTALLATIE.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
+
+
+## Schleim VPN (WireGuard)
+
+Open **Schleim VPN** in het browsermenu. Op Android kan de extensie via de GeckoView-brug het native VPN-scherm openen; de extensie voert zelf geen VPN-tunnel uit. Dit is geen systeembrede VPN-functie: alleen Schleim Browser gaat door de tunnel.
+
+Importeer een actuele persoonlijke WireGuard-.conf uit je Proton-account. De app versleutelt het profiel lokaal met Android Keystore en AES-GCM. Selecteer het geïmporteerde profiel en geef Android toestemming voor VPN.
+
+De openbare locatielijst wordt bij het openen uit de repositorycatalogus geladen. Dit is geen live Proton-status. Proton heeft het vroegere openbare serverlijst-eindpunt uitgeschakeld. Voor een verbinding is je eigen volledige configuratie nodig; openbare repositorybestanden bevatten geen privésleutels. Eerder blootgestelde sleutels moeten worden vernieuwd.
