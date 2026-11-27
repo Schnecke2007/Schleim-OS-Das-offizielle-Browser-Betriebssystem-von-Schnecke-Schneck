@@ -20,7 +20,7 @@ Directe download: [Schleim Browser voor Android – APK](https://github.com/Schn
 - Internetverbinding voor websites, Extension-inhoud en online functies
 - Ongeveer 200 MB vrije opslagruimte voor de APK en aanvullende appgegevens
 
-De app wordt gebouwd met Android SDK 36. De minimale Android-runtimeversie blijft Android 8.0 (API 26). De universele APK bevat GeckoView-native bibliotheken voor alle vier genoemde CPU-architecturen. Android gebruikt bij installatie de passende ABI. ARMv7/ARMv8 zijn CPU-architecturen, geen Android-versies.
+De app wordt gebouwd met Android SDK 36. De minimale Android-runtimeversie blijft Android 8.0 (API 26). De universele APK bevat GeckoView-native bibliotheken voor alle drie genoemde CPU-architecturen. Android gebruikt bij installatie de passende ABI. ARMv7/ARMv8 zijn CPU-architecturen, geen Android-versies.
 
 ## Installatie
 
