@@ -81,15 +81,17 @@ jobs:
           APK="android/app/build/outputs/apk/release/app-release.apk"
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
+          BADGING="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK")"
+          grep -q "package: name='de.schneckeschneck.schleimbrowser'" <<< "$BADGING"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose "$APK"
+          APK_FILES="$(unzip -Z1 "$APK")"
           for abi in armeabi-v7a arm64-v8a x86 x86_64; do
-            if ! unzip -Z1 "$APK" | grep -q "^lib/$abi/"; then
+            if [[ "$APK_FILES" != *"lib/$abi/"* ]]; then
               echo "Missing native GeckoView libraries for ABI: $abi" >&2
               exit 1
             fi
           done
-          unzip -Z1 "$APK" | grep -Fq "assets/extension/manifest.json"
+          [[ "$APK_FILES" == *"assets/extension/manifest.json"* ]]
           echo "Universal APK contains ARMv7, ARM64, x86 and x86_64 and has a valid APK signature."
 
       - name: Upload universal APK test artifact
