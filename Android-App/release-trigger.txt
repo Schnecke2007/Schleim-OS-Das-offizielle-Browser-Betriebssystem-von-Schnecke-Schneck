@@ -1,17 +1,9 @@
 Schleim OS 3.22.0 Android browser release
 
-Build and validate Schleim Browser 0.1.0-alpha32 (versionCode 32). Preserve the existing GeckoView browser features, dark brown UI #251205, tabs, history, bookmarks, encrypted password manager, add-on support and the exact NextDNS DoH resolver.
+Build and validate Schleim Browser 0.1.0-alpha32 (versionCode 32) without any VPN integration. Preserve all unrelated browser features, including GeckoView browsing, tabs, history, bookmarks, encrypted password manager, add-on support, downloads, printing, private browsing and the existing DNS-over-HTTPS configuration.
 
-Integrated WireGuard VPN in the Schleim Browser Android menu; do not create a separate VPN app. Provide status, location selection, import of current personal WireGuard .conf profiles, connect/disconnect and encrypted local storage using Android Keystore AES-GCM. Route the tunnel only through the Schleim Browser package. The Extension VPN tile opens the native Android VPN panel via GeckoView native messaging; desktop browsers show a fallback and the extension itself does not create a tunnel.
+The Android APK must be universal for the ABIs supplied by the pinned GeckoView libraries: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supplied by the pinned GeckoView build. Keep minSdk 26 (Android 8.0+).
 
-The public location catalog refreshes from the repository. It is a repository-maintained list, not live Proton availability. Import personal current configurations from the user's Proton account. Keep private keys out of public files, extension files, templates and APK assets. The previously published WireGuard private keys have been removed from current files; users must regenerate those keys because Git history may still contain earlier versions.
+No VPN menu, VPN tile, WireGuard dependency, VPN service, server catalog, WireGuard profile, VPN native bridge or VPN-related documentation should remain in the application or templates.
 
-Remove obsolete .ovpn files and any separate VPN APK if present. Keep sanitized .conf metadata and servers.json. Build one universal APK for the ABIs supplied by the pinned GeckoView/WireGuard libraries: ARMv7, ARM64 and x86_64. 32-bit x86 is not supplied by the pinned GeckoView build. Keep minSdk 26 (Android 8.0+).
-
-Update the Android Studio template, Extension template, and documentation/release notes in German, English, Dutch and Easy Language. Build and validate the APK, both Extension archives, the Android Studio template, update JSON, SHA-256 sums and APK signature. Update the existing v3.22.0 GitHub Release in place; do not delete/recreate it because the Actions integration cannot create releases. Verify all published assets and checksums.
-
-Retry release publication after fixing tag handling: preserve the existing tag and create v3.22.0 only if the release is absent; use GH_RELEASE_TOKEN when configured, otherwise GITHUB_TOKEN.
-
-Final rerun after restoring the requested native VPN integration to main; use this commit as the source for alpha32 and the complete v3.22.0 release.
-
-Rerun after restoring the VPN-aware validation workflow and preserving the existing v3.22.0 tag.
+Build and validate the APK, both Extension archives, the Android Studio template, update JSON, SHA-256 sums and APK signature. Update the existing v3.22.0 GitHub Release in place; preserve the existing tag and create the release only if it is absent. Verify all published assets and checksums.
