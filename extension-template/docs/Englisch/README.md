@@ -7,6 +7,7 @@ Welcome to the English documentation for the Browser OS template.
 - [Account and private cloud](ACCOUNT-AND-CLOUD.md)
 - [Features and technical notes](TECHNICAL-NOTES.md)
 - [External web apps](EXTERNAL-WEB-APP.md)
+- [Android VPN bridge](ANDROID-VPN-BRIDGE.md)
 - [Release notes](RELEASE-NOTES.md)
 
 The template includes a sample account, photo and video cloud, camera app, Browser Store and standalone demo. Personal details, app credentials and GitHub settings are placeholders.
