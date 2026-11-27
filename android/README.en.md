@@ -80,3 +80,19 @@ The Android app is published alongside the Extension in the consolidated release
 The guide and generator are kept in the repository under `Android-App/`. Inside the downloaded ZIP, the complete Android Studio project folder is named **Android-App Template**.
 
 [Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+
+
+## Schleim VPN (WireGuard)
+
+Schleim Browser includes a native VPN section in the browser menu. It uses the embedded WireGuard tunnel library; no separate VPN app is built. The extension opens the native VPN panel through the GeckoView native-messaging bridge.
+
+- Import a current personal WireGuard .conf file from your Proton VPN account. The app encrypts the profile with Android Keystore (AES-GCM).
+- The tunnel is restricted to Schleim Browser. Other Android apps do not use this browser VPN tunnel.
+- The location list is fetched from the repository's servers.json whenever the VPN panel opens. It reflects catalog changes committed to the repository.
+- Proton has disabled its previously public server-list endpoint, so reliable live discovery directly from Proton is not available. Import current personal .conf files from your own Proton account.
+- Free refers to locations Proton makes available on its Free plan. Schleim Browser does not operate VPN servers and cannot guarantee a location's availability.
+- Public .conf files in this repository are sanitized and contain no private keys. Previously exposed keys should be regenerated with Proton.
+
+### Universal APK
+
+The ABI filter was removed. One APK bundles the native ABI variants supplied by the GeckoView and WireGuard libraries (for example ARMv7, ARM64, x86 and x86_64). The app still requires Android 8.0 (API 26) or later; a universal ABI package does not mean support for every Android release.
