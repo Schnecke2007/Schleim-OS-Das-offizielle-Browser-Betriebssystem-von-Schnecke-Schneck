@@ -20,7 +20,7 @@ Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnec
 - Internetverbindung für Webseiten, Extension-Inhalte und Online-Funktionen
 - Rund 200 MB freier Speicher für die APK und zusätzlichen App-Speicher
 
-Die App wird mit Android SDK 36 gebaut. Der Mindestwert für das Ausführen der App bleibt Android 8.0 (API 26). Die universelle APK enthält die nativen GeckoView-Bibliotheken für alle vier oben genannten Prozessorarchitekturen. Sie ist eine einzelne Datei; Android verwendet beim Installieren die passende Architektur. ARMv7/ARMv8 bezeichnen CPU-Architekturen, nicht Android-Versionen.
+Die App wird mit Android SDK 36 gebaut. Der Mindestwert für das Ausführen der App bleibt Android 8.0 (API 26). Die universelle APK enthält die nativen GeckoView-Bibliotheken für alle drei oben genannten Prozessorarchitekturen. Sie ist eine einzelne Datei; Android verwendet beim Installieren die passende Architektur. ARMv7/ARMv8 bezeichnen CPU-Architekturen, nicht Android-Versionen.
 
 ## Installation
 
