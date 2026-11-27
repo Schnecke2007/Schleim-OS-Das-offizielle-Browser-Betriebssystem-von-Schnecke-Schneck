@@ -63,7 +63,7 @@ jobs:
           node --check "$ASSET_DIR/scripts/app.js"
           node --check extension-template/scripts/app.js
           python3 -m py_compile Android-App/tools/build_template.py
-          python3 Android-App/tools/build_template.py --android android --extension extension-template --docs extension-template/docs --output /tmp/android-template-check
+          python3 Android-App/tools/build_template.py --android android --extension extension --docs Android-App --output /tmp/android-template-check
           test -s /tmp/android-template-check/Android-App\ Template/app/src/main/java/com/example/yourbrowser/VpnIntegration.kt
           test -s /tmp/android-template-check/Android-App\ Template/vpn/servers.json
           if find /tmp/android-template-check/Android-App\ Template -name '*.ovpn' -print -quit | grep -q .; then echo 'Provider VPN profiles must not be shipped in the generic template.' >&2; exit 1; fi
