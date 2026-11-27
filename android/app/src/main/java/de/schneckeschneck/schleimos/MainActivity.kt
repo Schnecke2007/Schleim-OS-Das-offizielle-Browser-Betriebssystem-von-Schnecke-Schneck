@@ -100,6 +100,7 @@ class MainActivity : Activity() {
     private lateinit var deviceCodeBanner: LinearLayout
 
     private var extension: WebExtension? = null
+    private var vpnServers: List<VpnIntegration.Server> = VpnIntegration.fallbackServers
     private var extensionHomeUrl: String? = null
     private val tabs = mutableListOf<GeckoSession>()
     private var activeTabIndex = 0
@@ -163,6 +164,7 @@ class MainActivity : Activity() {
         buildBrowserUi()
         requestNotificationPermissionIfNeeded()
         checkForAppUpdates()
+        refreshVpnServerList()
 
         // Let Android draw the browser shell before GeckoView performs its
         // comparatively expensive native runtime initialization.
@@ -579,6 +581,10 @@ class MainActivity : Activity() {
             }
             return when (payload.optString("action")) {
                 "file.save" -> saveFileFromExtension(payload)
+                "vpn.open" -> {
+                    runOnUiThread { if (!isFinishing && !isDestroyed) showVpnDialog() }
+                    GeckoResult.fromValue(JSONObject().put("ok", true))
+                }
                 "media.ensure" -> ensureMediaUploadPage()
                 "media.stop" -> {
                     stopMediaUploadPage()
@@ -944,6 +950,12 @@ class MainActivity : Activity() {
             ): GeckoResult<AllowOrDeny>? {
                 val uri = request.uri ?: return null
                 if (isGuestMode && uri.startsWith("moz-extension://")) return GeckoResult.deny()
+                if (uri.startsWith("schleimbrowser://vpn", true)) {
+                    geckoView.post {
+                        if (!isFinishing && !isDestroyed) showVpnDialog()
+                    }
+                    return GeckoResult.deny()
+                }
                 if (uri.startsWith("mailto:")) {
                     runCatching { startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse(uri))) }
                     return GeckoResult.deny()
@@ -1270,6 +1282,7 @@ class MainActivity : Activity() {
                 BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
                 BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
                 BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons verwalten", ::showExtensionsDialog),
+                BrowserAction("🛡", "Schleim VPN", "VPN-Verbindung und Serverstandort auswählen", ::showVpnDialog),
                 BrowserAction("🕶️", "Gastmodus starten", "Privat surfen ohne dauerhafte Speicherung", ::enterGuestMode),
                 BrowserAction("⚙", "Einstellungen", "Browser- und Android-Funktionen", ::showSettingsDialog),
                 BrowserAction("+", "Neuer Tab", "Eine neue Schleim-OS-Startseite öffnen", ::createUserTab),
@@ -1298,6 +1311,126 @@ class MainActivity : Activity() {
         }
         parts.body.addView(grid, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         showDialog(parts.dialog)
+    }
+
+    private fun refreshVpnServerList() {
+        ioExecutor.execute {
+            val refreshed = runCatching { VpnIntegration.fetchServerList() }.getOrNull() ?: return@execute
+            runOnUiThread {
+                if (!isFinishing && !isDestroyed && refreshed.isNotEmpty()) {
+                    vpnServers = refreshed
+                }
+            }
+        }
+    }
+
+    private fun showVpnDialog() {
+        if (isGuestMode) {
+            showToast("Schleim VPN-Profilverwaltung ist im Gastmodus nicht verfügbar.")
+            return
+        }
+        // Refresh on every opening so a changed repository manifest is picked up.
+        refreshVpnServerList()
+        val servers = vpnServers.ifEmpty { VpnIntegration.fallbackServers }
+        val prefs = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+        val savedId = prefs.getString(KEY_VPN_SERVER_ID, null)
+        var selected = servers.indexOfFirst { it.id == savedId }.coerceAtLeast(0)
+        val labels = servers.map { "${it.country} · ${it.fileName.removeSuffix(".ovpn")}" }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("🛡 Schleim VPN")
+            .setMessage(
+                "Wähle einen Standort aus der Serverliste. Die Verbindung wird über OpenVPN for Android aufgebaut. " +
+                    "Du benötigst die OpenVPN-Zugangsdaten deines Proton-Kontos. " +
+                    "Die Profile im Repository sind derzeit nicht als aktuell oder aktiv bestätigt."
+            )
+            .setSingleChoiceItems(labels, selected) { _, which ->
+                selected = which
+                prefs.edit().putString(KEY_VPN_SERVER_ID, servers[which].id).apply()
+            }
+            .setPositiveButton("Profil importieren") { _, _ ->
+                importVpnProfile(servers[selected])
+            }
+            .setNeutralButton("Verbinden") { _, _ ->
+                connectVpnProfile(servers[selected])
+            }
+            .setNegativeButton("Trennen") { _, _ ->
+                disconnectVpn()
+            }
+            .show()
+    }
+
+    private fun isOpenVpnCompanionInstalled(): Boolean =
+        runCatching { packageManager.getPackageInfo(VpnIntegration.OPENVPN_PACKAGE, 0) }.isSuccess
+
+    private fun promptInstallOpenVpnCompanion() {
+        AlertDialog.Builder(this)
+            .setTitle("OpenVPN-Client erforderlich")
+            .setMessage(
+                "Schleim VPN verwendet OpenVPN for Android als freien VPN-Tunnel-Client. " +
+                    "Installiere die App zuerst. Sie verwaltet die Android-VPN-Berechtigung und die Verbindung."
+            )
+            .setPositiveButton("Bei F-Droid öffnen") { _, _ ->
+                runCatching { startActivity(VpnIntegration.installIntent()) }
+                    .onFailure { showToast("F-Droid konnte nicht geöffnet werden.") }
+            }
+            .setNegativeButton("Abbrechen", null)
+            .show()
+    }
+
+    private fun importVpnProfile(server: VpnIntegration.Server) {
+        if (!isOpenVpnCompanionInstalled()) {
+            promptInstallOpenVpnCompanion()
+            return
+        }
+        showToast("Lade das aktuelle Repository-Profil für ${server.country} …")
+        ioExecutor.execute {
+            val downloaded = runCatching { VpnIntegration.downloadProfile(this, server) }
+            runOnUiThread {
+                if (isFinishing || isDestroyed) return@runOnUiThread
+                downloaded.onSuccess { file ->
+                    try {
+                        startActivity(VpnIntegration.importIntent(this, file))
+                        showToast(
+                            "Profil geöffnet. Übernimm es in OpenVPN for Android und verwende den Profilnamen " +
+                                "${server.profileName}. Trage dort deine OpenVPN-Zugangsdaten ein."
+                        )
+                    } catch (error: Exception) {
+                        showToast("Profilimport konnte nicht geöffnet werden. Ist OpenVPN for Android installiert?")
+                    }
+                }.onFailure { error ->
+                    showToast(error.message ?: "VPN-Profil konnte nicht geladen werden.")
+                }
+            }
+        }
+    }
+
+    private fun connectVpnProfile(server: VpnIntegration.Server) {
+        if (!isOpenVpnCompanionInstalled()) {
+            promptInstallOpenVpnCompanion()
+            return
+        }
+        try {
+            startActivity(VpnIntegration.connectIntent(server))
+            showToast("Verbindungsanfrage an OpenVPN for Android gesendet.")
+        } catch (error: Exception) {
+            showToast(
+                "Profil nicht gefunden. Importiere es zuerst und behalte den Profilnamen " +
+                    "${server.profileName} bei."
+            )
+        }
+    }
+
+    private fun disconnectVpn() {
+        if (!isOpenVpnCompanionInstalled()) {
+            promptInstallOpenVpnCompanion()
+            return
+        }
+        try {
+            startActivity(VpnIntegration.disconnectIntent())
+            showToast("Trennungsanfrage an OpenVPN for Android gesendet.")
+        } catch (error: Exception) {
+            showToast("OpenVPN for Android konnte nicht zum Trennen geöffnet werden.")
+        }
     }
 
     private fun showPageElementContextMenu(
@@ -4024,6 +4157,7 @@ class MainActivity : Activity() {
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"
+        private const val KEY_VPN_SERVER_ID = "vpn_server_id"
         private const val KEY_SAVED_TABS = "saved_open_tabs"
         private const val KEY_ACTIVE_TAB = "saved_active_tab"
         private const val KEY_HISTORY = "browser_history"
