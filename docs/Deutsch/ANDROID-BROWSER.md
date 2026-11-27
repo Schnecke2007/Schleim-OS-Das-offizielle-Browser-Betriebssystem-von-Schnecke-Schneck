@@ -16,11 +16,11 @@ Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnec
 ## Systemanforderungen
 
 - Android 8.0 oder neuer (API 26+)
-- 64-Bit-ARM-Gerät (arm64-v8a)
+- ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), 32-Bit-x86 oder x86_64
 - Internetverbindung für Webseiten, Extension-Inhalte und Online-Funktionen
 - Rund 200 MB freier Speicher für die APK und zusätzlichen App-Speicher
 
-Die App wird mit Android SDK 36 gebaut. Der Mindestwert für das Ausführen der App bleibt Android 8.0 (API 26).
+Die App wird mit Android SDK 36 gebaut. Der Mindestwert für das Ausführen der App bleibt Android 8.0 (API 26). Die universelle APK enthält die nativen GeckoView-Bibliotheken für alle vier oben genannten Prozessorarchitekturen. Sie ist eine einzelne Datei; Android verwendet beim Installieren die passende Architektur. ARMv7/ARMv8 bezeichnen CPU-Architekturen, nicht Android-Versionen.
 
 ## Installation
 
@@ -58,6 +58,24 @@ Die Android-App bündelt die Schleim-OS-Extension in GeckoView. Dazu gehören di
 - Kamera- und Mikrofonaufnahme sind in der Android-App absichtlich deaktiviert. Die Kamera-Kachel erklärt diese Einschränkung. Die JavaScript-Webkamera der originalen Browser-Extension bleibt davon getrennt.
 - Manche Webseiten blockieren das Einbetten in andere Seiten. Solche Inhalte können leer bleiben oder müssen direkt geöffnet werden.
 - Nicht jede Chrome-Desktop-Erweiterung ist mit GeckoView kompatibel.
+
+## Schleim VPN – Proton Free
+
+Im Browser-Menü gibt es **Schleim VPN**. Die Oberfläche zeigt die Standorte aus der Serverliste des Repositorys und kann ein Profil importieren, eine Verbindung anfordern oder die Verbindung trennen.
+
+**Technische Umsetzung:** Schleim Browser steuert den kostenlosen OpenVPN-Client **OpenVPN for Android**. Dieser separate Client stellt den Android-`VpnService`-Tunnel bereit und verwaltet die Systemberechtigung, die Zugangsdaten sowie den Verbindungsstatus. Schleim Browser selbst enthält derzeit keine OpenVPN-Engine und ist kein eigener VPN-Anbieter.
+
+1. Installiere [OpenVPN for Android über F-Droid](https://f-droid.org/packages/de.blinkt.openvpn/).
+2. Öffne **Browser-Menü → Schleim VPN** und wähle einen Standort.
+3. Tippe auf **Profil importieren**. Schleim Browser lädt die Profil-Datei aus dem Repository und öffnet sie im OpenVPN-Client.
+4. Übernimm das Profil dort. Verwende den im Dialog angezeigten Profilnamen und trage deine **Proton-OpenVPN-Zugangsdaten** ein. Das normale Proton-Kontopasswort ist dafür nicht geeignet.
+5. Wähle **Verbinden**. Android kann eine VPN-Bestätigung anzeigen. Zum Trennen kannst du im Browser-Menü **Trennen** wählen oder den OpenVPN-Client verwenden.
+
+Die Serverliste wird beim Öffnen des VPN-Bereichs aus `vpn/servers.json` aktualisiert. Die ausgewählte Konfigurationsdatei wird beim Import direkt aus dem Repository geladen. Änderungen an der Liste oder an den Profilen im Repository erscheinen dadurch ohne APK-Update.
+
+**Wichtige Grenze:** Das aktualisiert die Liste und die Dateien im Schleim-Browser-Repository, nicht automatisch die Proton-Serverdaten. Proton ändert oder entfernt Server und manuelle Profile. Die vorhandenen Dateien stammen aus einem älteren Konfigurationsbestand und sind nicht als aktuell oder aktiv bestätigt. Proton weist darauf hin, dass vor September 2023 heruntergeladene manuelle OpenVPN-Konfigurationen ab Ende Februar 2026 nicht mehr unterstützt werden. Ersetze die Dateien im Repository durch aktuelle, von Proton heruntergeladene Profile, bevor du sie als funktionsfähig verwendest. [Proton: OpenVPN-Konfigurationen aktualisieren](https://protonvpn.com/blog/old-ovpn-configs) · [OpenVPN-Zugangsdaten](https://protonvpn.com/support/vpn-auth-fail-solution)
+
+Der Proton-Free-Tarif ist kostenlos; Schleim Browser erhebt für diese Integration keine VPN-Gebühr. Die Verfügbarkeit einzelner Länder und Server richtet sich weiterhin nach Proton.
 
 ## Verlauf, DNS und automatische Tab-Sicherung
 
@@ -117,6 +135,6 @@ Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. 
 - Mindest-Android-Version: API 26
 - Ziel-SDK: API 35
 - Build-SDK: API 36
-- Zielarchitektur: ARM64
+- APK: universell für armeabi-v7a, arm64-v8a, x86 und x86_64
 
 [Zur Hauptdokumentation](../../README.md) · [Installation der Browser-Extension](INSTALLATION.md) · [Fehlerbehebung](FEHLERBEHEBUNG.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
