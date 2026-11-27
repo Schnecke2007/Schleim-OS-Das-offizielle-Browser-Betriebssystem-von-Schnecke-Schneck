@@ -455,6 +455,13 @@
       <div id="legalDocumentMount">${renderLegalDocument(selectedLegalDocument)}</div>`;
   }
 
+  function renderVpn(){
+    const lang=currentLanguage();
+    const copy=lang==='en'?{eyebrow:'ANDROID VPN BRIDGE',title:'VPN integration.',desc:'A template screen for a native Android VPN service.',note:'The extension cannot create a system VPN tunnel by itself. Implement the native VpnService, choose a trusted tunnel engine, add your server manifest and current profiles, and handle consent and status in Android.',button:'Open native VPN controls',desktop:'This sample bridge is available only in your Android app.'}:lang==='nl'?{eyebrow:'ANDROID VPN-BRIDGE',title:'VPN-integratie.',desc:'Een voorbeeldscherm voor een native Android-VPN-service.',note:'De Extension kan zelf geen systeembrede VPN-tunnel maken. Implementeer VpnService, kies een betrouwbare tunnel-engine, voeg je servermanifest en actuele profielen toe en beheer toestemming en status in Android.',button:'Native VPN-bediening openen',desktop:'Deze voorbeeldbridge is alleen beschikbaar in je Android-app.'}:{eyebrow:'ANDROID-VPN-BRIDGE',title:'VPN-Integration.',desc:'Eine Vorlage für die Anbindung eines nativen Android-VPN-Dienstes.',note:'Die Extension allein kann keinen systemweiten VPN-Tunnel erstellen. Implementiere VpnService, integriere eine vertrauenswürdige Tunnel-Engine, ergänze Servermanifest und aktuelle Profile und verwalte Berechtigungen sowie Status in Android.',button:'Native VPN-Steuerung öffnen',desktop:'Diese Beispiel-Bridge ist nur in deiner Android-App verfügbar.'};
+    const android=/Android/i.test(navigator.userAgent||'');
+    return appHero(copy.eyebrow,copy.title,copy.desc,'🛡️')+'<div class="notice warning-notice">'+copy.note+'</div><div class="ssos-form-actions"><button class="app-button" type="button" data-vpn-open '+(android?'':'disabled')+'>'+copy.button+' ↗</button></div>'+(android?'':'<p class="body-copy">'+copy.desktop+'</p>');
+  }
+
   function renderSettings(){return `${appHero('OBERFLÄCHE ANPASSEN','Einstellungen.','Passe das Erscheinungsbild dieser Besucher-App an. Die Änderungen werden lokal in diesem Browser gespeichert.','⚙️')}
     <div class="link-list">${linkCard('🎛️','Kontrollzentrum','Wische vom oberen Bildschirmrand nach unten oder tippe auf die Uhr.','#control')}${linkCard('🌙','Darstellung wechseln','Zwischen heller und dunkler Oberfläche wechseln','#theme')}${linkCard('🔒','Sperrbildschirm','Die Smartphone-Ansicht sperren','#lock')}</div>
     <div class="notice">WLAN, Bluetooth, mobile Daten, Taschenlampe und Rotation werden in dieser Webapp nur optisch simuliert. Ein Browser darf diese Systemfunktionen des Galaxy S24 nicht selbstständig umschalten.</div>
