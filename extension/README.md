@@ -21,7 +21,7 @@ Die ZIP-Datei ist das fertige Original-Extension-Paket und wird direkt aus GitHu
 
 Neben der Chromium-Extension gibt es **Schleim Browser** als eigenständige Android-App auf Basis von Mozilla GeckoView. Sie enthält die Schleim-OS-Oberfläche und wird unabhängig von der Extension installiert und aktualisiert. Die Android-App ist nicht Bestandteil dieses Extension-ZIP-Pakets.
 
-- [Android-APK herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk)
+- [Android-APK herunterladen](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
 - [Android-Anleitung auf Deutsch](../docs/Deutsch/ANDROID-BROWSER.md)
 - [Android guide in English](../docs/Englisch/ANDROID-BROWSER.md)
 - [Android-handleiding in het Nederlands](../docs/Niederländisch/ANDROID-BROWSER.md)
@@ -126,7 +126,7 @@ Die Erweiterungsoberfläche enthält keine Werbe-IFrames und keine Werbe-Startpr
 
 Das Projekt veröffentlicht zusätzlich die eigenständige Android-App **Schleim Browser** auf Basis von Mozilla GeckoView. Die Android-App bündelt die Original-Extension, verwendet aber eine eigene native Browseroberfläche und wird als APK separat aktualisiert.
 
-- [Android-APK aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha23.apk)
+- [Android-APK aus dem neuesten Release](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
 - [Android-Installation, Updates und Fehlerbehebung](../docs/Deutsch/ANDROID-BROWSER.md)
 - [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
