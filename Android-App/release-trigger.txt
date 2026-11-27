@@ -11,3 +11,5 @@ Remove obsolete OpenVPN .ovpn profiles and any separate VPN APK if present. Keep
 Update the Android Studio template, Extension template, German/English/Dutch documentation and Easy Language documentation. Include VPN limitations, personal-profile import, private-key safety, browser-only tunnel behavior and ABI compatibility in release notes.
 
 Requested release: Schleim Browser alpha32 / v3.22.0. Build and validate the APK, generated Android Studio template, Extension ZIP, Extension template, update JSON, checksums and APK signature. Publish only after every build and release validation step passes, then verify all published assets.
+
+Retry release build after all six 3.22.0 release-note files were added and the universal APK ABI validation was corrected to the three ABIs actually shipped by GeckoView.
