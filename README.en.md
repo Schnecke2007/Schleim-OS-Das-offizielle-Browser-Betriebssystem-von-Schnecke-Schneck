@@ -280,3 +280,7 @@ Would you like to see more of my projects and updates? I’d be happy if you fol
 **Schleim OS** is developed and maintained by **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
+
+## Schleim VPN for Android
+
+Schleim Browser includes native WireGuard integration in the Android browser menu. Import your own current Proton WireGuard profile; it is encrypted locally. The tunnel applies only to Schleim Browser, not other Android apps. The location list refreshes from the repository catalog, not from a live Proton API. Never publish private keys.
