@@ -17,9 +17,10 @@ android {
         targetSdk = 35
         versionCode = 31
         versionName = "0.1.0-alpha31"
-        // The current Android target is ARM64; avoid bundling unused x86/32-bit GeckoView binaries.
+        // One universal APK includes all four GeckoView Android ABIs.
+        // Devices install/use only the native libraries matching their CPU.
         ndk {
-            abiFilters += listOf("arm64-v8a")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
     }
 
