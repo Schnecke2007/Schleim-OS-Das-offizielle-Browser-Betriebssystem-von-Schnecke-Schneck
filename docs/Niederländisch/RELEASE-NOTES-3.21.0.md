@@ -29,3 +29,12 @@
 - Mozilla GeckoView · Android 8.0+ · ARM64
 
 De Android-APK gebruikt de standaard Android-debugondertekening. Afhankelijk van de build moet de oude app mogelijk eerst worden verwijderd. Maak een back-up van belangrijke lokale gegevens en zo nodig een versleutelde profielback-up voordat je de oude app verwijdert.
+
+
+## Android – Alpha 32
+
+- Universele APK voor ARMv7, ARM64, x86 en x86_64; Android 8.0 (API 26) blijft de minimumversie.
+- Schleim VPN krijgt een bediening in het browsermenu en een Extension-tegel.
+- Verbindingen worden aangevraagd via OpenVPN for Android als externe client. Schleim Browser bevat geen eigen OpenVPN-engine.
+- De serverlijst en profielen worden uit de repository geladen. Wijzigingen in de repository worden zonder APK-update overgenomen.
+- De bestaande Proton-profielen komen uit 2023 en zijn niet als actueel of actief bevestigd. Gebruik actuele profielen en aparte OpenVPN-inloggegevens voordat je verbinding maakt.
