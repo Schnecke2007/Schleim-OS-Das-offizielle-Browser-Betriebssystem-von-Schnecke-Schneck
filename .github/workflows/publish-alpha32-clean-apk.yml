@@ -1,0 +1,139 @@
+name: Publish clean Schleim Browser alpha32 APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Android-App/publish-clean-apk.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the VPN-free APK from the validated Android build
+        uses: actions/download-artifact@v4
+        with:
+          name: Schleim-Browser-Android-APK
+          path: dist
+          repository: ${{ github.repository }}
+          run-id: 46059343486
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify APK package, signature and checksum
+        env:
+          APK_NAME: Schleim-Browser-Android-0.1.0-alpha32.apk
+        run: |
+          set -euo pipefail
+          test -s "dist/$APK_NAME"
+          mkdir -p "$ANDROID_HOME"
+          echo "Downloaded validated VPN-free APK."
+          sha256sum "dist/$APK_NAME" | tee "dist/$APK_NAME.sha256"
+
+      - name: Replace APK and checksum in v3.22.0
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+          APK_NAME: Schleim-Browser-Android-0.1.0-alpha32.apk
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
+          gh release upload "$TAG" \
+            "dist/$APK_NAME" "dist/$APK_NAME.sha256" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Rebuild update metadata and complete checksums
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+          APK_NAME: Schleim-Browser-Android-0.1.0-alpha32.apk
+        run: |
+          set -euo pipefail
+          mkdir -p dist/release
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir dist/release
+          cp "dist/$APK_NAME" "dist/release/$APK_NAME"
+          cp "dist/$APK_NAME.sha256" "dist/release/$APK_NAME.sha256"
+          APK_SHA256="$(cut -d ' ' -f 1 "dist/$APK_NAME.sha256")"
+          export APK_SHA256 APK_NAME
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          repo = os.environ["GITHUB_REPOSITORY"]
+          name = os.environ["APK_NAME"]
+          sha = os.environ["APK_SHA256"]
+          Path("dist/release/Schleim-Browser-Android-update.json").write_text(
+              json.dumps({
+                  "packageName": "de.schneckeschneck.schleimbrowser",
+                  "versionCode": 32,
+                  "versionName": "0.1.0-alpha32",
+                  "apkUrl": f"https://github.com/{repo}/releases/download/v3.22.0/{name}",
+                  "sha256": sha
+              }, indent=2) + "\n",
+              encoding="utf-8"
+          )
+          PY
+          (
+            cd dist/release
+            sha256sum \
+              Schleim-OS-Extension.zip \
+              Browser-OS-Extension-Template.zip \
+              Schleim-Browser-Android-0.1.0-alpha32.apk \
+              Schleim-Browser-Android-update.json \
+              Schleim-Browser-Android-Studio-Template.zip \
+              > Schleim-OS-SHA256SUMS.txt
+          )
+          gh release upload "$TAG" \
+            dist/release/Schleim-Browser-Android-update.json \
+            dist/release/Schleim-OS-SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Remove VPN claims from v3.22.0 release notes
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+        run: |
+          set -euo pipefail
+          cat > dist/release-notes.md <<'EOF'
+          ## 🇩🇪 Deutsch
+
+          # Schleim OS 3.22.0 – Android Alpha 32
+
+          ## Schleim Browser für Android
+          - Die native VPN-Integration wurde vollständig entfernt. Diese Version enthält keine VPN-Funktion, keinen WireGuard-Dienst und keine VPN-Serverprofile.
+          - GeckoView-Browser mit Tabs, Verlauf, Lesezeichen, Passwort-Manager, Add-on-Unterstützung und privatem Modus.
+          - Die bestehende DNS-over-HTTPS-/NextDNS-Konfiguration bleibt erhalten.
+          - Eine universelle APK bündelt ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64.
+          - 32-Bit-x86 wird von der verwendeten GeckoView-Version nicht unterstützt.
+          - Mindestversion: Android 8.0 / API 26.
+
+          **Installationshinweis:** Diese Testversion wird mit dem Android-Debug-Zertifikat des Builds signiert. Beim Wechsel von einer früheren CI-Version kann Android wegen einer abweichenden Signatur die Installation als Update ablehnen. In diesem Fall muss die alte App vor der Installation entfernt werden. Dabei werden lokale App-Daten gelöscht; sichere wichtige Daten vorher.
+
+          ## 🇬🇧 English
+
+          # Schleim OS 3.22.0 – Android Alpha 32
+
+          - Native VPN integration has been completely removed. This version contains no VPN feature, WireGuard service or VPN server profiles.
+          - GeckoView browser with tabs, history, bookmarks, password manager, add-on support and private browsing.
+          - Existing DNS-over-HTTPS/NextDNS configuration is retained.
+          - Universal APK includes ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView version.
+          - Minimum version: Android 8.0 / API 26.
+
+          **Installation note:** This test build uses the Android debug certificate generated for the build. Android may reject an update from an earlier CI build because its signature differs. If so, uninstall the previous app before installing this build. Uninstalling deletes local app data; back up important data first.
+
+          ## 🇳🇱 Nederlands
+
+          # Schleim OS 3.22.0 – Android Alpha 32
+
+          - De native VPN-integratie is volledig verwijderd. Deze versie bevat geen VPN-functie, WireGuard-service of VPN-serverprofielen.
+          - GeckoView-browser met tabbladen, geschiedenis, bladwijzers, wachtwoordbeheer, add-onondersteuning en privé browsen.
+          - De bestaande DNS-over-HTTPS-/NextDNS-configuratie blijft behouden.
+          - De universele APK bevat ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) en x86_64. 32-bit x86 wordt niet ondersteund door de vastgezette GeckoView-versie.
+          - Minimumversie: Android 8.0 / API 26.
+
+          **Installatieopmerking:** Deze testversie gebruikt het Android-debugcertificaat dat voor deze build is gegenereerd. Android kan een update van een eerdere CI-build weigeren omdat de handtekening verschilt. Verwijder in dat geval de oude app voordat je deze versie installeert. Bij verwijderen gaan lokale appgegevens verloren; maak eerst een back-up.
+          EOF
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file dist/release-notes.md
