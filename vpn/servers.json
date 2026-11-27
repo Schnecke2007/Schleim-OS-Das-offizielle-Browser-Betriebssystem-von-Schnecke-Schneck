@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "provider": "Proton VPN Free",
+  "generatedAt": "2026-11-27",
+  "updatePolicy": "Schleim Browser reads this manifest from the repository when available and downloads the matching profile from the same repository when importing. This does not automatically fetch authenticated Proton configuration files or certify that a profile is still active.",
+  "servers": [
+    {
+      "id": "ca",
+      "countryCode": "CA",
+      "country": "Kanada",
+      "fileName": "ca-free-4.protonvpn.udp.ovpn",
+      "profileName": "ca-free-4.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/ca-free-4.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "ch",
+      "countryCode": "CH",
+      "country": "Schweiz",
+      "fileName": "ch-free-2.protonvpn.udp.ovpn",
+      "profileName": "ch-free-2.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/ch-free-2.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "jp",
+      "countryCode": "JP",
+      "country": "Japan",
+      "fileName": "jp-free-9.protonvpn.udp.ovpn",
+      "profileName": "jp-free-9.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/jp-free-9.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "mx",
+      "countryCode": "MX",
+      "country": "Mexiko",
+      "fileName": "mx-free-6.protonvpn.udp.ovpn",
+      "profileName": "mx-free-6.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/mx-free-6.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "nl",
+      "countryCode": "NL",
+      "country": "Niederlande",
+      "fileName": "nl-free-15.protonvpn.udp.ovpn",
+      "profileName": "nl-free-15.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/nl-free-15.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "pl",
+      "countryCode": "PL",
+      "country": "Polen",
+      "fileName": "pl-free-5.protonvpn.udp.ovpn",
+      "profileName": "pl-free-5.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/pl-free-5.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "ro",
+      "countryCode": "RO",
+      "country": "Rumänien",
+      "fileName": "ro-free-17.protonvpn.udp.ovpn",
+      "profileName": "ro-free-17.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/ro-free-17.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "sg",
+      "countryCode": "SG",
+      "country": "Singapur",
+      "fileName": "sg-free-2.protonvpn.udp.ovpn",
+      "profileName": "sg-free-2.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/sg-free-2.protonvpn.udp.ovpn",
+      "status": "unverified"
+    },
+    {
+      "id": "us",
+      "countryCode": "US",
+      "country": "USA",
+      "fileName": "us-free-20.protonvpn.udp.ovpn",
+      "profileName": "us-free-20.protonvpn.udp",
+      "configPath": "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/us-free-20.protonvpn.udp.ovpn",
+      "status": "unverified"
+    }
+  ]
+}
