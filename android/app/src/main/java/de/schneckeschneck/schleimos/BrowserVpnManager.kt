@@ -10,6 +10,8 @@ import com.wireguard.config.Config
 import java.io.BufferedReader
 import java.io.StringReader
 import java.security.KeyStore
+import java.net.HttpURLConnection
+import java.net.URL
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -38,6 +40,25 @@ class BrowserVpnManager(context: Context) {
         .filter { it.startsWith(PROFILE_PREFIX) }
         .map { it.removePrefix(PROFILE_PREFIX) }
         .sortedWith(String.CASE_INSENSITIVE_ORDER)
+
+    /** Fetches the repository-maintained public location catalog (no credentials). */
+    fun fetchServerLocations(): List<String> {
+        val connection = URL(CATALOG_URL).openConnection() as HttpURLConnection
+        connection.connectTimeout = 5000
+        connection.readTimeout = 5000
+        connection.requestMethod = "GET"
+        connection.setRequestProperty("Cache-Control", "no-cache")
+        try {
+            val body = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+            val servers = org.json.JSONObject(body).getJSONArray("servers")
+            return (0 until servers.length()).map { index ->
+                val item = servers.getJSONObject(index)
+                "${item.getString("country")} · ${item.getString("id")}"
+            }
+        } finally {
+            connection.disconnect()
+        }
+    }
 
     fun saveProfile(displayName: String, configText: String): String {
         val name = displayName.trim().replace(Regex("[\\\\/:*?\"<>|]"), "_")
@@ -135,6 +156,7 @@ class BrowserVpnManager(context: Context) {
     }
 
     companion object {
+        private const val CATALOG_URL = "https://raw.githubusercontent.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/main/android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/servers.json"
         private const val PREFS = "schleim_browser_vpn_profiles"
         private const val PROFILE_PREFIX = "profile:"
         private const val KEY_CONNECTED_PROFILE = "connected_profile"
