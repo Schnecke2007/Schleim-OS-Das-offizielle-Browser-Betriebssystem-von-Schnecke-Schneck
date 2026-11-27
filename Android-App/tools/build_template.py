@@ -185,6 +185,7 @@ def main() -> None:
             "android/app/src/main/java/de/schneckeschneck/schleimos/VPN/Server/",
             "app/src/main/java/com/example/yourbrowser/VPN/Server/"
         )
+        vpn_text = vpn_text.replace("Schleim VPN", "VPN bridge")
         start = vpn_text.index("    val fallbackServers = listOf(")
         end = vpn_text.index("\n    )", start) + len("\n    )")
         generic_fallback = """    val fallbackServers = listOf(
@@ -234,6 +235,7 @@ def main() -> None:
         main_text = main_text.replace("deines Proton-Kontos", "deines VPN-Anbieters")
         main_text = main_text.replace("Schleim VPN-Profilverwaltung", "VPN-Profilverwaltung")
         main_text = main_text.replace("Schleim VPN verwendet", "Diese VPN-Integration verwendet")
+        main_text = main_text.replace("Schleim VPN", "VPN")
         main_file.write_text(main_text, encoding="utf-8")
 
     # Remove the original branded image and use a neutral adaptive placeholder icon.
