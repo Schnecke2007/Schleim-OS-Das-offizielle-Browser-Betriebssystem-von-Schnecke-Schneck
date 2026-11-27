@@ -20,7 +20,7 @@ android {
         // One universal APK includes all four GeckoView Android ABIs.
         // Devices install/use only the native libraries matching their CPU.
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
         }
     }
 
