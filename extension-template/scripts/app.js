@@ -647,6 +647,7 @@
     if(!els.search.classList.contains('hidden'))renderSearch(els.searchInput.value);
   });
   document.addEventListener('click',e=>{
+    const vpnOpen=e.target.closest('[data-vpn-open]');if(vpnOpen){if(!/Android/i.test(navigator.userAgent||'')){showToast('This native VPN bridge works only in your Android app.');return;}window.location.href='browseros://vpn';return;}
     const appBtn=e.target.closest('[data-app]');if(appBtn){openApp(appBtn.dataset.app);return;}
     const customResult=e.target.closest('[data-search-custom-app]');if(customResult){window.SSOSPersonalization?.openCustomApp?.(customResult.dataset.searchCustomApp);return;}
     const result=e.target.closest('[data-search-app]');if(result){openApp(result.dataset.searchApp);return;}
