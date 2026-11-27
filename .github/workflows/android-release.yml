@@ -155,8 +155,8 @@ jobs:
           assert "data-vpn-open" in extension_script
           template_script = Path("extension-template/scripts/app.js").read_text()
           assert "browseros://vpn" in template_script
-          assert "versionCode = 31" in gradle
-          assert 'versionName = "0.1.0-alpha31"' in gradle
+          assert "versionCode = 32" in gradle
+          assert 'versionName = "0.1.0-alpha32"' in gradle
           assert '"version": "3.21.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -363,14 +363,14 @@ jobs:
           echo "$APK_FILES" | grep -Fq "assets/extension/manifest.json"
           echo "$APK_FILES" | grep -Fq "assets/extension/pages/newtab.html"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha31.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha32.apk"
           echo "Universal APK built and verified for ARMv7, ARM64, x86 and x86_64 with a valid Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha31.apk
+          path: Schleim-Browser-Android-0.1.0-alpha32.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -457,17 +457,17 @@ jobs:
           fi
 
           # Copy the separately validated production APK into the release package.
-          cp "Schleim-Browser-Android-0.1.0-alpha31.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha32.apk" dist/release/
 
-          APK_NAME="Schleim-Browser-Android-0.1.0-alpha31.apk"
+          APK_NAME="Schleim-Browser-Android-0.1.0-alpha32.apk"
           APK_SHA256="$(sha256sum "dist/release/$APK_NAME" | awk '{print $1}')"
           python3 - <<PY
           import json
           from pathlib import Path
           Path("dist/release/Schleim-Browser-Android-update.json").write_text(json.dumps({
               "packageName": "de.schneckeschneck.schleimbrowser",
-              "versionCode": 31,
-              "versionName": "0.1.0-alpha31",
+              "versionCode": 32,
+              "versionName": "0.1.0-alpha32",
               "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.21.0/${APK_NAME}",
               "sha256": "${APK_SHA256}"
           }, indent=2) + "\n", encoding="utf-8")
@@ -478,7 +478,7 @@ jobs:
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha31.apk \
+              Schleim-Browser-Android-0.1.0-alpha32.apk \
               Schleim-Browser-Android-update.json \
               Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
@@ -513,7 +513,7 @@ jobs:
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha31.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha32.apk" \
             "dist/release/Schleim-Browser-Android-update.json" \
             "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
@@ -535,7 +535,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha31.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha32.apk" \
             --pattern "Schleim-Browser-Android-update.json" \
             --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
@@ -549,7 +549,7 @@ jobs:
           for asset in \
             Schleim-OS-Extension.zip \
             Browser-OS-Extension-Template.zip \
-            Schleim-Browser-Android-0.1.0-alpha31.apk \
+            Schleim-Browser-Android-0.1.0-alpha32.apk \
             Schleim-Browser-Android-update.json \
             Schleim-Browser-Android-Studio-Template.zip; do
             cmp -s "dist/release/$asset" "dist/verify/$asset"
@@ -560,7 +560,7 @@ jobs:
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha31.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha32.apk"
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
           echo "Release v3.21.0 published; every archive, checksum and APK signature verified."
