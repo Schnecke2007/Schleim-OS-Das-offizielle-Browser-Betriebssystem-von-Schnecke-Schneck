@@ -1,6 +1,6 @@
 # Browser OS – Extension Template
 
-**Template version: 3.14.9**
+**Template version: 3.22.0**
 
 Browser OS is a neutral, multilingual Manifest V3 template for Chromium-based browsers. It uses demo content, sample artwork and placeholders instead of personal data from the original project.
 
@@ -41,3 +41,10 @@ The update-center placeholder downloads only **Browser-OS-Extension-Template.zip
 - [Technical notes](docs/Englisch/TECHNICAL-NOTES.md)
 
 All profiles, images, accounts, repositories and legal texts are examples. Replace them before publishing.
+
+
+## Optional Android VPN bridge
+
+The template includes a Schleim VPN tile on the new-tab page. In an Android GeckoView host that registers the `browser` native-message bridge, the tile requests opening the host's native VPN panel. Desktop browsers show a fallback notice because extensions cannot directly start Android's `VpnService`.
+
+The native Android template includes WireGuard tunnel support and encrypted local profile storage. Import a current personal `.conf` file in the app; never bundle a private WireGuard key in the extension or public repository. The VPN tunnel is intended to be limited to the browser package.
