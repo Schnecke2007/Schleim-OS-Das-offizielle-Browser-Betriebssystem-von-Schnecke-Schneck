@@ -16,3 +16,11 @@
 Proton VPN Free kan serverwissels willekeurig toewijzen en wachttijden toepassen. Het openbare Proton-serverlijstendpoint is niet officieel ondersteund en is uitgeschakeld. De locatielijst blijft alleen automatisch actueel als de repositorycatalogus wordt bijgewerkt.
 
 De vaste NextDNS-resolver, bruine interface, tabs, geschiedenis, bladwijzers, wachtwoordbeheerder en extensies blijven behouden.
+
+
+## Extensiedetails
+- Elke add-on heeft een detailweergave met de metadata en machtigingen die GeckoView levert.
+- Optionele machtigingen kunnen afzonderlijk worden beheerd waar GeckoView dit ondersteunt.
+- De optie voor privévensters wordt alleen getoond als de add-on en GeckoView dit toestaan.
+
+**Beveiliging:** Privé-WireGuard-sleutels zijn uit openbare serverbestanden verwijderd. Omdat ze eerder openbaar waren, moet je de betrokken sleutels bij Proton vernieuwen.
