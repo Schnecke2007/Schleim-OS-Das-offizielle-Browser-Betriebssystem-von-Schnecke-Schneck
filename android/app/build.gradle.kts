@@ -15,8 +15,8 @@ android {
         applicationId = "de.schneckeschneck.schleimbrowser"
         minSdk = 26
         targetSdk = 35
-        versionCode = 31
-        versionName = "0.1.0-alpha31"
+        versionCode = 32
+        versionName = "0.1.0-alpha32"
         // One universal APK includes all four GeckoView Android ABIs.
         // Devices install/use only the native libraries matching their CPU.
         ndk {
