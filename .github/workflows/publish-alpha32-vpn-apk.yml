@@ -46,3 +46,28 @@ jobs:
             "dist/Schleim-Browser-Android-0.1.0-alpha32.apk" \
             "dist/Schleim-Browser-Android-0.1.0-alpha32.apk.sha256" \
             --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Correct localized native VPN bridge notes
+        env:
+          GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          TAG: v3.22.0
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json body --jq .body > dist/release-notes.md
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path("dist/release-notes.md")
+          body = path.read_text(encoding="utf-8")
+          replacements = {
+              "Die Browser-Extension kann den nativen Android-VPN-Tunnel nicht starten oder steuern.": "Die VPN-Kachel der Extension öffnet über GeckoView das native Android-VPN-Menü. Die Extension selbst erstellt keinen VPN-Tunnel.",
+              "The browser extension cannot start or control the native Android VPN tunnel.": "The Extension's VPN tile opens the native Android VPN panel through GeckoView. The Extension itself does not create a VPN tunnel.",
+              "De browserextensie kan de native Android-VPN-tunnel niet starten of bedienen.": "De VPN-tegel van de extensie opent via GeckoView het native Android-VPN-scherm. De extensie maakt zelf geen VPN-tunnel.",
+              "Die Browser-Erweiterung kann das Android-VPN nicht einschalten.": "Die VPN-Kachel in der Extension öffnet das VPN-Menü in der Android-App. Die Extension macht selbst keinen VPN-Tunnel.",
+              "The browser extension cannot turn on the Android VPN.": "The VPN tile in the extension opens the VPN menu in the Android app. The extension does not make a VPN tunnel.",
+              "De browserextensie kan de Android-VPN niet inschakelen.": "De VPN-tegel in de extensie opent het VPN-menu in de Android-app. De extensie maakt zelf geen VPN-tunnel.",
+          }
+          for old, new in replacements.items():
+              body = body.replace(old, new)
+          path.write_text(body, encoding="utf-8")
+          PY
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --notes-file dist/release-notes.md
