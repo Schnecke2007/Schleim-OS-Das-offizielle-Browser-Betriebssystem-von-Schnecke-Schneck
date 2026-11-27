@@ -1,17 +1,20 @@
-Schleim OS 3.21.0 Android browser release
+Schleim OS 3.22.0 / Schleim Browser Android alpha32
 
-Build and validate Schleim Browser 0.1.0-alpha31 (versionCode 31). Preserve all existing browser features, the #251205 dark brown UI, Mozilla GeckoView, tabs, local history, bookmarks, encrypted password manager, add-on support and the fixed NextDNS DNS-over-HTTPS resolver. The DNS resolver must remain exactly https://dns.nextdns.io/36e7f3/Schleim-Browser in TRR-only mode and must not be shown by hostname in Settings.
+Build and publish versionCode 32 / versionName 0.1.0-alpha32 and Extension 3.22.0. Preserve GeckoView, the #251205 UI, tabs, local history, bookmarks, encrypted password manager, guest mode, add-ons and the fixed NextDNS TRR-only resolver https://dns.nextdns.io/36e7f3/Schleim-Browser.
 
-Add a dedicated Details button for every installed extension in the Android extension manager. Populate the detail view only from actual GeckoView WebExtension metadata for that extension: description, version, developer, homepage, options page, rating/review metadata when present, required and optional permissions, host origins and data-collection permissions. Allow optional permissions to be individually granted or revoked through GeckoView's WebExtensionController APIs. Open an extension-specific options page only when GeckoView reports one.
+VPN:
+- WireGuard is integrated in the Schleim Browser Android menu through the existing tunnel library and Android VpnService consent; do not build a separate VPN APK.
+- VPN panel supports status, selecting an imported profile, connect/disconnect, importing .conf and refreshing the credential-free repository catalog.
+- Tunnel is app-scoped to Schleim Browser. Extension VPN tile uses GeckoView native messaging to open the Android panel; desktop extensions cannot start Android VpnService.
+- Import personal full WireGuard .conf files generated from the user's Proton account. Store profiles encrypted with Android Keystore AES-GCM. Never publish private keys or package them in APK assets.
+- Free location catalog is repository-maintained and refreshed by the app. It is not a live Proton availability API. Public templates have no PrivateKey.
+- Obsolete .ovpn files have been removed. No separate VPN APK was present.
 
-For compatible non-built-in extensions, provide the Run in private windows control backed by WebExtensionController.setAllowedInPrivateBrowsing. Respect an extension manifest that explicitly forbids private use. Display the manifest private-mode setting where available. Identify the proxy permission when an extension requests it, but do not claim this creates a system-wide VPN tunnel or guarantees that a VPN extension protects private traffic. Persist the allowedInPrivateBrowsing setting in the encrypted browser profile backup and restore it on another device along with add-on enabled/disabled state.
+Universal APK:
+- Bundle GeckoView ABIs ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64 in one APK.
+- 32-bit x86 is not supported by the pinned GeckoView AAR. Minimum Android API 26 / Android 8.0; Android 7 is not supported.
+- Validate the three supported native ABI folders, APK signature, package ID and bundled extension.
 
-Update German, English and Dutch Android documentation and Easy Language guides. Create release notes in all three languages plus Easy Language in each language. Explain that an extension may have no options page and that private browsing is not the same as a system-wide VPN.
+Update German, English and Dutch Android docs, Extension/template docs, all six localized release notes and project README version links. The Android Studio template must build. Update JSON must have versionCode 32 and versionName 0.1.0-alpha32. Package Extension ZIP, Extension template, APK, update JSON, Android Studio template and SHA-256 sums. Publish v3.22.0 only after all checks pass, then download and compare published assets and verify signatures/checksums.
 
-Package the Extension, neutral Extension template, Android APK alpha31, Android Studio template, update JSON and SHA-256 sums. Publish the complete release v3.21.0 only after the APK and templates pass build validation, then verify the published assets, metadata, checksums and APK signature.
-
-Requested release: 2026-11-25 — Schleim Browser alpha31 with per-extension detail screens, optional-permission management, private-window support and profile backup/restore integration.
-
-Final workflow trigger: validate Schleim Browser 3.21.0 / Android alpha31 and publish the complete v3.21.0 release only when the Android APK, generated Android Studio template, all localized release notes, asset checksums and APK signature validations succeed.
-
-Build retry: fix nullable GeckoView WebExtension results from setAllowedInPrivateBrowsing and optional-permission updates. Continue to build alpha31, validate the APK signature and all six localized release-note sections, then publish v3.21.0 only when every validation step succeeds.
+Run one final alpha32 release validation from the complete current main branch; supersede older queued retries.
