@@ -28,7 +28,7 @@ Neben der Chromium-Extension gibt es **Schleim Browser** als eigenständige Andr
 - [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 - [Schleim VPN – Android-Integration auf Deutsch](docs/VPN-ANDROID-DE.md) · [English](docs/VPN-ANDROID-EN.md) · [Nederlands](docs/VPN-ANDROID-NL.md)
 
-Die Android-App benötigt Android 8.0 oder neuer. Die universelle APK ist für ARMv7, ARM64, x86 und x86_64 vorgesehen. Kamera- und Mikrofonaufnahme sind in der Android-App deaktiviert; die Browser-Extension behält ihre eigene, geräteabhängige Webkamera-Funktion.
+Die Android-App benötigt Android 8.0 oder neuer. Die universelle APK ist für ARMv7, ARM64 und x86_64 vorgesehen. Kamera- und Mikrofonaufnahme sind in der Android-App deaktiviert; die Browser-Extension behält ihre eigene, geräteabhängige Webkamera-Funktion.
 
 
 
