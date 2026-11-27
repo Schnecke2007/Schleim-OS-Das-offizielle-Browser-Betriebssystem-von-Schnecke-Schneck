@@ -20,6 +20,7 @@ Choose your language. Each language has regular documentation and a matching Eas
 - [Account and cloud – Deutsch](Deutsch/KONTO-UND-CLOUD.md) · [English](Englisch/ACCOUNT-AND-CLOUD.md) · [Nederlands](Niederländisch/ACCOUNT-EN-PRIVECLOUD.md)
 - [Installation – Deutsch](Deutsch/INSTALLATION.md) · [English](Englisch/INSTALLATION.md) · [Nederlands](Niederländisch/INSTALLATIE.md)
 - [Technical notes – Deutsch](Deutsch/TECHNIK.md) · [English](Englisch/TECHNICAL-NOTES.md) · [Nederlands](Niederländisch/TECHNIEK.md)
+- [Android VPN bridge – Deutsch](Deutsch/ANDROID-VPN-BRIDGE.md) · [English](Englisch/ANDROID-VPN-BRIDGE.md) · [Nederlands](Niederländisch/ANDROID-VPN-BRIDGE.md)
 
 **Template version:** 3.14.9 · [Release notes in Deutsch, English and Nederlands](RELEASE-NOTES-3.14.9.md)
 
