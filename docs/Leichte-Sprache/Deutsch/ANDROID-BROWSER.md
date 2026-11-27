@@ -6,7 +6,7 @@ Sie enthält die Schleim-OS-Startseite.
 
 ## Download
 
-[Lade Schleim Browser Alpha 31 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk).
+[Lade Schleim Browser Alpha 32 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk).
 
 ## App installieren
 
@@ -69,3 +69,12 @@ Die Android-App hat eigene Updates.
 Die ausführliche Anleitung steht in der [Android-Browser-Dokumentation](../../Deutsch/ANDROID-BROWSER.md).
 
 [Zurück zur deutschen Anleitung in Leichter Sprache](README.md)
+
+## Schleim VPN und Geräte
+
+- Schleim Browser hat ein WireGuard-VPN direkt im Browser.
+- Du brauchst eine eigene vollständige .conf-Datei aus deinem Proton-Konto.
+- Die Server-Liste wird aus dem Schleim-OS-Repository geladen. Sie zeigt keine Live-Daten von Proton.
+- Nur Schleim Browser nutzt den Tunnel. Die Extension kann das VPN-Menü öffnen, aber sie baut keinen Tunnel.
+- Die APK unterstützt ARMv7, ARM64 und x86_64. 32-Bit-x86 geht nicht.
+- Android 8 oder neuer ist nötig. Android 7 geht nicht.

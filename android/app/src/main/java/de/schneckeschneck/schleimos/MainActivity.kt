@@ -13,6 +13,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.VpnService
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
@@ -118,6 +119,10 @@ class MainActivity : Activity() {
     @Volatile private var deviceLoginCancelled = false
     private var cloudBackupRunning = false
     private val downloadExecutor = Executors.newSingleThreadExecutor()
+    @Volatile private var vpnManagerInstance: BrowserVpnManager? = null
+    private val vpnManagerLock = Any()
+    private var pendingVpnProfile: String? = null
+    private var vpnDialog: Dialog? = null
     // Keep file listing, document writes and XPI copying away from Android's UI thread.
     private val ioExecutor = Executors.newFixedThreadPool(2)
 
@@ -578,6 +583,10 @@ class MainActivity : Activity() {
                 return GeckoResult.fromValue(JSONObject().put("ok", false).put("error", "Native Speicherung und Cloud-Funktionen sind im Gastmodus deaktiviert."))
             }
             return when (payload.optString("action")) {
+                "vpn.open" -> {
+                    runOnUiThread { showVpnDialog() }
+                    GeckoResult.fromValue(JSONObject().put("ok", true).put("opened", "vpn"))
+                }
                 "file.save" -> saveFileFromExtension(payload)
                 "media.ensure" -> ensureMediaUploadPage()
                 "media.stop" -> {
@@ -1253,6 +1262,240 @@ class MainActivity : Activity() {
         showToast(if (desktopMode) "Desktop-Ansicht aktiviert." else "Mobile Ansicht aktiviert.")
     }
 
+    private fun getBrowserVpnManager(): BrowserVpnManager {
+        vpnManagerInstance?.let { return it }
+        return synchronized(vpnManagerLock) {
+            vpnManagerInstance ?: BrowserVpnManager(this).also { vpnManagerInstance = it }
+        }
+    }
+
+    private fun showVpnDialog() {
+        if (isGuestMode) {
+            showToast("VPN-Profile und VPN-Verbindungen sind im Gastmodus nicht verfügbar.")
+            return
+        }
+        val parts = createDialogShell(
+            "Schleim VPN",
+            "WireGuard · Free-Serverliste · nur Schleim Browser wird über den Tunnel geleitet"
+        )
+        val status = TextView(this).apply {
+            text = "VPN-Status wird geladen …"
+            textSize = 14f
+            setTextColor(textPrimary)
+            setPadding(dp(14), dp(13), dp(14), dp(13))
+            background = roundedBackground(surfaceRaised, border, 12)
+        }
+        var selectedProfile: String? = null
+        val catalogLabel = TextView(this).apply {
+            text = "Free-Standorte werden geladen …"
+            textSize = 11f
+            setTextColor(textMuted)
+            setPadding(dp(4), dp(2), dp(4), dp(10))
+        }
+        val locationTile = createMenuTile("🌍", "Standort auswählen", "Wähle ein importiertes WireGuard-Profil") {
+            ioExecutor.execute {
+                val profiles = runCatching { getBrowserVpnManager().profileNames() }.getOrDefault(emptyList())
+                runOnUiThread {
+                    if (profiles.isEmpty()) {
+                        showToast("Importiere zuerst eine eigene WireGuard-Konfiguration.")
+                    } else {
+                        AlertDialog.Builder(this)
+                            .setTitle("VPN-Standort")
+                            .setItems(profiles.toTypedArray()) { _, which ->
+                                selectedProfile = profiles[which]
+                                showToast("VPN-Standort: ${profiles[which]}")
+                            }
+                            .setNegativeButton("Abbrechen", null)
+                            .show()
+                    }
+                }
+            }
+        }
+        val catalogTile = createMenuTile("🌐", "Free-Serverliste aktualisieren", "Aktuelle Standortliste aus dem Schleim-OS-Repository laden") {
+            ioExecutor.execute {
+                val catalog = runCatching { VpnServerCatalog.load(this) }
+                val profiles = runCatching { getBrowserVpnManager().profileNames() }.getOrDefault(emptyList())
+                runOnUiThread {
+                    if (catalog.isFailure) {
+                        showToast("Serverliste konnte nicht geladen werden: ${catalog.exceptionOrNull()?.message}")
+                    } else {
+                        showVpnServerCatalogDialog(catalog.getOrThrow(), profiles) { profile ->
+                            selectedProfile = profile
+                            status.text = "Standort ausgewählt · $profile"
+                        }
+                    }
+                }
+            }
+        }
+        val importTile = createMenuTile("＋", "WireGuard-Konfiguration importieren", "Eigene vollständige .conf-Datei verschlüsselt auf diesem Gerät speichern") {
+            launchVpnConfigImport()
+        }
+        val connectionTile = createMenuTile("⏻", "VPN verbinden", "Verbindung mit dem ausgewählten Standort starten") {
+            val profile = selectedProfile
+            if (profile.isNullOrBlank()) {
+                showToast("Wähle zuerst einen VPN-Standort aus.")
+                return@createMenuTile
+            }
+            val prepare = VpnService.prepare(this)
+            if (prepare != null) {
+                pendingVpnProfile = profile
+                startActivityForResult(prepare, REQUEST_VPN_PERMISSION)
+            } else {
+                connectBrowserVpn(profile, status)
+            }
+        }
+        parts.body.addView(status, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(10)
+        })
+        parts.body.addView(catalogLabel, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        parts.body.addView(locationTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        parts.body.addView(catalogTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        parts.body.addView(importTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
+        parts.body.addView(connectionTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        parts.body.addView(TextView(this).apply {
+            text = "Hinweis: Die Standortliste wird aus dem Schleim-OS-Repository aktualisiert; sie ist keine Live-Verfügbarkeitsabfrage von Proton. Zum Verbinden brauchst du eine vollständige, persönlich erzeugte WireGuard-.conf mit PrivateKey. Importiere sie über „WireGuard-Konfiguration importieren“. Der Tunnel gilt nur für Schleim Browser."
+            textSize = 11f
+            setTextColor(textMuted)
+            setPadding(dp(4), dp(10), dp(4), 0)
+        })
+        showDialog(parts.dialog)
+        vpnDialog = parts.dialog
+        ioExecutor.execute {
+            val manager = runCatching { getBrowserVpnManager() }.getOrNull()
+            val profiles = manager?.profileNames().orEmpty()
+            val catalogData = runCatching { VpnServerCatalog.load(this) }.getOrNull()
+            val locations = catalogData?.servers?.map { "${it.country} · ${it.id}" }.orEmpty()
+            val connected = manager?.isConnected() == true
+            val activeProfile = manager?.connectedProfile()
+            runOnUiThread {
+                if (isFinishing || isDestroyed) return@runOnUiThread
+                selectedProfile = activeProfile ?: profiles.firstOrNull()
+                catalogLabel.text = if (locations.isEmpty()) {
+                    "Serverkatalog nicht erreichbar. Bereits importierte Profile bleiben verfügbar."
+                } else {
+                    "${if (catalogData?.fromRemote == true) "Online aktualisiert" else "Offline-Kopie"} · Free-Standorte: " + locations.joinToString(", ")
+                }
+                status.text = when {
+                    connected -> "Verbunden · ${activeProfile ?: selectedProfile ?: "VPN"}"
+                    profiles.isEmpty() -> "Nicht verbunden · Noch keine Konfiguration importiert"
+                    else -> "Nicht verbunden · ${profiles.size} gespeicherte Standortprofile"
+                }
+                if (connected) {
+                    (connectionTile.getChildAt(1) as? TextView)?.text = "VPN trennen"
+                    (connectionTile.getChildAt(2) as? TextView)?.text = "Aktive WireGuard-Verbindung beenden"
+                    connectionTile.setOnClickListener {
+                        status.text = "VPN wird getrennt …"
+                        ioExecutor.execute {
+                            val result = runCatching { getBrowserVpnManager().disconnect() }
+                            runOnUiThread {
+                                status.text = if (result.isSuccess) "VPN getrennt" else "Trennen fehlgeschlagen: ${result.exceptionOrNull()?.message}"
+                                showToast(if (result.isSuccess) "Schleim VPN wurde getrennt." else "VPN konnte nicht getrennt werden.")
+                                if (result.isSuccess) {
+                                    vpnDialog?.dismiss()
+                                    vpnDialog = null
+                                    showVpnDialog()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun launchVpnConfigImport() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_TITLE, "WireGuard-Konfiguration auswählen")
+        }
+        startActivityForResult(intent, REQUEST_VPN_IMPORT)
+    }
+
+    private fun showVpnServerCatalogDialog(
+        catalog: VpnServerCatalogData,
+        importedProfiles: List<String>,
+        onProfileSelected: (String) -> Unit
+    ) {
+        val labels = catalog.servers.map { "${it.country} · ${it.id}" }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("Proton VPN · Free-Standorte")
+            .setMessage("Katalogstand: ${catalog.updated}\n${if (catalog.fromRemote) "Online aktualisiert" else "Offline-Kopie"}\n\nDie Liste zeigt Referenzstandorte. Die tatsächliche Verfügbarkeit wird nicht live geprüft.")
+            .setItems(labels) { _, which ->
+                val server = catalog.servers[which]
+                val idCompact = server.id.uppercase().filter { it.isLetterOrDigit() }
+                val matching = importedProfiles.firstOrNull { profile ->
+                    profile.uppercase().filter { it.isLetterOrDigit() }.contains(idCompact)
+                }
+                if (matching != null) {
+                    onProfileSelected(matching)
+                    showToast("Standort ausgewählt: ${server.country}")
+                } else {
+                    AlertDialog.Builder(this)
+                        .setTitle("${server.country} · ${server.id}")
+                        .setMessage("Für diesen Standort ist noch kein passendes vollständiges VPN-Profil importiert. Erstelle die WireGuard-Konfiguration in deinem Proton-Konto und importiere die .conf-Datei. Die öffentliche Vorlage enthält keinen privaten Schlüssel.")
+                        .setPositiveButton("Proton-Konfiguration öffnen") { _, _ ->
+                            createTab("https://account.protonvpn.com/downloads")
+                        }
+                        .setNegativeButton("Konfiguration importieren") { _, _ ->
+                            launchVpnConfigImport()
+                        }
+                        .setNeutralButton("Abbrechen", null)
+                        .show()
+                }
+            }
+            .setNegativeButton("Schließen", null)
+            .show()
+    }
+
+    private fun importBrowserVpnProfile(uri: Uri) {
+        ioExecutor.execute {
+            val result = runCatching {
+                val text = contentResolver.openInputStream(uri)?.bufferedReader(Charsets.UTF_8)?.use { it.readText() }
+                    ?: error("Datei konnte nicht geöffnet werden.")
+                require(text.length <= 256 * 1024) { "VPN-Konfiguration ist zu groß." }
+                val rawName = uri.lastPathSegment?.substringAfterLast('/')?.substringBeforeLast('.') ?: "WireGuard-Profil"
+                getBrowserVpnManager().saveProfile(rawName, text)
+            }
+            runOnUiThread {
+                if (result.isSuccess) {
+                    showToast("VPN-Profil „${result.getOrNull()}“ wurde verschlüsselt gespeichert.")
+                    vpnDialog?.dismiss()
+                    vpnDialog = null
+                    showVpnDialog()
+                } else {
+                    showToast("VPN-Import fehlgeschlagen: ${result.exceptionOrNull()?.message}")
+                }
+            }
+        }
+    }
+
+    private fun connectBrowserVpn(profileName: String, statusView: TextView? = null) {
+        statusView?.text = "VPN wird verbunden …"
+        ioExecutor.execute {
+            val result = runCatching { getBrowserVpnManager().connect(profileName) }
+            runOnUiThread {
+                statusView?.text = if (result.isSuccess) {
+                    "Verbunden · $profileName · nur Schleim Browser"
+                } else {
+                    "Verbindung fehlgeschlagen: ${result.exceptionOrNull()?.message}"
+                }
+                showToast(if (result.isSuccess) "Schleim VPN ist verbunden." else "VPN-Verbindung fehlgeschlagen.")
+                if (result.isSuccess) {
+                    vpnDialog?.dismiss()
+                    vpnDialog = null
+                    showVpnDialog()
+                }
+            }
+        }
+    }
+
     private fun showBrowserMenu() {
         val actions = if (isGuestMode) {
             listOf(
@@ -1270,6 +1513,7 @@ class MainActivity : Activity() {
                 BrowserAction("⇩", "Downloads", "Heruntergeladene Dateien verwalten", ::showDownloadsDialog),
                 BrowserAction("⎙", "Drucken", "Aktuelle Webseite im Android-Druckfenster öffnen", ::printCurrentPage),
                 BrowserAction("🧩", "Erweiterungen", "XPI-Add-ons verwalten", ::showExtensionsDialog),
+                BrowserAction("🛡", "Schleim VPN", "WireGuard-Verbindung nur für Schleim Browser", ::showVpnDialog),
                 BrowserAction("🕶️", "Gastmodus starten", "Privat surfen ohne dauerhafte Speicherung", ::enterGuestMode),
                 BrowserAction("⚙", "Einstellungen", "Browser- und Android-Funktionen", ::showSettingsDialog),
                 BrowserAction("+", "Neuer Tab", "Eine neue Schleim-OS-Startseite öffnen", ::createUserTab),
@@ -3937,6 +4181,17 @@ class MainActivity : Activity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BROWSER_ROLE) return
+        if (requestCode == REQUEST_VPN_PERMISSION) {
+            val profile = pendingVpnProfile
+            pendingVpnProfile = null
+            if (resultCode == RESULT_OK && !profile.isNullOrBlank()) connectBrowserVpn(profile)
+            else showToast("VPN-Berechtigung wurde nicht erteilt.")
+            return
+        }
+        if (requestCode == REQUEST_VPN_IMPORT) {
+            if (resultCode == RESULT_OK && data?.data != null) importBrowserVpnProfile(data.data!!)
+            return
+        }
         if (requestCode == REQUEST_VAULT_UNLOCK) {
             val callback = pendingVaultUnlock
             val cancelled = pendingVaultCancelled
@@ -4021,6 +4276,8 @@ class MainActivity : Activity() {
         private const val REQUEST_EXTENSION_PICKER = 1505
         private const val REQUEST_SAVE_FILE = 1506
         private const val REQUEST_VAULT_UNLOCK = 1507
+        private const val REQUEST_VPN_PERMISSION = 1508
+        private const val REQUEST_VPN_IMPORT = 1509
         private const val EXTRA_OPEN_APP = "schleim_os_open_app"
         private const val PREFERENCES = "schleim_os_browser_settings"
         private const val KEY_DESKTOP_MODE = "desktop_mode"

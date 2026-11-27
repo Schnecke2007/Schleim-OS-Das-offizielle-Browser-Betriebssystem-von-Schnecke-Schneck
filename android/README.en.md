@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha31 · GeckoView · ARM64**
+**Version 0.1.0-alpha32 · GeckoView · Universal APK**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -13,7 +13,7 @@ Schleim Browser is the standalone Android browser of the Schleim OS project. It 
 - Application ID: `de.schneckeschneck.schleimbrowser`.
 - Minimum version: Android 8.0 / API 26.
 - Target SDK: API 35; build SDK: API 36.
-- Target architecture: `arm64-v8a`.
+- Bundled ABIs: `armeabi-v7a`, `arm64-v8a` and `x86_64`; 32-bit `x86` is not provided by the pinned GeckoView build.
 - JDK 17, Gradle 8.13, Android Gradle Plugin 8.13.2 and Kotlin Gradle Plugin 2.3.0.
 
 ## Browser features
@@ -79,4 +79,20 @@ The Android app is published alongside the Extension in the consolidated release
 
 The guide and generator are kept in the repository under `Android-App/`. Inside the downloaded ZIP, the complete Android Studio project folder is named **Android-App Template**.
 
-[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+
+
+## Schleim VPN (WireGuard)
+
+Schleim Browser includes a native VPN section in the browser menu. It uses the embedded WireGuard tunnel library; no separate VPN app is built. The extension opens the native VPN panel through the GeckoView native-messaging bridge.
+
+- Import a current personal WireGuard .conf file from your Proton VPN account. The app encrypts the profile with Android Keystore (AES-GCM).
+- The tunnel is restricted to Schleim Browser. Other Android apps do not use this browser VPN tunnel.
+- The location list is fetched from the repository's servers.json whenever the VPN panel opens. It reflects catalog changes committed to the repository.
+- Proton has disabled its previously public server-list endpoint, so reliable live discovery directly from Proton is not available. Import current personal .conf files from your own Proton account.
+- Free refers to locations Proton makes available on its Free plan. Schleim Browser does not operate VPN servers and cannot guarantee a location's availability.
+- Public .conf files in this repository are sanitized and contain no private keys. Previously exposed keys should be regenerated with Proton.
+
+### Universal APK
+
+The build does not split the app into separate APKs. One APK bundles ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView library. Android 8.0 (API 26) or later is still required.

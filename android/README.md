@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha31)
+# Schleim Browser – Android-App (0.1.0-alpha32)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -11,7 +11,7 @@ Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie 
 - App-ID: de.schneckeschneck.schleimbrowser.
 - Mindestversion: Android 8.0 / API 26.
 - Ziel-SDK: API 35; Build-SDK: API 36.
-- Zielarchitektur: arm64-v8a.
+- Zielarchitektur: armeabi-v7a, arm64-v8a und x86_64 (universal APK; 32-bit x86 is not supported by the pinned GeckoView build).
 - JDK 17, Gradle 8.13, Android Gradle Plugin 8.13.2 und Kotlin Gradle Plugin 2.3.0.
 
 ## Browserfunktionen
@@ -74,3 +74,19 @@ Die Android-App wird zusammen mit der Extension im großen Release veröffentlic
 - Nederlands: ../docs/Niederländisch/ANDROID-BROWSER.md
 
 Die Anleitung und der Generator liegen im Repository unter Android-App/. Im heruntergeladenen ZIP heißt der vollständige Android-Studio-Projektordner **Android-App Template**.
+
+
+## Schleim VPN (WireGuard)
+
+Schleim Browser enthält einen integrierten VPN-Bereich im Browser-Menü. Er nutzt die eingebettete WireGuard-Tunnelbibliothek; es wird keine separate VPN-App gebaut. Die Extension öffnet den nativen VPN-Bereich über die GeckoView-Native-Messaging-Brücke.
+
+- Importiere eine aktuelle persönliche WireGuard-Konfigurationsdatei (.conf) aus deinem Proton-VPN-Konto. Die App speichert das Profil verschlüsselt mit Android Keystore (AES-GCM).
+- Der VPN-Tunnel ist auf Schleim Browser beschränkt. Andere Android-Apps werden nicht über diesen Tunnel geleitet.
+- Die Standortliste wird beim Öffnen des VPN-Bereichs aus dem Repository-Katalog servers.json abgerufen und zeigt Änderungen am Repository-Katalog.
+- Proton hat den früher öffentlich zugänglichen Serverlisten-Endpunkt abgeschaltet; eine automatische Live-Abfrage der Proton-Server ist daher nicht verlässlich möglich. Aktuelle persönliche .conf-Dateien müssen aus dem eigenen Proton-Konto importiert werden.
+- Free bezieht sich auf die von Proton angebotenen kostenlosen Standorte. Schleim Browser stellt selbst keinen VPN-Server bereit und garantiert keine Verfügbarkeit.
+- Die öffentlichen .conf-Dateien im Repository sind bereinigt und enthalten keine privaten Schlüssel. Frühere veröffentlichte Schlüssel sollten bei Proton erneuert werden.
+
+### Universelle APK
+
+Die APK wird nicht in mehrere Architektur-Dateien aufgeteilt. Sie bündelt ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64. 32-Bit-x86 wird von der gepinnten GeckoView-Bibliothek nicht unterstützt. Android 8.0 (API 26) oder neuer ist weiterhin erforderlich.
