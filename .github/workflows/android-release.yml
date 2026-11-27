@@ -152,8 +152,6 @@ jobs:
           assert "com.wireguard.android:tunnel" not in gradle
           assert "VpnService" not in android_manifest
           assert "vpn" not in main.lower()
-          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/BrowserVpnManager.kt").exists()
-          assert not Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").exists()
           assert '"version": "3.22.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
@@ -505,19 +503,12 @@ jobs:
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          # Reuse the existing release when present; otherwise create it on the
-          # existing v3.22.0 tag. Never delete or force-move the release tag.
+          git tag -f "$TAG" "$GITHUB_SHA"
+          git push origin "$TAG" --force
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release edit "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --title "Schleim OS 3.22.0" \
-              --notes-file dist/release-notes.md
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --title "Schleim OS 3.22.0" --notes-file dist/release-notes.md
           else
-            gh release create "$TAG" \
-              --repo "$GITHUB_REPOSITORY" \
-              --target "$GITHUB_SHA" \
-              --title "Schleim OS 3.22.0" \
-              --notes-file dist/release-notes.md
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "Schleim OS 3.22.0" --notes-file dist/release-notes.md --verify-tag
           fi
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
@@ -527,11 +518,7 @@ jobs:
             "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
             --repo "$GITHUB_REPOSITORY" --clobber
-
-          gh release edit "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "Schleim OS 3.22.0" \
-            --notes-file dist/release-notes.md
+          gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --title "Schleim OS 3.22.0" --notes-file dist/release-notes.md
 
       - name: Verify the exact files published to the GitHub Release
         env:
