@@ -1466,6 +1466,8 @@ class MainActivity : Activity() {
             runOnUiThread {
                 if (result.isSuccess) {
                     showToast("VPN-Profil „${result.getOrNull()}“ wurde verschlüsselt gespeichert.")
+                    vpnDialog?.dismiss()
+                    vpnDialog = null
                     showVpnDialog()
                 } else {
                     showToast("VPN-Import fehlgeschlagen: ${result.exceptionOrNull()?.message}")
