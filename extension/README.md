@@ -129,3 +129,10 @@ Das Projekt veröffentlicht zusätzlich die eigenständige Android-App **Schleim
 - [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
 
 Die Browser-Extension bleibt ein eigenständiges ZIP-Paket. Android-Kamera- und Mikrofonaufnahme sind in der App deaktiviert.
+
+
+## Schleim VPN on Android
+
+The new-tab page includes a Schleim VPN entry. In the Android GeckoView build, it sends a native message to the browser app and opens the built-in WireGuard panel. The extension does not implement a VPN tunnel itself and cannot start Android's VPN service on desktop browsers.
+
+VPN profiles are imported by the user in the Android app and stored encrypted with Android Keystore (AES-GCM). The tunnel is restricted to the Schleim Browser package. Do not place private WireGuard keys in extension files, the public server catalog, or the APK. The public catalog contains location labels only and is fetched from the repository when the VPN panel opens.
