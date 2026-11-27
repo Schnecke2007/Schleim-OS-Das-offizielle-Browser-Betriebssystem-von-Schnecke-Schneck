@@ -107,3 +107,5 @@ jobs:
           path: android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
           retention-days: 14
+
+# Universal APK validation tracks GeckoView's supported ABIs: ARMv7, ARM64 and x86_64.
