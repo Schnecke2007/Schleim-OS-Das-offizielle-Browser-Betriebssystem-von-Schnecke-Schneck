@@ -75,6 +75,6 @@ Lees de [uitgebreide Android-browserhandleiding](../../Niederländisch/ANDROID-B
 - Schleim Browser heeft WireGuard-VPN in de browser.
 - Je hebt je eigen volledige .conf-bestand uit je Proton-account nodig.
 - De serverlijst komt uit de Schleim OS-repository. De lijst toont geen live Proton-gegevens.
-- Alleen Schleim Browser gebruikt de tunnel. De Extension kan deze niet inschakelen.
+- Alleen Schleim Browser gebruikt de tunnel. De Extension kan het VPN-scherm openen, maar maakt de tunnel niet zelf.
 - De APK ondersteunt ARMv7, ARM64 en x86_64. 32-bit x86 werkt niet.
 - Android 8 of nieuwer is nodig. Android 7 werkt niet.
