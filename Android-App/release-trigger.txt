@@ -15,3 +15,5 @@ Requested release: Schleim Browser alpha32 / v3.22.0. Build and validate the APK
 Retry release build after all six 3.22.0 release-note files were added and the universal APK ABI validation was corrected to the three ABIs actually shipped by GeckoView.
 
 Re-run Android alpha32 build and publish after the complete 3.22.0 documentation is now present. Validate embedded WireGuard, the universal APK ABIs, and all release assets. No companion VPN APK.
+
+Retry release build after resolving the WireGuard GoBackend VpnService manifest merge conflict with tools:replace on android:exported.
