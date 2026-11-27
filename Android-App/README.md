@@ -26,7 +26,7 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 - Gradle 8.13 / Android Gradle Plugin 8.13.2
 - Kotlin Gradle Plugin 2.3.0
 - Internetzugang zum Laden von GeckoView und Android-Abhängigkeiten
-- ARM64-Gerät für die vorkonfigurierte ABI-Ausgabe
+- ARMv7-, ARM64- oder x86_64-Gerät; 32-Bit-x86 wird nicht unterstützt
 
 ## Projekt bauen
 
@@ -55,4 +55,4 @@ Importiere deine aktuelle persönliche WireGuard-Konfiguration (.conf) aus deine
 
 Die öffentlichen Serverdateien enthalten keine privaten Schlüssel. Frühere veröffentlichte Schlüssel sollten bei Proton erneuert werden. Alte OpenVPN-Dateien wurden entfernt.
 
-Die APK bündelt alle ABI-Varianten, die GeckoView und WireGuard bereitstellen. Mindestversion bleibt Android 8.0 / API 26.
+Die APK bündelt ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64. 32-Bit-x86 wird von der gepinnten GeckoView-Version nicht unterstützt. Mindestversion bleibt Android 8.0 / API 26.
