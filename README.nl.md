@@ -74,7 +74,7 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](docs/Niederländisch/RELEASE-NOTES-3.21.0.md) voor de versiegeschiedenis.
 
-**Schleim Browser voor Android:** Deze ontwikkelbranch voegt een universele APK toe voor ARMv7, ARM64, x86 en x86_64 (minimaal Android 8.0/API 26 blijft vereist) en Schleim VPN-bediening. De tunnel wordt geleverd door OpenVPN for Android als externe client; de Extension kan zelf geen systeembrede tunnel maken. De serverlijst en profielen worden uit de repository geladen en niet automatisch rechtstreeks bij Proton bijgewerkt. Actuele geldige providerprofielen zijn vereist. Details: [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [VPN in de Extension](extension/docs/VPN-ANDROID-NL.md).
+**Schleim Browser voor Android:** Deze ontwikkelbranch voegt een universele APK toe voor ARMv7, ARM64 en x86_64 (minimaal Android 8.0/API 26 blijft vereist) en Schleim VPN-bediening. De tunnel wordt geleverd door OpenVPN for Android als externe client; de Extension kan zelf geen systeembrede tunnel maken. De serverlijst en profielen worden uit de repository geladen en niet automatisch rechtstreeks bij Proton bijgewerkt. Actuele geldige providerprofielen zijn vereist. Details: [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) · [VPN in de Extension](extension/docs/VPN-ANDROID-NL.md).
 
 ## 📥 Downloaden en installeren
 
