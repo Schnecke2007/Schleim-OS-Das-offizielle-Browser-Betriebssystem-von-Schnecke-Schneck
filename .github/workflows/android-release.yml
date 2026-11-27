@@ -145,7 +145,7 @@ jobs:
           assert "androidx.webkit" not in gradle
           assert "versionCode = 32" in gradle
           assert 'versionName = "0.1.0-alpha32"' in gradle
-          for abi in ("armeabi-v7a", "arm64-v8a", "x86", "x86_64"):
+          for abi in ("armeabi-v7a", "arm64-v8a", "x86_64"):
               assert abi in gradle, f"Universal APK ABI missing from Gradle config: {abi}"
           assert "abiFilters" in gradle
           assert Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").is_file()
@@ -352,12 +352,17 @@ jobs:
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
           unzip -Z1 "$APK" > apk-entries.txt
-          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+          for abi in armeabi-v7a arm64-v8a x86_64; do
             if ! grep -q "^lib/$abi/" apk-entries.txt; then
-              echo "Universal APK is missing native libraries for ABI: $abi"
+              echo "Universal APK is missing GeckoView native libraries for supported ABI: $abi"
               exit 1
             fi
           done
+          if grep -q "^lib/x86/" apk-entries.txt; then
+            echo "32-bit x86 libraries are present."
+          else
+            echo "Notice: 32-bit x86 is not supported by the pinned GeckoView AAR; ARMv7, ARM64 and x86_64 are bundled."
+          fi
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
           # Any valid Android debug certificate is accepted. GitHub-hosted runners
           # may generate a fresh debug key, intentionally requiring reinstall.
@@ -464,7 +469,7 @@ jobs:
           from pathlib import Path
           Path("dist/release/Schleim-Browser-Android-update.json").write_text(json.dumps({
               "packageName": "de.schneckeschneck.schleimbrowser",
-              "versionCode": 31,
+              "versionCode": 32,
               "versionName": "0.1.0-alpha32",
               "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.22.0/${APK_NAME}",
               "sha256": "${APK_SHA256}"
@@ -490,7 +495,7 @@ jobs:
             echo "Unexpected old Android-App ZIP root folder found." >&2
             exit 1
           fi
-          echo "All project archives and the Alpha 31 APK are ready; the Android Studio ZIP root is Android-App Template."
+          echo "All project archives and the Alpha 32 APK are ready; the Android Studio ZIP root is Android-App Template."
 
       - name: Publish the complete 3.22.0 release
         env:
