@@ -1,6 +1,6 @@
 # Browser OS – Erweiterungs-Vorlage
 
-**Vorlagen-Version: 3.14.9**
+**Vorlagen-Version: 3.22.0**
 
 Browser OS ist eine neutrale, mehrsprachige Manifest-V3-Vorlage für Chromium-basierte Browser. Sie enthält Demo-Texte, Beispielgrafiken und Platzhalter statt persönlicher Originaldaten.
 
@@ -47,4 +47,4 @@ Alle Profile, Bilder, Konten, Repositories und rechtlichen Texte sind Beispiele.
 
 The template includes a Schleim VPN tile on the new-tab page. In an Android GeckoView host that registers the `browser` native-message bridge, the tile requests opening the host's native VPN panel. Desktop browsers show a fallback notice because extensions cannot directly start Android's `VpnService`.
 
-The native Android template includes WireGuard tunnel support and encrypted local profile storage. Import a current personal `.conf` file in the app; never bundle a private WireGuard key in the extension or public repository. The VPN tunnel is intended to be limited to the browser package.
+The native Android template includes WireGuard tunnel support and encrypted local profile storage. Import a current personal `.conf` file in the app; never bundle a private WireGuard key in the extension or public repository. The VPN tunnel is intended to be limited to the browser package. The Alpha 32 universal APK bundles ARMv7, ARM64 and x86_64. 32-bit x86 is not supported by the pinned GeckoView build; Android 8.0 (API 26) or newer is required.
