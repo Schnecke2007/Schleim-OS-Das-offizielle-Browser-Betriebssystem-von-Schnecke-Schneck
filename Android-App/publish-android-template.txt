@@ -1,0 +1,1 @@
+Build the privacy-scrubbed Android Studio template from the VPN integration branch and upload it to the existing v3.22.0 release.
