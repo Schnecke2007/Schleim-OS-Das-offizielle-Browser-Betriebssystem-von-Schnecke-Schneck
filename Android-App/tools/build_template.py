@@ -111,8 +111,8 @@ def main() -> None:
         for profile in vpn_server_dir.glob("*.conf"):
             profile_text = profile.read_text(encoding="utf-8")
             profile_text = re.sub(
-                r"(?im)^\\s*(?:PrivateKey|PresharedKey)\\s*=.*(?:\\r?\\n)?",
-                "# Secret key removed from public Android Studio template.\\n",
+                r"(?im)^\s*(?:PrivateKey|PresharedKey)\s*=.*(?:\r?\n)?",
+                "# Secret key removed from public Android Studio template.\n",
                 profile_text,
             )
             profile.write_text(profile_text, encoding="utf-8")
@@ -267,7 +267,7 @@ def main() -> None:
             if marker.lower() in value.lower():
                 leftovers.append(f"{file.relative_to(project)}: {marker}")
         if file.suffix.lower() == ".conf" and re.search(
-            r"(?im)^\\s*(?:PrivateKey|PresharedKey)\\s*=\\s*\\S+",
+            r"(?im)^\s*(?:PrivateKey|PresharedKey)\s*=\s*\S+",
             value,
         ):
             leftovers.append(f"{file.relative_to(project)}: private WireGuard key")
