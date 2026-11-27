@@ -21,6 +21,6 @@ Niet elke extensie heeft een eigen instellingenpagina. Niet elke extensie werkt 
 ## Versies
 
 - Browser-Extension: **3.21.0**
-- Schleim Browser: **0.1.0-alpha31**
+- Schleim Browser: **0.1.0-alpha32**
 
 Mogelijk moet je de oude app verwijderen voordat je een nieuwe installeert. Maak eerst een back-up van belangrijke gegevens.
