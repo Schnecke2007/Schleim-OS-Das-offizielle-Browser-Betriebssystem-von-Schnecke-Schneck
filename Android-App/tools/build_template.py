@@ -162,7 +162,7 @@ def main() -> None:
             "app/src/main/java/com/example/yourbrowser/VPN/Server/"
         )
         start = vpn_text.index("    val fallbackServers = listOf(")
-        end = vpn_text.index("\\n    )", start) + len("\\n    )")
+        end = vpn_text.index("\n    )", start) + len("\n    )")
         generic_fallback = """    val fallbackServers = listOf(
         Server(
             "example", "XX", "Example location", "example.ovpn", "example",
@@ -190,16 +190,16 @@ def main() -> None:
                 "configPath": "app/src/main/java/com/example/yourbrowser/VPN/Server/example.ovpn",
                 "status": "placeholder"
             }]
-        }, ensure_ascii=False, indent=2) + "\\n",
+        }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8"
     )
     server_readme = new_package / "VPN/Server/README.md"
     server_readme.parent.mkdir(parents=True, exist_ok=True)
     server_readme.write_text(
-        "# VPN server profiles\\n\\n"
+        "# VPN server profiles\n\n"
         "Place your own current OpenVPN profile files in this folder and update the repository-root "
         "vpn/servers.json manifest. Do not include usernames, passwords, private keys or personal "
-        "credentials in public repositories. The generic template does not ship provider profiles.\\n",
+        "credentials in public repositories. The generic template does not ship provider profiles.\n",
         encoding="utf-8"
     )
 
