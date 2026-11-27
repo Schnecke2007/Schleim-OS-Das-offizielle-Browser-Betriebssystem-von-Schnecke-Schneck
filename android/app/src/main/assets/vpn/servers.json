@@ -1,60 +1,69 @@
 {
-  "schemaVersion": 1,
+  "schema": 1,
   "provider": "Proton VPN",
   "plan": "Free",
-  "protocol": "WireGuard",
-  "source": "https://account.protonvpn.com/downloads",
-  "note": "Reference locations only. Server availability is not live. A complete, account-generated .conf with the user's own PrivateKey is required to connect.",
-  "locations": [
+  "updated": "2026-11-27",
+  "note": "This public catalog contains location labels only. Import your own current WireGuard .conf from your Proton account; do not share private keys.",
+  "servers": [
     {
-      "code": "CA",
+      "id": "CA-FREE-4",
+      "countryCode": "CA",
       "country": "Canada",
-      "server": "CA-FREE-4"
+      "profile": "wg-CA-FREE-4.conf"
     },
     {
-      "code": "CH",
+      "id": "CH-FREE-2",
+      "countryCode": "CH",
       "country": "Switzerland",
-      "server": "CH-FREE-2"
+      "profile": "wg-CH-FREE-2.conf"
     },
     {
-      "code": "JP",
+      "id": "JP-FREE-9",
+      "countryCode": "JP",
       "country": "Japan",
-      "server": "JP-FREE-9"
+      "profile": "wg-JP-FREE-9.conf"
     },
     {
-      "code": "MX",
+      "id": "MX-FREE-6",
+      "countryCode": "MX",
       "country": "Mexico",
-      "server": "MX-FREE-6"
+      "profile": "wg-MX-FREE-6.conf"
     },
     {
-      "code": "NL",
+      "id": "NL-FREE-15",
+      "countryCode": "NL",
       "country": "Netherlands",
-      "server": "NL-FREE-15"
+      "profile": "wg-NL-FREE-15.conf"
     },
     {
-      "code": "NO",
+      "id": "NO-FREE-3",
+      "countryCode": "NO",
       "country": "Norway",
-      "server": "NO-FREE-3"
+      "profile": "wg-NO-FREE-3.conf"
     },
     {
-      "code": "PL",
+      "id": "PL-FREE-5",
+      "countryCode": "PL",
       "country": "Poland",
-      "server": "PL-FREE-5"
+      "profile": "wg-PL-FREE-5.conf"
     },
     {
-      "code": "RO",
+      "id": "RO-FREE-17",
+      "countryCode": "RO",
       "country": "Romania",
-      "server": "RO-FREE-17"
+      "profile": "wg-RO-FREE-17.conf"
     },
     {
-      "code": "SG",
+      "id": "SG-FREE-2",
+      "countryCode": "SG",
       "country": "Singapore",
-      "server": "SG-FREE-2"
+      "profile": "wg-SG-FREE-2.conf"
     },
     {
-      "code": "US",
+      "id": "US-FREE-20",
+      "countryCode": "US",
       "country": "United States",
-      "server": "US-FREE-20"
+      "profile": "wg-US-FREE-20.conf"
     }
   ]
 }
