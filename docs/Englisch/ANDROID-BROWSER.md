@@ -9,18 +9,18 @@ The Android app does not replace Android. It is a browser that runs on Android.
 
 ## Download
 
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha31.apk**.
+Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha32.apk**.
 
-Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha31.apk)
+Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
 
 ## System requirements
 
 - Android 8.0 or newer (API 26+)
-- 64-bit ARM device (arm64-v8a)
+- ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) or x86_64
 - Internet access for websites, Extension content and online features
 - About 200 MB of free storage for the APK and additional app data
 
-The app is built with Android SDK 36. Its minimum runtime version remains Android 8.0 (API 26).
+The app is built with Android SDK 36. Minimum runtime remains Android 8.0 (API 26). The universal APK includes ARMv7, ARM64 and x86_64. 32-bit x86 is not supported by the pinned GeckoView build. Android 7 is not supported.
 
 ## Installation
 
