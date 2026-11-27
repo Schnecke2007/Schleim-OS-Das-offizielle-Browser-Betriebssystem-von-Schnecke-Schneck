@@ -1369,7 +1369,8 @@ class MainActivity : Activity() {
         ioExecutor.execute {
             val manager = runCatching { getBrowserVpnManager() }.getOrNull()
             val profiles = manager?.profileNames().orEmpty()
-            val locations = runCatching { manager?.fetchServerLocations().orEmpty() }.getOrDefault(emptyList())
+            val catalogData = runCatching { VpnServerCatalog.load(this) }.getOrNull()
+            val locations = catalogData?.servers?.map { "${it.country} · ${it.id}" }.orEmpty()
             val connected = manager?.isConnected() == true
             val activeProfile = manager?.connectedProfile()
             runOnUiThread {
@@ -1378,7 +1379,7 @@ class MainActivity : Activity() {
                 catalogLabel.text = if (locations.isEmpty()) {
                     "Serverkatalog nicht erreichbar. Bereits importierte Profile bleiben verfügbar."
                 } else {
-                    "Free-Standorte im aktuellen Repository-Katalog: " + locations.joinToString(", ")
+                    "${if (catalogData?.fromRemote == true) "Online aktualisiert" else "Offline-Kopie"} · Free-Standorte: " + locations.joinToString(", ")
                 }
                 status.text = when {
                     connected -> "Verbunden · ${activeProfile ?: selectedProfile ?: "VPN"}"
