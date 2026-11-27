@@ -1,7 +1,7 @@
 name: Build Schleim Browser Android APK
 
 on:
-  # Publish the consolidated 3.21.0 release only when all documentation,
+  # Publish the consolidated 3.22.0 release only when all documentation,
   # project files and template tooling have been committed.
   push:
     branches: [main]
@@ -143,9 +143,15 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
-          assert "versionCode = 31" in gradle
-          assert 'versionName = "0.1.0-alpha31"' in gradle
-          assert '"version": "3.21.0"' in Path("extension/manifest.json").read_text()
+          assert "versionCode = 32" in gradle
+          assert 'versionName = "0.1.0-alpha32"' in gradle
+          for abi in ("armeabi-v7a", "arm64-v8a", "x86", "x86_64"):
+              assert abi in gradle, f"Universal APK ABI missing from Gradle config: {abi}"
+          assert "abiFilters" in gradle
+          assert Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnServerCatalog.kt").is_file()
+          assert "VpnServerCatalog.load(this)" in main
+          assert "Free-Serverliste aktualisieren" in main
+          assert '"version": "3.22.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert 'android:label="Schleim Browser"' in android_manifest
@@ -287,9 +293,9 @@ jobs:
           assert "Eine Browser-Sicherung läuft noch." in main
           assert "Color.rgb(37, 18, 5)" in main
           for language in ("Deutsch", "Englisch", "Niederländisch"):
-              assert Path(f"docs/{language}/RELEASE-NOTES-3.21.0.md").is_file()
-              assert Path(f"docs/Leichte-Sprache/{language}/RELEASE-NOTES-3.21.0.md").is_file()
-          assert Path("extension/docs/RELEASE-NOTES-3.21.0.md").is_file()
+              assert Path(f"docs/{language}/RELEASE-NOTES-3.22.0.md").is_file()
+              assert Path(f"docs/Leichte-Sprache/{language}/RELEASE-NOTES-3.22.0.md").is_file()
+          assert Path("extension/docs/RELEASE-NOTES-3.22.0.md").is_file()
           assert "override fun onContextMenu(" in main
           assert "GeckoWebExecutor(runtime).fetch(request.build())" in main
           assert "private fun printCurrentPage()" in main
@@ -345,17 +351,24 @@ jobs:
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
           unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
           unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
+          unzip -Z1 "$APK" > apk-entries.txt
+          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+            if ! grep -q "^lib/$abi/" apk-entries.txt; then
+              echo "Universal APK is missing native libraries for ABI: $abi"
+              exit 1
+            fi
+          done
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
           # Any valid Android debug certificate is accepted. GitHub-hosted runners
           # may generate a fresh debug key, intentionally requiring reinstall.
-          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha31.apk"
+          cp "$APK" "Schleim-Browser-Android-0.1.0-alpha32.apk"
           echo "Release APK built and verified with the standard Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Schleim-Browser-Android-APK
-          path: Schleim-Browser-Android-0.1.0-alpha31.apk
+          path: Schleim-Browser-Android-0.1.0-alpha32.apk
           if-no-files-found: error
           retention-days: 30
 
@@ -366,30 +379,30 @@ jobs:
           mkdir -p dist
           {
             printf '## 🇩🇪 Deutsch\n\n'
-            cat docs/Deutsch/RELEASE-NOTES-3.21.0.md
+            cat docs/Deutsch/RELEASE-NOTES-3.22.0.md
             printf '\n\n---\n\n## 🇬🇧 English\n\n'
-            cat docs/Englisch/RELEASE-NOTES-3.21.0.md
+            cat docs/Englisch/RELEASE-NOTES-3.22.0.md
             printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
-            cat docs/Niederländisch/RELEASE-NOTES-3.21.0.md
+            cat docs/Niederländisch/RELEASE-NOTES-3.22.0.md
             printf '\n\n---\n\n## 🇩🇪 Leichte Sprache – Deutsch\n\n'
-            cat docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.21.0.md
+            cat docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.0.md
             printf '\n\n---\n\n## 🇬🇧 Plain language – English\n\n'
-            cat docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.21.0.md
+            cat docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.0.md
             printf '\n\n---\n\n## 🇳🇱 Eenvoudige taal – Nederlands\n\n'
-            cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.21.0.md
+            cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.0.md
           } > dist/release-notes.md
           test -s dist/release-notes.md
-          grep -q 'Neue Erweiterungs-Details' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.21.0.md
-          grep -q 'New extension details' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.21.0.md
-          grep -q 'Nieuwe extensiedetails' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.21.0.md
+          grep -q 'Neue Erweiterungs-Details' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.0.md
+          grep -q 'New extension details' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.0.md
+          grep -q 'Nieuwe extensiedetails' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.0.md
 
-      - name: Prepare Schleim OS 3.21.0 release
+      - name: Prepare Schleim OS 3.22.0 release
         id: target
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          TAG="v3.21.0"
+          TAG="v3.22.0"
           # Publication recreates this release only after every artifact is built.
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
@@ -442,9 +455,9 @@ jobs:
           fi
 
           # Copy the separately validated production APK into the release package.
-          cp "Schleim-Browser-Android-0.1.0-alpha31.apk" dist/release/
+          cp "Schleim-Browser-Android-0.1.0-alpha32.apk" dist/release/
 
-          APK_NAME="Schleim-Browser-Android-0.1.0-alpha31.apk"
+          APK_NAME="Schleim-Browser-Android-0.1.0-alpha32.apk"
           APK_SHA256="$(sha256sum "dist/release/$APK_NAME" | awk '{print $1}')"
           python3 - <<PY
           import json
@@ -452,8 +465,8 @@ jobs:
           Path("dist/release/Schleim-Browser-Android-update.json").write_text(json.dumps({
               "packageName": "de.schneckeschneck.schleimbrowser",
               "versionCode": 31,
-              "versionName": "0.1.0-alpha31",
-              "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.21.0/${APK_NAME}",
+              "versionName": "0.1.0-alpha32",
+              "apkUrl": "https://github.com/${GITHUB_REPOSITORY}/releases/download/v3.22.0/${APK_NAME}",
               "sha256": "${APK_SHA256}"
           }, indent=2) + "\n", encoding="utf-8")
           PY
@@ -463,7 +476,7 @@ jobs:
             sha256sum \
               Schleim-OS-Extension.zip \
               Browser-OS-Extension-Template.zip \
-              Schleim-Browser-Android-0.1.0-alpha31.apk \
+              Schleim-Browser-Android-0.1.0-alpha32.apk \
               Schleim-Browser-Android-update.json \
               Schleim-Browser-Android-Studio-Template.zip \
               > Schleim-OS-SHA256SUMS.txt
@@ -479,13 +492,13 @@ jobs:
           fi
           echo "All project archives and the Alpha 31 APK are ready; the Android Studio ZIP root is Android-App Template."
 
-      - name: Publish the complete 3.21.0 release
+      - name: Publish the complete 3.22.0 release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          # The pre-existing v3.21.0 tag may point to an earlier, incomplete build.
+          # The pre-existing v3.22.0 tag may point to an earlier, incomplete build.
           # Recreate it at the exact commit whose APK and templates were just validated.
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release delete "$TAG" --cleanup-tag --yes --repo "$GITHUB_REPOSITORY"
@@ -493,12 +506,12 @@ jobs:
           gh release create "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
-            --title "Schleim OS 3.21.0" \
+            --title "Schleim OS 3.22.0" \
             --notes-file dist/release-notes.md
           gh release upload "$TAG" \
             "dist/release/Schleim-OS-Extension.zip" \
             "dist/release/Browser-OS-Extension-Template.zip" \
-            "dist/release/Schleim-Browser-Android-0.1.0-alpha31.apk" \
+            "dist/release/Schleim-Browser-Android-0.1.0-alpha32.apk" \
             "dist/release/Schleim-Browser-Android-update.json" \
             "dist/release/Schleim-Browser-Android-Studio-Template.zip" \
             "dist/release/Schleim-OS-SHA256SUMS.txt" \
@@ -506,7 +519,7 @@ jobs:
 
           gh release edit "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Schleim OS 3.21.0" \
+            --title "Schleim OS 3.22.0" \
             --notes-file dist/release-notes.md
 
       - name: Verify the exact files published to the GitHub Release
@@ -520,7 +533,7 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --pattern "Schleim-OS-Extension.zip" \
             --pattern "Browser-OS-Extension-Template.zip" \
-            --pattern "Schleim-Browser-Android-0.1.0-alpha31.apk" \
+            --pattern "Schleim-Browser-Android-0.1.0-alpha32.apk" \
             --pattern "Schleim-Browser-Android-update.json" \
             --pattern "Schleim-Browser-Android-Studio-Template.zip" \
             --pattern "Schleim-OS-SHA256SUMS.txt" \
@@ -534,7 +547,7 @@ jobs:
           for asset in \
             Schleim-OS-Extension.zip \
             Browser-OS-Extension-Template.zip \
-            Schleim-Browser-Android-0.1.0-alpha31.apk \
+            Schleim-Browser-Android-0.1.0-alpha32.apk \
             Schleim-Browser-Android-update.json \
             Schleim-Browser-Android-Studio-Template.zip; do
             cmp -s "dist/release/$asset" "dist/verify/$asset"
@@ -545,7 +558,7 @@ jobs:
 
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose \
-            "dist/verify/Schleim-Browser-Android-0.1.0-alpha31.apk"
+            "dist/verify/Schleim-Browser-Android-0.1.0-alpha32.apk"
 
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null
-          echo "Release v3.21.0 published; every archive, checksum and APK signature verified."
+          echo "Release v3.22.0 published; every archive, checksum and APK signature verified."
