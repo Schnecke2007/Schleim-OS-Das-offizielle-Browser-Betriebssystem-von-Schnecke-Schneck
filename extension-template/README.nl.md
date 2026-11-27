@@ -43,6 +43,8 @@ De updatefunctie downloadt uitsluitend **Browser-OS-Extension-Template.zip** uit
 Alle profielen, afbeeldingen, accounts, repositories en juridische teksten zijn voorbeelden. Vervang ze voordat je publiceert.
 
 
-## Android-ondersteuning en universele APK
+## Optionele Android-VPN-brug
 
-De Android-app gebruikt Mozilla GeckoView. De universele APK bevat ARMv7 (`armeabi-v7a`), ARM64 (`arm64-v8a`) und x86_64 (`x86_64`). 32-bit x86 wordt niet ondersteund door de vastgezette GeckoView-versie. Android 8.0 (API 26) of hoger is vereist.
+De template bevat een Schleim VPN-tegel op de nieuwe-tabpagina. In een Android-GeckoView-host die de native-messagebrug `browser` registreert, vraagt de tegel om het native VPN-scherm te openen. Desktopbrowsers tonen een melding, omdat extensies Android `VpnService` niet rechtstreeks kunnen starten.
+
+De native Android-template bevat WireGuard-tunnelondersteuning en versleutelde lokale profielopslag. Importeer een actuele persoonlijke `.conf`-configuratie in de app; plaats nooit een privé-WireGuard-sleutel in de extensie of openbare repository. De VPN-tunnel is bedoeld om alleen het browserpakket te gebruiken.

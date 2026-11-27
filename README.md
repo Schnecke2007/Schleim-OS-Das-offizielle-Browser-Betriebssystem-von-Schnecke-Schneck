@@ -76,7 +76,7 @@ Auf der [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-o
 
 Die Release-Beschreibung enthält Neuerungen, Verbesserungen, bekannte Grenzen und – sofern vorhanden – Fehlerbehebungen. Die Versionshistorie findest du in den [Release Notes](docs/Deutsch/RELEASE-NOTES-3.21.0.md).
 
-**Schleim Browser 3.21.0 für Android:** Der Erweiterungsmanager bietet jetzt für jedes Add-on einen eigenen Detailbereich mit tatsächlich gemeldeten Berechtigungen und Einstellungen. Kompatible Erweiterungen können für private Fenster freigegeben werden; die Einstellung wird mit dem verschlüsselten Browser-Profil gesichert. Einzelheiten stehen in der [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md).
+**Schleim Browser 3.21.0 für Android:** Der Erweiterungsmanager bietet jetzt für jedes Add-on einen eigenen Detailbereich mit tatsächlich gemeldeten Berechtigungen und Einstellungen. Kompatible Erweiterungen können für private Fenster freigegeben werden; die Einstellung wird mit dem verschlüsselten Browser-Profil gesichert. Einzelheiten und VPN-Grenzen stehen in der [Android-Anleitung](docs/Deutsch/ANDROID-BROWSER.md).
 
 ## 📥 Download und Installation
 
@@ -284,3 +284,7 @@ Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mic
 **Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
 
 © 2026 Schnecke Schneck.
+
+## Schleim VPN für Android
+
+Schleim Browser enthält eine native WireGuard-Integration im Android-Browsermenü. Du importierst deine persönliche aktuelle Proton-WireGuard-Konfiguration; sie wird lokal verschlüsselt gespeichert. Der Tunnel gilt nur für Schleim Browser, nicht für andere Android-Apps. Die Standortliste wird aus dem Repository-Katalog aktualisiert; sie ist keine Live-Abfrage von Proton. Private Schlüssel gehören nicht in öffentliche Dateien.

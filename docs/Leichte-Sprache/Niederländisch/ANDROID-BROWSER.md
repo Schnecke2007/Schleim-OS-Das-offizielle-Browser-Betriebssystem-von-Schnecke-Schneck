@@ -40,7 +40,7 @@ De Schleim OS-startpagina is inbegrepen.
 - **Aanmelden:** Eerst opent de GitHub App-pagina in een nieuw tabblad. Installeer daar **Schleim OS Account**. Ga daarna terug naar Instellingen → Schleim-account en tik op Verder. De apparaatcode wordt getoond en gekopieerd. De GitHub-goedkeuringspagina opent in een ander tabblad.
 - **Cloudback-up:** De back-up wordt versleuteld opgeslagen in een privérepository op GitHub. Je hebt je GitHub-account en je back-upwachtwoord nodig om deze op een ander apparaat te herstellen.
 - **Details van extensies:** Elke extensie heeft een knop **Details**. Je ziet daar de gegevens die de browser over die extensie heeft. Bijvoorbeeld de naam, versie en machtigingen. Je kunt de eigen instellingenpagina openen als de extensie die heeft.
-- **Privétabbladen:** Bij geschikte extensies kun je **Uitvoeren in privévensters** inschakelen. De extensie moet privétabbladen ondersteunen. De extensie moet zelf privétabbladen ondersteunen. De instelling wordt in de browserback-up opgeslagen.
+- **Privétabbladen:** Bij geschikte extensies kun je **Uitvoeren in privévensters** inschakelen. De extensie moet privétabbladen ondersteunen. Deze instelling maakt op zichzelf geen VPN. De instelling wordt in de browserback-up opgeslagen.
 
 
 ## Updates
@@ -69,3 +69,12 @@ De Android-app heeft eigen updates.
 Lees de [uitgebreide Android-browserhandleiding](../../Niederländisch/ANDROID-BROWSER.md).
 
 [Terug naar de Nederlandse handleiding in eenvoudige taal](README.md)
+
+## Schleim VPN en apparaten
+
+- Schleim Browser heeft WireGuard-VPN in de browser.
+- Je hebt je eigen volledige .conf-bestand uit je Proton-account nodig.
+- De serverlijst komt uit de Schleim OS-repository. De lijst toont geen live Proton-gegevens.
+- Alleen Schleim Browser gebruikt de tunnel. De Extension kan het VPN-scherm openen, maar maakt de tunnel niet zelf.
+- De APK ondersteunt ARMv7, ARM64 en x86_64. 32-bit x86 werkt niet.
+- Android 8 of nieuwer is nodig. Android 7 werkt niet.

@@ -74,7 +74,7 @@ Op de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-of
 
 Elke release beschrijft nieuwe functies, verbeteringen, bekende beperkingen en waar van toepassing foutoplossingen. Bekijk de [release-opmerkingen](docs/Niederländisch/RELEASE-NOTES-3.21.0.md) voor de versiegeschiedenis.
 
-**Schleim Browser 3.21.0 voor Android:** De extensiebeheerder heeft nu een eigen detailweergave voor elke add-on, gebaseerd op metadata en machtigingen die GeckoView echt doorgeeft. Compatibele extensies kunnen in privévensters worden toegestaan; deze instelling wordt meegenomen in de versleutelde profielback-up en het herstel. Lees de [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) voor details.
+**Schleim Browser 3.21.0 voor Android:** De extensiebeheerder heeft nu een eigen detailweergave voor elke add-on, gebaseerd op metadata en machtigingen die GeckoView echt doorgeeft. Compatibele extensies kunnen in privévensters worden toegestaan; deze instelling wordt meegenomen in de versleutelde profielback-up en het herstel. Lees de [Android-handleiding](docs/Niederländisch/ANDROID-BROWSER.md) voor details en VPN-beperkingen.
 
 ## 📥 Downloaden en installeren
 
@@ -280,3 +280,7 @@ Wil je meer zien van mijn projecten en updates? Ik vind het leuk als je mij volg
 **Schleim OS** wordt ontwikkeld en onderhouden door **Schnecke Schneck**.
 
 © 2026 Schnecke Schneck.
+
+## Schleim VPN voor Android
+
+Schleim Browser bevat native WireGuard-integratie in het Android-browsermenu. Importeer je eigen actuele Proton-WireGuard-profiel; het wordt lokaal versleuteld opgeslagen. De tunnel geldt alleen voor Schleim Browser en niet voor andere Android-apps. De locatielijst wordt vernieuwd vanuit de repositorycatalogus, niet via een live Proton-API. Publiceer nooit privésleutels.
