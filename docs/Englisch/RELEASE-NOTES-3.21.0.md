@@ -25,7 +25,7 @@
 ## Versions
 
 - Browser Extension: **3.21.0**
-- Schleim Browser for Android: **0.1.0-alpha31**
+- Schleim Browser for Android: **0.1.0-alpha32**
 - Mozilla GeckoView · Android 8.0+ · ARM64
 
 The Android APK uses the standard Android debug signing key. Depending on the build, the old app may need to be uninstalled first. Back up important local data and, when needed, create an encrypted profile backup before uninstalling.
