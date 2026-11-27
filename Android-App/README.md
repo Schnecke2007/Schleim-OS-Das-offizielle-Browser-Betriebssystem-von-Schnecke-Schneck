@@ -32,7 +32,7 @@ Passe vor dem eigenen Build mindestens Folgendes an:
 
 Die Android-Vorlage enthält die native **VPN-Bridge** und ein Beispielmanifest unter `vpn/servers.json`. Sie steuert OpenVPN for Android als externen Client; eine eigene OpenVPN-Engine ist nicht eingebettet. Die generierte ZIP-Datei enthält aus Sicherheits- und Lizenzgründen keine produktiven `.ovpn`-Profile. Trage dein Repository in `VpnIntegration.kt` ein, ergänze aktuelle Anbieterprofile im Serverordner und aktualisiere das Manifest. Keine Zugangsdaten oder privaten Schlüssel in ein öffentliches Repository schreiben.
 
-Die universelle APK wird erst nach erfolgreichem CI-Build für alle vier ABIs veröffentlicht.
+Die universelle APK wird erst nach erfolgreichem CI-Build für alle drei unterstützten ABIs veröffentlicht.
 
 ## Projekt bauen
 
