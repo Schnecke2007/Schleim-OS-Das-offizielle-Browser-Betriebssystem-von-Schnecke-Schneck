@@ -33,7 +33,7 @@ Die Android-APK verwendet die normale Android-Debug-Signierung. Je nach Build ka
 
 ## Android – Alpha 32
 
-- Universelle APK für ARMv7, ARM64 und x86_64; Mindestversion Android 8.0 (API 26) bleibt bestehen.
+- Universelle APK für ARMv7, ARM64 und x86_64; 32-Bit-x86 wird von der aktuellen GeckoView-Version nicht unterstützt. Android 8.0 (API 26) bleibt Mindestversion.
 - Schleim VPN erhält ein Browser-Menü und eine Extension-Kachel.
 - Die Verbindung wird über OpenVPN for Android als externen Client angefordert. Schleim Browser enthält keine eigene OpenVPN-Engine.
 - Serverliste und Profile werden aus dem Repository geladen. Änderungen im Repository werden ohne APK-Update übernommen.
