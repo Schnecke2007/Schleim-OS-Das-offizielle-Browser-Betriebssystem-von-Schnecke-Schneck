@@ -14,7 +14,7 @@ permissions:
 
 concurrency:
   group: schleim-os-android-apk
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-android:
