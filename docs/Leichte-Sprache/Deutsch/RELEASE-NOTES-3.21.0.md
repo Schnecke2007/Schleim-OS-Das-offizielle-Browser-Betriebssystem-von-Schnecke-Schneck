@@ -24,3 +24,13 @@ Nicht jede Erweiterung hat eine eigene Einstellungsseite. Nicht jede Erweiterung
 - Schleim Browser: **0.1.0-alpha32**
 
 Vor einer Neuinstallation kann es nötig sein, die alte App zu löschen. Sichere wichtige Daten vorher.
+
+
+## Android – Alpha 32
+
+- Die neue APK passt zu vier Prozessoren: ARMv7, ARM64, x86 und x86_64.
+- Android 8.0 oder neuer wird weiter gebraucht.
+- Schleim Browser hat jetzt ein VPN-Menü.
+- Die Extension hat eine VPN-Kachel.
+- Für die VPN-Verbindung braucht man zusätzlich OpenVPN for Android.
+- Die alten Proton-Dateien sind von 2023. Sie sind nicht geprüft. Bitte nutze neue VPN-Dateien und eigene OpenVPN-Zugangsdaten.
