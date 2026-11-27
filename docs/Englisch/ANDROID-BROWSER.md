@@ -16,7 +16,7 @@ Direct download: [Schleim Browser for Android – APK](https://github.com/Schnec
 ## System requirements
 
 - Android 8.0 or newer (API 26+)
-- ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), 32-bit x86 or x86_64
+- ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), x86_64 (32-bit x86 is not supported by current GeckoView)
 - Internet access for websites, Extension content and online features
 - About 200 MB of free storage for the APK and additional app data
 
@@ -135,6 +135,6 @@ The release also provides **Schleim-Browser-Android-Studio-Template.zip**. The a
 - Minimum Android version: API 26
 - Target SDK: API 35
 - Build SDK: API 36
-- APK architecture: universal (armeabi-v7a, arm64-v8a, x86 and x86_64)
+- APK architecture: universal (armeabi-v7a, arm64-v8a and x86_64)
 
 [Main documentation](../../README.en.md) · [Browser Extension installation](INSTALLATION.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
