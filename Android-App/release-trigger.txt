@@ -17,3 +17,5 @@ Retry release build after all six 3.22.0 release-note files were added and the u
 Re-run Android alpha32 build and publish after the complete 3.22.0 documentation is now present. Validate embedded WireGuard, the universal APK ABIs, and all release assets. No companion VPN APK.
 
 Retry release build after resolving the WireGuard GoBackend VpnService manifest merge conflict with tools:replace on android:exported.
+
+Retry after fixing the Python regex escaping in the Android Studio template sanitizer. Verify that PrivateKey/PresharedKey lines are removed from template .conf files before packaging.
