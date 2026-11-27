@@ -21,6 +21,6 @@ Not every extension has its own settings page. Not every extension works with Ge
 ## Versions
 
 - Browser Extension: **3.21.0**
-- Schleim Browser: **0.1.0-alpha31**
+- Schleim Browser: **0.1.0-alpha32**
 
 You may need to uninstall the old app before installing a new one. Back up important data first.
