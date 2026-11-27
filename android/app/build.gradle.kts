@@ -17,7 +17,7 @@ android {
         targetSdk = 35
         versionCode = 32
         versionName = "0.1.0-alpha32"
-        // One universal APK includes all four GeckoView Android ABIs.
+        // One universal APK includes the three ABIs supported by this GeckoView version.
         // Devices install/use only the native libraries matching their CPU.
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
