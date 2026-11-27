@@ -18,7 +18,7 @@ TEXT_SUFFIXES = {
 
 REPLACEMENTS = [
     ("Schleim-Browser-Android-Studio-Template.zip", "Android-Studio-Template.zip"),
-    ("schleimbrowser://vpn", "yourbrowser://vpn"),
+    ("schleimbrowser://vpn", "browseros://vpn"),
     ("Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck",
      "YOUR_GITHUB_REPOSITORY"),
     ("schleim-os-android@schneckeschneck.de", "your-browser@example.com"),
