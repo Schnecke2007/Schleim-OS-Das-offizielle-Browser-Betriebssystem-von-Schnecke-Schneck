@@ -30,7 +30,8 @@
     "storage",
     "clipboardWrite",
     "offscreen",
-    "notifications"
+    "notifications",
+    "nativeMessaging"
   ],
   "minimum_chrome_version": "109",
   "background": {
