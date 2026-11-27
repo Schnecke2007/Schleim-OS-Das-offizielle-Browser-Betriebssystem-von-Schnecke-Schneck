@@ -1,6 +1,6 @@
 # Schleim OS | Das offizielle Browser-Betriebssystem von Schnecke Schneck
 
-**Version 3.17.0 · Chromium-Erweiterung · Manifest V3**
+**Version 3.21.0 · Chromium-Erweiterung · Manifest V3**
 
 Schleim OS ersetzt den normalen neuen Tab durch einen anpassbaren Startbildschirm mit App-Kacheln.
 
@@ -26,8 +26,9 @@ Neben der Chromium-Extension gibt es **Schleim Browser** als eigenständige Andr
 - [Android guide in English](../docs/Englisch/ANDROID-BROWSER.md)
 - [Android-handleiding in het Nederlands](../docs/Niederländisch/ANDROID-BROWSER.md)
 - [Android-Studio-Projektvorlage](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-Studio-Template.zip)
+- [Schleim VPN – Android-Integration auf Deutsch](docs/VPN-ANDROID-DE.md) · [English](docs/VPN-ANDROID-EN.md) · [Nederlands](docs/VPN-ANDROID-NL.md)
 
-Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Kamera- und Mikrofonaufnahme sind in der Android-App deaktiviert; die Browser-Extension behält ihre eigene, geräteabhängige Webkamera-Funktion.
+Die Android-App benötigt Android 8.0 oder neuer. Die universelle APK ist für ARMv7, ARM64, x86 und x86_64 vorgesehen. Kamera- und Mikrofonaufnahme sind in der Android-App deaktiviert; die Browser-Extension behält ihre eigene, geräteabhängige Webkamera-Funktion.
 
 
 
@@ -53,13 +54,14 @@ Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Ka
 - Manuelle Cloud-Sicherung und Wiederherstellung ausschließlich unter **Einstellungen → Schleim-Konto**
 - Backup-Format 2 mit App-Reihenfolge, installierten Store-Apps und Hintergrundbild
 - Benutzeroberfläche auf Deutsch, Englisch und Niederländisch
+- Schleim-VPN-Kachel in der Extension; in Schleim Browser Android öffnet sie die native VPN-Steuerung. Für den systemweiten Tunnel wird OpenVPN for Android als externer Client benötigt.
 - Werbefreie Erweiterungsoberfläche
 
 ## Projektdateien
 
 - `manifest.json` – Manifest V3, Neuer-Tab-Override, Hintergrund-Service-Worker und Berechtigungen
 - `scripts/media-upload-worker.js` – verwaltet Upload-Warteschlange, Authentifizierung und Benachrichtigungen
-- [Release Notes 3.17.0](docs/RELEASE-NOTES-3.17.0.md) – Android-Browser, Verbesserungen der Extension und aktuelle Funktionen
+- [Release Notes 3.21.0](docs/RELEASE-NOTES-3.21.0.md) – Android-Browser, Verbesserungen der Extension und aktuelle Funktionen
 - [Release Notes 3.15.0](docs/RELEASE-NOTES-3.15.0.md) – Hintergrund-Upload, erste Komprimierung und bekannte Grenzen
 - `pages/media-upload.html` und `scripts/media-upload-offscreen.js` – komprimieren Medien und laden sie unabhängig vom geöffneten Tab hoch
 - `pages/newtab.html` – Erweiterungsoberfläche
