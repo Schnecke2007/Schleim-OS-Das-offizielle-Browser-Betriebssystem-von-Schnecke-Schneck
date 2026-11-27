@@ -13,3 +13,5 @@ Update the Android Studio template, Extension template, and documentation/releas
 Retry release publication after fixing tag handling: preserve the existing tag and create v3.22.0 only if the release is absent; use GH_RELEASE_TOKEN when configured, otherwise GITHUB_TOKEN.
 
 Final rerun after restoring the requested native VPN integration to main; use this commit as the source for alpha32 and the complete v3.22.0 release.
+
+Rerun after restoring the VPN-aware validation workflow and preserving the existing v3.22.0 tag.
