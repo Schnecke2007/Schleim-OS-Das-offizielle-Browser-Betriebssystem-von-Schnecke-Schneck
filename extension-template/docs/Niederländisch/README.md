@@ -7,6 +7,7 @@ Welkom bij de Nederlandse documentatie van het Browser OS-template.
 - [Account en privécloud](ACCOUNT-EN-PRIVECLOUD.md)
 - [Functies en technische informatie](TECHNIEK.md)
 - [Externe webapps](EXTERNE-WEB-APP.md)
+- [Android-VPN-bridge](ANDROID-VPN-BRIDGE.md)
 - [Release-informatie](RELEASE-NOTES.md)
 
 Het template bevat een voorbeeldaccount, foto- en videocloud, camera-app, Browser Store en zelfstandige demo. Persoonlijke gegevens, app-aanmeldgegevens en GitHub-instellingen zijn tijdelijke invulvelden.
