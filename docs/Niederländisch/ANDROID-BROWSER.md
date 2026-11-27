@@ -16,11 +16,11 @@ Directe download: [Schleim Browser voor Android – APK](https://github.com/Schn
 ## Systeemvereisten
 
 - Android 8.0 of nieuwer (API 26+)
-- 64-bits ARM-apparaat (arm64-v8a)
+- ARMv7 (armeabi-v7a), ARM64 (arm64-v8a), 32-bits x86 of x86_64
 - Internetverbinding voor websites, Extension-inhoud en online functies
 - Ongeveer 200 MB vrije opslagruimte voor de APK en aanvullende appgegevens
 
-De app wordt gebouwd met Android SDK 36. De minimale Android-runtimeversie blijft Android 8.0 (API 26).
+De app wordt gebouwd met Android SDK 36. De minimale Android-runtimeversie blijft Android 8.0 (API 26). De universele APK bevat GeckoView-native bibliotheken voor alle vier genoemde CPU-architecturen. Android gebruikt bij installatie de passende ABI. ARMv7/ARMv8 zijn CPU-architecturen, geen Android-versies.
 
 ## Installatie
 
@@ -58,6 +58,24 @@ De Android-app bundelt de Schleim OS-Extension in GeckoView. De startpagina, app
 - Camera- en microfoonopnamen zijn in de Android-app bewust uitgeschakeld. De Camera-tegel legt deze beperking uit. De JavaScript-webcam van de oorspronkelijke browser-Extension blijft hiervan gescheiden.
 - Sommige websites blokkeren insluiting in andere pagina's. De inhoud kan leeg blijven of moet rechtstreeks worden geopend.
 - Niet elke Chrome-desktopextensie is compatibel met GeckoView.
+
+## Schleim VPN – Proton Free
+
+In het browsermenu staat **Schleim VPN**. Het toont locaties uit het servermanifest van de repository en kan een profiel importeren, een verbinding aanvragen of de verbinding verbreken.
+
+**Technische werking:** Schleim Browser bestuurt de gratis companion-app **OpenVPN for Android**. Die aparte app levert de Android-`VpnService`-tunnel en beheert de systeemtoestemming, inloggegevens en verbindingsstatus. Schleim Browser bevat momenteel geen eigen OpenVPN-engine en is zelf geen VPN-provider.
+
+1. Installeer [OpenVPN for Android via F-Droid](https://f-droid.org/packages/de.blinkt.openvpn/).
+2. Open **Browsermenu → Schleim VPN** en kies een locatie.
+3. Tik op **Profiel importeren**. Schleim Browser downloadt het profiel uit de repository en opent het in de OpenVPN-app.
+4. Importeer het profiel daar. Behoud de profielnaam die in het venster staat en voer je **Proton OpenVPN-inloggegevens** in. Je gewone Proton-accountwachtwoord is hiervoor niet geschikt.
+5. Kies **Verbinden**. Android kan een VPN-toestemmingsvenster tonen. Gebruik **Verbreken** in het browsermenu of de OpenVPN-app om de tunnel te stoppen.
+
+De serverlijst wordt vernieuwd vanuit `vpn/servers.json` wanneer het VPN-paneel wordt geopend. Het gekozen profiel wordt bij het importeren rechtstreeks uit de repository gedownload. Wijzigingen aan de repositorylijst en profielbestanden verschijnen daardoor zonder APK-update.
+
+**Belangrijke beperking:** Dit vernieuwt de lijst en bestanden in de Schleim Browser-repository, niet automatisch de upstream serverinventaris van Proton. Proton kan servers en handmatige profielen vervangen of verwijderen. De huidige repositoryprofielen komen uit een oudere configuratieset en zijn niet als actueel of actief bevestigd. Proton meldt dat handmatige OpenVPN-configuraties van vóór september 2023 na eind februari 2026 niet meer worden ondersteund. Vervang de profielen in de repository door actuele bestanden die je bij Proton downloadt voordat je ze als werkend beschouwt. [Proton: oude OpenVPN-configuraties bijwerken](https://protonvpn.com/blog/old-ovpn-configs) · [OpenVPN-inloggegevens](https://protonvpn.com/support/vpn-auth-fail-solution)
+
+Het Proton Free-abonnement is gratis; Schleim Browser rekent voor deze integratie geen VPN-kosten. Proton bepaalt welke locaties beschikbaar zijn.
 
 ## Geschiedenis, DNS en automatisch opgeslagen tabbladen
 
@@ -117,6 +135,6 @@ De release bevat ook **Schleim-Browser-Android-Studio-Template.zip**. Het archie
 - Minimale Android-versie: API 26
 - Target SDK: API 35
 - Build SDK: API 36
-- Doelarchitectuur: ARM64
+- APK-architectuur: universeel (armeabi-v7a, arm64-v8a, x86 en x86_64)
 
 [Hoofddocumentatie](../../README.nl.md) · [Installatie van de browser-Extension](INSTALLATIE.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
