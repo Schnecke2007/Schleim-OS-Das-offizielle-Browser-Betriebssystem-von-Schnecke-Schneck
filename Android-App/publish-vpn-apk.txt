@@ -1,1 +1,3 @@
 Publish the verified VPN-enabled Schleim Browser alpha32 APK from workflow run 46057639649 to the existing v3.22.0 release. SHA-256 is pinned in the publishing workflow.
+
+Update the v3.22.0 release notes so they accurately describe the native GeckoView VPN panel bridge.
