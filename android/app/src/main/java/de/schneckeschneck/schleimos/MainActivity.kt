@@ -1286,6 +1286,12 @@ class MainActivity : Activity() {
             background = roundedBackground(surfaceRaised, border, 12)
         }
         var selectedProfile: String? = null
+        val catalogLabel = TextView(this).apply {
+            text = "Free-Standorte werden geladen …"
+            textSize = 11f
+            setTextColor(textMuted)
+            setPadding(dp(4), dp(2), dp(4), dp(10))
+        }
         val locationTile = createMenuTile("🌍", "Standort auswählen", "Wähle ein importiertes WireGuard-Profil") {
             ioExecutor.execute {
                 val profiles = runCatching { getBrowserVpnManager().profileNames() }.getOrDefault(emptyList())
@@ -1330,6 +1336,7 @@ class MainActivity : Activity() {
         parts.body.addView(status, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             bottomMargin = dp(10)
         })
+        parts.body.addView(catalogLabel, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         parts.body.addView(locationTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             bottomMargin = dp(8)
         })
@@ -1348,11 +1355,17 @@ class MainActivity : Activity() {
         ioExecutor.execute {
             val manager = runCatching { getBrowserVpnManager() }.getOrNull()
             val profiles = manager?.profileNames().orEmpty()
+            val locations = runCatching { manager?.fetchServerLocations().orEmpty() }.getOrDefault(emptyList())
             val connected = manager?.isConnected() == true
             val activeProfile = manager?.connectedProfile()
             runOnUiThread {
                 if (isFinishing || isDestroyed) return@runOnUiThread
                 selectedProfile = activeProfile ?: profiles.firstOrNull()
+                catalogLabel.text = if (locations.isEmpty()) {
+                    "Serverkatalog nicht erreichbar. Bereits importierte Profile bleiben verfügbar."
+                } else {
+                    "Free-Standorte im aktuellen Repository-Katalog: " + locations.joinToString(", ")
+                }
                 status.text = when {
                     connected -> "Verbunden · ${activeProfile ?: selectedProfile ?: "VPN"}"
                     profiles.isEmpty() -> "Nicht verbunden · Noch keine Konfiguration importiert"
