@@ -95,4 +95,4 @@ Schleim Browser includes a native VPN section in the browser menu. It uses the e
 
 ### Universal APK
 
-The ABI filter was removed. One APK bundles the native ABI variants supplied by the GeckoView and WireGuard libraries (ARMv7, ARM64 and x86_64; 32-bit x86 is not supported by the pinned GeckoView AAR). The app still requires Android 8.0 (API 26) or later; a universal ABI package does not mean support for every Android release.
+The build does not split the app into separate APKs. One APK bundles ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView library. Android 8.0 (API 26) or later is still required.
