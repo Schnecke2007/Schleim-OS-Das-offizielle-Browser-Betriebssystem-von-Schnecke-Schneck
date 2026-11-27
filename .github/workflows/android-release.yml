@@ -143,6 +143,18 @@ jobs:
 
           gradle = Path("android/app/build.gradle.kts").read_text()
           assert "androidx.webkit" not in gradle
+          assert 'abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")' in gradle
+          vpn_integration = Path("android/app/src/main/java/de/schneckeschneck/schleimos/VpnIntegration.kt").read_text()
+          assert "VpnIntegration.fetchServerList()" in main
+          assert "private fun showVpnDialog()" in main
+          assert "schleimbrowser://vpn" in main
+          assert "fun fetchServerList()" in vpn_integration
+          assert Path("vpn/servers.json").is_file()
+          extension_script = Path("extension/scripts/app.js").read_text()
+          assert "vpn:renderVpn" in extension_script
+          assert "data-vpn-open" in extension_script
+          template_script = Path("extension-template/scripts/app.js").read_text()
+          assert "browseros://vpn" in template_script
           assert "versionCode = 31" in gradle
           assert 'versionName = "0.1.0-alpha31"' in gradle
           assert '"version": "3.21.0"' in Path("extension/manifest.json").read_text()
@@ -336,20 +348,23 @@ jobs:
 
       - name: Validate APK output
         run: |
-          # grep -q may close its pipe early; avoid pipefail SIGPIPE false negatives.
+          # Avoid pipefail SIGPIPE false negatives from grep -q.
           set -eu
           APK="android/app/build/outputs/apk/release/app-release.apk"
           test -s "$APK"
           BUILD_TOOLS="$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -n1)"
-          "$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
+          BADGING="$("$ANDROID_HOME/build-tools/$BUILD_TOOLS/aapt" dump badging "$APK")"
+          echo "$BADGING" | grep -q "package: name='de.schneckeschneck.schleimbrowser'"
           "$ANDROID_HOME/build-tools/$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$APK"
-          unzip -l "$APK" | grep -Fq "assets/extension/manifest.json"
-          unzip -l "$APK" | grep -Fq "assets/extension/pages/newtab.html"
+          APK_FILES="$(unzip -Z1 "$APK")"
+          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+            echo "$APK_FILES" | grep -Fq "lib/$abi/" || { echo "Missing native libraries for $abi" >&2; exit 1; }
+          done
+          echo "$APK_FILES" | grep -Fq "assets/extension/manifest.json"
+          echo "$APK_FILES" | grep -Fq "assets/extension/pages/newtab.html"
           cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-          # Any valid Android debug certificate is accepted. GitHub-hosted runners
-          # may generate a fresh debug key, intentionally requiring reinstall.
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha31.apk"
-          echo "Release APK built and verified with the standard Android debug signature."
+          echo "Universal APK built and verified for ARMv7, ARM64, x86 and x86_64 with a valid Android debug signature."
 
       - name: Publish APK as a downloadable workflow artifact
         uses: actions/upload-artifact@v4
