@@ -43,8 +43,8 @@ Der Update-Center-Platzhalter lädt ausschließlich **Browser-OS-Extension-Templ
 Alle Profile, Bilder, Konten, Repositories und rechtlichen Texte sind Beispiele. Ersetze sie vor einer Veröffentlichung.
 
 
-## Optional Android VPN bridge
+## Android-VPN-Brücke (optional)
 
-The template includes a Schleim VPN tile on the new-tab page. In an Android GeckoView host that registers the `browser` native-message bridge, the tile requests opening the host's native VPN panel. Desktop browsers show a fallback notice because extensions cannot directly start Android's `VpnService`.
+Die Vorlage enthält eine Schleim-VPN-Kachel auf der neuen Tab-Seite. In einer Android-App mit GeckoView und der nativen Nachrichtenbrücke `browser` öffnet die Kachel das VPN-Menü der App. Desktop-Browser zeigen einen Hinweis. Eine Extension kann Android `VpnService` nicht direkt starten.
 
-The native Android template includes WireGuard tunnel support and encrypted local profile storage. Import a current personal `.conf` file in the app; never bundle a private WireGuard key in the extension or public repository. The VPN tunnel is intended to be limited to the browser package. The Alpha 32 universal APK bundles ARMv7, ARM64 and x86_64. 32-bit x86 is not supported by the pinned GeckoView build; Android 8.0 (API 26) or newer is required.
+Die Android-Vorlage enthält WireGuard und verschlüsselte lokale Profil-Speicherung. Importiere in der App deine aktuelle persönliche `.conf`-Datei. Private WireGuard-Schlüssel gehören nicht in die Extension oder das öffentliche Repository. Der Tunnel soll nur Schleim Browser verwenden. Die Alpha-32-APK enthält ARMv7, ARM64 und x86_64. 32-Bit-x86 wird von GeckoView nicht unterstützt. Android 8.0 (API 26) oder neuer ist nötig.
