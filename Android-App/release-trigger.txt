@@ -1,23 +1,18 @@
-Schleim OS 3.22.0 Android browser release
+Schleim OS 3.22.0 / Schleim Browser Android alpha32
 
-Build and validate Schleim Browser 0.1.0-alpha32 (versionCode 32). Preserve existing GeckoView browser features, the dark brown UI #251205, tabs, history, bookmarks, encrypted password manager, add-on support and the exact NextDNS DoH resolver configuration.
+Build and publish versionCode 32 / versionName 0.1.0-alpha32 and Extension 3.22.0. Preserve GeckoView, the #251205 UI, tabs, local history, bookmarks, encrypted password manager, guest mode, add-ons and the fixed NextDNS TRR-only resolver https://dns.nextdns.io/36e7f3/Schleim-Browser.
 
-Integrate WireGuard directly into Schleim Browser's Android menu. Do not create or publish a separate VPN app. The native VPN panel must support status, selecting imported location profiles, connecting/disconnecting and importing current personal WireGuard .conf files. Encrypt imported profiles with Android Keystore AES-GCM and route the tunnel only to the Schleim Browser package. Keep private WireGuard keys out of public repository files, extension files, server catalogs and APK assets. The public location catalog is refreshed from the repository when the VPN panel opens. Document that Proton's former unauthenticated public server-list endpoint is unavailable and personal current configurations must be imported from the user's own Proton account.
+VPN:
+- WireGuard is integrated in the Schleim Browser Android menu through the existing tunnel library and Android VpnService consent; do not build a separate VPN APK.
+- VPN panel supports status, selecting an imported profile, connect/disconnect, importing .conf and refreshing the credential-free repository catalog.
+- Tunnel is app-scoped to Schleim Browser. Extension VPN tile uses GeckoView native messaging to open the Android panel; desktop extensions cannot start Android VpnService.
+- Import personal full WireGuard .conf files generated from the user's Proton account. Store profiles encrypted with Android Keystore AES-GCM. Never publish private keys or package them in APK assets.
+- Free location catalog is repository-maintained and refreshed by the app. It is not a live Proton availability API. Public templates have no PrivateKey.
+- Obsolete .ovpn files have been removed. No separate VPN APK was present.
 
-Connect the original browser extension's VPN tile to the Android native panel through the GeckoView native-message bridge. Desktop browsers must show a clear fallback; do not claim the extension itself implements Android VpnService.
+Universal APK:
+- Bundle GeckoView ABIs ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64 in one APK.
+- 32-bit x86 is not supported by the pinned GeckoView AAR. Minimum Android API 26 / Android 8.0; Android 7 is not supported.
+- Validate the three supported native ABI folders, APK signature, package ID and bundled extension.
 
-Remove obsolete OpenVPN .ovpn profiles and any separate VPN APK if present. Keep sanitized .conf location metadata and servers.json. Produce one universal APK with the native ABIs supplied by the pinned GeckoView/WireGuard libraries: ARMv7, ARM64 and x86_64. 32-bit x86 is not provided by the pinned GeckoView AAR. Keep minSdk 26 and document that universal ABI support does not mean support for every Android version.
-
-Update the Android Studio template, Extension template, German/English/Dutch documentation and Easy Language documentation. Include VPN limitations, personal-profile import, private-key safety, browser-only tunnel behavior and ABI compatibility in release notes.
-
-Requested release: Schleim Browser alpha32 / v3.22.0. Build and validate the APK, generated Android Studio template, Extension ZIP, Extension template, update JSON, checksums and APK signature. Publish only after every build and release validation step passes, then verify all published assets.
-
-Retry release build after all six 3.22.0 release-note files were added and the universal APK ABI validation was corrected to the three ABIs actually shipped by GeckoView.
-
-Re-run Android alpha32 build and publish after the complete 3.22.0 documentation is now present. Validate embedded WireGuard, the universal APK ABIs, and all release assets. No companion VPN APK.
-
-Retry release build after resolving the WireGuard GoBackend VpnService manifest merge conflict with tools:replace on android:exported.
-
-Retry after fixing the Python regex escaping in the Android Studio template sanitizer. Verify that PrivateKey/PresharedKey lines are removed from template .conf files before packaging.
-
-Final retry: include the fixed AndroidManifest.xml tools:replace="android:exported" attribute for the WireGuard GoBackend service; rebuild and verify alpha32 from current main.
+Update German, English and Dutch Android docs, Extension/template docs, all six localized release notes and project README version links. The Android Studio template must build. Update JSON must have versionCode 32 and versionName 0.1.0-alpha32. Package Extension ZIP, Extension template, APK, update JSON, Android Studio template and SHA-256 sums. Publish v3.22.0 only after all checks pass, then download and compare published assets and verify signatures/checksums.
