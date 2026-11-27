@@ -25,7 +25,7 @@
 ## Versies
 
 - Browser-Extension: **3.21.0**
-- Schleim Browser voor Android: **0.1.0-alpha31**
+- Schleim Browser voor Android: **0.1.0-alpha32**
 - Mozilla GeckoView · Android 8.0+ · ARM64
 
 De Android-APK gebruikt de standaard Android-debugondertekening. Afhankelijk van de build moet de oude app mogelijk eerst worden verwijderd. Maak een back-up van belangrijke lokale gegevens en zo nodig een versleutelde profielback-up voordat je de oude app verwijdert.
