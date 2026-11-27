@@ -92,7 +92,7 @@ class BrowserVpnManager(context: Context) {
         val interfaceIndex = lines.indexOfFirst { it.trim().equals("[Interface]", true) }
         require(interfaceIndex >= 0) { "WireGuard-[Interface]-Abschnitt fehlt." }
         lines.add(interfaceIndex + 1, "IncludedApplications = ${appContext.packageName}")
-        return lines.joinToString("\\n")
+        return lines.joinToString("\n")
     }
 
     private fun parseConfig(text: String): Config =
