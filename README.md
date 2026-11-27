@@ -284,3 +284,7 @@ Du möchtest mehr von meinen Projekten und Neuigkeiten sehen? Dann freue ich mic
 **Schleim OS** wird von **Schnecke Schneck** entwickelt und gepflegt.
 
 © 2026 Schnecke Schneck.
+
+## Schleim VPN für Android
+
+Schleim Browser enthält eine native WireGuard-Integration im Android-Browsermenü. Du importierst deine persönliche aktuelle Proton-WireGuard-Konfiguration; sie wird lokal verschlüsselt gespeichert. Der Tunnel gilt nur für Schleim Browser, nicht für andere Android-Apps. Die Standortliste wird aus dem Repository-Katalog aktualisiert; sie ist keine Live-Abfrage von Proton. Private Schlüssel gehören nicht in öffentliche Dateien.
