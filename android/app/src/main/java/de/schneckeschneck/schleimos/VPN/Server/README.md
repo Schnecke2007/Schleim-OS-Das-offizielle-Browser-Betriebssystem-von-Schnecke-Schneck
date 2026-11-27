@@ -1,21 +1,15 @@
-# Schleim Browser VPN-Serverprofile
+# Schleim Browser VPN – Serverkatalog
 
-Dieser Ordner enthält öffentliche WireGuard-Servervorlagen (.conf) für die in Proton VPN Free verfügbaren Standorte.
+Dieser Ordner enthält öffentliche Standort-Metadaten für die WireGuard-Integration. Er enthält **keine nutzbaren privaten VPN-Schlüssel**.
 
-## Sicherheit und Verwendung
+- `servers.json` ist der öffentliche Standortkatalog, den die Android-App beim Öffnen des VPN-Bereichs neu abruft.
+- Die `.conf`-Dateien sind bereinigte Serverprofile/Metadaten. Die `PrivateKey`-Zeilen wurden entfernt; diese Dateien sind deshalb nicht direkt verbindungsfähig.
+- Für eine Verbindung muss jede Person eine aktuelle WireGuard-Konfiguration aus dem eigenen Proton-VPN-Konto importieren. Schleim Browser speichert importierte Profile verschlüsselt mit Android Keystore (AES-GCM).
+- Der Tunnel wird auf das Paket von Schleim Browser beschränkt; andere Android-Apps werden nicht durch diesen Browser-VPN-Tunnel geleitet.
+- Die alte OpenVPN-Dateisammlung (`.ovpn`) wurde entfernt. Es wurde keine separate VPN-APK im VPN-Verzeichnis gefunden.
 
-- Die Vorlagen enthalten Server-Endpunkte und öffentliche Peer-Daten, aber **keinen persönlichen WireGuard-PrivateKey**.
-- Eine Vorlage ist deshalb nicht direkt verbindungsfähig.
-- Erzeuge deine persönliche WireGuard-Konfiguration über dein Proton-Konto und importiere die heruntergeladene .conf-Datei im Schleim Browser unter **Browser-Menü → Schleim VPN → WireGuard-Konfiguration importieren**.
-- Schleim Browser speichert importierte Profile lokal verschlüsselt mit AES-GCM und einem Schlüssel aus dem Android-Keystore.
-- Persönliche .conf-Dateien mit PrivateKey dürfen niemals in dieses öffentliche Repository oder in eine öffentliche APK hochgeladen werden.
+**Sicherheitsmaßnahme:** Die zuvor veröffentlichten WireGuard-Konfigurationen enthielten private Schlüssel. Die Schlüsselzeilen wurden aus den aktuellen Dateien entfernt. Das reicht nicht, um bereits veröffentlichte Schlüssel zu widerrufen: Erzeuge/aktualisiere die Konfigurationen in Proton VPN und verwende die alten Schlüssel nicht weiter.
 
-## Serverliste und Free-Tarif
+**Automatische Aktualisierung:** Die App ruft den Standortkatalog direkt aus diesem Repository ab. Änderungen an `servers.json` erscheinen daher beim nächsten Abruf. Proton hat den früher öffentlich verwendeten Server-API-Endpunkt für unauthentifizierte Anfragen abgeschaltet; der Katalog kann deshalb nicht zuverlässig live direkt von Proton synchronisiert werden. Die aktuellen persönlichen Konfigurationsdateien müssen aus dem eigenen Proton-Konto kommen.
 
-Proton VPN Free bietet aktuell kostenlose Server in zehn Ländern. Bei Free können Serverwechsel durch Proton zufällig zugewiesen werden und es gelten Wechselwartezeiten. Die früher verwendete öffentliche Serverliste-API ist nicht offiziell unterstützt und wurde abgeschaltet. Daher werden hier keine automatischen Änderungen an Server-Endpoints vorgetäuscht.
-
-Die Profile in diesem Verzeichnis sind keine Zugangsdaten und ersetzen keine von Proton für dein Konto erzeugte Konfiguration.
-
-## Alte OpenVPN-Dateien
-
-Die veralteten .ovpn-Dateien wurden aus dem aktuellen Verzeichnis entfernt. Eine separate VPN-APK war in diesem Ordner nicht vorhanden. Schleim VPN ist Bestandteil der Android-App und wird nicht als eigenständige VPN-App ausgeliefert.
+Die Verfügbarkeit einzelner Standorte im Proton-Free-Tarif kann sich ändern und wird nicht durch Schleim Browser garantiert.
