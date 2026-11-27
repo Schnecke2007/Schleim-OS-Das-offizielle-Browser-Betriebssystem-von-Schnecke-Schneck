@@ -118,6 +118,15 @@ Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. 
 - Mindest-Android-Version: API 26
 - Ziel-SDK: API 35
 - Build-SDK: API 36
-- Zielarchitektur: ARM64
+- Enthaltene ABIs: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64; 32-Bit-x86 wird von der gepinnten GeckoView-Version nicht bereitgestellt
 
 [Zur Hauptdokumentation](../../README.md) · [Installation der Browser-Extension](INSTALLATION.md) · [Fehlerbehebung](FEHLERBEHEBUNG.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
+
+
+## Schleim VPN (WireGuard)
+
+Öffne im Browser-Menü den Bereich **Schleim VPN**. Die Extension kann auf Android über die native GeckoView-Brücke den VPN-Bereich öffnen; sie führt selbst keinen VPN-Tunnel aus. Das ist keine systemweite VPN-Funktion: Nur Schleim Browser wird durch den Tunnel geleitet.
+
+Importiere eine aktuelle persönliche WireGuard-.conf-Datei aus deinem Proton-Konto. Die App verschlüsselt das Profil lokal mit Android Keystore und AES-GCM. Wähle anschließend das importierte Profil und erteile Android die VPN-Berechtigung.
+
+Die öffentliche Serverliste wird beim Öffnen aus dem Repository-Katalog geladen. Sie ist kein Live-Status von Proton. Proton hat den früher öffentlich verwendeten Serverlisten-Endpunkt abgeschaltet. Für eine Verbindung benötigst du deine eigene vollständige Konfiguration; die öffentlichen Repository-Dateien enthalten keine privaten Schlüssel. Frühere veröffentlichte Schlüssel sollten erneuert werden.
