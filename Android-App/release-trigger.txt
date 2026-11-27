@@ -11,3 +11,5 @@ Remove obsolete .ovpn files and any separate VPN APK if present. Keep sanitized 
 Update the Android Studio template, Extension template, and documentation/release notes in German, English, Dutch and Easy Language. Build and validate the APK, both Extension archives, the Android Studio template, update JSON, SHA-256 sums and APK signature. Update the existing v3.22.0 GitHub Release in place; do not delete/recreate it because the Actions integration cannot create releases. Verify all published assets and checksums.
 
 Retry release publication after fixing tag handling: preserve the existing tag and create v3.22.0 only if the release is absent; use GH_RELEASE_TOKEN when configured, otherwise GITHUB_TOKEN.
+
+Final rerun after restoring the requested native VPN integration to main; use this commit as the source for alpha32 and the complete v3.22.0 release.
