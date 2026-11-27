@@ -105,6 +105,18 @@ def main() -> None:
         ignore=shutil.ignore_patterns(".gradle", "build", "*.jks", "*.keystore", "local.properties")
     )
 
+    # Never export user-specific WireGuard credentials into the public template.
+    vpn_server_dir = project / "app/src/main/java/de/schneckeschneck/schleimos/VPN/Server"
+    if vpn_server_dir.exists():
+        for profile in vpn_server_dir.glob("*.conf"):
+            profile_text = profile.read_text(encoding="utf-8")
+            profile_text = re.sub(
+                r"(?im)^\\s*(?:PrivateKey|PresharedKey)\\s*=.*(?:\\r?\\n)?",
+                "# Secret key removed from public Android Studio template.\\n",
+                profile_text,
+            )
+            profile.write_text(profile_text, encoding="utf-8")
+
     # Bundle the actual GeckoView-compatible Extension source.
     extension_target = project / "app/src/main/assets/extension"
     if extension_target.exists():
@@ -254,6 +266,11 @@ def main() -> None:
         for marker in FORBIDDEN_MARKERS:
             if marker.lower() in value.lower():
                 leftovers.append(f"{file.relative_to(project)}: {marker}")
+        if file.suffix.lower() == ".conf" and re.search(
+            r"(?im)^\\s*(?:PrivateKey|PresharedKey)\\s*=\\s*\\S+",
+            value,
+        ):
+            leftovers.append(f"{file.relative_to(project)}: private WireGuard key")
     if leftovers:
         raise SystemExit("Personal data remained in template:\n" + "\n".join(leftovers))
 
