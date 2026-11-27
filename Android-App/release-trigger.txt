@@ -19,3 +19,5 @@ Re-run Android alpha32 build and publish after the complete 3.22.0 documentation
 Retry release build after resolving the WireGuard GoBackend VpnService manifest merge conflict with tools:replace on android:exported.
 
 Retry after fixing the Python regex escaping in the Android Studio template sanitizer. Verify that PrivateKey/PresharedKey lines are removed from template .conf files before packaging.
+
+Final retry: include the fixed AndroidManifest.xml tools:replace="android:exported" attribute for the WireGuard GoBackend service; rebuild and verify alpha32 from current main.
