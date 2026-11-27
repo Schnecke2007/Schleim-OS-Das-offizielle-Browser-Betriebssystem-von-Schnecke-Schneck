@@ -20,7 +20,7 @@ Direct download: [Schleim Browser for Android – APK](https://github.com/Schnec
 - Internet access for websites, Extension content and online features
 - About 200 MB of free storage for the APK and additional app data
 
-The app is built with Android SDK 36. Its minimum runtime version remains Android 8.0 (API 26). The universal APK contains GeckoView native libraries for all four CPU architectures listed above; Android uses the matching ABI during installation. ARMv7/ARMv8 are CPU architectures, not Android OS versions.
+The app is built with Android SDK 36. Its minimum runtime version remains Android 8.0 (API 26). The universal APK contains GeckoView native libraries for all three CPU architectures listed above; Android uses the matching ABI during installation. ARMv7/ARMv8 are CPU architectures, not Android OS versions.
 
 ## Installation
 
