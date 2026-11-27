@@ -32,7 +32,7 @@ jobs:
           python3 source/Android-App/tools/build_template.py \
             --android source/android \
             --extension source/extension \
-            --docs source/docs \
+            --docs source/Android-App \
             --output dist/template
           cd dist/template
           zip -q -r ../../dist/Schleim-Browser-Android-Studio-Template.zip "Android-App Template"
