@@ -515,7 +515,7 @@ jobs:
         run: |
           set -euo pipefail
           # Update the existing release or create it if it is missing.
-          # Do not delete or force-move the tag; the release is tied to this tag.
+          # Never delete or force-move the tag.
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release edit "$TAG" \
               --repo "$GITHUB_REPOSITORY" \
