@@ -17,14 +17,16 @@ Deno.serve(async (req: Request) => {
   const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const premiumPriceId = Deno.env.get("STRIPE_PREMIUM_PRICE_ID");
   const returnUrl = Deno.env.get("SCHLEIM_CLOUD_RETURN_URL");
 
-  if (!supabaseUrl || !anonKey || !serviceKey || !stripeKey || !returnUrl) {
+  if (!supabaseUrl || !anonKey || !serviceKey || !stripeKey || !premiumPriceId || !returnUrl) {
     return Response.json({ error: "PAYMENTS_NOT_CONFIGURED" }, { status: 503, headers: cors });
   }
-  if (!stripeKey.startsWith("sk_test_") && !stripeKey.startsWith("sk_live_")) {
-    return Response.json({ error: "INVALID_STRIPE_SECRET_KEY" }, { status: 503, headers: cors });
+  if (!/^(sk|rk)_(test|live)_/.test(stripeKey) || !/^price_/.test(premiumPriceId)) {
+    return Response.json({ error: "INVALID_STRIPE_CONFIGURATION" }, { status: 503, headers: cors });
   }
+
   const auth = req.headers.get("Authorization");
   if (!auth?.startsWith("Bearer ")) {
     return Response.json({ error: "AUTHENTICATION_REQUIRED" }, { status: 401, headers: cors });
@@ -49,32 +51,42 @@ Deno.serve(async (req: Request) => {
     return Response.json({ error: "PREMIUM_PLAN_NOT_CONFIGURED" }, { status: 503, headers: cors });
   }
 
-  const successUrl = new URL(returnUrl);
-  successUrl.searchParams.set("checkout", "success");
-  successUrl.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
-  const cancelUrl = new URL(returnUrl);
-  cancelUrl.searchParams.set("checkout", "cancel");
-
-  const form = new URLSearchParams();
-  form.set("mode", "subscription");
-  form.set("payment_method_types[0]", "card");
-  form.set("automatic_tax[enabled]", "false");
-  form.set("line_items[0][price_data][currency]", "eur");
-  form.set("line_items[0][price_data][unit_amount]", "299");
-  form.set("line_items[0][price_data][recurring][interval]", "month");
-  form.set("line_items[0][price_data][product_data][name]", "Schleim Cloud Premium – 10 GB");
-  form.set("line_items[0][quantity]", "1");
-  form.set("client_reference_id", user.id);
-  form.set("customer_email", user.email);
-  form.set("success_url", successUrl.toString());
-  form.set("cancel_url", cancelUrl.toString());
-  form.set("metadata[schleim_user_id]", user.id);
-  form.set("metadata[plan_id]", PREMIUM_PLAN_ID);
-  form.set("subscription_data[metadata][schleim_user_id]", user.id);
-  form.set("subscription_data[metadata][plan_id]", PREMIUM_PLAN_ID);
-  form.set("subscription_data[description]", "Schleim Cloud Premium – 10 GB");
-
   try {
+    // Verify the server-configured Stripe Price on every checkout; never trust a client-supplied amount or Price ID.
+    const priceResponse = await fetch(`${STRIPE_API}/prices/${encodeURIComponent(premiumPriceId)}`, {
+      headers: { Authorization: `Bearer ${stripeKey}` },
+    });
+    const price = await priceResponse.json().catch(() => ({}));
+    if (!priceResponse.ok || price?.active !== true ||
+        price?.currency !== "eur" || price?.unit_amount !== 299 ||
+        price?.recurring?.interval !== "month") {
+      console.error("Configured Stripe Price does not match Schleim Cloud Premium:", priceResponse.status);
+      return Response.json({ error: "STRIPE_PRICE_CONFIGURATION_INVALID" }, { status: 503, headers: cors });
+    }
+
+    const successUrl = new URL(returnUrl);
+    successUrl.searchParams.set("checkout", "success");
+    successUrl.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
+    const cancelUrl = new URL(returnUrl);
+    cancelUrl.searchParams.set("checkout", "cancel");
+
+    const form = new URLSearchParams();
+    form.set("mode", "subscription");
+    // Do not hardcode payment_method_types. Configure cards only in Stripe Dashboard
+    // while keeping Stripe's dynamic payment-method selection enabled.
+    form.set("automatic_tax[enabled]", "false");
+    form.set("line_items[0][price]", premiumPriceId);
+    form.set("line_items[0][quantity]", "1");
+    form.set("client_reference_id", user.id);
+    form.set("customer_email", user.email);
+    form.set("success_url", successUrl.toString());
+    form.set("cancel_url", cancelUrl.toString());
+    form.set("metadata[schleim_user_id]", user.id);
+    form.set("metadata[plan_id]", PREMIUM_PLAN_ID);
+    form.set("subscription_data[metadata][schleim_user_id]", user.id);
+    form.set("subscription_data[metadata][plan_id]", PREMIUM_PLAN_ID);
+    form.set("subscription_data[description]", "Schleim Cloud Premium – 10 GB");
+
     const response = await fetch(`${STRIPE_API}/checkout/sessions`, {
       method: "POST",
       headers: {
