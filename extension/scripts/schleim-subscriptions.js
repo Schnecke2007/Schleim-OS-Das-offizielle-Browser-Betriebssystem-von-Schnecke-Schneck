@@ -31,7 +31,9 @@
       '<div><b>' + esc(t('premium')) + '</b><strong>' + esc(t('price')) + '</strong><small>' + esc(t('disabled')) + '</small></div>' +
       '</div>' +
       '<p class="ssos-cloud-note">' + esc(t('setup')) + ': ' + esc(t('setupText')) + '</p>' +
-      '<p class="ssos-cloud-note">' + esc(t('safe')) + '</p></section>';
+      '<p class="ssos-cloud-note">' + esc(t('safe')) + '</p>' +
+      '<div class="ssos-form-actions"><a class="app-button" href="https://schnecke2007.github.io/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/cloud/" target="_blank" rel="noopener noreferrer">Schleim Cloud öffnen ↗</a></div>' +
+      '<p class="ssos-cloud-note">Die Cloud-Weboberfläche wird separat über GitHub Pages bereitgestellt. Anmeldung, Speicheranzeige und Aboverwaltung benötigen die aktivierte Supabase-Authentifizierung und bereitgestellte Edge Functions.</p></section>';
   }
   async function refresh() {
     // GitHub Device Flow tokens are not Supabase Auth sessions. Do not send
