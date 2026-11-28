@@ -1,34 +1,46 @@
 # Schleim OS Cloud Backend
 
-Payment processing is disabled. No bank account, card, Klarna account, Stripe account, or live payment method is connected. Checkout fails closed until a provider is configured. The initial Free plan is 1 GiB (1,073,741,824 bytes). Paid plans are catalog entries only and cannot be purchased.
+**Zahlungsdienst: ausschließlich Klarna.** Es wird kein anderer Zahlungsanbieter integriert. Der Live-Checkout bleibt gesperrt, bis Klarna-Händlerfreigabe, Produktionszugangsdaten, verbindliche Preise, Identitätsbrücke, serverseitige Speicherquoten und vollständige Tests vorliegen.
 
-## Supabase project configuration
+Die Supabase-Projektadresse und der öffentliche Publishable Key wurden in der Erweiterung hinterlegt. Ein Publishable Key ist für Client-Anwendungen vorgesehen und kein Administrationsschlüssel. Den `SUPABASE_SERVICE_ROLE_KEY` niemals in Browser-/Android-Code, GitHub oder Chat eintragen. Er gehört ausschließlich als geschütztes Supabase Edge Function Secret auf den Server.
 
-The project URL and public Supabase Publishable Key have been supplied and are configured in the extension client. A publishable key is intended for client-side use; it is not a secret and does not grant administrative access by itself. Never expose `SUPABASE_SERVICE_ROLE_KEY` in browser or Android code, GitHub source, or chat. Store it only as a protected Supabase Edge Function secret.
+Architektur: Schleim OS Extension und Android-App verwenden dasselbe Supabase-Backend. Supabase Auth/Identitätsbrücke identifiziert Nutzer; PostgreSQL verwaltet Tarife, Abos und Speicherverbrauch; Supabase Storage speichert Dateien. Der Server muss jede Berechtigung und jedes Kontingent erzwingen.
 
-Architecture: Schleim OS Extension and Android browser call Supabase Edge Functions. Supabase Auth identifies users; PostgreSQL stores plan and subscription state; Supabase Storage stores files. The backend must enforce quotas.
+## Tarifmodell
 
-## Remaining setup
+- Free: 1 GiB
+- Premium: 10 GiB – Verkaufspreis noch festzulegen
+- Premium Plus: 50 GiB – Verkaufspreis noch festzulegen
 
-1. Apply the SQL migration in `supabase/migrations`.
-2. Configure Edge Function secrets in Supabase, including the service-role key.
-3. Deploy `account-summary` and `create-checkout`.
-4. Configure a secure identity bridge from the existing GitHub Device Flow to Supabase Auth. GitHub Device Flow access tokens are not Supabase Auth JWTs and must not be forwarded as such.
-5. Implement and test server-side upload quota enforcement.
-6. Test the account and quota flow before configuring payments in test mode.
-7. Implement Klarna Playground checkout and subscription token flow server-side; follow `docs/KLARNA-SANDBOX.md`.
-8. Live payments remain disabled until explicitly approved.
+Preise, Währung und Intervall werden ausschließlich serverseitig festgelegt. Kein Checkout darf einen vom Client gelieferten Betrag übernehmen.
+
+## Status
+
+Das bestehende PR-Grundgerüst enthält Tabellen, RLS, die Kontoübersicht und eine bewusst gesperrte Checkout-Funktion. Es ist **noch kein produktives Abosystem**: Die Identitätsbrücke, Quota-Enforcement, Klarna-Integration, Scheduler, Webhook-Verarbeitung und Kündigungsaktion müssen noch implementiert und auf dem echten Supabase-Projekt deployed werden.
+
+## Produktionsverbindung
+
+Siehe [Klarna Production Setup](docs/KLARNA-PRODUCTION-SETUP.md) für die vollständige Verbindung und Checkliste.
+
+Wesentliche Voraussetzungen:
+1. Klarna Live-Händlerkonto mit Klarna Payments für Deutschland/EUR.
+2. Schriftliche Bestätigung, dass Customer Tokens und wiederkehrende Händlerbelastungen für das konkrete Händlerkonto und API-Produkt freigeschaltet sind.
+3. Produktionszugangsdaten und – falls der gewählte Produktpfad Webhooks vorsieht – Webhook-Signaturschlüssel.
+4. Rechtliche Verkäuferangaben, Supportkontakt, AGB, Datenschutz, Kündigungsregeln und verbindliche Preise.
+5. Sicherer GitHub-Login-zu-Schleim-Konto-Identitätsfluss; GitHub Device Flow Access Tokens sind keine Supabase Auth JWTs.
+6. Servergeprüfte Uploads, Scheduler, idempotente Zahlungsereignisse, automatische Tarifaktivierung und Kündigung.
 
 ## Klarna
 
-Klarna is the preferred candidate for the requested payment test. The intended route is Klarna Payments in Playground, with Customer Tokens for recurring subscription renewals. This requires merchant eligibility/contract confirmation and a Klarna Playground API credential pair. A normal one-time Klarna payment is not sufficient for recurring billing.
+Klarna ist der einzige geplante Zahlungsdienst. Wiederkehrende Abos verwenden den passenden Klarna Customer-Token-Flow. Ein gewöhnlicher einmaliger Klarna-Kauf genügt nicht. API-Produkt, API-Version, Authentifizierung und Webhook-Vertrag müssen zum Händlerkonto passen; klassische Klarna Payments und Klarna Network APIs dürfen nicht vermischt werden.
 
-Klarna test credentials must be stored only as Supabase Edge Function secrets. No Klarna credential is currently configured. No checkout, tokenization, webhook, scheduler, or renewal charge is active. The Playground does not process real payments or create invoices/fees.
+API-Schlüssel, Customer Tokens und Webhook-Signaturschlüssel gehören ausschließlich in geschützte Server-Secrets bzw. verschlüsselte serverseitige Speicherung. Keine Zugangsdaten in dieses Repository schreiben.
 
-## Plans
+## Sicherheit und Bereitstellung
 
-- Free: 1 GiB
-- Premium: 10 GiB (price not set, disabled)
-- Premium Plus: 50 GiB (price not set, disabled)
-
-Storage is measured in bytes. The limits are currently plan definitions only and are not yet enforced by an upload endpoint.
+- RLS für Nutzerdaten und keine clientseitigen Schreibrechte für Abos/Quota.
+- Jeder Upload wird serverseitig authentifiziert, auf Dateigröße und Kontingent geprüft und transaktionssicher verbucht.
+- Nur verifizierte Zahlungsvorgänge aktivieren oder verlängern Premium.
+- Kündigung stoppt weitere Verlängerungen, widerruft das Klarna-Token und behält den bezahlten Zugriff bis zum Periodenende; danach Rückstufung auf Free.
+- Webhooks müssen produktspezifisch signaturgeprüft, dauerhaft gespeichert und idempotent verarbeitet werden.
+- Keine echten Abbuchungen vor ausdrücklicher Produktionsfreigabe.
