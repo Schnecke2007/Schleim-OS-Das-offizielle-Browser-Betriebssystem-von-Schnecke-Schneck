@@ -1373,7 +1373,7 @@ class MainActivity : Activity() {
                 showToast("Melde dich zuerst mit deinem Schleim-Konto an.")
             } else {
                 ensureBackupPassphrase { passphrase ->
-                    syncBrowserVpnProfiles(passphrase, statusView = status, showToast = true, reopenDialog = true)
+                    syncBrowserVpnProfiles(passphrase, statusView = status, notifyUser = true, reopenDialog = true)
                 }
             }
         }
@@ -1447,7 +1447,7 @@ class MainActivity : Activity() {
         if (cloudSync.hasSession()) {
             val savedCloudPassphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
             if (!savedCloudPassphrase.isNullOrBlank()) {
-                syncBrowserVpnProfiles(savedCloudPassphrase, statusView = status, showToast = false, reopenDialog = false)
+                syncBrowserVpnProfiles(savedCloudPassphrase, statusView = status, notifyUser = false, reopenDialog = false)
             }
         }
 
@@ -1587,7 +1587,7 @@ class MainActivity : Activity() {
                     showToast("VPN-Profil „${result.getOrNull()}“ wurde lokal verschlüsselt gespeichert.")
                     val passphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
                     if (!passphrase.isNullOrBlank() && cloudSync.hasSession()) {
-                        syncBrowserVpnProfiles(passphrase, showToast = false, reopenDialog = false)
+                        syncBrowserVpnProfiles(passphrase, notifyUser = false, reopenDialog = false)
                     }
                     vpnDialog?.dismiss()
                     vpnDialog = null
@@ -1602,11 +1602,11 @@ class MainActivity : Activity() {
     private fun syncBrowserVpnProfiles(
         passphrase: String,
         statusView: TextView? = null,
-        showToast: Boolean = true,
+        notifyUser: Boolean = true,
         reopenDialog: Boolean = false
     ) {
         if (isGuestMode || !cloudSync.hasSession()) {
-            if (showToast) showToast("Bitte melde dich zuerst mit deinem Schleim-Konto an.")
+            if (notifyUser) showToast("Bitte melde dich zuerst mit deinem Schleim-Konto an.")
             return
         }
         if (vpnCloudSyncRunning) return
@@ -1651,16 +1651,16 @@ class MainActivity : Activity() {
                     val summary = "Schleim-Cloud: $downloaded geladen · $uploaded hochgeladen" +
                         if (conflicts > 0) " · $conflicts Namenskonflikt(e) unverändert gelassen" else ""
                     statusView?.text = summary
-                    if (showToast) showToast(summary)
+                    if (notifyUser) showToast(summary)
                     if (reopenDialog && !isFinishing && !isDestroyed) {
                         vpnDialog?.dismiss()
                         vpnDialog = null
                         showVpnDialog()
                     }
                 } else {
-                    val message = "VPN-Cloud-Synchronisierung fehlgeschlagen: \${result.exceptionOrNull()?.message ?: "Fehler"}"
+                    val message = "VPN-Cloud-Synchronisierung fehlgeschlagen: ${result.exceptionOrNull()?.message ?: "Fehler"}"
                     statusView?.text = message
-                    if (showToast) showToast(message)
+                    if (notifyUser) showToast(message)
                 }
             }
         }
