@@ -109,6 +109,7 @@ jobs:
           test ! -e "android/app/src/main/assets/camera/camera.html"
           node --check "$ASSET_DIR/scripts/app.js"
           node --check "$ASSET_DIR/scripts/schleim-account.js"
+          node --check "$ASSET_DIR/scripts/schleim-subscriptions.js"
           node --check "$ASSET_DIR/scripts/personalization.js"
           node --check "$ASSET_DIR/scripts/slime-store-admin.js"
           node --check "$ASSET_DIR/scripts/media-upload-worker.js"
