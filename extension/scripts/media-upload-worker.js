@@ -150,11 +150,10 @@ async function startUpload(jobId) {
   if (!session?.user?.login || !session?.accessToken) throw new Error('Bitte melde dich zuerst mit deinem Schleim-Konto an.');
   const currentStatus=(await chrome.storage.local.get(STATUS_KEY))?.[STATUS_KEY];
   if (currentStatus?.phase==='progress') throw new Error('Ein Medien-Upload läuft bereits. Warte, bis die aktuelle Warteschlange abgeschlossen ist.');
-  let repo=session.photosRepo;
-  if (!repo?.full_name || repo.full_name!==session.user.login+'/schleim-os-cloud-photos-and-videos') {
-    throw new Error('Das private Foto- und Video-Repository ist nicht verknüpft. Öffne zuerst die Fotos-App und verknüpfe den Speicher.');
+  const repo=session.repo;
+  if (!repo?.full_name || repo.full_name!==session.user.login+'/schleim-os-cloud' || repo.private!==true) {
+    throw new Error('Das private gemeinsame Schleim-Cloud-Repository ist nicht verknüpft.');
   }
-  if (repo.private!==true) throw new Error('Das Foto- und Video-Repository muss privat sein.');
   await storeStatus({jobId:jobId,phase:'progress',progress:0,message:'Upload wird im Hintergrund vorbereitet.',completed:0,total:0});
   await showProgress(jobId,0,'Upload wird im Hintergrund vorbereitet …');
   await ensureOffscreen();
