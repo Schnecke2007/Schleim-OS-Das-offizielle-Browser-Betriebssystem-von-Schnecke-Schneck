@@ -13,7 +13,7 @@ Supabase bleibt das Cloud-Backend für Konten, Abos und Speicher. Stripe verarbe
 Der Betrag wird serverseitig aus der Tarifkonfiguration geprüft. Der Client kann keinen Betrag vorgeben.
 
 ## Stripe-Integration im Branch
-- Stripe Checkout Session im Abonnementmodus mit Kartenzahlung.
+- Stripe Checkout Session im Abonnementmodus mit Kartenzahlung und dynamischen Zahlungsmethoden.
 - Monatlicher Preis wird serverseitig mit 299 EUR-Cent festgelegt.
 - Stripe-Webhooks werden anhand der `Stripe-Signature` mit HMAC-SHA256 und Zeitfenster geprüft.
 - `checkout.session.completed` legt den Vertrag zunächst als `pending` an.
@@ -21,14 +21,22 @@ Der Betrag wird serverseitig aus der Tarifkonfiguration geprüft. Der Client kan
 - Abonnementstatus und Periodenende werden anhand der Stripe Subscription API aktualisiert.
 - UI und Dokumentation nennen Stripe statt Mollie.
 
+## Supabase-Datenbank
+Die Migrationen 001 bis 003 wurden im verbundenen Supabase-Projekt angewendet:
+- Tarifkonfiguration (Free: 1 GiB, Premium: 10 GiB / 2,99 EUR monatlich)
+- Nutzer-Abonnements und Speicherverbrauch
+- Webhook-Ereignisprotokoll
+- Row Level Security und eingeschränkte Berechtigungen
+- Index- und RLS-Policy-Optimierungen
+
 ## Benötigte Supabase Edge Function Secrets
-- `STRIPE_SECRET_KEY`: zuerst `sk_test_...`, später Live-Schlüssel `sk_live_...`
-- `STRIPE_WEBHOOK_SECRET`: Signatur-Secret des Stripe-Webhooks (`whsec_...`)
+- `STRIPE_SECRET_KEY`: zunächst Testschlüssel, später Live-Schlüssel
+- `STRIPE_WEBHOOK_SECRET`: Signatur-Secret des Stripe-Webhooks
 - `SCHLEIM_CLOUD_RETURN_URL`: HTTPS-Rücksprungadresse der Schleim Cloud
 - `SUPABASE_SERVICE_ROLE_KEY`: ausschließlich serverseitig
 - Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` im Function-Kontext bereit
 
-Webhook-Endpunkt nach Deployment: `https://<PROJECT_REF>.supabase.co/functions/v1/stripe-webhook`
+Webhook-Endpunkt nach Deployment: `https://hrtunnupqcpklejpfsvq.supabase.co/functions/v1/stripe-webhook`
 
 Im Stripe Dashboard mindestens diese Ereignisse abonnieren:
 - `checkout.session.completed`
@@ -38,12 +46,14 @@ Im Stripe Dashboard mindestens diese Ereignisse abonnieren:
 - `customer.subscription.deleted`
 
 ## Noch nicht produktionsbereit
-Die Änderungen liegen zunächst nur im GitHub-Feature-Branch. Sie wurden nicht auf Supabase deployed und nicht mit einem Stripe-Händlerkonto end-to-end getestet. Der GitHub Device Flow ist kein Supabase Auth JWT; die sichere Identitätsbrücke muss vor dem Checkout fertiggestellt werden. Die UI hält den Checkout deshalb deaktiviert. Kündigungsablauf, Rücklastschriften/Erstattungen, vollständige atomare Webhook-Idempotenz, Speicherquota und Live-Freigabe müssen vor echtem Betrieb vollständig umgesetzt und getestet werden.
+Die Datenbankmigrationen sind auf Supabase angewendet, die Edge Functions aber noch nicht deployed. Es wurden keine Stripe-Produkte, Preise oder Webhook-Endpunkte angelegt. Stripe Tax Settings sind noch unvollständig (Hauptgeschäftsadresse fehlt); Steuerstatus und inklusive/exklusive Steuerdarstellung sind ungeklärt. Die Supabase Edge Function Secrets sind noch nicht gesetzt.
 
-**Keine Live-Abbuchungen sind aktiviert.** Das kann erst nach Händler-Onboarding, Hinterlegen der Live-Secrets, Webhook-Konfiguration, erfolgreichem Test und Deployment erfolgen.
+Der GitHub Device Flow ist kein Supabase Auth JWT; die sichere Identitätsbrücke muss vor dem Checkout fertiggestellt werden. Die UI hält den Checkout deshalb deaktiviert. Kündigungsablauf, robuste atomare Webhook-Idempotenz, vollständige Refund-/Zahlungsstatus-Behandlung und serverseitige Speicherquota müssen vor echtem Betrieb fertiggestellt und getestet werden.
+
+**Keine Live-Abbuchungen sind aktiviert.** Livebetrieb erst nach Händler-/Steuerkonfiguration, Hinterlegen der Live-Secrets, Deployment, End-to-End-Test und ausdrücklicher Freigabe.
 
 ## Weiterführende Dokumentation
-Siehe [Stripe SEPA Setup](docs/STRIPE-SEPA-SETUP.md).
+Siehe [Stripe-Kartenzahlung Setup](docs/STRIPE-SEPA-SETUP.md).
 
 Offizielle Dokumentation:
 - https://docs.stripe.com/api
