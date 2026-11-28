@@ -842,7 +842,7 @@
   $('#openProfile').addEventListener('click',()=>openApp('about'));
   $('#showAllApps').addEventListener('click',openSearch);
   $('#openCloud').addEventListener('click',()=>openApp('projects'));
-  $('#openVpn')?.addEventListener('click',async()=>{
+  $('#schleimVpn')?.addEventListener('click',async()=>{
     try{
       if(!globalThis.browser?.runtime?.sendNativeMessage) throw new Error('native messaging unavailable');
       const response=await browser.runtime.sendNativeMessage('browser',{action:'vpn.open'});

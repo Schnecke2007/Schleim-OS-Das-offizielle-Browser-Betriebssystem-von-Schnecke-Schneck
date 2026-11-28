@@ -21,3 +21,5 @@ Publish the new Android build as Schleim OS v3.22.1. Verify the APK build, signi
 CI validation adjustment: the documentation assertion runs against lowercase text and checks for the normalized token mbit/s.
 
 Launcher build robustness: use the original Android PNG when checked out; otherwise fall back to the repository's extension/assets/icons/icon-512.png. The build must still validate the generated launcher icon.
+
+Extension validation adjustment: the Android VPN tile is intentionally available in the new-tab page and opens the native VPN panel through the browser bridge. Legacy OpenVPN references remain prohibited.

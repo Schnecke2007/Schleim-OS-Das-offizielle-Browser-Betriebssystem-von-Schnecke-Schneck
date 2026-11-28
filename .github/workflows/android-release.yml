@@ -165,8 +165,8 @@ jobs:
           for extension_root in ("extension", "extension-template"):
               newtab = Path(extension_root, "pages/newtab.html").read_text(encoding="utf-8").lower()
               app_script = Path(extension_root, "scripts/app.js").read_text(encoding="utf-8").lower()
-              assert "openvpn" not in newtab and "wireguard" not in newtab
-              assert "openvpn" not in app_script and "wireguard" not in app_script
+              assert "openvpn" not in newtab and "wireguard" in newtab and "schleim vpn" in newtab
+              assert "openvpn" not in app_script and "vpn.open" in app_script and "wireguard" not in app_script
           assert '"version": "3.22.0"' in Path("extension/manifest.json").read_text()
           assert Path("Android-App/tools/build_template.py").is_file()
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
