@@ -37,6 +37,7 @@
     {id:'website',name:'Fan-Webseite',icon:'🌐',hint:'Die komplette Seitenübersicht',keys:'wix fan homepage unterseiten website'},
     {id:'shop',name:'Schneckenshop',icon:'🛍️',hint:'Merch und Print-on-Demand',keys:'spreadshirt shop merchandise bestellung'},
     {id:'slimestore',name:'Schleim-Store',icon:'🛍️',hint:'Apps entdecken, installieren und vorschlagen',keys:'schleim-store schleim store slime store app store apps installieren websites webapps'},
+    {id:'cloud',name:'Schleim Cloud',icon:'☁️',hint:'Cloud-Speicher und Abo verwalten',keys:'schleim cloud speicher konto premium abo dateien'},
     {id:'fanapp',name:'Fan-App',icon:'📱',hint:'Die Community-App',keys:'fan app android download apk'},
     {id:'websiteinfo',name:'Über diese Website',icon:'ℹ️',hint:'Funktionen und Community',keys:'dark mode chat profile mitglieder gruppen ki'},
     {id:'voiceassistant',name:'AI Sprachassistent',icon:'🎙️',hint:'NovaVoice – Sprachassistent-Projekt',keys:'ai sprachassistent voice assistant novavoice'},
@@ -58,7 +59,7 @@
   ];
 
   // Nur diese Hauptbereiche erscheinen auf dem Home-Bildschirm und in der globalen App-Suche.
-  const HOME_APP_IDS = ['about','slimestore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
+  const HOME_APP_IDS = ['about','cloud','slimestore','social','projects','studio','website','shop','images','camera','contact','legal','settings'];
   // The old static Wix gallery URLs are no longer bundled. Keep the app usable
   // and offer the live public gallery below instead of referencing an undefined constant.
   const WIX_GALLERY_IMAGES = [];
@@ -97,8 +98,8 @@
     nl: {name:'Nederlands', html:'nl-NL'}
   };
   const APP_LABELS = {
-    en:{websitehome:'Home',about:'About',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Photos',camera:'Camera',legal:'Legal information',settings:'Settings'},
-    nl:{websitehome:'Startpagina',about:'Over Schnecke',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
+    en:{websitehome:'Home',about:'About',cloud:'Schleim Cloud',social:'Social Media',projects:'Projects',studio:'Creator Studio',website:'Fan website',shop:'Snail shop',slimestore:'Schleim-Store',fanapp:'Fan app',websiteinfo:'About this website',chatgpt:'Custom ChatGPT',parentsettings:'Parental settings',schildi:'Schildi Smartphone',voiceassistant:'AI voice assistant',scratch:'Scratch project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & Media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'Email',google:'Google profile',images:'Photos',camera:'Camera',legal:'Legal information',settings:'Settings'},
+    nl:{websitehome:'Startpagina',about:'Over Schnecke',cloud:'Schleim Cloud',social:'Sociale media',projects:'Projecten',studio:'Creator Studio',website:'Fanwebsite',shop:'Slakkenwinkel',slimestore:'Schleim-Store',fanapp:'Fan-app',websiteinfo:'Over deze website',chatgpt:'Eigen ChatGPT',parentsettings:'Ouderinstellingen',schildi:'Schildi Smartphone',voiceassistant:'AI-spraakassistent',scratch:'Scratch-project',schleimcloud:'SchleimCloud PC',iptv:'IPTV & media',tech:'Tech Lab',contact:'Contact',whatsapp:'WhatsApp Business',email:'E-mail',google:'Google-profiel',images:'Foto’s',camera:'Camera',legal:'Juridische informatie',settings:'Instellingen'}
   };
   const HINT_LABELS = {
     en:{websitehome:'Welcome and page overview',about:'Profile and background',social:'Instagram and TikTok',projects:'Published projects and demos',studio:'Brand and services',website:'All fan website sections',shop:'Merchandise and print on demand',slimestore:'Discover apps in the Schleim-Store, install and suggest websites',fanapp:'Community app information',websiteinfo:'Features and community',chatgpt:'AI and development',parentsettings:'Project from the project overview',schildi:'Smartphone project',voiceassistant:'AI voice assistant project',scratch:'Creative coding project',schleimcloud:'Personal cloud project',iptv:'Streaming and media setups',tech:'Technology and experiments',contact:'Messages and collaborations',whatsapp:'Send a written message',email:'Contact by email',google:'Review the Creator Studio',images:'Private photo and video library',camera:'Original browser extension webcam; Android app shows a separate support notice',legal:'Imprint, privacy policy and terms',settings:'Appearance and language'},
@@ -638,6 +639,7 @@
     websitehome:renderWebsiteHome,shop:renderShop,websiteinfo:renderWebsiteInfo,fanapp:renderFanApp,tech:renderTech,images:renderImages,camera:renderCamera,legal:renderLegalHub,
     contact:renderContact,whatsapp:renderWhatsApp,email:renderEmail,google:renderGoogle,settings:renderSettings,
     slimestore:()=>window.SSOSPersonalization?.renderStore?.() || '<p class="body-copy">Schleim-Store konnte nicht geladen werden.</p>',
+    cloud:()=>'<div class="app-hero"><p class="eyebrow">PERSÖNLICHER CLOUD-SPEICHER</p><h2>Schleim Cloud</h2><p>Verwalte dein Schleim-Konto, deinen Speicher und dein Premium-Abo direkt in Schleim OS.</p><div class="embed-shell" style="min-height:680px"><iframe src="https://schnecke2007.github.io/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/cloud/" title="Schleim Cloud" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;min-height:680px;border:0;border-radius:16px;background:#251205"></iframe></div><p class="body-copy">Falls die Cloud nicht eingebettet werden kann, <a href="https://schnecke2007.github.io/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/cloud/" target="_blank" rel="noopener noreferrer">öffne sie in einem neuen Tab ↗</a>.</p></div>',
     chatgpt:()=>renderProjectDetail('chatgpt'),parentsettings:()=>renderProjectDetail('parentsettings'),schildi:()=>renderProjectDetail('schildi'),
     voiceassistant:()=>renderProjectDetail('voiceassistant'),scratch:()=>renderProjectDetail('scratch'),
     schleimcloud:()=>renderProjectDetail('schleimcloud'),iptv:()=>renderProjectDetail('iptv')
