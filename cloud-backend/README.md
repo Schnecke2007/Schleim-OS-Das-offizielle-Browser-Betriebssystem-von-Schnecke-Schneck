@@ -2,45 +2,51 @@
 
 **Tarifmodell:** Free mit 1 GiB sowie genau ein kostenpflichtiger Tarif: Premium mit 10 GiB für **2,99 € pro Monat**.
 
-**Zahlungsdienst:** Mollie SEPA-Lastschrift mit automatischer monatlicher Abbuchung nach ausdrücklicher Mandatserteilung. Der Kunde autorisiert die erste Zahlung; der Server prüft anschließend das gültige SEPA-Mandat und richtet das monatliche Mollie-Abonnement ein.
+**Zahlungsdienst:** Stripe Checkout + Stripe Billing mit SEPA-Lastschrift und automatischer monatlicher Abrechnung nach ausdrücklicher Mandatserteilung im Checkout.
 
-Die bestehende Supabase-Projektadresse und der öffentliche Publishable Key bleiben Bestandteil der Architektur. Supabase verwaltet Konten, Abos und Speicher; Mollie verarbeitet Zahlungen. Ein Publishable Key ist für Client-Anwendungen vorgesehen und kein Administrationsschlüssel. Den `SUPABASE_SERVICE_ROLE_KEY` und den `MOLLIE_API_KEY` niemals in Browser-/Android-Code, GitHub oder Chat eintragen.
+Supabase bleibt das Cloud-Backend für Konten, Abos und Speicher. Stripe verarbeitet ausschließlich Zahlungen. Die Stripe-API-Adresse lautet `https://api.stripe.com/v1`. Der geheime Stripe-Schlüssel darf nur serverseitig in Supabase Edge Function Secrets liegen. Niemals einen Secret Key oder Supabase Service Role Key in Browser-/Android-Code, GitHub oder Chat eintragen.
 
 ## Tarifmodell
-
 - Free: 1 GiB, kostenlos
 - Premium: 10 GiB, 2,99 EUR pro Monat
 
-Der Betrag wird serverseitig aus der Tarifkonfiguration gelesen. Der Client darf keinen Betrag vorgeben.
+Der Betrag wird serverseitig aus der Tarifkonfiguration geprüft. Der Client kann keinen Betrag vorgeben.
 
-## Implementierter Integrationsstand im Branch
-
-- Datenbankmigration für Premium 10 GiB / 299 Cent pro Monat und Entfernung von Premium Plus.
-- Mollie Checkout Edge Function: erstellt Kundenprofil und erste Zahlung mit `sequenceType: first`.
-- Mollie Webhook Edge Function: ruft den Zahlungsstatus direkt bei Mollie ab, prüft das gültige SEPA-Mandat und legt das monatliche Abonnement an; weitere bezahlte Abozahlungen aktualisieren den Abostatus.
-- UI zeigt nur Free und Premium 10 GB / 2,99 € monatlich.
-- Checkout bleibt praktisch nicht nutzbar, solange die Supabase-Identitätsbrücke, Secrets, Rücksprung-URL und Mollie-Freischaltung fehlen.
-
-## Noch nicht produktionsbereit
-
-Die Implementierung ist noch nicht auf dem echten Supabase-Projekt deployed oder mit einem Mollie-Händlerkonto end-to-end getestet. Der GitHub Device Flow ist kein Supabase Auth JWT. Vor dem Livebetrieb müssen Identitätsbrücke, Kündigungs-Endpunkt, Rücklastschrift-/Erstattungsbehandlung, robuste Webhook-Idempotenz, periodengenaue Statusabgleiche und serverseitige Speicherquota vollständig getestet werden.
+## Stripe-Integration im Branch
+- Stripe Checkout Session im Abonnementmodus mit SEPA Direct Debit.
+- Monatlicher Preis wird serverseitig mit 299 EUR-Cent festgelegt.
+- Stripe-Webhooks werden anhand der `Stripe-Signature` mit HMAC-SHA256 und Zeitfenster geprüft.
+- `checkout.session.completed` legt den Vertrag zunächst als `pending` an.
+- `invoice.paid` aktiviert Premium; fehlgeschlagene Rechnungen setzen den Status auf `past_due`.
+- Abonnementstatus und Periodenende werden anhand der Stripe Subscription API aktualisiert.
+- UI und Dokumentation nennen Stripe statt Mollie.
 
 ## Benötigte Supabase Edge Function Secrets
-
-- `MOLLIE_API_KEY`: Mollie Test-Key für Tests; später Live-Key nach Freigabe
-- `MOLLIE_WEBHOOK_URL`: öffentliche HTTPS-URL der deployten `mollie-webhook` Function
-- `SCHLEIM_CLOUD_RETURN_URL`: HTTPS-Rücksprungadresse der Cloud-Kontooberfläche
+- `STRIPE_SECRET_KEY`: zuerst `sk_test_...`, später Live-Schlüssel `sk_live_...`
+- `STRIPE_WEBHOOK_SECRET`: Signatur-Secret des Stripe-Webhooks (`whsec_...`)
+- `SCHLEIM_CLOUD_RETURN_URL`: HTTPS-Rücksprungadresse der Schleim Cloud
 - `SUPABASE_SERVICE_ROLE_KEY`: ausschließlich serverseitig
 - Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` im Function-Kontext bereit
 
-Keine Schlüssel in das Repository schreiben.
+Webhook-Endpunkt nach Deployment: `https://<PROJECT_REF>.supabase.co/functions/v1/stripe-webhook`
+
+Im Stripe Dashboard mindestens diese Ereignisse abonnieren:
+- `checkout.session.completed`
+- `invoice.paid`
+- `invoice.payment_failed`
+- `customer.subscription.updated`
+- `customer.subscription.deleted`
+
+## Noch nicht produktionsbereit
+Die Änderungen liegen zunächst nur im GitHub-Feature-Branch. Sie wurden nicht auf Supabase deployed und nicht mit einem Stripe-Händlerkonto end-to-end getestet. Der GitHub Device Flow ist kein Supabase Auth JWT; die sichere Identitätsbrücke muss vor dem Checkout fertiggestellt werden. Die UI hält den Checkout deshalb deaktiviert. Kündigungsablauf, Rücklastschriften/Erstattungen, vollständige atomare Webhook-Idempotenz, Speicherquota und Live-Freigabe müssen vor echtem Betrieb vollständig umgesetzt und getestet werden.
+
+**Keine Live-Abbuchungen sind aktiviert.** Das kann erst nach Händler-Onboarding, Hinterlegen der Live-Secrets, Webhook-Konfiguration, erfolgreichem Test und Deployment erfolgen.
 
 ## Weiterführende Dokumentation
+Siehe [Stripe SEPA Setup](docs/STRIPE-SEPA-SETUP.md).
 
-Siehe [Mollie SEPA Setup](docs/MOLLIE-SEPA-SETUP.md).
-
-Offizielle API-Referenzen:
-- [Mollie Recurring Payments](https://docs.mollie.com/docs/recurring-payments)
-- [Create subscription](https://docs.mollie.com/reference/create-subscription)
-- [Mandates API](https://docs.mollie.com/reference/mandates-api)
-- [Webhooks](https://docs.mollie.com/reference/webhooks)
+Offizielle Dokumentation:
+- https://docs.stripe.com/api
+- https://docs.stripe.com/billing/subscriptions/overview
+- https://docs.stripe.com/payments/sepa-debit
+- https://docs.stripe.com/webhooks
