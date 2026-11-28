@@ -3,7 +3,7 @@
 ## Tarif und Zahlung
 - Free: 1 GiB kostenlos
 - Premium: 10 GiB für 2,99 EUR pro Monat
-- Zahlungsdienst: Stripe Checkout + Billing mit SEPA-Lastschrift
+- Zahlungsdienst: Stripe Checkout + Billing mit Kartenzahlung
 
 ## Im Feature-Branch vorbereitet
 - Stripe Checkout Session im Subscription-Modus
@@ -14,13 +14,13 @@
 
 ## Einrichtung in Stripe
 1. Ein Stripe-Konto eröffnen und Unternehmens-/Händlerprüfung abschließen.
-2. SEPA Direct Debit im Stripe Dashboard aktivieren bzw. prüfen.
+2. Kartenzahlung im Stripe Dashboard aktivieren bzw. prüfen.
 3. Zunächst einen Test-Secret-Key (`sk_test_...`) erzeugen.
 4. Supabase Edge Function Secrets setzen: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SCHLEIM_CLOUD_RETURN_URL` und `SUPABASE_SERVICE_ROLE_KEY`.
 5. Die Edge Functions `create-checkout` und `stripe-webhook` deployen.
 6. Im Stripe Dashboard einen Webhook auf `https://<PROJECT_REF>.supabase.co/functions/v1/stripe-webhook` einrichten und die Ereignisse `checkout.session.completed`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.updated` und `customer.subscription.deleted` abonnieren.
 7. Das angezeigte Webhook-Signatur-Secret (`whsec_...`) als `STRIPE_WEBHOOK_SECRET` in Supabase hinterlegen.
-8. Den Checkout im Testmodus mit SEPA-Testdaten durchtesten.
+8. Den Checkout im Testmodus mit Stripe-Testkartendaten durchtesten.
 9. GitHub Device Flow sicher mit Supabase Auth verbinden. GitHub Access Tokens sind keine Supabase JWTs.
 
 ## Vor echten Abbuchungen zwingend erforderlich
