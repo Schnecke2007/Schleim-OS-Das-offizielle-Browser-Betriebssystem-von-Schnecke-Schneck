@@ -1622,7 +1622,11 @@ class MainActivity : Activity() {
                 var conflicts = 0
                 for (name in remoteNames) {
                     val envelope = cloudSync.downloadEncryptedVpnProfile(name)
-                    val bytes = SecureProfileStore.decryptBackup(envelope, passphrase)
+                    val bytes = try {
+                        SecureProfileStore.decryptBackup(envelope, passphrase)
+                    } catch (error: Exception) {
+                        throw IllegalStateException("Schleim-Cloud-Passwort falsch oder VPN-Profil beschädigt.", error)
+                    }
                     require(bytes.size <= 256 * 1024) { "Ein VPN-Profil in der Schleim-Cloud ist größer als erlaubt." }
                     val remoteConfig = String(bytes, Charsets.UTF_8)
                     if (name in localNames) {
@@ -1658,7 +1662,12 @@ class MainActivity : Activity() {
                         showVpnDialog()
                     }
                 } else {
-                    val message = "VPN-Cloud-Synchronisierung fehlgeschlagen: ${result.exceptionOrNull()?.message ?: "Fehler"}"
+                    val error = result.exceptionOrNull()
+                    if (error?.message.orEmpty().startsWith("Schleim-Cloud-Passwort falsch")) {
+                        // Let the user re-enter the same cross-device cloud passphrase on the next attempt.
+                        secureProfileStore.remove(KEY_CLOUD_PASSPHRASE)
+                    }
+                    val message = "VPN-Cloud-Synchronisierung fehlgeschlagen: ${error?.message ?: "Fehler"}"
                     statusView?.text = message
                     if (notifyUser) showToast(message)
                 }
