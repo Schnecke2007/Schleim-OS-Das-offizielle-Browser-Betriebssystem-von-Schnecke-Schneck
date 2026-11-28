@@ -17,3 +17,5 @@ Preserve all unrelated browser features, including GeckoView browsing, tabs, his
 The Android APK must be universal for ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supplied by the pinned GeckoView build. Keep minSdk 26 (Android 8.0+).
 
 Publish the new Android build as Schleim OS v3.22.1. Verify the APK build, signing, universal ABIs, generated Android Studio template, checksums and release assets. Do not overwrite v3.22.0.
+
+CI validation adjustment: the documentation assertion runs against lowercase text and checks for the normalized token mbit/s.

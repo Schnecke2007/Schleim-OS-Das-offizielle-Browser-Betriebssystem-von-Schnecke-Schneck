@@ -291,7 +291,7 @@ jobs:
           assert "In privaten Fenstern ausführen" in main
           android_guide = Path("docs/Deutsch/ANDROID-BROWSER.md").read_text().lower()
           assert "schleim vpn" in android_guide and "wireguard" in android_guide
-          assert "Mbit/s" in android_guide
+          assert "mbit/s" in android_guide
           assert "private fun showSettingsDialog()" in main
           assert 'private const val GITHUB_APP_INSTALL_URL = "https://github.com/apps/schleim-os-account"' in main
           assert "private const val KEY_ACCOUNT_INSTALL_STARTED" in main
@@ -515,7 +515,7 @@ jobs:
           fi
           echo "All project archives and the Alpha 32 APK are ready; the Android Studio ZIP root is Android-App Template."
 
-      - name: Publish the complete 3.22.0 release
+      - name: Publish the complete 3.22.1 release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.target.outputs.tag }}
