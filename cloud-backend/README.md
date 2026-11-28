@@ -2,7 +2,7 @@
 
 **Tarifmodell:** Free mit 1 GiB sowie genau ein kostenpflichtiger Tarif: Premium mit 10 GiB für **2,99 € pro Monat**.
 
-**Zahlungsdienst:** Stripe Checkout + Stripe Billing mit SEPA-Lastschrift und automatischer monatlicher Abrechnung nach ausdrücklicher Mandatserteilung im Checkout.
+**Zahlungsdienst:** Stripe Checkout + Stripe Billing mit Kartenzahlung und automatischer monatlicher Verlängerung.
 
 Supabase bleibt das Cloud-Backend für Konten, Abos und Speicher. Stripe verarbeitet ausschließlich Zahlungen. Die Stripe-API-Adresse lautet `https://api.stripe.com/v1`. Der geheime Stripe-Schlüssel darf nur serverseitig in Supabase Edge Function Secrets liegen. Niemals einen Secret Key oder Supabase Service Role Key in Browser-/Android-Code, GitHub oder Chat eintragen.
 
@@ -13,7 +13,7 @@ Supabase bleibt das Cloud-Backend für Konten, Abos und Speicher. Stripe verarbe
 Der Betrag wird serverseitig aus der Tarifkonfiguration geprüft. Der Client kann keinen Betrag vorgeben.
 
 ## Stripe-Integration im Branch
-- Stripe Checkout Session im Abonnementmodus mit SEPA Direct Debit.
+- Stripe Checkout Session im Abonnementmodus mit Kartenzahlung.
 - Monatlicher Preis wird serverseitig mit 299 EUR-Cent festgelegt.
 - Stripe-Webhooks werden anhand der `Stripe-Signature` mit HMAC-SHA256 und Zeitfenster geprüft.
 - `checkout.session.completed` legt den Vertrag zunächst als `pending` an.
@@ -48,5 +48,5 @@ Siehe [Stripe SEPA Setup](docs/STRIPE-SEPA-SETUP.md).
 Offizielle Dokumentation:
 - https://docs.stripe.com/api
 - https://docs.stripe.com/billing/subscriptions/overview
-- https://docs.stripe.com/payments/sepa-debit
+- https://docs.stripe.com/payments/cards
 - https://docs.stripe.com/webhooks
