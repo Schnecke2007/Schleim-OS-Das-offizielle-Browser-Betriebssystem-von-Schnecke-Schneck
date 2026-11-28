@@ -1,4 +1,4 @@
-# Schleim Browser – Android-App (0.1.0-alpha32)
+# Schleim Browser – Android-App (0.1.0-alpha33)
 
 Schleim Browser ist die eigenständige Android-App des Schleim-OS-Projekts. Sie basiert auf Mozilla GeckoView und bündelt die originale WebExtension aus extension/.
 
@@ -90,3 +90,8 @@ Schleim Browser enthält einen integrierten VPN-Bereich im Browser-Menü. Er nut
 ### Universelle APK
 
 Die APK wird nicht in mehrere Architektur-Dateien aufgeteilt. Sie bündelt ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64. 32-Bit-x86 wird von der gepinnten GeckoView-Bibliothek nicht unterstützt. Android 8.0 (API 26) oder neuer ist weiterhin erforderlich.
+
+
+- **Live-Datenraten:** Die VPN-Ansicht zeigt Download (empfangen) und Upload (gesendet) in Mbit/s sowie die übertragenen MB.
+- **Profilwechsel:** Du kannst ein anderes lokal importiertes WireGuard-Profil wählen und direkt im Browser-Menü verbinden.
+- **Profil-Datenschutz:** Die App entfernt Kommentarzeilen und den ursprünglichen Dateinamen, vergibt einen neutralen lokalen Namen und verschlüsselt die vollständige Konfiguration mit Android Keystore (AES-GCM). Die notwendigen privaten Schlüssel bleiben lokal erhalten; der VPN-Anbieter kann den Schlüssel weiterhin deinem Konto zuordnen.

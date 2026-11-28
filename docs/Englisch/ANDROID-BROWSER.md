@@ -9,9 +9,9 @@ The Android app does not replace Android. It is a browser that runs on Android.
 
 ## Download
 
-Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha32.apk**.
+Open the [GitHub Releases page](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) and download **Schleim-Browser-Android-0.1.0-alpha33.apk**.
 
-Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
+Direct download: [Schleim Browser for Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk)
 
 ## System requirements
 
@@ -120,3 +120,11 @@ The release also provides **Schleim-Browser-Android-Studio-Template.zip**. The a
 - Bundled ABIs: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64; 32-bit x86 is not supplied by the pinned GeckoView version
 
 [Main documentation](../../README.en.md) · [Browser Extension installation](INSTALLATION.md) · [Troubleshooting](TROUBLESHOOTING.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
+
+## Schleim VPN
+
+Open **Browser menu → Schleim VPN**. Import your personal WireGuard .conf file through Android's document picker. The app removes comment lines and the source filename, assigns a neutral local name and encrypts the complete configuration with Android Keystore (AES-GCM). Keys and tunnel addresses required for a working connection remain intact; they are not copied into GitHub or the APK.
+
+You can switch the VPN tunnel on and off, switch between imported profiles and view live traffic rates: download (received) and upload (sent) in Mbit/s, plus cumulative totals in MB. These readings apply only to the Schleim Browser tunnel. The tunnel is restricted to Schleim Browser; other Android apps do not use it. The app cannot prevent the VPN provider from associating the cryptographic key with its account.
+
+The location list is a reference catalog, not live server availability. Rotate any keys that were exposed previously with the provider.

@@ -1,9 +1,19 @@
-Schleim OS 3.22.0 Android browser release
+Schleim Browser Android VPN release
 
-Build and validate Schleim Browser 0.1.0-alpha32 (versionCode 32) without any VPN integration. Preserve all unrelated browser features, including GeckoView browsing, tabs, history, bookmarks, encrypted password manager, add-on support, downloads, printing, private browsing and the existing DNS-over-HTTPS configuration.
+Build and validate Schleim Browser 0.1.0-alpha33 (versionCode 33) with native WireGuard VPN controls directly in the Android browser menu.
 
-The Android APK must be universal for the ABIs supplied by the pinned GeckoView libraries: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supplied by the pinned GeckoView build. Keep minSdk 26 (Android 8.0+).
+Required VPN capabilities:
+- Native WireGuard tunnel through Android VpnService; no separate VPN app.
+- Connect/disconnect toggle and server/profile switching without leaving the browser menu.
+- Import personal WireGuard .conf profiles from Android's file picker.
+- Remove comment metadata and source filenames on import; assign neutral local profile names.
+- Encrypt all imported profile data locally with Android Keystore AES-GCM. Never commit personal .conf files, private keys or PresharedKeys, and never bundle user credentials in the APK or public template.
+- Keep the tunnel restricted to the Schleim Browser package.
+- Show live download (received) and upload (sent) rates in Mbit/s plus cumulative received/sent MB using WireGuard tunnel statistics.
+- Keep the public location catalog as reference metadata only; do not present it as live provider availability.
 
-No VPN menu, VPN tile, WireGuard dependency, VPN service, server catalog, WireGuard profile, VPN native bridge or VPN-related documentation should remain in the application or templates.
+Preserve all unrelated browser features, including GeckoView browsing, tabs, history, bookmarks, encrypted password manager, add-on support, downloads, printing, private browsing and DNS-over-HTTPS.
 
-Build and validate the APK, both Extension archives, the Android Studio template, update JSON, SHA-256 sums and APK signature. Update the existing v3.22.0 GitHub Release in place; preserve the existing tag and create the release only if it is absent. Verify all published assets and checksums.
+The Android APK must be universal for ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supplied by the pinned GeckoView build. Keep minSdk 26 (Android 8.0+).
+
+Publish the new Android build as Schleim OS v3.22.1. Verify the APK build, signing, universal ABIs, generated Android Studio template, checksums and release assets. Do not overwrite v3.22.0.

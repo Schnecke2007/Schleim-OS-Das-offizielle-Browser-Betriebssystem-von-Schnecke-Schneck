@@ -6,7 +6,7 @@ Sie enthält die Schleim-OS-Startseite.
 
 ## Download
 
-[Lade Schleim Browser Alpha 32 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk).
+[Lade Schleim Browser Alpha 32 herunter](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk).
 
 ## App installieren
 
@@ -78,3 +78,8 @@ Die ausführliche Anleitung steht in der [Android-Browser-Dokumentation](../../D
 - Nur Schleim Browser nutzt den Tunnel. Die Extension kann das VPN-Menü öffnen, aber sie baut keinen Tunnel.
 - Die APK unterstützt ARMv7, ARM64 und x86_64. 32-Bit-x86 geht nicht.
 - Android 8 oder neuer ist nötig. Android 7 geht nicht.
+
+- Das VPN zeigt Download und Upload in Mbit/s.
+- Du kannst andere importierte VPN-Profile auswählen.
+- Deine Profile werden nur auf dem Gerät gespeichert und verschlüsselt.
+- Der private Schlüssel bleibt nötig. Der VPN-Anbieter kann ihn deinem Konto zuordnen.

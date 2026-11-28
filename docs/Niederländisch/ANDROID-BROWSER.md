@@ -9,9 +9,9 @@ De Android-app vervangt Android niet. Het is een browser die op Android draait.
 
 ## Download
 
-Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha32.apk**.
+Open de [GitHub-Releases-pagina](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) en download **Schleim-Browser-Android-0.1.0-alpha33.apk**.
 
-Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
+Directe download: [Schleim Browser voor Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk)
 
 ## Systeemvereisten
 
@@ -120,3 +120,11 @@ De release bevat ook **Schleim-Browser-Android-Studio-Template.zip**. Het archie
 - Gebundelde ABI's: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) en x86_64; 32-bit x86 wordt niet geleverd door de vastgezette GeckoView-versie
 
 [Hoofddocumentatie](../../README.nl.md) · [Installatie van de browser-Extension](INSTALLATIE.md) · [Problemen oplossen](PROBLEMEN-OPLOSSEN.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
+
+## Schleim VPN
+
+Open **Browsermenu → Schleim VPN**. Importeer je persoonlijke WireGuard-.conf-bestand via de Android-bestandskiezer. De app verwijdert commentaarregels en de oorspronkelijke bestandsnaam, geeft het profiel een neutrale lokale naam en versleutelt de volledige configuratie met Android Keystore (AES-GCM). Sleutels en tunneladressen die nodig zijn voor een werkende verbinding blijven behouden; ze worden niet naar GitHub of de APK gekopieerd.
+
+Je kunt de VPN-tunnel in- en uitschakelen, wisselen tussen geïmporteerde profielen en live datasnelheden bekijken: download (ontvangen) en upload (verzonden) in Mbit/s, plus cumulatieve totalen in MB. Deze metingen gelden alleen voor de Schleim Browser-tunnel. De tunnel is beperkt tot Schleim Browser; andere Android-apps gebruiken deze tunnel niet. De app kan niet voorkomen dat de VPN-provider de cryptografische sleutel aan zijn account koppelt.
+
+De locatielijst is een referentiecatalogus en toont geen live serverbeschikbaarheid. Vernieuw eerder openbaar gemaakte sleutels bij de provider.

@@ -15,6 +15,11 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
+data class VpnTrafficSnapshot(
+    val receivedBytes: Long,
+    val sentBytes: Long
+)
+
 /**
  * Native, browser-scoped WireGuard manager.
  *
@@ -39,18 +44,29 @@ class BrowserVpnManager(context: Context) {
         .map { it.removePrefix(PROFILE_PREFIX) }
         .sortedWith(String.CASE_INSENSITIVE_ORDER)
 
-    fun saveProfile(displayName: String, configText: String): String {
-        val name = displayName.trim().replace(Regex("[\\\\/:*?\"<>|]"), "_")
-            .take(48).ifBlank { "WireGuard-Profil" }
-        require(configText.contains(Regex("(?im)^\\s*\\[Interface\\]\\s*$"))) {
+    /**
+     * Imports a user-selected configuration without retaining its source filename
+     * or comment metadata. WireGuard keys and tunnel addresses stay intact because
+     * they are required to authenticate and route the tunnel. The normalized profile
+     * is encrypted immediately and is never written to the repository or APK.
+     */
+    fun saveProfile(configText: String): String {
+        val normalizedConfig = configText.lineSequence()
+            .filterNot { it.trimStart().startsWith("#") }
+            .joinToString("\n")
+            .trim() + "\n"
+        require(normalizedConfig.contains(Regex("(?im)^\\s*\\[Interface\\]\\s*$"))) {
             "Die Datei enthält keinen WireGuard-[Interface]-Abschnitt."
         }
-        require(configText.contains(Regex("(?im)^\\s*PrivateKey\\s*="))) {
+        require(normalizedConfig.contains(Regex("(?im)^\\s*PrivateKey\\s*="))) {
             "Die WireGuard-Konfiguration enthält keinen PrivateKey."
         }
         // Parse before persisting, so malformed or unsupported configs are rejected.
-        parseConfig(configText)
-        val encrypted = encrypt(name, configText)
+        parseConfig(normalizedConfig)
+        val name = generateSequence(1) { it + 1 }
+            .map { "VPN-Standort $it" }
+            .first { !preferences.contains(PROFILE_PREFIX + it) }
+        val encrypted = encrypt(name, normalizedConfig)
         preferences.edit().putString(PROFILE_PREFIX + name, encrypted).apply()
         return name
     }
@@ -66,6 +82,16 @@ class BrowserVpnManager(context: Context) {
     }
 
     fun connectedProfile(): String? = preferences.getString(KEY_CONNECTED_PROFILE, null)
+
+    /** WireGuard peer counters for this tunnel only; values are cumulative bytes. */
+    fun trafficSnapshot(): VpnTrafficSnapshot {
+        if (!isConnected()) return VpnTrafficSnapshot(0L, 0L)
+        val statistics = backend.getStatistics(tunnel)
+        return VpnTrafficSnapshot(
+            receivedBytes = statistics.totalRx().coerceAtLeast(0L),
+            sentBytes = statistics.totalTx().coerceAtLeast(0L)
+        )
+    }
 
     fun connect(profileName: String) {
         val encrypted = preferences.getString(PROFILE_PREFIX + profileName, null)

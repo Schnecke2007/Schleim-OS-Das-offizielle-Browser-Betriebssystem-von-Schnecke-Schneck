@@ -1,6 +1,6 @@
 # Schleim Browser – Android app
 
-**Version 0.1.0-alpha32 · GeckoView · Universal APK**
+**Version 0.1.0-alpha33 · GeckoView · Universal APK**
 
 Schleim Browser is the standalone Android browser of the Schleim OS project. It uses Mozilla GeckoView and bundles the original Schleim OS WebExtension inside the APK.
 
@@ -79,7 +79,7 @@ The Android app is published alongside the Extension in the consolidated release
 
 The guide and generator are kept in the repository under `Android-App/`. Inside the downloaded ZIP, the complete Android Studio project folder is named **Android-App Template**.
 
-[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk) · [Android Studio template instructions](../Android-App/README.en.md)
+[Download the Android APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk) · [Android Studio template instructions](../Android-App/README.en.md)
 
 
 ## Schleim VPN (WireGuard)
@@ -96,3 +96,8 @@ Schleim Browser includes a native VPN section in the browser menu. It uses the e
 ### Universal APK
 
 The build does not split the app into separate APKs. One APK bundles ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView library. Android 8.0 (API 26) or later is still required.
+
+
+- **Live rates:** The VPN panel shows download (received) and upload (sent) in Mbit/s plus cumulative transferred MB.
+- **Profile switching:** Choose another locally imported WireGuard profile and connect directly from the browser menu.
+- **Profile privacy:** The app removes comment lines and the source filename, assigns a neutral local name and encrypts the complete configuration with Android Keystore (AES-GCM). Required private keys remain on the device; the VPN provider may still associate the key with its account.

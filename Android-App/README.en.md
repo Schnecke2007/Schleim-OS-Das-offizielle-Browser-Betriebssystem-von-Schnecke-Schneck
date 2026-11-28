@@ -56,3 +56,10 @@ Import your current personal WireGuard configuration (.conf) from your Proton ac
 Public server files contain no private keys. Previously exposed keys should be regenerated with Proton. Old OpenVPN files have been removed.
 
 The APK bundles ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) and x86_64. 32-bit x86 is not supported by the pinned GeckoView version. Minimum Android version remains Android 8.0 / API 26.
+
+
+## VPN live statistics
+
+Under **Schleim VPN** in the browser menu, you can switch WireGuard on and off, change between imported profiles and import personal .conf files. The panel shows current download and upload rates in Mbit/s plus cumulative received and sent MB for the active connection.
+
+Profiles are not published to GitHub or bundled into the APK. On import, the app removes comment lines and the original filename, assigns a neutral local name and encrypts the complete configuration with Android Keystore (AES-GCM). Keys and tunnel addresses required for a working connection remain intact. The tunnel is restricted to Schleim Browser. The VPN provider may still associate the cryptographic key with your account; renaming the file cannot remove that provider-side link.

@@ -1,1 +1,1 @@
-Publish the validated VPN-free Android Alpha 32 APK from workflow run 46059343486 to GitHub Release v3.22.0. Recalculate the APK checksum and update the release metadata and multilingual notes.
+Publish the validated native-WireGuard Schleim Browser Android Alpha 33 APK from the latest successful android-release workflow run to GitHub Release v3.22.1. Recalculate the APK checksum and update the release metadata and multilingual notes.

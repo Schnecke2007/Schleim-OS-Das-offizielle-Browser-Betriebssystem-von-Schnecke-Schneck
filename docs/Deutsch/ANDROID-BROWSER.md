@@ -9,9 +9,9 @@ Die Android-App ersetzt nicht Android. Sie ist ein Browser, der unter Android au
 
 ## Download
 
-Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha32.apk** herunter.
+Öffne die [GitHub-Releases-Seite](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest) und lade **Schleim-Browser-Android-0.1.0-alpha33.apk** herunter.
 
-Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk)
+Direktdownload: [Schleim Browser für Android – APK](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk)
 
 ## Systemanforderungen
 
@@ -120,3 +120,11 @@ Im Release gibt es zusätzlich **Schleim-Browser-Android-Studio-Template.zip**. 
 - Enthaltene ABIs: ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) und x86_64; 32-Bit-x86 wird von der gepinnten GeckoView-Version nicht bereitgestellt
 
 [Zur Hauptdokumentation](../../README.md) · [Installation der Browser-Extension](INSTALLATION.md) · [Fehlerbehebung](FEHLERBEHEBUNG.md) · [Releases](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest)
+
+## Schleim VPN
+
+Öffne **Browser-Menü → Schleim VPN**. Importiere deine persönliche WireGuard-.conf-Datei über die Android-Dateiauswahl. Die App entfernt Kommentarzeilen und den ursprünglichen Dateinamen, vergibt einen neutralen lokalen Namen und speichert die vollständige Konfiguration verschlüsselt mit Android Keystore (AES-GCM). Die für die Verbindung notwendigen Schlüssel und Tunneladressen bleiben erhalten; sie werden nicht in GitHub oder die APK übernommen.
+
+Du kannst den VPN-Tunnel ein- und ausschalten, zwischen importierten Profilen wechseln und Live-Datenraten sehen: Download (empfangen) und Upload (gesendet) in Mbit/s sowie die Gesamtmenge in MB. Die Werte beziehen sich ausschließlich auf den Schleim-Browser-Tunnel. Der Tunnel ist auf Schleim Browser beschränkt; andere Android-Apps werden nicht über ihn geleitet. Eine Zuordnung des Schlüssels durch den VPN-Anbieter zum jeweiligen Konto kann die App nicht verhindern.
+
+Die Standortliste ist ein Referenzkatalog, keine Live-Auskunft über verfügbare Server. Bereits veröffentlichte Schlüssel solltest du beim Anbieter erneuern.

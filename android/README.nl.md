@@ -1,6 +1,6 @@
 # Schleim Browser – Android-app
 
-**Versie 0.1.0-alpha32 · GeckoView · Universele APK**
+**Versie 0.1.0-alpha33 · GeckoView · Universele APK**
 
 Schleim Browser is de zelfstandige Android-browser van het Schleim OS-project. De app gebruikt Mozilla GeckoView en bevat de oorspronkelijke Schleim OS-WebExtension in het APK-bestand.
 
@@ -79,7 +79,7 @@ De Android-app wordt samen met de Extension in de gecombineerde release gepublic
 
 De handleiding en generator staan in de repository onder `Android-App/`. In het gedownloade ZIP-bestand heet de volledige Android Studio-projectmap **Android-App Template**.
 
-[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha32.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
+[Android-APK downloaden](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk) · [Instructies Android Studio-template](../Android-App/README.nl.md)
 
 
 ## Schleim VPN (WireGuard)
@@ -96,3 +96,8 @@ Schleim Browser heeft een geïntegreerd VPN-gedeelte in het browsermenu. Het geb
 ### Universele APK
 
 De build splitst de app niet in aparte APK-bestanden. Eén APK bevat ARMv7 (armeabi-v7a), ARM64 (arm64-v8a) en x86_64. 32-bit x86 wordt niet ondersteund door de vastgezette GeckoView-bibliotheek. Android 8.0 (API 26) of hoger blijft vereist.
+
+
+- **Live-snelheden:** Het VPN-venster toont download (ontvangen) en upload (verzonden) in Mbit/s plus de cumulatief overgedragen MB.
+- **Van profiel wisselen:** Kies een ander lokaal geïmporteerd WireGuard-profiel en maak rechtstreeks vanuit het browsermenu verbinding.
+- **Privacy van profielen:** De app verwijdert commentaarregels en de oorspronkelijke bestandsnaam, geeft het profiel een neutrale lokale naam en versleutelt de volledige configuratie met Android Keystore (AES-GCM). Noodzakelijke privésleutels blijven op het apparaat; de VPN-provider kan de sleutel nog steeds aan het account koppelen.
