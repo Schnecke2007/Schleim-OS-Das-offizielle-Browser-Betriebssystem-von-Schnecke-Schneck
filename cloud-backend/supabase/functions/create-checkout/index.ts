@@ -57,7 +57,6 @@ Deno.serve(async (req: Request) => {
 
   const form = new URLSearchParams();
   form.set("mode", "subscription");
-  form.append("payment_method_types[]", "card");
   form.set("line_items[0][price_data][currency]", "eur");
   form.set("line_items[0][price_data][unit_amount]", "299");
   form.set("line_items[0][price_data][recurring][interval]", "month");
@@ -72,6 +71,7 @@ Deno.serve(async (req: Request) => {
   form.set("subscription_data[metadata][schleim_user_id]", user.id);
   form.set("subscription_data[metadata][plan_id]", PREMIUM_PLAN_ID);
   form.set("subscription_data[description]", "Schleim Cloud Premium – 10 GB");
+  form.set("integration_identifier", "schleim-cloud-checkout-abcdwxyz");
 
   try {
     const response = await fetch(`${STRIPE_API}/checkout/sessions`, {
