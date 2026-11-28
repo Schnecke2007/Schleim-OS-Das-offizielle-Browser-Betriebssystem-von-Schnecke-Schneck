@@ -163,9 +163,11 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
         verifyPrivateRepository(session)
         val repository = session.optString("repository")
         val path = "/repos/$repository/contents/$BACKUP_PATH"
-        val existing = runCatching {
+        val existing = try {
             githubApi(session, "$path?ref=" + encode(session.optString("defaultBranch")))
-        }.getOrNull()
+        } catch (error: Exception) {
+            if (error.message.orEmpty().contains("HTTP 404")) null else throw error
+        }
         val body = JSONObject()
             .put("message", "Update encrypted Schleim Browser profile backup")
             .put("content", Base64.encodeToString((envelope.toString(2) + "\n").toByteArray(StandardCharsets.UTF_8), Base64.NO_WRAP))
