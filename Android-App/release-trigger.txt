@@ -23,3 +23,5 @@ CI validation adjustment: the documentation assertion runs against lowercase tex
 Launcher build robustness: use the original Android PNG when checked out; otherwise fall back to the repository's extension/assets/icons/icon-512.png. The build must still validate the generated launcher icon.
 
 Extension validation adjustment: the Android VPN tile is intentionally available in the new-tab page and opens the native VPN panel through the browser bridge. Legacy OpenVPN references remain prohibited.
+
+Rebuild requested 2026-11-28: rebuild the Android APK, repackage the latest extension source, regenerate the Android Studio template and SHA-256 checksums, then verify all published release assets against the current main commit.
