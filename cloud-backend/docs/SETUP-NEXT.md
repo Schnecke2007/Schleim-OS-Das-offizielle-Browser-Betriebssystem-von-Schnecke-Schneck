@@ -1,39 +1,28 @@
-# Was als Nächstes benötigt wird
+# Nächste Schritte zur produktiven Verbindung
 
-## Schritt 1 – Supabase-Projekt
+Die technische Produktions-Checkliste mit den Verbindungswegen steht in [KLARNA-PRODUCTION-SETUP.md](./KLARNA-PRODUCTION-SETUP.md).
 
-Die Projektadresse und der öffentliche Publishable Key wurden in den GitHub-Änderungszweig eingetragen:
-- Project URL: https://hrtunnupqcpklejpfsvq.supabase.co
-- Publishable Key: in der Erweiterungs-Konfiguration hinterlegt
+## Bereits vorhanden
+- Supabase-Projektadresse und öffentlicher Publishable Key in der Extension
+- Datenbank-Grundschema für Free 1 GiB, Premium 10 GiB und Premium Plus 50 GiB
+- Kontoübersicht als Edge Function
+- Checkout-Endpunkt, der bis zur vollständigen Einrichtung sicher deaktiviert bleibt
+- Abo-Bereich im Schleim-Konto
+- Klarna als einziger vorgesehener Zahlungsdienst
 
-Der Publishable Key ist für Client-Anwendungen vorgesehen. Den **Service-Role-Key niemals** in den Chat, ins Repository, in die Browser-Erweiterung oder in die Android-App eintragen. Er gehört ausschließlich als geschütztes Secret in die Supabase-Edge-Function-Umgebung.
+## Noch zwingend umzusetzen
+1. GitHub Device Flow sicher mit einer internen Schleim-Konto-Identität verbinden. GitHub-Tokens sind keine Supabase Auth JWTs.
+2. SQL-Migrationen und Edge Functions im tatsächlichen Supabase-Projekt deployen.
+3. Supabase Storage so konfigurieren, dass direkte Client-Uploads die Quota-Prüfung nicht umgehen können.
+4. Serverseitigen Upload-Endpunkt mit transaktionssicherer Quota-Prüfung implementieren.
+5. Klarna-Händlerkonto für Deutschland/EUR und Customer Tokens für wiederkehrende Händlerbelastungen freischalten lassen.
+6. Das konkrete Klarna-API-Produkt samt API-Version, Authentifizierung und Webhook-Vertrag festlegen.
+7. Serverseitigen Klarna-Checkout, Tokenisierung, Verlängerungs-Scheduler, Idempotenz, Zahlungsstatusabgleich, Webhook-Empfang und Kündigung implementieren.
+8. Verbindliche Verkaufspreise und rechtliche Checkout-Angaben festlegen.
+9. Browser-Erweiterung und Android-App gegen dasselbe Backend testen und erst danach produktiv freigeben.
 
-## Schritt 2 – Datenbank und Funktionen bereitstellen
+## Geheimnisse
+Produktions-API-Schlüssel, Webhook-Signaturschlüssel und Supabase Service-Role-Key ausschließlich in Supabase Edge Function Secrets speichern. Niemals in GitHub, Client-Code oder Chat eintragen.
 
-Die SQL-Migration muss im Supabase-Projekt ausgeführt und die Edge Functions `account-summary` sowie `create-checkout` müssen deployed werden. Dafür werden die serverseitigen Secrets `SUPABASE_URL`, `SUPABASE_ANON_KEY` und `SUPABASE_SERVICE_ROLE_KEY` benötigt. Der Service-Role-Key bleibt ausschließlich in Supabase.
-
-## Schritt 3 – Schleim-Konto verbinden
-
-Die vorhandene Anmeldung verwendet GitHub Device Flow. Sie stellt noch kein Supabase-Auth-JWT aus. Wir müssen eine serverseitige Verknüpfung einrichten, die das GitHub-Token bei GitHub validiert und die Schleim-Konto-ID sicher einer Supabase-Identität zuordnet. Bis dahin werden keine Kontodaten erfunden und keine Quota-Entscheidungen clientseitig getroffen.
-
-## Schritt 4 – Speicher
-
-Supabase Storage Bucket und Upload-Edge-Function einrichten. Jeder Upload muss serverseitig Identität, Dateigröße, Verbrauch und Tariflimit prüfen. Derzeit sind die Tariflimits noch nicht technisch auf Uploads durchgesetzt.
-
-## Schritt 5 – Klarna Playground vorbereiten
-
-1. Playground-Konto für Europe im Klarna-Partnerportal erstellen bzw. anmelden.
-2. Dort Playground API Username/Key ID und API Password/Secret erzeugen.
-3. Prüfen lassen, ob Klarna Payments und Customer Tokens für wiederkehrende Abos im Händlerkonto und für Deutschland freigeschaltet sind.
-4. Die beiden Playground-Zugangsdaten später ausschließlich als Supabase Edge Function Secrets setzen: `KLARNA_ENVIRONMENT=playground`, `KLARNA_REGION=eu`, `KLARNA_API_USERNAME`, `KLARNA_API_PASSWORD`.
-5. Niemals Klarna-Secrets in GitHub, Browser/Android oder Chat eintragen.
-
-Die vollständige technische Testplanung steht in [KLARNA-SANDBOX.md](./KLARNA-SANDBOX.md). Klarna Playground-Testkäufe lösen keine echten Zahlungen aus. Nur synthetische Testdaten verwenden.
-
-## Schritt 6 – Zahlungsintegration
-
-Backend-seitig Klarna Checkout-Session, Autorisierung, Customer Token, Verlängerungs-Scheduler, Idempotenz, Webhook-/Statusverarbeitung, Kündigung und fehlgeschlagene Zahlungen implementieren. Ein bestätigter Zahlungsvorgang muss serverseitig den Tarif aktualisieren. Bis alle Tests bestanden sind, bleibt der Checkout deaktiviert.
-
-## Sicherheitsgrenze
-
-Es werden keine Bankdaten benötigt und keine Live-Zahlungen aktiviert. Eine spätere Freigabe für den Produktivbetrieb erfolgt nur nach ausdrücklicher Zustimmung. Die Klarna-Verfügbarkeit für wiederkehrende Zahlungen muss vor einer Zusage von Klarna bestätigt werden.
+## Status
+Es ist derzeit keine Klarna-Verbindung aktiv. Der Checkout kann nicht genutzt werden. Speicherlimits werden noch nicht serverseitig erzwungen. Die Dokumentation behauptet ausdrücklich keine bereits erfolgte Aktivierung. Live-Zahlungen bleiben bis zur ausdrücklichen Produktionsfreigabe gesperrt.
