@@ -179,7 +179,7 @@
       content:await blobToBase64(blob),
       branch:auth.repo.default_branch || 'main'
     };
-    const targetPath = MEDIA_ROOT + '/' + String(path).replace(/^\\/+/, '');
+    const targetPath = MEDIA_ROOT + '/' + String(path).replace(/^\/+/, '');
     return apiPut('/repos/' + encodeURIComponent(auth.user.login) + '/' + REPO_NAME + '/contents/' + encodePath(targetPath), payload, onProgress);
   }
   async function updateIndex(items) {
