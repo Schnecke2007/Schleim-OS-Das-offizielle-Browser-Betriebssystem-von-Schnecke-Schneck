@@ -6,7 +6,7 @@ De Schleim OS-startpagina is inbegrepen.
 
 ## Download
 
-[Download Schleim Browser Alpha 32](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk).
+[Download Schleim Browser Alpha 33](https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/releases/latest/download/Schleim-Browser-Android-0.1.0-alpha33.apk).
 
 ## De app installeren
 
