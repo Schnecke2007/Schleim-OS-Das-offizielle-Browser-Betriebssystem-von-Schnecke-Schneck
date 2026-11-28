@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
 
   const form = new URLSearchParams();
   form.set("mode", "subscription");
-  form.append("payment_method_types[]", "sepa_debit");
+  form.append("payment_method_types[]", "card");
   form.set("line_items[0][price_data][currency]", "eur");
   form.set("line_items[0][price_data][unit_amount]", "299");
   form.set("line_items[0][price_data][recurring][interval]", "month");
