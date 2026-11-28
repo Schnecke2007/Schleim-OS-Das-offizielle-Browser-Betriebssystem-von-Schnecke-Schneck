@@ -61,15 +61,15 @@ Diese Werte serverseitig eintragen:
 | `STRIPE_PREMIUM_PRICE_ID` | Test-Price-ID aus Schritt 3 |
 | `STRIPE_WEBHOOK_SECRET` | Signing Secret des Test-Webhooks aus Schritt 6 |
 | `SCHLEIM_CLOUD_RETURN_URL` | Tatsächliche HTTPS-Rücksprungadresse der Schleim-Cloud-App |
-| `SUPABASE_SERVICE_ROLE_KEY` | Service-Role/Secret-Key dieses Supabase-Projekts, nur serverseitig |
 
-Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` für Edge Functions automatisch bereit. Diese Werte nicht als zusätzliche Secrets anlegen, wenn sie bereits injiziert werden.
+
+Supabase stellt `SUPABASE_URL`, `SUPABASE_ANON_KEY` und `SUPABASE_SERVICE_ROLE_KEY` im Edge-Function-Kontext automatisch bereit. Diese Systemvariablen nicht als eigene Secrets neu anlegen.
 
 Wenn du einen Stripe Restricted API Key erstellst, gib ihm nur die für Checkout, Price-Lesen, Subscription-Lesen und Customer-Portal-Sessions notwendigen Berechtigungen. Prüfe die tatsächlichen Berechtigungsnamen im Stripe Dashboard. Ein normaler Secret Key ist nur die Ausweichlösung.
 
 **Wichtig:** Secret-Werte niemals an ChatGPT senden. Nicht in GitHub Secrets, Quellcode, README, Browsercode oder Android-APK schreiben. Bereits früher offengelegte Schlüssel nicht erneut verwenden.
 
-## 6. Stripe-Test-Webhook anlegen
+## 6. Öffentliche Cloud-Adresse und GitHub Pages\n\nDie Cloud-Oberfläche liegt in `site/cloud/` und wird durch `.github/workflows/deploy-cloud-pages.yml` veröffentlicht. Aktiviere im GitHub-Repository unter Settings → Pages als Build and deployment Source **GitHub Actions**. Warte auf einen erfolgreichen Workflow und prüfe, dass diese URL über HTTPS erreichbar ist:\n\n`https://schnecke2007.github.io/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck/cloud/`\n\nTrage genau diese URL als `SCHLEIM_CLOUD_RETURN_URL` ein. Füge sie außerdem unter Supabase → Authentication → URL Configuration zu den erlaubten Redirect URLs hinzu. Richte dort auch den GitHub-Provider ein. Die von Supabase angezeigte OAuth Callback URL muss in der GitHub OAuth App als Authorization callback URL hinterlegt werden. Das GitHub Client Secret bleibt ausschließlich in Supabase.\n\n## 7. Stripe-Test-Webhook anlegen
 
 Nach dem Deployment lautet die Webhook-Adresse:
 
@@ -87,7 +87,7 @@ Das angezeigte Signing Secret (beginnt üblicherweise mit `whsec_`) als `STRIPE_
 
 Vor einem echten Produktionsbetrieb muss die Ereignisbehandlung zusätzlich um Refund-, Dispute- und Fraud-Ereignisse erweitert und getestet werden, insbesondere `charge.refunded`, `charge.dispute.created` und `radar.early_fraud_warning.created`. Der aktuelle Webhook ist deshalb noch keine vollständige Produktionslösung.
 
-## 7. Edge Functions deployen
+## 8. Edge Functions deployen
 
 Erst nachdem Auth und die benötigten Secrets korrekt eingerichtet sind, diese vier Funktionen aus dem GitHub-Branch `feature/schleim-cloud-subscriptions` deployen:
 
@@ -110,7 +110,7 @@ supabase functions list
 
 Die Webhook-Funktion muss ohne Supabase-JWT-Prüfung erreichbar sein, prüft aber zwingend die Stripe-Signatur selbst. Die drei Nutzerfunktionen müssen JWT-geschützt bleiben.
 
-## 8. Tests vor dem Livegang
+## 9. Tests vor dem Livegang
 
 - Neuer Supabase-Nutzer erhält Free mit 1 GiB.
 - Nicht angemeldete Nutzer können keinen Checkout und kein Kundenportal starten.
@@ -124,13 +124,13 @@ Die Webhook-Funktion muss ohne Supabase-JWT-Prüfung erreichbar sein, prüft abe
 
 **Speicherlimit:** Der aktuelle Stand enthält den Speicherzähler, erzwingt aber noch nicht nachweislich jedes Upload-/Löschereignis. Vor dem Livegang muss die tatsächliche Upload-Pipeline so angepasst werden, dass jeder Schreibvorgang serverseitig und atomar gegen das Kontingent geprüft wird. Ein bloßer Zähler oder eine UI-Anzeige reicht nicht.
 
-## 9. Steuer- und Händlerangaben
+## 10. Steuer- und Händlerangaben
 
 Der Betreiber hat angegeben, derzeit keine Umsatzsteuer zu erheben. Daher ist automatische Steuerberechnung im Checkout derzeit ausgeschaltet. Das ist keine rechtliche Einstufung. Vor dem Verkauf sind die tatsächlichen steuerlichen Pflichten, Rechnungsangaben und gegebenenfalls die Kleinunternehmerregelung mit einer qualifizierten Stelle zu klären.
 
 Im Stripe-Konto fehlen laut bisheriger Prüfung noch Angaben zur Hauptgeschäftsadresse bzw. die Tax Settings sind nicht vollständig. Keine Adresse oder Steuerregistrierung erfinden und keine Registrierung automatisch hinzufügen. Eine Stripe-Tax-Registrierung dokumentiert eine bereits bestehende Registrierung; sie ersetzt nicht die Anmeldung bei der zuständigen Behörde.
 
-## 10. Livegang
+## 11. Livegang
 
 Erst nach erfolgreichem Testbetrieb, abgeschlossener Händler-/Steuerprüfung, vollständigem Webhook, serverseitiger Speicherquota, getesteter Kündigung und ausdrücklicher Freigabe:
 
