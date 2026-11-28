@@ -41,7 +41,7 @@ Die Store-Oberfläche prüft den authentifizierten Status des Schleim-Kontos. Oh
 
 ## Foto- und Video-Cloud
 
-Das Medien-Repository `schleim-os-cloud-photos-and-videos` wird getrennt vom Einstellungs-Repository `schleim-os-cloud` verwaltet. Das Konto-Modul prüft Besitzer-ID und `private=true` und erstellt das Medien-Repository bei Bedarf über die GitHub-Repository-API. Die Medienschnittstelle akzeptiert nur Content-Pfade und verwendet dieselbe Schleim-Konto-Sitzung.
+Das Medien-Repository ist jetzt das bestehende private Konto-Repository `schleim-os-cloud`. Der Konto-Manager prüft Besitzer-ID und `private=true`; Medien-API-Pfade werden unter `Foto- und Video-Cloud/` aufgelöst. Das frühere Repository `schleim-os-cloud-photos-and-videos` wird ausschließlich als Migrationsquelle gelesen. Die Migration kopiert jede Datei mit Git-Blob-SHA-1-Prüfung und überschreibt keine abweichenden Zieldateien.
 
 Dateien werden nach Medientyp, Aufnahmejahr und -monat sortiert. JPEG-EXIF `DateTimeOriginal` wird – soweit verfügbar und lesbar – ausgewertet; andernfalls gilt `File.lastModified`. Die Metadatensuche funktioniert ohne externe Dienste. Optional stellt `schleim-photo-ai.js` über `LanguageModel.availability()` und `LanguageModel.create()` eine lokale Gemini-Nano-Sitzung bereit. Neue Fotos können nach ausdrücklicher Aktivierung lokal beschrieben werden; die Ergebnisse werden als Beschreibung und Stichwörter in den Medien-Metadaten gespeichert. Die KI-Suche erweitert Suchbegriffe lokal und bewertet Treffer anhand der gespeicherten Metadaten. Für Videos werden derzeit nur Metadaten und Dateinamen indexiert.
 
