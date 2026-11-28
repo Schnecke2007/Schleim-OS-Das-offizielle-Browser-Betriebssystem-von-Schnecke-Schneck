@@ -23,7 +23,7 @@ create table if not exists public.schleim_subscriptions (
   user_id uuid primary key references auth.users(id) on delete cascade,
   plan_id text not null default 'free' references public.schleim_plans(id),
   status text not null default 'active'
-    check (status in ('active','trialing','past_due','canceled','incomplete')),
+    check (status in ('active','trialing','past_due','canceled','incomplete','pending')),
   provider text,
   provider_customer_id text,
   provider_subscription_id text unique,
@@ -62,6 +62,9 @@ begin
   return new;
 end;
 $$;
+
+-- This function is only invoked by the auth.users trigger, never directly by API roles.
+revoke all on function public.schleim_ensure_free_subscription() from public, anon, authenticated;
 
 drop trigger if exists on_auth_user_created_schleim on auth.users;
 create trigger on_auth_user_created_schleim
