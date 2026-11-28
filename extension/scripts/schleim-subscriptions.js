@@ -11,9 +11,9 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const language = () => document.body?.dataset.language || 'de';
   const TEXT = {
-    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Geplanter Free-Tarif',included:'Vorgesehen: 1 GB Cloud-Speicher',plans:'Weitere Tarife',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Noch nicht verfügbar',setup:'Supabase-Projekt hinterlegt',setupText:'Das Projekt ist konfiguriert. Die sichere Konto-Verknüpfung und der Abruf deiner echten Kontodaten fehlen noch.',safe:'Zahlungen sind deaktiviert. Es wird nichts abgebucht.',noData:'Noch keine authentifizierten Cloud-Daten verfügbar.'},
-    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Planned Free plan',included:'Planned: 1 GB cloud storage',plans:'More plans',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Not available yet',setup:'Supabase project configured',setupText:'The project is configured. Secure account linking and retrieval of your real account data are still pending.',safe:'Payments are disabled. Nothing will be charged.',noData:'No authenticated cloud data available yet.'},
-    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Gepland Free-abonnement',included:'Gepland: 1 GB cloudopslag',plans:'Andere abonnementen',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Nog niet beschikbaar',setup:'Supabase-project ingesteld',setupText:'Het project is ingesteld. De veilige accountkoppeling en het ophalen van je echte accountgegevens ontbreken nog.',safe:'Betalingen zijn uitgeschakeld. Er wordt niets afgeschreven.',noData:'Nog geen geauthenticeerde cloudgegevens beschikbaar.'}
+    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Free',included:'1 GB Cloud-Speicher kostenlos',plans:'Dein Upgrade',premium:'Premium · 10 GB',price:'2,99 € / Monat',disabled:'Checkout wird nach Einrichtung freigeschaltet',setup:'Supabase-Projekt hinterlegt',setupText:'Das Backend bleibt unter deiner bisherigen Supabase-URL erreichbar. Die sichere Konto-Verknüpfung muss noch fertiggestellt werden.',safe:'Automatische monatliche SEPA-Lastschrift über Mollie nach ausdrücklicher Mandatserteilung.',noData:'Noch keine authentifizierten Cloud-Daten verfügbar.'},
+    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Free',included:'1 GB cloud storage at no cost',plans:'Your upgrade',premium:'Premium · 10 GB',price:'€2.99 / month',disabled:'Checkout will be enabled after setup',setup:'Supabase project configured',setupText:'The backend remains available at your existing Supabase URL. Secure account linking still needs to be completed.',safe:'Automatic monthly SEPA direct debit through Mollie after explicit mandate authorization.',noData:'No authenticated cloud data available yet.'},
+    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Free',included:'1 GB cloudopslag gratis',plans:'Je upgrade',premium:'Premium · 10 GB',price:'€ 2,99 / maand',disabled:'Checkout wordt na configuratie geactiveerd',setup:'Supabase-project ingesteld',setupText:'De backend blijft bereikbaar via je bestaande Supabase-URL. De veilige accountkoppeling moet nog worden voltooid.',safe:'Automatische maandelijkse SEPA-incasso via Mollie na uitdrukkelijke machtiging.',noData:'Nog geen geauthenticeerde cloudgegevens beschikbaar.'}
   };
   const t = key => (TEXT[language()] || TEXT.de)[key] || TEXT.de[key] || key;
   const formatBytes = bytes => {
@@ -28,16 +28,15 @@
       '<div class="ssos-subscription-current"><b>' + esc(t('free')) + ' · 1 GB</b><p>' + esc(t('included')) + '</p>' +
       '<div class="ssos-subscription-meter"><span style="width:0%"></span></div><small>' + esc(t('noData')) + '</small></div>' +
       '<h5>' + esc(t('plans')) + '</h5><div class="ssos-subscription-plans">' +
-      '<div><b>' + esc(t('premium')) + '</b><small>' + esc(t('disabled')) + '</small></div>' +
-      '<div><b>' + esc(t('plus')) + '</b><small>' + esc(t('disabled')) + '</small></div></div>' +
+      '<div><b>' + esc(t('premium')) + '</b><strong>' + esc(t('price')) + '</strong><small>' + esc(t('disabled')) + '</small></div>' +
+      '</div>' +
       '<p class="ssos-cloud-note">' + esc(t('setup')) + ': ' + esc(t('setupText')) + '</p>' +
       '<p class="ssos-cloud-note">' + esc(t('safe')) + '</p></section>';
   }
   async function refresh() {
     // GitHub Device Flow tokens are not Supabase Auth sessions. Do not send
     // them to Supabase or pretend that they authenticate the billing API.
-    // The public project configuration is present, but no trusted user JWT
-    // exists until the server-side identity bridge has been implemented.
+    // Checkout remains unavailable until a trusted identity bridge is deployed.
     return {
       configured: Boolean(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey),
       authenticated: false,
