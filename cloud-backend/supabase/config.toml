@@ -1,4 +1,4 @@
-project_id = "schleim-os-cloud"
+project_id = "hrtunnupqcpklejpfsvq"
 
 [api]
 enabled = true
@@ -9,7 +9,7 @@ max_rows = 1000
 
 [db]
 port = 54322
-major_version = 15
+major_version = 17
 
 [functions.account-summary]
 verify_jwt = true
