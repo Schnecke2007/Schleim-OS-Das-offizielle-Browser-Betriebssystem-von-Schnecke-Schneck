@@ -2,64 +2,58 @@
 
 **Tarifmodell:** Free mit 1 GiB sowie genau ein kostenpflichtiger Tarif: Premium mit 10 GiB für **2,99 € pro Monat**.
 
-**Zahlungsdienst:** Stripe Checkout + Stripe Billing mit Kartenzahlung und automatischer monatlicher Verlängerung.
+**Zahlungsdienst:** Stripe Checkout + Stripe Billing mit monatlicher Verlängerung. Die Payment-Method-Auswahl erfolgt dynamisch über Stripe; im Stripe Dashboard sind Karten als einzige gewünschte Methode zu konfigurieren.
 
-Supabase bleibt das Cloud-Backend für Konten, Abos und Speicher. Stripe verarbeitet ausschließlich Zahlungen. Die Stripe-API-Adresse lautet `https://api.stripe.com/v1`. Der geheime Stripe-Schlüssel darf nur serverseitig in Supabase Edge Function Secrets liegen. Niemals einen Secret Key oder Supabase Service Role Key in Browser-/Android-Code, GitHub oder Chat eintragen.
+Supabase verwaltet Konten, Abos und Speicher. Stripe verarbeitet Zahlungen. Geheimnisse gehören ausschließlich in Supabase Edge Function Secrets. Niemals einen Stripe-Key oder Supabase Service Role Key in Browser-/Android-Code, GitHub oder Chat eintragen.
 
 ## Tarifmodell
 - Free: 1 GiB, kostenlos
 - Premium: 10 GiB, 2,99 EUR pro Monat
 
-Der Betrag wird serverseitig aus der Tarifkonfiguration geprüft. Der Client kann keinen Betrag vorgeben.
+Der Client kann weder Preis noch Price-ID vorgeben. Checkout verwendet die serverseitig konfigurierte Stripe Price-ID und prüft, dass sie aktiv ist und exakt 2,99 EUR monatlich kostet.
 
-## Stripe-Integration im Branch
-- Stripe Checkout Session im Abonnementmodus mit Kartenzahlung und dynamischen Zahlungsmethoden.
-- Monatlicher Preis wird serverseitig mit 299 EUR-Cent festgelegt.
-- Stripe-Webhooks werden anhand der `Stripe-Signature` mit HMAC-SHA256 und Zeitfenster geprüft.
-- `checkout.session.completed` legt den Vertrag zunächst als `pending` an.
-- `invoice.paid` aktiviert Premium; fehlgeschlagene Rechnungen setzen den Status auf `past_due`.
-- Abonnementstatus und Periodenende werden anhand der Stripe Subscription API aktualisiert.
-- UI und Dokumentation nennen Stripe statt Mollie.
+## Funktionen im Branch
+- `account-summary`: authentifizierte Kontoinformationen, Tarif und Speicheranzeige.
+- `create-checkout`: authentifizierter Stripe Checkout im Abonnementmodus.
+- `create-customer-portal`: authentifizierter Zugang zum Stripe Customer Portal für Aboverwaltung und Kündigung.
+- `stripe-webhook`: prüft Stripe-Signaturen und synchronisiert den Abostatus.
+
+Die Checkout-Funktion nutzt keine fest verdrahtete `payment_method_types`-Liste. Die gewünschten Zahlungsmethoden müssen im Stripe Dashboard konfiguriert werden.
 
 ## Supabase-Datenbank
 Die Migrationen 001 bis 003 wurden im verbundenen Supabase-Projekt angewendet:
-- Tarifkonfiguration (Free: 1 GiB, Premium: 10 GiB / 2,99 EUR monatlich)
-- Nutzer-Abonnements und Speicherverbrauch
+- Free 1 GiB / Premium 10 GiB und 2,99 EUR monatlich
+- Abonnement- und Speicherzähler-Tabellen
 - Webhook-Ereignisprotokoll
-- Row Level Security und eingeschränkte Berechtigungen
-- Index- und RLS-Policy-Optimierungen
+- Row Level Security und Indizes
 
-## Benötigte Supabase Edge Function Secrets
-- `STRIPE_SECRET_KEY`: zunächst Testschlüssel, später Live-Schlüssel
-- `STRIPE_WEBHOOK_SECRET`: Signatur-Secret des Stripe-Webhooks
-- `SCHLEIM_CLOUD_RETURN_URL`: HTTPS-Rücksprungadresse der Schleim Cloud
+## Benötigte Edge Function Secrets
+- `STRIPE_SECRET_KEY`: vorzugsweise ein minimal berechtigter Restricted Key
+- `STRIPE_PREMIUM_PRICE_ID`: Stripe Price-ID des 2,99-EUR-Monatspreises
+- `STRIPE_WEBHOOK_SECRET`: Signing Secret des Webhook-Endpunkts
+- `SCHLEIM_CLOUD_RETURN_URL`: tatsächliche HTTPS-Rücksprungadresse
 - `SUPABASE_SERVICE_ROLE_KEY`: ausschließlich serverseitig
-- Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` im Function-Kontext bereit
 
-Webhook-Endpunkt nach Deployment: `https://hrtunnupqcpklejpfsvq.supabase.co/functions/v1/stripe-webhook`
+Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` im Function-Kontext bereit.
 
-Im Stripe Dashboard mindestens diese Ereignisse abonnieren:
-- `checkout.session.completed`
-- `invoice.paid`
-- `invoice.payment_failed`
-- `customer.subscription.updated`
-- `customer.subscription.deleted`
+Webhook-URL nach Deployment:
+`https://hrtunnupqcpklejpfsvq.supabase.co/functions/v1/stripe-webhook`
 
-## Steuerkonfiguration (aktueller Betreiberstand)
-Der Betreiber hat angegeben, derzeit keine Umsatzsteuer zu erheben. Der Checkout setzt deshalb aktuell `automatic_tax[enabled]=false`; es wird keine automatische Steuerberechnung oder ein zusätzlicher Steuerbetrag aktiviert. Das ist keine steuerrechtliche Einstufung und ersetzt nicht die Prüfung, ob Kleinunternehmerregelung, Rechnungsangaben oder andere Pflichten gelten. Bei einer späteren Änderung muss diese Einstellung vor dem Verkauf angepasst werden.
+Der Webhook verarbeitet derzeit `checkout.session.completed`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.updated` und `customer.subscription.deleted`. Für den Produktionsbetrieb fehlen noch die vollständige Behandlung von Refunds, Disputes und Fraud-Warnungen sowie belastbare End-to-End-Tests.
 
-## Noch nicht produktionsbereit
-Die Datenbankmigrationen sind auf Supabase angewendet, die Edge Functions aber noch nicht deployed. Es wurden keine Stripe-Produkte, Preise oder Webhook-Endpunkte angelegt. Stripe Tax Settings sind noch unvollständig (Hauptgeschäftsadresse fehlt); Steuerstatus und inklusive/exklusive Steuerdarstellung sind ungeklärt. Die Supabase Edge Function Secrets sind noch nicht gesetzt.
+## Steuerkonfiguration
+Der Betreiber hat angegeben, derzeit keine Umsatzsteuer zu erheben. Deshalb bleibt automatische Steuerberechnung ausgeschaltet. Das ist keine steuerrechtliche Einstufung und ersetzt nicht die Prüfung der tatsächlichen Pflichten und Rechnungsangaben.
 
-Der GitHub Device Flow ist kein Supabase Auth JWT; die sichere Identitätsbrücke muss vor dem Checkout fertiggestellt werden. Die UI hält den Checkout deshalb deaktiviert. Kündigungsablauf, robuste atomare Webhook-Idempotenz, vollständige Refund-/Zahlungsstatus-Behandlung und serverseitige Speicherquota müssen vor echtem Betrieb fertiggestellt und getestet werden.
+## Nicht produktionsbereit
+- Edge Functions sind derzeit noch nicht deployed.
+- Supabase Edge Function Secrets sind noch nicht gesetzt.
+- Es gibt noch keine bestätigte Stripe Price-ID oder einen konfigurierten Webhook-Endpunkt.
+- Supabase Auth muss als echte Identitätsquelle verwendet werden; der GitHub Device Flow allein ist kein Supabase JWT.
+- Die Speicherquota ist noch nicht nachweislich in der vollständigen Upload-Pipeline serverseitig und atomar erzwungen.
+- Refund-/Dispute-/Fraud-Behandlung und End-to-End-Tests stehen noch aus.
+- Stripe-Händler-/Steuerangaben müssen vom Betreiber vervollständigt und geprüft werden.
 
-**Keine Live-Abbuchungen sind aktiviert.** Livebetrieb erst nach Händler-/Steuerkonfiguration, Hinterlegen der Live-Secrets, Deployment, End-to-End-Test und ausdrücklicher Freigabe.
+**Keine Live-Abbuchungen sind aktiviert.** Livegang erst nach vollständiger Prüfung und ausdrücklicher Freigabe.
 
-## Weiterführende Dokumentation
-Siehe [Stripe-Kartenzahlung Setup](docs/STRIPE-SEPA-SETUP.md).
-
-Offizielle Dokumentation:
-- https://docs.stripe.com/api
-- https://docs.stripe.com/billing/subscriptions/overview
-- https://docs.stripe.com/payments/cards
-- https://docs.stripe.com/webhooks
+## Einrichtung
+Die detaillierte Anleitung steht in [STRIPE-SUPABASE-SETUP.md](docs/STRIPE-SUPABASE-SETUP.md).
