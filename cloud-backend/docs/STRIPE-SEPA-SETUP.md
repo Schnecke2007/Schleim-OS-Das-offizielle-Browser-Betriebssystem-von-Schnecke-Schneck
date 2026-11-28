@@ -1,4 +1,4 @@
-# Schleim Cloud – Stripe SEPA-Lastschrift
+# Schleim Cloud – Stripe Kartenzahlung
 
 ## Tarif
 - Free: 1 GiB, kostenlos
@@ -9,7 +9,7 @@
 1. Der angemeldete Kunde wählt Premium.
 2. Der Server liest den Premium-Tarif und prüft 299 Cent, EUR und monatliches Intervall.
 3. Die Edge Function erstellt eine Stripe Checkout Session im Subscription-Modus.
-4. Der Kunde wird zu Stripe Checkout weitergeleitet und gibt seine Bankdaten ein. Stripe sammelt die SEPA-Mandatsautorisierung im Checkout.
+4. Der Kunde wird zu Stripe Checkout weitergeleitet und gibt seine Kartendaten ein. Stripe sammelt die Kartenzahlung im Checkout.
 5. Stripe sendet signierte Webhook-Ereignisse. Die Edge Function prüft die Signatur mit `STRIPE_WEBHOOK_SECRET`.
 6. `checkout.session.completed` speichert das Abonnement zunächst als `pending`.
 7. Erst `invoice.paid` aktiviert Premium. `invoice.payment_failed` setzt den Status auf `past_due`; Kündigungen werden als `canceled` markiert.
@@ -35,7 +35,7 @@ Ereignisse:
 - `customer.subscription.deleted`
 
 ## Händlerkonto und Live-Betrieb
-Das Stripe-Konto muss vollständig eingerichtet und verifiziert sein. SEPA Direct Debit muss für das Konto verfügbar sein. Für Tests zuerst Testschlüssel verwenden. Live-Zahlungen sind erst nach erfolgreichem Test, sicherer Authentifizierung, Deployment und Hinterlegen der Live-Secrets möglich.
+Das Stripe-Konto muss vollständig eingerichtet und verifiziert sein. Kartenzahlung muss für das Konto verfügbar sein. Für Tests zuerst Testschlüssel verwenden. Live-Zahlungen sind erst nach erfolgreichem Test, sicherer Authentifizierung, Deployment und Hinterlegen der Live-Secrets möglich.
 
 ## Offene Produktionsarbeiten
 - Supabase-Migrationen und Edge Functions deployen und testen.
