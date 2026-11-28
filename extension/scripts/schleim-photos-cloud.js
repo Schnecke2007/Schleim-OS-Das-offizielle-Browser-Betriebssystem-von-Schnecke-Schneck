@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const REPO_NAME = 'schleim-os-cloud-photos-and-videos';
+  const REPO_NAME = 'schleim-os-cloud';
+  const MEDIA_ROOT = 'Foto- und Video-Cloud';
   const INDEX_PATH = '_metadata/media-index.json';
   const MAX_FILE_BYTES = 50 * 1024 * 1024;
   const MAX_IMAGE_EDGE = 2560;
@@ -10,7 +11,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const state = {
     repository: null, items: [], indexSha: null, view: 'all', query: '',
-    objectUrls: [], busy: false, backgroundBusy: false,
+    objectUrls: [], busy: false, backgroundBusy: false, migrating: false,
     cameraStream: null, cameraStarted: false,
     cameraRecorder: null, cameraChunks: [], cameraRecording: false,
     facingMode: 'environment', activeApp: null
@@ -79,7 +80,14 @@
       connectedTo: 'Verbunden mit',
       connectHint: 'Bei älteren Schleim-OS-Versionen wird dieses zweite private Repository noch nicht automatisch angelegt. Verknüpfe es einmalig hier.',
       accountRequired: 'Für die Verknüpfung ist ein angemeldetes Schleim-Konto erforderlich.',
-      originalLimit: 'Upload-Limit: 50 MiB pro Datei. GitHub ist ein versionsbasiertes Repository und kein unbegrenzter Medien- oder Backup-Dienst.',
+      originalLimit: 'Upload-Limit: 50 MiB pro Datei. Deine Medien liegen im privaten Schleim-Cloud-Repository unter Foto- und Video-Cloud. GitHub ist ein versionsbasiertes Repository und kein unbegrenzter Medien- oder Backup-Dienst.',
+      migrationInfo: 'Ein bisheriger separater Medien-Speicher wurde gefunden. Alle Originaldateien, Vorschaubilder und Metadaten können in das gemeinsame Schleim-Cloud-Repository kopiert und geprüft werden.',
+      migrationButton: 'Alte Mediathek in Schleim-Cloud übernehmen',
+      migrationProgress: 'Mediathek wird geprüft und übertragen',
+      migrationDone: 'Alle Dateien wurden übertragen und anhand ihrer Git-Datei-Prüfsummen geprüft. Das alte Repository bleibt vorerst als Sicherheitskopie erhalten.',
+      migrationConflict: 'Eine Datei mit abweichendem Inhalt liegt bereits im Ziel. Es wurde nichts überschrieben; der Vorgang kann nach Klärung erneut gestartet werden.',
+      migrationMissing: 'Das bisherige Foto-/Video-Repository wurde nicht gefunden.',
+      migrationArchive: 'Die Übernahme ist bereits abgeschlossen. Das frühere Repository wird nicht mehr für neue Uploads verwendet; es bleibt als Sicherheitskopie bestehen.',
       noCapture: 'Kameraansicht nicht verfügbar. Starte die Webkamera erneut.'
     },
     en: {
@@ -144,7 +152,14 @@
       connectedTo: 'Connected to',
       connectHint: 'Older Schleim OS versions do not create this second private repository automatically. Link it here once.',
       accountRequired: 'A signed-in Schleim account is required.',
-      originalLimit: 'Upload limit: 50 MiB per file. GitHub is a version-controlled repository, not an unlimited media or backup service.',
+      originalLimit: 'Upload limit: 50 MiB per file. Media is stored in the private Schleim cloud repository under Foto- und Video-Cloud. GitHub is a version-controlled repository, not an unlimited media or backup service.',
+      migrationInfo: 'A separate legacy media repository was found. All original files, thumbnails and metadata can be copied and verified in the unified Schleim cloud repository.',
+      migrationButton: 'Move existing media library into Schleim Cloud',
+      migrationProgress: 'Checking and transferring the media library',
+      migrationDone: 'All files were transferred and verified using their Git blob checksums. The old repository is retained as a safety copy for now.',
+      migrationConflict: 'A target file with different content already exists. Nothing was overwritten; resolve the conflict before retrying.',
+      migrationMissing: 'The previous photo and video repository was not found.',
+      migrationArchive: 'The migration is complete. The previous repository is no longer used for new uploads and is retained as a safety copy.',
       noCapture: 'Camera view unavailable. Start the webcam again.'
     },
     nl: {
@@ -209,7 +224,14 @@
       connectedTo: 'Verbonden met',
       connectHint: 'Oudere Schleim OS-versies maken deze tweede privérepository nog niet automatisch aan. Koppel deze hier eenmalig.',
       accountRequired: 'Een aangemeld Schleim-account is vereist.',
-      originalLimit: 'Uploadlimiet: 50 MiB per bestand. GitHub is een repository met versiebeheer en geen onbeperkte media- of back-updienst.',
+      originalLimit: 'Uploadlimiet: 50 MiB per bestand. Media wordt opgeslagen in de privé-Schleim-cloudrepository onder Foto- und Video-Cloud. GitHub is een repository met versiebeheer en geen onbeperkte media- of back-updienst.',
+      migrationInfo: 'Er is een aparte oude mediarepository gevonden. Alle originele bestanden, miniaturen en metadata kunnen worden gekopieerd en gecontroleerd in de gezamenlijke Schleim-cloudrepository.',
+      migrationButton: 'Bestaande mediabibliotheek naar Schleim Cloud verplaatsen',
+      migrationProgress: 'Mediabibliotheek controleren en overzetten',
+      migrationDone: 'Alle bestanden zijn overgezet en gecontroleerd met hun Git blob-controlesommen. De oude repository blijft voorlopig als reservekopie bestaan.',
+      migrationConflict: 'Er bestaat al een doelbestand met andere inhoud. Er is niets overschreven; los het conflict op voordat je opnieuw probeert.',
+      migrationMissing: 'De vorige foto- en videorepository is niet gevonden.',
+      migrationArchive: 'De migratie is voltooid. De vorige repository wordt niet meer gebruikt voor nieuwe uploads en blijft als reservekopie bestaan.',
       noCapture: 'Cameraweergave niet beschikbaar. Start die webcamera opnieuw.'
     }
   };
@@ -872,18 +894,128 @@
     host.innerHTML = '<p>' + esc(t('linking')) + '</p>';
     try {
       const repo = await account().getPhotosRepository();
+      if (!repo?.private) throw new Error('Das gemeinsame Schleim-Cloud-Repository ist nicht privat oder nicht verfügbar.');
       state.repository = repo;
-      if (!repo) {
-        host.innerHTML = '<p><b>' + esc(t('unlinked')) + '</b></p><p>' + esc(t('connectHint')) + '</p><button type="button" class="app-button" data-photos-link>' + esc(t('link')) + '</button>';
-        return;
-      }
       const index = await getIndex();
       state.items = index.items;
       renderStats(host, state.items, repo);
       host.insertAdjacentHTML('beforeend','<p class="ssos-photos-repo-link"><a href="' + esc(repo.html_url) + '" target="_blank" rel="noopener noreferrer">' + esc(t('connectedTo')) + ' ' + esc(repo.full_name) + ' ↗</a></p><p>' + esc(t('originalLimit')) + '</p>');
+      const legacy = await account().getLegacyPhotosRepository();
+      if (legacy) {
+        let migrated = false;
+        try {
+          await account().requestPhotosRepository('/contents/_metadata/migration-complete.json');
+          migrated = true;
+        } catch (error) {
+          if (error.status !== 404) throw error;
+        }
+        const section = document.createElement('section');
+        section.className = 'ssos-photos-migration';
+        const message = document.createElement('p');
+        message.textContent = migrated ? t('migrationArchive') : t('migrationInfo');
+        section.appendChild(message);
+        if (!migrated) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'app-button';
+          button.dataset.photosMigrate = 'true';
+          button.textContent = t('migrationButton');
+          section.appendChild(button);
+        }
+        const progress = document.createElement('p');
+        progress.dataset.photosMigrationStatus = 'true';
+        progress.setAttribute('role','status');
+        section.appendChild(progress);
+        host.appendChild(section);
+      }
     } catch (error) {
       host.innerHTML = '<p class="is-error">' + esc(error.message || t('loadError')) + '</p>';
     }
+  }
+
+  async function gitBlobSha(blob) {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    const header = new TextEncoder().encode('blob ' + bytes.byteLength + '\0');
+    const payload = new Uint8Array(header.length + bytes.length);
+    payload.set(header,0);
+    payload.set(bytes,header.length);
+    const digest = new Uint8Array(await crypto.subtle.digest('SHA-1',payload));
+    return [...digest].map(value=>value.toString(16).padStart(2,'0')).join('');
+  }
+  async function migrateLegacyRepository(button) {
+    if (state.migrating) return;
+    if (!accountReady()) throw new Error(t('notSignedIn'));
+    state.migrating = true;
+    if (button) button.disabled = true;
+    const status = $('[data-photos-migration-status]');
+    const showProgress = message => { if (status) status.textContent = message; };
+    let completed = 0, skipped = 0, totalBytes = 0;
+    try {
+      const legacy = await account().getLegacyPhotosRepository();
+      if (!legacy) throw new Error(t('migrationMissing'));
+      const branch = legacy.default_branch || 'main';
+      const tree = await account().requestLegacyPhotosRepository('/git/trees/' + encodeURIComponent(branch) + '?recursive=1');
+      if (tree.truncated) throw new Error('GitHub hat den alten Dateibaum abgeschnitten. Die Migration wurde aus Sicherheitsgründen gestoppt.');
+      const files = (tree.tree || []).filter(entry => entry.type === 'blob').sort((a,b)=>a.path.localeCompare(b.path));
+      if (!files.length) throw new Error(t('migrationMissing'));
+      for (let index=0;index<files.length;index++) {
+        const entry = files[index];
+        if (!entry.path || entry.path.startsWith('/') || entry.path.split('/').some(part=>part==='..')) {
+          throw new Error('Die alte Mediathek enthält einen ungültigen Dateipfad: ' + String(entry.path || 'unbekannt'));
+        }
+        showProgress(t('migrationProgress') + ' · ' + (index+1) + '/' + files.length + ' · ' + entry.path);
+        let existing = null;
+        try {
+          existing = await account().requestPhotosRepository('/contents/' + encodePath(entry.path));
+        } catch (error) {
+          if (error.status !== 404) throw error;
+        }
+        if (existing?.sha === entry.sha) {
+          skipped++;
+          totalBytes += Number(entry.size) || 0;
+          continue;
+        }
+        if (existing) throw new Error(t('migrationConflict') + ' (' + entry.path + ')');
+        const raw = await account().requestLegacyPhotosRepository(
+          '/contents/' + encodePath(entry.path) + '?ref=' + encodeURIComponent(branch),
+          {headers:{Accept:'application/vnd.github.raw'},responseType:'blob'}
+        );
+        if (!(raw instanceof Blob) || raw.size !== Number(entry.size)) {
+          throw new Error('Die Quelldatei konnte nicht vollständig gelesen werden: ' + entry.path);
+        }
+        const sourceSha = await gitBlobSha(raw);
+        if (sourceSha !== entry.sha) throw new Error('Prüfsummenfehler in der Quelldatei: ' + entry.path);
+        const uploaded = await putFile(entry.path, raw, 'Migrate legacy Schleim media into unified cloud');
+        if (uploaded.sha !== entry.sha) throw new Error('Die Zieldatei wurde nicht identisch gespeichert: ' + entry.path);
+        completed++;
+        totalBytes += raw.size;
+      }
+      const report = {
+        format:'schleim-unified-media-migration',
+        schemaVersion:1,
+        sourceRepository:legacy.full_name,
+        destinationRepository:repoName(),
+        files:files.length,
+        copied:completed,
+        alreadyPresent:skipped,
+        bytes:totalBytes,
+        completedAt:new Date().toISOString(),
+        verification:'git-blob-sha1'
+      };
+      await putFile('_metadata/migration-complete.json',new Blob([JSON.stringify(report,null,2)+'\n'],{type:'application/json'}),'Verify unified Schleim media migration');
+      showProgress(t('migrationDone') + ' · ' + files.length + ' Dateien');
+      await refreshMediaApp();
+      await mountSettings();
+    } catch (error) {
+      showProgress((error.message || t('loadError')) + ' · Bereits übertragene Dateien bleiben erhalten; erneut starten setzt die Migration fort.');
+      throw error;
+    } finally {
+      state.migrating = false;
+      if (button?.isConnected) button.disabled = false;
+    }
+  }
+  function repoName() {
+    return account()?.getAccount?.()?.repository || REPO_NAME;
   }
 
   async function linkRepository() {
@@ -984,6 +1116,14 @@
 
   function stopCamera() { stopBrowserCamera(); }
   async function handleClick(event) {
+    const migrationButton = event.target.closest('[data-photos-migrate]');
+    if (migrationButton) {
+      migrationButton.disabled = true;
+      try { await migrateLegacyRepository(migrationButton); }
+      catch (error) { setStatus('[data-photos-status]',error.message || t('loadError'),true); }
+      finally { if (migrationButton.isConnected && !state.migrating) migrationButton.disabled = false; }
+      return;
+    }
     const link = event.target.closest('[data-photos-link]');
     if (link) {
       link.disabled = true;
