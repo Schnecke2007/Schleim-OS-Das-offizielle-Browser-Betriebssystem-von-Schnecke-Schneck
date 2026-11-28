@@ -7,8 +7,9 @@
   const API = 'https://api.github.com';
   const TOKEN_URL = 'https://github.com/login/oauth/access_token';
   const CLIENT_ID = 'Iv23lihfJBU95UVCrVt1';
-  const REPO_NAME = 'schleim-os-cloud-photos-and-videos';
-  const INDEX_PATH = '_metadata/media-index.json';
+  const REPO_NAME = 'schleim-os-cloud';
+  const MEDIA_ROOT = 'Foto- und Video-Cloud';
+  const INDEX_PATH = MEDIA_ROOT + '/_metadata/media-index.json';
   const MAX_FILE_BYTES = 50 * 1024 * 1024;
   const SAFE_FILE_BYTES = 49 * 1024 * 1024; // Target with headroom; hard upload ceiling remains 50 MiB.
   const activeJobs = new Set();
@@ -178,7 +179,8 @@
       content:await blobToBase64(blob),
       branch:auth.repo.default_branch || 'main'
     };
-    return apiPut('/repos/' + encodeURIComponent(auth.user.login) + '/' + REPO_NAME + '/contents/' + encodePath(path), payload, onProgress);
+    const targetPath = MEDIA_ROOT + '/' + String(path).replace(/^\\/+/, '');
+    return apiPut('/repos/' + encodeURIComponent(auth.user.login) + '/' + REPO_NAME + '/contents/' + encodePath(targetPath), payload, onProgress);
   }
   async function updateIndex(items) {
     const existing = await getIndex();
@@ -542,7 +544,7 @@
     try {
       if (!auth?.user?.login||!auth?.accessToken) throw new Error('Bitte melde dich zuerst unter Einstellungen → Schleim-Konto an.');
       if (auth.repo?.full_name!==auth.user.login+'/'+REPO_NAME || auth.repo?.private!==true) {
-        throw new Error('Das private Foto- und Video-Repository ist nicht verknüpft. Öffne zuerst die Fotos-App und verknüpfe den Speicher.');
+        throw new Error('Das private gemeinsame Schleim-Cloud-Repository ist nicht verknüpft.');
       }
       const job=await readJob(jobId);
       if (!job || !Array.isArray(job.files) || !job.files.length) throw new Error('Die Upload-Warteschlange ist leer oder nicht mehr verfügbar.');
