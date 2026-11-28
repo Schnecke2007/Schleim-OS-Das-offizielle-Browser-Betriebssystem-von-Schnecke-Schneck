@@ -6,9 +6,8 @@ const cors = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const PREMIUM_PRICE = "2.99";
+const STRIPE_API = "https://api.stripe.com/v1";
 const PREMIUM_PLAN_ID = "premium";
-const MOLLIE_API = "https://api.mollie.com/v2";
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
@@ -17,12 +16,16 @@ Deno.serve(async (req: Request) => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
   const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const mollieKey = Deno.env.get("MOLLIE_API_KEY");
-  const auth = req.headers.get("Authorization");
+  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const returnUrl = Deno.env.get("SCHLEIM_CLOUD_RETURN_URL");
 
-  if (!supabaseUrl || !anonKey || !serviceKey || !mollieKey) {
-    return Response.json({ error: "PAYMENTS_NOT_CONFIGURED", message: "Supabase or Mollie server secrets are missing." }, { status: 503, headers: cors });
+  if (!supabaseUrl || !anonKey || !serviceKey || !stripeKey || !returnUrl) {
+    return Response.json({ error: "PAYMENTS_NOT_CONFIGURED" }, { status: 503, headers: cors });
   }
+  if (!stripeKey.startsWith("sk_test_") && !stripeKey.startsWith("sk_live_")) {
+    return Response.json({ error: "INVALID_STRIPE_SECRET_KEY" }, { status: 503, headers: cors });
+  }
+  const auth = req.headers.get("Authorization");
   if (!auth?.startsWith("Bearer ")) {
     return Response.json({ error: "AUTHENTICATION_REQUIRED" }, { status: 401, headers: cors });
   }
@@ -46,64 +49,58 @@ Deno.serve(async (req: Request) => {
     return Response.json({ error: "PREMIUM_PLAN_NOT_CONFIGURED" }, { status: 503, headers: cors });
   }
 
-  const siteUrl = Deno.env.get("SCHLEIM_CLOUD_RETURN_URL");
-  const webhookUrl = Deno.env.get("MOLLIE_WEBHOOK_URL");
-  if (!siteUrl || !webhookUrl || !webhookUrl.startsWith("https://")) {
-    return Response.json({ error: "PAYMENT_URLS_NOT_CONFIGURED" }, { status: 503, headers: cors });
-  }
+  const successUrl = new URL(returnUrl);
+  successUrl.searchParams.set("checkout", "success");
+  successUrl.searchParams.set("session_id", "{CHECKOUT_SESSION_ID}");
+  const cancelUrl = new URL(returnUrl);
+  cancelUrl.searchParams.set("checkout", "cancel");
 
-  const headers = {
-    "Authorization": `Bearer ${mollieKey}`,
-    "Content-Type": "application/json",
-  };
-  const mollieRequest = async (path: string, body?: unknown) => {
-    const response = await fetch(`${MOLLIE_API}${path}`, {
-      method: body ? "POST" : "GET",
-      headers,
-      body: body ? JSON.stringify(body) : undefined,
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(`Mollie API ${response.status}: ${JSON.stringify(payload)}`);
-    return payload;
-  };
+  const form = new URLSearchParams();
+  form.set("mode", "subscription");
+  form.append("payment_method_types[]", "sepa_debit");
+  form.set("line_items[0][price_data][currency]", "eur");
+  form.set("line_items[0][price_data][unit_amount]", "299");
+  form.set("line_items[0][price_data][recurring][interval]", "month");
+  form.set("line_items[0][price_data][product_data][name]", "Schleim Cloud Premium – 10 GB");
+  form.set("line_items[0][quantity]", "1");
+  form.set("client_reference_id", user.id);
+  form.set("customer_email", user.email);
+  form.set("success_url", successUrl.toString());
+  form.set("cancel_url", cancelUrl.toString());
+  form.set("metadata[schleim_user_id]", user.id);
+  form.set("metadata[plan_id]", PREMIUM_PLAN_ID);
+  form.set("subscription_data[metadata][schleim_user_id]", user.id);
+  form.set("subscription_data[metadata][plan_id]", PREMIUM_PLAN_ID);
+  form.set("subscription_data[description]", "Schleim Cloud Premium – 10 GB");
 
   try {
-    const customer = await mollieRequest("/customers", {
-      name: user.user_metadata?.full_name || user.email,
-      email: user.email,
-      metadata: { schleim_user_id: user.id },
-    });
-
-    const payment = await mollieRequest("/payments", {
-      amount: { currency: "EUR", value: PREMIUM_PRICE },
-      description: "Schleim Cloud Premium – erste SEPA-Autorisierung",
-      sequenceType: "first",
-      customerId: customer.id,
-      redirectUrl: siteUrl,
-      webhookUrl,
-      metadata: {
-        schleim_user_id: user.id,
-        plan_id: PREMIUM_PLAN_ID,
-        purpose: "premium_subscription_first_payment",
+    const response = await fetch(`${STRIPE_API}/checkout/sessions`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${stripeKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
       },
+      body: form,
     });
-
-    const checkoutUrl = payment?._links?.checkout?.href;
-    if (!checkoutUrl || typeof checkoutUrl !== "string") {
-      return Response.json({ error: "MOLLIE_CHECKOUT_URL_MISSING" }, { status: 502, headers: cors });
+    const session = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      console.error("Stripe Checkout API error:", response.status, session?.error?.type);
+      return Response.json({ error: "STRIPE_CHECKOUT_FAILED" }, { status: 502, headers: cors });
     }
-
+    if (typeof session.url !== "string") {
+      return Response.json({ error: "STRIPE_CHECKOUT_URL_MISSING" }, { status: 502, headers: cors });
+    }
     return Response.json({
-      checkout_url: checkoutUrl,
-      payment_id: payment.id,
-      amount: PREMIUM_PRICE,
+      checkout_url: session.url,
+      session_id: session.id,
+      amount: "2.99",
       currency: "EUR",
       interval: "month",
       plan_id: PREMIUM_PLAN_ID,
-      message: "Continue to Mollie to authorize the first SEPA payment and recurring mandate.",
+      provider: "stripe",
     }, { headers: { ...cors, "Cache-Control": "no-store" } });
   } catch (error) {
-    console.error("Mollie checkout initialization failed:", error);
-    return Response.json({ error: "MOLLIE_CHECKOUT_FAILED" }, { status: 502, headers: cors });
+    console.error("Stripe checkout initialization failed:", error);
+    return Response.json({ error: "STRIPE_CHECKOUT_FAILED" }, { status: 502, headers: cors });
   }
 });
