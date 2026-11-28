@@ -1,8 +1,9 @@
 (() => {
   'use strict';
+  // Supabase publishable key: public by design. Never place a service-role key here.
   const CONFIG = Object.freeze({
-    supabaseUrl: '',
-    supabaseAnonKey: '',
+    supabaseUrl: 'https://hrtunnupqcpklejpfsvq.supabase.co',
+    supabaseAnonKey: 'sb_publishable_87WPVR-4mWS3hluaI7G4PQ_9RFe8aQO',
     accountSummaryFunction: 'account-summary',
     checkoutFunction: 'create-checkout'
   });
@@ -10,9 +11,9 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const language = () => document.body?.dataset.language || 'de';
   const TEXT = {
-    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Geplanter Free-Tarif',included:'Vorgesehen: 1 GB Cloud-Speicher',plans:'Weitere Tarife',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Noch nicht verfügbar',setup:'Cloud-Backend noch nicht verbunden',setupText:'Sobald das Backend eingerichtet ist, zeigen wir hier deinen echten Speicherverbrauch und deinen Tarif.',safe:'Zahlungen sind deaktiviert. Es wird nichts abgebucht.',noData:'Noch keine Cloud-Daten verfügbar.'},
-    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Planned Free plan',included:'Planned: 1 GB cloud storage',plans:'More plans',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Not available yet',setup:'Cloud backend not connected yet',setupText:'Once the backend is configured, your real storage usage and plan will appear here.',safe:'Payments are disabled. Nothing will be charged.',noData:'No cloud data available yet.'},
-    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Gepland Free-abonnement',included:'Gepland: 1 GB cloudopslag',plans:'Andere abonnementen',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Nog niet beschikbaar',setup:'Cloudbackend nog niet verbonden',setupText:'Zodra de backend is ingesteld, zie je hier je echte opslagverbruik en abonnement.',safe:'Betalingen zijn uitgeschakeld. Er wordt niets afgeschreven.',noData:'Nog geen cloudd gegevens beschikbaar.'}
+    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Geplanter Free-Tarif',included:'Vorgesehen: 1 GB Cloud-Speicher',plans:'Weitere Tarife',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Noch nicht verfügbar',setup:'Supabase-Projekt hinterlegt',setupText:'Das Projekt ist konfiguriert. Die sichere Konto-Verknüpfung und der Abruf deiner echten Kontodaten fehlen noch.',safe:'Zahlungen sind deaktiviert. Es wird nichts abgebucht.',noData:'Noch keine authentifizierten Cloud-Daten verfügbar.'},
+    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Planned Free plan',included:'Planned: 1 GB cloud storage',plans:'More plans',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Not available yet',setup:'Supabase project configured',setupText:'The project is configured. Secure account linking and retrieval of your real account data are still pending.',safe:'Payments are disabled. Nothing will be charged.',noData:'No authenticated cloud data available yet.'},
+    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Gepland Free-abonnement',included:'Gepland: 1 GB cloudopslag',plans:'Andere abonnementen',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Nog niet beschikbaar',setup:'Supabase-project ingesteld',setupText:'Het project is ingesteld. De veilige accountkoppeling en het ophalen van je echte accountgegevens ontbreken nog.',safe:'Betalingen zijn uitgeschakeld. Er wordt niets afgeschreven.',noData:'Nog geen geauthenticeerde cloudgegevens beschikbaar.'}
   };
   const t = key => (TEXT[language()] || TEXT.de)[key] || TEXT.de[key] || key;
   const formatBytes = bytes => {
@@ -35,8 +36,13 @@
   async function refresh() {
     // GitHub Device Flow tokens are not Supabase Auth sessions. Do not send
     // them to Supabase or pretend that they authenticate the billing API.
-    if (!CONFIG.supabaseUrl || !CONFIG.supabaseAnonKey) return null;
-    return null;
+    // The public project configuration is present, but no trusted user JWT
+    // exists until the server-side identity bridge has been implemented.
+    return {
+      configured: Boolean(CONFIG.supabaseUrl && CONFIG.supabaseAnonKey),
+      authenticated: false,
+      paymentsEnabled: false
+    };
   }
   function mount() {
     document.querySelectorAll('.ssos-settings-cloud[data-ssos-cloud-account]').forEach(host => {
