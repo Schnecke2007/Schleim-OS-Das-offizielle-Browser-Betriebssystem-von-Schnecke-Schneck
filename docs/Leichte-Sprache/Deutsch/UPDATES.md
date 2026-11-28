@@ -49,4 +49,4 @@ Wichtig: Durch das Löschen der alten App können Verlauf und gespeicherte Tabs 
 
 Wenn du angemeldet bist, erstelle vor der Deinstallation eine Sicherung unter **Einstellungen → Schleim-Konto**. Nach der Installation kannst du sie dort wiederherstellen. Du brauchst dafür dein GitHub-Konto und dein Backup-Passwort. Ohne Konto-Sicherung können lokale Daten verloren gehen.
 
-[Release Notes 3.20.0](RELEASE-NOTES-3.20.0.md)
+[Release Notes 3.22.1](RELEASE-NOTES-3.22.1.md)
