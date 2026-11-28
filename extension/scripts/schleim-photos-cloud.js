@@ -963,10 +963,11 @@
         if (!entry.path || entry.path.startsWith('/') || entry.path.split('/').some(part=>part==='..')) {
           throw new Error('Die alte Mediathek enthält einen ungültigen Dateipfad: ' + String(entry.path || 'unbekannt'));
         }
+        const targetRelativePath = entry.path === 'README.md' ? '_metadata/legacy-media-repository-README.md' : entry.path;
         showProgress(t('migrationProgress') + ' · ' + (index+1) + '/' + files.length + ' · ' + entry.path);
         let existing = null;
         try {
-          existing = await account().requestPhotosRepository('/contents/' + encodePath(entry.path));
+          existing = await account().requestPhotosRepository('/contents/' + encodePath(targetRelativePath));
         } catch (error) {
           if (error.status !== 404) throw error;
         }
@@ -975,7 +976,7 @@
           totalBytes += Number(entry.size) || 0;
           continue;
         }
-        if (existing) throw new Error(t('migrationConflict') + ' (' + entry.path + ')');
+        if (existing) throw new Error(t('migrationConflict') + ' (' + targetRelativePath + ')');
         const raw = await account().requestLegacyPhotosRepository(
           '/contents/' + encodePath(entry.path) + '?ref=' + encodeURIComponent(branch),
           {headers:{Accept:'application/vnd.github.raw'},responseType:'blob'}
@@ -985,7 +986,7 @@
         }
         const sourceSha = await gitBlobSha(raw);
         if (sourceSha !== entry.sha) throw new Error('Prüfsummenfehler in der Quelldatei: ' + entry.path);
-        const uploaded = await putFile(entry.path, raw, 'Migrate legacy Schleim media into unified cloud');
+        const uploaded = await putFile(targetRelativePath, raw, 'Migrate legacy Schleim media into unified cloud');
         if (uploaded.sha !== entry.sha) throw new Error('Die Zieldatei wurde nicht identisch gespeichert: ' + entry.path);
         completed++;
         totalBytes += raw.size;
