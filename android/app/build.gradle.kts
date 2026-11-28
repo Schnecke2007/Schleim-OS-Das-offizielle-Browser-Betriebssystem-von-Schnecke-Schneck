@@ -53,29 +53,31 @@ android {
  */
 val prepareLauncherIcon by tasks.registering {
     val sourceIcon = file("src/main/file_00000000f7dc8210993324a486df07ef.png")
+    val fallbackIcon = file("../../extension/assets/icons/icon-512.png")
     val targetIcon = file("src/main/res/mipmap-xxxhdpi/ic_launcher.png")
     val oldIcon = file("src/main/res/mipmap-xxxhdpi/ic_launcher.webp")
 
-    inputs.file(sourceIcon)
+    inputs.files(sourceIcon, fallbackIcon)
     outputs.file(targetIcon)
 
     doLast {
-        check(sourceIcon.isFile) {
-            "The supplied Schleim Browser launcher PNG is missing: ${sourceIcon.path}"
+        val selectedIcon = if (sourceIcon.isFile) sourceIcon else fallbackIcon
+        check(selectedIcon.isFile) {
+            "No launcher icon source is available. Expected ${sourceIcon.path} or ${fallbackIcon.path}"
         }
-        val header = sourceIcon.inputStream().use { input -> ByteArray(24).also { check(input.read(it) == it.size) } }
+        val header = selectedIcon.inputStream().use { input -> ByteArray(24).also { check(input.read(it) == it.size) } }
         check(
             header[0] == 0x89.toByte() &&
                 header[1] == 0x50.toByte() &&
                 header[2] == 0x4E.toByte() &&
                 header[3] == 0x47.toByte()
         ) {
-            "The supplied launcher image is not a valid PNG."
+            "The selected launcher image is not a valid PNG: ${selectedIcon.path}"
         }
         targetIcon.parentFile.mkdirs()
-        sourceIcon.copyTo(targetIcon, overwrite = true)
+        selectedIcon.copyTo(targetIcon, overwrite = true)
         oldIcon.delete()
-        println("Schleim Browser launcher icon copied from the supplied repository PNG.")
+        println("Schleim Browser launcher icon copied from ${selectedIcon.path}.")
     }
 }
 

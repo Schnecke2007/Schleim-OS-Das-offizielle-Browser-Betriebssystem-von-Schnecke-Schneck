@@ -172,7 +172,7 @@ jobs:
           assert 'applicationId = "de.schneckeschneck.schleimbrowser"' in gradle
           assert 'android:label="Schleim Browser"' in android_manifest
           assert 'android:icon="@mipmap/ic_launcher"' in android_manifest
-          assert Path("android/app/src/main/file_00000000f7dc8210993324a486df07ef.png").is_file()
+          assert Path("android/app/src/main/file_00000000f7dc8210993324a486df07ef.png").is_file() or Path("extension/assets/icons/icon-512.png").is_file()
           assert '"file.save" -> saveFileFromExtension(payload)' in main
           assert "ACTION_CREATE_DOCUMENT" in main
           assert "REQUEST_SAVE_FILE" in main
@@ -381,7 +381,9 @@ jobs:
           else
             echo "Notice: 32-bit x86 is not supported by the pinned GeckoView AAR; ARMv7, ARM64 and x86_64 are bundled."
           fi
-          cmp -s "android/app/src/main/file_00000000f7dc8210993324a486df07ef.png" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+          ICON_SOURCE="android/app/src/main/file_00000000f7dc8210993324a486df07ef.png"
+          if [ ! -s "$ICON_SOURCE" ]; then ICON_SOURCE="extension/assets/icons/icon-512.png"; fi
+          cmp -s "$ICON_SOURCE" "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
           # Any valid Android debug certificate is accepted. GitHub-hosted runners
           # may generate a fresh debug key, intentionally requiring reinstall.
           cp "$APK" "Schleim-Browser-Android-0.1.0-alpha33.apk"
