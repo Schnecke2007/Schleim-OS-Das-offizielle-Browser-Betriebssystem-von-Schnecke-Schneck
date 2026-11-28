@@ -17,7 +17,8 @@
     "https://geocoding-api.open-meteo.com/*",
     "https://raw.githubusercontent.com/*",
     "https://api.github.com/*",
-    "https://github.com/*"
+    "https://github.com/*",
+    "https://*.supabase.co/*"
   ],
   "optional_host_permissions": [
     "https://*/*",

@@ -1,0 +1,43 @@
+name: Deploy Schleim Cloud website
+
+on:
+  push:
+    branches:
+      - feature/schleim-cloud-subscriptions
+    paths:
+      - 'site/**'
+      - '.github/workflows/deploy-cloud-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: schleim-cloud-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # Keep manual runs restricted to the reviewed Cloud feature branch.
+    if: github.ref == 'refs/heads/feature/schleim-cloud-subscriptions'
+    environment:
+      # Use a dedicated environment instead of the stale github-pages
+      # environment whose branch allow-list currently rejects this branch.
+      # actions/deploy-pages supports a custom environment name.
+      name: schleim-cloud-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
