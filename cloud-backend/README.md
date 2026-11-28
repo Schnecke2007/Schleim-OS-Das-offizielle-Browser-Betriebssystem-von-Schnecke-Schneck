@@ -16,11 +16,14 @@ Architecture: Schleim OS Extension and Android browser call Supabase Edge Functi
 4. Configure a secure identity bridge from the existing GitHub Device Flow to Supabase Auth. GitHub Device Flow access tokens are not Supabase Auth JWTs and must not be forwarded as such.
 5. Implement and test server-side upload quota enforcement.
 6. Test the account and quota flow before configuring payments in test mode.
-7. Live payments remain disabled until explicitly approved.
+7. Implement Klarna Playground checkout and subscription token flow server-side; follow `docs/KLARNA-SANDBOX.md`.
+8. Live payments remain disabled until explicitly approved.
 
-## Payment
+## Klarna
 
-Stripe is the likely first subscription provider. Klarna can be evaluated as an additional method after recurring-payment eligibility is confirmed for the merchant account and region. Do not promise Klarna automatic monthly renewals until confirmed.
+Klarna is the preferred candidate for the requested payment test. The intended route is Klarna Payments in Playground, with Customer Tokens for recurring subscription renewals. This requires merchant eligibility/contract confirmation and a Klarna Playground API credential pair. A normal one-time Klarna payment is not sufficient for recurring billing.
+
+Klarna test credentials must be stored only as Supabase Edge Function secrets. No Klarna credential is currently configured. No checkout, tokenization, webhook, scheduler, or renewal charge is active. The Playground does not process real payments or create invoices/fees.
 
 ## Plans
 
