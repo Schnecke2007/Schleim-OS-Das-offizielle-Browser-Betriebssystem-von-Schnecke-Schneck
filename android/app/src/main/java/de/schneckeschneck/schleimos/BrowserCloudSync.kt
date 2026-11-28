@@ -163,9 +163,11 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
         verifyPrivateRepository(session)
         val repository = session.optString("repository")
         val path = "/repos/$repository/contents/$BACKUP_PATH"
-        val existing = runCatching {
+        val existing = try {
             githubApi(session, "$path?ref=" + encode(session.optString("defaultBranch")))
-        }.getOrNull()
+        } catch (error: Exception) {
+            if (error.message.orEmpty().contains("HTTP 404")) null else throw error
+        }
         val body = JSONObject()
             .put("message", "Update encrypted Schleim Browser profile backup")
             .put("content", Base64.encodeToString((envelope.toString(2) + "\n").toByteArray(StandardCharsets.UTF_8), Base64.NO_WRAP))
@@ -200,6 +202,90 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
         } finally {
             connection.disconnect()
         }
+    }
+
+    /** Lists profile names; the corresponding config files are encrypted envelopes, never plain .conf files. */
+    fun listEncryptedVpnProfiles(): List<String> {
+        val session = requireSession()
+        verifyPrivateRepository(session)
+        val repository = session.optString("repository")
+        val path = "/repos/$repository/contents/$VPN_SERVER_DIRECTORY?ref=" + encode(session.optString("defaultBranch"))
+        val entries = try {
+            githubApiArray(session, path)
+        } catch (error: Exception) {
+            if (error.message.orEmpty().contains("HTTP 404")) return emptyList()
+            throw error
+        }
+        val names = mutableListOf<String>()
+        for (index in 0 until entries.length()) {
+            val item = entries.optJSONObject(index) ?: continue
+            if (item.optString("type") != "file") continue
+            val decoded = vpnProfileNameFromFile(item.optString("name")) ?: continue
+            names.add(decoded)
+        }
+        return names.distinct().sortedWith(String.CASE_INSENSITIVE_ORDER)
+    }
+
+    /** Uploads an AES-256-GCM/PBKDF2 envelope to the private Schleim cloud repository. */
+    fun uploadEncryptedVpnProfile(profileName: String, envelope: JSONObject) {
+        val session = requireSession()
+        verifyPrivateRepository(session)
+        require(envelope.optString("format") == "schleim-browser-encrypted-profile" &&
+            envelope.optString("cipher") == "AES-256-GCM" && envelope.optString("kdf") == "PBKDF2WithHmacSHA256") {
+            "VPN-Profile müssen vor dem Upload mit dem Schleim-Cloud-Passwort verschlüsselt werden."
+        }
+        val repository = session.optString("repository")
+        val path = "/repos/$repository/contents/$VPN_SERVER_DIRECTORY/" + vpnProfileFileName(profileName)
+        val existing = runCatching {
+            githubApi(session, "$path?ref=" + encode(session.optString("defaultBranch")))
+        }.getOrNull()
+        val body = JSONObject()
+            .put("message", "Update encrypted Schleim VPN profile")
+            .put("content", Base64.encodeToString((envelope.toString(2) + "\n").toByteArray(StandardCharsets.UTF_8), Base64.NO_WRAP))
+            .put("branch", session.optString("defaultBranch", "main"))
+        if (!existing?.optString("sha").isNullOrBlank()) body.put("sha", existing!!.optString("sha"))
+        githubApi(session, path, "PUT", body)
+    }
+
+    /** Downloads a profile envelope. Decryption remains on-device and requires the user's cloud passphrase. */
+    fun downloadEncryptedVpnProfile(profileName: String): JSONObject {
+        val session = requireSession()
+        verifyPrivateRepository(session)
+        val repository = session.optString("repository")
+        val path = "/repos/$repository/contents/$VPN_SERVER_DIRECTORY/" +
+            vpnProfileFileName(profileName) + "?ref=" + encode(session.optString("defaultBranch"))
+        val item = githubApi(session, path)
+        val encoded = item.optString("content")
+        require(encoded.isNotBlank()) { "Die verschlüsselte VPN-Datei enthält keine Daten." }
+        val bytes = Base64.decode(encoded.replace("\\s".toRegex(), ""), Base64.DEFAULT)
+        val envelope = JSONObject(String(bytes, StandardCharsets.UTF_8))
+        require(envelope.optString("format") == "schleim-browser-encrypted-profile") {
+            "Die VPN-Datei hat ein unbekanntes Verschlüsselungsformat."
+        }
+        return envelope
+    }
+
+    private fun vpnProfileFileName(profileName: String): String {
+        require(profileName.isNotBlank() && profileName.length <= 80 &&
+            profileName.none { it.isISOControl() || it == '/' || it == '\\' }) {
+            "Der VPN-Profilname ist ungültig."
+        }
+        val encoded = Base64.encodeToString(
+            profileName.toByteArray(StandardCharsets.UTF_8),
+            Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING
+        )
+        return "$encoded.conf.enc"
+    }
+
+    private fun vpnProfileNameFromFile(fileName: String): String? {
+        if (!fileName.endsWith(".conf.enc")) return null
+        val encoded = fileName.removeSuffix(".conf.enc")
+        return runCatching {
+            String(
+                Base64.decode(encoded, Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING),
+                StandardCharsets.UTF_8
+            ).takeIf { it.isNotBlank() && it.length <= 80 && it.none { ch -> ch.isISOControl() || ch == '/' || ch == '\\' } }
+        }.getOrNull()
     }
 
     private fun requireSession(): JSONObject {
@@ -332,6 +418,7 @@ class BrowserCloudSync(private val secureStore: SecureProfileStore) {
         private const val GITHUB_APP_SLUG = "schleim-os-account"
         private const val REPOSITORY_NAME = "schleim-os-cloud"
         private const val BACKUP_PATH = "schleim-browser/profile-v1.enc"
+        private const val VPN_SERVER_DIRECTORY = "schleim-browser/VPN/Server"
         private const val CONTENTS_BASE = "/repos/"
         private const val API_BASE = "https://api.github.com"
         private const val DEVICE_CODE_URL = "https://github.com/login/device/code"

@@ -46,7 +46,7 @@ Die Android-App benötigt Android 8.0 oder neuer auf einem 64-Bit-ARM-Gerät. Ka
 - Fortschrittsbenachrichtigung mit Prozentanzeige und Abschlussmeldung, die direkt die Fotos-App öffnet
 - Statische Fotos werden lokal mit abgestuften WebP-Profilen optimiert; Videos als WebM neu kodiert und bei Bedarf in mehreren Durchgängen weiter verkleinert. Uploads über 50 MiB werden verhindert.
 - Kamera-App mit Front-/Rückkamera, Fotos und Videoaufnahmen
-- Separates privates Medien-Repository `schleim-os-cloud-photos-and-videos`
+- Foto- und Video-Cloud im gemeinsamen privaten Schleim-Konto-Repository `schleim-os-cloud` unter `Foto- und Video-Cloud/`
 - Speicherübersicht mit Foto-/Videoanzahl und belegten MB/GB unter **Einstellungen → Schleim-Konto**
 - Metadatensuche mit Synonymen auf allen unterstützten Geräten
 - Optionale KI-Bildbeschreibung und semantische Suche mit lokalem Gemini Nano in geeigneten Chrome-Desktop-Erweiterungen, ohne API-Schlüssel

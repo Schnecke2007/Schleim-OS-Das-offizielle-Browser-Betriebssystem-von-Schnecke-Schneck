@@ -9,6 +9,8 @@ const standaloneSource = fs.readFileSync(path.join(root, 'standalone/schleim-os-
 const personalizationSource = fs.readFileSync(path.join(root, 'scripts/personalization.js'), 'utf8');
 const accountSource = fs.readFileSync(path.join(root, 'scripts/schleim-account.js'), 'utf8');
 const photosCloudSource = fs.readFileSync(path.join(root, 'scripts/schleim-photos-cloud.js'), 'utf8');
+const uploadWorkerSource = fs.readFileSync(path.join(root, 'scripts/media-upload-worker.js'), 'utf8');
+const uploadOffscreenSource = fs.readFileSync(path.join(root, 'scripts/media-upload-offscreen.js'), 'utf8');
 const photosAISource = fs.readFileSync(path.join(root, 'scripts/schleim-photo-ai.js'), 'utf8');
 const newtabSource = fs.readFileSync(path.join(root, 'pages/newtab.html'), 'utf8');
 const personalizationCss = fs.readFileSync(path.join(root, 'styles/personalization.css'), 'utf8');
@@ -59,14 +61,19 @@ test('Photos and Camera are first-class Schleim OS apps', () => {
   assert.match(newtabSource, /schleim-photos-cloud\.js/);
 });
 
-test('Photo cloud uses a separate private repository and the existing Schleim account', () => {
-  assert.match(accountSource, /PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos'/);
+test('Photo cloud uses the unified private Schleim account repository and migrates legacy media safely', () => {
+  assert.match(accountSource, /const MEDIA_ROOT='Foto- und Video-Cloud'/);
+  assert.match(accountSource, /const LEGACY_PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos'/);
   assert.match(accountSource, /async function ensurePhotosRepository/);
-  assert.match(accountSource, /repository\.private!==true/);
-  assert.match(accountSource, /private:true/);
+  assert.match(accountSource, /async function getLegacyPhotosRepository/);
+  assert.match(accountSource, /async function requestLegacyPhotosRepository/);
   assert.match(accountSource, /requestPhotosRepository/);
-  assert.match(photosCloudSource, /getPhotosRepository/);
-  assert.match(photosCloudSource, /ensurePhotosRepository/);
+  assert.match(photosCloudSource, /const REPO_NAME = 'schleim-os-cloud'/);
+  assert.match(photosCloudSource, /async function migrateLegacyRepository/);
+  assert.match(photosCloudSource, /crypto\.subtle\.digest\('SHA-1'/);
+  assert.match(photosCloudSource, /data-photos-migrate/);
+  assert.match(uploadWorkerSource, /const repo=session\.repo/);
+  assert.match(uploadOffscreenSource, /const MEDIA_ROOT = 'Foto- und Video-Cloud'/);
 });
 
 test('Media uploads use date folders, metadata and a bounded file size', () => {

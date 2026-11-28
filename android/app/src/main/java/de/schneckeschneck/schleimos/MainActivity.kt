@@ -125,6 +125,7 @@ class MainActivity : Activity() {
     private val vpnManagerLock = Any()
     private var pendingVpnProfile: String? = null
     private var vpnDialog: Dialog? = null
+    @Volatile private var vpnCloudSyncRunning = false
     // Keep file listing, document writes and XPI copying away from Android's UI thread.
     private val ioExecutor = Executors.newFixedThreadPool(2)
 
@@ -1367,6 +1368,15 @@ class MainActivity : Activity() {
         val importTile = createMenuTile("＋", "WireGuard-Profil importieren", "Persönliche .conf-Datei lokal neutral benennen und verschlüsselt speichern") {
             launchVpnConfigImport()
         }
+        val cloudSyncTile = createMenuTile("☁", "VPN-Profile mit Schleim-Cloud synchronisieren", "Verschlüsselte Profile auf dieses und weitere Geräte übertragen") {
+            if (!cloudSync.hasSession()) {
+                showToast("Melde dich zuerst mit deinem Schleim-Konto an.")
+            } else {
+                ensureBackupPassphrase { passphrase ->
+                    syncBrowserVpnProfiles(passphrase, statusView = status, notifyUser = true, reopenDialog = true)
+                }
+            }
+        }
         connectionTile = createMenuTile("⏻", "VPN einschalten", "Mit dem ausgewählten Standort verbinden") {
             val profile = selectedProfile
             val manager = runCatching { getBrowserVpnManager() }.getOrNull()
@@ -1422,15 +1432,24 @@ class MainActivity : Activity() {
         parts.body.addView(importTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             bottomMargin = dp(8)
         })
+        parts.body.addView(cloudSyncTile, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            bottomMargin = dp(8)
+        })
         parts.body.addView(connectionTile ?: error("VPN-Schaltfläche wurde nicht erstellt."), LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         parts.body.addView(TextView(this).apply {
-            text = "Datenschutz: Persönliche Profile werden nicht mit der APK oder GitHub ausgeliefert. Die App entfernt Kommentarzeilen und ursprüngliche Dateinamen, speichert die notwendige WireGuard-Konfiguration aber verschlüsselt mit Android Keystore (AES-GCM). Der private Schlüssel bleibt für die Verbindung erhalten. Der Tunnel gilt nur für Schleim Browser; andere Android-Apps werden nicht über diesen Browser-Tunnel geleitet. Die Standortliste ist ein Referenzkatalog, keine Live-Verfügbarkeitsanzeige."
+            text = "Datenschutz: VPN-Konfigurationen werden lokal mit Android Keystore und für die geräteübergreifende Schleim-Cloud-Synchronisierung zusätzlich mit AES-256-GCM/PBKDF2 verschlüsselt. Unverschlüsselte .conf-Dateien werden nicht hochgeladen. Das Cloud-Passwort wird lokal im Android-Keystore gespeichert. Der Tunnel gilt nur für Schleim Browser; andere Android-Apps werden nicht über diesen Browser-Tunnel geleitet. Die Standortliste ist ein Referenzkatalog, keine Live-Verfügbarkeitsanzeige."
             textSize = 11f
             setTextColor(textMuted)
             setPadding(dp(4), dp(10), dp(4), 0)
         })
         showDialog(parts.dialog)
         vpnDialog = parts.dialog
+        if (cloudSync.hasSession()) {
+            val savedCloudPassphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
+            if (!savedCloudPassphrase.isNullOrBlank()) {
+                syncBrowserVpnProfiles(savedCloudPassphrase, statusView = status, notifyUser = false, reopenDialog = false)
+            }
+        }
 
         var previousRx: Long? = null
         var previousTx: Long? = null
@@ -1565,12 +1584,92 @@ class MainActivity : Activity() {
             }
             runOnUiThread {
                 if (result.isSuccess) {
-                    showToast("VPN-Profil „${result.getOrNull()}“ wurde verschlüsselt gespeichert.")
+                    showToast("VPN-Profil „${result.getOrNull()}“ wurde lokal verschlüsselt gespeichert.")
+                    val passphrase = runCatching { secureProfileStore.getString(KEY_CLOUD_PASSPHRASE) }.getOrNull()
+                    if (!passphrase.isNullOrBlank() && cloudSync.hasSession()) {
+                        syncBrowserVpnProfiles(passphrase, notifyUser = false, reopenDialog = false)
+                    }
                     vpnDialog?.dismiss()
                     vpnDialog = null
                     showVpnDialog()
                 } else {
                     showToast("VPN-Import fehlgeschlagen: ${result.exceptionOrNull()?.message}")
+                }
+            }
+        }
+    }
+
+    private fun syncBrowserVpnProfiles(
+        passphrase: String,
+        statusView: TextView? = null,
+        notifyUser: Boolean = true,
+        reopenDialog: Boolean = false
+    ) {
+        if (isGuestMode || !cloudSync.hasSession()) {
+            if (notifyUser) showToast("Bitte melde dich zuerst mit deinem Schleim-Konto an.")
+            return
+        }
+        if (vpnCloudSyncRunning) return
+        vpnCloudSyncRunning = true
+        statusView?.text = "VPN-Profile werden mit der Schleim-Cloud abgeglichen …"
+        ioExecutor.execute {
+            val result = runCatching {
+                val manager = getBrowserVpnManager()
+                val localNames = manager.profileNames()
+                val remoteNames = cloudSync.listEncryptedVpnProfiles()
+                var downloaded = 0
+                var uploaded = 0
+                var conflicts = 0
+                for (name in remoteNames) {
+                    val envelope = cloudSync.downloadEncryptedVpnProfile(name)
+                    val bytes = try {
+                        SecureProfileStore.decryptBackup(envelope, passphrase)
+                    } catch (error: Exception) {
+                        throw IllegalStateException("Schleim-Cloud-Passwort falsch oder VPN-Profil beschädigt.", error)
+                    }
+                    require(bytes.size <= 256 * 1024) { "Ein VPN-Profil in der Schleim-Cloud ist größer als erlaubt." }
+                    val remoteConfig = String(bytes, Charsets.UTF_8)
+                    if (name in localNames) {
+                        val localConfig = manager.exportProfile(name)
+                        if (localConfig.trimEnd() != remoteConfig.trimEnd()) conflicts++
+                    } else {
+                        manager.importProfile(name, remoteConfig)
+                        downloaded++
+                    }
+                }
+                val remoteSet = remoteNames.toHashSet()
+                for (name in localNames) {
+                    if (name !in remoteSet) {
+                        val localConfig = manager.exportProfile(name)
+                        val envelope = SecureProfileStore.encryptBackup(localConfig.toByteArray(Charsets.UTF_8), passphrase)
+                        cloudSync.uploadEncryptedVpnProfile(name, envelope)
+                        uploaded++
+                    }
+                }
+                Triple(downloaded, uploaded, conflicts)
+            }
+            runOnUiThread {
+                vpnCloudSyncRunning = false
+                if (result.isSuccess) {
+                    val (downloaded, uploaded, conflicts) = result.getOrThrow()
+                    val summary = "Schleim-Cloud: $downloaded geladen · $uploaded hochgeladen" +
+                        if (conflicts > 0) " · $conflicts Namenskonflikt(e) unverändert gelassen" else ""
+                    statusView?.text = summary
+                    if (notifyUser) showToast(summary)
+                    if (reopenDialog && !isFinishing && !isDestroyed) {
+                        vpnDialog?.dismiss()
+                        vpnDialog = null
+                        showVpnDialog()
+                    }
+                } else {
+                    val error = result.exceptionOrNull()
+                    if (error?.message.orEmpty().startsWith("Schleim-Cloud-Passwort falsch")) {
+                        // Let the user re-enter the same cross-device cloud passphrase on the next attempt.
+                        secureProfileStore.remove(KEY_CLOUD_PASSPHRASE)
+                    }
+                    val message = "VPN-Cloud-Synchronisierung fehlgeschlagen: ${error?.message ?: "Fehler"}"
+                    statusView?.text = message
+                    if (notifyUser) showToast(message)
                 }
             }
         }
@@ -2709,8 +2808,8 @@ class MainActivity : Activity() {
         content.addView(password)
         content.addView(confirm)
         AlertDialog.Builder(this)
-            .setTitle("Backup-Passwort festlegen")
-            .setMessage("Dieses Passwort verschlüsselt dein Browser-Profil vor dem Upload. Du brauchst es auch auf jedem weiteren Gerät. Es kann nicht von GitHub zurückgesetzt werden.")
+            .setTitle("Schleim-Cloud-Passwort festlegen")
+            .setMessage("Dieses Passwort verschlüsselt dein Browser-Profil und deine VPN-Konfigurationen vor dem Upload. Du brauchst es auch auf jedem weiteren Gerät. Es kann nicht von GitHub zurückgesetzt werden.")
             .setView(content)
             .setNegativeButton("Abbrechen", null)
             .setPositiveButton("Sicher speichern") { _, _ ->

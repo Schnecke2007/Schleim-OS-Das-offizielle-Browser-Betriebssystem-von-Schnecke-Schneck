@@ -482,13 +482,16 @@
       id:repository.id,
       full_name:repository.full_name,
       html_url:repository.html_url,
-      default_branch:repository.default_branch||'main'
+      default_branch:repository.default_branch||'main',
+      private:true,
+      size:Number(repository.size)||0
     };
   }
-  const PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos';
-  function normalizePrivateRepository(repository) {
+  const MEDIA_ROOT='Foto- und Video-Cloud';
+  const LEGACY_PHOTOS_REPO_NAME='schleim-os-cloud-photos-and-videos';
+  function normalizePrivateMediaRepository(repository) {
     if(Number(repository.owner?.id)!==Number(session?.user?.id))throw new Error(t('ownerMismatch'));
-    if(repository.private!==true)throw new Error('The photo repository must be private. Public repositories are not accepted.');
+    if(repository.private!==true)throw new Error('The media repository must be private. Public repositories are not accepted.');
     return {
       id:repository.id,
       full_name:repository.full_name,
@@ -500,45 +503,52 @@
   }
   async function getPhotosRepository() {
     if(!session?.user?.login)throw new Error(t('authError'));
-    if(session.photosRepo?.full_name===session.user.login+'/'+PHOTOS_REPO_NAME)return {...session.photosRepo};
+    const expected=session.user.login+'/'+REPO_NAME;
+    if(session.repo?.full_name===expected&&session.repo.private===true)return {...session.repo};
+    const repository=await githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+REPO_NAME);
+    session.repo=normalizePrivateMediaRepository(repository);
+    await storageSet(session);
+    return {...session.repo};
+  }
+  async function ensurePhotosRepository() {
+    return getPhotosRepository();
+  }
+  async function getLegacyPhotosRepository() {
+    if(!session?.user?.login)throw new Error(t('authError'));
+    const expected=session.user.login+'/'+LEGACY_PHOTOS_REPO_NAME;
+    if(session.legacyPhotosRepo?.full_name===expected&&session.legacyPhotosRepo.private===true)return {...session.legacyPhotosRepo};
     let repository;
     try{
-      repository=await githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+PHOTOS_REPO_NAME);
+      repository=await githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+LEGACY_PHOTOS_REPO_NAME);
     }catch(error){
       if(error.status===404)return null;
       throw error;
     }
-    session.photosRepo=normalizePrivateRepository(repository);
+    session.legacyPhotosRepo=normalizePrivateMediaRepository(repository);
     await storageSet(session);
-    return {...session.photosRepo};
-  }
-  async function ensurePhotosRepository() {
-    if(!session?.user?.login)throw new Error(t('authError'));
-    const existing=await getPhotosRepository();
-    if(existing)return existing;
-    const repository=await githubApi('/user/repos',{
-      method:'POST',
-      body:JSON.stringify({
-        name:PHOTOS_REPO_NAME,
-        description:'Private personal photo and video library for Schleim OS.',
-        private:true,
-        auto_init:true,
-        has_issues:false,
-        has_projects:false,
-        has_wiki:false
-      })
-    });
-    session.photosRepo=normalizePrivateRepository(repository);
-    await storageSet(session);
-    return {...session.photosRepo};
+    return {...session.legacyPhotosRepo};
   }
   async function requestPhotosRepository(path, options={}) {
-    if(typeof path!=='string'||(!path.startsWith('/contents/')&&!path.startsWith('/git/trees/'))){
-      throw new Error('Unsupported photo repository API path.');
+    if(typeof path!=='string'||!path.startsWith('/contents/')){
+      throw new Error('Unsupported unified media repository API path.');
     }
     const repository=await getPhotosRepository();
-    if(!repository)throw new Error('The private photo and video repository is not linked yet.');
-    return githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+PHOTOS_REPO_NAME+path,options);
+    if(!repository?.private)throw new Error('The unified Schleim cloud repository is not private.');
+    const relativePath=path.slice('/contents/'.length);
+    const scopedPath='/contents/'+encodeURIComponent(MEDIA_ROOT)+'/'+relativePath;
+    return githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+REPO_NAME+scopedPath,options);
+  }
+  async function requestLegacyPhotosRepository(path, options={}) {
+    if(typeof path!=='string'||(!path.startsWith('/contents/')&&!path.startsWith('/git/trees/'))){
+      throw new Error('Unsupported legacy media repository API path.');
+    }
+    const repository=await getLegacyPhotosRepository();
+    if(!repository) {
+      const error=new Error('The legacy photo and video repository was not found.');
+      error.status=404;
+      throw error;
+    }
+    return githubApi('/repos/'+encodeURIComponent(session.user.login)+'/'+LEGACY_PHOTOS_REPO_NAME+path,options);
   }
   function encodeBase64Utf8(value) {
     const bytes=new TextEncoder().encode(value);
@@ -691,11 +701,13 @@
   }
   window.SSOSCloudAccount=Object.freeze({
     mount:mountPanels,
-    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null,photoRepository:session.photosRepo?.full_name||null}:null,
+    getAccount:()=>session?.user?{...session.user,repository:session.repo?.full_name||null,photoRepository:session.repo?.full_name||null,legacyPhotoRepository:session.legacyPhotosRepo?.full_name||null}:null,
     getState:()=>({ready:accountReady,authenticated:accountReady&&!installationStage&&!installationPending&&!!(session?.accessToken&&session?.user&&session?.repo)}),
     getPhotosRepository,
     ensurePhotosRepository,
-    requestPhotosRepository
+    requestPhotosRepository,
+    getLegacyPhotosRepository,
+    requestLegacyPhotosRepository
   });
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();

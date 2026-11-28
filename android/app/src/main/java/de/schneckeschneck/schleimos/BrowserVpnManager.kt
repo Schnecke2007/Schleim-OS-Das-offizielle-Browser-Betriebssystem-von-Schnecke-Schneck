@@ -71,6 +71,36 @@ class BrowserVpnManager(context: Context) {
         return name
     }
 
+    /** Returns a validated profile only to the encrypted cloud-sync layer. */
+    fun exportProfile(name: String): String {
+        val encrypted = preferences.getString(PROFILE_PREFIX + name, null)
+            ?: throw IllegalStateException("Dieses VPN-Profil ist nicht mehr vorhanden.")
+        return decrypt(name, encrypted)
+    }
+
+    /** Imports a cloud profile under its original name after validating its WireGuard syntax. */
+    fun importProfile(name: String, configText: String) {
+        require(name.isNotBlank() && name.length <= 80 && name.none { it.isISOControl() || it == '/' || it == '\\' }) {
+            "Der VPN-Profilname ist ungültig."
+        }
+        require(!preferences.contains(PROFILE_PREFIX + name)) {
+            "Ein VPN-Profil mit diesem Namen ist bereits vorhanden."
+        }
+        require(configText.length <= 256 * 1024) { "VPN-Konfiguration ist zu groß." }
+        val normalizedConfig = configText.lineSequence()
+            .filterNot { it.trimStart().startsWith("#") }
+            .joinToString("\n")
+            .trim() + "\n"
+        require(normalizedConfig.contains(Regex("(?im)^\\s*\\[Interface\\]\\s*$"))) {
+            "Die Datei enthält keinen WireGuard-[Interface]-Abschnitt."
+        }
+        require(normalizedConfig.contains(Regex("(?im)^\\s*PrivateKey\\s*="))) {
+            "Die WireGuard-Konfiguration enthält keinen PrivateKey."
+        }
+        parseConfig(normalizedConfig)
+        preferences.edit().putString(PROFILE_PREFIX + name, encrypt(name, normalizedConfig)).apply()
+    }
+
     fun deleteProfile(name: String) {
         preferences.edit().remove(PROFILE_PREFIX + name).apply()
     }
