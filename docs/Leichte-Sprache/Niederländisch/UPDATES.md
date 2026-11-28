@@ -49,4 +49,4 @@ Belangrijk: Als je de oude app verwijdert, kunnen de geschiedenis en opgeslagen 
 
 Ben je aangemeld? Maak dan vóór het verwijderen een back-up via **Instellingen → Schleim-account**. Na de installatie kun je deze daar herstellen. Je hebt je GitHub-account en back-upwachtwoord nodig. Zonder accountback-up kunnen lokale gegevens verloren gaan.
 
-[Release Notes 3.20.0](RELEASE-NOTES-3.20.0.md)
+[Release Notes 3.22.1](RELEASE-NOTES-3.22.1.md)
