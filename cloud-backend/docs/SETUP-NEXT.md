@@ -3,25 +3,32 @@
 ## Tarif und Zahlung
 - Free: 1 GiB kostenlos
 - Premium: 10 GiB für 2,99 EUR pro Monat
-- Zahlungsweg: Mollie SEPA-Lastschrift mit automatischer monatlicher Abbuchung nach gültiger Mandatserteilung
+- Zahlungsdienst: Stripe Checkout + Billing mit SEPA-Lastschrift
 
-## Bereits im Branch vorbereitet
-- Supabase-Projektadresse und öffentlicher Publishable Key in der Extension
-- Datenbankmigration für den einzelnen Premium-Tarif
-- Mollie Checkout Edge Function für die erste Zahlung/Mandatserteilung
-- Mollie Webhook Edge Function für die Prüfung bei Mollie und die Erstellung des monatlichen Abonnements
-- UI zeigt nur noch Free und Premium
-- Checkout bleibt deaktiviert, bis Backend-Identität und Secrets eingerichtet sind
+## Im Feature-Branch vorbereitet
+- Stripe Checkout Session im Subscription-Modus
+- Monatlicher Betrag von 2,99 EUR wird serverseitig festgelegt
+- Stripe Webhook-Signaturprüfung
+- Aktivierung nach `invoice.paid`, Statusbehandlung für fehlgeschlagene und beendete Abos
+- Stripe statt Mollie in Konfiguration und Dokumentation
 
-## Vor dem Testbetrieb
-1. Migrationen in Supabase prüfen und deployen.
-2. Supabase Edge Functions `create-checkout` und `mollie-webhook` deployen.
-3. Mollie Test-API-Key als `MOLLIE_API_KEY` in Supabase Secrets hinterlegen.
-4. `MOLLIE_WEBHOOK_URL` auf die öffentliche HTTPS-Adresse der deployten Webhook-Funktion setzen.
-5. `SCHLEIM_CLOUD_RETURN_URL` auf die HTTPS-Rücksprungseite der Schleim Cloud setzen.
-6. Mollie-Testprofil und SEPA-Lastschrift-Testmöglichkeiten prüfen.
-7. GitHub Device Flow sicher mit Supabase Auth verbinden. GitHub Access Tokens sind keine Supabase JWTs.
-8. Kündigung, Rücklastschrift, fehlgeschlagene Zahlungen, Webhook-Duplikate und Speicherquota ergänzen und testen.
+## Einrichtung in Stripe
+1. Ein Stripe-Konto eröffnen und Unternehmens-/Händlerprüfung abschließen.
+2. SEPA Direct Debit im Stripe Dashboard aktivieren bzw. prüfen.
+3. Zunächst einen Test-Secret-Key (`sk_test_...`) erzeugen.
+4. Supabase Edge Function Secrets setzen: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SCHLEIM_CLOUD_RETURN_URL` und `SUPABASE_SERVICE_ROLE_KEY`.
+5. Die Edge Functions `create-checkout` und `stripe-webhook` deployen.
+6. Im Stripe Dashboard einen Webhook auf `https://<PROJECT_REF>.supabase.co/functions/v1/stripe-webhook` einrichten und die Ereignisse `checkout.session.completed`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.updated` und `customer.subscription.deleted` abonnieren.
+7. Das angezeigte Webhook-Signatur-Secret (`whsec_...`) als `STRIPE_WEBHOOK_SECRET` in Supabase hinterlegen.
+8. Den Checkout im Testmodus mit SEPA-Testdaten durchtesten.
+9. GitHub Device Flow sicher mit Supabase Auth verbinden. GitHub Access Tokens sind keine Supabase JWTs.
 
-## Wichtige Grenzen
-Die API-Funktionen sind im Repository vorbereitet, aber nicht im Supabase-Projekt deployed und nicht live verifiziert. Ohne Identitätsbrücke kann ein Schleim-OS-GitHub-Login keinen Checkout authentifizieren. Keine echten Zahlungen auslösen, bevor Testbetrieb und ausdrückliche Produktionsfreigabe abgeschlossen sind.
+## Vor echten Abbuchungen zwingend erforderlich
+- Sichere GitHub-/Supabase-Identitätsbrücke fertigstellen.
+- Kündigungsfunktion und Behandlung von Rücklastschriften, Erstattungen und Zahlungsfehlern ergänzen.
+- Webhook-Idempotenz und Statusabgleich vollständig testen.
+- Serverseitige Speicherquota erzwingen.
+- Rechtliche Anbieterangaben, AGB, Datenschutz, Preis-/Kündigungsinformationen und SEPA-Mandatstexte prüfen.
+- Erst nach erfolgreichem Testbetrieb Live-Key (`sk_live_...`) und Live-Webhook-Secret einsetzen.
+
+**Wichtig:** Die Integration ist nicht auf Supabase deployed. Es sind keine Live-Schlüssel vorhanden und keine echten Abbuchungen aktiviert. Ein Code-Commit allein aktiviert keine Abbuchungen.
