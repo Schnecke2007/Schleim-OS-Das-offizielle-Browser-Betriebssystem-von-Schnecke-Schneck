@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#251205">
+  <meta name="description" content="Schleim Cloud – persönlicher Speicher und Aboverwaltung für Schleim OS.">
+  <title>Schleim Cloud · Schnecke Schneck</title>
+  <style>
+    :root{color-scheme:dark;--bg:#170d07;--panel:#251205;--panel2:#321b0b;--line:#604127;--text:#fff8ef;--muted:#c8b6a3;--accent:#d6a36d;--danger:#ffb4a4;--ok:#b8d5ad}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#68401f 0,transparent 55%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+    a{color:inherit}.wrap{width:min(920px,calc(100% - 32px));margin:0 auto;padding:28px 0 56px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#d8b27b,#805b3d);display:grid;place-items:center;color:#211813;font-size:25px}.brand strong{display:block}.brand small,.muted,small{color:var(--muted)}.pill{border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--muted);font-size:12px}
+    h1{font-size:clamp(30px,6vw,48px);line-height:1.08;margin:0 0 12px}h2{font-size:20px;margin:0 0 12px}.intro{max-width:650px;margin-bottom:26px}.intro p{color:var(--muted);margin:0}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.card{background:linear-gradient(160deg,rgba(58,34,17,.96),rgba(37,18,5,.96));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 16px 44px #0004}.wide{grid-column:1/-1}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.plan{font-size:23px;font-weight:700}.price{font-size:28px;font-weight:750;color:var(--accent)}.meter{height:10px;background:#ffffff19;border-radius:99px;overflow:hidden;margin:14px 0 8px}.meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,#9b673c,#e0b37e);border-radius:99px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    button,.button{border:1px solid #a9794b;background:linear-gradient(135deg,#9b673c,#70421f);color:#fff8ef;border-radius:12px;padding:11px 16px;font:inherit;font-weight:650;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:44px}
+    button.secondary,.button.secondary{background:#ffffff0a;border-color:var(--line)}button:disabled{opacity:.45;cursor:not-allowed}.notice{padding:12px 14px;border-radius:12px;background:#ffffff0a;border:1px solid var(--line);color:var(--muted);font-size:14px;margin-top:14px}.status{min-height:22px;margin-top:12px;color:var(--ok);overflow-wrap:anywhere}.status.error{color:var(--danger)}.account{overflow-wrap:anywhere}.hidden{display:none!important}.footer{margin-top:24px;color:var(--muted);font-size:12px;text-align:center}
+    @media(max-width:680px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.card{padding:18px}.top{align-items:flex-start}.pill{white-space:nowrap}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="brand"><div class="mark" aria-hidden="true">🐌</div><div><strong>Schleim Cloud</strong><small>Teil von Schleim OS</small></div></div>
+      <span class="pill">Sicheres Konto · Supabase</span>
+    </header>
+    <section class="intro">
+      <h1>Deine Dateien.<br>Deine Schleim Cloud.</h1>
+      <p>Ein gemeinsamer Cloud-Bereich für Schleim OS und die Android-App. Melde dich mit deinem GitHub-Konto an. Die Anmeldung wird sicher über Supabase Auth abgewickelt.</p>
+    </section>
+    <section class="grid">
+      <article class="card wide">
+        <div class="row"><div><h2>Dein Schleim-Konto</h2><div id="account" class="account muted">Nicht angemeldet</div></div><span class="pill" id="authBadge">Gast</span></div>
+        <div class="actions">
+          <button id="login">Mit GitHub anmelden</button>
+          <button id="logout" class="secondary hidden">Abmelden</button>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Bitte melde dich an, um deinen Cloud-Status abzurufen.</p>
+      </article>
+      <article class="card">
+        <h2>Dein Speicher</h2>
+        <div class="row"><span class="plan" id="plan">Free</span><span id="usageText" class="muted">0 B / 1 GiB</span></div>
+        <div class="meter" aria-label="Speichernutzung"><span id="usageBar"></span></div>
+        <small id="usageHint">1 GiB kostenloser Speicherplatz</small>
+      </article>
+      <article class="card">
+        <h2>Premium</h2>
+        <div class="price">2,99 € <small>/ Monat</small></div>
+        <p class="muted">10 GiB Cloud-Speicher, monatlich kündbar über die Aboverwaltung.</p>
+        <div class="actions"><button id="upgrade" disabled>Premium abonnieren</button><button id="portal" class="secondary hidden">Abo verwalten / kündigen</button></div>
+        <div class="notice" id="paymentNotice">Zahlungen sind derzeit noch nicht freigeschaltet. Es wird keine Abbuchung ausgelöst.</div>
+      </article>
+      <article class="card wide">
+        <h2>So funktioniert die Cloud</h2>
+        <p class="muted">Dein Konto und der Abostatus werden über Supabase verwaltet. Stripe übernimmt später die Kartenzahlung. Premium wird erst nach einer serverseitig bestätigten Zahlung aktiviert.</p>
+        <div class="notice">Hinweis: Die Speicherübersicht zeigt erst dann echte Nutzungsdaten, wenn du angemeldet bist und die Cloud-Backend-Funktionen bereitgestellt wurden. Die technische Speicherbegrenzung und die vollständigen Zahlungstests sind noch nicht abgeschlossen.</div>
+        <div class="actions"><a class="button secondary" href="https://github.com/Schnecke2007/Schleim-OS-Das-offizielle-Browser-Betriebssystem-von-Schnecke-Schneck" target="_blank" rel="noopener noreferrer">Schleim OS auf GitHub ↗</a></div>
+      </article>
+    </section>
+    <footer class="footer">Schleim Cloud · Entwickelt und gepflegt von Schnecke Schneck · © 2026</footer>
+  </main>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.1';
+    const SUPABASE_URL = 'https://hrtunnupqcpklejpfsvq.supabase.co';
+    // Publishable/anon key is public by design. Never place service-role or Stripe secret keys here.
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_87WPVR-4mWS3hluaI7G4PQ_9RFe8aQO';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+    const $ = id => document.getElementById(id);
+    const status = (message, error=false) => { $('status').textContent = message; $('status').classList.toggle('error',error); };
+    const bytes = value => {
+      const n = Math.max(0,Number(value)||0);
+      if(n < 1024) return n.toFixed(0)+' B';
+      if(n < 1024**2) return (n/1024).toFixed(1)+' KiB';
+      if(n < 1024**3) return (n/1024**2).toFixed(1)+' MiB';
+      return (n/1024**3).toFixed(2)+' GiB';
+    };
+    async function loadSummary(session) {
+      if(!session) return;
+      status('Cloud-Kontostand wird geladen …');
+      const {data,error} = await supabase.functions.invoke('account-summary',{headers:{Authorization:'Bearer '+session.access_token}});
+      if(error || !data) { status('Kontostand noch nicht verfügbar. Prüfe, ob die Supabase-Funktion account-summary bereitgestellt wurde.',true); return; }
+      const used = Number(data.usage?.used_bytes||0), limit = Number(data.usage?.limit_bytes||1073741824);
+      $('plan').textContent = data.subscription?.plan_id === 'premium' ? 'Premium' : 'Free';
+      $('usageText').textContent = bytes(used)+' / '+bytes(limit);
+      $('usageBar').style.width = Math.min(100,limit ? used/limit*100 : 0)+'%';
+      $('usageHint').textContent = data.subscription?.current_period_end ? 'Abo-Zeitraum endet: '+new Date(data.subscription.current_period_end).toLocaleDateString('de-DE') : '1 GiB kostenloser Speicherplatz';
+      const premium = data.subscription?.plan_id === 'premium';
+      $('upgrade').disabled = !data.payments_enabled || premium;
+      $('upgrade').textContent = premium ? 'Premium ist aktiv' : data.payments_enabled ? 'Premium abonnieren' : 'Noch nicht freigeschaltet';
+      $('paymentNotice').textContent = data.payments_enabled ? 'Zahlungen sind freigeschaltet. Checkout wird sicher über das Backend gestartet.' : 'Zahlungen sind derzeit noch nicht freigeschaltet. Es wird keine Abbuchung ausgelöst.';
+      $('portal').classList.toggle('hidden',!premium);
+      status('Cloud-Kontostand erfolgreich geladen.');
+    }
+    async function renderSession(session) {
+      const signedIn = Boolean(session?.user);
+      $('login').classList.toggle('hidden',signedIn);
+      $('logout').classList.toggle('hidden',!signedIn);
+      $('authBadge').textContent = signedIn ? 'Angemeldet' : 'Gast';
+      $('account').textContent = signedIn ? (session.user.email || session.user.user_metadata?.user_name || 'GitHub-Konto verbunden') : 'Nicht angemeldet';
+      $('upgrade').disabled = true;
+      $('portal').classList.add('hidden');
+      if(signedIn) await loadSummary(session);
+      else { $('plan').textContent='Free'; $('usageText').textContent='0 B / 1 GiB'; $('usageBar').style.width='0%'; status('Bitte melde dich an, um deinen Cloud-Status abzurufen.'); }
+    }
+    $('login').addEventListener('click',async()=>{
+      status('GitHub-Anmeldung wird geöffnet …');
+      const {error} = await supabase.auth.signInWithOAuth({provider:'github',options:{redirectTo:window.location.href.split('?')[0].split('#')[0]}});
+      if(error) status('Anmeldung fehlgeschlagen: '+error.message,true);
+    });
+    $('logout').addEventListener('click',async()=>{
+      const {error} = await supabase.auth.signOut();
+      if(error) status('Abmeldung fehlgeschlagen: '+error.message,true);
+      else await renderSession(null);
+    });
+    $('upgrade').addEventListener('click',async()=>{
+      const {data:{session}} = await supabase.auth.getSession();
+      if(!session) return status('Bitte zuerst anmelden.',true);
+      status('Sicherer Checkout wird vorbereitet …');
+      const {data,error} = await supabase.functions.invoke('create-checkout',{headers:{Authorization:'Bearer '+session.access_token}});
+      if(error || !data?.checkout_url) return status('Checkout ist noch nicht verfügbar. Es wurde keine Zahlung ausgelöst.',true);
+      window.location.assign(data.checkout_url);
+    });
+    $('portal').addEventListener('click',async()=>{
+      const {data:{session}} = await supabase.auth.getSession();
+      if(!session) return status('Bitte zuerst anmelden.',true);
+      status('Aboverwaltung wird geöffnet …');
+      const {data,error} = await supabase.functions.invoke('create-customer-portal',{headers:{Authorization:'Bearer '+session.access_token}});
+      if(error || !data?.portal_url) return status('Aboverwaltung ist derzeit nicht verfügbar.',true);
+      window.location.assign(data.portal_url);
+    });
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('checkout')==='success') status('Checkout abgeschlossen. Die Premium-Aktivierung wird über den Stripe-Webhook bestätigt.');
+    if(params.get('checkout')==='cancel') status('Checkout wurde abgebrochen. Es wurde keine Zahlung bestätigt.');
+    supabase.auth.onAuthStateChange((_event,session)=>{ void renderSession(session); });
+    const {data:{session}} = await supabase.auth.getSession();
+    await renderSession(session);
+  </script>
+</body>
+</html>
