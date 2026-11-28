@@ -45,6 +45,9 @@ Im Stripe Dashboard mindestens diese Ereignisse abonnieren:
 - `customer.subscription.updated`
 - `customer.subscription.deleted`
 
+## Steuerkonfiguration (aktueller Betreiberstand)
+Der Betreiber hat angegeben, derzeit keine Umsatzsteuer zu erheben. Der Checkout setzt deshalb aktuell `automatic_tax[enabled]=false`; es wird keine automatische Steuerberechnung oder ein zusätzlicher Steuerbetrag aktiviert. Das ist keine steuerrechtliche Einstufung und ersetzt nicht die Prüfung, ob Kleinunternehmerregelung, Rechnungsangaben oder andere Pflichten gelten. Bei einer späteren Änderung muss diese Einstellung vor dem Verkauf angepasst werden.
+
 ## Noch nicht produktionsbereit
 Die Datenbankmigrationen sind auf Supabase angewendet, die Edge Functions aber noch nicht deployed. Es wurden keine Stripe-Produkte, Preise oder Webhook-Endpunkte angelegt. Stripe Tax Settings sind noch unvollständig (Hauptgeschäftsadresse fehlt); Steuerstatus und inklusive/exklusive Steuerdarstellung sind ungeklärt. Die Supabase Edge Function Secrets sind noch nicht gesetzt.
 
