@@ -10,9 +10,9 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const language = () => document.body?.dataset.language || 'de';
   const TEXT = {
-    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Free',included:'1 GB Cloud-Speicher inklusive',plans:'Weitere Tarife',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Noch nicht verfügbar',setup:'Cloud-Backend noch nicht verbunden',setupText:'Sobald das Backend eingerichtet ist, zeigen wir hier deinen echten Speicherverbrauch und deinen Tarif.',safe:'Zahlungen sind deaktiviert. Es wird nichts abgebucht.',noData:'Noch keine Cloud-Daten verfügbar.'},
-    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Free',included:'1 GB cloud storage included',plans:'More plans',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Not available yet',setup:'Cloud backend not connected yet',setupText:'Once the backend is configured, your real storage usage and plan will appear here.',safe:'Payments are disabled. Nothing will be charged.',noData:'No cloud data available yet.'},
-    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Free',included:'1 GB cloudopslag inbegrepen',plans:'Andere abonnementen',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Nog niet beschikbaar',setup:'Cloudbackend nog niet verbonden',setupText:'Zodra de backend is ingesteld, zie je hier je echte opslagverbruik en abonnement.',safe:'Betalingen zijn uitgeschakeld. Er wordt niets afgeschreven.',noData:'Nog geen cloudd gegevens beschikbaar.'}
+    de: {title:'Schleim Cloud & Abo',intro:'Dein gemeinsamer Cloud-Speicher für Schleim OS und die Android-App.',free:'Geplanter Free-Tarif',included:'Vorgesehen: 1 GB Cloud-Speicher',plans:'Weitere Tarife',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Noch nicht verfügbar',setup:'Cloud-Backend noch nicht verbunden',setupText:'Sobald das Backend eingerichtet ist, zeigen wir hier deinen echten Speicherverbrauch und deinen Tarif.',safe:'Zahlungen sind deaktiviert. Es wird nichts abgebucht.',noData:'Noch keine Cloud-Daten verfügbar.'},
+    en: {title:'Schleim Cloud & subscription',intro:'Your shared cloud storage for Schleim OS and the Android app.',free:'Planned Free plan',included:'Planned: 1 GB cloud storage',plans:'More plans',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Not available yet',setup:'Cloud backend not connected yet',setupText:'Once the backend is configured, your real storage usage and plan will appear here.',safe:'Payments are disabled. Nothing will be charged.',noData:'No cloud data available yet.'},
+    nl: {title:'Schleim Cloud & abonnement',intro:'Je gedeelde cloudopslag voor Schleim OS en de Android-app.',free:'Gepland Free-abonnement',included:'Gepland: 1 GB cloudopslag',plans:'Andere abonnementen',premium:'Premium · 10 GB',plus:'Premium Plus · 50 GB',disabled:'Nog niet beschikbaar',setup:'Cloudbackend nog niet verbonden',setupText:'Zodra de backend is ingesteld, zie je hier je echte opslagverbruik en abonnement.',safe:'Betalingen zijn uitgeschakeld. Er wordt niets afgeschreven.',noData:'Nog geen cloudd gegevens beschikbaar.'}
   };
   const t = key => (TEXT[language()] || TEXT.de)[key] || TEXT.de[key] || key;
   const formatBytes = bytes => {
@@ -39,7 +39,7 @@
     return null;
   }
   function mount() {
-    document.querySelectorAll('[data-ssos-cloud-account]').forEach(host => {
+    document.querySelectorAll('.ssos-settings-cloud[data-ssos-cloud-account]').forEach(host => {
       if (host.dataset.ssosSubscriptionMounted === '1') return;
       host.dataset.ssosSubscriptionMounted = '1';
       host.insertAdjacentHTML('afterend', render());
