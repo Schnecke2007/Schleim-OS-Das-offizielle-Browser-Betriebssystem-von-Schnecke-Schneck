@@ -18,7 +18,7 @@ Deno.serve(async (req: Request) => {
   const admin = createClient(supabaseUrl, serviceKey);
   try {
     // Mollie webhooks only carry a resource ID. Always retrieve the resource
-    // from Mollie; never trust a client or webhook-supplied payment status.
+    // from Mollie; never trust a webhook-supplied payment status.
     const paymentResponse = await fetch(`${MOLLIE_API}/payments/${encodeURIComponent(paymentId)}`, {
       headers: { Authorization: `Bearer ${mollieKey}` },
     });
@@ -26,8 +26,7 @@ Deno.serve(async (req: Request) => {
     const payment = await paymentResponse.json();
 
     const userId = payment?.metadata?.schleim_user_id;
-    if (payment?.metadata?.purpose !== "premium_subscription_first_payment" ||
-        payment?.metadata?.plan_id !== "premium" ||
+    if (payment?.metadata?.plan_id !== "premium" ||
         typeof userId !== "string" ||
         payment?.amount?.currency !== "EUR" ||
         payment?.amount?.value !== "2.99") {
@@ -35,6 +34,12 @@ Deno.serve(async (req: Request) => {
     }
 
     if (payment.status !== "paid") {
+      if (payment.subscriptionId) {
+        await admin.from("schleim_subscriptions").update({
+          status: "past_due",
+          updated_at: new Date().toISOString(),
+        }).eq("user_id", userId).eq("provider_subscription_id", payment.subscriptionId);
+      }
       await admin.from("schleim_billing_events").upsert({
         provider: "mollie",
         provider_event_id: paymentId,
@@ -45,51 +50,79 @@ Deno.serve(async (req: Request) => {
       return new Response("OK", { status: 200 });
     }
 
-    const customerId = payment.customerId;
-    if (typeof customerId !== "string" || !customerId.startsWith("cst_")) throw new Error("Mollie customer missing");
+    if (payment.subscriptionId) {
+      // Subsequent monthly charge: activate/extend only after Mollie reports paid.
+      const periodEnd = new Date();
+      periodEnd.setMonth(periodEnd.getMonth() + 1);
+      const { error } = await admin.from("schleim_subscriptions").update({
+        plan_id: "premium",
+        status: "active",
+        current_period_end: periodEnd.toISOString(),
+        updated_at: new Date().toISOString(),
+      }).eq("user_id", userId).eq("provider_subscription_id", payment.subscriptionId);
+      if (error) throw error;
+    } else {
+      // First payment: require a valid SEPA mandate before creating the recurring subscription.
+      if (payment?.metadata?.purpose !== "premium_subscription_first_payment") {
+        return new Response("Unexpected one-off payment", { status: 400 });
+      }
 
-    const mandatesResponse = await fetch(`${MOLLIE_API}/customers/${customerId}/mandates`, {
-      headers: { Authorization: `Bearer ${mollieKey}` },
-    });
-    if (!mandatesResponse.ok) throw new Error("Could not verify SEPA mandate");
-    const mandates = await mandatesResponse.json();
-    const validMandate = (mandates?._embedded?.mandates ?? []).find((m: any) =>
-      m.status === "valid" && m.method === "directdebit"
-    );
-    if (!validMandate) throw new Error("No valid SEPA direct debit mandate after first payment");
+      const customerId = payment.customerId;
+      if (typeof customerId !== "string" || !customerId.startsWith("cst_")) throw new Error("Mollie customer missing");
 
-    const subscriptionResponse = await fetch(`${MOLLIE_API}/customers/${customerId}/subscriptions`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${mollieKey}`,
-        "Content-Type": "application/json",
-        "Idempotency-Key": `schleim-premium-${paymentId}`,
-      },
-      body: JSON.stringify({
-        amount: { currency: "EUR", value: "2.99" },
-        interval: "1 month",
-        description: "Schleim Cloud Premium – 10 GB",
-        method: "directdebit",
-        mandateId: validMandate.id,
-        webhookUrl,
-        metadata: { schleim_user_id: userId, plan_id: "premium" },
-      }),
-    });
-    const subscription = await subscriptionResponse.json().catch(() => ({}));
-    if (!subscriptionResponse.ok) throw new Error("Mollie subscription creation failed");
+      const existing = await admin.from("schleim_subscriptions")
+        .select("provider_subscription_id")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (existing.data?.provider_subscription_id) {
+        return new Response("Subscription already linked", { status: 200 });
+      }
 
-    const { error: updateError } = await admin.from("schleim_subscriptions").upsert({
-      user_id: userId,
-      plan_id: "premium",
-      status: "incomplete",
-      provider: "mollie",
-      provider_customer_id: customerId,
-      provider_mandate_id: validMandate.id,
-      provider_subscription_id: subscription.id,
-      current_period_end: null,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "user_id" });
-    if (updateError) throw updateError;
+      const mandatesResponse = await fetch(`${MOLLIE_API}/customers/${customerId}/mandates`, {
+        headers: { Authorization: `Bearer ${mollieKey}` },
+      });
+      if (!mandatesResponse.ok) throw new Error("Could not verify SEPA mandate");
+      const mandates = await mandatesResponse.json();
+      const validMandate = (mandates?._embedded?.mandates ?? []).find((m: any) =>
+        m.status === "valid" && m.method === "directdebit"
+      );
+      if (!validMandate) throw new Error("No valid SEPA direct debit mandate after first payment");
+
+      const subscriptionResponse = await fetch(`${MOLLIE_API}/customers/${customerId}/subscriptions`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${mollieKey}`,
+          "Content-Type": "application/json",
+          "Idempotency-Key": `schleim-premium-${paymentId}`,
+        },
+        body: JSON.stringify({
+          amount: { currency: "EUR", value: "2.99" },
+          interval: "1 month",
+          description: "Schleim Cloud Premium – 10 GB",
+          method: "directdebit",
+          mandateId: validMandate.id,
+          webhookUrl,
+          metadata: { schleim_user_id: userId, plan_id: "premium" },
+        }),
+      });
+      const subscription = await subscriptionResponse.json().catch(() => ({}));
+      if (!subscriptionResponse.ok) throw new Error("Mollie subscription creation failed");
+
+      const periodEnd = new Date();
+      periodEnd.setMonth(periodEnd.getMonth() + 1);
+      const { error: updateError } = await admin.from("schleim_subscriptions").upsert({
+        user_id: userId,
+        plan_id: "premium",
+        status: "active",
+        provider: "mollie",
+        provider_customer_id: customerId,
+        provider_mandate_id: validMandate.id,
+        provider_subscription_id: subscription.id,
+        current_period_end: periodEnd.toISOString(),
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "user_id" });
+      if (updateError) throw updateError;
+    }
 
     await admin.from("schleim_billing_events").upsert({
       provider: "mollie",
