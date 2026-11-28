@@ -1,4 +1,4 @@
--- Schleim Cloud pricing: exactly one paid tier, billed monthly.
+-- Schleim Cloud pricing: one Premium tier, billed monthly via Stripe.
 -- Existing Premium Plus subscriptions are normalized to Premium before the legacy plan is removed.
 update public.schleim_subscriptions
 set plan_id = 'premium', updated_at = now()
@@ -14,9 +14,6 @@ set display_name = 'Premium',
 where id = 'premium';
 
 delete from public.schleim_plans where id = 'premium_plus';
-
-alter table public.schleim_subscriptions
-  add column if not exists provider_mandate_id text;
 
 create table if not exists public.schleim_billing_events (
   id bigint generated always as identity primary key,
