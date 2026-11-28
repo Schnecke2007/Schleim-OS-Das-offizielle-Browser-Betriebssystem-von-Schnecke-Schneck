@@ -1,52 +1,46 @@
 # Schleim OS Cloud Backend
 
-**Geplanter Zahlungsdienst: Mollie mit SEPA-Lastschrift und monatlichen Abonnements.** Kunden müssen ein ausdrückliches SEPA-Mandat erteilen. Erst danach darf Mollie wiederkehrende Abbuchungen ausführen. Der Live-Checkout bleibt gesperrt, bis Händlerfreigabe, Preise, Identitätsbrücke, Webhooks, serverseitige Speicherquoten und vollständige Tests eingerichtet sind.
+**Tarifmodell:** Free mit 1 GiB sowie genau ein kostenpflichtiger Tarif: Premium mit 10 GiB für **2,99 € pro Monat**.
 
-Die Supabase-Projektadresse und der öffentliche Publishable Key wurden in der Erweiterung hinterlegt. Ein Publishable Key ist für Client-Anwendungen vorgesehen und kein Administrationsschlüssel. Den `SUPABASE_SERVICE_ROLE_KEY` niemals in Browser-/Android-Code, GitHub oder Chat eintragen. Er gehört ausschließlich als geschütztes Supabase Edge Function Secret auf den Server.
+**Zahlungsdienst:** Mollie SEPA-Lastschrift mit automatischer monatlicher Abbuchung nach ausdrücklicher Mandatserteilung. Der Kunde autorisiert die erste Zahlung; der Server prüft anschließend das gültige SEPA-Mandat und richtet das monatliche Mollie-Abonnement ein.
 
-Architektur: Schleim OS Extension und Android-App verwenden dasselbe Supabase-Backend. Supabase Auth/Identitätsbrücke identifiziert Nutzer; PostgreSQL verwaltet Tarife, Abos und Speicherverbrauch; Supabase Storage speichert Dateien. Der Server muss jede Berechtigung und jedes Kontingent erzwingen.
+Die bestehende Supabase-Projektadresse und der öffentliche Publishable Key bleiben Bestandteil der Architektur. Supabase verwaltet Konten, Abos und Speicher; Mollie verarbeitet Zahlungen. Ein Publishable Key ist für Client-Anwendungen vorgesehen und kein Administrationsschlüssel. Den `SUPABASE_SERVICE_ROLE_KEY` und den `MOLLIE_API_KEY` niemals in Browser-/Android-Code, GitHub oder Chat eintragen.
 
 ## Tarifmodell
 
-- Free: 1 GiB
-- Premium: 10 GiB – Verkaufspreis noch festzulegen
-- Premium Plus: 50 GiB – Verkaufspreis noch festzulegen
+- Free: 1 GiB, kostenlos
+- Premium: 10 GiB, 2,99 EUR pro Monat
 
-Preise, Währung und Intervall werden ausschließlich serverseitig festgelegt. Kein Checkout darf einen vom Client gelieferten Betrag übernehmen.
+Der Betrag wird serverseitig aus der Tarifkonfiguration gelesen. Der Client darf keinen Betrag vorgeben.
 
-## Zahlungsablauf
+## Implementierter Integrationsstand im Branch
 
-1. Der Kunde wählt Premium oder Premium Plus und sieht Preis, monatliches Intervall, Kündigungsbedingungen und Verkäuferangaben.
-2. Der Server erstellt bzw. verknüpft ein Mollie-Kundenprofil.
-3. Der Kunde erteilt über einen von Mollie unterstützten Erstzahlungs-/Autorisierungsablauf ausdrücklich das Mandat für künftige SEPA-Lastschriften.
-4. Der Server prüft den Mandatsstatus und erstellt das monatliche Mollie-Abonnement.
-5. Mollie sendet Zahlungsereignisse an den HTTPS-Webhook. Der Server verifiziert den Zahlungsstatus direkt bei Mollie, verarbeitet Ereignisse idempotent und aktiviert/verlängert den Tarif erst bei bestätigter Zahlung.
-6. Bei Kündigung wird die Mollie-Abonnementverlängerung serverseitig gestoppt. Der bezahlte Zugriff bleibt gemäß den angezeigten Vertragsbedingungen bis zum Periodenende erhalten.
+- Datenbankmigration für Premium 10 GiB / 299 Cent pro Monat und Entfernung von Premium Plus.
+- Mollie Checkout Edge Function: erstellt Kundenprofil und erste Zahlung mit `sequenceType: first`.
+- Mollie Webhook Edge Function: ruft den Zahlungsstatus direkt bei Mollie ab, prüft das gültige SEPA-Mandat und legt das monatliche Abonnement an; weitere bezahlte Abozahlungen aktualisieren den Abostatus.
+- UI zeigt nur Free und Premium 10 GB / 2,99 € monatlich.
+- Checkout bleibt praktisch nicht nutzbar, solange die Supabase-Identitätsbrücke, Secrets, Rücksprung-URL und Mollie-Freischaltung fehlen.
 
-SEPA-Lastschriften können zurückgegeben werden. Fehlgeschlagene oder zurückgebuchte Zahlungen müssen deshalb den Status `past_due` bzw. einen definierten Sperr-/Kulanzprozess auslösen; ein Checkout-Redirect allein ist niemals ein Zahlungsnachweis.
+## Noch nicht produktionsbereit
 
-## Status
+Die Implementierung ist noch nicht auf dem echten Supabase-Projekt deployed oder mit einem Mollie-Händlerkonto end-to-end getestet. Der GitHub Device Flow ist kein Supabase Auth JWT. Vor dem Livebetrieb müssen Identitätsbrücke, Kündigungs-Endpunkt, Rücklastschrift-/Erstattungsbehandlung, robuste Webhook-Idempotenz, periodengenaue Statusabgleiche und serverseitige Speicherquota vollständig getestet werden.
 
-Das bestehende PR-Grundgerüst enthält Tabellen, RLS, die Kontoübersicht und eine bewusst gesperrte Checkout-Funktion. Es ist **noch kein produktives Abosystem**: Die Mollie-Integration, Kunden-/Mandatsverwaltung, Subscriptions API, Webhook-Verarbeitung, Kündigungsaktion, Scheduler, Identitätsbrücke und Quota-Enforcement müssen noch implementiert und auf dem echten Supabase-Projekt deployed werden.
+## Benötigte Supabase Edge Function Secrets
 
-## Produktionsverbindung
+- `MOLLIE_API_KEY`: Mollie Test-Key für Tests; später Live-Key nach Freigabe
+- `MOLLIE_WEBHOOK_URL`: öffentliche HTTPS-URL der deployten `mollie-webhook` Function
+- `SCHLEIM_CLOUD_RETURN_URL`: HTTPS-Rücksprungadresse der Cloud-Kontooberfläche
+- `SUPABASE_SERVICE_ROLE_KEY`: ausschließlich serverseitig
+- Supabase stellt `SUPABASE_URL` und `SUPABASE_ANON_KEY` im Function-Kontext bereit
 
-Siehe [Mollie SEPA Subscription Setup](docs/MOLLIE-SEPA-SETUP.md) für Voraussetzungen und Checkliste.
+Keine Schlüssel in das Repository schreiben.
 
-Wesentliche Voraussetzungen:
-1. Mollie-Händlerkonto und Freischaltung von SEPA-Lastschrift sowie wiederkehrenden Zahlungen.
-2. Mollie API-Zugangsdaten und öffentlicher HTTPS-Webhook-Endpunkt.
-3. Verbindliche Preise für Premium und Premium Plus.
-4. Rechtliche Verkäuferangaben, Supportkontakt, AGB, Datenschutz, Kündigungs- und Rückerstattungsregeln.
-5. Sicherer GitHub-Login-zu-Schleim-Konto-Identitätsfluss; GitHub Device Flow Access Tokens sind keine Supabase Auth JWTs.
-6. Serverseitige Upload-Quoten, Zahlungsstatusabgleich, Scheduler, Idempotenz und Kündigung.
-7. Durchgängige Tests im Mollie-Testmodus vor jeder Live-Freigabe.
+## Weiterführende Dokumentation
 
-## Sicherheit und Bereitstellung
+Siehe [Mollie SEPA Setup](docs/MOLLIE-SEPA-SETUP.md).
 
-- RLS für Nutzerdaten und keine clientseitigen Schreibrechte für Abos/Quota.
-- Jeder Upload wird serverseitig authentifiziert, auf Dateigröße und Kontingent geprüft und transaktionssicher verbucht.
-- Nur serverseitig bestätigte, erfolgreiche Mollie-Zahlungen aktivieren oder verlängern Premium.
-- Mollie-API-Schlüssel und Supabase Service-Role-Key ausschließlich als geschützte Supabase Edge Function Secrets speichern.
-- Webhooks müssen authentifiziert/verifiziert, dauerhaft protokolliert und idempotent verarbeitet werden.
-- Keine echten Abbuchungen vor ausdrücklicher Produktionsfreigabe.
+Offizielle API-Referenzen:
+- [Mollie Recurring Payments](https://docs.mollie.com/docs/recurring-payments)
+- [Create subscription](https://docs.mollie.com/reference/create-subscription)
+- [Mandates API](https://docs.mollie.com/reference/mandates-api)
+- [Webhooks](https://docs.mollie.com/reference/webhooks)
