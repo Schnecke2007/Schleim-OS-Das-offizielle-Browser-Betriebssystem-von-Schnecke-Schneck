@@ -1,7 +1,7 @@
 name: Build Schleim Browser Android APK
 
 on:
-  # Publish the consolidated 3.22.0 release only when all documentation,
+  # Publish the consolidated 3.22.1 release only when all documentation,
   # project files and template tooling have been committed.
   push:
     branches: [main]
@@ -404,22 +404,22 @@ jobs:
           mkdir -p dist
           {
             printf '## 🇩🇪 Deutsch\n\n'
-            cat docs/Deutsch/RELEASE-NOTES-3.22.0.md
+            cat docs/Deutsch/RELEASE-NOTES-3.22.1.md
             printf '\n\n---\n\n## 🇬🇧 English\n\n'
-            cat docs/Englisch/RELEASE-NOTES-3.22.0.md
+            cat docs/Englisch/RELEASE-NOTES-3.22.1.md
             printf '\n\n---\n\n## 🇳🇱 Nederlands\n\n'
-            cat docs/Niederländisch/RELEASE-NOTES-3.22.0.md
+            cat docs/Niederländisch/RELEASE-NOTES-3.22.1.md
             printf '\n\n---\n\n## 🇩🇪 Leichte Sprache – Deutsch\n\n'
-            cat docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.0.md
+            cat docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.1.md
             printf '\n\n---\n\n## 🇬🇧 Plain language – English\n\n'
-            cat docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.0.md
+            cat docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.1.md
             printf '\n\n---\n\n## 🇳🇱 Eenvoudige taal – Nederlands\n\n'
-            cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.0.md
+            cat docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.1.md
           } > dist/release-notes.md
           test -s dist/release-notes.md
-          grep -q 'Neue Erweiterungs-Details' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.0.md
-          grep -q 'New extension details' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.0.md
-          grep -q 'Nieuwe extensiedetails' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.0.md
+          grep -q 'Neue Erweiterungs-Details' docs/Leichte-Sprache/Deutsch/RELEASE-NOTES-3.22.1.md
+          grep -q 'New extension details' docs/Leichte-Sprache/Englisch/RELEASE-NOTES-3.22.1.md
+          grep -q 'Nieuwe extensiedetails' docs/Leichte-Sprache/Niederländisch/RELEASE-NOTES-3.22.1.md
 
       - name: Prepare Schleim OS 3.22.1 release
         id: target
@@ -515,7 +515,7 @@ jobs:
             echo "Unexpected old Android-App ZIP root folder found." >&2
             exit 1
           fi
-          echo "All project archives and the Alpha 32 APK are ready; the Android Studio ZIP root is Android-App Template."
+          echo "All project archives and the Alpha 33 APK are ready; the Android Studio ZIP root is Android-App Template."
 
       - name: Publish the complete 3.22.1 release
         env:
