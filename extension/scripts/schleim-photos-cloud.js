@@ -772,7 +772,7 @@
       if (!target || target.querySelector('img')) continue;
       try {
         const blob = await account().requestPhotosRepository('/contents/' + encodePath(item.thumbnailPath), {
-          headers:{Accept:'application/vnd.github.raw'}, responseType:'blob'
+          headers:{Accept:'application/vnd.github.raw+json'}, responseType:'blob'
         });
         const url = URL.createObjectURL(blob);
         state.objectUrls.push(url);
@@ -784,7 +784,7 @@
   }
   async function readOriginal(item) {
     const blob = await account().requestPhotosRepository('/contents/' + encodePath(item.path), {
-      headers:{Accept:'application/vnd.github.raw'}, responseType:'blob'
+      headers:{Accept:'application/vnd.github.raw+json'}, responseType:'blob'
     });
     const url = URL.createObjectURL(blob);
     state.objectUrls.push(url);
@@ -979,7 +979,7 @@
         if (existing) throw new Error(t('migrationConflict') + ' (' + targetRelativePath + ')');
         const raw = await account().requestLegacyPhotosRepository(
           '/contents/' + encodePath(entry.path) + '?ref=' + encodeURIComponent(branch),
-          {headers:{Accept:'application/vnd.github.raw'},responseType:'blob'}
+          {headers:{Accept:'application/vnd.github.raw+json'},responseType:'blob'}
         );
         if (!(raw instanceof Blob) || raw.size !== Number(entry.size)) {
           throw new Error('Die Quelldatei konnte nicht vollständig gelesen werden: ' + entry.path);
